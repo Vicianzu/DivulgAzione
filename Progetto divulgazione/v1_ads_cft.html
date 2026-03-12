@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>AdS/CFT — Corrispondenza Olografica</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#000010; color:#e2e8f0; font-family:'Georgia',serif; overflow:hidden; }
+#canvas { display:block; }
+
+#ui {
+  position:fixed; top:0; left:0; right:0;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:11px 22px;
+  background:rgba(0,0,16,0.92);
+  border-bottom:1px solid #1e293b;
+  z-index:100; gap:12px;
+}
+#title    { font-size:13px; color:#38bdf8; letter-spacing:3px; text-transform:uppercase; white-space:nowrap; }
+#phase-desc { font-size:11.5px; color:#94a3b8; text-align:center; line-height:1.5; max-width:560px; }
+#phase-name { font-size:14px; color:#7dd3fc; font-weight:bold; text-align:right; white-space:nowrap; }
+
+#bottom {
+  position:fixed; bottom:0; left:0; right:0;
+  padding:9px 20px;
+  background:rgba(0,0,16,0.92);
+  border-top:1px solid #1e293b;
+  display:flex; justify-content:center; gap:8px; z-index:100; flex-wrap:wrap;
+}
+.btn {
+  padding:6px 14px; border:1px solid #1e3a5f;
+  background:#0c1a2e; color:#7dd3fc;
+  border-radius:20px; cursor:pointer; font-size:11px; transition:all 0.3s;
+}
+.btn:hover, .btn.active { background:#0c4a6e; border-color:#38bdf8; color:#e0f2fe; }
+
+#panel {
+  position:fixed; right:14px; top:66px;
+  width:200px;
+  background:rgba(8,14,30,0.94);
+  border:1px solid #1e3a5f; border-radius:10px;
+  padding:13px; font-size:11px; color:#64748b;
+  line-height:1.7; z-index:100;
+}
+#panel h3 { color:#38bdf8; font-size:12px; margin-bottom:8px;
+  border-bottom:1px solid #1e293b; padding-bottom:5px; letter-spacing:1px; }
+.pr { display:flex; justify-content:space-between; margin-bottom:3px; }
+.pv { color:#e2e8f0; font-weight:bold; }
+.leg { display:flex; align-items:center; gap:7px; margin-bottom:5px; }
+.ld  { width:18px; height:3px; border-radius:2px; }
+</style>
+</head>
+<body>
+<div id="ui">
+  <div id="title">AdS/CFT</div>
+  <div id="phase-desc">—</div>
+  <div id="phase-name">—</div>
+</div>
+<canvas id="canvas"></canvas>
+<div id="panel">
+  <h3>DIZIONARIO</h3>
+  <div class="pr"><span>Fase:</span><span class="pv" id="s-phase">—</span></div>
+  <div class="pr"><span>Dim. bulk:</span><span class="pv" id="s-bulk">AdS₅</span></div>
+  <div class="pr"><span>Dim. bordo:</span><span class="pv" id="s-bdy">CFT₄</span></div>
+  <div class="pr"><span>N D3-brane:</span><span class="pv" id="s-n">N≫1</span></div>
+  <hr style="border-color:#1e293b;margin:8px 0;">
+  <div class="leg"><div class="ld" style="background:#38bdf8;"></div><span>Bordo CFT (4D)</span></div>
+  <div class="leg"><div class="ld" style="background:#7c3aed;"></div><span>Bulk AdS (5D+)</span></div>
+  <div class="leg"><div class="ld" style="background:#f59e0b;"></div><span>D3-Brane</span></div>
+  <div class="leg"><div class="ld" style="background:#4ade80; height:1px; border-top:1px dashed #4ade80;"></div><span>Geodetica bulk</span></div>
+  <div class="leg"><div class="ld" style="background:#f97316;"></div><span>Stringa aperta</span></div>
+  <hr style="border-color:#1e293b;margin:8px 0;">
+  <div style="font-size:10px;color:#334155;line-height:1.5;">
+    Maldacena 1997<br>
+    AdS₅×S⁵ ↔ 𝒩=4 SYM<br>
+    N→∞, gs→0<br>
+    λ=g²ₛN — 't Hooft coupling
+  </div>
+</div>
+<div id="bottom">
+  <button class="btn active"  onclick="go(0)">① D-Brane pile-up</button>
+  <button class="btn"         onclick="go(1)">② Curvatura spaziotempo</button>
+  <button class="btn"         onclick="go(2)">③ Geometria AdS</button>
+  <button class="btn"         onclick="go(3)">④ Bulk vs Bordo</button>
+  <button class="btn"         onclick="go(4)">⑤ Dualità olografica</button>
+  <button class="btn"         onclick="go(5)">⑥ Dizionario AdS/CFT</button>
+  <button class="btn"         onclick="go(6)">⑦ Ologramma completo</button>
+</div>
+
+<script>
+const cv=document.getElementById('canvas');
+const cx=cv.getContext('2d');
+let W,H;
+function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
+resize(); window.addEventListener('resize',resize);
+
+let ph=0, T=0, pT=0;
+
+const PHASES=[
+  { name:"Stack di N D3-Brane",
+    desc:"N D3-brane identiche si sovrappongono. Le stringhe aperte tese tra di esse generano il campo di gauge SU(N). L'accoppiamento cresce con N." },
+  { name:"Le brane curvano lo spaziotempo",
+    desc:"Lo stack massiccio di brane deforma la metrica: crea un 'pozzo gravitazionale' nelle 10 dimensioni. La curvatura è proporzionale a N·gₛ·α'²." },
+  { name:"Geometria Anti-de Sitter (AdS₅×S⁵)",
+    desc:"Vicino alle brane la geometria diventa AdS₅×S⁵. AdS è uno spaziotempo iperbolico a curvatura negativa costante. La costante cosmologica è Λ<0." },
+  { name:"Bulk e Bordo",
+    desc:"Il Bulk è l'interno AdS₅ (5D, con gravità). Il Bordo è il confine a r→∞: uno spaziotempo piatto 4D su cui vive la CFT. Il bordo è 'infinitamente lontano' ma raggiungiuto dalle geodetiche in tempo finito." },
+  { name:"Dualità: gravità nel bulk ↔ CFT sul bordo",
+    desc:"Maldacena: la stringa IIB nel bulk AdS₅×S⁵ è ESATTAMENTE equivalente alla teoria di gauge 𝒩=4 Super Yang-Mills 4D sul bordo. Una è la riformulazione olografica dell'altra." },
+  { name:"Dizionario AdS/CFT",
+    desc:"Ogni oggetto bulk ha un corrispondente sul bordo. Massa della particella bulk ↔ dimensione dell'operatore CFT. Campo scalare φ↔ operatore O. Black hole AdS ↔ stato termico CFT (T Hawking = T CFT)." },
+  { name:"Il principio olografico completo",
+    desc:"La fisica del bulk 5D è completamente codificata sul bordo 4D. Come un ologramma 3D su una lastra 2D. Entropia di Bekenstein-Hawking = entropia della CFT. La gravità è emergente." }
+];
+
+function go(n){
+  ph=n; pT=0;
+  document.querySelectorAll('.btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+  document.getElementById('s-phase').textContent=(n+1)+'/7';
+  updateUI();
+}
+function updateUI(){
+  document.getElementById('phase-desc').textContent=PHASES[ph].desc;
+  document.getElementById('phase-name').textContent=PHASES[ph].name;
+}
+
+// ── helpers ───────────────────────────────────────────────
+function lbl(x,y,txt,col,sz,al='center',bold=false){
+  cx.fillStyle=col;
+  cx.font=`${bold?'bold ':''}${sz}px Georgia,serif`;
+  cx.textAlign=al; cx.fillText(txt,x,y);
+}
+function glow(c,b){cx.shadowColor=c;cx.shadowBlur=b;}
+function ng(){cx.shadowBlur=0;}
+
+let _stars=null;
+function stars(){
+  if(!_stars)_stars=Array.from({length:180},()=>({
+    x:Math.random()*3000,y:Math.random()*2000,
+    r:Math.random()*1.3+0.2,o:Math.random()*0.4+0.1
+  }));
+  _stars.forEach(s=>{
+    cx.beginPath();cx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    cx.fillStyle=`rgba(255,255,255,${s.o*(0.5+0.5*Math.sin(T*0.3+s.x*0.01))})`;
+    cx.fill();
+  });
+}
+
+function bg(){
+  const g=cx.createRadialGradient(W/2,H/2,80,W/2,H/2,Math.max(W,H)*0.9);
+  g.addColorStop(0,'#020920');g.addColorStop(1,'#000010');
+  cx.fillStyle=g;cx.fillRect(0,0,W,H);
+}
+
+// ── FASE 0: stack D3-brane ────────────────────────────────
+function ph0(){
+  const cx2=W*0.5, cy2=H*0.5;
+  const N=8, sep=18, bW=W*0.55, bH=28;
+
+  // stringhe aperte tra brane (vibranti)
+  for(let i=0;i<N-1;i++){
+    for(let s=0;s<3;s++){
+      const y0=cy2-(N/2)*sep+i*sep+sep;
+      const y1=cy2-(N/2)*sep+(i+1)*sep;
+      const x0=cx2-bW/2+W*0.08+s*W*0.12+Math.sin(T*0.3+s)*W*0.04;
+      cx.beginPath();
+      const steps=30;
+      for(let k=0;k<=steps;k++){
+        const f=k/steps;
+        const env=Math.sin(Math.PI*f);
+        const xw=x0+12*env*Math.sin(4*Math.PI*f-T*3+s);
+        const yw=y0+(y1-y0)*f;
+        k===0?cx.moveTo(xw,yw):cx.lineTo(xw,yw);
+      }
+      cx.strokeStyle=`hsl(${30+s*40},80%,60%)`;
+      cx.lineWidth=1.5;glow(`hsl(${30+s*40},80%,60%)`,6);cx.stroke();ng();
+    }
+  }
+
+  // brane
+  for(let i=0;i<N;i++){
+    const by=cy2-(N/2)*sep+i*sep;
+    const alpha=0.55+0.3*(i/(N-1));
+    const grad=cx.createLinearGradient(cx2-bW/2,by,cx2+bW/2,by+bH);
+    grad.addColorStop(0,`rgba(245,158,11,${alpha*0.9})`);
+    grad.addColorStop(0.5,`rgba(253,230,138,${alpha})`);
+    grad.addColorStop(1,`rgba(180,83,9,${alpha*0.7})`);
+    // ombra prospettica
+    cx.beginPath();
+    cx.ellipse(cx2,by+bH/2+4,bW/2,bH*0.22,0,0,Math.PI*2);
+    cx.fillStyle='rgba(0,0,0,0.3)';cx.fill();
+    // corpo
+    cx.beginPath();
+    cx.roundRect(cx2-bW/2,by,bW,bH,4);
+    cx.fillStyle=grad;glow('#f59e0b',10);cx.fill();ng();
+    cx.strokeStyle='rgba(253,230,138,0.5)';cx.lineWidth=1;cx.stroke();
+    if(i===0||i===N-1||i===N/2|0){
+      lbl(cx2+bW/2+10, by+bH/2+4, `D3`, '#fde68a', 10, 'left');
+    }
+  }
+
+  // etichetta SU(N)
+  lbl(cx2, cy2-(N/2)*sep-30, `Stack di N=${N} D3-Brane`, '#fde68a', 16, 'center', true);
+  lbl(cx2, cy2-(N/2)*sep-12, 'Stringhe aperte tese tra brane → gauge field SU(N)', '#b45309', 11);
+  lbl(cx2, cy2+(N/2)*sep+bH+18, 'Con N→∞ e gₛ→0  ma  λ=gₛN fisso:', '#64748b', 11);
+  lbl(cx2, cy2+(N/2)*sep+bH+34, 'teoria di gauge SU(N) in regime di coupling forte', '#38bdf8', 11);
+
+  // frecce lato
+  const arY=cy2-(N/2)*sep;
+  cx.beginPath();cx.moveTo(cx2-bW/2-30,arY);cx.lineTo(cx2-bW/2-30,arY+(N-1)*sep+bH);
+  cx.strokeStyle='rgba(245,158,11,0.4)';cx.lineWidth=1.5;
+  cx.setLineDash([4,5]);cx.stroke();cx.setLineDash([]);
+  lbl(cx2-bW/2-42, cy2+4, 'N', '#f59e0b', 13, 'center', true);
+}
+
+// ── FASE 1: curvatura spaziotempo ─────────────────────────
+function ph1(){
+  const ox=W*0.5, oy=H*0.52;
+  const gW=W*0.7, gH=H*0.5;
+  const cols=18, rows=14;
+
+  // griglia warped
+  for(let r=0;r<=rows;r++){
+    cx.beginPath();
+    for(let c=0;c<=cols;c++){
+      const fx=c/cols, fy=r/rows;
+      const dx=fx-0.5, dy=fy-0.5;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      const warp=0.38*Math.exp(-dist*dist*8);
+      const px=(fx-0.5)*gW+ox;
+      const py=(fy-0.5)*gH+oy + warp*H*0.35 + 4*Math.sin(T*0.4+c*0.3)*warp;
+      c===0?cx.moveTo(px,py):cx.lineTo(px,py);
+    }
+    cx.strokeStyle=`rgba(56,189,248,${0.08+0.18*(r/rows)})`;cx.lineWidth=0.8;cx.stroke();
+  }
+  for(let c=0;c<=cols;c++){
+    cx.beginPath();
+    for(let r=0;r<=rows;r++){
+      const fx=c/cols, fy=r/rows;
+      const dx=fx-0.5, dy=fy-0.5;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      const warp=0.38*Math.exp(-dist*dist*8);
+      const px=(fx-0.5)*gW+ox;
+      const py=(fy-0.5)*gH+oy + warp*H*0.35 + 4*Math.sin(T*0.4+c*0.3)*warp;
+      r===0?cx.moveTo(px,py):cx.lineTo(px,py);
+    }
+    cx.strokeStyle=`rgba(56,189,248,${0.08+0.18*(c/cols)})`;cx.lineWidth=0.8;cx.stroke();
+  }
+
+  // massa centrale (stack brane)
+  const mGrad=cx.createRadialGradient(ox,oy+H*0.16,5,ox,oy+H*0.16,38);
+  mGrad.addColorStop(0,'#fde68a');mGrad.addColorStop(0.4,'#f59e0b');mGrad.addColorStop(1,'rgba(180,83,9,0)');
+  cx.beginPath();cx.arc(ox,oy+H*0.16,38,0,Math.PI*2);
+  cx.fillStyle=mGrad;glow('#f59e0b',20);cx.fill();ng();
+  lbl(ox,oy+H*0.16+5,'N·D3','#fde68a',11,'center',true);
+
+  // frecce curvatura
+  for(let a=0;a<8;a++){
+    const ang=(a/8)*Math.PI*2;
+    const r1=50,r2=20;
+    const x1=ox+r1*Math.cos(ang), y1=oy+H*0.16+r1*Math.sin(ang)*0.5;
+    const x2=ox+r2*Math.cos(ang), y2=oy+H*0.16+r2*Math.sin(ang)*0.5;
+    cx.beginPath();cx.moveTo(x1,y1);cx.lineTo(x2,y2);
+    cx.strokeStyle='rgba(245,158,11,0.4)';cx.lineWidth=1;cx.stroke();
+  }
+
+  lbl(W*0.5, H*0.12, 'Curvatura dello spaziotempo', '#7dd3fc', 18, 'center', true);
+  lbl(W*0.5, H*0.12+24, 'La massa-energia delle N brane deforma la metrica gμν', '#64748b', 12);
+  lbl(W*0.5, H*0.12+40, 'Rμν − ½gμνR = 8πG Tμν', '#38bdf8', 11);
+
+  lbl(W*0.14, H*0.6, 'spaziotempo piatto', '#334155', 10);
+  lbl(W*0.5, H*0.88, '→ al limite N→∞: geometria AdS₅×S⁵', '#a78bfa', 13, 'center', true);
+}
+
+// ── FASE 2: geometria AdS ─────────────────────────────────
+function ph2(){
+  const ox=W*0.42, oy=H*0.52;
+  const R=Math.min(W,H)*0.33;
+
+  // disco di Poincaré (modello del disco per AdS2D)
+  // cerchi isocoordinate
+  for(let k=1;k<=9;k++){
+    const r2=R*(k/9);
+    const col=k<4?'rgba(124,58,237,0.5)':k<7?'rgba(56,189,248,0.3)':'rgba(56,189,248,0.15)';
+    cx.beginPath();cx.arc(ox,oy,r2,0,Math.PI*2);
+    cx.strokeStyle=col;cx.lineWidth=k===1?2:0.8;cx.stroke();
+  }
+  // linee geodetiche (archi di cerchio passanti per bordo)
+  const geodetics=[
+    [0.1,0.9],[0.2,0.8],[0.3,0.7],[0.15,0.75],[0.05,0.55],
+    [-0.1,-0.9],[-0.2,-0.8],[-0.3,-0.7],
+    [0.5,0.5*0.8],[0.5,-0.5*0.8],[-0.5,0.5*0.8],[-0.5,-0.5*0.8]
+  ];
+  geodetics.forEach(([dx,dy])=>{
+    const x1=ox+R*dx, y1=oy+R*dy;
+    const x2=ox+R*(-dy), y2=oy+R*dx;
+    cx.beginPath();cx.moveTo(x1,y1);cx.lineTo(x2,y2);
+    cx.strokeStyle='rgba(74,222,128,0.12)';cx.lineWidth=0.8;cx.stroke();
+  });
+
+  // bordo del cerchio
+  const bGrad=cx.createLinearGradient(ox-R,oy,ox+R,oy);
+  bGrad.addColorStop(0,'rgba(56,189,248,0)');
+  bGrad.addColorStop(0.3,'rgba(56,189,248,0.7)');
+  bGrad.addColorStop(0.7,'rgba(56,189,248,0.7)');
+  bGrad.addColorStop(1,'rgba(56,189,248,0)');
+  cx.beginPath();cx.arc(ox,oy,R,0,Math.PI*2);
+  cx.strokeStyle='#38bdf8';cx.lineWidth=3;glow('#38bdf8',16);cx.stroke();ng();
+
+  // centro
+  cx.beginPath();cx.arc(ox,oy,12,0,Math.PI*2);
+  const cG=cx.createRadialGradient(ox-4,oy-4,1,ox,oy,12);
+  cG.addColorStop(0,'#fde68a');cG.addColorStop(1,'rgba(180,83,9,0)');
+  cx.fillStyle=cG;glow('#f59e0b',20);cx.fill();ng();
+
+  // asse radiale r
+  cx.beginPath();cx.moveTo(ox,oy);cx.lineTo(ox+R,oy);
+  cx.strokeStyle='rgba(148,163,184,0.4)';cx.lineWidth=1.5;
+  cx.setLineDash([5,5]);cx.stroke();cx.setLineDash([]);
+  lbl(ox+R/2,oy-10,'r (coordinata radiale AdS)','#64748b',10);
+  lbl(ox+R+8,oy,'r→∞','#38bdf8',11,'left');
+  lbl(ox-10,oy,'r=0','#fde68a',11,'right');
+
+  // metrica
+  const bx2=W*0.76, bH2=H*0.38;
+  cx.fillStyle='rgba(8,14,30,0.9)';
+  cx.beginPath();cx.roundRect(bx2,bH2,W*0.22,H*0.28,8);cx.fill();
+  cx.strokeStyle='#1e3a5f';cx.lineWidth=1;cx.stroke();
+  lbl(bx2+W*0.11,bH2+18,'Metrica AdS₅','#38bdf8',12,'center',true);
+  lbl(bx2+W*0.11,bH2+38,'ds² = L²/z² (dz²+dx²μ)','#a78bfa',11,'center');
+  lbl(bx2+W*0.11,bH2+56,'z → 0  :  bordo (UV)','#60a5fa',10,'center');
+  lbl(bx2+W*0.11,bH2+70,'z → ∞  :  centro (IR)','#7c3aed',10,'center');
+  lbl(bx2+W*0.11,bH2+90,'Λ = −6/L²  <  0','#94a3b8',10,'center');
+  lbl(bx2+W*0.11,bH2+106,'Curvatura cost. negativa','#64748b',9,'center');
+  lbl(bx2+W*0.11,bH2+120,'Isometrie ≅ SO(2,4)','#64748b',9,'center');
+  lbl(bx2+W*0.11,bH2+134,'= gruppo conforme 4D ✓','#4ade80',9,'center');
+
+  lbl(ox,oy+R+28,'Modello del disco di Poincaré per AdS','#7dd3fc',14,'center',true);
+  lbl(ox,oy+R+46,'Il bordo (cerchio) = spaziotempo 4D piatto (Minkowski)','#64748b',11);
+  lbl(ox,oy-R-20,'BULK AdS₅','#7c3aed',13,'center',true);
+  lbl(ox,oy-R-6,'(con gravità, 5 dimensioni)','#475569',10);
+
+  // etichette bordo
+  for(let a=0;a<6;a++){
+    const ang=(a/6)*Math.PI*2+T*0.1;
+    const bx3=ox+R*Math.cos(ang), by3=oy+R*Math.sin(ang);
+    cx.beginPath();cx.arc(bx3,by3,3,0,Math.PI*2);
+    cx.fillStyle='#38bdf8';cx.fill();
+  }
+  lbl(W*0.5,H*0.1,'Geometria Anti-de Sitter','#f1f5f9',18,'center',true);
+  lbl(W*0.5,H*0.1+22,'Spaziotempo con curvatura negativa costante — il "palcoscenico" della dualità','#64748b',12);
+}
+
+// ── FASE 3: bulk vs bordo ─────────────────────────────────
+function ph3(){
+  const ox=W*0.5, R=Math.min(W*0.36,H*0.34);
+  const oy=H*0.52;
+
+  // --- cilindro AdS (rappresentazione ESU) ---
+  // ombra
+  cx.beginPath();cx.ellipse(ox,oy+R*0.78,R*0.88,R*0.15,0,0,Math.PI*2);
+  cx.fillStyle='rgba(0,0,0,0.4)';cx.fill();
+
+  // faccia inferiore
+  cx.beginPath();cx.ellipse(ox,oy+R*0.72,R*0.88,R*0.18,0,0,Math.PI*2);
+  const botG=cx.createRadialGradient(ox,oy+R*0.72,10,ox,oy+R*0.72,R*0.88);
+  botG.addColorStop(0,'#1e1b4b');botG.addColorStop(1,'#0c0a1e');
+  cx.fillStyle=botG;cx.fill();
+  cx.strokeStyle='rgba(124,58,237,0.5)';cx.lineWidth=1.5;cx.stroke();
+
+  // lati del cilindro
+  cx.beginPath();cx.moveTo(ox-R*0.88,oy-R*0.68);cx.lineTo(ox-R*0.88,oy+R*0.72);
+  cx.strokeStyle='rgba(56,189,248,0.2)';cx.lineWidth=1;cx.stroke();
+  cx.beginPath();cx.moveTo(ox+R*0.88,oy-R*0.68);cx.lineTo(ox+R*0.88,oy+R*0.72);
+  cx.strokeStyle='rgba(56,189,248,0.2)';cx.lineWidth=1;cx.stroke();
+
+  // riempimento bulk (gradiente radiale)
+  const bulkFill=cx.createRadialGradient(ox,oy,10,ox,oy,R*0.7);
+  bulkFill.addColorStop(0,'rgba(124,58,237,0.22)');
+  bulkFill.addColorStop(0.6,'rgba(56,189,248,0.07)');
+  bulkFill.addColorStop(1,'rgba(0,0,16,0)');
+  cx.beginPath();cx.ellipse(ox,oy,R*0.88,R*0.78,0,0,Math.PI*2);
+  cx.fillStyle=bulkFill;cx.fill();
+
+  // geodetiche nel bulk
+  for(let g=0;g<8;g++){
+    const a=(g/8)*Math.PI*2+T*0.04;
+    const bx3=ox+R*0.85*Math.cos(a), by3=oy+R*0.7*Math.sin(a)*0.82;
+    cx.beginPath();
+    cx.moveTo(bx3,by3);
+    cx.quadraticCurveTo(ox+R*0.1*Math.cos(a+0.5),oy+R*0.08*Math.sin(a+0.5)*0.82, ox,oy);
+    cx.strokeStyle='rgba(74,222,128,0.12)';cx.lineWidth=1;
+    cx.setLineDash([4,6]);cx.stroke();cx.setLineDash([]);
+  }
+
+  // faccia superiore (bordo CFT)
+  cx.beginPath();cx.ellipse(ox,oy-R*0.68,R*0.88,R*0.18,0,0,Math.PI*2);
+  const topG=cx.createRadialGradient(ox,oy-R*0.68,5,ox,oy-R*0.68,R*0.88);
+  topG.addColorStop(0,'rgba(56,189,248,0.25)');
+  topG.addColorStop(0.7,'rgba(56,189,248,0.12)');
+  topG.addColorStop(1,'rgba(56,189,248,0.05)');
+  cx.fillStyle=topG;glow('#38bdf8',18);cx.fill();ng();
+  cx.strokeStyle='#38bdf8';cx.lineWidth=2.5;cx.stroke();
+
+  // operatori sul bordo (punti luminosi)
+  for(let p=0;p<10;p++){
+    const a2=(p/10)*Math.PI*2+T*0.15;
+    const r2=R*0.5*(0.3+0.6*((p%3)/2));
+    const px2=ox+r2*Math.cos(a2), py2=oy-R*0.68+r2*0.18*Math.sin(a2);
+    cx.beginPath();cx.arc(px2,py2,3+Math.sin(T*1.5+p)*1.2,0,Math.PI*2);
+    cx.fillStyle=`hsl(${200+p*16},90%,70%)`;glow(`hsl(${200+p*16},90%,60%)`,8);cx.fill();ng();
+  }
+
+  // particella nel bulk
+  const partA=T*0.4;
+  const partR=R*0.38;
+  const partX=ox+partR*Math.cos(partA), partY=oy+partR*0.6*Math.sin(partA);
+  cx.beginPath();cx.arc(partX,partY,7,0,Math.PI*2);
+  const pGr=cx.createRadialGradient(partX-2,partY-2,1,partX,partY,7);
+  pGr.addColorStop(0,'#fff');pGr.addColorStop(1,'#a78bfa');
+  cx.fillStyle=pGr;glow('#a78bfa',15);cx.fill();ng();
+  lbl(partX+14,partY+4,'φ(r,x)','#c4b5fd',10,'left');
+
+  // asse z
+  cx.beginPath();cx.moveTo(ox+R*0.95,oy+R*0.6);cx.lineTo(ox+R*0.95,oy-R*0.75);
+  cx.strokeStyle='rgba(148,163,184,0.35)';cx.lineWidth=1;cx.stroke();
+  lbl(ox+R*0.95+8,oy+R*0.6,'z→∞ (IR)','#7c3aed',9,'left');
+  lbl(ox+R*0.95+8,oy-R*0.75,'z→0 (UV)','#38bdf8',9,'left');
+
+  // etichette
+  lbl(ox,oy-R*0.68-22,'BORDO (r→∞)','#38bdf8',14,'center',true);
+  lbl(ox,oy-R*0.68-6,'CFT₄ — teoria quantistica di campo senza gravità','#60a5fa',10);
+  lbl(ox,oy+8,'BULK','#7c3aed',20,'center',true);
+  lbl(ox,oy+28,'AdS₅','#a78bfa',13,'center');
+  lbl(ox,oy+44,'gravità + stringhe','#64748b',10);
+  lbl(ox,oy+R*0.68+22,'Dimensione extra (radiale)','#64748b',10,'center');
+  lbl(ox,oy+R*0.68+36,'r = scala di energia nella CFT','#475569',9,'center');
+
+  lbl(W*0.5,H*0.1,'Bulk AdS₅ e il suo Bordo','#f1f5f9',18,'center',true);
+  lbl(W*0.5,H*0.1+22,'La dimensione radiale di AdS = scala di energia (RG flow) nella CFT','#64748b',12);
+}
+
+// ── FASE 4: dualità ───────────────────────────────────────
+function ph4(){
+  const lx=W*0.22, rx=W*0.78, my=H*0.50;
+
+  // --- lato sinistro: BULK ---
+  const bulkR=H*0.28;
+  cx.beginPath();cx.arc(lx,my,bulkR,0,Math.PI*2);
+  const bG=cx.createRadialGradient(lx-20,my-20,10,lx,my,bulkR);
+  bG.addColorStop(0,'rgba(124,58,237,0.35)');bG.addColorStop(1,'rgba(14,0,40,0.5)');
+  cx.fillStyle=bG;cx.fill();
+  cx.strokeStyle='#7c3aed';cx.lineWidth=2;glow('#7c3aed',12);cx.stroke();ng();
+
+  // particelle nel bulk
+  for(let p=0;p<6;p++){
+    const a=(p/6)*Math.PI*2+T*0.3*(p%2?1:-1);
+    const r=bulkR*(0.3+0.4*(p%3)/2);
+    const px2=lx+r*Math.cos(a), py2=my+r*0.7*Math.sin(a);
+    cx.beginPath();cx.arc(px2,py2,5,0,Math.PI*2);
+    cx.fillStyle=`hsl(${260+p*20},80%,70%)`;glow(`hsl(${260+p*20},80%,60%)`,8);cx.fill();ng();
+  }
+  // stringa nel bulk
+  cx.beginPath();
+  for(let k=0;k<=60;k++){
+    const f=k/60, a=f*Math.PI*3+T*0.5;
+    const r=bulkR*0.5*f;
+    const px2=lx+r*Math.cos(a), py2=my+r*0.7*Math.sin(a);
+    k===0?cx.moveTo(px2,py2):cx.lineTo(px2,py2);
+  }
+  cx.strokeStyle='rgba(167,139,250,0.6)';cx.lineWidth=1.5;
+  cx.setLineDash([4,4]);cx.stroke();cx.setLineDash([]);
+
+  lbl(lx,my-bulkR-20,'BULK','#a78bfa',16,'center',true);
+  lbl(lx,my-bulkR-4, 'Stringa IIB in AdS₅×S⁵','#7c3aed',11);
+  lbl(lx,my,'Gravità quantistica','#c4b5fd',13,'center',true);
+  lbl(lx,my+18,'+ stringhe + brane','#7c3aed',10);
+  lbl(lx,my+bulkR+16,'5 dimensioni','#64748b',10,'center');
+
+  // --- simbolo ≡ al centro ---
+  lbl(W*0.5,my-12,'=','#4ade80',52,'center',true);
+  lbl(W*0.5,my+28,'ESATTAMENTE','#4ade80',11,'center',true);
+  lbl(W*0.5,my+42,'equivalenti','#4ade80',10);
+
+  // frecce doppia
+  cx.beginPath();cx.moveTo(lx+bulkR+10,my);cx.lineTo(W*0.5-25,my);
+  cx.strokeStyle='rgba(74,222,128,0.5)';cx.lineWidth=2;
+  cx.setLineDash([6,4]);cx.stroke();cx.setLineDash([]);
+  cx.beginPath();cx.moveTo(rx-bulkR-10,my);cx.lineTo(W*0.5+25,my);
+  cx.strokeStyle='rgba(74,222,128,0.5)';cx.lineWidth=2;
+  cx.setLineDash([6,4]);cx.stroke();cx.setLineDash([]);
+
+  // --- lato destro: BORDO CFT ---
+  cx.beginPath();cx.arc(rx,my,bulkR,0,Math.PI*2);
+  const bG2=cx.createRadialGradient(rx-20,my-20,10,rx,my,bulkR);
+  bG2.addColorStop(0,'rgba(56,189,248,0.35)');bG2.addColorStop(1,'rgba(0,14,40,0.5)');
+  cx.fillStyle=bG2;cx.fill();
+  cx.strokeStyle='#38bdf8';cx.lineWidth=2;glow('#38bdf8',12);cx.stroke();ng();
+
+  // linee di campo CFT
+  for(let l=0;l<8;l++){
+    const a=(l/8)*Math.PI*2;
+    const r1=bulkR*0.2, r2=bulkR*0.8;
+    cx.beginPath();
+    const steps2=30;
+    for(let k=0;k<=steps2;k++){
+      const f=k/steps2, r=r1+(r2-r1)*f;
+      const wiggle=5*Math.sin(4*Math.PI*f+T*2+l);
+      const px2=rx+(r+wiggle)*Math.cos(a+(0.3*Math.sin(T*0.5+l)));
+      const py2=my+(r+wiggle)*0.7*Math.sin(a+(0.3*Math.sin(T*0.5+l)));
+      k===0?cx.moveTo(px2,py2):cx.lineTo(px2,py2);
+    }
+    cx.strokeStyle=`rgba(56,189,248,${0.15+0.1*(l%3)})`;cx.lineWidth=1.2;cx.stroke();
+  }
+
+  lbl(rx,my-bulkR-20,'BORDO','#38bdf8',16,'center',true);
+  lbl(rx,my-bulkR-4,'𝒩=4 Super Yang-Mills','#60a5fa',11);
+  lbl(rx,my,'Campo di gauge SU(N)','#7dd3fc',13,'center',true);
+  lbl(rx,my+18,'senza gravità','#38bdf8',10);
+  lbl(rx,my+bulkR+16,'4 dimensioni','#64748b',10,'center');
+
+  lbl(W*0.5,H*0.1,'AdS/CFT — La Dualità Olografica','#f1f5f9',18,'center',true);
+  lbl(W*0.5,H*0.1+24,'Juan Maldacena, 1997 — una delle corrispondenze più profonde della fisica teorica','#64748b',12);
+
+  // box Maldacena
+  cx.fillStyle='rgba(8,14,30,0.88)';
+  cx.beginPath();cx.roundRect(W*0.5-130,H*0.82,260,50,8);cx.fill();
+  cx.strokeStyle='#1e3a5f';cx.lineWidth=1;cx.stroke();
+  lbl(W*0.5,H*0.82+18,'Stringa IIB / AdS₅×S⁵','#a78bfa',11,'center',true);
+  lbl(W*0.5,H*0.82+34,'↕','#4ade80',13,'center');
+  lbl(W*0.5,H*0.82+50,'𝒩=4 SYM  SU(N), d=4','#38bdf8',11,'center',true);
+}
+
+// ── FASE 5: dizionario ────────────────────────────────────
+function ph5(){
+  const entries=[
+    { bulk:'Campo scalare  φ(z,x)',      arrow:'↔', bdy:'Operatore O (dim. Δ)',       col:'#a78bfa' },
+    { bulk:'Massa  m²L²=Δ(Δ−4)',        arrow:'↔', bdy:'Dimensione conforme Δ',       col:'#60a5fa' },
+    { bulk:'Black Hole AdS (TH)',        arrow:'↔', bdy:'Stato termico CFT  (T=TH)',   col:'#f59e0b' },
+    { bulk:'Orizzonte degli eventi',     arrow:'↔', bdy:'Entropia di Von Neumann',     col:'#ef4444' },
+    { bulk:'Stringa (endpoint su bdy)',  arrow:'↔', bdy:'Operatore di Wilson W[C]',    col:'#f97316' },
+    { bulk:'Gravitone  gμν',            arrow:'↔', bdy:'Tensore energia-impulso Tμν', col:'#4ade80'  },
+    { bulk:'Campo di gauge Aμ (bulk)',   arrow:'↔', bdy:'Corrente conservata Jμ',      col:'#38bdf8' },
+    { bulk:'Azione on-shell SUGRA',      arrow:'↔', bdy:'Funzione generatrice W[J]',   col:'#c4b5fd' },
+  ];
+
+  lbl(W*0.5,H*0.1,'Dizionario AdS/CFT','#f1f5f9',20,'center',true);
+  lbl(W*0.5,H*0.1+26,'Ogni oggetto fisico nel bulk ha un esatto corrispondente nella CFT sul bordo','#64748b',12);
+
+  const headerY=H*0.2;
+  const lCol=W*0.08, rCol=W*0.58, mCol=W*0.5;
+  const rowH=H*0.08;
+
+  // header
+  cx.fillStyle='rgba(8,14,30,0.9)';
+  cx.beginPath();cx.roundRect(lCol,headerY-20,W*0.38,28,5);cx.fill();
+  cx.beginPath();cx.roundRect(rCol,headerY-20,W*0.38,28,5);cx.fill();
+  lbl(lCol+W*0.19,headerY,'BULK  (AdS₅, con gravità)','#7c3aed',13,'center',true);
+  lbl(rCol+W*0.19,headerY,'BORDO  (CFT₄, senza gravità)','#38bdf8',13,'center',true);
+  lbl(mCol,headerY,'↔','#4ade80',14,'center',true);
+
+  entries.forEach((e,i)=>{
+    const y=headerY+rowH*(i+1);
+    const pulse=0.7+0.3*Math.sin(T*1.5+i*0.7);
+
+    // riga di sfondo alternata
+    if(i%2===0){
+      cx.fillStyle='rgba(255,255,255,0.02)';
+      cx.beginPath();cx.roundRect(lCol-5,y-14,W*0.88+10,rowH-2,4);cx.fill();
+    }
+
+    // bulk
+    cx.fillStyle='rgba(124,58,237,0.1)';
+    cx.beginPath();cx.roundRect(lCol,y-14,W*0.37,rowH-4,5);cx.fill();
+    cx.strokeStyle=e.col+'44';cx.lineWidth=1;cx.stroke();
+    lbl(lCol+10,y+4,e.bulk,e.col,12,'left');
+
+    // freccia centrale pulsante
+    cx.globalAlpha=pulse;
+    lbl(mCol,y+4,'↔','#4ade80',16,'center',true);
+    cx.globalAlpha=1;
+
+    // boundary
+    cx.fillStyle='rgba(56,189,248,0.08)';
+    cx.beginPath();cx.roundRect(rCol,y-14,W*0.37,rowH-4,5);cx.fill();
+    cx.strokeStyle=e.col+'44';cx.lineWidth=1;cx.stroke();
+    lbl(rCol+10,y+4,e.bdy,e.col,12,'left');
+  });
+
+  // formula GKPW
+  const fy=H*0.88;
+  cx.fillStyle='rgba(8,14,30,0.92)';
+  cx.beginPath();cx.roundRect(W*0.5-220,fy-16,440,46,8);cx.fill();
+  cx.strokeStyle='#4ade80';cx.lineWidth=1;cx.stroke();
+  lbl(W*0.5,fy+2,'Formula GKPW:   ⟨e∫Jᵢ·Oⁱ⟩CFT = ZString[φ|∂AdS = J]','#4ade80',12,'center',true);
+  lbl(W*0.5,fy+22,'(Gubser-Klebanov-Polyakov, Witten — 1998)','#64748b',10);
+}
+
+// ── FASE 6: ologramma completo ────────────────────────────
+function ph6(){
+  const ox=W*0.5, oy=H*0.52;
+  const R=Math.min(W*0.38,H*0.36);
+
+  // ── ologramma 3D: semisfera AdS ──
+  // linee di longitudine
+  const nLon=18;
+  for(let l=0;l<nLon;l++){
+    const a=(l/nLon)*Math.PI*2;
+    cx.beginPath();
+    for(let s=0;s<=50;s++){
+      const theta=(s/50)*Math.PI*0.9;
+      const r=R*Math.sin(theta), z=-R*Math.cos(theta);
+      const x=ox+r*Math.cos(a+T*0.05);
+      const y=oy+r*0.38*Math.sin(a+T*0.05)+z*0.55;
+      s===0?cx.moveTo(x,y):cx.lineTo(x,y);
+    }
+    const depth=(Math.cos(a+T*0.05)+1)/2;
+    cx.strokeStyle=`rgba(124,58,237,${0.06+0.14*depth})`;cx.lineWidth=0.8;cx.stroke();
+  }
+
+  // linee di latitudine
+  const nLat=8;
+  for(let lt=1;lt<nLat;lt++){
+    const theta=(lt/nLat)*Math.PI*0.9;
+    const r=R*Math.sin(theta), z=-R*Math.cos(theta);
+    cx.beginPath();cx.ellipse(ox,oy+z*0.55,r,r*0.38,0,0,Math.PI*2);
+    cx.strokeStyle=`rgba(56,189,248,${0.04+0.12*(lt/nLat)})`;cx.lineWidth=0.8;cx.stroke();
+  }
+
+  // bordo (base del cilindro / disco)
+  cx.beginPath();cx.ellipse(ox,oy,R,R*0.38,0,0,Math.PI*2);
+  cx.strokeStyle='#38bdf8';cx.lineWidth=3;glow('#38bdf8',20);cx.stroke();ng();
+
+  // CFT operatori sul bordo (onda)
+  const nOps=80;
+  for(let p=0;p<nOps;p++){
+    const a=(p/nOps)*Math.PI*2;
+    const wave=1+0.12*Math.sin(5*a+T*2)+0.06*Math.sin(11*a-T*1.5)+0.04*Math.sin(17*a+T*3.2);
+    const r2=R*wave;
+    const px2=ox+r2*Math.cos(a), py2=oy+r2*0.38*Math.sin(a);
+    cx.beginPath();cx.arc(px2,py2,1.8,0,Math.PI*2);
+    cx.fillStyle=`hsl(${190+p*2},90%,70%)`;cx.fill();
+  }
+
+  // raggi olografici (dal bordo al centro)
+  for(let r=0;r<12;r++){
+    const a=(r/12)*Math.PI*2+T*0.06;
+    const bx3=ox+R*Math.cos(a), by3=oy+R*0.38*Math.sin(a);
+    const prog=(T*0.3+r*0.5)%1;
+    const ex2=ox+(R*prog*0.9)*Math.cos(a), ey2=oy+(R*prog*0.9)*0.38*Math.sin(a)-R*0.45*prog*0.6;
+    cx.beginPath();cx.moveTo(bx3,by3);cx.lineTo(ex2,ey2);
+    cx.strokeStyle=`rgba(74,222,128,${0.08*(1-prog)+0.04})`;cx.lineWidth=1;cx.stroke();
+    // punto in moto
+    cx.beginPath();cx.arc(ex2,ey2,2.5,0,Math.PI*2);
+    cx.fillStyle=`rgba(74,222,128,${0.6*(1-prog)})`;cx.fill();
+  }
+
+  // cuore: punto centrale (black hole / centro AdS)
+  const bhR=14+3*Math.sin(T*0.8);
+  cx.beginPath();cx.arc(ox,oy-R*0.4,bhR,0,Math.PI*2);
+  const bhG=cx.createRadialGradient(ox,oy-R*0.4,2,ox,oy-R*0.4,bhR);
+  bhG.addColorStop(0,'#fde68a');bhG.addColorStop(0.4,'#f59e0b');bhG.addColorStop(1,'rgba(180,83,9,0)');
+  cx.fillStyle=bhG;glow('#f59e0b',25);cx.fill();ng();
+  lbl(ox,oy-R*0.4+4,'BH','#fde68a',10,'center',true);
+
+  // frecce concettuali
+  const arrowData=[
+    { x:W*0.08, y:H*0.28, text:['Entropia BH', '= Entropia CFT', 'S = A/4Gℏ'], col:'#ef4444' },
+    { x:W*0.08, y:H*0.62, text:['Hawking T', '= Temperatura', 'della CFT'], col:'#f59e0b' },
+    { x:W*0.88, y:H*0.28, text:['Scattering', 'nel bulk ↔', 'correlatori CFT'], col:'#a78bfa' },
+    { x:W*0.88, y:H*0.62, text:['RG flow CFT', '= moto radiale', 'in AdS (z)'], col:'#4ade80' },
+  ];
+  arrowData.forEach(d=>{
+    cx.fillStyle='rgba(8,14,30,0.88)';
+    cx.beginPath();cx.roundRect(d.x-70,d.y-20,140,60,7);cx.fill();
+    cx.strokeStyle=d.col+'66';cx.lineWidth=1;cx.stroke();
+    d.text.forEach((t2,i)=>lbl(d.x,d.y-4+i*16,t2,i===0?d.col:'#94a3b8',i===0?11:10));
+  });
+
+  // linea centrale orizzontale
+  lbl(ox,H*0.1,'Il Principio Olografico','#f1f5f9',20,'center',true);
+  lbl(ox,H*0.1+26,'La fisica 5D del bulk è completamente codificata nel campo 4D sul bordo','#64748b',12);
+  lbl(ox,H*0.1+44,'Come un ologramma 3D inciso su una lastra 2D','#475569',11);
+
+  lbl(ox,oy+R*0.38+24,'BORDO 4D — CFT (operatori, correlatori, entropia...)','#38bdf8',12,'center',true);
+  lbl(ox,oy-R*0.38,'BULK 5D — AdS (BH, stringhe, gravitoni...)','#a78bfa',11,'center',true);
+
+  // formula entropia
+  cx.fillStyle='rgba(8,14,30,0.92)';
+  cx.beginPath();cx.roundRect(W*0.5-175,H*0.88,350,42,8);cx.fill();
+  cx.strokeStyle='#ef4444';cx.lineWidth=1;cx.stroke();
+  lbl(W*0.5,H*0.88+16,'Bekenstein-Hawking:   S = A / 4Gℏ','#ef4444',12,'center',true);
+  lbl(W*0.5,H*0.88+32,'= Entropia entanglement della CFT sul bordo','#64748b',10,'center');
+}
+
+// ── MAIN LOOP ─────────────────────────────────────────────
+function draw(){
+  cx.clearRect(0,0,W,H); bg(); stars();
+  switch(ph){
+    case 0:ph0();break; case 1:ph1();break; case 2:ph2();break;
+    case 3:ph3();break; case 4:ph4();break; case 5:ph5();break;
+    case 6:ph6();break;
+  }
+  T+=0.022; pT++;
+  if(pT>520&&ph<6) go(ph+1);
+  requestAnimationFrame(draw);
+}
+
+go(0); draw();
+</script>
+</body>
+</html>

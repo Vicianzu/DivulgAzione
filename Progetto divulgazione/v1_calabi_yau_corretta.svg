@@ -1,0 +1,153 @@
+<svg viewBox="0 0 900 600" xmlns="http://www.w3.org/2000/svg" font-family="Georgia, serif">
+
+  <!-- Sfondo -->
+  <defs>
+    <radialGradient id="bgGrad" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#0a0a2e"/>
+      <stop offset="100%" stop-color="#000010"/>
+    </radialGradient>
+    <radialGradient id="cyGrad" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#a78bfa"/>
+      <stop offset="40%" stop-color="#7c3aed"/>
+      <stop offset="100%" stop-color="#1e1b4b"/>
+    </radialGradient>
+    <radialGradient id="pointGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#7c3aed" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <filter id="softGlow">
+      <feGaussianBlur stdDeviation="6" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="900" height="600" fill="url(#bgGrad)"/>
+
+  <!-- Stelle di sfondo -->
+  <circle cx="50" cy="30" r="1" fill="white" opacity="0.6"/>
+  <circle cx="150" cy="80" r="0.8" fill="white" opacity="0.4"/>
+  <circle cx="820" cy="50" r="1.2" fill="white" opacity="0.5"/>
+  <circle cx="750" cy="120" r="0.7" fill="white" opacity="0.3"/>
+  <circle cx="30" cy="200" r="1" fill="white" opacity="0.5"/>
+  <circle cx="880" cy="300" r="0.9" fill="white" opacity="0.4"/>
+  <circle cx="60" cy="500" r="1.1" fill="white" opacity="0.6"/>
+  <circle cx="830" cy="520" r="0.8" fill="white" opacity="0.3"/>
+
+  <!-- ===== SEZIONE SINISTRA: Spazio 3D ordinario ===== -->
+  <!-- Titolo sezione -->
+  <text x="220" y="50" text-anchor="middle" fill="#94a3b8" font-size="13" letter-spacing="2">SPAZIO VISIBILE (3D)</text>
+
+  <!-- Griglia 3D isometrica semplificata - piano XY -->
+  <g opacity="0.5" stroke="#334155" stroke-width="0.8">
+    <!-- Linee orizzontali -->
+    <line x1="60" y1="200" x2="380" y2="200"/>
+    <line x1="60" y1="240" x2="380" y2="240"/>
+    <line x1="60" y1="280" x2="380" y2="280"/>
+    <line x1="60" y1="320" x2="380" y2="320"/>
+    <line x1="60" y1="360" x2="380" y2="360"/>
+    <line x1="60" y1="400" x2="380" y2="400"/>
+    <!-- Linee verticali -->
+    <line x1="100" y1="160" x2="100" y2="440"/>
+    <line x1="140" y1="160" x2="140" y2="440"/>
+    <line x1="180" y1="160" x2="180" y2="440"/>
+    <line x1="220" y1="160" x2="220" y2="440"/>
+    <line x1="260" y1="160" x2="260" y2="440"/>
+    <line x1="300" y1="160" x2="300" y2="440"/>
+    <line x1="340" y1="160" x2="340" y2="440"/>
+  </g>
+
+  <!-- UN SOLO punto evidenziato con zoom -->
+  <circle cx="220" cy="300" r="6" fill="url(#pointGlow)" filter="url(#softGlow)"/>
+  <circle cx="220" cy="300" r="4" fill="white"/>
+
+  <!-- Freccia di zoom verso la Calabi-Yau -->
+  <line x1="270" y1="290" x2="430" y2="200" stroke="#a78bfa" stroke-width="1.5" stroke-dasharray="6,4" marker-end="url(#arrow)"/>
+  <defs>
+    <marker id="arrow" markerWidth="8" height="8" refX="6" refY="3" orient="auto">
+      <path d="M0,0 L0,6 L8,3 z" fill="#a78bfa"/>
+    </marker>
+  </defs>
+
+  <!-- Etichetta punto -->
+  <text x="220" y="480" text-anchor="middle" fill="#64748b" font-size="11">ogni punto dello spazio</text>
+  <text x="220" y="496" text-anchor="middle" fill="#64748b" font-size="11">contiene dimensioni extra</text>
+
+  <!-- ===== SEZIONE DESTRA: La Calabi-Yau unica ===== -->
+  <!-- Grande Calabi-Yau artistica -->
+  <g transform="translate(620, 290)">
+    <!-- Corpo principale - forma toroidale complessa -->
+    <ellipse cx="0" cy="0" rx="140" ry="100" fill="none" stroke="#7c3aed" stroke-width="1" opacity="0.3"/>
+
+    <!-- Superficie principale -->
+    <path d="M-80,-60 C-40,-90 40,-90 80,-60 C110,-30 110,30 80,60 C40,90 -40,90 -80,60 C-110,30 -110,-30 -80,-60 Z"
+          fill="url(#cyGrad)" opacity="0.85"/>
+
+    <!-- Struttura interna - buchi e curvature -->
+    <ellipse cx="0" cy="0" rx="45" ry="30" fill="#0a0a2e" opacity="0.7"/>
+    <ellipse cx="0" cy="0" rx="35" ry="20" fill="none" stroke="#a78bfa" stroke-width="1.5" opacity="0.6"/>
+
+    <!-- Linee di curvatura esterne -->
+    <path d="M-80,-60 C-50,-20 -50,20 -80,60" fill="none" stroke="#c4b5fd" stroke-width="1" opacity="0.5"/>
+    <path d="M80,-60 C50,-20 50,20 80,60" fill="none" stroke="#c4b5fd" stroke-width="1" opacity="0.5"/>
+    <path d="M-80,-60 C-20,-80 20,-80 80,-60" fill="none" stroke="#c4b5fd" stroke-width="1" opacity="0.4"/>
+    <path d="M-80,60 C-20,80 20,80 80,60" fill="none" stroke="#c4b5fd" stroke-width="1" opacity="0.4"/>
+
+    <!-- Linee interne complesse -->
+    <path d="M-45,-10 C-20,-35 20,-35 45,-10 C60,10 45,35 0,40 C-45,35 -60,10 -45,-10 Z"
+          fill="none" stroke="#ddd6fe" stroke-width="0.8" opacity="0.4"/>
+    <path d="M-30,0 C0,-50 30,0 0,45 C-30,0 -30,0 -30,0" fill="none" stroke="#e9d5ff" stroke-width="0.8" opacity="0.3"/>
+
+    <!-- Riflessi luce -->
+    <ellipse cx="-30" cy="-35" rx="20" ry="12" fill="white" opacity="0.08" transform="rotate(-20,-30,-35)"/>
+
+    <!-- Glow esterno -->
+    <ellipse cx="0" cy="0" rx="100" ry="75" fill="none" stroke="#7c3aed" stroke-width="12" opacity="0.08"/>
+    <ellipse cx="0" cy="0" rx="115" ry="88" fill="none" stroke="#7c3aed" stroke-width="6" opacity="0.05"/>
+  </g>
+
+  <!-- Titolo sezione destra -->
+  <text x="620" y="50" text-anchor="middle" fill="#94a3b8" font-size="13" letter-spacing="2">DIMENSIONI EXTRA (6D compattificate)</text>
+
+  <!-- ===== TESTI INFORMATIVI ===== -->
+
+  <!-- Box informativo in basso -->
+  <rect x="40" y="515" width="820" height="70" rx="8" fill="#0f172a" stroke="#334155" stroke-width="1" opacity="0.9"/>
+
+  <!-- Testo principale -->
+  <text x="450" y="542" text-anchor="middle" fill="#e2e8f0" font-size="15" font-weight="bold">
+    La compattificazione è UNA SOLA, identica in ogni punto dell'universo
+  </text>
+  <text x="450" y="563" text-anchor="middle" fill="#94a3b8" font-size="12">
+    In ogni punto dello spazio esistono 6 dimensioni extra arrotolate in questa forma — la Calabi-Yau non è "localizzata", è universale
+  </text>
+  <text x="450" y="582" text-anchor="middle" fill="#7c3aed" font-size="11" font-style="italic">
+    Scala stimata: ~10⁻³³ cm (scala di Planck) — invisibile, ma presente ovunque
+  </text>
+
+  <!-- Etichetta Calabi-Yau -->
+  <text x="620" y="430" text-anchor="middle" fill="#c4b5fd" font-size="14" font-weight="bold" filter="url(#glow)">Varietà di Calabi-Yau</text>
+  <text x="620" y="450" text-anchor="middle" fill="#7c3aed" font-size="11">(proiezione 3D di una geometria 6D)</text>
+
+  <!-- Etichetta zoom -->
+  <text x="340" y="175" fill="#a78bfa" font-size="12" font-style="italic">ingrandimento</text>
+  <text x="340" y="190" fill="#a78bfa" font-size="12" font-style="italic">di scala di Planck</text>
+
+  <!-- Titolo principale -->
+  <text x="450" y="110" text-anchor="middle" fill="#f1f5f9" font-size="22" font-weight="bold">
+    Compattificazione di Calabi-Yau
+  </text>
+  <text x="450" y="135" text-anchor="middle" fill="#64748b" font-size="13">
+    Teoria delle Stringhe — Rappresentazione divulgativa corretta
+  </text>
+
+</svg>
