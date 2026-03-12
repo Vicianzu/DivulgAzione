@@ -85,6 +85,7 @@ body { background:#000010; color:#e2e8f0; font-family:'Georgia',serif; overflow:
   <button class="btn"         onclick="go(4)">⑤ Dualità olografica</button>
   <button class="btn"         onclick="go(5)">⑥ Dizionario AdS/CFT</button>
   <button class="btn"         onclick="go(6)">⑦ Ologramma completo</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()">⏸ Pausa</button>
 </div>
 
 <script>
@@ -694,6 +695,11 @@ function ph6(){
 }
 
 // ── MAIN LOOP ─────────────────────────────────────────────
+let paused = false;
+function togglePause(){
+  paused = !paused;
+  document.getElementById('btn-pause').textContent = paused ? '▶ Riprendi' : '⏸ Pausa';
+}
 function draw(){
   cx.clearRect(0,0,W,H); bg(); stars();
   switch(ph){
@@ -701,8 +707,8 @@ function draw(){
     case 3:ph3();break; case 4:ph4();break; case 5:ph5();break;
     case 6:ph6();break;
   }
-  T+=0.022; pT++;
-  if(pT>520&&ph<6) go(ph+1);
+  T+=0.007; if(!paused) pT++;
+  if(pT>1800&&ph<6&&!paused) go(ph+1);
   requestAnimationFrame(draw);
 }
 
