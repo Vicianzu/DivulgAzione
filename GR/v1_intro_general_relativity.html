@@ -143,10 +143,14 @@ function lbl(x,y,txt,col,sz,al='center',bold=false){
 function gw(col,blur){ cx.shadowColor=col; cx.shadowBlur=blur; }
 function ng(){ cx.shadowBlur=0; }
 
+const STAR_COUNT = 180;
+const AUTO_ADVANCE_FRAMES = 520;
+
 let _stars = null;
 function stars(){
-  if(!_stars) _stars = Array.from({length:180}, ()=>({
-    x:Math.random()*3000, y:Math.random()*2000,
+  if(!_stars) _stars = Array.from({length:STAR_COUNT}, ()=>({
+    x:Math.random()*Math.max(window.screen.width,3000),
+    y:Math.random()*Math.max(window.screen.height,2000),
     r:Math.random()*1.3+0.2, o:Math.random()*0.4+0.1
   }));
   _stars.forEach(s=>{
@@ -1073,7 +1077,7 @@ function draw(){
   if(!paused){
     T += 0.022;
     pT++;
-    if(pT > 520 && ph < 7) go(ph+1);
+    if(pT > AUTO_ADVANCE_FRAMES && ph < 7) go(ph+1);
   }
 
   requestAnimationFrame(draw);
