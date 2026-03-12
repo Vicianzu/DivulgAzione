@@ -82,6 +82,7 @@
   <button class="phase-btn"         onclick="setPhase(3)">④ Campi quantistici</button>
   <button class="phase-btn"         onclick="setPhase(4)">⑤ Particelle → Atomi</button>
   <button class="phase-btn"         onclick="setPhase(5)">⑥ Materia barionica</button>
+  <button class="phase-btn" id="btn-pause" onclick="togglePause()">⏸ Pausa</button>
 </div>
 
 <script>
@@ -623,6 +624,11 @@ function drawPhase5(){
 }
 
 // ─── LOOP ────────────────────────────────────────────────
+let paused = false;
+function togglePause(){
+  paused = !paused;
+  document.getElementById('btn-pause').textContent = paused ? '▶ Riprendi' : '⏸ Pausa';
+}
 function draw(){
   ctx.clearRect(0,0,W,H);
   const bg=ctx.createRadialGradient(W/2,H/2,60,W/2,H/2,Math.max(W,H)*0.9);
@@ -637,8 +643,8 @@ function draw(){
     case 4: drawPhase4(); break;
     case 5: drawPhase5(); break;
   }
-  t+=0.025; phaseT++;
-  if(phaseT>500&&phase<5) setPhase(phase+1);
+  t+=0.007; if(!paused) phaseT++;
+  if(phaseT>1800&&phase<5&&!paused) setPhase(phase+1);
   updateUI();
   requestAnimationFrame(draw);
 }
