@@ -36,14 +36,20 @@ body { background:#000010; color:#e2e8f0; font-family:'Georgia',serif; overflow:
 
 #panel {
   position:fixed; right:14px; top:66px;
-  width:200px;
+  width:170px;
   background:rgba(8,14,30,0.94);
   border:1px solid #1e3a5f; border-radius:10px;
   padding:13px; font-size:11px; color:#64748b;
   line-height:1.7; z-index:100;
 }
 #panel h3 { color:#38bdf8; font-size:12px; margin-bottom:8px;
-  border-bottom:1px solid #1e293b; padding-bottom:5px; letter-spacing:1px; }
+  border-bottom:1px solid #1e293b; padding-bottom:5px; letter-spacing:1px;
+  display:flex; justify-content:space-between; align-items:center; }
+#panel-toggle {
+  cursor:pointer; background:none; border:none;
+  color:#38bdf8; font-size:14px; line-height:1; padding:0;
+}
+#panel-body { overflow:hidden; transition:max-height 0.3s ease; max-height:400px; }
 .pr { display:flex; justify-content:space-between; margin-bottom:3px; }
 .pv { color:#e2e8f0; font-weight:bold; }
 .leg { display:flex; align-items:center; gap:7px; margin-bottom:5px; }
@@ -58,23 +64,25 @@ body { background:#000010; color:#e2e8f0; font-family:'Georgia',serif; overflow:
 </div>
 <canvas id="canvas"></canvas>
 <div id="panel">
-  <h3>DIZIONARIO</h3>
-  <div class="pr"><span>Fase:</span><span class="pv" id="s-phase">—</span></div>
-  <div class="pr"><span>Dim. bulk:</span><span class="pv" id="s-bulk">AdS₅</span></div>
-  <div class="pr"><span>Dim. bordo:</span><span class="pv" id="s-bdy">CFT₄</span></div>
-  <div class="pr"><span>N D3-brane:</span><span class="pv" id="s-n">N≫1</span></div>
-  <hr style="border-color:#1e293b;margin:8px 0;">
-  <div class="leg"><div class="ld" style="background:#38bdf8;"></div><span>Bordo CFT (4D)</span></div>
-  <div class="leg"><div class="ld" style="background:#7c3aed;"></div><span>Bulk AdS (5D+)</span></div>
-  <div class="leg"><div class="ld" style="background:#f59e0b;"></div><span>D3-Brane</span></div>
-  <div class="leg"><div class="ld" style="background:#4ade80; height:1px; border-top:1px dashed #4ade80;"></div><span>Geodetica bulk</span></div>
-  <div class="leg"><div class="ld" style="background:#f97316;"></div><span>Stringa aperta</span></div>
-  <hr style="border-color:#1e293b;margin:8px 0;">
-  <div style="font-size:10px;color:#334155;line-height:1.5;">
-    Maldacena 1997<br>
-    AdS₅×S⁵ ↔ 𝒩=4 SYM<br>
-    N→∞, gs→0<br>
-    λ=g²ₛN — 't Hooft coupling
+  <h3>DIZIONARIO <button id="panel-toggle" onclick="togglePanel()" title="Mostra/Nascondi">▼</button></h3>
+  <div id="panel-body">
+    <div class="pr"><span>Fase:</span><span class="pv" id="s-phase">—</span></div>
+    <div class="pr"><span>Dim. bulk:</span><span class="pv" id="s-bulk">AdS₅</span></div>
+    <div class="pr"><span>Dim. bordo:</span><span class="pv" id="s-bdy">CFT₄</span></div>
+    <div class="pr"><span>N D3-brane:</span><span class="pv" id="s-n">N≫1</span></div>
+    <hr style="border-color:#1e293b;margin:8px 0;">
+    <div class="leg"><div class="ld" style="background:#38bdf8;"></div><span>Bordo CFT (4D)</span></div>
+    <div class="leg"><div class="ld" style="background:#7c3aed;"></div><span>Bulk AdS (5D+)</span></div>
+    <div class="leg"><div class="ld" style="background:#f59e0b;"></div><span>D3-Brane</span></div>
+    <div class="leg"><div class="ld" style="background:#4ade80; height:1px; border-top:1px dashed #4ade80;"></div><span>Geodetica bulk</span></div>
+    <div class="leg"><div class="ld" style="background:#f97316;"></div><span>Stringa aperta</span></div>
+    <hr style="border-color:#1e293b;margin:8px 0;">
+    <div style="font-size:10px;color:#334155;line-height:1.5;">
+      Maldacena 1997<br>
+      AdS₅×S⁵ ↔ 𝒩=4 SYM<br>
+      N→∞, gs→0<br>
+      λ=g²ₛN — 't Hooft coupling
+    </div>
   </div>
 </div>
 <div id="bottom">
@@ -95,7 +103,25 @@ let W,H;
 function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}
 resize(); window.addEventListener('resize',resize);
 
-let ph=0, T=0, pT=0;
+let ph=0, T=0, pT=0, paused=false;
+
+function togglePause(){
+  paused=!paused;
+  document.getElementById('btn-pause').textContent=paused?'▶ Riprendi':'⏸ Pausa';
+}
+
+function togglePanel(){
+  const body=document.getElementById('panel-body');
+  const btn=document.getElementById('panel-toggle');
+  const collapsed=!body.style.maxHeight||body.style.maxHeight==='0px';
+  if(collapsed){
+    body.style.maxHeight='400px';
+    btn.textContent='▼';
+  } else {
+    body.style.maxHeight='0px';
+    btn.textContent='▶';
+  }
+}
 
 const PHASES=[
   { name:"Stack di N D3-Brane",
@@ -195,7 +221,7 @@ function ph0(){
     cx.roundRect(cx2-bW/2,by,bW,bH,4);
     cx.fillStyle=grad;glow('#f59e0b',10);cx.fill();ng();
     cx.strokeStyle='rgba(253,230,138,0.5)';cx.lineWidth=1;cx.stroke();
-    if(i===0||i===N-1||i===N/2|0){
+    if(i===0||i===N-1||i===Math.floor(N/2)){
       lbl(cx2+bW/2+10, by+bH/2+4, `D3`, '#fde68a', 10, 'left');
     }
   }
@@ -665,11 +691,12 @@ function ph6(){
   lbl(ox,oy-R*0.4+4,'BH','#fde68a',10,'center',true);
 
   // frecce concettuali
+  const panelW = 198; // 170px (width) + 14px (right offset) + 13px (padding) + 1px (border) ≈ 198px from right edge
   const arrowData=[
-    { x:W*0.08, y:H*0.28, text:['Entropia BH', '= Entropia CFT', 'S = A/4Gℏ'], col:'#ef4444' },
-    { x:W*0.08, y:H*0.62, text:['Hawking T', '= Temperatura', 'della CFT'], col:'#f59e0b' },
-    { x:W*0.88, y:H*0.28, text:['Scattering', 'nel bulk ↔', 'correlatori CFT'], col:'#a78bfa' },
-    { x:W*0.88, y:H*0.62, text:['RG flow CFT', '= moto radiale', 'in AdS (z)'], col:'#4ade80' },
+    { x: W*0.09,           y:H*0.30, text:['Entropia BH', '= Entropia CFT', 'S = A/4Gℏ'], col:'#ef4444' },
+    { x: W*0.09,           y:H*0.65, text:['Hawking T', '= Temperatura', 'della CFT'], col:'#f59e0b' },
+    { x: W - panelW - 90, y:H*0.30, text:['Scattering', 'nel bulk ↔', 'correlatori CFT'], col:'#a78bfa' },
+    { x: W - panelW - 90, y:H*0.65, text:['RG flow CFT', '= moto radiale', 'in AdS (z)'], col:'#4ade80' },
   ];
   arrowData.forEach(d=>{
     cx.fillStyle='rgba(8,14,30,0.88)';
@@ -683,8 +710,8 @@ function ph6(){
   lbl(ox,H*0.1+26,'La fisica 5D del bulk è completamente codificata nel campo 4D sul bordo','#64748b',12);
   lbl(ox,H*0.1+44,'Come un ologramma 3D inciso su una lastra 2D','#475569',11);
 
-  lbl(ox,oy+R*0.38+24,'BORDO 4D — CFT (operatori, correlatori, entropia...)','#38bdf8',12,'center',true);
-  lbl(ox,oy-R*0.38,'BULK 5D — AdS (BH, stringhe, gravitoni...)','#a78bfa',11,'center',true);
+  lbl(ox,oy+R*0.45,'BORDO 4D — CFT (operatori, correlatori, entropia...)','#38bdf8',12,'center',true);
+  lbl(ox,oy-R*0.5,'BULK 5D — AdS (BH, stringhe, gravitoni...)','#a78bfa',11,'center',true);
 
   // formula entropia
   cx.fillStyle='rgba(8,14,30,0.92)';
@@ -707,8 +734,8 @@ function draw(){
     case 3:ph3();break; case 4:ph4();break; case 5:ph5();break;
     case 6:ph6();break;
   }
-  T+=0.007; if(!paused) pT++;
-  if(pT>1800&&ph<6&&!paused) go(ph+1);
+  T+=0.022; pT++;
+  if(pT>520&&ph<6&&!paused) go(ph+1);
   requestAnimationFrame(draw);
 }
 
