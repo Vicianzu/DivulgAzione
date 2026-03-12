@@ -176,7 +176,7 @@ function ph0(){
     {yr:1913,name:'Bohr',form:'modello atomico quantizzato',col:'#f59e0b'},
     {yr:1924,name:'de Broglie',form:'λ = h/p',col:'#f59e0b'},
     {yr:1925,name:'Heisenberg',form:'meccanica a matrici',col:'#f59e0b'},
-    {yr:1926,name:'Schrödinger',form:'equazione d\'onda  iℏ∂ψ/∂t = Ĥψ',col:'#a78bfa'},
+    {yr:1926,name:'Schrödinger',form:'equazione d\'onda iℏ∂ψ/∂t = Ĥψ',col:'#a78bfa'},
     {yr:1927,name:'Dirac',form:'equazione relativistica',col:'#f59e0b'},
     {yr:1927,name:'Heisenberg',form:'Δx · Δp ≥ ℏ/2',col:'#38bdf8'},
   ];
@@ -343,7 +343,7 @@ function ph1(){
     ng();
   }
 
-  if(pT<310) lbl(W*0.5,H*0.92,'La particella viaggia come onda... al misura il collasso avviene...','#475569',10);
+  if(pT<310) lbl(W*0.5,H*0.92,'La particella viaggia come onda... alla misura il collasso avviene...','#475569',10);
 }
 
 // ── FASE 2: Il Principio di Indeterminazione ──────────────
@@ -500,11 +500,12 @@ function ph3(){
   lbl(W*0.5,H*0.88,'La particella viaggia come onda attraverso entrambe le fenditure simultaneamente','#94a3b8',11,'center');
 }
 function interferenceY(){
-  const theta=Math.random()*Math.PI*2-Math.PI;
-  const intensity=Math.pow(Math.cos(theta*2),2)*Math.exp(-theta*theta/6);
-  const accept=intensity>Math.random();
-  if(!accept) return interferenceY();
-  return theta/Math.PI;
+  for(let attempt=0;attempt<200;attempt++){
+    const theta=Math.random()*Math.PI*2-Math.PI;
+    const intensity=Math.pow(Math.cos(theta*2),2)*Math.exp(-theta*theta/6);
+    if(intensity>Math.random()) return theta/Math.PI;
+  }
+  return 0;
 }
 
 // ── FASE 4: Spin — Stern-Gerlach ──────────────────────────
