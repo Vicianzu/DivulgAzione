@@ -1,0 +1,1047 @@
+/* ============================================================
+   style.css — Regalo Livolsi
+   Tema: Dark mode cosmico, tono scientifico-ironico
+   Colori: sfondo #0a0a1a, accenti viola/cyan/oro
+   ============================================================ */
+
+/* ── Reset e base ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --bg:        #0a0a1a;
+  --bg2:       #0f0f2a;
+  --bg3:       #13132e;
+  --violet:    #a855f7;
+  --violet-l:  #c084fc;
+  --cyan:      #22d3ee;
+  --cyan-l:    #67e8f9;
+  --gold:      #fbbf24;
+  --gold-l:    #fde68a;
+  --red:       #f87171;
+  --green:     #4ade80;
+  --text:      #e2e8f0;
+  --text-dim:  #94a3b8;
+  --border:    rgba(168, 85, 247, 0.25);
+  --glow-v:    0 0 20px rgba(168, 85, 247, 0.4);
+  --glow-c:    0 0 20px rgba(34, 211, 238, 0.4);
+  --glow-g:    0 0 20px rgba(251, 191, 36, 0.4);
+  --font-mono: 'Courier New', Courier, monospace;
+  --font-sans: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-sans);
+  min-height: 100vh;
+  overflow-x: hidden;
+  line-height: 1.7;
+}
+
+/* ── Canvas sfondo particelle (fisso) ── */
+#particle-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Contenuto principale ── */
+#content {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 0 24px 80px;
+}
+
+/* ============================================================
+   NAVBAR
+   ============================================================ */
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(10, 10, 26, 0.92);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  flex-wrap: wrap;
+  min-height: 52px;
+}
+
+nav .nav-brand {
+  font-family: var(--font-mono);
+  color: var(--violet);
+  font-size: 0.85rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  margin-right: 12px;
+  white-space: nowrap;
+}
+
+nav a {
+  color: var(--text-dim);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  padding: 6px 10px;
+  border-radius: 4px;
+  transition: color 0.2s, background 0.2s;
+  white-space: nowrap;
+}
+
+nav a:hover {
+  color: var(--cyan);
+  background: rgba(34, 211, 238, 0.08);
+}
+
+nav a.active {
+  color: var(--violet);
+  background: rgba(168, 85, 247, 0.15);
+  border: 1px solid rgba(168, 85, 247, 0.3);
+}
+
+/* ============================================================
+   TIPOGRAFIA
+   ============================================================ */
+h1 {
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.2;
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--cyan);
+}
+
+h3 {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: var(--violet-l);
+}
+
+p {
+  color: var(--text-dim);
+  margin-bottom: 16px;
+}
+
+strong {
+  color: var(--text);
+}
+
+/* ── Gradiente titolo principale ── */
+.gradient-title {
+  background: linear-gradient(135deg, var(--violet) 0%, var(--cyan) 50%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* ── Testo in stile terminale ── */
+.mono {
+  font-family: var(--font-mono);
+}
+
+/* ============================================================
+   HERO SECTION
+   ============================================================ */
+.hero {
+  text-align: center;
+  padding: 80px 0 60px;
+  min-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-subtitle {
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--cyan);
+  margin-bottom: 32px;
+  min-height: 1.5em;
+}
+
+.hero-subtitle::after {
+  content: '█';
+  animation: blink 1s step-end infinite;
+  color: var(--cyan);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* ── Pulsante CTA ── */
+.btn {
+  display: inline-block;
+  padding: 14px 32px;
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--violet), var(--cyan));
+  color: #fff;
+  box-shadow: var(--glow-v);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 40px rgba(168, 85, 247, 0.6);
+}
+
+.btn-outline {
+  background: transparent;
+  color: var(--cyan);
+  border: 1px solid var(--cyan);
+}
+
+.btn-outline:hover {
+  background: rgba(34, 211, 238, 0.1);
+  box-shadow: var(--glow-c);
+}
+
+/* ============================================================
+   SEZIONI GENERALI
+   ============================================================ */
+.section {
+  padding: 60px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.section:last-child {
+  border-bottom: none;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--gold);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+/* ── Card generica ── */
+.card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 28px;
+  transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--glow-v);
+  border-color: var(--violet);
+}
+
+/* ── Grid card ── */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 32px;
+}
+
+/* ── Box citazione ── */
+.quote-box {
+  border-left: 4px solid var(--violet);
+  background: rgba(168, 85, 247, 0.06);
+  padding: 20px 24px;
+  border-radius: 0 8px 8px 0;
+  font-style: italic;
+  margin: 32px 0;
+  font-size: 1.1rem;
+  color: var(--text);
+}
+
+.quote-box cite {
+  display: block;
+  margin-top: 8px;
+  font-style: normal;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--violet-l);
+}
+
+/* ── Box equazione ── */
+.equation-box {
+  background: var(--bg3);
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  border-radius: 12px;
+  padding: 32px 24px;
+  font-family: var(--font-mono);
+  font-size: clamp(0.7rem, 2vw, 0.95rem);
+  color: var(--cyan-l);
+  text-align: center;
+  margin: 32px 0;
+  overflow-x: auto;
+  line-height: 2;
+  position: relative;
+}
+
+.equation-box.pulse {
+  animation: eqPulse 3s ease-in-out infinite;
+}
+
+@keyframes eqPulse {
+  0%, 100% { box-shadow: 0 0 10px rgba(34, 211, 238, 0.2); }
+  50%       { box-shadow: 0 0 40px rgba(34, 211, 238, 0.6); }
+}
+
+/* ── Syntax highlight equazione ── */
+.eq-delta  { color: var(--gold); }
+.eq-psi    { color: var(--violet-l); }
+.eq-gamma  { color: var(--cyan); }
+.eq-lambda { color: var(--red); }
+.eq-trace  { color: var(--green); }
+.eq-sum    { color: #f472b6; }
+.eq-zero   { color: var(--gold); font-weight: bold; }
+
+/* ============================================================
+   TIMELINE
+   ============================================================ */
+.timeline {
+  position: relative;
+  padding: 20px 0;
+  margin-top: 32px;
+}
+
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 28px;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--violet), var(--cyan), var(--gold));
+}
+
+.timeline-item {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 32px;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.timeline-item.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.timeline-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--violet);
+  border: 2px solid var(--cyan);
+  flex-shrink: 0;
+  margin-top: 4px;
+  margin-left: 21px;
+  box-shadow: var(--glow-v);
+  position: relative;
+  z-index: 1;
+}
+
+.timeline-content {
+  flex: 1;
+}
+
+.timeline-year {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  margin-bottom: 4px;
+}
+
+/* ============================================================
+   PILASTRI (pagina 2)
+   ============================================================ */
+.pillar-card {
+  background: var(--bg2);
+  border-radius: 12px;
+  padding: 24px;
+  transition: transform 0.3s, box-shadow 0.3s;
+  opacity: 0;
+  transform: translateY(30px);
+  cursor: pointer;
+}
+
+.pillar-card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.pillar-card:hover {
+  transform: translateY(-6px) scale(1.02);
+}
+
+.pillar-card .pillar-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  display: block;
+}
+
+.pillar-card .pillar-detail {
+  display: none;
+  margin-top: 12px;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+}
+
+.pillar-card.expanded .pillar-detail {
+  display: block;
+}
+
+/* ── Colori per ogni pilastro ── */
+.pillar-1 { border: 1px solid rgba(168, 85, 247, 0.5); }
+.pillar-1:hover { box-shadow: 0 0 20px rgba(168, 85, 247, 0.3); }
+.pillar-2 { border: 1px solid rgba(34, 211, 238, 0.5); }
+.pillar-2:hover { box-shadow: 0 0 20px rgba(34, 211, 238, 0.3); }
+.pillar-3 { border: 1px solid rgba(251, 191, 36, 0.5); }
+.pillar-3:hover { box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
+.pillar-4 { border: 1px solid rgba(74, 222, 128, 0.5); }
+.pillar-4:hover { box-shadow: 0 0 20px rgba(74, 222, 128, 0.3); }
+.pillar-5 { border: 1px solid rgba(248, 113, 113, 0.5); }
+.pillar-5:hover { box-shadow: 0 0 20px rgba(248, 113, 113, 0.3); }
+.pillar-6 { border: 1px solid rgba(244, 114, 182, 0.5); }
+.pillar-6:hover { box-shadow: 0 0 20px rgba(244, 114, 182, 0.3); }
+
+/* ============================================================
+   PROGRESS BAR
+   ============================================================ */
+.progress-container {
+  margin: 12px 0;
+}
+
+.progress-label {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--text-dim);
+}
+
+.progress-bar {
+  height: 8px;
+  background: var(--bg3);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  width: 0;
+  transition: width 1.5s cubic-bezier(0.16, 1, 0.3, 1);
+  background: linear-gradient(90deg, var(--violet), var(--cyan));
+}
+
+.progress-fill.gold {
+  background: linear-gradient(90deg, var(--gold), var(--red));
+}
+
+/* ============================================================
+   TABELLA COMPARATIVA (pagina 4)
+   ============================================================ */
+.compare-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  margin: 32px 0;
+  font-size: 0.9rem;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+.compare-table th {
+  background: var(--bg3);
+  padding: 14px 18px;
+  text-align: left;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.compare-table th:nth-child(2) { color: var(--cyan); }
+.compare-table th:nth-child(3) { color: var(--violet); }
+
+.compare-table td {
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.4s, transform 0.4s;
+}
+
+.compare-table tr.visible td {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.compare-table td:first-child {
+  color: var(--gold);
+  font-weight: 600;
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+}
+
+.compare-table td:nth-child(2) {
+  background: rgba(34, 211, 238, 0.04);
+}
+
+.compare-table td:nth-child(3) {
+  background: rgba(168, 85, 247, 0.04);
+}
+
+.compare-table tr:last-child td {
+  border-bottom: none;
+}
+
+/* ============================================================
+   RED FLAG (pagina 5)
+   ============================================================ */
+.redflag-counter {
+  font-family: var(--font-mono);
+  font-size: 3rem;
+  color: var(--red);
+  text-align: right;
+  padding: 0 24px;
+  text-shadow: 0 0 20px rgba(248, 113, 113, 0.6);
+}
+
+.redflag-item {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  background: var(--bg2);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+  border-radius: 10px;
+  padding: 20px;
+  margin-bottom: 14px;
+  opacity: 0;
+  transform: translateX(-30px);
+  transition: opacity 0.4s, transform 0.4s, border-color 0.3s, box-shadow 0.3s;
+}
+
+.redflag-item.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.redflag-item:hover {
+  border-color: var(--red);
+  box-shadow: 0 0 20px rgba(248, 113, 113, 0.2);
+}
+
+.redflag-item.alarm {
+  border-color: var(--red);
+  animation: alarm 2s ease-in-out 1s infinite;
+}
+
+@keyframes alarm {
+  0%, 100% { box-shadow: 0 0 10px rgba(248, 113, 113, 0.2); }
+  50%       { box-shadow: 0 0 30px rgba(248, 113, 113, 0.7); }
+}
+
+.flag-emoji {
+  font-size: 1.8rem;
+  flex-shrink: 0;
+  animation: flagShake 0.4s ease-in-out;
+}
+
+@keyframes flagShake {
+  0%, 100% { transform: rotate(0deg); }
+  25%       { transform: rotate(-8deg); }
+  75%       { transform: rotate(8deg); }
+}
+
+/* ── Fuffometro ── */
+.fuffometro {
+  margin: 32px 0;
+  text-align: center;
+}
+
+.fuffometro-title {
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  color: var(--gold);
+  margin-bottom: 10px;
+  letter-spacing: 0.1em;
+}
+
+.fuffometro-bar {
+  height: 24px;
+  background: var(--bg3);
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+}
+
+.fuffometro-fill {
+  height: 100%;
+  border-radius: 12px;
+  width: 0;
+  transition: width 2s cubic-bezier(0.16, 1, 0.3, 1);
+  background: linear-gradient(90deg, var(--gold), var(--red));
+  position: relative;
+}
+
+.fuffometro-fill::after {
+  content: 'FUFFA DETECTED';
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: rgba(255,255,255,0.8);
+  white-space: nowrap;
+  letter-spacing: 0.1em;
+}
+
+/* ============================================================
+   VOTO (pagina 6)
+   ============================================================ */
+
+/* ── Contatore circolare ── */
+.score-ring {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 40px auto;
+}
+
+.score-ring svg {
+  transform: rotate(-90deg);
+}
+
+.score-ring-bg {
+  fill: none;
+  stroke: var(--bg3);
+  stroke-width: 12;
+}
+
+.score-ring-fill {
+  fill: none;
+  stroke: url(#scoreGrad);
+  stroke-width: 12;
+  stroke-linecap: round;
+  stroke-dasharray: 502;
+  stroke-dashoffset: 502;
+  transition: stroke-dashoffset 2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.score-number {
+  position: absolute;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  font-family: var(--font-mono);
+  font-size: 4rem;
+  font-weight: bold;
+  color: var(--gold);
+  text-shadow: var(--glow-g);
+  opacity: 0;
+  transition: opacity 0.5s;
+}
+
+.score-label {
+  position: absolute;
+  bottom: 28px; left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  color: var(--text-dim);
+  white-space: nowrap;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+/* ── Medaglione NEP ── */
+.nep-seal {
+  text-align: center;
+  margin: 40px 0;
+}
+
+.nep-seal-inner {
+  display: inline-block;
+  border: 3px solid var(--red);
+  border-radius: 50%;
+  padding: 24px 32px;
+  font-family: var(--font-mono);
+  font-size: 1rem;
+  color: var(--red);
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-weight: bold;
+  box-shadow: 0 0 40px rgba(248, 113, 113, 0.4);
+  opacity: 0;
+  transform: scale(0);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.nep-seal-inner.visible {
+  opacity: 1;
+  transform: scale(1) rotate(-5deg);
+}
+
+/* ── Criteri di valutazione ── */
+.criterion {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  padding: 14px;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.4s, transform 0.4s;
+}
+
+.criterion.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.criterion.plus {
+  background: rgba(74, 222, 128, 0.06);
+  border: 1px solid rgba(74, 222, 128, 0.2);
+}
+
+.criterion.minus {
+  background: rgba(248, 113, 113, 0.06);
+  border: 1px solid rgba(248, 113, 113, 0.2);
+}
+
+.criterion-sign {
+  font-size: 1.2rem;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.criterion-score {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: bold;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+
+.criterion.plus .criterion-score { color: var(--green); }
+.criterion.minus .criterion-score { color: var(--red); }
+
+/* ── Scala Not Even Wrong ── */
+.new-scale {
+  display: flex;
+  gap: 6px;
+  margin: 24px 0;
+  flex-wrap: wrap;
+}
+
+.new-scale-segment {
+  flex: 1;
+  min-width: 60px;
+  height: 48px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: bold;
+  position: relative;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.new-scale-segment:hover {
+  transform: scaleY(1.2);
+}
+
+.new-scale-segment.seg-1 { background: rgba(34, 211, 238, 0.3); }
+.new-scale-segment.seg-2 { background: rgba(251, 191, 36, 0.3); }
+.new-scale-segment.seg-3 { background: rgba(248, 113, 113, 0.3); }
+.new-scale-segment.seg-active { background: var(--red); color: #fff; box-shadow: 0 0 20px rgba(248, 113, 113, 0.6); }
+
+/* ============================================================
+   CONFETTI (canvas overlay)
+   ============================================================ */
+#confetti-canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  pointer-events: none;
+  z-index: 999;
+}
+
+/* ============================================================
+   NAVIGAZIONE PAGINE (footer)
+   ============================================================ */
+.page-nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 0 20px;
+  border-top: 1px solid var(--border);
+  margin-top: 60px;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.page-nav a {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--cyan);
+  text-decoration: none;
+  font-family: var(--font-mono);
+  font-size: 0.9rem;
+  padding: 10px 20px;
+  border: 1px solid rgba(34, 211, 238, 0.3);
+  border-radius: 6px;
+  transition: all 0.2s;
+}
+
+.page-nav a:hover {
+  background: rgba(34, 211, 238, 0.08);
+  box-shadow: var(--glow-c);
+}
+
+/* ============================================================
+   REVEAL ON SCROLL
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ============================================================
+   CONTATORE SATIRICO (pagina 3)
+   ============================================================ */
+.counter-display {
+  font-family: var(--font-mono);
+  font-size: clamp(3rem, 10vw, 6rem);
+  color: var(--gold);
+  text-align: center;
+  text-shadow: var(--glow-g);
+  line-height: 1;
+  margin: 16px 0;
+}
+
+.counter-box {
+  text-align: center;
+  background: var(--bg2);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 16px;
+  padding: 32px;
+  margin: 32px 0;
+}
+
+/* ── Claim box (pagina 3) ── */
+.claim-box {
+  background: var(--bg2);
+  border-radius: 12px;
+  padding: 28px;
+  margin-bottom: 20px;
+  border-left: 4px solid var(--violet);
+  opacity: 0;
+  transform: translateX(-20px);
+  transition: opacity 0.5s, transform 0.5s;
+}
+
+.claim-box.visible {
+  opacity: 1;
+  transform: translateX(0);
+}
+
+.claim-box .claim-icon {
+  font-size: 2rem;
+  margin-bottom: 10px;
+  display: block;
+  animation: iconExplode 0.5s ease-out;
+}
+
+@keyframes iconExplode {
+  0%   { transform: scale(0) rotate(-180deg); opacity: 0; }
+  70%  { transform: scale(1.3) rotate(10deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* ============================================================
+   VS BATTLE (pagina 4)
+   ============================================================ */
+.vs-header {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+  padding: 24px;
+  background: var(--bg2);
+  border-radius: 12px;
+}
+
+.vs-side {
+  flex: 1;
+  text-align: center;
+}
+
+.vs-side h3 {
+  font-size: 1.2rem;
+  margin: 0;
+}
+
+.vs-divider {
+  font-family: var(--font-mono);
+  font-size: 2rem;
+  font-weight: bold;
+  color: var(--red);
+  text-shadow: 0 0 20px rgba(248, 113, 113, 0.6);
+  position: relative;
+}
+
+.vs-divider::before,
+.vs-divider::after {
+  content: '⚡';
+  position: absolute;
+  font-size: 1rem;
+  animation: lightning 1s ease-in-out infinite alternate;
+}
+
+.vs-divider::before { left: -30px; top: 0; }
+.vs-divider::after  { right: -30px; top: 0; }
+
+@keyframes lightning {
+  0%   { opacity: 0.2; transform: scale(0.8); }
+  100% { opacity: 1;   transform: scale(1.2); }
+}
+
+/* ============================================================
+   GRAFICO (pagina 4)
+   ============================================================ */
+#ambition-canvas {
+  width: 100%;
+  max-width: 600px;
+  height: 350px;
+  margin: 0 auto;
+  display: block;
+}
+
+/* ============================================================
+   BADGE / TAG
+   ============================================================ */
+.badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+}
+
+.badge-violet { background: rgba(168, 85, 247, 0.2); color: var(--violet-l); border: 1px solid rgba(168, 85, 247, 0.4); }
+.badge-cyan   { background: rgba(34, 211, 238, 0.2); color: var(--cyan-l);   border: 1px solid rgba(34, 211, 238, 0.4); }
+.badge-gold   { background: rgba(251, 191, 36, 0.2); color: var(--gold-l);   border: 1px solid rgba(251, 191, 36, 0.4); }
+.badge-red    { background: rgba(248, 113, 113, 0.2); color: var(--red);     border: 1px solid rgba(248, 113, 113, 0.4); }
+.badge-green  { background: rgba(74, 222, 128, 0.2); color: var(--green);    border: 1px solid rgba(74, 222, 128, 0.4); }
+
+/* ============================================================
+   INFO BOX (ironico)
+   ============================================================ */
+.info-box {
+  background: rgba(251, 191, 36, 0.06);
+  border: 1px solid rgba(251, 191, 36, 0.3);
+  border-radius: 10px;
+  padding: 20px 24px;
+  margin: 24px 0;
+}
+
+.info-box .info-title {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: var(--gold);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 640px) {
+  nav {
+    padding: 8px 12px;
+    gap: 2px;
+  }
+
+  nav .nav-brand {
+    width: 100%;
+    margin-bottom: 4px;
+  }
+
+  nav a {
+    font-size: 0.68rem;
+    padding: 4px 7px;
+  }
+
+  .vs-header {
+    flex-direction: column;
+  }
+
+  .compare-table {
+    font-size: 0.78rem;
+  }
+
+  .compare-table th,
+  .compare-table td {
+    padding: 10px 10px;
+  }
+
+  .new-scale-segment {
+    height: 36px;
+    font-size: 0.65rem;
+  }
+}

@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚛️ L'Equazione Universale Ψ — Regalo Livolsi</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+<!-- ══════════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════════ -->
+<nav role="navigation" aria-label="Navigazione principale">
+  <span class="nav-brand">🔭 Regalo Livolsi</span>
+  <a href="index.html">01 Profeta</a>
+  <a href="p2-equazione.html" class="active" aria-current="page">02 Equazione</a>
+  <a href="p3-pretese.html">03 Pretese</a>
+  <a href="p4-confronti.html">04 Confronti</a>
+  <a href="p5-redflags.html">05 Red Flag</a>
+  <a href="p6-voto.html">06 Verdetto</a>
+</nav>
+
+<div id="content">
+
+  <!-- ── HERO ── -->
+  <section class="hero" style="min-height:50vh; padding-top:60px;" aria-labelledby="p2-title">
+    <p class="section-label">🧮 Formalismo Variazionale Quartico</p>
+    <h1 id="p2-title" class="gradient-title">
+      L'Equazione Universale Ψ
+    </h1>
+    <p style="font-size:1.1rem; color:var(--text-dim); max-width:600px; text-align:center;">
+      L'equazione che spiega tutto (senza parametri, senza scuse, senza previsioni falsificabili verificate)
+    </p>
+  </section>
+
+  <!-- ── L'EQUAZIONE ── -->
+  <section class="section" aria-labelledby="sec-eq">
+    <p class="section-label">📐 Il Cuore della Teoria</p>
+    <h2 id="sec-eq">🌟 L'Equazione Quartica di Livolsi</h2>
+    <p>
+      Tutto inizia da un unico funzionale variazionale. Livolsi ne prende la derivata funzionale
+      rispetto a <strong>Ψ†</strong> e la impone uguale a zero — tecnica standard in fisica teorica.
+      Il risultato è <em>questa bestia</em>:
+    </p>
+
+    <!-- Equazione con syntax highlight e animazione pulse -->
+    <div class="equation-box pulse" role="img" aria-label="Equazione fondamentale di Livolsi">
+      <div id="eq-container">
+        <!-- L'equazione viene iniettata da JS termine per termine -->
+        <span class="eq-delta">δ/δΨ†(x)</span>
+        <span class="eq-bracket">[ </span>
+        <span class="eq-sum" style="opacity:0; transition: opacity 0.5s;" id="term1">
+          Σ<sub>ij</sub> (Ψ†<sub>i</sub> Γ Ψ<sub>j</sub>)²
+        </span>
+        <span class="eq-lambda" style="opacity:0; transition: opacity 0.5s;" id="term2">
+          − λ₁ Σ<sub>i</sub> (Ψ†<sub>i</sub>Ψ<sub>i</sub> − 1)²
+        </span>
+        <span class="eq-trace" style="opacity:0; transition: opacity 0.5s;" id="term3">
+          − λ₂ Σ<sub>ijk</sub> Tr[Γ(Ψ<sub>i</sub>Ψ†<sub>j</sub> − Ψ<sub>k</sub>Ψ†<sub>i</sub>)]²
+        </span>
+        <span class="eq-bracket"> ] </span>
+        <span class="eq-zero" style="opacity:0; transition: opacity 0.5s;" id="term4">= 0</span>
+      </div>
+    </div>
+
+    <!-- Spiegazione termine per termine -->
+    <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));">
+      <div class="card reveal" tabindex="0">
+        <span style="color:var(--gold); font-family:var(--font-mono); font-size:0.85rem;">δ/δΨ†(x)</span>
+        <h3 style="margin-top:8px;">Derivata Funzionale</h3>
+        <p>Il meccanismo variazionale classico. Come il principio di minima azione, ma applicato a un campo quantistico.</p>
+      </div>
+      <div class="card reveal" tabindex="0">
+        <span style="color:#f472b6; font-family:var(--font-mono); font-size:0.85rem;">Σᵢⱼ (Ψ†ᵢ Γ Ψⱼ)²</span>
+        <h3 style="margin-top:8px;">Termine Quartico</h3>
+        <p>Interazione a quattro campi mediata da Γ (matrice di correlazione). La base strutturale del modello.</p>
+      </div>
+      <div class="card reveal" tabindex="0">
+        <span style="color:var(--red); font-family:var(--font-mono); font-size:0.85rem;">λ₁ Σᵢ (Ψ†ᵢΨᵢ − 1)²</span>
+        <h3 style="margin-top:8px;">Vincolo di Norma</h3>
+        <p>Penalizza le deviazioni dalla norma unitaria. Un modo compatto di imporre conservazione della norma.</p>
+      </div>
+      <div class="card reveal" tabindex="0">
+        <span style="color:var(--green); font-family:var(--font-mono); font-size:0.85rem;">λ₂ Tr[Γ(ΨΨ† − ΨΨ†)]²</span>
+        <h3 style="margin-top:8px;">Termine Ciclico</h3>
+        <p>Struttura Z₃ ciclica da cui, secondo Livolsi, emerge il gruppo SU(3) e il decadimento dei Kaoni.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── IN PRATICA ── -->
+  <section class="section reveal" aria-labelledby="sec-pratica">
+    <p class="section-label">💬 Per il Lettore</p>
+    <h2 id="sec-pratica">🤔 In Pratica, Cosa Significa?</h2>
+
+    <div class="info-box">
+      <p class="info-title">📖 Spiegazione per Non Fisici</p>
+      <p>
+        Immagina di voler costruire l'universo intero con un'unica formula. Livolsi prende un
+        <strong>funzionale</strong> (una funzione di funzioni), lo rende <em>quartico</em>
+        (ha termini elevati alla quarta potenza), e dice: "il minimo di questo oggetto è la realtà."
+      </p>
+      <p style="margin-bottom:0;">
+        È elegante? Sì. Funziona? Questa è la domanda da cento miliardi di dollar— ehm, di eV.
+      </p>
+    </div>
+
+    <blockquote class="quote-box">
+      "Da questo unico funzionale emergono senza postulati aggiuntivi: la simmetria di gauge,
+      la struttura di Lorentz, la massa delle particelle, e persino la costante di struttura fine α."
+      <cite>— Edoardo Livolsi (dal manifesto Ψ)</cite>
+    </blockquote>
+  </section>
+
+  <!-- ── SEI PILASTRI ── -->
+  <section class="section" aria-labelledby="sec-pilastri">
+    <p class="section-label">🏛️ I Fondamenti</p>
+    <h2 id="sec-pilastri">🗿 I Sei Pilastri della Teoria</h2>
+    <p>
+      Livolsi identifica sei <strong>invarianti fondamentali</strong> che emergono naturalmente
+      dal funzionale Ψ. Clicca su ciascuno per espandere la spiegazione.
+    </p>
+
+    <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+
+      <!-- Pilastro 1 -->
+      <div class="pillar-card pillar-1" tabindex="0" role="button" aria-expanded="false"
+           aria-controls="p1-detail" onclick="togglePillar(this)">
+        <span class="pillar-icon">⚖️</span>
+        <h3>1. Norma</h3>
+        <p>La norma del campo Ψ si conserva automaticamente.</p>
+        <div class="pillar-detail" id="p1-detail">
+          Il vincolo Ψ†Ψ = 1 è incorporato nel funzionale tramite il parametro λ₁.
+          Non è un postulato aggiunto: emerge come condizione di stazionarietà.
+          Fisicamente corrisponde alla conservazione della probabilità nella meccanica quantistica.
+          <span class="badge badge-violet" style="margin-top:8px; display:inline-block;">✓ Strutturalmente solido</span>
+        </div>
+      </div>
+
+      <!-- Pilastro 2 -->
+      <div class="pillar-card pillar-2" tabindex="0" role="button" aria-expanded="false"
+           aria-controls="p2-detail" onclick="togglePillar(this)">
+        <span class="pillar-icon">🔗</span>
+        <h3>2. Correlazione</h3>
+        <p>Correlazioni interne tra le componenti del campo Ψ.</p>
+        <div class="pillar-detail" id="p2-detail">
+          Il termine (Ψ†ᵢΓΨⱼ)² genera correlazioni tra componenti diverse del campo.
+          Livolsi interpreta Γ come "matrice universale di correlazione" da cui emergono
+          tutte le interazioni fondamentali. La scelta specifica di Γ non è però derivata:
+          viene postulata implicitamente.
+          <span class="badge badge-gold" style="margin-top:8px; display:inline-block;">⚠️ Γ non determinata</span>
+        </div>
+      </div>
+
+      <!-- Pilastro 3 -->
+      <div class="pillar-card pillar-3" tabindex="0" role="button" aria-expanded="false"
+           aria-controls="p3-detail" onclick="togglePillar(this)">
+        <span class="pillar-icon">🔄</span>
+        <h3>3. Simmetria</h3>
+        <p>Simmetrie emergenti dalla struttura variazionale.</p>
+        <div class="pillar-detail" id="p3-detail">
+          Livolsi sostiene che SU(3)×SU(2)×U(1) — il gruppo di gauge del Modello Standard —
+          emerge automaticamente dalla struttura del funzionale. In particolare la struttura
+          Z₃ ciclica del termine di traccia genererebbe SU(3). È un'idea interessante ma
+          non supportata da calcoli espliciti pubblicati.
+          <span class="badge badge-red" style="margin-top:8px; display:inline-block;">❌ Mancano i calcoli espliciti</span>
+        </div>
+      </div>
+
+      <!-- Pilastro 4 -->
+      <div class="pillar-card pillar-4" tabindex="0" role="button" aria-expanded="false"
+           aria-controls="p4-detail" onclick="togglePillar(this)">
+        <span class="pillar-icon">🌐</span>
+        <h3>4. Coerenza Globale</h3>
+        <p>Il campo Ψ è auto-consistente a livello globale.</p>
+        <div class="pillar-detail" id="p4-detail">
+          Il sistema risolve per sé stesso: le equazioni del moto del funzionale ammettono
+          soluzioni auto-consistenti. Livolsi chiama questo "Coerenza Globale" —
+          un termine evocativo ma non operativo in senso tecnico standard.
+          Corrisponde approssimativamente a: "le equazioni non sono banalmente contraddittorie."
+          <span class="badge badge-cyan" style="margin-top:8px; display:inline-block;">ℹ️ Tecnico ma vago</span>
+        </div>
+      </div>
+
+      <!-- Pilastro 5 -->
+      <div class="pillar-card pillar-5" tabindex="0" role="button" aria-expanded="false"
+           aria-controls="p5-detail" onclick="togglePillar(this)">
+        <span class="pillar-icon">🧲</span>
+        <h3>5. Invarianza di Gauge</h3>
+        <p>Emerge implicitamente, non è postulata.</p>
+        <div class="pillar-detail" id="p5-detail">
+          Questa è la pretesa più audace: che l'invarianza di gauge locale — fondamento di
+          tutta la fisica delle particelle — emerga automaticamente dal funzionale senza
+          essere inserita a mano. Nel Modello Standard viene invece postulata.
+          Se fosse vero sarebbe rivoluzionario. Per ora è un'affermazione senza dimostrazione pubblicata.
+          <span class="badge badge-red" style="margin-top:8px; display:inline-block;">❌ Affermazione straordinaria</span>
+        </div>
+      </div>
+
+      <!-- Pilastro 6 -->
+      <div class="pillar-card pillar-6" tabindex="0" role="button" aria-expanded="false"
+           aria-controls="p6-detail" onclick="togglePillar(this)">
+        <span class="pillar-icon">🚀</span>
+        <h3>6. Struttura Lorentziana</h3>
+        <p>Collegamento con SU(3)×SU(2)×U(1) e il gruppo di Lorentz.</p>
+        <div class="pillar-detail" id="p6-detail">
+          Il funzionale dovrebbe ricondurre alla struttura spaziotemporale di Minkowski
+          e ai gruppi di simmetria del Modello Standard. Livolsi cita questa come
+          "connessione con la fisica nota" ma non fornisce la procedura esplicita di riduzione.
+          Come arrivare dal funzionale Ψ alle 19 costanti del Modello Standard rimane oscuro.
+          <span class="badge badge-gold" style="margin-top:8px; display:inline-block;">⚠️ Riduzione non mostrata</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── FORMULA PROVOCATORIA ── -->
+  <section class="section reveal" aria-labelledby="sec-formula">
+    <p class="section-label">🎲 La Ciliegina sulla Torta</p>
+    <h2 id="sec-formula">✨ La Formula Più Audace: <code class="mono">1 Hz = 3α^(7/2)</code></h2>
+    <p>
+      Tra tutte le previsioni della teoria, questa è la più verificabile — il che la rende
+      anche la più interessante da esaminare.
+    </p>
+    <div class="equation-box" role="img" aria-label="Formula 1 Hz uguale a 3 alfa elevato a 7/2">
+      <span class="eq-delta">1 Hz</span>
+      <span style="color:var(--text);"> = </span>
+      <span class="eq-psi">3</span>
+      <span style="color:var(--text);"> × </span>
+      <span class="eq-gamma">α</span><sup class="eq-sum">(7/2)</sup>
+    </div>
+    <p>
+      Dove <strong>α ≈ 1/137.036</strong> è la costante di struttura fine.
+      Calcoliamo: 3 × (1/137.036)^3.5 ≈ 3 × 2.27 × 10⁻⁸ ≈ <strong>6.8 × 10⁻⁸</strong>.
+    </p>
+    <p>
+      Ma 1 Hz è... 1 Hz. Non è una costante adimensionale.
+      Confrontare Hz (che dipende dalla definizione del secondo) con α (adimensionale)
+      è dimensionalmente problematico, a meno di non specificare chiaramente il sistema di unità
+      e il meccanismo di riduzione — cosa che Livolsi non fa in modo esplicito.
+    </p>
+    <div class="info-box">
+      <p class="info-title">🔍 Nota critica</p>
+      <p style="margin:0;">
+        Una relazione del tipo "frequenza = funzione di costanti adimensionali" richiede
+        che la frequenza sia misurata in unità naturali (ℏ = c = 1). Senza specificarlo,
+        la formula dipende dalla scelta arbitraria del sistema di unità.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── NAVIGAZIONE PAGINE ── -->
+  <nav class="page-nav" aria-label="Navigazione tra pagine">
+    <a href="index.html" aria-label="Torna alla pagina precedente: Il Profeta">← Pagina 1: Il Profeta</a>
+    <span style="color:var(--text-dim); font-size:0.85rem;">Pagina 2 di 6</span>
+    <a href="p3-pretese.html" aria-label="Vai alla pagina successiva: Cosa Spiega">Pagina 3: Cosa Spiega →</a>
+  </nav>
+
+</div><!-- /#content -->
+
+<script src="main.js"></script>
+<script>
+  /* ── Particelle ── */
+  particleCanvas('particle-canvas');
+
+  /* ── Anima i termini dell'equazione uno per uno ── */
+  document.addEventListener('DOMContentLoaded', () => {
+    const terms = ['term1', 'term2', 'term3', 'term4'];
+    terms.forEach((id, i) => {
+      setTimeout(() => {
+        const el = document.getElementById(id);
+        if (el) el.style.opacity = '1';
+      }, 800 + i * 600);
+    });
+  });
+
+  /* ── Toggle pilastri (espandi/chiudi) ── */
+  function togglePillar(card) {
+    const isExpanded = card.classList.contains('expanded');
+    /* Chiudi tutti */
+    document.querySelectorAll('.pillar-card').forEach(c => {
+      c.classList.remove('expanded');
+      c.setAttribute('aria-expanded', 'false');
+    });
+    /* Apri quello cliccato (se non era già aperto) */
+    if (!isExpanded) {
+      card.classList.add('expanded');
+      card.setAttribute('aria-expanded', 'true');
+    }
+  }
+
+  /* Accessibilità: toggle con tasto Enter/Space */
+  document.querySelectorAll('.pillar-card').forEach(card => {
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        togglePillar(card);
+      }
+    });
+  });
+</script>
+
+</body>
+</html>

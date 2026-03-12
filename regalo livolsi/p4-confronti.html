@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>⚔️ Livolsi vs Il Mondo — Regalo Livolsi</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+<!-- ══════════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════════ -->
+<nav role="navigation" aria-label="Navigazione principale">
+  <span class="nav-brand">🔭 Regalo Livolsi</span>
+  <a href="index.html">01 Profeta</a>
+  <a href="p2-equazione.html">02 Equazione</a>
+  <a href="p3-pretese.html">03 Pretese</a>
+  <a href="p4-confronti.html" class="active" aria-current="page">04 Confronti</a>
+  <a href="p5-redflags.html">05 Red Flag</a>
+  <a href="p6-voto.html">06 Verdetto</a>
+</nav>
+
+<div id="content">
+
+  <!-- ── HERO ── -->
+  <section class="hero" style="min-height:40vh; padding-top:60px;" aria-labelledby="p4-title">
+    <p class="section-label">⚔️ Scontro Epocale</p>
+    <h1 id="p4-title" class="gradient-title">
+      L'Arena:<br>Livolsi vs La Fisica Mainstream
+    </h1>
+    <p style="font-size:1.05rem; color:var(--text-dim); max-width:620px; text-align:center;">
+      Un confronto onesto tra la teoria Ψ e le teorie fisiche consolidate.
+      Senza esclusione di colpi (analitici).
+    </p>
+  </section>
+
+  <!-- ── VS HEADER ── -->
+  <section class="section" aria-label="Presentazione dello scontro">
+    <div class="vs-header" role="region" aria-label="Contendenti">
+      <div class="vs-side">
+        <span style="font-size:2.5rem;" aria-hidden="true">🏛️</span>
+        <h3 style="color:var(--cyan);">Fisica Standard</h3>
+        <p style="color:var(--text-dim); font-size:0.85rem;">
+          Modello Standard · Relatività Generale<br>
+          ~100 anni di esperimenti · ~10,000 scienziati
+        </p>
+        <span class="badge badge-cyan">Peer Review</span>
+      </div>
+      <div class="vs-divider" aria-hidden="true">VS</div>
+      <div class="vs-side">
+        <span style="font-size:2.5rem;" aria-hidden="true">🔮</span>
+        <h3 style="color:var(--violet);">Livolsi Ψ</h3>
+        <p style="color:var(--text-dim); font-size:0.85rem;">
+          Funzionale Quartico Variazionale<br>
+          1 autore · Praga · Zero parametri liberi
+        </p>
+        <span class="badge badge-violet">PhilArchive / Zenodo</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TABELLA COMPARATIVA ── -->
+  <section class="section" aria-labelledby="sec-table">
+    <p class="section-label">📊 Il Confronto Punto per Punto</p>
+    <h2 id="sec-table">📋 Tabella Comparativa Animata</h2>
+    <p>Le righe appaiono una per una — perché il dramma scientifico merita il suo ritmo.</p>
+
+    <div style="overflow-x:auto;">
+      <table class="compare-table" role="table" aria-label="Confronto tra fisica standard e teoria di Livolsi">
+        <thead>
+          <tr>
+            <th scope="col" style="color:var(--gold);">Argomento</th>
+            <th scope="col">🏛️ Fisica Standard</th>
+            <th scope="col">🔮 Livolsi Ψ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Velocità della luce</td>
+            <td>Costante fondamentale postulata<br><code class="mono" style="color:var(--cyan-l);">c = 299,792,458 m/s</code></td>
+            <td>"Rapporto spettrale inevitabile"<br><code class="mono" style="color:var(--violet-l);">c = L<sub>em</sub> / T<sub>em</sub></code></td>
+          </tr>
+          <tr>
+            <td>Bosone di Higgs</td>
+            <td>Particella fondamentale del Meccanismo di Higgs. Massa misurata ≈ 125.1 GeV</td>
+            <td>Prima eccitazione del funzionale quartico Ψ. Massa: calcolata (valore non pubblicato)</td>
+          </tr>
+          <tr>
+            <td>Massa delle particelle</td>
+            <td>19 parametri liberi misurati sperimentalmente nel Modello Standard</td>
+            <td>Autovalori dell'Hessiana del funzionale — zero parametri liberi (se fosse vero)</td>
+          </tr>
+          <tr>
+            <td>Parametri liberi</td>
+            <td>~19 nel Modello Standard<br>(masse, angoli CKM, costanti di accoppiamento)</td>
+            <td><strong style="color:var(--violet);">0 (zero!)</strong><br>Tutto emerge dal funzionale</td>
+          </tr>
+          <tr>
+            <td>Gravità</td>
+            <td>Relatività Generale (GR) per la macroscala; Quantum Gravity unresolved</td>
+            <td>Emerge da Ψ come effettiva geometria dello spaziotempo — unificazione inclusa</td>
+          </tr>
+          <tr>
+            <td>Invarianza di Gauge</td>
+            <td>Postulata: SU(3)×SU(2)×U(1) è il punto di partenza, non derivato</td>
+            <td>Emerge implicitamente dal funzionale — non postulata (affermazione senza dimostrazione)</td>
+          </tr>
+          <tr>
+            <td>Validazione sperimentale</td>
+            <td>Migliaia di esperimenti in 100+ anni. Precisione fino a 12 cifre significative</td>
+            <td><em style="color:var(--text-dim);">In attesa...</em> 🕐</td>
+          </tr>
+          <tr>
+            <td>Pubblicazione</td>
+            <td>Riviste peer-reviewed (Physical Review, JHEP, Nature Physics...)</td>
+            <td>PhilArchive (filosofia), Zenodo (open access self-upload), JHEPGC (in revisione)</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ── CERN ── -->
+  <section class="section reveal" aria-labelledby="sec-cern">
+    <p class="section-label">🔬 Il Caso Specifico</p>
+    <h2 id="sec-cern">⚡ Livolsi vs. il CERN</h2>
+    <p>
+      La citazione più provocatoria della teoria Ψ riguarda direttamente la scoperta
+      del bosone di Higgs nel 2012 — uno dei momenti più celebrati nella storia della fisica.
+    </p>
+
+    <blockquote class="quote-box">
+      "Il CERN ha trovato la prima eccitazione del funzionale Ψ quartico.
+      Non lo sa ancora."
+      <cite>— Livolsi (parafrasi dal manifesto Ψ)</cite>
+    </blockquote>
+
+    <div class="card-grid" style="grid-template-columns:1fr 1fr;">
+      <div class="card" tabindex="0">
+        <span style="font-size:2rem;" aria-hidden="true">🏛️</span>
+        <h3 style="color:var(--cyan);">Interpretazione del CERN</h3>
+        <p>La particella a 125.1 GeV è il bosone di Higgs del Meccanismo di Higgs–Brout–Englert,
+           predetto nel 1964, confermato con precisione straordinaria tramite milioni di decadimenti
+           analizzati da ATLAS e CMS.</p>
+        <span class="badge badge-cyan">Premio Nobel 2013</span>
+      </div>
+      <div class="card" tabindex="0">
+        <span style="font-size:2rem;" aria-hidden="true">🔮</span>
+        <h3 style="color:var(--violet);">Interpretazione Livolsi</h3>
+        <p>La stessa particella è la prima eccitazione del funzionale Ψ. La struttura di campo
+           sottostante è diversa. La fisica che emerge è più ricca. Il valore di 125.1 GeV
+           dovrebbe essere calcolabile da Ψ. Il calcolo non è stato pubblicato.</p>
+        <span class="badge badge-red">Calcolo mancante</span>
+      </div>
+    </div>
+
+    <div class="info-box" style="margin-top:24px;">
+      <p class="info-title">📐 La sfida concreta</p>
+      <p style="margin:0;">
+        Per contestare l'interpretazione del CERN, Livolsi dovrebbe: (1) calcolare
+        la massa del bosone Ψ dal funzionale, (2) mostrare che è ≈125.1 GeV,
+        (3) predire un osservabile che differisca dal Modello Standard entro le
+        precisioni sperimentali di LHC. Nessuno di questi passaggi è stato completato.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── GRAFICO AMBIZIONE vs COMPLESSITÀ ── -->
+  <section class="section" aria-labelledby="sec-chart">
+    <p class="section-label">📈 Analisi Quantitativa</p>
+    <h2 id="sec-chart">📊 Complessità vs Pretese: Il Grafico</h2>
+    <p>
+      Una visualizzazione del rapporto tra complessità matematica e ampiezza delle pretese
+      per le principali teorie fisiche. La posizione di Livolsi è... istruttiva.
+    </p>
+
+    <canvas id="ambition-canvas" aria-label="Grafico Complessità matematica vs Ampiezza delle pretese"
+            role="img" style="border-radius:12px; border:1px solid var(--border);"></canvas>
+
+    <p style="text-align:center; color:var(--text-dim); font-size:0.85rem; margin-top:12px;">
+      Posizione ideale: alta complessità matematica + pretese moderate e verificate.
+      La zona nord-ovest (bassa complessità, alte pretese) è territorio a rischio.
+    </p>
+  </section>
+
+  <!-- ── BARRA SFIDA AL CERN ── -->
+  <section class="section reveal" aria-labelledby="sec-cern-bar">
+    <p class="section-label">💪 Metriche di Audacia</p>
+    <h2 id="sec-cern-bar">🎯 Livello di Sfida Agli Enti Consolidati</h2>
+
+    <div class="progress-container">
+      <div class="progress-label">
+        <span>Sfida al CERN</span>
+        <span>95%</span>
+      </div>
+      <div class="progress-bar" style="height:16px;">
+        <div class="progress-fill gold" data-target="95" role="progressbar"
+             aria-valuenow="95" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-label">
+        <span>Sfida ad Einstein</span>
+        <span>88%</span>
+      </div>
+      <div class="progress-bar" style="height:16px;">
+        <div class="progress-fill gold" data-target="88" role="progressbar"
+             aria-valuenow="88" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-label">
+        <span>Sfida all'Intero Modello Standard</span>
+        <span>100%</span>
+      </div>
+      <div class="progress-bar" style="height:16px;">
+        <div class="progress-fill gold" data-target="100" role="progressbar"
+             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+    </div>
+
+    <div class="progress-container">
+      <div class="progress-label">
+        <span>Esperimenti di supporto indipendenti</span>
+        <span>0%</span>
+      </div>
+      <div class="progress-bar" style="height:16px;">
+        <div class="progress-fill" data-target="0"
+             style="background: var(--red);" role="progressbar"
+             aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── COSA DICE LA COMUNITÀ ── -->
+  <section class="section reveal" aria-labelledby="sec-community">
+    <p class="section-label">🌐 Ricezione</p>
+    <h2 id="sec-community">📬 La Risposta della Comunità Scientifica</h2>
+    <p>
+      Le teorie radicali hanno precedenti storici — da Wegener con la deriva dei continenti
+      a Boltzmann con la meccanica statistica, entrambi ignorati inizialmente.
+      Ma c'è una differenza cruciale:
+    </p>
+    <div class="card-grid" style="grid-template-columns:1fr 1fr;">
+      <div class="card" tabindex="0">
+        <span style="font-size:2rem;" aria-hidden="true">✅</span>
+        <h3 style="color:var(--green);">Teorie Rivoluzionarie Vere</h3>
+        <ul style="color:var(--text-dim); padding-left:20px; margin-top:8px;">
+          <li>Fanno previsioni specifiche</li>
+          <li>Le previsioni sono verificate sperimentalmente</li>
+          <li>La matematica è esplicita e verificabile</li>
+          <li>La comunità riesce a replicare i calcoli</li>
+        </ul>
+      </div>
+      <div class="card" tabindex="0">
+        <span style="font-size:2rem;" aria-hidden="true">🚩</span>
+        <h3 style="color:var(--red);">Teoria Ψ (ad oggi)</h3>
+        <ul style="color:var(--text-dim); padding-left:20px; margin-top:8px;">
+          <li>Pretese generali senza calcoli numerici</li>
+          <li>Nessuna previsione indipendentemente verificata</li>
+          <li>Matematica parzialmente esplicita</li>
+          <li>Nessuna replica pubblica dei calcoli</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NAVIGAZIONE PAGINE ── -->
+  <nav class="page-nav" aria-label="Navigazione tra pagine">
+    <a href="p3-pretese.html" aria-label="Torna alla pagina precedente: Cosa Spiega">← Pagina 3: Cosa Spiega</a>
+    <span style="color:var(--text-dim); font-size:0.85rem;">Pagina 4 di 6</span>
+    <a href="p5-redflags.html" aria-label="Vai alla pagina successiva: Red Flag Parade">Pagina 5: Red Flag →</a>
+  </nav>
+
+</div><!-- /#content -->
+
+<script src="main.js"></script>
+<script>
+  /* ── Particelle ── */
+  particleCanvas('particle-canvas');
+
+  /* ── Grafico ambizione/complessità ── */
+  document.addEventListener('DOMContentLoaded', () => {
+    /* Osserva quando il canvas entra nel viewport */
+    const chartCanvas = document.getElementById('ambition-canvas');
+    if (chartCanvas) {
+      const chartObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            drawAmbitionChart('ambition-canvas');
+            chartObserver.disconnect();
+          }
+        });
+      }, { threshold: 0.3 });
+      chartObserver.observe(chartCanvas);
+    }
+  });
+</script>
+
+</body>
+</html>
