@@ -462,7 +462,7 @@ function ph3(){
   // spawn new particle
   if(pT%15===0 && _particles.length<60){
     const targetY=H*0.5+H*0.3*interferenceY();
-    _particles.push({x:gunX,y:H*0.5,tx:screenX,ty:targetY,prog:0,done:false,dy:targetY});
+    _particles.push({x:gunX,y:H*0.5,tx:screenX,ty:targetY,prog:0,done:false});
   }
 
   // draw interference pattern on screen (dots)
