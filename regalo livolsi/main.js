@@ -39,7 +39,7 @@ function particleCanvas(canvasId) {
   }
 
   /* Crea N particelle con proprietà casuali */
-  function createParticles(n = 120) {
+  function createParticles(n = 80) {
     particles = Array.from({ length: n }, () => ({
       x:     Math.random() * W,
       y:     Math.random() * H,
@@ -134,7 +134,7 @@ function revealOnScroll() {
   const elements = document.querySelectorAll('.reveal, .timeline-item, .pillar-card, .claim-box, .redflag-item, .criterion');
 
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
+    entries.forEach((entry) => {
       if (entry.isIntersecting) {
         /* Piccolo delay progressivo per elementi multipli */
         const delay = entry.target.dataset.delay || 0;
