@@ -128,6 +128,7 @@
   <button class="phase-btn" onclick="setPhase(3)">④ Particelle</button>
   <button class="phase-btn" onclick="setPhase(4)">⑤ Atomi</button>
   <button class="phase-btn" onclick="setPhase(5)">⑥ Materia barionica</button>
+  <button class="phase-btn" id="btn-pause" onclick="togglePause()">⏸ Pausa</button>
 </div>
 
 <script>
@@ -686,6 +687,11 @@ function arrow(x1,y1,x2,y2,col){
 }
 
 // ─── LOOP PRINCIPALE ────────────────────────────────────
+let paused = false;
+function togglePause(){
+  paused = !paused;
+  document.getElementById('btn-pause').textContent = paused ? '▶ Riprendi' : '⏸ Pausa';
+}
 function draw() {
   ctx.clearRect(0,0,W,H);
 
@@ -716,11 +722,11 @@ function draw() {
     case 5: drawPhase5(); break;
   }
 
-  t += 0.025;
-  phaseT++;
+  t += 0.007;
+  if(!paused) phaseT++;
 
   // avanzamento automatico
-  if(phaseT > 420 && phase < 5){
+  if(phaseT > 1800 && phase < 5 && !paused){
     setPhase(phase+1);
   }
 

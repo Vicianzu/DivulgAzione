@@ -63,6 +63,7 @@ body { background:#000010; color:#e2e8f0; font-family:'Georgia',serif; overflow:
   <button class="btn"        onclick="go(3)">④ Near-horizon limit</button>
   <button class="btn"        onclick="go(4)">⑤ Geometria AdS₅×S⁵</button>
   <button class="btn"        onclick="go(5)">⑥ Dualità olografica</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()">⏸ Pausa</button>
 </div>
 
 <script>
@@ -687,14 +688,19 @@ function drawClosedStr(ox,oy,r,col,mode){
 }
 
 // ─── LOOP ─────────────────────────────────────────────────
+let paused = false;
+function togglePause(){
+  paused = !paused;
+  document.getElementById('btn-pause').textContent = paused ? '▶ Riprendi' : '⏸ Pausa';
+}
 function draw(){
   c.clearRect(0,0,W,H);bgDraw();stars();
   switch(ph){
     case 0:ph0();break;case 1:ph1();break;case 2:ph2();break;
     case 3:ph3();break;case 4:ph4();break;case 5:ph5();break;
   }
-  T+=0.022;pT++;
-  if(pT>560&&ph<5)go(ph+1);
+  T+=0.007;if(!paused)pT++;
+  if(pT>1800&&ph<5&&!paused)go(ph+1);
   requestAnimationFrame(draw);
 }
 go(0);draw();
