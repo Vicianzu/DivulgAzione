@@ -1,1 +1,852 @@
-<!DOCTYPE html>\n<html lang="it">\n<head>\n    <meta charset="UTF-8">\n    <meta name="viewport" content="width=device-width, initial-scale=1.0">\n    <title>Old quantum theory or Quantum Mechanics: a look at the spectrum of the hydrogen atom</title>\n    <style>\n        body {\n            margin: 0;\n            font-family: Arial, sans-serif;\n            background-color: #001f3f;\n            color: #fff;\n            font-size: 18px;\n        }\n        .phase {\n            display: none;\n            padding: 20px;\n        }\n        .active {\n            display: block;\n        }\n        .nav-buttons {\n            display: flex;\n            justify-content: center;\n            margin-top: 20px;\n        }\n        .nav-button {\n            padding: 10px 20px;\n            background-color: #3D9970;\n            color: #fff;\n            border: none;\n            cursor: pointer;\n            margin: 0 10px;\n        }\n        footer {\n            text-align: center;\n            margin-top: 50px;\n            font-size: 14px;\n        }\n    </style>\n</head>\n<body>\n\n    <div class="phase active" id="phase1">\n        <h1>1. Contesto spettro idrogeno</h1>\n        <p>Dettagli sul contesto dello spettro idrogeno...</p>\n    </div>\n    <div class="phase" id="phase2">\n        <h1>2. Schrödinger setup</h1>\n        <p>Descrizione dell'installazione di Schrödinger...</p>\n    </div>\n    <div class="phase" id="phase3">\n        <h1>3. Soluzione 1S e ruolo di ψ(r)=exp(-r/a0)</h1>\n        <p>Spiegazione della soluzione 1S...</p>\n    </div>\n    <div class="phase" id="phase4">\n        <h1>4. Separazione variabili e armoniche sferiche</h1>\n        <p>Discussione sulla separazione delle variabili...</p>\n    </div>\n    <div class="phase" id="phase5">\n        <h1>5. Laguerre e quantizzazione dei livelli En∝-1/n^2</h1>\n        <p>Panoramica su Laguerre e quantizzazione...</p>\n    </div>\n    <div class="phase" id="phase6">\n        <h1>6. Vecchia teoria quantistica: Bohr/de Broglie e condizioni di quantizzazione</h1>\n        <p>Confronto tra le teorie di Bohr e de Broglie...</p>\n    </div>\n    <div class="phase" id="phase7">\n        <h1>7. Confronto visivo: orbita vs densità di probabilità</h1>\n        <p>Visualizzazione dell'orbita e densità di probabilità...</p>\n    </div>\n    <div class="phase" id="phase8">\n        <h1>8. Tesi dell'autore sulla momentum substitution 1D vs multidimensionale</h1>\n        <p>Discussione sulla tesi dell'autore...</p>\n    </div>\n    <div class="phase" id="phase9">\n        <h1>9. Sintesi e takeaway</h1>\n        <p>Riassunto delle informazioni trattate...</p>\n    </div>\n\n    <div class="nav-buttons">\n        <button class="nav-button" onclick="showPhase(1)">01</button>\n        <button class="nav-button" onclick="showPhase(2)">02</button>\n        <button class="nav-button" onclick="showPhase(3)">03</button>\n        <button class="nav-button" onclick="showPhase(4)">04</button>\n        <button class="nav-button" onclick="showPhase(5)">05</button>\n        <button class="nav-button" onclick="showPhase(6)">06</button>\n        <button class="nav-button" onclick="showPhase(7)">07</button>\n        <button class="nav-button" onclick="showPhase(8)">08</button>\n        <button class="nav-button" onclick="showPhase(9)">09</button>\n    </div>\n\n    <footer>\n        <p>Attribution: Jorma Jormakka</p>\n    </footer>\n\n    <script>\n        function showPhase(phase) {\n            const phases = document.querySelectorAll('.phase');\n            phases.forEach(p => p.classList.remove('active'));\n            document.getElementById('phase' + phase).classList.add('active');\n        }\n    </script>\n\n</body>\n</html>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Old quantum theory or Quantum Mechanics: a look at the spectrum of the hydrogen atom</title>
+<style>
+/* ── Reset ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #000d1a;
+  color: #e2e8f0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 18px;
+  line-height: 1.75;
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* ── Canvas background ── */
+#canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+}
+
+/* ── Top UI bar ── */
+#ui {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  background: rgba(0, 8, 20, 0.96);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+  z-index: 200;
+  gap: 10px;
+}
+
+#ui-title {
+  font-size: 11px;
+  color: #0ea5e9;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+#ui-phase {
+  font-size: 12px;
+  color: #94a3b8;
+  text-align: center;
+  flex: 1;
+  line-height: 1.4;
+  padding: 0 8px;
+}
+
+#ui-badge {
+  background: #0d9488;
+  color: #f0fdfa;
+  font-size: 10px;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: 1px;
+}
+
+/* ── Left text panel ── */
+#panel {
+  position: fixed;
+  top: 52px;
+  left: 0;
+  width: min(610px, 46vw);
+  height: calc(100vh - 52px - 52px);
+  overflow-y: auto;
+  z-index: 100;
+  padding: 32px 36px 28px;
+  background: rgba(0, 8, 20, 0.91);
+  border-right: 1px solid rgba(14, 165, 233, 0.13);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(14, 165, 233, 0.3) transparent;
+}
+
+#panel::-webkit-scrollbar { width: 4px; }
+#panel::-webkit-scrollbar-track { background: transparent; }
+#panel::-webkit-scrollbar-thumb { background: rgba(14, 165, 233, 0.3); border-radius: 2px; }
+
+/* ── Phase content ── */
+.phase-content { display: none; }
+.phase-content.active { display: block; }
+
+.phase-tag {
+  font-size: 10px;
+  font-family: 'Courier New', monospace;
+  color: #0d9488;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.phase-title {
+  font-size: 1.45rem;
+  font-weight: normal;
+  color: #e0f2fe;
+  line-height: 1.3;
+  margin-bottom: 20px;
+  letter-spacing: 0.01em;
+}
+
+.phase-body {
+  font-size: 1rem;
+  color: #cbd5e1;
+  line-height: 1.8;
+  max-width: 62ch;
+}
+
+.phase-body p { margin-bottom: 1em; }
+.phase-body p:last-child { margin-bottom: 0; }
+
+.phase-body ul {
+  margin: 0.7em 0 0.9em 1.4em;
+  line-height: 2;
+}
+
+.formula {
+  font-family: 'Courier New', monospace;
+  font-size: 0.88rem;
+  color: #7dd3fc;
+  background: rgba(14, 165, 233, 0.07);
+  padding: 11px 16px;
+  border-left: 2px solid #0ea5e9;
+  border-radius: 0 6px 6px 0;
+  margin: 14px 0;
+  display: block;
+  line-height: 1.65;
+  white-space: pre-line;
+  overflow-x: auto;
+}
+
+.hl { color: #38bdf8; }
+.am { color: #fbbf24; }
+.gr { color: #4ade80; }
+
+.note {
+  font-size: 0.82rem;
+  color: #4a6080;
+  font-style: italic;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(14, 165, 233, 0.1);
+  line-height: 1.6;
+}
+
+/* ── Bottom navigation ── */
+#bottom {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 10px;
+  background: rgba(0, 8, 20, 0.96);
+  border-top: 1px solid rgba(14, 165, 233, 0.2);
+  z-index: 200;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 5px 13px;
+  border: 1px solid rgba(14, 165, 233, 0.28);
+  background: rgba(14, 165, 233, 0.06);
+  color: #7dd3fc;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+  transition: background 0.22s, border-color 0.22s, color 0.22s, box-shadow 0.22s;
+  outline: none;
+}
+
+.btn:hover {
+  background: rgba(14, 165, 233, 0.18);
+  border-color: #0ea5e9;
+  color: #e0f2fe;
+}
+
+.btn.active {
+  background: rgba(14, 165, 233, 0.22);
+  border-color: #38bdf8;
+  color: #e0f2fe;
+  box-shadow: 0 0 10px -3px #0ea5e9;
+}
+
+.btn:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 2px;
+}
+
+#btn-pause {
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.06);
+  margin-left: 8px;
+}
+
+#btn-pause:hover {
+  background: rgba(245, 158, 11, 0.18);
+  border-color: #f59e0b;
+  color: #fef3c7;
+}
+
+/* ── Mobile layout ── */
+@media (max-width: 820px) {
+  body { overflow-y: auto; }
+
+  #canvas { position: fixed; }
+
+  #panel {
+    position: relative;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid rgba(14, 165, 233, 0.15);
+    height: auto;
+    max-height: 58vh;
+    background: rgba(0, 8, 20, 0.94);
+    padding: 20px 18px 16px;
+  }
+
+  #ui-title { display: none; }
+  #ui-phase { text-align: left; }
+
+  .phase-body { max-width: 100%; }
+
+  #bottom { gap: 4px; }
+  .btn { padding: 4px 10px; font-size: 11px; }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="canvas" aria-hidden="true"></canvas>
+
+<!-- Top UI bar -->
+<div id="ui" role="banner">
+  <div id="ui-title" aria-label="DivulgAzione sezione viXra">DivulgAzione · viXra</div>
+  <div id="ui-phase" aria-live="polite"></div>
+  <div id="ui-badge">viXra · 9 fasi</div>
+</div>
+
+<!-- Left text panel -->
+<main id="panel" role="main" aria-label="Contenuto della fase corrente" tabindex="-1">
+
+  <!-- Phase 01 -->
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">Fase 01 — Contesto</div>
+    <h1 class="phase-title">Spettro dell'idrogeno: la prova del nove della fisica quantistica</h1>
+    <div class="phase-body">
+      <p>L'atomo di idrogeno è il sistema fisico più semplice che esista: un protone e un elettrone, tenuti insieme dall'interazione coulombiana. Eppure per decenni ha rappresentato il banco di prova più severo per ogni teoria della struttura della materia.</p>
+      <p>Quando un elettrone transita da un livello energetico più alto a uno più basso emette un fotone con frequenza ben precisa. L'insieme di queste frequenze forma lo <span class="hl">spettro di emissione dell'idrogeno</span>: righe nette e misurabili con grande accuratezza, che qualunque teoria quantistica deve saper riprodurre.</p>
+      <p>Il preprint di Jorma Jormakka (<em>viXra:2603.0063</em>, 2026) muove da una domanda semplice: la <span class="hl">vecchia teoria quantistica</span> (Bohr 1913, de Broglie 1924) e la <span class="hl">meccanica quantistica</span> di Schrödinger (1926) arrivano allo stesso risultato percorrendo strade molto diverse. Cosa ci insegna questo confronto?</p>
+      <p>Nelle prossime fasi esploreremo entrambi i percorsi: la trattazione moderna con l'equazione di Schrödinger, poi l'approccio semiclassico di Bohr e de Broglie, e infine la tesi specifica dell'autore sul ruolo della sostituzione del momento angolare.</p>
+      <span class="formula">Eₙ = −13.6 eV / n²     n = 1, 2, 3, …</span>
+      <p class="note">Visualizzazione: scala dei livelli energetici dell'idrogeno per n = 1…6. La spaziatura decresce come 1/n², addensandosi verso il limite di ionizzazione E = 0. Il punto luminoso indica la transizione con emissione di fotone (in giallo).</p>
+    </div>
+  </div>
+
+  <!-- Phase 02 -->
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">Fase 02 — Setup QM</div>
+    <h1 class="phase-title">L'equazione di Schrödinger per l'idrogeno</h1>
+    <div class="phase-body">
+      <p>La meccanica quantistica descrive l'elettrone nell'atomo di idrogeno tramite una <span class="hl">funzione d'onda</span> ψ(r,θ,φ), soluzione dell'equazione di Schrödinger stazionaria:</p>
+      <span class="formula">Ĥ ψ = E ψ</span>
+      <p>L'operatore hamiltoniano Ĥ include l'energia cinetica (tramite il laplaciano ∇²) e l'energia potenziale coulombiana V(r):</p>
+      <span class="formula">Ĥ = −(ℏ²/2mₑ) ∇² + V(r)
+V(r) = −e²/(4πε₀r)</span>
+      <p>In coordinate sferiche (r, θ, φ), l'operatore ∇² si separa in una parte radiale e una angolare. Questo è cruciale: il problema tridimensionale si scompone in equazioni più semplici, ciascuna trattabile separatamente.</p>
+      <p>La funzione d'onda ψ descrive la <span class="hl">densità di probabilità</span> di trovare l'elettrone in un dato punto dello spazio: |ψ(r,θ,φ)|² dV è la probabilità di trovarlo nel volumetto dV attorno a (r,θ,φ).</p>
+      <p>L'energia E è un parametro che può assumere solo valori <span class="am">discreti</span> — i livelli energetici — determinati dalle condizioni di regolarità della funzione d'onda.</p>
+      <p class="note">Visualizzazione: forme stilizzate degli orbitali s, p, d come sezioni polari degli armoniche sferiche |Y_l^m(θ)|. Le tre colonne mostrano l = 0, 1, 2.</p>
+    </div>
+  </div>
+
+  <!-- Phase 03 -->
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">Fase 03 — Stato fondamentale</div>
+    <h1 class="phase-title">Lo stato 1s e il raggio di Bohr</h1>
+    <div class="phase-body">
+      <p>Lo stato fondamentale dell'idrogeno (n = 1, l = 0, m = 0 — detto <span class="hl">1s</span>) ha la funzione d'onda più semplice: non dipende da θ né da φ, ma solo da r.</p>
+      <span class="formula">ψ₁ₛ(r) = (1/√π) · (1/a₀)^(3/2) · exp(−r/a₀)</span>
+      <p>La costante <span class="hl">a₀</span> è il <em>raggio di Bohr</em>:</p>
+      <span class="formula">a₀ = ℏ²/(mₑ e²) ≈ 0.529 Å</span>
+      <p>Il raggio di Bohr fissa la scala di lunghezza caratteristica dell'atomo. La densità di probabilità radiale</p>
+      <span class="formula">P(r) = 4πr² |ψ|² = (4/a₀³) r² exp(−2r/a₀)</span>
+      <p>ha il suo massimo esattamente in <span class="am">r = a₀</span>, che coincide con il raggio dell'orbita di Bohr per n = 1.</p>
+      <p>La forma esponenziale exp(−r/a₀) non viene assunta arbitrariamente: emerge come unica soluzione normalizzabile dell'equazione radiale per n = 1. Per n &gt; 1 la struttura è più complessa: compaiono polinomi radiali che introducono <em>nodi</em> nella funzione d'onda.</p>
+      <p class="note">Visualizzazione: densità radiale P(r) per gli stati 1s (blu) e 2s (verde). Le linee verticali tratteggiate indicano i raggi di Bohr corrispondenti (a₀ e 4a₀).</p>
+    </div>
+  </div>
+
+  <!-- Phase 04 -->
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">Fase 04 — Separazione variabili</div>
+    <h1 class="phase-title">Separazione delle variabili e armoniche sferiche</h1>
+    <div class="phase-body">
+      <p>La chiave della soluzione esatta è la <span class="hl">separazione delle variabili</span>: si cerca ψ nella forma prodotto di una parte radiale e una parte angolare.</p>
+      <span class="formula">ψ(r,θ,φ) = R_{nl}(r) · Y_l^m(θ,φ)</span>
+      <p>Le <span class="hl">armoniche sferiche</span> Y_l^m(θ,φ) sono autofunzioni dell'operatore di momento angolare L̂². Dipendono da due numeri interi:</p>
+      <ul>
+        <li><strong class="hl">l</strong> — numero quantico angolare (l = 0, 1, …, n−1)</li>
+        <li><strong class="hl">m</strong> — numero quantico magnetico (m = −l, …, 0, …, +l)</li>
+      </ul>
+      <p>Il numero quantico principale <strong class="am">n</strong> (n = 1, 2, 3, …) determina il livello energetico. I tre numeri quantici insieme identificano univocamente ogni stato dell'elettrone.</p>
+      <p>La parte angolare Y_l^m descrive la <em>forma</em> dell'orbitale nello spazio: sferica per l = 0 (orbitali s), a doppio lobo per l = 1 (orbitali p), a quattro lobi per l = 2 (orbitali d).</p>
+      <span class="formula">L̂² Y_l^m = ℏ² l(l+1) Y_l^m
+L̂_z Y_l^m = ℏm · Y_l^m</span>
+      <p class="note">La separazione funziona perché V(r) dipende solo da r: il potenziale è sfericalmente simmetrico e il momento angolare è una costante del moto.</p>
+    </div>
+  </div>
+
+  <!-- Phase 05 -->
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">Fase 05 — Livelli energetici</div>
+    <h1 class="phase-title">Polinomi di Laguerre e la scala dei livelli</h1>
+    <div class="phase-body">
+      <p>Una volta separata la parte angolare, l'equazione radiale per R_{nl}(r) si risolve imponendo la normalizzabilità di ψ. Le soluzioni regolari si esprimono tramite i <span class="hl">polinomi di Laguerre generalizzati</span> L_{n−l−1}^{2l+1}:</p>
+      <span class="formula">R_{nl}(r) ∝ (r/a₀)^l · exp(−r/na₀) · L_{n−l−1}^{2l+1}(2r/na₀)</span>
+      <p>La normalizzabilità impone che il polinomio abbia grado finito (n − l − 1 ≥ 0), il che costringe n a essere un intero positivo. Da questa condizione emergono i livelli energetici:</p>
+      <span class="formula">Eₙ = −(mₑ e⁴)/(8ε₀²h²) · 1/n²  =  −13.6 eV / n²</span>
+      <p>La dipendenza <span class="hl">Eₙ ∝ −1/n²</span> non viene assunta a priori: emerge naturalmente dalla struttura matematica dell'equazione radiale.</p>
+      <p>Il numero di stati con lo stesso n (degenerazione) è <span class="am">n²</span>: per ogni n ci sono n valori di l, e per ogni l ci sono 2l+1 valori di m.</p>
+      <p>Questo spiega la formula di Rydberg: le transizioni tra livelli n e m danno frequenze ν ∝ 1/m² − 1/n².</p>
+      <p class="note">Visualizzazione: scala dei livelli energetici per n = 1…6. Il livello evidenziato (n = 4) mostra la degenerazione n² = 16. Il punto giallo indica l'emissione di un fotone verso il livello inferiore.</p>
+    </div>
+  </div>
+
+  <!-- Phase 06 -->
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">Fase 06 — Vecchia teoria quantistica</div>
+    <h1 class="phase-title">Bohr e de Broglie: la via semiclassica</h1>
+    <div class="phase-body">
+      <p>Prima di Schrödinger, Niels Bohr (1913) ottenne la formula corretta dei livelli energetici imponendo una condizione di quantizzazione <em>ad hoc</em> sul momento angolare dell'elettrone in orbita circolare:</p>
+      <span class="formula">L = mₑ v r = n ℏ     (n = 1, 2, 3, …)</span>
+      <p>Combinando questa condizione con l'equilibrio tra forza coulombiana e forza centripeta, Bohr ricavò i raggi delle orbite (rₙ = n²a₀) e i livelli energetici Eₙ = −13.6 eV/n².</p>
+      <p>Louis de Broglie (1924) fornì una <span class="hl">giustificazione fisica</span> alla condizione di Bohr: se l'elettrone si comporta come un'onda con lunghezza d'onda λ = h/mₑv, la condizione di orbita stabile è che l'onda formi un'onda stazionaria chiusa lungo il percorso circolare:</p>
+      <span class="formula">n λ = 2πr  →  n(h/mₑv) = 2πr  →  mₑvr = nℏ</span>
+      <p>In questa visione, l'orbita permessa è quella in cui si formano esattamente <span class="am">n lunghezze d'onda intere</span> lungo la circonferenza: l'onda "torna in fase con se stessa" dopo un giro completo.</p>
+      <p>Il risultato numerico — livelli energetici e spettro — è <span class="gr">identico a quello di Schrödinger</span> per l'idrogeno, pur partendo da un'immagine fisica completamente diversa.</p>
+      <p class="note">Visualizzazione: orbita circolare con n = 3 nodi. L'onda di de Broglie (in verde-acqua) forma tre lunghezze d'onda intere lungo la circonferenza. Il punto blu rappresenta l'elettrone in moto.</p>
+    </div>
+  </div>
+
+  <!-- Phase 07 -->
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">Fase 07 — Confronto visivo</div>
+    <h1 class="phase-title">Orbita deterministica vs densità di probabilità</h1>
+    <div class="phase-body">
+      <p>Il confronto più immediato tra i due approcci è <span class="hl">visivo</span>: cosa descrivono realmente le due teorie?</p>
+      <p>Nel modello di Bohr, l'elettrone percorre un'<em>orbita circolare precisa</em> a raggio rₙ = n²a₀. La posizione è deterministica: in ogni istante l'elettrone si trova su quella circonferenza.</p>
+      <p>Nella meccanica quantistica, |ψ_{nl}(r,θ,φ)|² descrive una <span class="hl">densità di probabilità</span>: l'elettrone non ha posizione definita, ma è "distribuito" nello spazio. La densità radiale</p>
+      <span class="formula">P(r) = r² |R_{nl}(r)|²</span>
+      <p>ha un picco a r ≈ n²a₀ — compatibile col raggio di Bohr — ma si estende su tutto lo spazio.</p>
+      <p>Per lo <span class="hl">stato 1s</span>: simmetria sferica, massimo in r = a₀.</p>
+      <p>Per lo <span class="gr">stato 2s</span>: due lobi radiali, nodo in r ≈ 2a₀, massimo esterno in r ≈ 5a₀.</p>
+      <span class="formula">P₁ₛ(r) = (4/a₀³) r² exp(−2r/a₀)
+P₂ₛ(r) = (1/8a₀³) r² (2−r/a₀)² exp(−r/a₀)</span>
+      <p>L'accordo dei picchi di P(r) con il raggio di Bohr non è una coincidenza: entrambe le teorie catturano la stessa struttura fisica con linguaggi radicalmente diversi.</p>
+      <p class="note">Visualizzazione: densità radiale P(r) per 1s e 2s. Le linee verticali indicano i raggi di Bohr n²a₀.</p>
+    </div>
+  </div>
+
+  <!-- Phase 08 -->
+  <div class="phase-content" id="ph-8">
+    <div class="phase-tag">Fase 08 — Tesi dell'autore</div>
+    <h1 class="phase-title">La sostituzione del momento: 1D vs 3D</h1>
+    <div class="phase-body">
+      <p>La tesi centrale del paper di Jormakka riguarda il modo in cui il momento angolare viene trattato nei due approcci, e in particolare la natura della <span class="hl">sostituzione del momento</span> che porta all'equazione di Schrödinger.</p>
+      <p>In meccanica quantistica, il passaggio dalla meccanica classica all'operatore quantistico avviene tramite la sostituzione covariante:</p>
+      <span class="formula">p⃗ → p̂ = −iℏ ∇     (operatore in 3D)</span>
+      <p>Il laplaciano ∇² che appare nell'Hamiltoniana è l'operatore tridimensionale completo, che in coordinate sferiche si separa in parte radiale e angolare, generando naturalmente i numeri quantici l e m e il termine centrifugo ℏ²l(l+1)/(2mₑr²).</p>
+      <p>L'autore osserva che nel modello di Bohr la quantizzazione del momento angolare L = mₑvr = nℏ corrisponde a una sostituzione essenzialmente <span class="am">unidimensionale</span>: si quantizza un'unica componente scalare del momento (quella tangenziale all'orbita), senza il pieno formalismo dell'operatore ∇ in 3D.</p>
+      <p>Jormakka argomenta che questo contrasto — sostituzione <span class="am">1D (Bohr)</span> vs sostituzione <span class="hl">3D (Schrödinger)</span> — è il nucleo concettuale della differenza tra i due approcci. Entrambi producono la stessa formula Eₙ per l'idrogeno, ma per ragioni strutturali differenti.</p>
+      <p>Il paper analizza come la distinzione si manifesti nell'equazione radiale di Schrödinger e come il termine centrifugo emerga dalla trattazione 3D ma non da quella 1D di Bohr.</p>
+      <p class="note">Nota: si tratta della posizione dell'autore del preprint viXra, esposta qui in modo divulgativo e neutro. Visualizzazione: orbita n = 4 con onda stazionaria, a ricordare l'approccio 1D tangenziale di Bohr/de Broglie.</p>
+    </div>
+  </div>
+
+  <!-- Phase 09 -->
+  <div class="phase-content" id="ph-9">
+    <div class="phase-tag">Fase 09 — Sintesi</div>
+    <h1 class="phase-title">Due linguaggi, una stessa fisica</h1>
+    <div class="phase-body">
+      <p>Entrambe le teorie — la vecchia teoria quantistica e la meccanica quantistica di Schrödinger — predicono correttamente le <span class="hl">righe spettrali dell'idrogeno</span>. Questo è un fatto stabilito da oltre un secolo di misurazioni spettroscopiche.</p>
+      <p>Il confronto tra i due approcci illumina aspetti complementari:</p>
+      <ul>
+        <li>Il modello di Bohr è <strong class="hl">intuitivo e potente</strong> per i livelli energetici dell'idrogeno, ma non si generalizza ad atomi più complessi né descrive correttamente le degenerazioni degli stati.</li>
+        <li>La meccanica quantistica di Schrödinger è più <strong class="gr">completa e predittiva</strong>: descrive la struttura angolare degli orbitali, i momenti magnetici, le probabilità di transizione, e si applica a qualsiasi sistema.</li>
+        <li>L'accordo numerico non è una coincidenza: entrambe catturano la stessa fisica sottostante — il potenziale coulombiano e la quantizzazione del momento angolare — con linguaggi diversi.</li>
+      </ul>
+      <p>Dal punto di vista del paper di Jormakka, il confronto mette in luce come la sostituzione del momento in 1D (Bohr) e in 3D (Schrödinger) producano gli stessi livelli energetici, suggerendo che la coincidenza non sia banale.</p>
+      <span class="formula">Bohr (1D):        L = nℏ  →  Eₙ = −13.6 eV/n²
+Schrödinger (3D): ∇²ψ   →  Eₙ = −13.6 eV/n²</span>
+      <p>Il confronto tra vecchia e nuova teoria quantistica resta un esercizio formativo prezioso: mostra come la fisica possa essere descritta da strutture matematiche diverse e concordare sulle predizioni osservabili.</p>
+      <p class="note">Fonte: Jorma Jormakka, "Old quantum theory or Quantum Mechanics: a look at the spectrum of the hydrogen atom", viXra:2603.0063 (2026). Visualizzazione: tutti i livelli energetici n = 1…6 con possibili transizioni.</p>
+    </div>
+  </div>
+
+</main>
+
+<!-- Bottom navigation -->
+<nav id="bottom" aria-label="Navigazione tra le fasi">
+  <button class="btn active" onclick="goPhase(1)" aria-label="Fase 01 — Contesto">01</button>
+  <button class="btn" onclick="goPhase(2)" aria-label="Fase 02 — Setup QM">02</button>
+  <button class="btn" onclick="goPhase(3)" aria-label="Fase 03 — Stato 1s">03</button>
+  <button class="btn" onclick="goPhase(4)" aria-label="Fase 04 — Separazione variabili">04</button>
+  <button class="btn" onclick="goPhase(5)" aria-label="Fase 05 — Livelli energetici">05</button>
+  <button class="btn" onclick="goPhase(6)" aria-label="Fase 06 — Bohr e de Broglie">06</button>
+  <button class="btn" onclick="goPhase(7)" aria-label="Fase 07 — Confronto visivo">07</button>
+  <button class="btn" onclick="goPhase(8)" aria-label="Fase 08 — Tesi dell'autore">08</button>
+  <button class="btn" onclick="goPhase(9)" aria-label="Fase 09 — Sintesi">09</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</nav>
+
+<script>
+'use strict';
+
+// ── Phase metadata ────────────────────────────────────────────────────────────
+const PHASES = [
+  { name: 'Contesto e obiettivo',     scene: 'A', highlightN: 2, desc: 'Spettro dell\'idrogeno — banco di prova della fisica quantistica' },
+  { name: 'Setup Schrödinger',        scene: 'D', highlightN: 1, desc: 'L\'equazione di Schrödinger in coordinate sferiche' },
+  { name: 'Stato 1s e raggio di Bohr', scene: 'C', highlightN: 1, desc: 'ψ₁ₛ(r) ∝ exp(−r/a₀) — densità radiale di probabilità' },
+  { name: 'Separazione variabili',    scene: 'D', highlightN: 2, desc: 'ψ = R(r)·Y(θ,φ) — armoniche sferiche e numeri quantici' },
+  { name: 'Laguerre e livelli Eₙ',   scene: 'A', highlightN: 4, desc: 'Eₙ = −13.6 eV/n² — dalla matematica alla scala energetica' },
+  { name: 'Bohr e de Broglie',        scene: 'B', highlightN: 3, desc: 'nλ = 2πr — l\'onda stazionaria sull\'orbita' },
+  { name: 'Orbita vs densità',        scene: 'C', highlightN: 2, desc: 'Modello classico vs distribuzione di probabilità quantistica' },
+  { name: 'Sostituzione del momento', scene: 'B', highlightN: 4, desc: 'Quantizzazione 1D (Bohr) vs operatore ∇ in 3D (Schrödinger)' },
+  { name: 'Sintesi',                  scene: 'A', highlightN: 6, desc: 'Due linguaggi, una stessa fisica — il valore del confronto' },
+];
+
+let currentPhase = 1;
+let paused = false;
+let T = 0;
+const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+// ── Canvas setup ──────────────────────────────────────────────────────────────
+const cv = document.getElementById('canvas');
+const ctx = cv.getContext('2d');
+let W, H, animRafId;
+
+function resize() {
+  W = cv.width = window.innerWidth;
+  H = cv.height = window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// ── Navigation ────────────────────────────────────────────────────────────────
+function goPhase(n) {
+  currentPhase = Math.max(1, Math.min(9, n));
+
+  document.querySelectorAll('.phase-content').forEach(el => el.classList.remove('active'));
+  document.getElementById('ph-' + currentPhase).classList.add('active');
+
+  document.querySelectorAll('#bottom .btn:not(#btn-pause)').forEach((btn, i) => {
+    btn.classList.toggle('active', i + 1 === currentPhase);
+  });
+
+  const ph = PHASES[currentPhase - 1];
+  document.getElementById('ui-phase').textContent = ph.desc;
+  document.getElementById('panel').scrollTop = 0;
+  history.replaceState(null, '', '#p' + currentPhase);
+  T = 0;
+}
+
+function togglePause() {
+  paused = !paused;
+  const btn = document.getElementById('btn-pause');
+  btn.textContent = paused ? '▶' : '⏸';
+  btn.setAttribute('aria-label', paused ? 'Riprendi animazione' : 'Pausa animazione');
+  if (!paused) {
+    animRafId = requestAnimationFrame(draw);
+  }
+}
+
+// Deep-link support
+function initFromHash() {
+  const m = window.location.hash.match(/^#p([1-9])$/);
+  if (m) { goPhase(parseInt(m[1])); return; }
+  const sp = new URLSearchParams(window.location.search);
+  const qn = parseInt(sp.get('phase') || '');
+  if (qn >= 1 && qn <= 9) { goPhase(qn); return; }
+  goPhase(1);
+}
+
+// Keyboard navigation
+window.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goPhase(currentPhase + 1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   goPhase(currentPhase - 1);
+  if (e.key === ' ') { e.preventDefault(); togglePause(); }
+});
+
+// ── Drawing helpers ───────────────────────────────────────────────────────────
+function lerp(a, b, t) { return a + (b - a) * t; }
+function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+function glow(col, blur) { ctx.shadowColor = col; ctx.shadowBlur = blur; }
+function noGlow() { ctx.shadowBlur = 0; }
+
+function txt(x, y, s, col, sz, align, font) {
+  ctx.fillStyle = col;
+  ctx.font = sz + 'px ' + (font || 'Georgia,serif');
+  ctx.textAlign = align || 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(s, x, y);
+}
+
+// ── Stars ─────────────────────────────────────────────────────────────────────
+let stars = [];
+function initStars() {
+  stars = [];
+  const n = clamp(Math.floor(W * H / 9000), 80, 220);
+  for (let i = 0; i < n; i++) {
+    stars.push({
+      x: Math.random() * W, y: Math.random() * H,
+      r: Math.random() * 1.1 + 0.2,
+      a: Math.random(),
+      da: (Math.random() * 0.005 + 0.001) * (Math.random() < 0.5 ? 1 : -1),
+    });
+  }
+}
+initStars();
+window.addEventListener('resize', initStars);
+
+function drawStars() {
+  for (const s of stars) {
+    if (!reducedMotion) { s.a += s.da; if (s.a > 1 || s.a < 0) s.da = -s.da; }
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(190,215,255,' + clamp(s.a, 0, 1) * 0.55 + ')';
+    ctx.fill();
+  }
+}
+
+// Animation center — right-side of screen on desktop, center on mobile
+function animCX() { return W > 820 ? W * 0.72 : W * 0.5; }
+function animCY() { return W > 820 ? H * 0.5 : H * 0.77; }
+
+// ── Scene A: Energy levels ────────────────────────────────────────────────────
+function sceneA(phIdx) {
+  const cx = animCX(), cy = animCY();
+  const ph = PHASES[phIdx];
+  const hlN = ph.highlightN;
+  const nLevels = 6;
+
+  const rangeH = Math.min(H * 0.72, 420);
+  const yBot = cy + rangeH * 0.55;
+  const yTop = yBot - rangeH;
+  const xC = cx, xL = cx - 100, xR = cx + 110;
+
+  // En = -1/n² normalized: E1=-1, E∞=0
+  function eY(n) { return yTop + rangeH * (1 - 1 / (n * n)); }
+
+  // Background rect
+  ctx.fillStyle = 'rgba(14,165,233,0.04)';
+  ctx.fillRect(xL - 30, yTop - 24, (xR - xL) + 80, rangeH + 44);
+
+  // Ionization line E=0
+  ctx.setLineDash([4, 5]);
+  ctx.strokeStyle = 'rgba(251,191,36,0.4)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(xL - 22, yTop); ctx.lineTo(xR + 18, yTop); ctx.stroke();
+  ctx.setLineDash([]);
+  txt(xR + 20, yTop, 'E = 0', 'rgba(251,191,36,0.5)', 9, 'left', "'Courier New',monospace");
+
+  // Energy axis
+  ctx.strokeStyle = 'rgba(14,165,233,0.18)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(xL - 22, yTop - 6); ctx.lineTo(xL - 22, yBot + 6); ctx.stroke();
+
+  // Levels
+  for (let n = 1; n <= nLevels; n++) {
+    const y = eY(n);
+    const isHL = n === hlN;
+    const lineCol = isHL ? '#38bdf8' : 'rgba(14,165,233,0.35)';
+
+    if (isHL && !reducedMotion) glow('#38bdf8', 18);
+    ctx.strokeStyle = lineCol;
+    ctx.lineWidth = isHL ? 2.5 : 1;
+    ctx.beginPath(); ctx.moveTo(xL - 20, y); ctx.lineTo(xR + 14, y); ctx.stroke();
+    noGlow();
+
+    txt(xL - 26, y, 'n=' + n, isHL ? '#38bdf8' : '#3a5a7a', 10, 'right', "'Courier New',monospace");
+    const eV = (-13.6 / (n * n)).toFixed(2);
+    txt(xR + 16, y, eV + ' eV', isHL ? '#7dd3fc' : '#2c4460', 9, 'left', "'Courier New',monospace");
+
+    // Electron dot on highlighted level
+    if (isHL && !reducedMotion) {
+      const ex = xL + (xR - xL) * (0.5 + 0.42 * Math.sin(T * 0.7));
+      ctx.beginPath(); ctx.arc(ex, y, 5, 0, Math.PI * 2);
+      glow('#60a5fa', 14);
+      ctx.fillStyle = '#3b82f6'; ctx.fill();
+      noGlow();
+    }
+  }
+
+  // Photon emission arrow (from hlN to hlN-1)
+  if (hlN > 1 && !reducedMotion) {
+    const y1 = eY(hlN), y2 = eY(hlN - 1);
+    const t = (T * 0.35) % 1;
+    const ay = lerp(y1, y2, t);
+    const ax = xC + 20;
+    ctx.setLineDash([3, 4]);
+    ctx.strokeStyle = 'rgba(251,191,36,0.5)';
+    ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(ax, y1); ctx.lineTo(ax, y2); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath(); ctx.arc(ax, ay, 4, 0, Math.PI * 2);
+    glow('#fbbf24', 10); ctx.fillStyle = '#fbbf24'; ctx.fill(); noGlow();
+    txt(ax + 10, (y1 + y2) * 0.5, 'fotone', 'rgba(251,191,36,0.5)', 9, 'left', "'Courier New',monospace");
+  }
+
+  // Axis label
+  ctx.save(); ctx.translate(xL - 40, cy); ctx.rotate(-Math.PI / 2);
+  txt(0, 0, 'Energia', '#2c4460', 10, 'center', "'Courier New',monospace");
+  ctx.restore();
+
+  txt(cx, yTop - 16, 'Livelli energetici — idrogeno', '#4a7a9b', 12, 'center');
+}
+
+// ── Scene B: Bohr orbit + standing wave ──────────────────────────────────────
+function sceneB(phIdx) {
+  const cx = animCX(), cy = animCY();
+  const n = PHASES[phIdx].highlightN;
+  const orbitR = Math.min(Math.min(W, H) * 0.25, 140);
+  const amp = orbitR * 0.09;
+  const wSpeed = reducedMotion ? 0 : T * 0.45;
+  const pts = 300;
+
+  // Orbit ghost circle
+  ctx.strokeStyle = 'rgba(14,165,233,0.18)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.arc(cx, cy, orbitR, 0, Math.PI * 2); ctx.stroke();
+
+  // Standing wave on orbit
+  ctx.beginPath();
+  for (let i = 0; i <= pts; i++) {
+    const angle = (i / pts) * Math.PI * 2;
+    const wave = amp * Math.sin(n * angle + wSpeed);
+    const r = orbitR + wave;
+    const px = cx + r * Math.cos(angle);
+    const py = cy + r * Math.sin(angle);
+    i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+  }
+  ctx.closePath();
+  glow('#0d9488', 12);
+  ctx.strokeStyle = '#14b8a6'; ctx.lineWidth = 2; ctx.stroke();
+  noGlow();
+
+  // Wave fill
+  ctx.save(); ctx.globalAlpha = 0.06; ctx.fillStyle = '#14b8a6'; ctx.fill(); ctx.restore();
+
+  // Animated electron
+  if (!reducedMotion) {
+    const eAngle = T * 0.55;
+    const wave = amp * Math.sin(n * eAngle + wSpeed);
+    const er = orbitR + wave;
+    ctx.beginPath(); ctx.arc(cx + er * Math.cos(eAngle), cy + er * Math.sin(eAngle), 6, 0, Math.PI * 2);
+    glow('#60a5fa', 16); ctx.fillStyle = '#3b82f6'; ctx.fill(); noGlow();
+  }
+
+  // Nucleus
+  ctx.beginPath(); ctx.arc(cx, cy, 7, 0, Math.PI * 2);
+  glow('#f97316', 14); ctx.fillStyle = '#f97316'; ctx.fill(); noGlow();
+  txt(cx, cy + 18, 'p⁺', '#f97316', 10, 'center');
+
+  // Labels
+  txt(cx, cy - orbitR - 22, 'Orbita n = ' + n + ' · ' + n + ' nodi', '#4a7a9b', 12, 'center');
+  txt(cx, cy + orbitR + 24, 'r = ' + (n * n) + 'a₀   |   nλ = 2πr', '#2c4460', 10, 'center', "'Courier New',monospace");
+}
+
+// ── Scene C: Radial probability density ──────────────────────────────────────
+function sceneC(phIdx) {
+  const cx = animCX(), cy = animCY();
+  const plotW = Math.min(W > 820 ? W * 0.46 : W * 0.88, 340);
+  const plotH = Math.min(H * 0.38, 200);
+  const x0 = cx - plotW * 0.5, y1 = cy + plotH * 0.5;
+  const x1 = x0 + plotW, y0 = y1 - plotH;
+  const rMax = 22; // in units of a0
+
+  ctx.fillStyle = 'rgba(0,8,20,0.35)';
+  ctx.fillRect(x0 - 12, y0 - 28, plotW + 24, plotH + 50);
+
+  // Axes
+  ctx.strokeStyle = 'rgba(14,165,233,0.25)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(x0, y1); ctx.lineTo(x1, y1); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(x0, y0 - 4); ctx.lineTo(x0, y1); ctx.stroke();
+  txt((x0 + x1) * 0.5, y1 + 14, 'r / a₀', '#2c4460', 10, 'center', "'Courier New',monospace");
+  txt(x0 - 6, y0 - 14, 'P(r)', '#2c4460', 10, 'center', "'Courier New',monospace");
+
+  // Grid
+  for (let r = 5; r <= rMax; r += 5) {
+    const px = x0 + (r / rMax) * plotW;
+    ctx.setLineDash([2, 5]);
+    ctx.strokeStyle = 'rgba(14,165,233,0.1)';
+    ctx.beginPath(); ctx.moveTo(px, y0); ctx.lineTo(px, y1); ctx.stroke();
+    ctx.setLineDash([]);
+    txt(px, y1 + 7, String(r), '#223344', 9, 'center', "'Courier New',monospace");
+  }
+
+  // Helper: draw filled + stroked curve
+  function drawCurve(fn, col, normV, labelY, label) {
+    // fill
+    ctx.beginPath();
+    ctx.moveTo(x0, y1);
+    for (let i = 0; i <= plotW; i++) {
+      const r = (i / plotW) * rMax;
+      const v = fn(r) / normV;
+      ctx.lineTo(x0 + i, y1 - v * plotH);
+    }
+    ctx.lineTo(x1, y1);
+    ctx.closePath();
+    ctx.save(); ctx.globalAlpha = 0.09; ctx.fillStyle = col; ctx.fill(); ctx.restore();
+
+    // stroke
+    ctx.beginPath();
+    for (let i = 0; i <= plotW; i++) {
+      const r = (i / plotW) * rMax;
+      const v = fn(r) / normV;
+      i === 0 ? ctx.moveTo(x0 + i, y1 - v * plotH) : ctx.lineTo(x0 + i, y1 - v * plotH);
+    }
+    glow(col, 7); ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.stroke(); noGlow();
+    if (labelY !== undefined) txt(x1 - 6, labelY, label, col, 10, 'right', "'Courier New',monospace");
+  }
+
+  // P1s(r) = 4 r² e^{-2r}  (a0=1)
+  const f1s = r => 4 * r * r * Math.exp(-2 * r);
+  const norm1s = 4 * 1 * Math.exp(-2); // max at r=1
+  drawCurve(f1s, '#38bdf8', norm1s, y0 + 14, '1s  P(r) ∝ r²e^{-2r/a₀}');
+
+  // P2s(r) = (1/8) r² (2-r)² e^{-r}
+  const f2s = r => (1/8) * r * r * Math.pow(2 - r, 2) * Math.exp(-r);
+  let norm2s = 0;
+  for (let ri = 0; ri <= rMax; ri += 0.05) { const v = f2s(ri); if (v > norm2s) norm2s = v; }
+  drawCurve(f2s, '#4ade80', norm2s, y0 + 28, '2s  P(r) ∝ r²(2−r/a₀)²e^{-r/a₀}');
+
+  // Bohr radii vertical lines
+  [1, 4].forEach((ra, i) => {
+    const px = x0 + (ra / rMax) * plotW;
+    ctx.setLineDash([4, 4]);
+    ctx.strokeStyle = 'rgba(251,191,36,0.45)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(px, y0); ctx.lineTo(px, y1); ctx.stroke();
+    ctx.setLineDash([]);
+    txt(px, y0 - 8, (i === 0 ? 'a₀' : '4a₀'), 'rgba(251,191,36,0.6)', 9, 'center', "'Courier New',monospace");
+  });
+
+  txt(cx, y0 - 20, 'Densità radiale P(r) = r²|R(r)|²', '#4a7a9b', 11, 'center');
+}
+
+// ── Scene D: Spherical harmonics (stylized 2D blobs) ─────────────────────────
+function sceneD(phIdx) {
+  const cx = animCX(), cy = animCY();
+  const n = PHASES[phIdx].highlightN; // 1 or 2
+  const spread = Math.min(W * (W > 820 ? 0.14 : 0.28), 130);
+  const blobR = Math.min(H * 0.12, 60);
+
+  const configs = [
+    { l: 0, m: 0, label: 'Y₀⁰  (orbitale s)', col: '#38bdf8', dx: -spread, dy: 0 },
+    { l: 1, m: 0, label: 'Y₁⁰  (orbitale p)', col: '#4ade80', dx: 0,       dy: 0 },
+    { l: 2, m: 0, label: 'Y₂⁰  (orbitale d)', col: '#fbbf24', dx:  spread, dy: 0 },
+  ];
+
+  txt(cx, cy - blobR * 2.4, 'Armoniche sferiche — forma degli orbitali', '#4a7a9b', 12, 'center');
+
+  for (const cfg of configs) {
+    const bcx = cx + cfg.dx, bcy = cy + cfg.dy;
+    const R = blobR + (reducedMotion ? 0 : blobR * 0.06 * Math.sin(T * 0.5 + cfg.dx * 0.01));
+
+    ctx.beginPath();
+    const pts = 200;
+    for (let i = 0; i <= pts; i++) {
+      const theta = (i / pts) * Math.PI * 2;
+      let r;
+      if (cfg.l === 0) {
+        r = R;
+      } else if (cfg.l === 1) {
+        r = R * Math.abs(Math.cos(theta));
+      } else {
+        const c = Math.cos(theta);
+        r = R * 0.48 * Math.abs(3 * c * c - 1);
+      }
+      const px = bcx + r * Math.cos(theta - Math.PI / 2);
+      const py = bcy + r * Math.sin(theta - Math.PI / 2);
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.save(); ctx.globalAlpha = 0.15; ctx.fillStyle = cfg.col; ctx.fill(); ctx.restore();
+    glow(cfg.col, 10); ctx.strokeStyle = cfg.col; ctx.lineWidth = 1.5; ctx.stroke(); noGlow();
+
+    txt(bcx, bcy + R + 20, cfg.label, cfg.col, 10, 'center', "'Courier New',monospace");
+    txt(bcx, bcy + R + 34, 'l = ' + cfg.l, '#2c4460', 9, 'center', "'Courier New',monospace");
+  }
+
+  txt(cx, cy + blobR * 2.0, 'n: livello   ·   l: forma   ·   m: orientamento', '#2c4460', 10, 'center', "'Courier New',monospace");
+}
+
+// ── Main draw loop ────────────────────────────────────────────────────────────
+function draw() {
+  ctx.clearRect(0, 0, W, H);
+
+  // Background
+  const bg = ctx.createRadialGradient(W * 0.62, H * 0.5, 0, W * 0.62, H * 0.5, Math.max(W, H) * 0.75);
+  bg.addColorStop(0, '#001828');
+  bg.addColorStop(1, '#000a14');
+  ctx.fillStyle = bg; ctx.fillRect(0, 0, W, H);
+
+  drawStars();
+
+  const ph = PHASES[currentPhase - 1];
+  switch (ph.scene) {
+    case 'A': sceneA(currentPhase - 1); break;
+    case 'B': sceneB(currentPhase - 1); break;
+    case 'C': sceneC(currentPhase - 1); break;
+    case 'D': sceneD(currentPhase - 1); break;
+  }
+
+  if (!reducedMotion && !paused) T += 0.016;
+  if (!paused) animRafId = requestAnimationFrame(draw);
+}
+
+// ── Init ──────────────────────────────────────────────────────────────────────
+initFromHash();
+draw();
+</script>
+</body>
+</html>
