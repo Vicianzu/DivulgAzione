@@ -1,0 +1,488 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>D-Brane e la Congettura di Maldacena | Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="ui">
+  <span id="ui-title">DivulgAzione · Maldacena</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">8 fasi</span>
+</div>
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — POLCHINSKI</div>
+    <div class="phase-title">Le D-brane: oggetti non-perturbativi (Polchinski 1995)</div>
+    <div class="phase-body">
+      <p>Prima del 1995 le D-brane erano solo condizioni al contorno di Dirichlet. <span class="hl">Polchinski (1995)</span> mostrò che le D-brane sono oggetti <span class="am">fisici fondamentali</span> — soluzioni solitoniche esatte della teoria di stringa. La tensione di una Dp-brana:</p>
+      <code class="formula">T_p = 1/((2π)^p g_s l_s^{p+1})</code>
+      <p>Scala come <span class="hl">1/g_s</span>: le brane sono pesanti a debole accoppiamento. La scoperta di Polchinski completò il quadro delle dualità. Le D-brane hanno <span class="gr">carica RR</span> che si accoppia con le forme differenziali di tipo II.</p>
+      <code class="formula">T_p = 1/((2π)^p g_s l^{p+1}_s)   (tensione Dp-brana)
+Carica: μ_p = T_p  (BPS)
+D-brane: sorgenti delle forme RR
+→ non-perturbative: invisibili a g_s → 0</code>
+      <div class="note">Animazione: brana piatta con stringhe aperte ancorate agli estremi.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — STACK</div>
+    <div class="phase-title">N D3-brane coincidenti: la sorgente di AdS/CFT</div>
+    <div class="phase-body">
+      <p>Consideriamo <span class="hl">N D3-brane</span> coincidenti. Le N² stringhe aperte tra le N brane generano una <span class="am">teoria di gauge SU(N)</span> sul worldvolume 3+1D. Il contenuto è precisamente <span class="hl">𝒩=4 SYM</span>. Il bulk lontano rimane piatto con stringhe chiuse (gravitoni). La carica totale è N unità del flusso della <span class="gr">5-forma RR</span>: ∫F₅ = N.</p>
+      <code class="formula">N D3-brane → SU(N) 𝒩=4 SYM in 3+1D
+N² stringhe aperte → W-bosoni + scalari + fermioni
+Carica RR: ∫_{S⁵} F₅ = N
+Bulk: gravitoni in ℝ^{9,1}</code>
+      <div class="note">Animazione: stack di N brane parallele con stringhe aperte tra di esse.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — DOPPIA</div>
+    <div class="phase-title">La doppia descrizione: due regimi opposti</div>
+    <div class="phase-body">
+      <p>Le N D3-brane hanno <span class="hl">due descrizioni</span> valide in regimi opposti. <span class="am">Regime A (g_s N ≪ 1)</span>: teoria di gauge SU(N) sul worldvolume + stringhe chiuse nel bulk piatto. <span class="hl">Regime B (g_s N ≫ 1)</span>: la geometria si curva in <span class="am">AdS₅×S⁵</span> + SUGRA IIB. Entrambe descrivono la <span class="gr">stessa fisica</span>.</p>
+      <code class="formula">g_s N ≪ 1: SU(N) 𝒩=4 SYM + bulk piatto
+g_s N ≫ 1: AdS₅×S⁵ + SUGRA IIB
+Entrambi = N D3-brane coincidenti
+→ stessa fisica, regimi diversi</code>
+      <div class="note">Animazione: cursore che si sposta da g_sN piccolo a grande, mostrando la transizione tra le due descrizioni.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — NEAR-HORIZON</div>
+    <div class="phase-title">Il limite near-horizon di Maldacena</div>
+    <div class="phase-body">
+      <p><span class="hl">Maldacena (1997)</span> effettuò il limite: α'→0 con <span class="am">U = r/α' fisso</span>. Le due descrizioni si <span class="hl">disaccoppiano</span>: (A) 𝒩=4 SYM si separa dalle stringhe chiuse nel bulk. (B) La geometria near-horizon diventa esattamente <span class="gr">AdS₅×S⁵</span>, disaccoppiata dal bulk piatto. Maldacena congetturò che le due teorie near-horizon sono <span class="vi">equivalenti come teorie complete</span>.</p>
+      <code class="formula">Limite: α'→0, U = r/α' fisso
+→ (A) 𝒩=4 SYM puro in ℝ^{3,1}
+→ (B) IIB su AdS₅×S⁵ puro
+Maldacena: (A) ≡ (B) (congettura)</code>
+      <div class="note">Animazione: zoom verso le brane — il bulk piatto scompare, appare la geometria AdS₅×S⁵.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — CONGETTURA</div>
+    <div class="phase-title">La congettura di Maldacena</div>
+    <div class="phase-body">
+      <p>La <span class="hl">congettura di Maldacena (1997)</span>: <span class="am">Stringa IIB su AdS₅×S⁵ è esattamente equivalente a 𝒩=4 SYM con gauge SU(N)</span>. I parametri si identificano: L⁴/α'² = 4πg_s N = λ = g²_YM N. La costante di stringa g_s = g²_YM/(4π). Il raggio AdS L = λ^{1/4} l_s. N = rango del gauge. La dualità è <span class="gr">olografica</span>: 5D con gravità ↔ 4D senza gravità.</p>
+      <code class="formula">{IIB su AdS₅×S⁵} ≡ {𝒩=4 SYM, SU(N)}
+L⁴ = 4πg_s N α'²
+λ = g²_YM N = g_s N × 4π = (L/l_s)⁴
+g_s = g²_YM / (4π)</code>
+      <div class="note">Animazione: equazione di equivalenza al centro con entrambi i lati che pulsano luminosi.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — VERSIONI</div>
+    <div class="phase-title">Tre versioni della congettura</div>
+    <div class="phase-body">
+      <p>La congettura esiste in <span class="hl">tre versioni</span>. <span class="am">Forte</span>: valida per tutti N e λ — la dualità è esatta per qualunque valore. <span class="hl">Intermedia</span>: valida per N→∞ con λ fisso — stringa quantistica classica sul worldsheet. <span class="gr">Debole</span>: valida per N→∞ e λ→∞ — SUGRA classica. La versione debole ha il <span class="vi">massimo numero di verifiche</span> perché la SUGRA è calcolabile con i metodi ordinari.</p>
+      <code class="formula">FORTE: tutti N, λ (non dimostrata)
+INTERMEDIA: N→∞, λ qual. (IIB quantistica)
+DEBOLE: N→∞, λ→∞ (SUGRA classica)
+SUGRA valida per λ ≫ 1, N ≫ 1</code>
+      <div class="note">Animazione: tre cerchi concentrici — esterno FORTE, medio INTERMEDIA, interno DEBOLE (più verificato).</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — VERIFICHE</div>
+    <div class="phase-title">Le prime verifiche: GKP e Witten 1998</div>
+    <div class="phase-body">
+      <p><span class="hl">Gubser-Klebanov-Polyakov</span> e <span class="am">Witten (1998)</span> svilupparono le prime verifiche. Le più dirette usano gli <span class="hl">operatori BPS</span> (protetti dalla SUSY): le loro dimensioni conformi non ricevono correzioni quantistiche. I multiplet BPS della CFT corrispondono esattamente agli stati SUGRA in AdS₅×S⁵. Lo spettro delle fluttuazioni SUGRA corrisponde allo spettro degli operatori di 𝒩=4 SYM. Le funzioni a <span class="gr">2 e 3 punti</span> degli operatori protetti concordano da entrambi i lati.</p>
+      <code class="formula">Verifica 1: multiplet BPS ↔ stati SUGRA
+Verifica 2: ⟨OO⟩_{CFT} ↔ propagatore bulk
+Verifica 3: ⟨OOO⟩_{CFT} ↔ vertice cubico AdS
+Dimensioni protette: Δ = J (esatto da entrambi)</code>
+      <div class="note">Animazione: tabella di corrispondenza con operatori CFT a sinistra e stati SUGRA a destra, linee di match che appaiono.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-8">
+    <div class="phase-tag">FASE 08 — EVIDENZE</div>
+    <div class="phase-title">Perché ci crediamo: 28 anni di evidenze</div>
+    <div class="phase-body">
+      <p>In quasi tre decenni, la congettura ha superato centinaia di test. (1) <span class="hl">Corrispondenza degli spettri</span> di operatori e stati SUGRA. (2) <span class="am">Funzioni di correlazione</span> protette concordanti. (3) <span class="gr">Viscosità η/s = ℏ/(4πk_B)</span>: limite universale da AdS/CFT, verificato al RHIC. (4) <span class="vi">Estensioni</span> a AdS₃/CFT₂, AdS₄/CFT₃, AdS₇/CFT₆. (5) Integrable spin chains compatibili da entrambi i lati. L'articolo di Maldacena è il più citato della fisica (~25.000 citazioni nel 2026).</p>
+      <code class="formula">~25.000 citazioni (2026)
+η/s = ℏ/(4πk_B)  [KSS bound, verificato RHIC]
+Spettro integrabile: coincide da entrambi
+Estensioni: AdS₃, AdS₄, AdS₇ tutte verificate</code>
+      <div class="note">Animazione: curva esponenziale di crescita delle citazioni 1997-2026.</div>
+    </div>
+  </div>
+
+</div>
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · Polchinski</button>
+  <button class="btn" onclick="goPhase(2)">02 · Stack</button>
+  <button class="btn" onclick="goPhase(3)">03 · Doppia</button>
+  <button class="btn" onclick="goPhase(4)">04 · Near-Hor.</button>
+  <button class="btn" onclick="goPhase(5)">05 · Congettura</button>
+  <button class="btn" onclick="goPhase(6)">06 · Versioni</button>
+  <button class="btn" onclick="goPhase(7)">07 · Verifiche</button>
+  <button class="btn" onclick="goPhase(8)">08 · Evidenze</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+window.T2_PHASES = [
+  { name: 'Le D-brane', desc: 'FASE 01 — D-brane come oggetti non-perturbativi: T_p ~ 1/(g_s l_s^{p+1})', scene: 'polchinski' },
+  { name: 'Stack N D3', desc: 'FASE 02 — N D3-brane → SU(N) 𝒩=4 SYM + carica RR N', scene: 'stack' },
+  { name: 'Doppia descriz.', desc: 'FASE 03 — g_s N ≪ 1: gauge; g_s N ≫ 1: AdS₅×S⁵', scene: 'doppia' },
+  { name: 'Near-horizon', desc: 'FASE 04 — α\'→0: 𝒩=4 SYM ≡ IIB su AdS₅×S⁵', scene: 'nearhorizon' },
+  { name: 'La Congettura', desc: 'FASE 05 — {IIB AdS₅×S⁵} ≡ {𝒩=4 SYM SU(N)} (Maldacena 1997)', scene: 'congettura' },
+  { name: 'Tre versioni', desc: 'FASE 06 — Forte / Intermedia / Debole della congettura', scene: 'versioni' },
+  { name: 'Prime verifiche', desc: 'FASE 07 — Operatori BPS, funzioni di correlazione, spettro', scene: 'verifiche' },
+  { name: 'Evidenze', desc: 'FASE 08 — 28 anni di test, ~25000 citazioni, η/s universale', scene: 'evidenze' },
+];
+
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const cx = t2AnimCX(W);
+  const cy = t2AnimCY(H);
+  const rm = t2ReducedMotion();
+  const scene = T2_PHASES[phIdx] ? T2_PHASES[phIdx].scene : '';
+
+  ctx.clearRect(0, 0, W, H);
+
+  if (scene === 'polchinski') {
+    // Flat brane as a horizontal line
+    const bY = cy;
+    t2Glow(ctx, '#facc15', 18);
+    ctx.beginPath();
+    ctx.moveTo(W * 0.1, bY);
+    ctx.lineTo(W * 0.9, bY);
+    ctx.strokeStyle = '#facc15';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    t2NoGlow(ctx);
+
+    // Label
+    t2Txt(ctx, 'D3-brana', W * 0.5, bY - 18, '#facc15', 15, 'center');
+    t2Txt(ctx, 'T_p ~ 1/g_s', W * 0.5, bY + 32, '#94a3b8', 13, 'center');
+
+    // Open strings anchored on the brane
+    const nStr = 6;
+    for (let i = 0; i < nStr; i++) {
+      const xAnchor = W * (0.15 + i * 0.13);
+      const strH = H * 0.18;
+      const phase = rm ? 0 : T * 1.5 + i * 1.1;
+      ctx.beginPath();
+      ctx.moveTo(xAnchor, bY);
+      const steps = 30;
+      for (let s = 0; s <= steps; s++) {
+        const frac = s / steps;
+        const xS = xAnchor + (frac - 0.5) * 8;
+        const yS = bY - frac * strH + Math.sin(frac * Math.PI * 4 + phase) * 8;
+        if (s === 0) ctx.moveTo(xS, yS); else ctx.lineTo(xS, yS);
+      }
+      ctx.strokeStyle = 'rgba(56,189,248,0.75)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      // endpoint dot
+      const xEnd = xAnchor + (0.5 - 0.5) * 8;
+      ctx.beginPath();
+      ctx.arc(xAnchor, bY - strH, 3, 0, Math.PI * 2);
+      ctx.fillStyle = '#f472b6';
+      ctx.fill();
+    }
+
+  } else if (scene === 'stack') {
+    // 3 stacked branes
+    const nBranes = 3;
+    const spacing = H * 0.18;
+    const braneYs = [cy - spacing, cy, cy + spacing];
+    const colors = ['#38bdf8', '#facc15', '#4ade80'];
+    for (let b = 0; b < nBranes; b++) {
+      t2Glow(ctx, colors[b], 12);
+      ctx.beginPath();
+      ctx.moveTo(W * 0.15, braneYs[b]);
+      ctx.lineTo(W * 0.85, braneYs[b]);
+      ctx.strokeStyle = colors[b];
+      ctx.lineWidth = 2.5;
+      ctx.stroke();
+      t2NoGlow(ctx);
+    }
+    // Strings between brane pairs
+    const pairs = [[0,1],[1,2],[0,2]];
+    const xPositions = [W*0.3, W*0.5, W*0.65];
+    for (let p = 0; p < pairs.length; p++) {
+      const [b1, b2] = pairs[p];
+      const xA = xPositions[p];
+      const y1 = braneYs[b1], y2 = braneYs[b2];
+      const phase = rm ? 0 : T * 1.2 + p * 0.8;
+      ctx.beginPath();
+      const steps = 24;
+      for (let s = 0; s <= steps; s++) {
+        const frac = s / steps;
+        const xS = xA + Math.sin(frac * Math.PI * 3 + phase) * 10;
+        const yS = t2Lerp(y1, y2, frac);
+        if (s === 0) ctx.moveTo(xS, yS); else ctx.lineTo(xS, yS);
+      }
+      ctx.strokeStyle = 'rgba(56,189,248,0.8)';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+    t2Txt(ctx, 'SU(N)', W * 0.5, cy - spacing - 28, '#38bdf8', 15, 'center');
+    t2Txt(ctx, 'N² stringhe', W * 0.5, cy + spacing + 28, '#94a3b8', 13, 'center');
+
+  } else if (scene === 'doppia') {
+    const midX = W * 0.5;
+    // Divider
+    ctx.beginPath();
+    ctx.moveTo(midX, H * 0.1);
+    ctx.lineTo(midX, H * 0.9);
+    ctx.strokeStyle = 'rgba(148,163,184,0.4)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([6, 4]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Left panel: flat brane + grid
+    ctx.strokeStyle = 'rgba(56,189,248,0.3)';
+    ctx.lineWidth = 1;
+    for (let gx = W*0.05; gx < midX - 10; gx += 30) {
+      ctx.beginPath(); ctx.moveTo(gx, H*0.2); ctx.lineTo(gx, H*0.8); ctx.stroke();
+    }
+    for (let gy = H*0.2; gy < H*0.8; gy += 30) {
+      ctx.beginPath(); ctx.moveTo(W*0.05, gy); ctx.lineTo(midX-10, gy); ctx.stroke();
+    }
+    ctx.beginPath();
+    ctx.moveTo(W*0.08, cy);
+    ctx.lineTo(midX - 20, cy);
+    ctx.strokeStyle = '#facc15';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    t2Txt(ctx, 'g_sN ≪ 1', W*0.25, H*0.15, '#38bdf8', 14, 'center');
+    t2Txt(ctx, 'gauge + bulk piatto', W*0.25, H*0.85, '#94a3b8', 11, 'center');
+
+    // Right panel: AdS semicircle
+    const rX = W * 0.75, rY = H * 0.72, rR = H * 0.35;
+    ctx.beginPath();
+    ctx.arc(rX, rY, rR, Math.PI, 0);
+    ctx.strokeStyle = '#a78bfa';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    // inner semicircles
+    for (let rr = rR * 0.4; rr < rR; rr += rR * 0.2) {
+      ctx.beginPath();
+      ctx.arc(rX, rY, rr, Math.PI, 0);
+      ctx.strokeStyle = 'rgba(167,139,250,0.3)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+    t2Txt(ctx, 'g_sN ≫ 1', W*0.75, H*0.15, '#a78bfa', 14, 'center');
+    t2Txt(ctx, 'AdS₅×S⁵', W*0.75, H*0.85, '#94a3b8', 11, 'center');
+
+    // Animated particle sliding left to right
+    if (!rm) {
+      const frac = (Math.sin(T * 0.5) + 1) * 0.5;
+      const pX = t2Lerp(W*0.1, W*0.9, frac);
+      const pY = cy + Math.sin(frac * Math.PI) * (-H*0.1);
+      ctx.beginPath();
+      ctx.arc(pX, pY, 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#f472b6';
+      ctx.fill();
+    }
+
+  } else if (scene === 'nearhorizon') {
+    // Zoom animation
+    const zoom = rm ? 1 : 1 + (Math.sin(T * 0.4) + 1) * 1.5;
+    const scale = t2Clamp(zoom, 1, 4);
+
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.scale(scale * 0.5 + 0.5, scale * 0.5 + 0.5);
+    ctx.translate(-cx, -cy);
+
+    // Draw AdS semicircle geometry
+    const rY = cy + H * 0.25, rR = H * 0.38;
+    ctx.beginPath();
+    ctx.arc(cx, rY, rR, Math.PI, 0);
+    ctx.strokeStyle = '#a78bfa';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    for (let rr = rR * 0.25; rr < rR; rr += rR * 0.25) {
+      ctx.beginPath();
+      ctx.arc(cx, rY, rr, Math.PI, 0);
+      ctx.strokeStyle = 'rgba(167,139,250,0.25)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+    // Brane at bottom
+    ctx.beginPath();
+    ctx.moveTo(cx - rR, rY);
+    ctx.lineTo(cx + rR, rY);
+    ctx.strokeStyle = '#facc15';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    ctx.restore();
+
+    // Fading formula
+    const alpha = rm ? 1 : t2Clamp((Math.sin(T * 0.4) + 1) * 0.5, 0, 1);
+    ctx.globalAlpha = alpha;
+    t2Txt(ctx, "α'→0", cx, H * 0.18, '#38bdf8', 20, 'center');
+    ctx.globalAlpha = 1;
+    t2Txt(ctx, 'AdS₅×S⁵', cx, H * 0.88, '#a78bfa', 14, 'center');
+
+  } else if (scene === 'congettura') {
+    const pulse = rm ? 1 : 0.7 + 0.3 * Math.sin(T * 2);
+    // Left side
+    t2Txt(ctx, '{IIB AdS₅×S⁵}', cx - W*0.25, cy - 12, '#38bdf8', 16, 'center');
+    // Right side
+    t2Txt(ctx, '{𝒩=4 SYM}', cx + W*0.25, cy - 12, '#4ade80', 16, 'center');
+    // Central equivalence
+    t2Glow(ctx, '#f9a825', 20 * pulse);
+    ctx.font = `bold ${Math.round(32 * pulse)}px monospace`;
+    ctx.fillStyle = '#facc15';
+    ctx.textAlign = 'center';
+    ctx.fillText('≡', cx, cy + 14);
+    t2NoGlow(ctx);
+    ctx.textAlign = 'left';
+    // Parameter identification
+    t2Txt(ctx, 'λ = g²_YM N = (L/l_s)⁴', cx, cy + 60, '#94a3b8', 13, 'center');
+    t2Txt(ctx, 'Maldacena 1997', cx, cy + 82, '#64748b', 12, 'center');
+    // Decorative lines
+    ctx.beginPath();
+    ctx.moveTo(cx - W*0.38, cy - 2);
+    ctx.lineTo(cx - W*0.14, cy - 2);
+    ctx.strokeStyle = 'rgba(56,189,248,0.4)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(cx + W*0.14, cy - 2);
+    ctx.lineTo(cx + W*0.38, cy - 2);
+    ctx.strokeStyle = 'rgba(74,222,128,0.4)';
+    ctx.stroke();
+
+  } else if (scene === 'versioni') {
+    const R = Math.min(W, H) * 0.36;
+    const rings = [
+      { r: R,        label: 'FORTE',      color: '#38bdf8' },
+      { r: R * 0.65, label: 'INTERMEDIA', color: '#a78bfa' },
+      { r: R * 0.35, label: 'DEBOLE',     color: '#4ade80' },
+    ];
+    for (let i = 0; i < rings.length; i++) {
+      const ring = rings[i];
+      const pulse = rm ? 1 : 0.6 + 0.4 * Math.sin(T * 1.2 + i * 1.5);
+      t2Glow(ctx, ring.color, 10 * pulse);
+      ctx.beginPath();
+      ctx.arc(cx, cy, ring.r, 0, Math.PI * 2);
+      ctx.strokeStyle = ring.color;
+      ctx.lineWidth = 2;
+      ctx.globalAlpha = 0.4 + 0.6 * pulse;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+      t2NoGlow(ctx);
+      t2Txt(ctx, ring.label, cx, cy - ring.r + 18, ring.color, 13, 'center');
+    }
+    t2Txt(ctx, '← più verificata', cx + R * 0.35 + 10, cy, '#64748b', 11, 'left');
+
+  } else if (scene === 'verifiche') {
+    const items = ['O_BPS', '⟨OO⟩', '⟨OOO⟩', 'Δ = J'];
+    const right = ['stati SUGRA', 'propagat. bulk', 'vertice AdS', 'Δ = J'];
+    const rowH = H * 0.14;
+    const startY = cy - rowH * 1.5;
+    const lX = cx - W * 0.28, rX = cx + W * 0.28;
+
+    for (let i = 0; i < items.length; i++) {
+      const y = startY + i * rowH;
+      // Left dot + label
+      ctx.beginPath();
+      ctx.arc(lX, y, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#38bdf8';
+      ctx.fill();
+      t2Txt(ctx, items[i], lX + 12, y + 5, '#dde6f0', 13, 'left');
+      // Right dot + label
+      ctx.beginPath();
+      ctx.arc(rX, y, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#4ade80';
+      ctx.fill();
+      t2Txt(ctx, right[i], rX - 12, y + 5, '#dde6f0', 13, 'right');
+      // Animated connecting line appearing over time
+      const lineProgress = rm ? 1 : t2Clamp((T * 0.5 - i * 0.5), 0, 1);
+      if (lineProgress > 0) {
+        const endX = t2Lerp(lX + 20, rX - 20, lineProgress);
+        ctx.beginPath();
+        ctx.moveTo(lX + 20, y);
+        ctx.lineTo(endX, y);
+        ctx.strokeStyle = 'rgba(250,204,21,0.6)';
+        ctx.lineWidth = 1.5;
+        ctx.stroke();
+      }
+    }
+    t2Txt(ctx, 'CFT', lX, startY - 24, '#38bdf8', 13, 'center');
+    t2Txt(ctx, 'SUGRA / AdS', rX, startY - 24, '#4ade80', 13, 'center');
+
+  } else if (scene === 'evidenze') {
+    const startX = W * 0.1, endX = W * 0.9;
+    const topY = H * 0.18, botY = H * 0.78;
+    const years = [1997, 1998, 2006, 2013, 2019, 2026];
+    const nYears = years.length - 1;
+
+    // Axes
+    ctx.beginPath();
+    ctx.moveTo(startX, botY);
+    ctx.lineTo(endX, botY);
+    ctx.strokeStyle = 'rgba(148,163,184,0.5)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(startX, botY);
+    ctx.lineTo(startX, topY);
+    ctx.stroke();
+
+    // Exponential growth curve
+    ctx.beginPath();
+    const steps = 80;
+    for (let s = 0; s <= steps; s++) {
+      const frac = s / steps;
+      const xP = t2Lerp(startX, endX, frac);
+      const yP = t2Lerp(botY, topY, Math.pow(frac, 1.5) * (rm ? 1 : t2Clamp(T * 0.25, 0, 1)));
+      if (s === 0) ctx.moveTo(xP, yP); else ctx.lineTo(xP, yP);
+    }
+    ctx.strokeStyle = '#38bdf8';
+    ctx.lineWidth = 2.5;
+    t2Glow(ctx, '#38bdf8', 8);
+    ctx.stroke();
+    t2NoGlow(ctx);
+
+    // Year markers
+    for (let i = 0; i <= nYears; i++) {
+      const frac = i / nYears;
+      const xP = t2Lerp(startX, endX, frac);
+      const yP = t2Lerp(botY, topY, Math.pow(frac, 1.5));
+      ctx.beginPath();
+      ctx.arc(xP, yP, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#facc15';
+      ctx.fill();
+      t2Txt(ctx, String(years[i]), xP, botY + 16, '#94a3b8', 10, 'center');
+    }
+
+    t2Txt(ctx, '~25.000 citazioni (2026)', cx, topY - 14, '#facc15', 14, 'center');
+    t2Txt(ctx, 'citazioni →', startX - 8, t2Lerp(botY, topY, 0.5), '#64748b', 10, 'right');
+  }
+};
+
+t2Init();
+</script>
+</body>
+</html>

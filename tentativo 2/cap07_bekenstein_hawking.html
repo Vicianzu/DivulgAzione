@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>S_BH — Entropia di Bekenstein-Hawking | Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="ui">
+  <span id="ui-title">DivulgAzione · S_BH</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">8 fasi</span>
+</div>
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — TERMODIN.</div>
+    <div class="phase-title">La termodinamica dei buchi neri</div>
+    <div class="phase-body">
+      <p>La meccanica classica dei buchi neri ha una struttura formalmente analoga alla termodinamica. I quattro teoremi (Bardeen-Carter-Hawking 1973). 0°: la temperatura superficiale κ è costante sull'orizzonte. 1°: <code class="formula">dM = κ/(8πG) dA + Ω dJ + Φ dQ</code> (energia analoga a dU = TdS + ...). 2°: <span class="hl">l'area non decresce mai</span>: <code class="formula">δA ≥ 0</code> (Hawking 1971) — il teorema dell'area. 3°: κ=0 non è raggiungibile in un numero finito di passi. Ma la temperatura κ è zero nel buco nero classico — non c'è radiazione! L'analogia sembrava puramente formale fino alla <span class="am">radiazione di Hawking</span>.</p>
+      <code class="formula">0°: κ = costante sull'orizzonte
+1°: dM = (κ/8πG)dA + ΩdJ + ΦdQ
+2°: δA ≥ 0   (teorema dell'area)
+3°: κ = 0 irraggiungibile</code>
+      <div class="note">Animazione: orizzonte del buco nero che pulsaggia, area che cresce monotonamente nel tempo.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — BEKENSTEIN</div>
+    <div class="phase-title">Bekenstein: l'entropia come area</div>
+    <div class="phase-body">
+      <p>Nel 1972, Jacob <span class="hl">Bekenstein</span> propose che l'area dell'orizzonte fosse letteralmente proporzionale all'<span class="am">entropia</span> del buco nero. Il suo argomento: se si lancia un oggetto nel buco nero, l'informazione sembra persa, ma l'area dell'orizzonte cresce. Per conservare il secondo principio della termodinamica generalizzato, l'entropia del BH deve compensare. La formula di Bekenstein: <code class="formula">S_BH = η k_B A/l²_P</code>. La costante η fu determinata da Hawking (1974) essere esattamente 1/4. Questa è la <span class="gr">prima formula</span> che unisce tutti e tre i pilastri: la relatività generale (G), la meccanica quantistica (ℏ) e la termodinamica (k_B).</p>
+      <code class="formula">S_BH = k_B A / (4 l²_P)   [Bekenstein-Hawking]
+l²_P = ℏG/c³ ≈ 2.6 × 10⁻⁷⁰ m²
+S_BH unisce: G (GR), ℏ (QM), k_B (termo)
+→ "formula di Rosetta" della fisica teorica</code>
+      <div class="note">Animazione: il buco nero con l'orizzonte visibile, e un numero grande "S = A/4G" che appare al centro.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — HAWKING</div>
+    <div class="phase-title">La radiazione di Hawking</div>
+    <div class="phase-body">
+      <p>Nel 1974, Stephen <span class="hl">Hawking</span> mostrò che i buchi neri <span class="am">emettono radiazione termica</span>. Il meccanismo: vicino all'orizzonte, il vuoto quantistico fluttua creando coppie di particelle virtuali. Se una particella cade nell'orizzonte e l'altra fugge, il buco nero perde energia emettendo la particella fuggita. La temperatura di Hawking: <code class="formula">T_H = ℏc³/(8πGMk_B)</code>. Per un buco nero di massa solare, <code class="formula">T_H ≈ 10⁻⁷ K</code> — inosservabilmente freddo. Ma per mini-buchi neri primordiali o nei sistemi analoghi (condensati di Bose-Einstein), la radiazione è misurabile. L'emissione fa sì che il BH perda massa ed <span class="gr">evapori</span>.</p>
+      <code class="formula">T_H = ℏc³/(8πGMk_B) = ℏκ/(2πck_B)
+T_H[M☉] ≈ 6 × 10⁻⁸ K (freddissimo!)
+T_H[M=10¹⁵g] ≈ 10¹¹ K (hot!)
+Tempo di evaporazione: t_ev ~ G²M³/(ℏc⁴)</code>
+      <div class="note">Animazione: coppie di particelle create vicino all'orizzonte, una cade dentro, l'altra fugge come radiazione di Hawking.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — PARADOSSO</div>
+    <div class="phase-title">Il paradosso dell'informazione di Hawking</div>
+    <div class="phase-body">
+      <p>La radiazione di Hawking è <span class="hl">puramente termica</span>: ha la stessa distribuzione di un corpo nero a temperatura T_H. Questo crea un paradosso fondamentale: se un buco nero si forma collassando e poi evapora completamente, <span class="am">l'informazione sulla configurazione iniziale è persa</span>. La meccanica quantistica richiede che l'evoluzione sia unitaria: <code class="formula">|ψ_finale⟩ = U|ψ_iniziale⟩</code> con U†U=1. La perdita di informazione viola l'unitarietà — viola quindi la meccanica quantistica. Hawking (1976) inizialmente credeva che l'informazione fosse davvero perduta. Questo è il <span class="gr">paradosso dell'informazione</span> dei buchi neri, uno dei problemi aperti più profondi.</p>
+      <code class="formula">Unitarietà QM: |ψ(t)⟩ = U(t)|ψ(0)⟩
+Radiazione Hawking: stato misto (termico)
+Se BH evapora completamente:
+→ stato puro → stato misto ← VIOLA unitarietà!</code>
+      <div class="note">Animazione: informazione che cade nel buco nero (libro, freccia) e il BH che evapora emettendo solo rumore termico — l'informazione "sparisce".</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — MICROSTATI</div>
+    <div class="phase-title">Il puzzle dei microstati: S_BH è enorme</div>
+    <div class="phase-body">
+      <p>Un buco nero di massa M ha entropia <code class="formula">S_BH = 4πGM²/ℏc</code>. Per M=M_☉: S ~ 10⁷⁷ k_B — enormemente più grande dell'entropia della stella collassata (~10⁵⁷ k_B). La formula di Boltzmann <code class="formula">S = k_B log Ω</code> richiede che ci siano <code class="formula">e^{S/k_B} ~ 10^{10^{77}}</code> microstati del buco nero. Quali sono questi microstati? Nella relatività generale classica, il teorema "no-hair" dice che il buco nero è caratterizzato solo da (M, J, Q) — tre numeri! Come si conciliano 3 numeri con 10^{10^{77}} microstati? Questa è la sfida per la teoria della gravità quantistica.</p>
+      <code class="formula">S_BH = 4πGM²/(ℏc) ~ M²/M²_P
+S[M_☉] ~ 10⁷⁷ k_B  (enorme!)
+Ω = e^{S_BH/k_B} ~ 10^{10^{77}}  (microstati)
+No-hair: BH ~ (M, J, Q) → 3 numeri??? </code>
+      <div class="note">Animazione: confronto visivo tra l'entropia di una stella (piccola barra) e quella del BH equivalente (barra enorme).</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — STROMINGER</div>
+    <div class="phase-title">Strominger-Vafa: derivazione microscopica</div>
+    <div class="phase-body">
+      <p>Nel 1996, <span class="hl">Strominger e Vafa</span> calcolarono l'entropia di un buco nero estremale a cinque dimensioni usando la teoria delle stringhe. Il buco nero è costruito da un sistema di <span class="am">D1-brane + D5-brane + momento</span>. Contando i microstati quantistici (stati di eccitazione delle stringhe aperte tra le brane), ottennero esattamente la formula di Bekenstein-Hawking: <code class="formula">S = A/(4G)</code>. Questo fu il primo <span class="gr">conteggio microscopico</span> dell'entropia di un buco nero — una conferma straordinaria che la formula di BH ha una vera interpretazione statistica, e che le brane sono i microstati.</p>
+      <code class="formula">BH estremale 5D: Q₁ D1-brane + Q₅ D5-brane + n momento
+Microstati: stati eccitati delle stringhe aperte
+S_micro = 2π√(Q₁Q₅n)   [Strominger-Vafa]
+S_BH = A/(4G)   [Bekenstein-Hawking]
+→ S_micro = S_BH ✓</code>
+      <div class="note">Animazione: D-brane con stringhe aperte tra esse, il numero di stati che cresce esponenzialmente, il confronto con A/4G.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — OLOGRAFICO</div>
+    <div class="phase-title">Il principio olografico di 't Hooft e Susskind</div>
+    <div class="phase-body">
+      <p>L'entropia di Bekenstein-Hawking suggerisce qualcosa di profondo sul contenuto informazionale dello spaziotempo. <span class="hl">'t Hooft (1993)</span> e <span class="am">Susskind (1994)</span> formularono il <span class="hl">principio olografico</span>: il massimo di entropia (informazione) in una regione di spazio è proporzionale alla sua <span class="am">area</span> (non al volume): <code class="formula">S_max = A/(4G_N l²_P)</code>. Un volume di spazio con area A può contenere al massimo A/4 bit di informazione. Il mondo è come un <span class="gr">ologramma</span>: la descrizione 3D del volume è codificata completamente sulla superficie 2D. Questo è l'argomento concettuale che precede AdS/CFT.</p>
+      <code class="formula">S_max = A / (4 G_N)   [principio olografico]
+= A / (4 l²_P)  (in unità di Planck)
+1 "bit" per 4 l²_P di area
+Universe: I_max ~ (R_H/l_P)² ~ 10^{122} bit</code>
+      <div class="note">Animazione: volume che "proietta" la sua informazione sulla superficie — come un ologramma 2D che codifica il 3D.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-8">
+    <div class="phase-tag">FASE 08 — COLLEGA</div>
+    <div class="phase-title">AdS/CFT come realizzazione dell'olografia</div>
+    <div class="phase-body">
+      <p>La formula di Bekenstein-Hawking è la <span class="hl">prima manifestazione</span> del principio olografico. AdS/CFT ne è la realizzazione concreta e matematicamente controllata. Un <span class="am">buco nero in AdS</span> corrisponde a uno stato termico della CFT a temperatura T_Hawking. La formula di Ryu-Takayanagi (2006) generalizza Bekenstein-Hawking: <code class="formula">S_A = Area(γ_A)/(4G_N)</code> per <em>qualunque</em> regione A del bordo. Il <span class="gr">flusso dell'entropia</span> di un buco nero che evapora corrisponde alla curva di Page nella CFT unitaria. AdS/CFT risolve il paradosso dell'informazione: la CFT è unitaria per definizione, quindi l'evaporazione del BH deve essere unitaria.</p>
+      <code class="formula">S_BH = A/(4G_N) ← caso speciale di RT
+S_A = Area(γ_A)/(4G_N)   [Ryu-Takayanagi]
+BH in AdS ↔ stato termico CFT a T = T_Hawking
+→ evaporazione BH unitaria nella CFT ✓</code>
+      <div class="note">Animazione: buco nero in AdS con corrispondenza verso lo stato termico della CFT al bordo.</div>
+    </div>
+  </div>
+
+</div>
+
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · Termodin.</button>
+  <button class="btn" onclick="goPhase(2)">02 · Bekenstein</button>
+  <button class="btn" onclick="goPhase(3)">03 · Hawking</button>
+  <button class="btn" onclick="goPhase(4)">04 · Paradosso</button>
+  <button class="btn" onclick="goPhase(5)">05 · Microstati</button>
+  <button class="btn" onclick="goPhase(6)">06 · Strominger</button>
+  <button class="btn" onclick="goPhase(7)">07 · Olografico</button>
+  <button class="btn" onclick="goPhase(8)">08 · AdS/CFT</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: 'Termodinamica classica dei BH',  desc: 'FASE 01 — Quattro leggi: κ=costante, dM=(κ/8πG)dA+…, δA≥0', scene: 'termodin'  },
+  { name: "L'intuizione di Bekenstein",     desc: 'FASE 02 — S_BH = k_B A/(4 l²_P): area = entropia',          scene: 'bekenstein' },
+  { name: 'La radiazione di Hawking',       desc: 'FASE 03 — T_H = ℏc³/(8πGMk_B): i buchi neri irradiano',    scene: 'hawking'    },
+  { name: "Il paradosso dell'informazione", desc: 'FASE 04 — Evaporazione BH: perdita di unitarietà?',          scene: 'paradosso'  },
+  { name: 'Il puzzle dei microstati',       desc: 'FASE 05 — S[M☉]~10⁷⁷k_B: quali microstati?',               scene: 'microstati' },
+  { name: 'Strominger-Vafa',               desc: 'FASE 06 — D-brane: S_micro = S_BH (conteggio esatto)',       scene: 'strominger' },
+  { name: 'Il principio olografico',        desc: 'FASE 07 — S_max = A/4G_N: il mondo come ologramma',         scene: 'olografico' },
+  { name: "AdS/CFT e l'olografia",         desc: 'FASE 08 — S_BH ← Ryu-Takayanagi; BH in AdS ↔ CFT termica', scene: 'collega'    },
+];
+
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const cx    = t2AnimCX();
+  const cy    = t2AnimCY();
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phIdx].scene;
+
+  // ── Helper: draw a black hole ────────────────────────────────────────────
+  function drawBH(x, y, r, col) {
+    t2Glow(col || '#f97316', 22);
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, Math.PI * 2);
+    ctx.fillStyle = '#000007';
+    ctx.fill();
+    ctx.strokeStyle = col || '#f97316';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    t2NoGlow();
+  }
+
+  // ── SCENE: termodin ──────────────────────────────────────────────────────
+  if (scene === 'termodin') {
+    const bhR = Math.min(W, H) * 0.13;
+    drawBH(cx, cy, bhR, '#fbbf24');
+
+    // Growing rings showing δA ≥ 0
+    for (let i = 0; i < 5; i++) {
+      const prog  = rm ? (i + 1) / 5 : (((T * 0.28 + i * 0.2) % 1));
+      const rr    = bhR * (1.06 + prog * 1.1);
+      const alpha = Math.max(0, (0.55 - 0.55 * prog));
+      ctx.beginPath();
+      ctx.arc(cx, cy, rr, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(251,191,36,${alpha})`;
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+    }
+
+    // κ = costante label
+    t2Glow('#22d3ee', 10);
+    t2Txt(cx, cy - bhR - 28, "κ = costante sull'orizzonte", '#22d3ee', 12, 'center', "'Courier New',monospace");
+    t2NoGlow();
+
+    // δA ≥ 0 arrow
+    const arY = cy + bhR + 26;
+    ctx.beginPath();
+    ctx.moveTo(cx - 52, arY);
+    ctx.lineTo(cx + 40, arY);
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(cx + 40, arY);
+    ctx.lineTo(cx + 31, arY - 6);
+    ctx.lineTo(cx + 31, arY + 6);
+    ctx.closePath();
+    ctx.fillStyle = '#4ade80';
+    ctx.fill();
+    t2Txt(cx, arY + 16, 'δA ≥ 0  (Hawking 1971)', '#4ade80', 11, 'center', "'Courier New',monospace");
+    t2Txt(cx, arY + 36, 'Quattro leggi — analogia con la termodinamica', '#60a5fa', 11, 'center');
+    return;
+  }
+
+  // ── SCENE: bekenstein ────────────────────────────────────────────────────
+  if (scene === 'bekenstein') {
+    const bhR = Math.min(W, H) * 0.12;
+    drawBH(cx, cy, bhR, '#f97316');
+
+    // Glowing horizon ring
+    const pr = rm ? 1 : (1 + 0.04 * Math.sin(T * 1.4));
+    t2Glow('#fbbf24', 20);
+    ctx.beginPath();
+    ctx.arc(cx, cy, bhR * 1.05 * pr, 0, Math.PI * 2);
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth   = 3;
+    ctx.stroke();
+    t2NoGlow();
+
+    t2Txt(cx + bhR * 1.25, cy - 10, 'A = 4πr²_S', '#fbbf24', 10, 'left', "'Courier New',monospace");
+    t2Txt(cx + bhR * 1.25, cy + 8,  '(area orizzonte)', '#b45309', 9, 'left');
+
+    // Main formula glowing
+    const pt = rm ? 1 : (0.75 + 0.25 * Math.sin(T * 1.8));
+    t2Glow('#a78bfa', 24 * pt);
+    t2Txt(cx, cy + bhR + 36, 'S_BH = k_B A / (4 l²_P)', '#c4b5fd', 14, 'center', "'Courier New',monospace");
+    t2NoGlow();
+
+    // Three pillars
+    const py2 = cy + bhR + 62;
+    t2Glow('#22d3ee', 8); t2Txt(cx - 90, py2, 'G (GR)',     '#22d3ee', 11, 'center'); t2NoGlow();
+    t2Glow('#4ade80', 8); t2Txt(cx,      py2, 'ℏ (QM)',     '#4ade80', 11, 'center'); t2NoGlow();
+    t2Glow('#f97316', 8); t2Txt(cx + 90, py2, 'k_B (termo)','#f97316', 11, 'center'); t2NoGlow();
+    t2Txt(cx, cy - bhR - 24, 'Bekenstein 1972: entropia ∝ area', '#f0f9ff', 12, 'center');
+    return;
+  }
+
+  // ── SCENE: hawking ───────────────────────────────────────────────────────
+  if (scene === 'hawking') {
+    const bhR = Math.min(W, H) * 0.11;
+    const bhx = cx - W * 0.08;
+    drawBH(bhx, cy, bhR, '#f97316');
+
+    // Particle pairs
+    for (let i = 0; i < 4; i++) {
+      const pairAng = -Math.PI * 0.25 + i * (Math.PI * 0.7 / 3);
+      const spawnX  = bhx + bhR * 1.15 * Math.cos(pairAng);
+      const spawnY  = cy  + bhR * 1.15 * Math.sin(pairAng);
+
+      if (!rm) {
+        const tOff = ((T * 0.65 + i * 0.25) % 1);
+        // Infalling
+        const inX = t2Lerp(spawnX, bhx + bhR * 0.7 * Math.cos(pairAng), tOff);
+        const inY = t2Lerp(spawnY, cy  + bhR * 0.7 * Math.sin(pairAng), tOff);
+        t2Glow('#f472b6', 10);
+        ctx.beginPath(); ctx.arc(inX, inY, 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = '#f472b6'; ctx.fill();
+        t2NoGlow();
+        // Escaping
+        const escAng = Math.atan2(spawnY - cy, spawnX - bhx);
+        const escX   = t2Lerp(spawnX, spawnX + Math.cos(escAng) * W * 0.3, tOff);
+        const escY   = t2Lerp(spawnY, spawnY + Math.sin(escAng) * H * 0.22, tOff);
+        t2Glow('#fbbf24', 12);
+        ctx.beginPath(); ctx.arc(escX, escY, 3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(251,191,36,${1 - tOff * 0.4})`; ctx.fill();
+        t2NoGlow();
+      } else {
+        ctx.beginPath(); ctx.arc(spawnX - 5, spawnY, 3, 0, Math.PI * 2);
+        ctx.fillStyle = '#f472b6'; ctx.fill();
+        ctx.beginPath(); ctx.arc(spawnX + 9, spawnY, 3, 0, Math.PI * 2);
+        ctx.fillStyle = '#fbbf24'; ctx.fill();
+      }
+    }
+
+    t2Glow('#fbbf24', 8);
+    t2Txt(cx + W * 0.2, cy - 14, 'Radiazione di Hawking', '#fbbf24', 11, 'center');
+    t2NoGlow();
+    t2Txt(cx + W * 0.2, cy + 6, '(particella fuggita)', '#b45309', 9, 'center');
+    t2Txt(cx, cy + bhR + 32, 'T_H = ℏc³/(8πGMk_B)', '#60a5fa', 12, 'center', "'Courier New',monospace");
+    t2Txt(cx, cy + bhR + 52, 'I buchi neri irradiano — ma sono molto freddi', '#4a7a9b', 10, 'center');
+    return;
+  }
+
+  // ── SCENE: paradosso ─────────────────────────────────────────────────────
+  if (scene === 'paradosso') {
+    const bhR = Math.min(W, H) * 0.12;
+    drawBH(cx, cy, bhR, '#7c3aed');
+
+    // Info boxes falling in
+    for (let i = 0; i < 3; i++) {
+      const tOff = rm ? 0.35 + i * 0.2 : ((T * 0.42 + i * 0.33) % 1);
+      const sx   = cx - W * 0.33;
+      const sy   = cy - 20 + i * 22;
+      const ex   = cx - bhR * 0.75;
+      const ey   = cy - 8 + i * 8;
+      const px2  = t2Lerp(sx, ex, tOff);
+      const py2  = t2Lerp(sy, ey, tOff);
+      const a2   = Math.max(0, 1 - tOff * 0.9);
+      ctx.fillStyle   = `rgba(34,211,238,${a2 * 0.65})`;
+      ctx.strokeStyle = `rgba(34,211,238,${a2})`;
+      ctx.lineWidth   = 1;
+      ctx.beginPath(); ctx.rect(px2 - 10, py2 - 7, 20, 14); ctx.fill(); ctx.stroke();
+      ctx.fillStyle = `rgba(255,255,255,${a2 * 0.85})`;
+      ctx.font = 'bold 7px monospace'; ctx.textAlign = 'center';
+      ctx.fillText('ψ', px2, py2 + 3);
+    }
+
+    // Thermal noise out
+    for (let j = 0; j < 5; j++) {
+      const tOff = rm ? j / 5 : ((T * 0.37 + j * 0.2) % 1);
+      const ang  = -Math.PI * 0.28 + j * (Math.PI * 0.14);
+      const sx   = cx + bhR * 1.1 * Math.cos(ang);
+      const sy   = cy + bhR * 1.1 * Math.sin(ang);
+      const nx2  = t2Lerp(sx, sx + Math.cos(ang) * W * 0.27, tOff);
+      const ny2  = t2Lerp(sy, sy + Math.sin(ang) * H * 0.2,  tOff);
+      t2Glow('#f97316', 6);
+      ctx.beginPath(); ctx.arc(nx2, ny2, 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(251,191,36,${0.7 - tOff * 0.4})`; ctx.fill();
+      t2NoGlow();
+    }
+
+    t2Glow('#22d3ee', 8);
+    t2Txt(cx - W * 0.28, cy - 36, '| ψ ⟩', '#22d3ee', 13, 'center', "'Courier New',monospace");
+    t2Txt(cx - W * 0.28, cy - 18, 'informazione', '#22d3ee', 9, 'center');
+    t2NoGlow();
+    t2Glow('#ef4444', 14);
+    t2Txt(cx, cy + bhR + 32, '✗  stato puro → stato misto', '#ef4444', 13, 'center');
+    t2NoGlow();
+    t2Txt(cx, cy + bhR + 54, 'VIOLA unitarietà QM — il paradosso di Hawking', '#7c3aed', 10, 'center');
+    return;
+  }
+
+  // ── SCENE: microstati ────────────────────────────────────────────────────
+  if (scene === 'microstati') {
+    const barW  = Math.min(W * 0.11, 55);
+    const maxH  = H * 0.44;
+    const baseY = cy + maxH * 0.48;
+
+    // Stellar entropy bar (small)
+    const starX = cx - barW * 2;
+    const starH = maxH * 0.055;
+    ctx.fillStyle   = 'rgba(34,211,238,0.22)';
+    ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.rect(starX - barW * 0.5, baseY - starH, barW, starH); ctx.fill(); ctx.stroke();
+    t2Txt(starX, baseY - starH - 14, '10⁵⁷ k_B', '#22d3ee', 10, 'center', "'Courier New',monospace");
+    t2Txt(starX, baseY + 14, 'Stella',    '#22d3ee', 10, 'center');
+    t2Txt(starX, baseY + 28, 'collassata','#22d3ee',  9, 'center');
+
+    // BH entropy bar (huge, animated)
+    const bhBarX = cx + barW * 2;
+    const bhBarH = rm ? maxH : t2Clamp(maxH * (0.55 + 0.45 * Math.sin(T * 0.38 + 1.5)), maxH * 0.35, maxH);
+    t2Glow('#f97316', 14);
+    ctx.fillStyle   = 'rgba(249,115,22,0.28)';
+    ctx.strokeStyle = '#f97316'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.rect(bhBarX - barW * 0.5, baseY - bhBarH, barW, bhBarH); ctx.fill(); ctx.stroke();
+    t2NoGlow();
+    t2Glow('#fbbf24', 10);
+    t2Txt(bhBarX, baseY - bhBarH - 16, '10⁷⁷ k_B', '#fbbf24', 10, 'center', "'Courier New',monospace");
+    t2NoGlow();
+    t2Txt(bhBarX, baseY + 14, 'Buco Nero', '#f97316', 10, 'center');
+    t2Txt(bhBarX, baseY + 28, '(M = M☉)',  '#f97316',  9, 'center');
+
+    // Factor arrow
+    const fy = cy - maxH * 0.52;
+    ctx.setLineDash([4, 3]);
+    ctx.beginPath(); ctx.moveTo(starX + barW * 0.5 + 5, fy + 10);
+    ctx.lineTo(bhBarX - barW * 0.5 - 5, fy + 10);
+    ctx.strokeStyle = 'rgba(167,243,208,0.45)'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.setLineDash([]);
+    t2Txt(cx, fy - 2, '× 10²⁰', '#a7f3d0', 11, 'center');
+    t2Txt(cx, cy - maxH * 0.67, 'S_BH enormemente superiore a S_stella', '#f0f9ff', 12, 'center');
+    t2Txt(cx, baseY + 50, 'No-hair: solo M,J,Q → quali 10^{10^{77}} microstati?', '#7c3aed', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: strominger ────────────────────────────────────────────────────
+  if (scene === 'strominger') {
+    const bW  = W * 0.52;
+    const d1Y = cy - H * 0.13;
+    const d5Y = cy + H * 0.13;
+    const bX  = cx - bW * 0.5;
+    const bX2 = cx + bW * 0.5;
+
+    // D1-brane
+    t2Glow('#22d3ee', 10);
+    ctx.beginPath(); ctx.moveTo(bX, d1Y); ctx.lineTo(bX2, d1Y);
+    ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 3; ctx.stroke();
+    t2NoGlow();
+    t2Txt(bX2 + 10, d1Y + 4, 'D1-brana (Q₁)', '#22d3ee', 10, 'left', "'Courier New',monospace");
+
+    // D5-brane
+    t2Glow('#a78bfa', 10);
+    ctx.beginPath(); ctx.moveTo(bX, d5Y); ctx.lineTo(bX2, d5Y);
+    ctx.strokeStyle = '#a78bfa'; ctx.lineWidth = 3; ctx.stroke();
+    t2NoGlow();
+    t2Txt(bX2 + 10, d5Y + 4, 'D5-brana (Q₅)', '#a78bfa', 10, 'left', "'Courier New',monospace");
+
+    // Wavy strings between branes
+    for (let si = 0; si < 5; si++) {
+      const sx  = bX + (si + 0.5) * (bW / 5);
+      const amp = rm ? 6 : (6 + 3 * Math.sin(T * 2.1 + si * 1.3));
+      ctx.beginPath();
+      for (let k = 0; k <= 22; k++) {
+        const f  = k / 22;
+        const xx = sx + amp * Math.sin(f * Math.PI * 3 + T * 1.9 + si * 0.9);
+        const yy = d1Y + (d5Y - d1Y) * f;
+        k === 0 ? ctx.moveTo(xx, yy) : ctx.lineTo(xx, yy);
+      }
+      const hue = 120 + si * 28;
+      ctx.strokeStyle = `hsl(${hue},80%,65%)`; ctx.lineWidth = 1.5;
+      t2Glow(`hsl(${hue},80%,65%)`, 5); ctx.stroke(); t2NoGlow();
+    }
+
+    // Result equation
+    const eqY = cy + H * 0.28;
+    t2Glow('#4ade80', 14);
+    t2Txt(cx, eqY, 'S_micro = 2π√(Q₁Q₅n)  =  A/(4G)  ✓', '#4ade80', 13, 'center', "'Courier New',monospace");
+    t2NoGlow();
+    t2Txt(cx, eqY + 24, 'Strominger-Vafa 1996 — primo conteggio microscopico', '#4a7a9b', 10, 'center');
+    t2Txt(cx, d1Y - 22, 'Stringhe aperte tra le brane → microstati del BH', '#f0f9ff', 12, 'center');
+    return;
+  }
+
+  // ── SCENE: olografico ────────────────────────────────────────────────────
+  if (scene === 'olografico') {
+    const s   = Math.min(W, H) * 0.19;
+    const dx  = s * 0.42; const dy = s * 0.22;
+    const cxc = cx - dx * 0.3; const cyc = cy;
+
+    const front = [
+      [cxc - s * 0.5, cyc - s * 0.5],
+      [cxc + s * 0.5, cyc - s * 0.5],
+      [cxc + s * 0.5, cyc + s * 0.5],
+      [cxc - s * 0.5, cyc + s * 0.5],
+    ];
+    const back = front.map(([x, y]) => [x + dx, y - dy]);
+
+    // Volume fill
+    const va = rm ? 0.08 : (0.06 + 0.04 * Math.sin(T * 1.0));
+    ctx.fillStyle = `rgba(99,102,241,${va})`;
+    ctx.beginPath(); ctx.moveTo(...front[0]);
+    front.forEach(p => ctx.lineTo(...p)); ctx.closePath(); ctx.fill();
+
+    const edge = (p1, p2, col, lw) => {
+      ctx.beginPath(); ctx.moveTo(...p1); ctx.lineTo(...p2);
+      ctx.strokeStyle = col; ctx.lineWidth = lw; ctx.stroke();
+    };
+    for (let i = 0; i < 4; i++) edge(front[i], front[(i+1)%4], 'rgba(99,102,241,0.8)', 1.5);
+    for (let i = 0; i < 4; i++) edge(back[i],  back[(i+1)%4],  'rgba(99,102,241,0.4)', 1.0);
+    for (let i = 0; i < 4; i++) edge(front[i], back[i],        'rgba(99,102,241,0.5)', 1.0);
+
+    // Top surface highlighted (holographic screen)
+    t2Glow('#22d3ee', 14);
+    ctx.beginPath();
+    ctx.moveTo(...front[0]); ctx.lineTo(...back[0]); ctx.lineTo(...back[1]); ctx.lineTo(...front[1]); ctx.closePath();
+    ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 2.5; ctx.stroke();
+    const sa = rm ? 0.12 : (0.10 + 0.06 * Math.sin(T * 1.3));
+    ctx.fillStyle = `rgba(34,211,238,${sa})`; ctx.fill();
+    t2NoGlow();
+
+    // Arrows from interior to surface
+    for (let ai = 0; ai < 3; ai++) {
+      const f   = (ai + 1) / 4;
+      const sx2 = cxc - s * 0.25 + ai * s * 0.22;
+      const sy2 = cyc + s * 0.15 - ai * s * 0.12;
+      const tx2 = sx2 + dx * f * 0.8;
+      const ty2 = sy2 - dy * f * 0.8 - s * 0.45 * f;
+      const aa  = rm ? 0.5 : (0.3 + 0.3 * Math.abs(Math.sin(T * 1.5 + ai)));
+      ctx.beginPath(); ctx.moveTo(sx2, sy2); ctx.lineTo(tx2, ty2);
+      ctx.strokeStyle = `rgba(167,243,208,${aa})`; ctx.lineWidth = 1.5; ctx.stroke();
+    }
+
+    t2Glow('#22d3ee', 10);
+    t2Txt(cxc + dx + s * 0.55, cyc - dy - s * 0.5, 'S ≤ A/(4G)', '#22d3ee', 13, 'center', "'Courier New',monospace");
+    t2NoGlow();
+    t2Txt(cxc, cyc + s * 0.65 + 16, 'Principio Olografico', '#f0f9ff', 12, 'center');
+    t2Txt(cxc, cyc + s * 0.65 + 34, 'informazione del volume codificata sulla superficie', '#4a7a9b', 10, 'center');
+    return;
+  }
+
+  // ── SCENE: collega ───────────────────────────────────────────────────────
+  if (scene === 'collega') {
+    const R  = Math.min(W * 0.24, H * 0.38, 175);
+
+    // AdS concentric rings
+    for (let ri = 1; ri <= 6; ri++) {
+      const pp = rm ? 1 : (0.7 + 0.3 * Math.sin(T * 0.7 + ri * 0.5));
+      ctx.beginPath(); ctx.arc(cx, cy, R * (ri / 6), 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(99,102,241,${0.12 * pp})`; ctx.lineWidth = 0.8; ctx.stroke();
+    }
+
+    // Boundary circle
+    t2Glow('#0ea5e9', 12);
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.strokeStyle = '#0ea5e9'; ctx.lineWidth = 2; ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, cy - R - 14, 'BORDO AdS ↔ CFT termica', '#0ea5e9', 10, 'center', "'Courier New',monospace");
+
+    // BH at center
+    const bhR2 = R * 0.22;
+    drawBH(cx, cy, bhR2, '#f97316');
+    t2Txt(cx, cy + bhR2 + 12, 'BH AdS',  '#f97316', 9, 'center', "'Courier New',monospace");
+    t2Txt(cx, cy + bhR2 + 24, 'T = T_H', '#f97316', 9, 'center', "'Courier New',monospace");
+
+    // Radial moving dots
+    for (let ai = 0; ai < 6; ai++) {
+      const ang  = (Math.PI * 2 * ai) / 6;
+      const tOff = rm ? 0.5 : ((T * 0.5 + ai * 0.166) % 1);
+      const sx2  = cx + bhR2 * 1.1 * Math.cos(ang);
+      const sy2  = cy + bhR2 * 1.1 * Math.sin(ang);
+      ctx.beginPath(); ctx.moveTo(sx2, sy2);
+      ctx.lineTo(cx + R * 0.93 * Math.cos(ang), cy + R * 0.93 * Math.sin(ang));
+      ctx.strokeStyle = 'rgba(251,191,36,0.12)'; ctx.lineWidth = 1; ctx.stroke();
+      if (!rm) {
+        const nx2 = t2Lerp(sx2, cx + R * 0.93 * Math.cos(ang), tOff);
+        const ny2 = t2Lerp(sy2, cy + R * 0.93 * Math.sin(ang), tOff);
+        t2Glow('#fbbf24', 8);
+        ctx.beginPath(); ctx.arc(nx2, ny2, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = '#fbbf24'; ctx.fill(); t2NoGlow();
+      }
+    }
+
+    // CFT label
+    t2Glow('#22d3ee', 8);
+    t2Txt(cx + R + 14, cy - 14, 'CFT',    '#22d3ee', 13, 'left');
+    t2Txt(cx + R + 14, cy + 4,  'termica','#22d3ee', 13, 'left');
+    t2NoGlow();
+    t2Txt(cx + R + 14, cy + 22, 'T = T_Hawking', '#b45309', 9, 'left', "'Courier New',monospace");
+    t2Txt(cx, cy + R + 26, 'S_BH = A/(4G_N)  ←  Ryu-Takayanagi', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    t2Txt(cx, cy + R + 44, 'evaporazione BH unitaria nella CFT ✓', '#4ade80', 10, 'center');
+    return;
+  }
+
+  // Fallback
+  ctx.beginPath(); ctx.arc(cx, cy, Math.min(W, H) * 0.18, 0, Math.PI * 2);
+  ctx.strokeStyle = 'rgba(14,165,233,0.3)'; ctx.lineWidth = 1; ctx.stroke();
+};
+
+t2Init();
+</script>
+</body>
+</html>
