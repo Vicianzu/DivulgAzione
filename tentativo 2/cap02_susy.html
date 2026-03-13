@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supersimmetria (SUSY) | Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="ui">
+  <span id="ui-title">DivulgAzione · SUSY</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">8 fasi</span>
+</div>
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — GERARCHIA</div>
+    <div class="phase-title">Il problema della gerarchia</div>
+    <div class="phase-body">
+      <p>La fisica del Modello Standard nasconde un problema di naturalezza profondo. La massa del <span class="hl">bosone di Higgs</span> misurata sperimentalmente è circa 125 GeV. Ma la scala di Planck — la scala a cui la gravità diventa quantistica — è circa 10¹⁹ GeV. Queste due scale differiscono di 17 ordini di grandezza.</p>
+      <p>Il problema è che le <span class="am">correzioni quantistiche ai loop</span> alla massa dell'Higgs sono dell'ordine della scala di cutoff UV al quadrato: δm²_H ~ Λ²_UV. Se la fisica nuova compare a E_P, allora le correzioni dovrebbero portare m_H ≈ E_P — non 125 GeV. Per ottenere la massa osservata servirebbe una cancellazione fine-tuned di 34 cifre significative tra i parametri nudi e le correzioni. Questa è una coincidenza considerata fisicamente inaccettabile: il <span class="am">problema della gerarchia</span>.</p>
+      <p>La <span class="hl">supersimmetria</span> offre una soluzione elegante e naturale: per ogni particella bosonica che contribuisce positivamente ai loop vi è un superpartner fermionico con contributo uguale e opposto. La cancellazione è automatica — protetta dalla simmetria.</p>
+      <code class="formula">δm²_H ~ Λ²_UV (loop bosonici)
+− δm²_H ~ Λ²_UV (loop fermionici SUSY)
+→ δm²_H |_{SUSY} = 0 (cancellazione esatta!)</code>
+      <div class="note">Animazione: grafico a barre verticali — barra bassa per m_H (125 GeV) e barra altissima per E_P (10¹⁹ GeV), con linee ondulate di loop che si annullano sopra la barra di Higgs.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — PARTICELLE</div>
+    <div class="phase-title">Fermioni e bosoni: le due famiglie</div>
+    <div class="phase-body">
+      <p>Tutte le particelle fondamentali conosciute appartengono a due grandi famiglie, definite dal loro <span class="hl">spin</span>.</p>
+      <p>I <span class="am">fermioni</span> hanno spin semi-intero (1/2, 3/2, ...) e seguono la <span class="am">statistica di Fermi-Dirac</span>: non possono occupare lo stesso stato quantistico (principio di esclusione di Pauli). I fermioni costituiscono la materia: quark (u, d, s, c, b, t), leptoni (elettrone, muone, tau, neutrini). La loro natura antisimmetrica è il motivo per cui la materia è solida e stabile.</p>
+      <p>I <span class="hl">bosoni</span> hanno spin intero (0, 1, 2, ...) e seguono la <span class="hl">statistica di Bose-Einstein</span>: possono occupare lo stesso stato quantistico in numero illimitato. I bosoni mediano le interazioni fondamentali: il fotone (elettromagnetismo, spin 1), i gluoni (forza forte, spin 1), W e Z (forza debole, spin 1), il bosone di Higgs (spin 0), e il gravitone (spin 2).</p>
+      <p>La <span class="gr">SUSY</span> stabilisce una simmetria fondamentale tra questi due mondi: ogni fermione ha un partner bosonico e viceversa, con proprietà identiche (salvo lo spin) se la SUSY è esatta.</p>
+      <code class="formula">Fermioni: spin ½, 3/2, ... → statistica Fermi-Dirac
+Bosoni: spin 0, 1, 2, ... → statistica Bose-Einstein</code>
+      <div class="note">Animazione: punti rossi (fermioni) che si respingono e si tengono distanti, punti blu (bosoni) che si raggruppano e si sovrappongono — le due statistiche quantistiche in azione.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — ALGEBRA</div>
+    <div class="phase-title">L'algebra della supersimmetria</div>
+    <div class="phase-body">
+      <p>La supersimmetria è una simmetria dello spaziotempo generata dall'operatore <span class="hl">Q</span> (supercarica o generatore SUSY). Questo operatore trasforma bosoni in fermioni e viceversa:</p>
+      <p>L'algebra SUSY è una <span class="am">superalgebra di Lie</span>: un'algebra graduata che contiene sia commutatori (relazioni bosoniche) sia anticommutatori (relazioni fermioniche). La relazione fondamentale — che distingue la SUSY da ogni altra simmetria interna — è l'anticommutatore tra Q e la sua coniugata Q̄:</p>
+      <code class="formula">Q|bosone⟩ = |fermione⟩,   Q|fermione⟩ = |bosone⟩
+{Q_α, Q̄_β̇} = 2σ^μ_{αβ̇} P_μ
+[Q, P_μ] = 0,   [Q, M_μν] = σ_μν Q</code>
+      <p>L'equazione {Q, Q̄} = 2σ^μ P_μ è straordinaria: l'anticommutatore di due supercariche produce il <span class="gr">generatore delle traslazioni</span> P_μ — cioè il momento-energia. Questo significa che la SUSY non è una simmetria interna ma una <span class="vi">simmetria dello spaziotempo</span>: è profondamente intrecciata con la geometria. Questo è il teorema di Haag-Łopuszański-Sohnius (1975): la SUSY è l'unica estensione possibile dell'algebra di Poincaré compatibile con l'unitarietà della matrice S.</p>
+      <div class="note">Animazione: due nodi (rosso=fermione, blu=bosone) collegati da frecce bidirezionali pulsanti etichettate Q e Q̄ — le trasformazioni SUSY visualizzate come connessioni tra i due settori.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — PARTNER</div>
+    <div class="phase-title">I superpartner: lo specchio delle particelle</div>
+    <div class="phase-body">
+      <p>Se la SUSY è una simmetria della natura, ogni particella del Modello Standard deve avere un <span class="hl">superpartner</span> con spin che differisce di 1/2 e con la stessa carica, massa (se SUSY esatta) e numeri quantici interni.</p>
+      <p>I partner dei <span class="am">fermioni</span> (spin 1/2) sono <span class="am">sfermioni</span> (spin 0): lo squark (partner del quark), il selettrone (partner dell'elettrone), lo sneutrino (partner del neutrino). I partner dei <span class="hl">bosoni di gauge</span> (spin 1) sono <span class="hl">gaugini</span> (spin 1/2): il fotino (partner del fotone), il gluino (partner del gluone), i wino e zino (partner di W e Z). Il partner dell'<span class="gr">Higgs</span> (spin 0) è l'<span class="gr">higgsino</span> (spin 1/2). Il partner del <span class="vi">gravitone</span> (spin 2) è il <span class="vi">gravitino</span> (spin 3/2). Se la SUSY è rotta, i superpartner sono più pesanti delle particelle SM corrispondenti.</p>
+      <code class="formula">quark (½) ↔ squark (0)
+fermione (½) ↔ sfermione (0)
+fotone (1) ↔ fotino (½)
+graviton (2) ↔ gravitino (3/2)</code>
+      <div class="note">Animazione: due colonne di nodi — particelle SM a sinistra (colori brillanti) e superpartner a destra (colori più tenui) — con frecce di trasformazione Q che collegano ogni coppia.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — N4SYM</div>
+    <div class="phase-title">𝒩=4 Super Yang-Mills: la CFT del bordo</div>
+    <div class="phase-body">
+      <p>La teoria <span class="hl">𝒩=4 Super Yang-Mills</span> (SYM) è la teoria di gauge con il più alto numero di supersimmetrie possibili in quattro dimensioni di spaziotempo. "𝒩=4" indica quattro supercariche indipendenti Q_a (con a=1,2,3,4).</p>
+      <p>Il contenuto di campi è completamente determinato dalla simmetria: un <span class="am">bosone di gauge</span> A_μ (spin 1), sei <span class="gr">scalari reali</span> φ_I (con I=1,...,6, spin 0), e quattro <span class="vi">spinori di Weyl</span> λ_a (spin 1/2). Tutti questi campi trasformano nella <span class="am">rappresentazione aggiunta</span> del gruppo di gauge SU(N). Nessun parametro libero aggiuntivo (a parte g_YM e N): la simmetria fissa completamente la struttura della teoria.</p>
+      <p>Il gruppo di simmetria globale è <span class="hl">SU(2,2|4)</span> — la superalgebra conforme in 4D — che include il gruppo conforme SO(2,4) ≅ SU(2,2) e il gruppo di R-simmetria SO(6) ≅ SU(4). Queste simmetrie coincidono esattamente con le isometrie di AdS₅×S⁵.</p>
+      <code class="formula">L = Tr(-¼F²_μν - ½(D_μφ_I)² + ¼[φ_I,φ_J]²
+       + fermioni + Yukawa)
+Gruppo di gauge: SU(N),   4 supercariche</code>
+      <div class="note">Animazione: diagramma circolare del gruppo SU(N) con i campi A (ambra), φ (verde), λ (viola) come punti colorati che orbitano attorno al centro etichettato SU(N).</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — CONFORME</div>
+    <div class="phase-title">Invarianza conforme: β = 0 esatta</div>
+    <div class="phase-body">
+      <p>Nelle teorie di gauge ordinarie come QED e QCD, la costante di accoppiamento <span class="am">scorre con l'energia</span> secondo il gruppo di rinormalizzazione (RG). La funzione beta β(g) = μ ∂g/∂μ descrive questo scorrimento: nella QCD, β &lt; 0 (libertà asintotica); nella QED, β &gt; 0 (accoppiamento che cresce verso l'UV).</p>
+      <p>In 𝒩=4 SYM accade qualcosa di straordinario: la <span class="hl">funzione beta è esattamente zero</span> a tutti gli ordini in teoria perturbativa — e, come dimostrato più tardi, anche a livello non-perturbativo. La costante di accoppiamento g_YM non scorre: mantiene lo stesso valore a tutte le scale di energia.</p>
+      <p>La teoria è quindi <span class="gr">esattamente conforme</span> per qualsiasi valore di g_YM e N. Questo significa che 𝒩=4 SYM non ha una scala caratteristica — è invariante sotto dilatazioni e trasformazioni conformi dello spaziotempo. È questa proprietà che la rende una <span class="vi">CFT</span> (Conformal Field Theory) e la candidata ideale per il lato bordo di AdS/CFT.</p>
+      <code class="formula">β(g_YM) = 0   (esatta, tutti gli ordini)
+→ g_YM non scorre con l'energia
+→ teoria conforme per qualsiasi g_YM e N</code>
+      <div class="note">Animazione: diagramma del flusso RG nello spazio degli accoppiamenti — le linee di flusso convergono verso un punto fisso (β=0) dove si arrestano, visualizzando l'invarianza conforme.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — THOOFT</div>
+    <div class="phase-title">Il limite di 't Hooft e i diagrammi planari</div>
+    <div class="phase-body">
+      <p>La teoria 𝒩=4 SYM ha due parametri: la costante di accoppiamento g_YM e il rango N del gruppo di gauge SU(N). Gerard 't Hooft (1974) propose di studiare un limite speciale: <span class="am">N → ∞</span> mantenendo fissa la costante di <span class="hl">'t Hooft</span> λ = g²_YM N. In questo limite la teoria semplifica enormemente.</p>
+      <p>Il motivo è topologico: ogni diagramma di Feynman contribuisce con una potenza di N determinata dalla sua topologia. Un diagramma con topologia di una superficie di genere g (g buchi) contribuisce come N^{2-2g}. Nel limite N → ∞ sopravvivono solo i <span class="gr">diagrammi planari</span> (g=0, superficie sferica): quelli che possono essere disegnati su un piano senza incroci di propagatori. I diagrammi <span class="am">non-planari</span> (g≥1) sono soppressi da potenze di 1/N².</p>
+      <p>Questo limite ha un'interpretazione sorprendente: la somma dei diagrammi planari di una teoria di gauge è simile alla teoria delle stringhe. λ grande corrisponde al regime in cui la <span class="vi">supergravità classica</span> nel bulk AdS è una buona approssimazione — il regime in cui AdS/CFT è più utile.</p>
+      <code class="formula">λ = g²_YM N   (costante di 't Hooft)
+N→∞ con λ fisso: solo diagrammi planari
+Ampiezza ~ N^{2-2g}  (g = numero di handles)</code>
+      <div class="note">Animazione: due diagrammi di Feynman schematici — uno planare (cerchi connessi in piano, etichettato N²) e uno non-planare (con un incrocio, etichettato 1/N²) — con il secondo soppresso visivamente.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-8">
+    <div class="phase-tag">FASE 08 — FENOMENO</div>
+    <div class="phase-title">SUSY rotta: la fenomenologia</div>
+    <div class="phase-body">
+      <p>La SUSY esatta prevederebbe superpartner con la stessa massa delle particelle SM — ma nessuno squark o selectron a 100 GeV è mai stato osservato. La <span class="hl">SUSY deve essere rotta</span> spontaneamente a una scala M_SUSY sufficientemente alta da spiegare l'assenza di segnali agli acceleratori attuali.</p>
+      <p>La rottura spontanea di SUSY avviene quando il campo ausiliario F (o D) acquista un valore di aspettazione nel vuoto non nullo: <span class="am">⟨F⟩ ≠ 0</span>. Il goldstino — il fermione di Goldstone della rottura di SUSY — viene "mangiato" dal gravitino attraverso il meccanismo di super-Higgs, dando al <span class="vi">gravitino</span> una massa m_{3/2} ~ ⟨F⟩/M_P.</p>
+      <p>L'<span class="gr">LHC</span> a CERN ha cercato superpartner fino a masse di circa 2-3 TeV senza trovarli. Questo non esclude la SUSY, ma pone vincoli sulla scala di rottura. La SUSY potrebbe essere rotta a scale molto alte (SUSY split o high-scale SUSY), o i superpartner potrebbero avere masse o configurazioni di decadimento che li rendono difficili da osservare. Nonostante i risultati negativi dell'LHC, la SUSY rimane la motivazione teorica principale di AdS/CFT.</p>
+      <code class="formula">M_SUSY > TeV (da assenza di segnali LHC)
+m_gravitino ~ ⟨F⟩/M_P
+⟨F⟩^{1/2} ~ 10^{10-11} GeV (rottura mediata per gravità)</code>
+      <div class="note">Animazione: supermultipletto come livello energetico singolo che si divide in due livelli separati — bosone in basso, fermione in alto — con un gap verticale etichettato M_SUSY, che si allarga dinamicamente.</div>
+    </div>
+  </div>
+
+</div>
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · Gerarchia</button>
+  <button class="btn" onclick="goPhase(2)">02 · F&amp;B</button>
+  <button class="btn" onclick="goPhase(3)">03 · Algebra</button>
+  <button class="btn" onclick="goPhase(4)">04 · Partner</button>
+  <button class="btn" onclick="goPhase(5)">05 · N=4SYM</button>
+  <button class="btn" onclick="goPhase(6)">06 · Conforme</button>
+  <button class="btn" onclick="goPhase(7)">07 · 't Hooft</button>
+  <button class="btn" onclick="goPhase(8)">08 · Rottura</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: 'Il Problema della Gerarchia',       desc: 'FASE 01 — δm²_H ~ Λ²_UV → cancellazione SUSY esatta',           scene: 'gerarchia' },
+  { name: 'Fermioni e Bosoni',                 desc: 'FASE 02 — Spin ½ (Fermi) vs spin intero (Bose): le due famiglie', scene: 'fb'        },
+  { name: 'L\'Algebra della Supersimmetria',   desc: 'FASE 03 — {Q_α, Q̄_β̇} = 2σ^μ P_μ: SUSY è simmetria spaziotemporale', scene: 'algebra'  },
+  { name: 'I Superpartner',                    desc: 'FASE 04 — Squark, selettrone, fotino, gravitino: lo specchio',    scene: 'partner'   },
+  { name: '𝒩=4 Super Yang-Mills',             desc: 'FASE 05 — β=0, SU(N), 4 supercariche: la CFT del bordo',          scene: 'n4sym'     },
+  { name: 'Invarianza Conforme',               desc: 'FASE 06 — β(g_YM)=0 esatta: teoria conforme a tutte le scale',   scene: 'conforme'  },
+  { name: 'Il Limite di \'t Hooft',            desc: 'FASE 07 — λ=g²N, N→∞: solo diagrammi planari sopravvivono',      scene: 'thooft'    },
+  { name: 'SUSY Rotta: Fenomenologia',         desc: 'FASE 08 — M_SUSY > TeV, gravitino, assenza LHC',                 scene: 'rottura'   },
+];
+
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const cx    = t2AnimCX();
+  const cy    = t2AnimCY();
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phIdx].scene;
+
+  // ── SCENE: GERARCHIA — grafico a barre m_H vs E_P con loop ───────────────
+  if (scene === 'gerarchia') {
+    const barW    = 40;
+    const maxBarH = H * 0.52;
+    const baseY   = cy + H * 0.18;
+    const higgsx  = cx - W * 0.20;
+    const planckx = cx + W * 0.20;
+
+    // Etichetta asse Y
+    t2Txt(cx - W * 0.36, baseY - maxBarH * 0.5, 'Energia', '#64748b', 9, 'center');
+
+    // Barra Planck (alta)
+    const planckH = maxBarH;
+    t2Glow('#f43f5e', 8);
+    ctx.fillStyle = 'rgba(244,63,94,0.3)';
+    ctx.fillRect(planckx - barW * 0.5, baseY - planckH, barW, planckH);
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 2;
+    ctx.strokeRect(planckx - barW * 0.5, baseY - planckH, barW, planckH);
+    t2NoGlow();
+    t2Txt(planckx, baseY - planckH - 14, '10¹⁹ GeV', '#f43f5e', 9, 'center', "'Courier New',monospace");
+    t2Txt(planckx, baseY + 14, 'E_P (Planck)', '#f43f5e', 9, 'center');
+
+    // Barra Higgs (bassa)
+    const higgsH = maxBarH * 0.008;
+    t2Glow('#0ea5e9', 10);
+    ctx.fillStyle = 'rgba(14,165,233,0.5)';
+    ctx.fillRect(higgsx - barW * 0.5, baseY - higgsH, barW, higgsH);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+    ctx.strokeRect(higgsx - barW * 0.5, baseY - higgsH, barW, higgsH);
+    t2NoGlow();
+    t2Txt(higgsx, baseY - higgsH - 14, '125 GeV', '#0ea5e9', 9, 'center', "'Courier New',monospace");
+    t2Txt(higgsx, baseY + 14, 'm_H (Higgs)', '#0ea5e9', 9, 'center');
+
+    // Loop bosonico (freccia verso l'alto, rossa) e fermionico (verso il basso, verde)
+    if (!rm) {
+      const loopY   = baseY - higgsH - 20;
+      const loopAmp = 14;
+      const phLoop  = T * 2.5;
+
+      // Loop bosonico — si aggiunge
+      ctx.beginPath();
+      for (let i = 0; i <= 40; i++) {
+        const t2  = i / 40;
+        const lx  = higgsx - 25 + t2 * 50;
+        const ly  = loopY - loopAmp * Math.abs(Math.sin(t2 * Math.PI + phLoop));
+        if (i === 0) ctx.moveTo(lx, ly); else ctx.lineTo(lx, ly);
+      }
+      ctx.strokeStyle = 'rgba(244,63,94,0.8)';
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+
+      // Loop fermionico SUSY — cancella (tratteggiato verde)
+      ctx.setLineDash([4, 3]);
+      ctx.beginPath();
+      for (let i = 0; i <= 40; i++) {
+        const t2  = i / 40;
+        const lx  = higgsx - 25 + t2 * 50;
+        const ly  = loopY + loopAmp * Math.abs(Math.sin(t2 * Math.PI + phLoop + Math.PI));
+        if (i === 0) ctx.moveTo(lx, ly); else ctx.lineTo(lx, ly);
+      }
+      ctx.strokeStyle = 'rgba(74,222,128,0.8)';
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    t2Glow('#4ade80', 10);
+    t2Txt(higgsx, baseY - higgsH - 52, 'SUSY: cancellazione!', '#4ade80', 9, 'center');
+    t2NoGlow();
+    t2Txt(cx, baseY + 36, '17 ordini di grandezza di differenza', '#64748b', 9, 'center');
+    return;
+  }
+
+  // ── SCENE: FB — fermioni che si respingono, bosoni che si raggruppano ─────
+  if (scene === 'fb') {
+    const nPart = 8;
+    const zoneW = W * 0.32;
+    const ferX  = cx - W * 0.22;
+    const bosX  = cx + W * 0.22;
+
+    // Calcola posizioni: fermioni si respingono (spread), bosoni si raggruppano (centro)
+    for (let i = 0; i < nPart; i++) {
+      const ang = (Math.PI * 2 / nPart) * i;
+
+      // Fermione (rosso) — spread massimo, si tengono distanti
+      const ferSpread = 52;
+      const ferOsc    = rm ? 0 : 6 * Math.sin(T * 1.2 + i * 1.3);
+      const ferX2 = ferX + (ferSpread + ferOsc) * Math.cos(ang);
+      const ferY2 = cy   + (ferSpread + ferOsc) * Math.sin(ang);
+
+      t2Glow('#f43f5e', 8);
+      ctx.beginPath();
+      ctx.arc(ferX2, ferY2, 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#f43f5e';
+      ctx.fill();
+      t2NoGlow();
+
+      // Bosone (blu) — si raggruppano al centro
+      const bosSpread = rm ? 12 : (8 + 8 * Math.abs(Math.sin(T * 0.8 + i * 0.6)));
+      const bosX2 = bosX + bosSpread * Math.cos(ang);
+      const bosY2 = cy   + bosSpread * Math.sin(ang);
+
+      t2Glow('#60a5fa', 8);
+      ctx.beginPath();
+      ctx.arc(bosX2, bosY2, 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#60a5fa';
+      ctx.fill();
+      t2NoGlow();
+    }
+
+    // Linee di repulsione tra fermioni (a coppie)
+    for (let i = 0; i < nPart; i += 2) {
+      const a1    = (Math.PI * 2 / nPart) * i;
+      const a2    = (Math.PI * 2 / nPart) * (i + 1);
+      const spr   = 52;
+      const osc1  = rm ? 0 : 6 * Math.sin(T * 1.2 + i * 1.3);
+      const osc2  = rm ? 0 : 6 * Math.sin(T * 1.2 + (i + 1) * 1.3);
+      ctx.beginPath();
+      ctx.moveTo(ferX + (spr + osc1) * Math.cos(a1), cy + (spr + osc1) * Math.sin(a1));
+      ctx.lineTo(ferX + (spr + osc2) * Math.cos(a2), cy + (spr + osc2) * Math.sin(a2));
+      ctx.strokeStyle = 'rgba(244,63,94,0.2)';
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+    }
+
+    // Label
+    t2Txt(ferX, cy - 90, 'FERMIONI', '#f43f5e', 11, 'center');
+    t2Txt(ferX, cy - 74, 'spin ½ — Pauli', '#f43f5e', 9, 'center');
+    t2Txt(bosX, cy - 90, 'BOSONI', '#60a5fa', 11, 'center');
+    t2Txt(bosX, cy - 74, 'spin 0,1,2 — Bose', '#60a5fa', 9, 'center');
+
+    // Freccia SUSY al centro
+    const arrowPulse = rm ? 1 : (0.7 + 0.3 * Math.sin(T * 2));
+    t2Glow('#4ade80', 12 * arrowPulse);
+    t2Txt(cx, cy, '⟵ SUSY ⟶', '#4ade80', 12, 'center');
+    t2NoGlow();
+    return;
+  }
+
+  // ── SCENE: ALGEBRA — nodi con frecce Q e Q̄ ───────────────────────────────
+  if (scene === 'algebra') {
+    const ferX = cx - W * 0.22;
+    const bosX = cx + W * 0.22;
+    const nodeY = cy;
+    const nodeR = 30;
+
+    // Nodo fermione
+    t2Glow('#f43f5e', 16);
+    ctx.beginPath();
+    ctx.arc(ferX, nodeY, nodeR, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(15,23,42,0.9)';
+    ctx.fill();
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 2.5;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(ferX, nodeY - 4, 'f', '#f43f5e', 16, 'center');
+    t2Txt(ferX, nodeY + 11, 'spin ½', '#f43f5e', 8, 'center');
+    t2Txt(ferX, nodeY - nodeR - 12, 'FERMIONE', '#f43f5e', 10, 'center');
+
+    // Nodo bosone
+    t2Glow('#60a5fa', 16);
+    ctx.beginPath();
+    ctx.arc(bosX, nodeY, nodeR, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(15,23,42,0.9)';
+    ctx.fill();
+    ctx.strokeStyle = '#60a5fa';
+    ctx.lineWidth   = 2.5;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(bosX, nodeY - 4, 'b', '#60a5fa', 16, 'center');
+    t2Txt(bosX, nodeY + 11, 'spin 0,1', '#60a5fa', 8, 'center');
+    t2Txt(bosX, nodeY - nodeR - 12, 'BOSONE', '#60a5fa', 10, 'center');
+
+    // Frecce animate tra i nodi
+    const gapX = bosX - ferX - nodeR * 2;
+    const arrY1 = nodeY - 12;
+    const arrY2 = nodeY + 12;
+    const pulse = rm ? 1 : (0.65 + 0.35 * Math.sin(T * 2.2));
+
+    // Freccia Q: fermione → bosone
+    t2Glow('#4ade80', 10 * pulse);
+    ctx.beginPath();
+    ctx.moveTo(ferX + nodeR + 4, arrY1);
+    ctx.lineTo(bosX - nodeR - 4, arrY1);
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    // Punta freccia
+    ctx.beginPath();
+    ctx.moveTo(bosX - nodeR - 4, arrY1);
+    ctx.lineTo(bosX - nodeR - 14, arrY1 - 6);
+    ctx.lineTo(bosX - nodeR - 14, arrY1 + 6);
+    ctx.closePath();
+    ctx.fillStyle = '#4ade80';
+    ctx.fill();
+    t2NoGlow();
+    t2Txt((ferX + bosX) * 0.5, arrY1 - 10, 'Q', '#4ade80', 12, 'center');
+
+    // Freccia Q̄: bosone → fermione
+    t2Glow('#c084fc', 10 * pulse);
+    ctx.beginPath();
+    ctx.moveTo(bosX - nodeR - 4, arrY2);
+    ctx.lineTo(ferX + nodeR + 4, arrY2);
+    ctx.strokeStyle = '#c084fc';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(ferX + nodeR + 4, arrY2);
+    ctx.lineTo(ferX + nodeR + 14, arrY2 - 6);
+    ctx.lineTo(ferX + nodeR + 14, arrY2 + 6);
+    ctx.closePath();
+    ctx.fillStyle = '#c084fc';
+    ctx.fill();
+    t2NoGlow();
+    t2Txt((ferX + bosX) * 0.5, arrY2 + 16, 'Q̄', '#c084fc', 12, 'center');
+
+    // Formula principale
+    t2Txt(cx, nodeY + 75, '{Q, Q̄} = 2σ^μ P_μ', '#94a3b8', 11, 'center', "'Courier New',monospace");
+    t2Txt(cx, nodeY + 92, '(SUSY = simmetria dello spaziotempo)', '#475569', 9, 'center');
+    return;
+  }
+
+  // ── SCENE: PARTNER — due colonne SM | superpartner ────────────────────────
+  if (scene === 'partner') {
+    const smX    = cx - W * 0.25;
+    const spX    = cx + W * 0.25;
+    const startY = cy - H * 0.25;
+    const stepY  = H * 0.125;
+
+    const pairs = [
+      { sm: 'quark (½)',   sp: 'squark (0)',     colSM: '#fbbf24', colSP: '#fbbf24' },
+      { sm: 'elettrone (½)', sp: 'selettrone (0)', colSM: '#0ea5e9', colSP: '#0ea5e9' },
+      { sm: 'fotone (1)',  sp: 'fotino (½)',     colSM: '#f0f9ff', colSP: '#f0f9ff' },
+      { sm: 'gluone (1)',  sp: 'gluino (½)',     colSM: '#4ade80', colSP: '#4ade80' },
+      { sm: 'gravitone (2)',sp: 'gravitino (3/2)',colSM: '#c084fc', colSP: '#c084fc' },
+    ];
+
+    // Intestazioni
+    t2Txt(smX, startY - 20, 'MODELLO STANDARD', '#94a3b8', 10, 'center');
+    t2Txt(spX, startY - 20, 'SUPERPARTNER', '#475569', 10, 'center');
+
+    for (const [pi, p] of pairs.entries()) {
+      const py     = startY + pi * stepY;
+      const pulse  = rm ? 1 : (0.7 + 0.3 * Math.sin(T * 1.5 + pi * 0.7));
+
+      // Nodo SM
+      t2Glow(p.colSM, 10 * pulse);
+      ctx.beginPath();
+      ctx.arc(smX, py, 9, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(15,23,42,0.9)';
+      ctx.fill();
+      ctx.strokeStyle = p.colSM;
+      ctx.lineWidth   = 2;
+      ctx.stroke();
+      t2NoGlow();
+      t2Txt(smX + 16, py + 4, p.sm, p.colSM, 9, 'left', "'Courier New',monospace");
+
+      // Nodo superpartner (più opaco, SUSY rotta)
+      ctx.globalAlpha = 0.55;
+      ctx.beginPath();
+      ctx.arc(spX, py, 9, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(15,23,42,0.9)';
+      ctx.fill();
+      ctx.strokeStyle = p.colSP;
+      ctx.lineWidth   = 1.5;
+      ctx.setLineDash([4, 3]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      ctx.globalAlpha = 1;
+      t2Txt(spX - 16, py + 4, p.sp, p.colSP, 9, 'right', "'Courier New',monospace");
+
+      // Freccia Q
+      const arrowAlpha = rm ? 0.5 : (0.3 + 0.4 * Math.sin(T * 1.8 + pi * 0.5));
+      ctx.beginPath();
+      ctx.moveTo(smX + 9, py);
+      ctx.lineTo(spX - 9, py);
+      ctx.strokeStyle = 'rgba(74,222,128,' + arrowAlpha + ')';
+      ctx.lineWidth   = 1.2;
+      ctx.stroke();
+      t2Txt(cx, py - 8, 'Q', 'rgba(74,222,128,' + arrowAlpha + ')', 7, 'center');
+    }
+
+    t2Txt(cx, startY + pairs.length * stepY + 18, 'Massa uguale se SUSY esatta — diversa se rotta', '#475569', 9, 'center');
+    return;
+  }
+
+  // ── SCENE: N4SYM — diagramma campi in orbita attorno SU(N) ───────────────
+  if (scene === 'n4sym') {
+    const r1  = Math.min(W * 0.16, H * 0.18, 90);
+    const r2  = r1 * 1.65;
+    const r3  = r1 * 2.2;
+
+    // Cerchio SU(N) centrale
+    t2Glow('#fbbf24', 16);
+    ctx.beginPath();
+    ctx.arc(cx, cy, r1, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(15,23,42,0.9)';
+    ctx.fill();
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth   = 2.5;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, cy - 6, 'SU(N)', '#fbbf24', 12, 'center');
+    t2Txt(cx, cy + 10, 'gauge', '#fbbf24', 8, 'center');
+
+    // Orbite circolari
+    for (const [ri, rorb] of [r2, r3].entries()) {
+      ctx.beginPath();
+      ctx.arc(cx, cy, rorb, 0, Math.PI * 2);
+      ctx.strokeStyle = ri === 0 ? 'rgba(251,191,36,0.15)' : 'rgba(99,102,241,0.12)';
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+    }
+
+    // Campi orbitanti: A_μ (ambra), φ_I (verde), λ_a (viola)
+    const fields = [
+      { label: 'A_μ', col: '#fbbf24', orbit: r2, n: 1, speed: 0.6 },
+      { label: 'φ_I', col: '#4ade80', orbit: r3, n: 6, speed: 0.4 },
+      { label: 'λ_a', col: '#c084fc', orbit: r2, n: 4, speed: -0.5 },
+    ];
+
+    for (const f of fields) {
+      const baseOff = f.speed;
+      for (let i = 0; i < f.n; i++) {
+        const ang = (Math.PI * 2 / f.n) * i + (rm ? 0 : T * baseOff);
+        const fx  = cx + f.orbit * Math.cos(ang);
+        const fy  = cy + f.orbit * Math.sin(ang);
+        const pulse = rm ? 1 : (0.8 + 0.2 * Math.sin(T * 2.2 + i * 0.9));
+
+        t2Glow(f.col, 10 * pulse);
+        ctx.beginPath();
+        ctx.arc(fx, fy, 6, 0, Math.PI * 2);
+        ctx.fillStyle = f.col;
+        ctx.fill();
+        t2NoGlow();
+
+        if (f.n <= 1 || i === 0) {
+          t2Txt(fx + 10, fy + 4, f.label, f.col, 8, 'left', "'Courier New',monospace");
+        }
+      }
+    }
+
+    // Legenda
+    t2Txt(cx, cy + r3 + 22, '𝒩=4 SYM — gruppo di gauge SU(N)', '#94a3b8', 10, 'center');
+    return;
+  }
+
+  // ── SCENE: CONFORME — flusso RG con punto fisso β=0 ──────────────────────
+  if (scene === 'conforme') {
+    const arrowsX = [cx - W * 0.28, cx - W * 0.14, cx, cx + W * 0.14, cx + W * 0.28];
+    const arrowsY = [cy - H * 0.20, cy - H * 0.10, cy, cy + H * 0.10, cy + H * 0.20];
+
+    // Griglia flusso RG
+    for (const gx of arrowsX) {
+      for (const gy of arrowsY) {
+        const dist = Math.hypot(gx - cx, gy - cy);
+        if (dist < 20) continue; // skip punto fisso
+
+        const ang    = Math.atan2(gy - cy, gx - cx);
+        const len    = t2Clamp(30 - dist * 0.05, 8, 28);
+        const alpha  = t2Clamp(0.15 + (1 - dist / (W * 0.4)) * 0.5, 0.1, 0.6);
+        // Freccia verso il punto fisso (verso cx,cy)
+        const endX = gx - Math.cos(ang) * len;
+        const endY = gy - Math.sin(ang) * len;
+
+        ctx.beginPath();
+        ctx.moveTo(gx, gy);
+        ctx.lineTo(endX, endY);
+        ctx.strokeStyle = 'rgba(99,102,241,' + alpha + ')';
+        ctx.lineWidth   = 1.2;
+        ctx.stroke();
+
+        // Puntina freccia
+        ctx.beginPath();
+        ctx.arc(endX, endY, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(99,102,241,' + alpha + ')';
+        ctx.fill();
+      }
+    }
+
+    // Punto fisso al centro — β=0
+    const fixedPulse = rm ? 1 : (0.8 + 0.2 * Math.sin(T * 2.5));
+    t2Glow('#4ade80', 22 * fixedPulse);
+    ctx.beginPath();
+    ctx.arc(cx, cy, 14, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(15,23,42,0.95)';
+    ctx.fill();
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth   = 2.5;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, cy + 5, 'β=0', '#4ade80', 11, 'center', "'Courier New',monospace");
+
+    t2Txt(cx, cy - H * 0.28, 'Flusso del gruppo di rinormalizzazione', '#94a3b8', 11, 'center');
+    t2Txt(cx, cy + H * 0.28, 'β(g_YM) = 0   →   teoria esattamente conforme', '#475569', 9, 'center', "'Courier New',monospace");
+
+    // Etichette assi
+    t2Txt(cx + W * 0.32, cy, 'g_YM →', '#475569', 9, 'left');
+    t2Txt(cx, cy - H * 0.24, '↑ μ (scala)', '#475569', 9, 'center');
+    return;
+  }
+
+  // ── SCENE: THOOFT — diagrammi planare vs non-planare ─────────────────────
+  if (scene === 'thooft') {
+    const planX  = cx - W * 0.25;
+    const noplanX = cx + W * 0.25;
+    const diagY  = cy;
+    const diagR  = Math.min(W * 0.12, 65);
+
+    // === Diagramma PLANARE (sinistra) ===
+    t2Glow('#0ea5e9', 14);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+
+    // Propagatori orizzontali
+    ctx.beginPath();
+    ctx.moveTo(planX - diagR - 22, diagY);
+    ctx.lineTo(planX - diagR, diagY);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(planX + diagR, diagY);
+    ctx.lineTo(planX + diagR + 22, diagY);
+    ctx.stroke();
+
+    // Loop (cerchio) a sinistra
+    ctx.beginPath();
+    ctx.arc(planX, diagY, diagR, 0, Math.PI * 2);
+    ctx.stroke();
+    t2NoGlow();
+
+    // Propagatori interni al loop (radiali)
+    for (let i = 0; i < 3; i++) {
+      const ang = (Math.PI * 2 / 3) * i;
+      ctx.beginPath();
+      ctx.moveTo(planX, diagY);
+      ctx.lineTo(planX + diagR * 0.7 * Math.cos(ang), diagY + diagR * 0.7 * Math.sin(ang));
+      ctx.strokeStyle = 'rgba(14,165,233,0.5)';
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+    }
+
+    t2Txt(planX, diagY + diagR + 20, 'Planare', '#0ea5e9', 10, 'center');
+    t2Txt(planX, diagY + diagR + 34, '~ N²', '#0ea5e9', 10, 'center', "'Courier New',monospace");
+    t2Txt(planX, diagY - diagR - 16, 'nessun incrocio', '#0ea5e9', 9, 'center');
+
+    // === Diagramma NON-PLANARE (destra, attenuato) ===
+    ctx.globalAlpha = 0.35;
+
+    // Due loop che si incrociano
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 2;
+    ctx.beginPath();
+    ctx.arc(noplanX - diagR * 0.35, diagY, diagR * 0.7, 0, Math.PI * 2);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.arc(noplanX + diagR * 0.35, diagY, diagR * 0.7, 0, Math.PI * 2);
+    ctx.stroke();
+
+    // Propagatori
+    ctx.beginPath();
+    ctx.moveTo(noplanX - diagR - 22, diagY);
+    ctx.lineTo(noplanX + diagR + 22, diagY);
+    ctx.stroke();
+
+    ctx.globalAlpha = 1;
+
+    // Incrocio (X) evidenziato
+    const crossX = noplanX;
+    const crossS = 10;
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 2.5;
+    ctx.beginPath();
+    ctx.moveTo(crossX - crossS, diagY - crossS);
+    ctx.lineTo(crossX + crossS, diagY + crossS);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(crossX + crossS, diagY - crossS);
+    ctx.lineTo(crossX - crossS, diagY + crossS);
+    ctx.stroke();
+
+    t2Txt(noplanX, diagY + diagR + 20, 'Non-planare', '#f43f5e', 10, 'center');
+    t2Txt(noplanX, diagY + diagR + 34, '~ 1/N²', '#f43f5e', 10, 'center', "'Courier New',monospace");
+    t2Txt(noplanX, diagY - diagR - 16, 'soppresso per N→∞', '#f43f5e', 9, 'center');
+
+    // Formula λ
+    t2Txt(cx, cy - H * 0.28, 'λ = g²_YM N   (costante di \'t Hooft)', '#fbbf24', 12, 'center');
+    t2Txt(cx, cy + H * 0.30, 'N→∞ con λ fisso: domina il settore planare', '#64748b', 9, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: ROTTURA — supermultipletto che si divide ───────────────────────
+  if (scene === 'rottura') {
+    const levelW  = W * 0.45;
+    const levelX0 = cx - levelW * 0.5;
+
+    // Livello unico (SUSY esatta) in alto
+    const unitedY = cy - H * 0.14;
+    ctx.beginPath();
+    ctx.moveTo(levelX0, unitedY);
+    ctx.lineTo(levelX0 + levelW, unitedY);
+    ctx.strokeStyle = 'rgba(100,116,139,0.5)';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2Txt(cx, unitedY - 14, 'SUSY esatta: m_bosone = m_fermione', '#64748b', 9, 'center');
+
+    // Gap animato (M_SUSY)
+    const gapSize = rm ? H * 0.22 : H * 0.22 * t2Clamp(0.4 + 0.6 * (Math.sin(T * 0.8) * 0.5 + 0.5), 0.5, 1);
+
+    // Livello bosone (basso)
+    const bosY = unitedY + gapSize + 12;
+    t2Glow('#60a5fa', 14);
+    ctx.beginPath();
+    ctx.moveTo(levelX0, bosY);
+    ctx.lineTo(levelX0 + levelW, bosY);
+    ctx.strokeStyle = '#60a5fa';
+    ctx.lineWidth   = 3;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, bosY + 16, 'Bosone (spin 0,1)', '#60a5fa', 10, 'center');
+
+    // Livello fermione (alto rispetto al bosone)
+    const ferY2 = bosY - gapSize;
+    t2Glow('#f43f5e', 14);
+    ctx.beginPath();
+    ctx.moveTo(levelX0, ferY2);
+    ctx.lineTo(levelX0 + levelW, ferY2);
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 3;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, ferY2 - 14, 'Fermione (spin ½)', '#f43f5e', 10, 'center');
+
+    // Freccia verticale gap + etichetta M_SUSY
+    const gapX = levelX0 - 22;
+    ctx.beginPath();
+    ctx.moveTo(gapX, ferY2);
+    ctx.lineTo(gapX, bosY);
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    // Punte
+    ctx.beginPath();
+    ctx.moveTo(gapX, ferY2);
+    ctx.lineTo(gapX - 5, ferY2 + 10);
+    ctx.lineTo(gapX + 5, ferY2 + 10);
+    ctx.closePath();
+    ctx.fillStyle = '#fbbf24';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(gapX, bosY);
+    ctx.lineTo(gapX - 5, bosY - 10);
+    ctx.lineTo(gapX + 5, bosY - 10);
+    ctx.closePath();
+    ctx.fillStyle = '#fbbf24';
+    ctx.fill();
+
+    t2Glow('#fbbf24', 10);
+    t2Txt(gapX - 14, (ferY2 + bosY) * 0.5 + 4, 'M_SUSY', '#fbbf24', 9, 'right', "'Courier New',monospace");
+    t2Txt(gapX - 14, (ferY2 + bosY) * 0.5 + 18, '> TeV', '#fbbf24', 8, 'right', "'Courier New',monospace");
+    t2NoGlow();
+
+    t2Txt(cx, bosY + H * 0.12, 'LHC: nessun superpartner fino a ~3 TeV', '#475569', 9, 'center');
+    return;
+  }
+
+  // ── Fallback ──────────────────────────────────────────────────────────────
+  t2Txt(cx, cy, 'Scena non definita', '#64748b', 12, 'center');
+};
+
+t2Init();
+</script>
+</body>
+</html>
