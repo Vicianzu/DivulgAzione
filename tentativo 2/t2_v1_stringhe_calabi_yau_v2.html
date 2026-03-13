@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teoria delle Stringhe v2 — Calabi-Yau Aggiornato | Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<!-- Top bar -->
+<div id="ui">
+  <span id="ui-title">DivulgAzione · Stringhe v2</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">6 fasi</span>
+</div>
+
+<!-- Left panel -->
+<div id="panel">
+
+  <div class="phase-content" id="ph-1">
+    <div class="phase-tag">FASE 01 — D-BRANE</div>
+    <div class="phase-title">D-brane: ipersuperfici di Dirichlet</div>
+    <div class="phase-body">
+      <p>Nelle teorie di stringa con condizioni al bordo di <span class="hl">Dirichlet</span>, le estremità delle stringhe aperte sono vincolate a terminare su ipersuperfici chiamate <span class="am">D-brane</span> (da Dirichlet). Una D_p-brana occupa p dimensioni spaziali più il tempo, quindi è un oggetto (p+1)-dimensionale nello spazio-tempo.</p>
+      <p>Le D-brane sono oggetti fisici dinamici: hanno massa, tensione e carica sotto i campi di Ramond-Ramond. Le <span class="hl">stringhe aperte coincidenti</span> su N D-brane generano una teoria di gauge <span class="am">non-abeliana SU(N)</span>. Questo è il punto di partenza dell'AdS/CFT: N D3-brane → SYM con gruppo SU(N).</p>
+      <p>L'azione delle D-brane è descritta dall'<span class="gr">azione di Born-Infeld dilatonica</span> (DBI), che include il campo di stringa B_ab e la curvatura F_ab del campo di gauge:</p>
+      <code class="formula">S_DBI = −T_p ∫ d^{p+1}ξ e^{−Φ} √{−det(g_ab + B_ab + 2πα'F_ab)}</code>
+      <p>La tensione T_p ~ 1/(gₛ α'^{(p+1)/2}) diverge nel limite di accoppiamento debole gₛ → 0: le D-brane sono oggetti <span class="hl">non perturbativi</span> fondamentali, invisibili nell'espansione perturbativa ordinaria della teoria di stringa.</p>
+      <div class="note">Animazione: piano orizzontale luminoso (D-brana) con stringhe aperte oscillanti che partono dalla sua superficie e vi terminano.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — M-TEORIA</div>
+    <div class="phase-title">M-teoria: la teoria unificata in 11 dimensioni</div>
+    <div class="phase-body">
+      <p>La crisi della teoria di stringa degli anni '80 si rivelò apparente: le cinque teorie di supercorda (Tipo I, IIA, IIB, Eterotiche SO(32) e E₈×E₈) non sono teorie diverse, ma <span class="hl">limiti</span> di una teoria unica in <span class="am">11 dimensioni</span> chiamata <span class="gr">M-teoria</span> (la "M" sta per Misteriosa, Membrana, o Matrice, a seconda dell'autore).</p>
+      <p>La M-teoria contiene <span class="hl">M2-brane</span> (membrane 2D) e <span class="hl">M5-brane</span> come oggetti fondamentali. La connessione con la stringa di Tipo IIA è diretta: la dimensione 11 è un cerchio di raggio R₁₁ proporzionale alla costante di accoppiamento:</p>
+      <code class="formula">R₁₁ = gₛ lₛ   ⟹   IIA ↔ M-theory
+lₛ = √α'   (lunghezza di stringa)</code>
+      <p>Nel limite gₛ → ∞ la corda IIA diventa fortemente accoppiata e la dimensione 11 si decompattifica: emerge la M-teoria. La <span class="am">rete di dualità</span> che connette tutte e cinque le teorie di stringa e la M-teoria è stata scoperta da Witten nel 1995 nella cosiddetta "second superstring revolution".</p>
+      <div class="note">Animazione: 5 nodi (le teorie di stringa) connessi al nodo centrale M-teoria da frecce, ognuna etichettata con la dualità corrispondente.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — DUALITÀ</div>
+    <div class="phase-title">Dualità T e S: simmetrie profonde</div>
+    <div class="phase-body">
+      <p>Le dualità sono simmetrie che collegano teorie fisicamente equivalenti. La <span class="hl">T-dualità</span> (dualità di bersaglio) connette teorie compattificate su cerchi di raggio diverso: una stringa su cerchio di raggio R produce la stessa fisica di una stringa su cerchio di raggio α'/R. Questa equivalenza è radicale: fisicamente il grande è uguale al piccolo.</p>
+      <code class="formula">T-dualità:   R ↔ α'/R
+             IIA ↔ IIB   (sotto T-dualità)</code>
+      <p>La <span class="am">S-dualità</span> (dualità forte-debole) connette un regime di accoppiamento forte con uno di accoppiamento debole, permettendo calcoli perturbativi nel regime fortemente accoppiato (altrimenti inaccessibile):</p>
+      <code class="formula">S-dualità:   gₛ ↔ 1/gₛ
+             IIB ↔ IIB   SO(32) Het ↔ Tipo I</code>
+      <p>Queste dualità non sono semplici simmetrie formali: hanno profonde conseguenze fisiche. La <span class="gr">dualità T trasforma D_p-brane in D_{p±1}-brane</span>. Le D-brane sono fondamentali per capire le dualità: sono gli oggetti che si trasformano in modo covariante. La rete di dualità che connette tutte le teorie è la prova che esiste un unico framework fondamentale.</p>
+      <div class="note">Animazione: raggio R che oscilla tra valori grandi (R) e piccoli (α'/R), visualizzando la T-dualità come trasformazione del cerchio di compattificazione.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — MODULI</div>
+    <div class="phase-title">Moduli della Calabi-Yau: il landscape</div>
+    <div class="phase-body">
+      <p>La geometria della varietà Calabi-Yau è parametrizzata da campi scalari senza potenziale classico, chiamati <span class="hl">moduli</span>. Fisicamente rappresentano la forma e le dimensioni delle dimensioni extra. Il loro numero è determinato dai numeri di Hodge:</p>
+      <code class="formula">h^{1,1} + h^{2,1} = moduli totali
+h^{1,1}: Kähler moduli (volumi di cicli)
+h^{2,1}: moduli complessi (forma del CY)</code>
+      <p>Il problema cruciale: moduli non fissati corrispondono a <span class="am">campi scalari senza massa</span> nella teoria 4D — delle "forze a lungo raggio" in contraddizione con le osservazioni. Il meccanismo <span class="hl">KKLT</span> (Kachru-Kallosh-Linde-Trivedi, 2003) stabilizza i moduli combinando flussi di campo (fluxes), correzioni perturbative e non-perturbative.</p>
+      <p>Il risultato è il "<span class="gr">landscape</span>": un numero enorme (~10^500) di minimi stabili del potenziale effettivo, ciascuno corrispondente a un universo con fisica diversa. La selezione del nostro universo rimane uno dei grandi problemi aperti — possibilmente richiedendo argomenti antropici o una descrizione di multiverso.</p>
+      <div class="note">Animazione: griglia di punti (spazio dei moduli) con un punto evidenziato che rappresenta "il nostro vuoto".</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — SUSY</div>
+    <div class="phase-title">Supersimmetria: bosoni e fermioni unificati</div>
+    <div class="phase-body">
+      <p>La <span class="hl">supersimmetria</span> (SUSY) è la simmetria che scambia bosoni (spin intero) e fermioni (spin semintero). È una simmetria dello spazio-tempo: i generatori supersimmetrici Q sono cariche spinoriali che trasformano stati di spin diverso. In supercorda, SUSY è necessaria per l'eliminazione dei tachioni e la consistenza della teoria.</p>
+      <p>L'algebra supersimmetrica è fondamentale: i generatori Q trasformano i multipletti della teoria, connettendo ogni bosone al suo superpartner fermionico:</p>
+      <code class="formula">Q |bosone⟩ = |fermione⟩
+Q |fermione⟩ = |bosone⟩
+{Q, Q̄} = 2γ^μ P_μ</code>
+      <p>I <span class="am">superpartner</span> del Modello Standard sono: lo <span class="gr">selettrone</span> (partner scalare dell'elettrone), lo <span class="gr">squark</span> (partner scalare del quark), il <span class="gr">gluino</span> (partner fermionico del gluone), il <span class="gr">fotino/neutralino</span> (partner del fotone e del bosone Z). La SUSY è rotta alla scala m_SUSY ≳ 1 TeV per spiegare la sua assenza a basse energie. LHC non ha trovato evidenza diretta fino al Run 3.</p>
+      <div class="note">Animazione: due colonne di particelle (bosoni e fermioni) collegate da frecce doppie — la supersimmetria come simmetria di scambio.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — SFIDE</div>
+    <div class="phase-title">Previsioni e sfide sperimentali</div>
+    <div class="phase-body">
+      <p>La teoria delle stringhe fa previsioni precise, anche se molte sono a scale di energia lontane da quelle attualmente accessibili. Le principali: <span class="hl">superpartner SUSY</span> alla scala del TeV (non trovati a LHC), <span class="am">dimensioni extra</span> a distanze sub-mm (testate dalla gravità di Cavendish), <span class="gr">assioni</span> come materia oscura (ricercati in esperimenti come ADMX), gravitini.</p>
+      <p>La scala fondamentale della teoria è legata alla scala di Planck e alla costante di accoppiamento:</p>
+      <code class="formula">M_Planck = M_s / gₛ   ~   10^{19} GeV
+lₛ = √α'   ~   10^{−33} cm (se M_s ~ M_Planck)</code>
+      <p>Le <span class="hl">sfide teoriche</span> principali sono: il problema del landscape (troppi vacui, nessun principio selettivo), la mancanza di una formulazione non-perturbativa completa di M-teoria, la dimostrazione rigorosa dell'AdS/CFT (che rimane una congettura), e la connessione con il Modello Standard realistico. La <span class="am">gravità modificata</span> a distanze sub-millimetriche (predetta da dimensioni extra grandi) potrebbe offrire il primo segnale sperimentale diretto.</p>
+      <div class="note">Animazione: diagramma dello spettro di particelle — SM in ciano, superpartner in ambra, stringhe massive ad alta energia in verde, con scale logaritmiche.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom navigation -->
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01</button>
+  <button class="btn" onclick="goPhase(2)">02</button>
+  <button class="btn" onclick="goPhase(3)">03</button>
+  <button class="btn" onclick="goPhase(4)">04</button>
+  <button class="btn" onclick="goPhase(5)">05</button>
+  <button class="btn" onclick="goPhase(6)">06</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()">⏸</button>
+</div>
+
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: 'D-Brane',      desc: 'FASE 01 — D-Brane e Stringhe Aperte',       scene: 'dbrane' },
+  { name: 'M-Teoria',     desc: 'FASE 02 — M-Teoria e le 11 Dimensioni',     scene: 'mtheory' },
+  { name: 'Dualità',      desc: 'FASE 03 — Dualità T e S',                   scene: 'duality' },
+  { name: 'Moduli',       desc: 'FASE 04 — Moduli della Calabi-Yau',         scene: 'moduli' },
+  { name: 'SUSY',         desc: 'FASE 05 — Supersimmetria',                  scene: 'susy' },
+  { name: 'Sfide',        desc: 'FASE 06 — Previsioni e Sfide Sperimentali', scene: 'challenges' },
+];
+
+window.t2Draw = function(T, phaseIdx, ctx, W, H) {
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phaseIdx].scene;
+  const cx = t2AnimCX();
+  const cy = t2AnimCY();
+
+  // ── Helper: draw a D-brane plane ─────────────────────────────────────────
+  function drawBrane(y, width, col, alpha, label) {
+    const x0 = cx - width * 0.5;
+    const x1 = cx + width * 0.5;
+
+    t2Glow(col, 14);
+    ctx.beginPath();
+    ctx.moveTo(x0, y);
+    ctx.lineTo(x1, y);
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 3;
+    ctx.stroke();
+
+    // Fill glow beneath
+    const grad = ctx.createLinearGradient(cx, y, cx, y + 18);
+    grad.addColorStop(0, `${col}${Math.round(alpha * 255).toString(16).padStart(2, '0')}`);
+    grad.addColorStop(1, 'rgba(0,0,0,0)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(x0, y, width, 18);
+
+    t2NoGlow();
+    if (label) t2Txt(x1 + 12, y, label, col, 9.5, 'left', "'Courier New',monospace");
+  }
+
+  // ── Helper: draw an open string (curve) attached to brane ────────────────
+  function drawOpenString(brane_y, sx, length, col, tOffset) {
+    const phase   = rm ? 0 : T * 2.1 + tOffset;
+    const steps   = 60;
+    t2Glow(col, 8);
+    ctx.beginPath();
+    for (let i = 0; i <= steps; i++) {
+      const frac = i / steps;
+      const px   = sx;
+      const py   = brane_y + frac * length;
+      const wave = Math.sin(frac * Math.PI) * 14 * Math.sin(phase + frac * Math.PI * 2);
+      if (i === 0) ctx.moveTo(px + wave, py); else ctx.lineTo(px + wave, py);
+    }
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Endpoint dot
+    ctx.beginPath();
+    ctx.arc(sx, brane_y + length, 3.5, 0, Math.PI * 2);
+    ctx.fillStyle = col;
+    ctx.fill();
+    t2NoGlow();
+  }
+
+  // ── Helper: draw a closed string (oscillating ellipse/loop) ─────────────
+  function drawClosedString(lx, ly, rx, ry, col, tOffset) {
+    const stretch = rm ? 1 : 1 + 0.18 * Math.sin(T * 2.0 + tOffset);
+    t2Glow(col, 8);
+    ctx.beginPath();
+    ctx.ellipse(lx, ly, rx * stretch, ry / stretch, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 1.8;
+    ctx.stroke();
+    t2NoGlow();
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // SCENE: dbrane — D-brane + open strings (phase 0)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (scene === 'dbrane') {
+    const braneY  = cy - H * 0.06;
+    const braneW  = W * 0.46;
+
+    drawBrane(braneY, braneW, '#22d3ee', 0.5, 'D3-brana');
+
+    // Open strings hanging down from brane
+    const nStrings = 6;
+    for (let i = 0; i < nStrings; i++) {
+      const sx  = (cx - braneW * 0.4) + (braneW * 0.8) * (i / (nStrings - 1));
+      const len = H * 0.16 + H * 0.04 * Math.sin(i * 1.3);
+      drawOpenString(braneY, sx, len, '#4ade80', i * 0.6);
+    }
+
+    // Closed string propagating away from brane (graviton)
+    const cx2 = cx + braneW * 0.52;
+    const cy2 = braneY - H * 0.08;
+    drawClosedString(cx2, cy2, 18, 10, '#fbbf24', 0);
+    t2Txt(cx2 + 30, cy2, 'chiusa (gravitone)', '#fbbf24', 9, 'left', "'Courier New',monospace");
+
+    t2Glow('#0ea5e9', 7);
+    t2Txt(cx, braneY + H * 0.26, 'S_DBI = −T_p ∫ e^{−Φ} √{−det(g+B+2πα\'F)}', '#7dd3fc', 9, 'center', "'Courier New',monospace");
+    t2NoGlow();
+    t2Txt(cx, braneY + H * 0.35, 'N D3-brane → SU(N) gauge theory', '#4a7a9b', 9, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // SCENE: mtheory — web of dualities (phase 1)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (scene === 'mtheory') {
+    // M-theory center node
+    const mR = Math.min(W, H) * 0.07;
+    const pulse = rm ? 1 : 0.85 + 0.15 * Math.sin(T * 1.4);
+
+    t2Glow('#a78bfa', 20 * pulse);
+    ctx.beginPath();
+    ctx.arc(cx, cy, mR * pulse, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(167,139,250,0.18)';
+    ctx.fill();
+    ctx.strokeStyle = '#a78bfa';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, cy, 'M', '#c4b5fd', 18, 'center', 'bold Georgia,serif');
+    t2Txt(cx, cy + 16, 'M-teoria', '#a78bfa', 9, 'center', "'Courier New',monospace");
+
+    // 5 string theories around it
+    const theories = [
+      { label: 'Tipo IIA',  angle: -Math.PI * 0.5,  col: '#22d3ee' },
+      { label: 'Tipo IIB',  angle: -Math.PI * 0.1,  col: '#38bdf8' },
+      { label: 'Tipo I',    angle:  Math.PI * 0.3,   col: '#4ade80' },
+      { label: 'Het SO(32)',angle:  Math.PI * 0.7,   col: '#fbbf24' },
+      { label: 'Het E₈×E₈', angle: -Math.PI * 0.9,  col: '#fb923c' },
+    ];
+
+    const outerR = mR * 2.9;
+    for (const th of theories) {
+      const nx = cx + outerR * Math.cos(th.angle);
+      const ny = cy + outerR * Math.sin(th.angle);
+
+      // Arrow from outer to center
+      ctx.beginPath();
+      ctx.moveTo(nx, ny);
+      ctx.lineTo(cx + mR * Math.cos(th.angle), cy + mR * Math.sin(th.angle));
+      ctx.strokeStyle = `${th.col}88`;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      t2Glow(th.col, 10);
+      ctx.beginPath();
+      ctx.arc(nx, ny, 14, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0,10,20,0.8)';
+      ctx.fill();
+      ctx.strokeStyle = th.col;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      t2NoGlow();
+      t2Txt(nx, ny, th.label.split(' ')[0], th.col, 8, 'center', "'Courier New',monospace");
+    }
+
+    t2Txt(cx, cy + outerR + 26, 'R₁₁ = gₛ lₛ   (IIA ↔ M-theory)', '#7dd3fc', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // SCENE: duality — T-duality animated radius (phase 2)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (scene === 'duality') {
+    // Left circle: large R
+    const baseR = Math.min(W, H) * 0.12;
+    const oscil = rm ? 0 : Math.sin(T * 0.9) * 0.45;
+    const R_left  = baseR * (1 + oscil);
+    const R_right = baseR * (1 / (1 + oscil));   // inversely related
+
+    const lx = cx - W * 0.16, rx = cx + W * 0.16;
+
+    t2Glow('#22d3ee', 10);
+    ctx.beginPath();
+    ctx.arc(lx, cy, R_left, 0, Math.PI * 2);
+    ctx.strokeStyle = '#22d3ee';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(lx, cy, `R = ${(R_left / baseR).toFixed(2)} lₛ`, '#22d3ee', 10, 'center', "'Courier New',monospace");
+    t2Txt(lx, cy + R_left + 18, 'grande', '#22d3ee', 10, 'center');
+
+    t2Glow('#fbbf24', 10);
+    ctx.beginPath();
+    ctx.arc(rx, cy, R_right, 0, Math.PI * 2);
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(rx, cy, `α'/R = ${(R_right / baseR).toFixed(2)} lₛ`, '#fbbf24', 10, 'center', "'Courier New',monospace");
+    t2Txt(rx, cy + R_right + 18, 'piccolo', '#fbbf24', 10, 'center');
+
+    // ↔ arrow
+    t2Glow('#4ade80', 8);
+    t2Txt(cx, cy, '↔', '#4ade80', 22, 'center', 'bold Georgia,serif');
+    t2NoGlow();
+    t2Txt(cx, cy - baseR - 20, 'T-dualità: R ↔ α\'/R', '#4ade80', 11, 'center');
+
+    t2Txt(cx, cy + baseR + 48, 'S-dualità: gₛ ↔ 1/gₛ   (forte ↔ debole)', '#a78bfa', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // SCENE: moduli — moduli space grid (phase 3)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (scene === 'moduli') {
+    const gridN = 9;
+    const gridSpX = W * 0.042;
+    const gridSpY = H * 0.058;
+    const gx0 = cx - gridN * gridSpX * 0.5;
+    const gy0 = cy - gridN * gridSpY * 0.5;
+
+    // Draw grid of vacuum points
+    for (let i = 0; i < gridN; i++) {
+      for (let j = 0; j < gridN; j++) {
+        const px = gx0 + i * gridSpX;
+        const py = gy0 + j * gridSpY;
+        const isOurs = (i === 4 && j === 4);
+        const dist   = Math.hypot(i - 4, j - 4);
+        const alpha  = isOurs ? 1 : Math.max(0.1, 0.5 - dist * 0.06);
+
+        if (isOurs) {
+          const ourPulse = rm ? 1 : 0.7 + 0.3 * Math.sin(T * 2.0);
+          t2Glow('#4ade80', 18 * ourPulse);
+          ctx.beginPath();
+          ctx.arc(px, py, 5.5, 0, Math.PI * 2);
+          ctx.fillStyle = '#4ade80';
+          ctx.fill();
+          t2NoGlow();
+          t2Txt(px + 14, py - 10, '← nostro vuoto', '#4ade80', 9, 'left', "'Courier New',monospace");
+        } else {
+          ctx.beginPath();
+          ctx.arc(px, py, 2.5, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(56,189,248,${alpha})`;
+          ctx.fill();
+        }
+      }
+    }
+
+    // Axis labels
+    t2Txt(gx0 + gridN * gridSpX + 16, cy, 'h^{1,1}', '#fbbf24', 10, 'left', "'Courier New',monospace");
+    t2Txt(cx, gy0 - 16, 'h^{2,1}', '#fbbf24', 10, 'center', "'Courier New',monospace");
+
+    t2Txt(cx, gy0 + gridN * gridSpY + 24, 'h^{1,1} + h^{2,1} = moduli totali', '#7dd3fc', 10, 'center', "'Courier New',monospace");
+    t2Txt(cx, gy0 + gridN * gridSpY + 40, 'Landscape: ~10^500 vacui possibili', '#4a7a9b', 9.5, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // SCENE: susy — SUSY multiplet pairs (phase 4)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (scene === 'susy') {
+    const pairs = [
+      { boson: 'fotone (γ)',    fermion: 'fotino (γ̃)',    col: '#fbbf24' },
+      { boson: 'gluone (g)',    fermion: 'gluino (g̃)',     col: '#4ade80' },
+      { boson: 'W±, Z⁰',       fermion: 'wino, zino',    col: '#22d3ee' },
+      { boson: 'Higgs (H)',     fermion: 'higgsino (H̃)',  col: '#a78bfa' },
+      { boson: 'gravitone (G)', fermion: 'gravitino (G̃)', col: '#fb923c' },
+    ];
+
+    const lx  = cx - W * 0.18;
+    const rx  = cx + W * 0.18;
+    const y0  = cy - H * 0.22;
+    const dY  = H * 0.11;
+
+    t2Txt(lx, y0 - 24, 'BOSONI', '#22d3ee', 11, 'center', 'bold Georgia,serif');
+    t2Txt(rx, y0 - 24, 'FERMIONI', '#fbbf24', 11, 'center', 'bold Georgia,serif');
+    t2Txt(cx, y0 - 24, 'Q', '#a78bfa', 13, 'center', 'bold italic Georgia,serif');
+
+    for (let i = 0; i < pairs.length; i++) {
+      const p  = pairs[i];
+      const py = y0 + i * dY;
+
+      // Boson node
+      t2Glow(p.col, 10);
+      ctx.beginPath();
+      ctx.arc(lx, py, 12, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0,10,20,0.8)';
+      ctx.fill();
+      ctx.strokeStyle = p.col;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      t2NoGlow();
+      t2Txt(lx, py, p.boson, p.col, 8.5, 'center', "'Courier New',monospace");
+
+      // Fermion node
+      t2Glow(p.col, 10);
+      ctx.beginPath();
+      ctx.arc(rx, py, 12, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(0,10,20,0.8)';
+      ctx.fill();
+      ctx.strokeStyle = p.col;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+      t2NoGlow();
+      t2Txt(rx, py, p.fermion, p.col, 8.5, 'center', "'Courier New',monospace");
+
+      // Double arrow (animated)
+      const arrowFrac = rm ? 0.5 : (Math.sin(T * 1.5 + i * 0.8) * 0.5 + 0.5);
+      const ax = t2Lerp(lx + 14, rx - 14, arrowFrac);
+      ctx.beginPath();
+      ctx.moveTo(lx + 14, py);
+      ctx.lineTo(rx - 14, py);
+      ctx.strokeStyle = `${p.col}55`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(ax, py, 3, 0, Math.PI * 2);
+      ctx.fillStyle = p.col;
+      ctx.fill();
+    }
+
+    t2Txt(cx, y0 + pairs.length * dY + 14, 'Q|bosone⟩ = |fermione⟩', '#7dd3fc', 10, 'center', "'Courier New',monospace");
+    t2Txt(cx, y0 + pairs.length * dY + 30, '{Q, Q̄} = 2γ^μ P_μ', '#4a7a9b', 9.5, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // SCENE: challenges — particle spectrum + energy scale (phase 5)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (scene === 'challenges') {
+    // Energy scale bar (vertical, log)
+    const barX  = cx - W * 0.16;
+    const barY0 = cy - H * 0.30;
+    const barY1 = cy + H * 0.28;
+    const barH  = barY1 - barY0;
+
+    ctx.beginPath();
+    ctx.moveTo(barX, barY0);
+    ctx.lineTo(barX, barY1);
+    ctx.strokeStyle = 'rgba(148,163,184,0.4)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    const scales = [
+      { label: 'M_Planck 10^{19} GeV', y: 0.04, col: '#a78bfa' },
+      { label: 'M_s stringa',          y: 0.12, col: '#fbbf24' },
+      { label: 'SUSY (TeV)',            y: 0.38, col: '#4ade80' },
+      { label: 'Elettrodebole (100 GeV)', y: 0.55, col: '#22d3ee' },
+      { label: 'QCD (1 GeV)',           y: 0.72, col: '#38bdf8' },
+      { label: 'Atomi (eV)',            y: 0.92, col: '#94a3b8' },
+    ];
+
+    for (const s of scales) {
+      const sy = barY0 + barH * s.y;
+      // Tick
+      ctx.beginPath();
+      ctx.moveTo(barX - 5, sy);
+      ctx.lineTo(barX + 5, sy);
+      ctx.strokeStyle = s.col;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Dot on the right
+      const dotX = barX + W * 0.06 + W * 0.24 * Math.random() * 0;  // fixed layout
+      t2Txt(barX + 12, sy, s.label, s.col, 9, 'left', "'Courier New',monospace");
+    }
+
+    // LHC reach marker
+    const lhcY = barY0 + barH * 0.55;
+    ctx.beginPath();
+    ctx.moveTo(barX - 18, lhcY);
+    ctx.lineTo(barX + 18, lhcY);
+    ctx.strokeStyle = '#ef4444';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([3, 3]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    t2Txt(barX - 22, lhcY, '← LHC', '#ef4444', 8.5, 'right', "'Courier New',monospace");
+
+    t2Glow('#0ea5e9', 7);
+    t2Txt(cx + W * 0.08, cy, 'M_Planck = M_s / gₛ', '#7dd3fc', 10, 'center', "'Courier New',monospace");
+    t2NoGlow();
+    t2Txt(cx + W * 0.08, cy + 18, '~   10^{19} GeV', '#7dd3fc', 10, 'center', "'Courier New',monospace");
+    t2Txt(cx + W * 0.08, cy + 50, 'Sfida: nessun segnale diretto finora', '#ef4444', 9.5, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // Fallback: brane + open strings
+  const braneY = cy;
+  drawBrane(braneY, W * 0.40, '#22d3ee', 0.4, '');
+  for (let i = 0; i < 5; i++) {
+    const sx = cx - W * 0.15 + W * 0.075 * i;
+    drawOpenString(braneY, sx, H * 0.15, '#4ade80', i * 0.7);
+  }
+};
+
+t2Init();
+</script>
+</body>
+</html>
