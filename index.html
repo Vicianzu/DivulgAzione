@@ -145,6 +145,26 @@
       margin-top: 4px;
     }
 
+    /* ── Section title ── */
+    .section-title {
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: normal;
+      letter-spacing: 0.08em;
+      text-align: center;
+      margin: 0 0 32px;
+      padding-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .section-subtitle {
+      font-size: 0.85rem;
+      color: #64748b;
+      text-align: center;
+      margin-top: -20px;
+      margin-bottom: 32px;
+      letter-spacing: 0.06em;
+    }
+
     /* ── Footer ── */
     footer {
       text-align: center;
@@ -174,10 +194,14 @@
     <p class="subtitle">Fisica Teorica Interattiva</p>
   </header>
 
-  <main class="grid">
+  <main>
+
+    <h2 class="section-title" style="background: linear-gradient(135deg,#a78bfa,#38bdf8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Pagine originali</h2>
+
+    <div class="grid">
 
     <!-- Card 1 — Stringhe v1 -->
-    <a class="card" href="Progetto divulgazione/v1_stringhe_calabi_yau.html"
+    <a class="card" href="Progetto%20divulgazione/v1_stringhe_calabi_yau.html"
        style="--accent: #a78bfa;">
       <div class="card-header">
         <div class="card-titles">
@@ -191,7 +215,7 @@
     </a>
 
     <!-- Card 2 — Stringhe v2 -->
-    <a class="card" href="Progetto divulgazione/v1_stringhe_calabi_yau_v2.html"
+    <a class="card" href="Progetto%20divulgazione/v1_stringhe_calabi_yau_v2.html"
        style="--accent: #818cf8;">
       <div class="card-header">
         <div class="card-titles">
@@ -205,7 +229,7 @@
     </a>
 
     <!-- Card 3 — AdS/CFT v1 -->
-    <a class="card" href="Progetto divulgazione/v1_ads_cft.html"
+    <a class="card" href="Progetto%20divulgazione/v1_ads_cft.html"
        style="--accent: #38bdf8;">
       <div class="card-header">
         <div class="card-titles">
@@ -219,21 +243,21 @@
     </a>
 
     <!-- Card 4 — AdS/CFT v2 -->
-    <a class="card" href="Progetto divulgazione/v1_ads_cft_v2.html"
+    <a class="card" href="Progetto%20divulgazione/v1_ads_cft_v2.html"
        style="--accent: #7dd3fc;">
       <div class="card-header">
         <div class="card-titles">
           <h2>AdS/CFT v2</h2>
           <div class="sub">Versione aggiornata</div>
         </div>
-        <span class="badge">7 fasi</span>
+        <span class="badge">6 fasi</span>
       </div>
       <p>Versione migliorata della corrispondenza olografica AdS/CFT con visualizzazioni più dettagliate.</p>
       <div class="card-link">v1_ads_cft_v2.html</div>
     </a>
 
     <!-- Card 5 — Bulk Reconstruction -->
-    <a class="card" href="Progetto divulgazione/v1_bulk_reconstruction.html"
+    <a class="card" href="Progetto%20divulgazione/v1_bulk_reconstruction.html"
        style="--accent: #4ade80;">
       <div class="card-header">
         <div class="card-titles">
@@ -246,7 +270,77 @@
       <div class="card-link">v1_bulk_reconstruction.html</div>
     </a>
 
-    <!-- Card 6 — viXra: Hydrogen spectrum (QM vs old quantum theory) -->
+    <!-- Card 6 — Relatività Speciale -->
+    <a class="card" href="Progetto%20divulgazione/v1_relativita_speciale.html"
+       style="--accent: #fb923c;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Relatività Speciale</h2>
+          <div class="sub">Einstein 1905 — I due postulati</div>
+        </div>
+        <span class="badge">8 fasi</span>
+      </div>
+      <p>Dalla crisi della fisica classica ai postulati di Einstein: dilatazione del tempo, contrazione delle lunghezze, simultaneità relativa, E=mc², trasformazioni di Lorentz.</p>
+      <div class="card-link">v1_relativita_speciale.html</div>
+    </a>
+
+    <!-- Card 7 — Relatività Generale -->
+    <a class="card" href="GR/v1_intro_general_relativity.html"
+       style="--accent: #e879f9;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Relatività Generale</h2>
+          <div class="sub">Einstein 1915 — Spazio-tempo curvo</div>
+        </div>
+        <span class="badge">8 fasi</span>
+      </div>
+      <p>Dal principio di equivalenza alle equazioni di campo G_μν = 8πG/c⁴ T_μν. Deflessione della luce, onde gravitazionali, buchi neri, costante cosmologica.</p>
+      <div class="card-link">GR/v1_intro_general_relativity.html</div>
+    </a>
+
+    <!-- Card 8 — Loop Quantum Gravity -->
+    <a class="card" href="LQG/v1_intro_lqg.html"
+       style="--accent: #c084fc;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Loop Quantum Gravity</h2>
+          <div class="sub">Gravità quantistica a loop</div>
+        </div>
+        <span class="badge">8 fasi</span>
+      </div>
+      <p>Variabili di Ashtekar, loop di Wilson, spin network, spazio discreto, spin foam, background independence. Una delle principali teorie di gravità quantistica.</p>
+      <div class="card-link">LQG/v1_intro_lqg.html</div>
+    </a>
+
+    <!-- Card 9 — Meccanica Quantistica -->
+    <a class="card" href="QM/v1_intro_quantum_mechanics.html"
+       style="--accent: #34d399;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Meccanica Quantistica</h2>
+          <div class="sub">Dalla crisi classica al Modello Standard</div>
+        </div>
+        <span class="badge">10 fasi</span>
+      </div>
+      <p>Funzione d'onda, principio di indeterminazione, doppia fenditura, spin, Modello Standard, QCD, entanglement, QED, bosone di Higgs. La teoria più precisa mai costruita.</p>
+      <div class="card-link">QM/v1_intro_quantum_mechanics.html</div>
+    </a>
+
+    <!-- Card 10 — Asymptotic Safety -->
+    <a class="card" href="Asymptotic_safety/v1_intro_asymptotic_safety.html"
+       style="--accent: #f59e0b;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Asymptotic Safety</h2>
+          <div class="sub">Sicurezza asintotica della gravità</div>
+        </div>
+        <span class="badge">7 fasi</span>
+      </div>
+      <p>Weinberg 1976: le costanti di accoppiamento gravitazionale convergono a un punto fisso UV non-Gaussiano. Il flusso RG, il punto fisso, l'equazione di Wetterich.</p>
+      <div class="card-link">Asymptotic_safety/v1_intro_asymptotic_safety.html</div>
+    </a>
+
+    <!-- Card 11 — viXra: Hydrogen spectrum (QM vs old quantum theory) -->
     <a class="card" href="vixra%20divulgazione/v1_hydrogen_old_quantum_vs_qm.html"
        style="--accent: #22c55e;">
       <div class="card-header">
@@ -259,6 +353,156 @@
       <p>Una lettura divulgativa (stile DivulgAzione) del preprint di Jorma Jormakka: livelli energetici dell'idrogeno, orbitale vs funzione d'onda, e critica alla "momentum substitution".</p>
       <div class="card-link">v1_hydrogen_old_quantum_vs_qm.html</div>
     </a>
+
+    </div><!-- /grid originali -->
+
+    <!-- ── Tentativo 2 section ── -->
+    <h2 class="section-title" style="margin-top:64px; background: linear-gradient(135deg,#38bdf8,#4ade80); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Tentativo 2 — Layout migliorato</h2>
+    <p class="section-subtitle">Pannello testo leggibile · font responsivo · canvas a destra</p>
+
+    <div class="grid">
+
+    <!-- T2 Card 1 — AdS/CFT v1 -->
+    <a class="card" href="tentativo%202/t2_v1_ads_cft.html"
+       style="--accent: #38bdf8;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>AdS/CFT — Tentativo 2</h2>
+          <div class="sub">Dualità olografica · layout migliorato</div>
+        </div>
+        <span class="badge">7 fasi</span>
+      </div>
+      <p>Versione con pannello testo leggibile (18px, line-height 1.8) e canvas animato a destra. Stessa fisica, interfaccia rinnovata.</p>
+      <div class="card-link">t2_v1_ads_cft.html</div>
+    </a>
+
+    <!-- T2 Card 2 — AdS/CFT v2 -->
+    <a class="card" href="tentativo%202/t2_v1_ads_cft_v2.html"
+       style="--accent: #7dd3fc;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>AdS/CFT v2 — Tentativo 2</h2>
+          <div class="sub">Versione aggiornata · layout migliorato</div>
+        </div>
+        <span class="badge">6 fasi</span>
+      </div>
+      <p>Versione migliorata della corrispondenza olografica AdS/CFT con layout a due pannelli.</p>
+      <div class="card-link">t2_v1_ads_cft_v2.html</div>
+    </a>
+
+    <!-- T2 Card 3 — Bulk Reconstruction -->
+    <a class="card" href="tentativo%202/t2_v1_bulk_reconstruction.html"
+       style="--accent: #4ade80;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Bulk Reconstruction — Tentativo 2</h2>
+          <div class="sub">Olografia quantistica · layout migliorato</div>
+        </div>
+        <span class="badge">6 fasi</span>
+      </div>
+      <p>Ricostruzione del bulk AdS dal bordo CFT. Layout a pannello testo + canvas, con testi leggibili e spaziatura migliorata.</p>
+      <div class="card-link">t2_v1_bulk_reconstruction.html</div>
+    </a>
+
+    <!-- T2 Card 4 — Stringhe -->
+    <a class="card" href="tentativo%202/t2_v1_stringhe_calabi_yau.html"
+       style="--accent: #a78bfa;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Stringhe Calabi-Yau — Tentativo 2</h2>
+          <div class="sub">Stringhe → Particelle · layout migliorato</div>
+        </div>
+        <span class="badge">6 fasi</span>
+      </div>
+      <p>Dalla stringa quantistica alla materia barionica. Layout rinnovato con pannello descrittivo laterale.</p>
+      <div class="card-link">t2_v1_stringhe_calabi_yau.html</div>
+    </a>
+
+    <!-- T2 Card 5 — Stringhe v2 -->
+    <a class="card" href="tentativo%202/t2_v1_stringhe_calabi_yau_v2.html"
+       style="--accent: #818cf8;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Stringhe v2 — Tentativo 2</h2>
+          <div class="sub">D-Brana · Gravitone · layout migliorato</div>
+        </div>
+        <span class="badge">6 fasi</span>
+      </div>
+      <p>Stringhe aperte e chiuse, D-Brana, gravitone, campi quantistici. Versione con layout a due pannelli.</p>
+      <div class="card-link">t2_v1_stringhe_calabi_yau_v2.html</div>
+    </a>
+
+    <!-- T2 Card 6 — Relatività Speciale -->
+    <a class="card" href="tentativo%202/t2_v1_relativita_speciale.html"
+       style="--accent: #fb923c;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Relatività Speciale — Tentativo 2</h2>
+          <div class="sub">Einstein 1905 · layout migliorato</div>
+        </div>
+        <span class="badge">8 fasi</span>
+      </div>
+      <p>Dilatazione del tempo, contrazione delle lunghezze, E=mc². Layout con testo leggibile e canvas animato a destra.</p>
+      <div class="card-link">t2_v1_relativita_speciale.html</div>
+    </a>
+
+    <!-- T2 Card 7 — Asymptotic Safety -->
+    <a class="card" href="tentativo%202/t2_v1_intro_asymptotic_safety.html"
+       style="--accent: #f59e0b;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Asymptotic Safety — Tentativo 2</h2>
+          <div class="sub">Sicurezza asintotica · layout migliorato</div>
+        </div>
+        <span class="badge">7 fasi</span>
+      </div>
+      <p>Punto fisso UV, flusso RG, equazione di Wetterich. Interfaccia rinnovata con pannello testo leggibile.</p>
+      <div class="card-link">t2_v1_intro_asymptotic_safety.html</div>
+    </a>
+
+    <!-- T2 Card 8 — Relatività Generale -->
+    <a class="card" href="tentativo%202/t2_v1_intro_general_relativity.html"
+       style="--accent: #e879f9;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Relatività Generale — Tentativo 2</h2>
+          <div class="sub">Einstein 1915 · layout migliorato</div>
+        </div>
+        <span class="badge">8 fasi</span>
+      </div>
+      <p>Equazioni di campo, onde gravitazionali, buchi neri, costante cosmologica. Layout con testi e canvas rinnovati.</p>
+      <div class="card-link">t2_v1_intro_general_relativity.html</div>
+    </a>
+
+    <!-- T2 Card 9 — LQG -->
+    <a class="card" href="tentativo%202/t2_v1_intro_lqg.html"
+       style="--accent: #c084fc;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Loop Quantum Gravity — Tentativo 2</h2>
+          <div class="sub">LQG · layout migliorato</div>
+        </div>
+        <span class="badge">8 fasi</span>
+      </div>
+      <p>Variabili di Ashtekar, spin network, spazio discreto, spin foam. Layout a pannello testo + canvas con tipografia leggibile.</p>
+      <div class="card-link">t2_v1_intro_lqg.html</div>
+    </a>
+
+    <!-- T2 Card 10 — Meccanica Quantistica -->
+    <a class="card" href="tentativo%202/t2_v1_intro_quantum_mechanics.html"
+       style="--accent: #34d399;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Meccanica Quantistica — Tentativo 2</h2>
+          <div class="sub">QM · layout migliorato</div>
+        </div>
+        <span class="badge">10 fasi</span>
+      </div>
+      <p>Funzione d'onda, entanglement, Modello Standard, bosone di Higgs. Layout completamente rinnovato con pannello testo leggibile.</p>
+      <div class="card-link">t2_v1_intro_quantum_mechanics.html</div>
+    </a>
+
+    </div><!-- /grid tentativo 2 -->
 
   </main>
 
