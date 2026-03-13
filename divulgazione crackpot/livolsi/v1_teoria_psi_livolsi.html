@@ -1,0 +1,1002 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<title>Teoria Ψ Universale — Edoardo Livolsi</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#000010; color:#e2e8f0; font-family:'Georgia',serif; overflow:hidden; }
+#canvas { display:block; }
+
+#ui {
+  position:fixed; top:0; left:0; right:0;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:11px 22px;
+  background:rgba(0,0,16,0.92);
+  border-bottom:1px solid #1e293b;
+  z-index:100; gap:12px;
+}
+#title    { font-size:13px; color:#a78bfa; letter-spacing:3px; text-transform:uppercase; white-space:nowrap; }
+#phase-desc { font-size:11.5px; color:#94a3b8; text-align:center; line-height:1.5; max-width:560px; }
+#phase-name { font-size:14px; color:#c4b5fd; font-weight:bold; text-align:right; white-space:nowrap; }
+
+#bottom {
+  position:fixed; bottom:0; left:0; right:0;
+  padding:9px 20px;
+  background:rgba(0,0,16,0.92);
+  border-top:1px solid #1e293b;
+  display:flex; justify-content:center; gap:6px; z-index:100; flex-wrap:wrap;
+}
+.btn {
+  padding:6px 12px; border:1px solid #3b1f6e;
+  background:#0d0a1e; color:#a78bfa;
+  border-radius:20px; cursor:pointer; font-size:10.5px; transition:all 0.3s;
+}
+.btn:hover, .btn.active { background:#2e1065; border-color:#a78bfa; color:#ede9fe; }
+#pause-btn {
+  padding:6px 14px; border:1px solid #374151;
+  background:#111827; color:#9ca3af;
+  border-radius:20px; cursor:pointer; font-size:11px; transition:all 0.3s;
+}
+#pause-btn:hover { background:#1f2937; color:#e5e7eb; }
+
+#panel {
+  position:fixed; right:14px; top:66px;
+  width:210px;
+  background:rgba(8,5,22,0.94);
+  border:1px solid #3b1f6e; border-radius:10px;
+  padding:13px; font-size:11px; color:#64748b;
+  line-height:1.8; z-index:100;
+}
+#panel h3 { color:#a78bfa; font-size:12px; margin-bottom:8px;
+  border-bottom:1px solid #1e293b; padding-bottom:5px; letter-spacing:1px; }
+.pr { display:flex; justify-content:space-between; margin-bottom:3px; flex-wrap:wrap; gap:2px; }
+.pv { color:#e2e8f0; font-weight:bold; font-size:10.5px; }
+.sep { border-color:#1e293b; margin:7px 0; }
+.leg { display:flex; align-items:center; gap:7px; margin-bottom:5px; }
+.ld  { width:14px; height:14px; border-radius:50%; flex-shrink:0; }
+</style>
+</head>
+<body>
+<div id="ui">
+  <div id="title">Teoria Ψ Universale</div>
+  <div id="phase-desc">—</div>
+  <div id="phase-name">—</div>
+</div>
+<canvas id="canvas"></canvas>
+<div id="panel">
+  <h3 id="panel-title">CAMPO Ψ</h3>
+  <div id="panel-body"></div>
+</div>
+<div id="bottom">
+  <button class="btn active" onclick="go(0)">① Campo Ψ</button>
+  <button class="btn" onclick="go(1)">② Funzionale Quartico</button>
+  <button class="btn" onclick="go(2)">③ Sei Pilastri</button>
+  <button class="btn" onclick="go(3)">④ Operatore Γ</button>
+  <button class="btn" onclick="go(4)">⑤ Emergenza Fisica</button>
+  <button class="btn" onclick="go(5)">⑥ Velocità della Luce</button>
+  <button class="btn" onclick="go(6)">⑦ Coscienza</button>
+  <button class="btn" onclick="go(7)">⑧ Multiverso</button>
+  <button id="pause-btn" onclick="togglePause()">⏸ Pausa</button>
+</div>
+
+<script>
+const cv = document.getElementById('canvas');
+const cx = cv.getContext('2d');
+let W, H;
+function resize() { W = cv.width = window.innerWidth; H = cv.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+
+let phase = 0, paused = false, t = 0;
+let animId;
+
+/* ──────────────────────────────────────────────────────── PHASES DATA */
+const phases = [
+  {
+    name: '① Il Campo Ψ',
+    desc: 'Il campo Ψ è l\'unico oggetto fondamentale della teoria. Non è una particella, non è un\'onda: è un\'entità variazionale auto-consistente. Ogni struttura fisica — massa, gravità, costanti — emerge dalla sua coerenza interna.',
+    panelTitle: 'CAMPO Ψ',
+    panelData: [
+      ['N_componenti', '∞'],
+      ['Tipo', 'Multi-componente'],
+      ['Simmetria', 'Auto-emergente'],
+      ['Norma', '‖Ψ‖ = cost.'],
+      ['Struttura', 'Variazionale'],
+    ]
+  },
+  {
+    name: '② Il Funzionale Quartico',
+    desc: 'Il funzionale quartico chiuso è il cuore della teoria. La sua variazione rispetto a Ψ† produce un\'equazione auto-referenziale: il campo Ψ definisce la propria struttura dinamica attraverso la minimizzazione.',
+    panelTitle: 'FUNZIONALE F[Ψ]',
+    panelData: [
+      ['Grado', '4 (quartico)'],
+      ['Param. liberi', '0'],
+      ['Vincoli', 'λ₁, λ₂'],
+      ['Condizione', 'δF/δΨ† = 0'],
+      ['Minimo', 'Globale unico'],
+    ]
+  },
+  {
+    name: '③ I Sei Pilastri',
+    desc: 'I sei invarianti fondamentali non sono assunzioni — sono conseguenze necessarie della struttura variazionale chiusa. Emergono come simmetrie del minimo globale del funzionale.',
+    panelTitle: 'SEI INVARIANTI',
+    panelData: null,
+    panelLegend: [
+      { color:'#9333ea', label:'NORMA — ‖Ψ‖ = cost.' },
+      { color:'#22d3ee', label:'CORRELAZIONE — max' },
+      { color:'#4ade80', label:'SIMMETRIA — emergente' },
+      { color:'#f59e0b', label:'COERENZA — auto-consist.' },
+      { color:'#f97316', label:'GAUGE — SU(3)×SU(2)×U(1)' },
+      { color:'#f1f5f9', label:'LORENTZ — autovalore' },
+    ]
+  },
+  {
+    name: '④ Operatore Γ e Hessiana',
+    desc: 'L\'operatore Γ[Ψ] non viene dall\'esterno. È il "cervello" del funzionale: la sua struttura emerge auto-consistentemente dalla soluzione dell\'equazione stessa. L\'Hessiana della seconda variazione genera lo spettro fisico completo.',
+    panelTitle: 'OPERATORE Γ',
+    panelData: [
+      ['Tipo', 'Auto-generato'],
+      ['Input', 'Ψ, ∂Ψ, Ψ†'],
+      ['Output', 'Settori fisici'],
+      ['Hessiana', 'H_eff = δ²F/δΨ²'],
+      ['Spettro', 'Continuo + discreto'],
+    ]
+  },
+  {
+    name: '⑤ Emergenza della Fisica',
+    desc: 'Tutte le particelle sono fluttuazioni quantistiche attorno allo stato coerente Ψ₀. La relazione di dispersione emergente ωₖ² = c_Ψ²|k|² + m_Ψ² riproduce E=mc² come caso speciale a bassa coerenza. La massa non è una proprietà fondamentale: è una frequenza di risonanza.',
+    panelTitle: 'ESPANSIONE Ψ',
+    panelData: [
+      ['Ψ₀', 'Stato coerente'],
+      ['φ', 'Fluttuazione'],
+      ['H_eff', 'Op. effettivo'],
+      ['ωₖ²', 'c²|k|² + m²'],
+      ['Higgs m', '√μ₀ (1° autoval.)'],
+    ]
+  },
+  {
+    name: '⑥ Velocità della Luce',
+    desc: 'La velocità della luce non è una costante fondamentale imposta dall\'esterno. È il "rapporto spettrale inevitabile" del minimizzatore globale del funzionale: il rapporto tra la scala spaziale e la scala temporale degli invarianti spettrali dell\'Hessiana.',
+    panelTitle: 'c COME RAPPORTO',
+    panelData: [
+      ['c_em', 'L_em / T_em'],
+      ['Derivazione', 'Autoval. Hessiana'],
+      ['Param. liberi', '0'],
+      ['Relazione α', '1 Hz = 3α^(7/2)'],
+      ['Fine-tuning', 'Risolto — unico'],
+    ]
+  },
+  {
+    name: '⑦ Coscienza e Coerenza',
+    desc: 'La "coerenza globale" è il quarto invariante fondamentale della teoria. Livolsi suggerisce — in modo speculativo — che sistemi complessi auto-organizzati potrebbero esibire proprietà analoghe alla coerenza del campo Ψ. In questa prospettiva, la coscienza sarebbe una forma di "coerenza variazionale" a scala macroscopica.',
+    panelTitle: 'COERENZA GLOBALE',
+    panelData: [
+      ['Stato', 'Speculativo'],
+      ['Analogia', 'coerenza → mente'],
+      ['Campo', 'Filosofia mente'],
+      ['Scala', 'Macroscopica'],
+      ['Invariante', '4° pilastro'],
+    ]
+  },
+  {
+    name: '⑧ Il Multiverso Variazionale',
+    desc: 'Ogni minimo locale del funzionale quartico corrisponde a un "universo coerente" con costanti fisiche diverse. Il nostro universo occupa il minimo globale — non per coincidenza antropica, ma perché è il solo stato di coerenza massima.',
+    panelTitle: 'MULTIVERSO Ψ',
+    panelData: [
+      ['Minimi locali', '∞'],
+      ['Min. globale', 'Il nostro universo'],
+      ['Costanti', 'Diverse per minimo'],
+      ['Selezione', 'Necessità variaz.'],
+      ['Antropico', 'Non necessario'],
+    ]
+  }
+];
+
+/* ──────────────────────────────────────────────────────── PHASE 1 — Campo Ψ */
+let nodes1 = [];
+function initPhase1() {
+  nodes1 = [];
+  const N = 32;
+  for (let i = 0; i < N; i++) {
+    nodes1.push({
+      x: 0.1 * W + Math.random() * 0.8 * W,
+      y: 0.1 * H + Math.random() * 0.8 * H,
+      r: 3 + Math.random() * 4,
+      phase: Math.random() * Math.PI * 2,
+      freq: 0.6 + Math.random() * 1.2,
+      norm: 0.5 + Math.random() * 0.5,
+      vx: (Math.random() - 0.5) * 0.18,
+      vy: (Math.random() - 0.5) * 0.18,
+    });
+  }
+}
+function drawPhase1() {
+  cx.fillStyle = 'rgba(0,0,16,0.18)';
+  cx.fillRect(0, 0, W, H);
+  const now = t * 0.016;
+  // Move nodes slowly
+  nodes1.forEach(n => {
+    n.x += n.vx; n.y += n.vy;
+    if (n.x < 0.08*W || n.x > 0.92*W) n.vx *= -1;
+    if (n.y < 0.08*H || n.y > 0.92*H) n.vy *= -1;
+  });
+  // Draw connections
+  for (let i = 0; i < nodes1.length; i++) {
+    for (let j = i + 1; j < nodes1.length; j++) {
+      const a = nodes1[i], b = nodes1[j];
+      const dx = a.x - b.x, dy = a.y - b.y;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if (dist < 160) {
+        const alpha = (1 - dist/160) * 0.45;
+        const pulse = 0.5 + 0.5 * Math.sin(now * 1.2 + a.phase + b.phase);
+        const r = Math.round(130 + 60 * pulse);
+        const g = Math.round(60 + 40 * pulse);
+        const bl = Math.round(200 + 55 * pulse);
+        cx.beginPath();
+        cx.moveTo(a.x, a.y);
+        cx.lineTo(b.x, b.y);
+        cx.strokeStyle = `rgba(${r},${g},${bl},${alpha * pulse})`;
+        cx.lineWidth = 0.8;
+        cx.stroke();
+      }
+    }
+  }
+  // Draw nodes
+  nodes1.forEach(n => {
+    const pulse = 0.5 + 0.5 * Math.sin(now * n.freq + n.phase);
+    const size = n.r * (0.7 + 0.6 * pulse * n.norm);
+    const alpha = 0.5 + 0.5 * pulse;
+    // Glow
+    const grd = cx.createRadialGradient(n.x, n.y, 0, n.x, n.y, size * 3.5);
+    grd.addColorStop(0, `rgba(167,139,250,${alpha * 0.7})`);
+    grd.addColorStop(0.5, `rgba(124,58,237,${alpha * 0.25})`);
+    grd.addColorStop(1, 'rgba(0,0,0,0)');
+    cx.beginPath();
+    cx.arc(n.x, n.y, size * 3.5, 0, Math.PI*2);
+    cx.fillStyle = grd;
+    cx.fill();
+    // Core
+    cx.beginPath();
+    cx.arc(n.x, n.y, size, 0, Math.PI*2);
+    cx.fillStyle = `rgba(196,181,253,${alpha})`;
+    cx.fill();
+  });
+  // Label
+  cx.font = 'bold 28px Georgia';
+  cx.fillStyle = 'rgba(167,139,250,0.12)';
+  cx.textAlign = 'center';
+  cx.fillText('Ψ', W/2, H/2 + 10);
+}
+
+/* ──────────────────────────────────────────────────────── PHASE 2 — Funzionale Quartico */
+let ball2 = { x: 0, y: 0, vx: 0, vy: 0 };
+function initPhase2() {
+  ball2 = { x: W * 0.15, y: H * 0.25, vx: 0.4, vy: 0 };
+}
+function landscape2(x, y) {
+  // Normalized coords -1..1
+  const nx = (x / W) * 2 - 1;
+  const ny = (y / H) * 2 - 1;
+  // Quartic landscape with multiple local minima + one global minimum
+  return nx*nx*nx*nx - 1.5*nx*nx + 0.3*nx + ny*ny*ny*ny - 1.2*ny*ny + 0.1*Math.sin(4*nx);
+}
+function drawPhase2() {
+  cx.fillStyle = 'rgba(0,0,16,0.22)';
+  cx.fillRect(0, 0, W, H);
+  const now = t * 0.016;
+
+  // Draw landscape as heatmap
+  const step = 6;
+  for (let px = 0; px < W; px += step) {
+    for (let py = 0; py < H; py += step) {
+      const v = landscape2(px, py);
+      const norm = Math.max(0, Math.min(1, (v + 1.5) / 3));
+      // Deep blue for low energy, purple for high
+      const r = Math.round(20 + 100 * (1 - norm));
+      const g = Math.round(5 + 15 * (1 - norm));
+      const bl = Math.round(40 + 120 * (1 - norm));
+      cx.fillStyle = `rgb(${r},${g},${bl})`;
+      cx.fillRect(px, py, step, step);
+    }
+  }
+
+  // Highlight global minimum
+  const gx = W * 0.5, gy = H * 0.72;
+  const pulse = 0.6 + 0.4 * Math.sin(now * 2);
+  const grad = cx.createRadialGradient(gx, gy, 0, gx, gy, 55 * pulse);
+  grad.addColorStop(0, 'rgba(167,139,250,0.9)');
+  grad.addColorStop(0.4, 'rgba(124,58,237,0.5)');
+  grad.addColorStop(1, 'rgba(0,0,0,0)');
+  cx.beginPath();
+  cx.arc(gx, gy, 55 * pulse, 0, Math.PI*2);
+  cx.fillStyle = grad;
+  cx.fill();
+
+  // Label global minimum
+  cx.font = 'bold 13px Georgia';
+  cx.fillStyle = '#c4b5fd';
+  cx.textAlign = 'center';
+  cx.fillText('Minimo globale', gx, gy + 70);
+  cx.font = '11px Georgia';
+  cx.fillStyle = '#7c3aed';
+  cx.fillText('il nostro universo', gx, gy + 86);
+
+  // Local minima markers
+  const locals = [
+    [W*0.22, H*0.35], [W*0.78, H*0.38], [W*0.35, H*0.62], [W*0.72, H*0.55],
+    [W*0.12, H*0.60], [W*0.85, H*0.65],
+  ];
+  locals.forEach(([lx, ly]) => {
+    const pg = cx.createRadialGradient(lx, ly, 0, lx, ly, 20);
+    pg.addColorStop(0, 'rgba(99,60,180,0.7)');
+    pg.addColorStop(1, 'rgba(0,0,0,0)');
+    cx.beginPath();
+    cx.arc(lx, ly, 20, 0, Math.PI*2);
+    cx.fillStyle = pg;
+    cx.fill();
+  });
+
+  // Animated "particle" falling toward global min
+  // Simple physics: move toward global min
+  const fx = (gx - ball2.x) * 0.0004;
+  const fy = (gy - ball2.y) * 0.0004;
+  ball2.vx = ball2.vx * 0.98 + fx;
+  ball2.vy = ball2.vy * 0.98 + fy;
+  ball2.x += ball2.vx;
+  ball2.y += ball2.vy;
+  if (Math.hypot(ball2.x - gx, ball2.y - gy) < 10) {
+    ball2 = { x: W * (0.1 + Math.random() * 0.8), y: H * (0.1 + Math.random() * 0.3), vx: 0, vy: 0 };
+  }
+  cx.beginPath();
+  cx.arc(ball2.x, ball2.y, 5, 0, Math.PI*2);
+  cx.fillStyle = '#f59e0b';
+  cx.fill();
+
+  // Equation overlay
+  cx.font = 'bold 17px monospace';
+  cx.fillStyle = 'rgba(167,139,250,0.72)';
+  cx.textAlign = 'left';
+  cx.fillText('δF/δΨ† = 0', 28, H - 80);
+  cx.font = '12px monospace';
+  cx.fillStyle = 'rgba(148,163,184,0.65)';
+  cx.fillText('F[Ψ] = Σᵢⱼ(Ψ†ᵢΓΨⱼ)² − λ₁Σᵢ(Ψ†ᵢΨᵢ−1)² − λ₂Σᵢⱼₖ Tr[Γ(ΨᵢΨ†ⱼ−ΨₖΨ†ᵢ)]²', 28, H - 58);
+}
+
+/* ──────────────────────────────────────────────────────── PHASE 3 — Sei Pilastri */
+const pillarColors = ['#9333ea','#22d3ee','#4ade80','#f59e0b','#f97316','#f1f5f9'];
+const pillarNames = ['NORMA','CORRELAZIONE','SIMMETRIA','COERENZA','GAUGE','LORENTZ'];
+const pillarFormulas = ['‖Ψ‖ = cost.','Σ(Ψ†ΓΨ)² = max','Emergente','Auto-consist.','SU(3)×SU(2)×U(1)','Autovalore'];
+let activeConn3 = 0;
+function drawPhase3() {
+  cx.fillStyle = 'rgba(0,0,16,0.20)';
+  cx.fillRect(0, 0, W, H);
+  const now = t * 0.016;
+  const cx0 = W / 2, cy0 = H / 2;
+  const R = Math.min(W, H) * 0.3;
+
+  // Compute node positions
+  const pos = pillarNames.map((_, i) => {
+    const angle = (i / 6) * Math.PI * 2 - Math.PI / 2;
+    return { x: cx0 + R * Math.cos(angle), y: cy0 + R * Math.sin(angle) };
+  });
+
+  // Cycle active connection
+  const connIndex = Math.floor(now * 0.6) % 6;
+
+  // Draw all connections dimly
+  for (let i = 0; i < 6; i++) {
+    for (let j = i+1; j < 6; j++) {
+      const active = (i === connIndex || j === connIndex);
+      const pulse = active ? (0.4 + 0.6 * Math.sin(now * 3)) : 0.08;
+      cx.beginPath();
+      cx.moveTo(pos[i].x, pos[i].y);
+      cx.lineTo(pos[j].x, pos[j].y);
+      cx.strokeStyle = active
+        ? `rgba(167,139,250,${pulse})`
+        : 'rgba(60,40,100,0.13)';
+      cx.lineWidth = active ? 1.5 : 0.7;
+      cx.stroke();
+    }
+  }
+
+  // Center glyph
+  const cpulse = 0.6 + 0.4 * Math.sin(now * 1.5);
+  const cg = cx.createRadialGradient(cx0, cy0, 0, cx0, cy0, 44 * cpulse);
+  cg.addColorStop(0, 'rgba(167,139,250,0.8)');
+  cg.addColorStop(0.5, 'rgba(124,58,237,0.3)');
+  cg.addColorStop(1, 'rgba(0,0,0,0)');
+  cx.beginPath();
+  cx.arc(cx0, cy0, 44 * cpulse, 0, Math.PI*2);
+  cx.fillStyle = cg;
+  cx.fill();
+  cx.font = 'bold 26px Georgia';
+  cx.fillStyle = 'rgba(196,181,253,0.9)';
+  cx.textAlign = 'center';
+  cx.textBaseline = 'middle';
+  cx.fillText('Ψ', cx0, cy0);
+  cx.textBaseline = 'alphabetic';
+
+  // Draw nodes
+  pos.forEach((p, i) => {
+    const active = (i === connIndex);
+    const pulse = active ? (0.5 + 0.5 * Math.sin(now * 4 + i)) : 0.4;
+    const col = pillarColors[i];
+    const gr = cx.createRadialGradient(p.x, p.y, 0, p.x, p.y, active ? 42 : 28);
+    gr.addColorStop(0, col + 'cc');
+    gr.addColorStop(0.5, col + '44');
+    gr.addColorStop(1, 'rgba(0,0,0,0)');
+    cx.beginPath();
+    cx.arc(p.x, p.y, active ? 42 : 28, 0, Math.PI*2);
+    cx.fillStyle = gr;
+    cx.fill();
+    cx.beginPath();
+    cx.arc(p.x, p.y, active ? 12 : 8, 0, Math.PI*2);
+    cx.fillStyle = col;
+    cx.fill();
+
+    // Label
+    const angle = (i / 6) * Math.PI * 2 - Math.PI / 2;
+    const lx = cx0 + (R + 58) * Math.cos(angle);
+    const ly = cy0 + (R + 58) * Math.sin(angle);
+    cx.font = `bold ${active ? 13 : 11}px Georgia`;
+    cx.fillStyle = active ? col : col + '99';
+    cx.textAlign = 'center';
+    cx.fillText(pillarNames[i], lx, ly);
+    cx.font = `${active ? 11 : 10}px Georgia`;
+    cx.fillStyle = active ? '#94a3b8' : '#334155';
+    cx.fillText(pillarFormulas[i], lx, ly + 14);
+  });
+}
+
+/* ──────────────────────────────────────────────────────── PHASE 4 — Operatore Γ e Hessiana */
+const MSIZE = 8;
+let matrixValues = [];
+let revealCount = 0;
+function initPhase4() {
+  matrixValues = [];
+  for (let i = 0; i < MSIZE; i++) {
+    matrixValues[i] = [];
+    for (let j = 0; j < MSIZE; j++) {
+      matrixValues[i][j] = (Math.random() - 0.5) * 2;
+    }
+  }
+  revealCount = 0;
+}
+function drawPhase4() {
+  cx.fillStyle = 'rgba(0,0,16,0.20)';
+  cx.fillRect(0, 0, W, H);
+  const now = t * 0.016;
+
+  // Gradually reveal matrix
+  if (t % 6 === 0 && revealCount < MSIZE * MSIZE) revealCount++;
+
+  const cellSize = Math.min(44, Math.floor(Math.min(W, H) * 0.07));
+  const matW = MSIZE * cellSize;
+  const matH = MSIZE * cellSize;
+  const mx0 = W/2 - matW/2;
+  const my0 = H/2 - matH/2 - 30;
+
+  // Bracket lines
+  cx.strokeStyle = 'rgba(167,139,250,0.55)';
+  cx.lineWidth = 2;
+  cx.beginPath();
+  cx.moveTo(mx0 - 14, my0 - 6); cx.lineTo(mx0 - 14, my0 + matH + 6);
+  cx.moveTo(mx0 + matW + 14, my0 - 6); cx.lineTo(mx0 + matW + 14, my0 + matH + 6);
+  cx.stroke();
+
+  for (let i = 0; i < MSIZE; i++) {
+    for (let j = 0; j < MSIZE; j++) {
+      const idx = i * MSIZE + j;
+      if (idx >= revealCount) continue;
+      const v = matrixValues[i][j];
+      const x = mx0 + j * cellSize + cellSize/2;
+      const y = my0 + i * cellSize + cellSize/2;
+      const heat = (v + 1) / 2; // 0..1
+      const r = Math.round(60 + 180 * heat);
+      const g = Math.round(20 + 40 * (1 - Math.abs(v)));
+      const bl = Math.round(180 - 100 * heat);
+      cx.font = `${cellSize > 36 ? 11 : 9}px monospace`;
+      cx.fillStyle = `rgb(${r},${g},${bl})`;
+      cx.textAlign = 'center';
+      cx.textBaseline = 'middle';
+      cx.fillText(v.toFixed(2), x, y);
+    }
+  }
+  cx.textBaseline = 'alphabetic';
+
+  // After matrix is full, show eigenvalue spectrum
+  if (revealCount >= MSIZE * MSIZE) {
+    const specY = my0 + matH + 50;
+    cx.font = '12px Georgia';
+    cx.fillStyle = 'rgba(167,139,250,0.8)';
+    cx.textAlign = 'center';
+    cx.fillText('Spettro H_eff  (autovalori emergenti)', W/2, specY);
+    const eigenvals = [-1.82, -0.91, -0.23, 0.14, 0.55, 1.07, 1.68, 2.44];
+    const bx0 = W/2 - 200;
+    for (let k = 0; k < eigenvals.length; k++) {
+      const pulse = 0.5 + 0.5 * Math.sin(now * 2 + k * 0.7);
+      const ex = bx0 + k * 57;
+      const height = 20 + 40 * Math.abs(eigenvals[k]) / 2.5;
+      const col = eigenvals[k] < 0 ? `rgba(99,60,180,${0.5 + 0.5*pulse})` : `rgba(167,139,250,${0.5+0.5*pulse})`;
+      cx.fillStyle = col;
+      cx.fillRect(ex, specY + 22, 12, -height);
+      cx.font = '9px monospace';
+      cx.fillStyle = '#64748b';
+      cx.textAlign = 'center';
+      cx.fillText(eigenvals[k].toFixed(2), ex + 6, specY + 36);
+    }
+  }
+
+  // Title
+  cx.font = 'bold 14px Georgia';
+  cx.fillStyle = 'rgba(196,181,253,0.7)';
+  cx.textAlign = 'center';
+  cx.fillText('Γ[Ψ] — Auto-generato', W/2, my0 - 22);
+}
+
+/* ──────────────────────────────────────────────────────── PHASE 5 — Emergenza Fisica */
+const particles5 = [];
+const particleTypes = [
+  { label:'e⁻', color:'#38bdf8', m:0.511 },
+  { label:'γ',  color:'#fde68a', m:0 },
+  { label:'q',  color:'#4ade80', m:2.3 },
+  { label:'g⃗',  color:'#f97316', m:80.4 },
+  { label:'H⁰', color:'#c4b5fd', m:125.1 },
+  { label:'ν',  color:'#a78bfa', m:0.001 },
+  { label:'W⁺', color:'#fb7185', m:80.4 },
+  { label:'Z⁰', color:'#67e8f9', m:91.2 },
+];
+let lastEmit5 = 0;
+function drawPhase5() {
+  cx.fillStyle = 'rgba(0,0,16,0.17)';
+  cx.fillRect(0, 0, W, H);
+  const now = t * 0.016;
+
+  // Central Ψ₀
+  const cx0 = W/2, cy0 = H/2;
+  const pulse = 0.6 + 0.4 * Math.sin(now * 2);
+  const cg = cx.createRadialGradient(cx0, cy0, 0, cx0, cy0, 70 * pulse);
+  cg.addColorStop(0, 'rgba(167,139,250,0.9)');
+  cg.addColorStop(0.4, 'rgba(124,58,237,0.4)');
+  cg.addColorStop(1, 'rgba(0,0,0,0)');
+  cx.beginPath();
+  cx.arc(cx0, cy0, 70 * pulse, 0, Math.PI*2);
+  cx.fillStyle = cg;
+  cx.fill();
+  cx.font = 'bold 20px Georgia';
+  cx.fillStyle = 'rgba(196,181,253,0.95)';
+  cx.textAlign = 'center';
+  cx.textBaseline = 'middle';
+  cx.fillText('Ψ₀', cx0, cy0);
+  cx.textBaseline = 'alphabetic';
+
+  // Emit waves
+  if (t - lastEmit5 > 40) {
+    lastEmit5 = t;
+    const angle = Math.random() * Math.PI * 2;
+    const speed = 1.2 + Math.random() * 0.8;
+    const type = particleTypes[Math.floor(Math.random() * particleTypes.length)];
+    particles5.push({
+      x: cx0, y: cy0,
+      vx: Math.cos(angle) * speed,
+      vy: Math.sin(angle) * speed,
+      age: 0, maxAge: 180,
+      color: type.color,
+      label: type.label,
+      wave: 0
+    });
+  }
+
+  // Concentric waves
+  for (let w = 0; w < 4; w++) {
+    const wr = ((now * 55 + w * 75) % 300);
+    if (wr > 10) {
+      const alpha = Math.max(0, 0.3 * (1 - wr / 300));
+      cx.beginPath();
+      cx.arc(cx0, cy0, wr, 0, Math.PI*2);
+      cx.strokeStyle = `rgba(124,58,237,${alpha})`;
+      cx.lineWidth = 1.2;
+      cx.stroke();
+    }
+  }
+
+  // Update and draw particles
+  for (let i = particles5.length - 1; i >= 0; i--) {
+    const p = particles5[i];
+    p.x += p.vx; p.y += p.vy;
+    p.age++;
+    if (p.age > p.maxAge || p.x < 0 || p.x > W || p.y < 0 || p.y > H) {
+      particles5.splice(i, 1);
+      continue;
+    }
+    const alpha = Math.min(1, (1 - p.age / p.maxAge) * 2);
+    const dist = Math.hypot(p.x - cx0, p.y - cy0);
+    const crystalize = dist > 90;
+    if (crystalize) {
+      cx.beginPath();
+      cx.arc(p.x, p.y, 5, 0, Math.PI*2);
+      cx.fillStyle = p.color + Math.round(alpha * 255).toString(16).padStart(2,'0');
+      cx.fill();
+      cx.font = 'bold 11px Georgia';
+      cx.fillStyle = p.color;
+      cx.textAlign = 'center';
+      cx.fillText(p.label, p.x, p.y - 10);
+    }
+  }
+
+  // Dispersion formula
+  cx.font = '13px monospace';
+  cx.fillStyle = 'rgba(167,139,250,0.75)';
+  cx.textAlign = 'center';
+  cx.fillText('ωₖ² = c_Ψ² |k|² + m_Ψ²', W/2, H - 65);
+  cx.font = '11px Georgia';
+  cx.fillStyle = 'rgba(148,163,184,0.6)';
+  cx.fillText('Ψ(x) = Ψ₀(x) + ε φ(x)', W/2, H - 45);
+}
+
+/* ──────────────────────────────────────────────────────── PHASE 6 — Velocità della Luce */
+function drawPhase6() {
+  cx.fillStyle = 'rgba(0,0,16,0.20)';
+  cx.fillRect(0, 0, W, H);
+  const now = t * 0.016;
+
+  const oscH = H * 0.18;
+  const oscW = W * 0.7;
+  const cx0 = W / 2;
+  const baseY1 = H * 0.38;
+  const baseY2 = H * 0.62;
+
+  // Labels
+  cx.font = '12px Georgia';
+  cx.fillStyle = '#38bdf8';
+  cx.textAlign = 'left';
+  cx.fillText('L_em  (scala spaziale)', cx0 - oscW/2, baseY1 - oscH/2 - 14);
+  cx.fillStyle = '#f59e0b';
+  cx.fillText('T_em  (scala temporale)', cx0 - oscW/2, baseY2 - oscH/2 - 14);
+
+  // Draw two oscilloscope traces
+  const drawTrace = (baseY, col, freq, amp, phase) => {
+    cx.beginPath();
+    for (let px = 0; px < oscW; px++) {
+      const nx = px / oscW;
+      const vy = baseY + amp * Math.sin(2 * Math.PI * freq * nx + now * 2 + phase);
+      if (px === 0) cx.moveTo(cx0 - oscW/2 + px, vy);
+      else cx.lineTo(cx0 - oscW/2 + px, vy);
+    }
+    cx.strokeStyle = col;
+    cx.lineWidth = 2;
+    cx.stroke();
+  };
+
+  // Convergence: after some time they get same frequency (→ c is constant)
+  const converge = Math.min(1, now * 0.04);
+  const freq1 = 2.0, freq2 = 2.0 * (1 - converge) + 2.0 * converge;
+  drawTrace(baseY1, '#38bdf8', freq1, oscH * 0.38, 0);
+  drawTrace(baseY2, '#f59e0b', freq2, oscH * 0.38, Math.PI * (1 - converge));
+
+  // Ratio line
+  if (converge > 0.4) {
+    const alpha = (converge - 0.4) / 0.6;
+    cx.font = `bold 18px Georgia`;
+    cx.fillStyle = `rgba(167,139,250,${alpha * 0.95})`;
+    cx.textAlign = 'center';
+    cx.fillText('c = L_em / T_em', W/2, H/2 + 5);
+    cx.font = '13px Georgia';
+    cx.fillStyle = `rgba(196,181,253,${alpha * 0.7})`;
+    cx.fillText('Rapporto spettrale inevitabile', W/2, H/2 + 26);
+  }
+
+  // Sync indicator
+  const syncLevel = Math.floor(converge * 100);
+  cx.font = '11px monospace';
+  cx.fillStyle = '#64748b';
+  cx.textAlign = 'left';
+  cx.fillText(`Coerenza spettrale: ${syncLevel}%`, 28, H - 80);
+
+  // Formula overlay
+  cx.font = '13px monospace';
+  cx.fillStyle = 'rgba(167,139,250,0.75)';
+  cx.textAlign = 'right';
+  cx.fillText('1 Hz = 3α^(7/2)', W - 28, H - 80);
+  cx.font = '11px Georgia';
+  cx.fillStyle = 'rgba(148,163,184,0.55)';
+  cx.fillText('α ≈ 1/137  (struttura fine emergente)', W - 28, H - 62);
+
+  // Oscilloscope grid
+  cx.strokeStyle = 'rgba(30,58,95,0.35)';
+  cx.lineWidth = 0.7;
+  for (let gx = cx0 - oscW/2; gx <= cx0 + oscW/2; gx += oscW/8) {
+    cx.beginPath(); cx.moveTo(gx, baseY1 - oscH); cx.lineTo(gx, baseY1 + oscH);
+    cx.stroke();
+    cx.beginPath(); cx.moveTo(gx, baseY2 - oscH); cx.lineTo(gx, baseY2 + oscH);
+    cx.stroke();
+  }
+}
+
+/* ──────────────────────────────────────────────────────── PHASE 7 — Coscienza */
+let neuroNodes = [], psiNodes7 = [];
+function initPhase7() {
+  neuroNodes = [];
+  psiNodes7 = [];
+  const N = 22;
+  for (let i = 0; i < N; i++) {
+    neuroNodes.push({
+      x: W * (0.2 + Math.random() * 0.6),
+      y: H * (0.15 + Math.random() * 0.7),
+      phase: Math.random() * Math.PI * 2,
+      freq: 0.5 + Math.random(),
+      r: 3 + Math.random() * 3,
+      vx: (Math.random()-0.5)*0.12,
+      vy: (Math.random()-0.5)*0.12,
+    });
+    psiNodes7.push({
+      x: W * (0.2 + Math.random() * 0.6),
+      y: H * (0.15 + Math.random() * 0.7),
+      phase: Math.random() * Math.PI * 2,
+      freq: 0.4 + Math.random() * 0.8,
+      r: 4 + Math.random() * 3,
+      vx: (Math.random()-0.5)*0.14,
+      vy: (Math.random()-0.5)*0.14,
+    });
+  }
+}
+function drawPhase7() {
+  cx.fillStyle = 'rgba(0,0,16,0.18)';
+  cx.fillRect(0, 0, W, H);
+  const now = t * 0.016;
+  const sync = Math.min(1, now * 0.025);
+
+  // Move nodes
+  const moveNodes = (arr) => arr.forEach(n => {
+    n.x += n.vx; n.y += n.vy;
+    if (n.x < 0.1*W || n.x > 0.9*W) n.vx *= -1;
+    if (n.y < 0.1*H || n.y > 0.9*H) n.vy *= -1;
+  });
+  moveNodes(neuroNodes); moveNodes(psiNodes7);
+
+  // Draw Ψ connections (violet)
+  for (let i = 0; i < psiNodes7.length; i++) {
+    for (let j = i+1; j < psiNodes7.length; j++) {
+      const a = psiNodes7[i], b = psiNodes7[j];
+      const d = Math.hypot(a.x-b.x, a.y-b.y);
+      if (d < 150) {
+        const alpha = (1-d/150) * 0.35 * (0.5 + 0.5*sync);
+        cx.beginPath();
+        cx.moveTo(a.x, a.y); cx.lineTo(b.x, b.y);
+        cx.strokeStyle = `rgba(124,58,237,${alpha})`;
+        cx.lineWidth = 0.7;
+        cx.stroke();
+      }
+    }
+  }
+
+  // Draw neuro connections (cyan)
+  for (let i = 0; i < neuroNodes.length; i++) {
+    for (let j = i+1; j < neuroNodes.length; j++) {
+      const a = neuroNodes[i], b = neuroNodes[j];
+      const d = Math.hypot(a.x-b.x, a.y-b.y);
+      if (d < 140) {
+        const alpha = (1-d/140) * 0.3;
+        cx.beginPath();
+        cx.moveTo(a.x, a.y); cx.lineTo(b.x, b.y);
+        cx.strokeStyle = `rgba(34,211,238,${alpha})`;
+        cx.lineWidth = 0.6;
+        cx.stroke();
+      }
+    }
+  }
+
+  // Cross-network resonance lines when sync > 0.3
+  if (sync > 0.3) {
+    const rs = (sync - 0.3) / 0.7;
+    for (let i = 0; i < 8; i++) {
+      const a = psiNodes7[i], b = neuroNodes[i];
+      const d = Math.hypot(a.x-b.x, a.y-b.y);
+      if (d < 250) {
+        const pulse = 0.4 + 0.6 * Math.sin(now * 3 + i);
+        cx.beginPath();
+        cx.moveTo(a.x, a.y); cx.lineTo(b.x, b.y);
+        cx.strokeStyle = `rgba(167,139,250,${rs * 0.4 * pulse})`;
+        cx.lineWidth = 1;
+        cx.setLineDash([4, 6]);
+        cx.stroke();
+        cx.setLineDash([]);
+      }
+    }
+  }
+
+  // Draw Ψ nodes (violet)
+  psiNodes7.forEach((n, i) => {
+    const pulse = 0.5 + 0.5 * Math.sin(now * n.freq + n.phase);
+    cx.beginPath();
+    cx.arc(n.x, n.y, n.r * (0.8 + 0.4 * pulse), 0, Math.PI*2);
+    cx.fillStyle = `rgba(167,139,250,${0.6 + 0.4 * pulse})`;
+    cx.fill();
+  });
+  // Draw neuro nodes (cyan)
+  neuroNodes.forEach((n, i) => {
+    const pulse = 0.5 + 0.5 * Math.sin(now * n.freq + n.phase + 1.2);
+    cx.beginPath();
+    cx.arc(n.x, n.y, n.r * (0.7 + 0.5 * pulse), 0, Math.PI*2);
+    cx.fillStyle = `rgba(34,211,238,${0.5 + 0.4 * pulse})`;
+    cx.fill();
+  });
+
+  // Sync label
+  cx.font = '13px Georgia';
+  cx.fillStyle = `rgba(196,181,253,${sync})`;
+  cx.textAlign = 'center';
+  if (sync > 0.6) {
+    cx.fillText('Risonanza — Coerenza Variazionale', W/2, H - 65);
+  }
+  cx.font = '11px Georgia';
+  cx.fillStyle = 'rgba(100,116,139,0.8)';
+  cx.fillText('Campo Ψ  ←→  Rete Neurale', W/2, H - 45);
+
+  // Legend
+  cx.font = '11px Georgia';
+  cx.fillStyle = '#7c3aed';
+  cx.textAlign = 'left';
+  cx.fillText('● Campo Ψ', 28, H - 80);
+  cx.fillStyle = '#22d3ee';
+  cx.fillText('● Rete Neurale', 28, H - 62);
+}
+
+/* ──────────────────────────────────────────────────────── PHASE 8 — Multiverso */
+let universes8 = [];
+let balls8 = [];
+function initPhase8() {
+  universes8 = [];
+  const N = 18;
+  for (let i = 0; i < N; i++) {
+    const isGlobal = (i === 0);
+    universes8.push({
+      x: isGlobal ? W/2 : W*(0.1 + Math.random()*0.8),
+      y: isGlobal ? H*0.72 : H*(0.15 + Math.random()*0.75),
+      depth: isGlobal ? 0.9 : 0.2 + Math.random()*0.5,
+      color: isGlobal ? '#a78bfa' : `hsl(${Math.random()*360},60%,45%)`,
+      label: isGlobal ? 'il nostro\nuniverso' : '',
+      r: isGlobal ? 46 : 14 + Math.random()*20,
+    });
+  }
+  balls8 = [];
+  for (let i = 0; i < 6; i++) {
+    balls8.push({
+      x: W*(0.1+Math.random()*0.8), y: H*0.12,
+      vx: (Math.random()-0.5)*0.5, vy: 0.3,
+      target: universes8[1 + Math.floor(Math.random()*(universes8.length-1))],
+      settled: false,
+    });
+  }
+}
+function drawPhase8() {
+  cx.fillStyle = 'rgba(0,0,16,0.18)';
+  cx.fillRect(0, 0, W, H);
+  const now = t * 0.016;
+
+  // Draw landscape gradient
+  const lg = cx.createLinearGradient(0, 0, 0, H);
+  lg.addColorStop(0, 'rgba(10,5,30,0.0)');
+  lg.addColorStop(0.5, 'rgba(20,8,50,0.25)');
+  lg.addColorStop(1, 'rgba(5,2,20,0.6)');
+  cx.fillStyle = lg;
+  cx.fillRect(0, 0, W, H);
+
+  // Draw universes (minima)
+  universes8.forEach((u, i) => {
+    const pulse = 0.6 + 0.4 * Math.sin(now * 1.5 + i * 0.8);
+    const gr = cx.createRadialGradient(u.x, u.y, 0, u.x, u.y, u.r * pulse);
+    gr.addColorStop(0, u.color + 'dd');
+    gr.addColorStop(0.45, u.color + '55');
+    gr.addColorStop(1, 'rgba(0,0,0,0)');
+    cx.beginPath();
+    cx.arc(u.x, u.y, u.r * pulse, 0, Math.PI*2);
+    cx.fillStyle = gr;
+    cx.fill();
+    if (u.label) {
+      cx.font = 'bold 11px Georgia';
+      cx.fillStyle = '#c4b5fd';
+      cx.textAlign = 'center';
+      const lines = u.label.split('\n');
+      lines.forEach((l, li) => {
+        cx.fillText(l, u.x, u.y + u.r * 1.3 + li * 14);
+      });
+    }
+  });
+
+  // Global minimum star label
+  const gmin = universes8[0];
+  cx.font = 'bold 13px Georgia';
+  cx.fillStyle = '#a78bfa';
+  cx.textAlign = 'center';
+  cx.fillText('Minimo Globale', gmin.x, gmin.y - gmin.r - 12);
+
+  // Move balls toward their target universes
+  balls8.forEach(b => {
+    if (!b.settled) {
+      const dx = b.target.x - b.x, dy = b.target.y - b.y;
+      b.vx += dx * 0.0005;
+      b.vy += dy * 0.0005;
+      b.vx *= 0.97; b.vy *= 0.97;
+      b.x += b.vx; b.y += b.vy;
+      if (Math.hypot(dx, dy) < 12) b.settled = true;
+    }
+    if (!b.settled) {
+      cx.beginPath();
+      cx.arc(b.x, b.y, 4, 0, Math.PI*2);
+      cx.fillStyle = '#f59e0b';
+      cx.fill();
+    }
+  });
+
+  // Labels
+  cx.font = '11px Georgia';
+  cx.fillStyle = 'rgba(100,116,139,0.8)';
+  cx.textAlign = 'left';
+  cx.fillText('Ogni minimo = un universo coerente con costanti proprie', 28, H - 60);
+  cx.fillStyle = 'rgba(167,139,250,0.7)';
+  cx.fillText('Il nostro universo = unico minimo di coerenza massima', 28, H - 42);
+}
+
+/* ──────────────────────────────────────────────────────── INIT & SWITCH */
+function initPhase(p) {
+  // Stop lingering particles
+  particles5.length = 0;
+  if (p === 0) initPhase1();
+  if (p === 1) initPhase2();
+  if (p === 3) initPhase4();
+  if (p === 6) initPhase7();
+  if (p === 7) initPhase8();
+}
+
+function updatePanel(p) {
+  const ph = phases[p];
+  document.getElementById('panel-title').textContent = ph.panelTitle;
+  const body = document.getElementById('panel-body');
+  if (ph.panelData) {
+    body.innerHTML = ph.panelData.map(([k,v]) =>
+      `<div class="pr"><span>${k}:</span><span class="pv">${v}</span></div>`
+    ).join('') + (ph.panelNote ? `<hr class="sep"><div style="font-size:10px;color:#334155;line-height:1.5;">${ph.panelNote}</div>` : '');
+  } else if (ph.panelLegend) {
+    body.innerHTML = ph.panelLegend.map(l =>
+      `<div class="leg"><div class="ld" style="background:${l.color};"></div><span style="font-size:10px;">${l.label}</span></div>`
+    ).join('');
+  }
+}
+
+function go(p) {
+  phase = p;
+  t = 0;
+  initPhase(p);
+  updatePanel(p);
+  document.querySelectorAll('.btn').forEach((b, i) => b.classList.toggle('active', i === p));
+  document.getElementById('phase-name').textContent = phases[p].name;
+  document.getElementById('phase-desc').textContent = phases[p].desc;
+}
+
+function togglePause() {
+  paused = !paused;
+  const btn = document.getElementById('pause-btn');
+  btn.textContent = paused ? '▶ Play' : '⏸ Pausa';
+  if (!paused) loop();
+}
+
+/* ──────────────────────────────────────────────────────── RENDER LOOP */
+const drawFns = [drawPhase1, drawPhase2, drawPhase3, drawPhase4, drawPhase5, drawPhase6, drawPhase7, drawPhase8];
+
+function loop() {
+  if (paused) return;
+  t++;
+  cx.save();
+  drawFns[phase]();
+  cx.restore();
+  animId = requestAnimationFrame(loop);
+}
+
+// Init
+go(0);
+loop();
+</script>
+</body>
+</html>
