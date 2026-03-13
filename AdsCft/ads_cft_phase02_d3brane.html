@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdS/CFT — Fase 02: Stack di N D₃-brane | DivulgAzione</title>
+<link rel="stylesheet" href="../tentativo 2/t2_style.css">
+<style>
+/* ── Leggibilità pannello ── */
+#panel {
+  background: rgba(0, 5, 15, 0.97);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.phase-body {
+  color: #dde6f0;
+}
+
+.phase-title {
+  color: #f0f9ff;
+  text-shadow: 0 1px 8px rgba(0,0,0,0.8);
+}
+
+.phase-tag {
+  color: #2dd4bf;
+}
+
+.note {
+  color: #94a3b8;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 4px;
+  padding: 12px 14px;
+  border-top: 1px solid rgba(14, 165, 233, 0.15);
+  margin-top: 16px;
+}
+</style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<!-- Top bar -->
+<div id="ui">
+  <span id="ui-title">DivulgAzione · AdS/CFT</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">Fase 02</span>
+</div>
+
+<!-- Left panel -->
+<div id="panel">
+
+  <div class="phase-content" id="ph-1">
+    <div class="phase-tag">FASE 02 — STACK DI BRANE</div>
+    <div class="phase-title">Stack di N D₃-brane: l'origine della dualità</div>
+    <div class="phase-body">
+
+      <p>Una <span class="am">D3-brana</span> è un'ipersuperficie (3+1)-dimensionale immersa nello spaziotempo a 10 dimensioni della teoria di stringa. Le estremità delle <span class="hl">stringhe aperte</span> sono vincolate ad essa, mentre le <span class="gr">stringhe chiuse</span> — incluso il gravitone — si propagano liberamente nel <span class="vi">bulk</span> 10D. Una singola brana è piatta: non curva lo spaziotempo.</p>
+
+      <p>Quando si sovrappongono <span class="am">N brane coincidenti</span>, le N² stringhe aperte tese tra di esse generano un <span class="hl">campo di gauge SU(N)</span>. L'energia di massa totale scala come N·T₃, dove la tensione di brana vale:</p>
+
+      <code class="formula">T₃ ~ 1 / (gₛ α'²)</code>
+
+      <p>Il punto cruciale è il <span class="am">doppio limite di 't Hooft</span>: si manda N → ∞ mantenendo fissato l'accoppiamento di 't Hooft λ = gₛ N ≫ 1. In questo regime la teoria di gauge sul bordo delle brane diventa <span class="hl">fortemente accoppiata</span>, e la descrizione gravitazionale (di stringa) nel bulk prende il sopravvento.</p>
+
+      <p>La metrica che emerge nelle vicinanze dello stack di brane è:</p>
+
+      <code class="formula">ds² = H(r)^{-½} η_{μν} dx^μ dx^ν + H(r)^{½} (dr² + r² dΩ₅²)
+H(r) = 1 + L⁴/r⁴     L⁴ = 4π gₛ N α'²
+λ = gₛ N  (accoppiamento di 't Hooft)</code>
+
+      <p>Lontano dalle brane (r → ∞) la metrica diventa piatta — spaziotempo di Minkowski. In prossimità delle brane (r → 0) la funzione di distorsione H(r) domina e la geometria si restringe nella <span class="am">gola AdS₅</span>: è qui che nasce la dualità.</p>
+
+      <div class="note">Visualizzazione: N brane sovrapposte (lamelle dorate parallele) con stringhe aperte che si tendono tra di esse (in arancio/viola). Una stringa chiusa (anello luminoso giallo) orbita liberamente nel bulk sopra. Al crescere di N, l'alone luminoso attorno alle brane si intensifica — rappresentando la curvatura nascente.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom navigation -->
+<div id="bottom">
+  <button class="btn" onclick="goPhase(1)">01 · Stack</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+
+<script src="../tentativo 2/t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  {
+    name: 'Stack di N D₃-brane',
+    desc: 'FASE 02 — Stack di N D₃-brane: SU(N) gauge · λ = gₛN ≫ 1 → geometria AdS₅',
+    scene: 'stack'
+  }
+];
+
+// ── Canvas drawing ────────────────────────────────────────────────────────────
+window.t2Draw = function(T, phaseIdx, ctx, W, H) {
+  const rm = t2ReducedMotion();
+  const cx = t2AnimCX();
+  const cy = t2AnimCY();
+
+  const N = 8;              // number of branes
+  const braneW = W * 0.45; // brane plate width
+  const braneSpacing = 20; // vertical spacing between branes
+  const stackH = (N - 1) * braneSpacing;
+  const stackTopY = cy - stackH * 0.5;
+
+  // ── 1. Glow halo around the brane stack ────────────────────────────────────
+  const haloR = braneW * 0.7;
+  const haloPulse = rm ? 1.0 : 0.8 + 0.2 * Math.sin(T * 0.8);
+  const halo = ctx.createRadialGradient(cx, cy, 0, cx, cy, haloR * haloPulse);
+  halo.addColorStop(0, 'rgba(245,158,11,0.12)');
+  halo.addColorStop(0.6, 'rgba(245,158,11,0.05)');
+  halo.addColorStop(1, 'rgba(0,0,0,0)');
+  ctx.fillStyle = halo;
+  ctx.fillRect(cx - haloR, cy - haloR * 0.8, haloR * 2, haloR * 1.6);
+
+  // ── 2. Open strings between adjacent brane pairs ───────────────────────────
+  const nStrings = 10;
+  for (let s = 0; s < nStrings; s++) {
+    const braneA = Math.floor(s % (N - 1));
+    const y1 = stackTopY + braneA * braneSpacing + (rm ? 0 : 2 * Math.sin(T * 0.6 + braneA * 0.3));
+    const y2 = stackTopY + (braneA + 1) * braneSpacing + (rm ? 0 : 2 * Math.sin(T * 0.6 + (braneA + 1) * 0.3));
+
+    const xOffset = (s / nStrings - 0.5) * braneW * 0.78;
+    const x1 = cx + xOffset;
+    const x2 = cx + xOffset + (rm ? 0 : 6 * Math.sin(T * 1.3 + s * 0.7));
+
+    const midX = (x1 + x2) * 0.5;
+    const midY = (y1 + y2) * 0.5;
+    const ctrlDX = rm ? 0 : 14 * Math.sin(T * 1.1 + s * 1.1);
+    const isOrange = s % 2 === 0;
+    const col = isOrange ? '#f97316' : '#a78bfa';
+
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.bezierCurveTo(
+      midX + ctrlDX, midY - 4,
+      midX - ctrlDX, midY + 4,
+      x2, y2
+    );
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 1.2;
+    t2Glow(col, 5);
+    ctx.stroke();
+    t2NoGlow();
+  }
+
+  // ── 3. Brane plates (drawn after strings so plates sit on top) ─────────────
+  for (let i = 0; i < N; i++) {
+    const yBase = stackTopY + i * braneSpacing;
+    const yOsc = rm ? 0 : 2 * Math.sin(T * 0.6 + i * 0.3);
+    const y = yBase + yOsc;
+
+    // Glow
+    t2Glow('#f59e0b', 12);
+
+    // Main plate line (thick)
+    ctx.beginPath();
+    ctx.moveTo(cx - braneW * 0.5, y);
+    ctx.lineTo(cx + braneW * 0.5, y);
+    ctx.strokeStyle = '#f59e0b';
+    ctx.lineWidth = 3.5;
+    ctx.stroke();
+
+    // Subtle depth shading (parallelogram feel)
+    ctx.beginPath();
+    ctx.moveTo(cx - braneW * 0.5, y);
+    ctx.lineTo(cx + braneW * 0.5, y);
+    ctx.strokeStyle = 'rgba(253,230,138,0.35)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+
+    t2NoGlow();
+  }
+
+  // ── 4. Closed string (glowing ring) in the bulk above the stack ────────────
+  const csY = cy - H * 0.28;
+  const csR = rm ? 30 : 30 + 6 * Math.sin(T * 1.1);
+  const csX = rm ? cx : cx + 18 * Math.cos(T * 0.35);
+  const csYAnim = rm ? csY : csY + 5 * Math.sin(T * 0.5);
+
+  t2Glow('#fde68a', 18);
+  ctx.beginPath();
+  ctx.arc(csX, csYAnim, csR, 0, Math.PI * 2);
+  ctx.strokeStyle = '#fde68a';
+  ctx.lineWidth = 2;
+  ctx.stroke();
+  t2NoGlow();
+
+  // Label: stringa chiusa
+  t2Txt(csX, csYAnim - csR - 14, 'stringa chiusa', '#fde68a', 11, 'center', 'monospace');
+
+  // ── 5. Labels ──────────────────────────────────────────────────────────────
+
+  // "SU(N) gauge" near the open strings
+  t2Txt(cx, cy + 6, 'SU(N) gauge', 'rgba(249,115,22,0.9)', 12, 'center', 'monospace');
+
+  // λ = gₛN ≫ 1 below brane stack
+  t2Txt(cx, stackTopY + stackH + 28, 'λ = gₛN ≫ 1', '#fbbf24', 12, 'center', 'monospace');
+
+  // Bulk 10D label upper right of canvas area
+  const bulkLabelX = W > 820 ? cx + braneW * 0.6 : W * 0.88;
+  const bulkLabelY = W > 820 ? cy - H * 0.35 : cy - H * 0.22;
+  t2Txt(bulkLabelX, bulkLabelY, 'Bulk 10D', 'rgba(148,163,184,0.8)', 12, 'right', 'monospace');
+
+  // Vertical dimension bracket indicating bulk extent
+  const brkX = cx + braneW * 0.5 + 28;
+  const brkTop = csY - csR - 20;
+  const brkBot = stackTopY + stackH + 14;
+  ctx.beginPath();
+  ctx.moveTo(brkX + 6, brkTop);
+  ctx.lineTo(brkX, brkTop);
+  ctx.lineTo(brkX, brkBot);
+  ctx.lineTo(brkX + 6, brkBot);
+  ctx.strokeStyle = 'rgba(148,163,184,0.45)';
+  ctx.lineWidth = 1.2;
+  ctx.stroke();
+  // Small arrow head at top
+  ctx.beginPath();
+  ctx.moveTo(brkX - 3, brkTop + 8);
+  ctx.lineTo(brkX, brkTop);
+  ctx.lineTo(brkX + 3, brkTop + 8);
+  ctx.stroke();
+
+  // ── 6. Info box (top-left of canvas area) ─────────────────────────────────
+  const ibX = W > 820 ? cx - braneW * 0.5 - 10 : 14;
+  const ibY = W > 820 ? cy - stackH * 0.5 - 80 : stackTopY - 80;
+  const ibW = 148;
+  const ibH = 62;
+
+  ctx.fillStyle = 'rgba(0,8,20,0.82)';
+  ctx.strokeStyle = 'rgba(245,158,11,0.55)';
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.roundRect(ibX - ibW * 0.5, ibY - ibH * 0.5, ibW, ibH, 6);
+  ctx.fill();
+  ctx.stroke();
+
+  t2Txt(ibX, ibY - 18, 'N = 8', '#f59e0b', 12, 'center', 'monospace');
+  t2Txt(ibX, ibY,      'λ = gₛN', '#fbbf24', 11, 'center', 'monospace');
+  t2Txt(ibX, ibY + 18, 'T₃ ~ 1/(gₛα′²)', '#94a3b8', 10, 'center', 'monospace');
+};
+
+t2Init();
+</script>
+</body>
+</html>
