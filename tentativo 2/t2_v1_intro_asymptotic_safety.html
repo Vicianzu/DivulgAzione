@@ -1,0 +1,625 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asymptotic Safety — Sicurezza Asintotica | Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<!-- Top bar -->
+<div id="ui">
+  <span id="ui-title">DivulgAzione · Asymptotic Safety</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">7 fasi</span>
+</div>
+
+<!-- Left panel -->
+<div id="panel">
+
+  <div class="phase-content" id="ph-1">
+    <div class="phase-tag">FASE 01 — STORIA</div>
+    <div class="phase-title">Steven Weinberg e l'idea della sicurezza asintotica</div>
+    <div class="phase-body">
+      <p><span class="hl">Steven Weinberg</span> (1933–2021) fu uno degli architetti del Modello Standard (Premio Nobel 1979 con Glashow e Salam). Nel <span class="am">1976</span>, alla Scuola Estiva di Erice, propose un nuovo paradigma per la gravità quantistica: la <span class="gr">sicurezza asintotica</span>.</p>
+      <p>L'idea: forse la gravità non è davvero non-rinormalizzabile — diventa <span class="hl">UV-completa</span> grazie a un <span class="vi">punto fisso non-Gaussiano</span> nello spazio dei coupling. Invece di divergere ad alta energia, le costanti di accoppiamento gravitazionale convergono a valori finiti e ben definiti.</p>
+      <p>Questo approccio non richiede nuove particelle, dimensioni extra o la rinuncia alla geometria riemanniana: è una <span class="am">teoria quantistica della gravità costruita con la gravità stessa</span>, ma gestita con il potente strumento del Gruppo di Rinormalizzazione.</p>
+      <code class="formula">g(μ) → g* ≠ 0   al crescere di μ → ∞
+(punto fisso UV non-Gaussiano)</code>
+      <div class="note">▸ Ritratto di Weinberg (1933–2021): Nobel per la fisica 1979. La sua proposta del 1976 ad Erice rimase per vent'anni un'idea seminale, poi sviluppata numericamente da Martin Reuter (1998).</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — ASINTOTICA</div>
+    <div class="phase-title">Perché si chiama "asintotica"?</div>
+    <div class="phase-body">
+      <p>"Asintotico" viene dal greco <span class="am">ἀσύμπτωτος</span>: «che non cade insieme», che si avvicina indefinitamente senza mai toccare. In geometria, un'asintota è una retta cui una curva si avvicina senza mai raggiungerla.</p>
+      <p>In fisica, "asintotico" descrive il comportamento delle <span class="hl">costanti di accoppiamento</span> g(μ) al crescere della scala di energia μ → ∞. Nel flusso del Gruppo di Rinormalizzazione, la traiettoria di g(μ) è <span class="gr">asintotica al punto fisso</span> g*: si avvicina, ma non lo supera mai in tempo finito.</p>
+      <p>Il punto fisso <span class="vi">g*</span> agisce come un attrattore nel flusso RG: le traiettorie fisiche nel piano dei coupling si arrotolano verso g* ma non si incrociano mai con esso a energia finita. È una proprietà topologica del flusso, non solo numerica.</p>
+      <code class="formula">lim_{μ→∞} g(μ) = g*    (finito e non-zero)
+β(g) = μ dg/dμ → 0   quando g → g*</code>
+      <div class="note">▸ Traiettoria RG nel piano dei coupling: la curva si avvicina asintoticamente al punto fisso g* come un'iperbole alla propria asintota. La funzione β si annulla in g*.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — SAFETY</div>
+    <div class="phase-title">Perché si chiama "safety" (sicurezza)?</div>
+    <div class="phase-body">
+      <p>La teoria è "<span class="hl">sicura</span>" dalle divergenze UV. Nelle teorie non-rinormalizzabili, come la gravità quantistica perturbativa, i coupling divergono ad alta energia: <span class="am">g → ∞</span> quando μ → ∞. La teoria perde predicibilità — produce previsioni infinite, fisicamente senza senso.</p>
+      <p>Nella sicurezza asintotica, invece, <span class="gr">g → g* &lt; ∞</span>: il coupling rimane finito a tutte le energie. La teoria è predicibile a tutte le scale. Si dice che la teoria è <span class="vi">UV-sicura</span>: non crolla nell'ultravioletto.</p>
+      <p>La "<span class="hl">superficie critica UV</span>" (UV critical surface) è la varietà di attrazione del punto fisso nel flusso RG: solo i coupling che iniziano su questa superficie evolvono verso g*. La dimensione finita di questa superficie determina il numero di <span class="am">parametri liberi della teoria</span> — fondamentale per la predicibilità.</p>
+      <code class="formula">g → ∞   (non sicura: teoria perturbativa)
+  vs
+g → g* &lt; ∞   (sicura: asymptotic safety)
+dim(UV critical surface) = N_free params</code>
+      <div class="note">▸ Confronto di traiettorie: quelle che divergono (divergono verso l'alto) vs quelle che convergono al punto fisso g* (frecce che si avvitano verso il punto). Solo le seconde sono fisiche.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — RG FLOW</div>
+    <div class="phase-title">Il flusso RG nel piano delle fasi</div>
+    <div class="phase-body">
+      <p>La costante gravitazionale <span class="hl">G(μ)</span> e la costante cosmologica <span class="am">Λ(μ)</span> cambiano con la scala di energia μ. Il <span class="gr">flusso del Gruppo di Rinormalizzazione</span> descrive la loro evoluzione nel piano (G̃, Λ̃), dove si usano le versioni adimensionali: G̃ = G·k² e Λ̃ = Λ/k².</p>
+      <p>Il flusso è governato dalla celebre <span class="vi">equazione di Wetterich</span> (equazione RG esatta, 1993): un'equazione funzionale per l'azione efficace Γ_k che tiene conto di tutte le fluttuazioni quantistiche sopra la scala k. È esatta — non perturbativa — e costituisce la base del metodo FRG.</p>
+      <p>Le <span class="hl">linee di flusso</span> nel piano (G̃, Λ̃) rivelano la struttura di fase della gravità quantistica: regioni di flusso verso il punto fisso UV, regioni di fuga verso l'infrarosso (la gravità classica), e separatrici che definiscono la fisica osservabile.</p>
+      <code class="formula">∂_t Γ_k = ½ Tr[(Γ_k^(2) + R_k)^{-1} ∂_t R_k]
+t = log(k/k₀),   G̃ = G·k²,   Λ̃ = Λ/k²</code>
+      <div class="note">▸ Flusso RG animato nel piano (G̃, Λ̃): molte traiettorie con frecce che mostrano la direzione del flusso verso IR (k→0). Il punto fisso UV si trova nell'angolo superiore destro del diagramma.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — FIXED POINT</div>
+    <div class="phase-title">Il punto fisso UV: il cuore dell'asymptotic safety</div>
+    <div class="phase-body">
+      <p>Ad energie molto alte (scala di Planck e oltre), il flusso RG converge verso un <span class="hl">punto fisso UV non-Gaussiano</span> (G̃*, Λ̃*) ≠ (0,0). Questo punto fu trovato per la prima volta numericamente da <span class="am">Martin Reuter</span> nel 1998 usando il FRG nell'approssimazione di Einstein-Hilbert.</p>
+      <p>Il punto fisso ha <span class="gr">2 direzioni rilevanti</span> (autovalori negativi della matrice di stabilità) — corrispondenti a 2 parametri liberi della teoria di gravità quantistica. Questo è un numero straordinariamente piccolo e predicibile, in contrasto con la gravità perturbativa che ha infiniti parametri liberi.</p>
+      <p>I valori numerici (nell'approssimazione di Einstein-Hilbert) sono: <span class="vi">G̃* ≈ 0.707</span> e <span class="hl">Λ̃* ≈ 0.193</span>. Risultati più precisi includono operatori di curvatura superiori (R², R³,...) e confermano la stabilità del punto fisso.</p>
+      <code class="formula">G̃* ≈ 0.707   (Newton adimensionale)
+Λ̃* ≈ 0.193   (cosmologica adimensionale)
+θ₁ ≈ −1.48 ± 3.04i   (esponenti critici)</code>
+      <div class="note">▸ Il punto fisso evidenziato con un alone luminoso nel diagramma di flusso. Le 2 direzioni rilevanti (frecce rosse) e le direzioni irrilevanti (frecce blu) mostrano la struttura attrattiva del punto.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — CONFRONTO</div>
+    <div class="phase-title">Libertà asintotica vs sicurezza asintotica</div>
+    <div class="phase-body">
+      <p>Nella <span class="hl">QCD</span>, il coupling forte scorre verso zero ad alta energia: <span class="am">g → 0</span> quando μ → ∞. Questa è la <span class="gr">libertà asintotica</span> — un punto fisso <em>Gaussiano</em> (g* = 0). Scoperta da Gross, Politzer e Wilczek nel 1973 (Nobel 2004), spiega perché i quark ad alta energia si comportano come particelle quasi-libere.</p>
+      <p>Nella <span class="vi">sicurezza asintotica</span>, g → g* ≠ 0 — un punto fisso <em>non-Gaussiano</em>. Entrambe rendono le teorie UV-complete e predicibili. La differenza chiave: la libertà asintotica richiede un parametro di espansione perturbativo piccolo; la sicurezza asintotica richiede solo la <span class="hl">finitezza del punto fisso</span>, accessibile solo con metodi non perturbativi.</p>
+      <p>Un'analogia: la libertà asintotica è come avvicinarsi all'<span class="am">origine</span> (g=0) di una mappa, la sicurezza asintotica come avvicinarsi a un punto <span class="gr">interno</span> (g*≠0). In entrambi i casi, il flusso si "congela" al punto fisso. La teoria della gravità può essere UV-completa come la QCD, ma con un diverso punto fisso.</p>
+      <code class="formula">Libertà asintotica (QCD):   g → 0   (punto fisso Gaussiano)
+Sicurezza asintotica (AS):  g → g* ≠ 0   (non-Gaussiano)
+Entrambe: β(g*) = 0,  teoria predicibile ∀μ</code>
+      <div class="note">▸ Due diagrammi di flusso affiancati: a sinistra, QCD con frecce che convergono all'origine (g=0); a destra, AS con frecce che convergono a g*≠0. La struttura del flusso è analoga, il punto fisso è diverso.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — PREVISIONI</div>
+    <div class="phase-title">Previsioni e stato dell'arte</div>
+    <div class="phase-body">
+      <p><span class="hl">Martin Reuter</span> (1998) applicò il FRG alla gravità, aprendo un campo di ricerca attivo con centinaia di pubblicazioni. La previsione più spettacolare: <span class="am">Shaposhnikov e Wetterich</span> (2010) predissero la massa del bosone di Higgs a circa <span class="gr">126 GeV</span> — prima della scoperta al LHC! Il valore misurato nel 2012 è <span class="hl">125.09 ± 0.24 GeV</span>: un accordo straordinario.</p>
+      <p>Altre previsioni dell'asymptotic safety: (1) la costante di Newton corre secondo <span class="vi">G(k) ≈ G*/k²</span> alle scale di Planck; (2) modifiche ai processi di scattering gravitazionale ad altissima energia; (3) una cosmologia primordiale senza singolarità iniziale; (4) uno <span class="am">spettro di potenza primordiale</span> con correzioni specifiche rilevabili nel fondo cosmico a microonde.</p>
+      <p>Lo stato dell'arte: il punto fisso è stato confermato in approssimazioni sempre più accurate, includendo operatori R^n fino a n=35, accoppiamenti con materia, e gravità in varie dimensioni. La <span class="gr">sfida attuale</span> è dimostrare la consistenza del troncamento e calcolare previsioni osservabili precise per il CMB e le onde gravitazionali.</p>
+      <code class="formula">G(k) ~ G*/k²   quando k → ∞   (running Newton)
+m_Higgs ≈ 126 GeV   (Shaposhnikov-Wetterich 2010)
+vs   m_H = 125.09 ± 0.24 GeV   (LHC, 2012)</code>
+      <div class="note">▸ La traiettoria fisica dell'asymptotic safety nel piano (G̃, Λ̃): parte dal punto fisso UV, scorre verso i valori IR osservati G≈6.67×10⁻¹¹, Λ≈10⁻¹²² (in unità di Planck). La previsione della massa del bosone di Higgs è un test cruciale della teoria.</div>
+    </div>
+  </div>
+
+</div><!-- #panel -->
+
+<!-- Bottom navigation -->
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)" aria-label="Fase 1: Storia">01</button>
+  <button class="btn" onclick="goPhase(2)" aria-label="Fase 2: Asintotica">02</button>
+  <button class="btn" onclick="goPhase(3)" aria-label="Fase 3: Safety">03</button>
+  <button class="btn" onclick="goPhase(4)" aria-label="Fase 4: RG Flow">04</button>
+  <button class="btn" onclick="goPhase(5)" aria-label="Fase 5: Fixed Point">05</button>
+  <button class="btn" onclick="goPhase(6)" aria-label="Fase 6: Confronto">06</button>
+  <button class="btn" onclick="goPhase(7)" aria-label="Fase 7: Previsioni">07</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: '01', desc: 'FASE 01 — STORIA · Weinberg e la nascita dell\'idea (1976)' },
+  { name: '02', desc: 'FASE 02 — ASINTOTICA · Perché si chiama "asintotica"?' },
+  { name: '03', desc: 'FASE 03 — SAFETY · Perché la teoria è "sicura"?' },
+  { name: '04', desc: 'FASE 04 — RG FLOW · Il flusso nel piano delle fasi (G̃, Λ̃)' },
+  { name: '05', desc: 'FASE 05 — FIXED POINT · Il punto fisso UV non-Gaussiano' },
+  { name: '06', desc: 'FASE 06 — CONFRONTO · Libertà asintotica vs sicurezza asintotica' },
+  { name: '07', desc: 'FASE 07 — PREVISIONI · Reuter, Wetterich e la massa dell\'Higgs' },
+];
+
+// ── RG flow diagram helpers ────────────────────────────────────────────────────
+// We work in a local coordinate system inside the canvas:
+//   diagram origin at (ox, oy), width dw, height dh
+// Physical axes: G̃ horizontal (0..1), Λ̃ vertical (0..0.5)
+
+const GSTAR = 0.707, LSTAR = 0.193;  // UV fixed point (dimensionless)
+const G_MAX = 1.1,   L_MAX = 0.55;   // axis extents
+
+// Map physical (g, lam) → canvas pixel
+function toCanvas(g, lam, ox, oy, dw, dh) {
+  return [
+    ox + (g   / G_MAX) * dw,
+    oy + dh - (lam / L_MAX) * dh
+  ];
+}
+
+// RG beta functions (schematic, qualitatively correct near fixed point)
+// dG̃/dt = (2 + ηN) G̃   simplified near FP as attraction toward (GSTAR, LSTAR)
+// We use a phenomenological flow that has the right fixed-point topology.
+function betaG(g, lam) {
+  // Near FP: linear part with attraction; global: diverge if far
+  const dg = g - GSTAR, dl = lam - LSTAR;
+  // Eigenvalues ~-1.5 ± 3i → spiral attractor
+  return -1.5 * dg + 3.0 * dl;
+}
+function betaL(g, lam) {
+  const dg = g - GSTAR, dl = lam - LSTAR;
+  return -3.0 * dg - 1.5 * dl;
+}
+
+// Integrate one RG step (forward = toward IR, i.e. t decreases)
+function rgStep(g, lam, dt) {
+  const bg = betaG(g, lam), bl = betaL(g, lam);
+  return [g + bg * dt, lam + bl * dt];
+}
+
+// Build a trajectory from start point, N steps toward IR (dt>0 → away from FP)
+function buildTraj(g0, lam0, steps, dt) {
+  const pts = [[g0, lam0]];
+  let g = g0, lam = lam0;
+  for (let i = 0; i < steps; i++) {
+    [g, lam] = rgStep(g, lam, dt);
+    if (g < -0.05 || g > G_MAX + 0.2 || lam < -0.3 || lam > L_MAX + 0.2) break;
+    pts.push([g, lam]);
+  }
+  return pts;
+}
+
+// Predefined starting points for flow lines (IR end, integrate toward UV = FP)
+// We draw trajectories that START at IR (low k, observable) and flow toward UV FP
+const IR_STARTS = [
+  [0.05, 0.02], [0.15, 0.01], [0.30, 0.03], [0.50, 0.05],
+  [0.70, 0.08], [0.85, 0.12], [0.95, 0.20], [0.80, 0.30],
+  [0.60, 0.35], [0.40, 0.30], [0.20, 0.20], [0.10, 0.12],
+  [0.05, 0.25], [0.25, 0.40], [0.50, 0.42], [0.90, 0.42],
+];
+
+// Build all trajectories toward FP (dt negative = toward UV)
+function buildAllTrajs(steps, dt) {
+  return IR_STARTS.map(([g0, l0]) => buildTraj(g0, l0, steps, dt));
+}
+
+// Draw an arrowhead at the end of (p1→p2) segment
+function drawArrow(ctx, x1, y1, x2, y2, size, col) {
+  const angle = Math.atan2(y2 - y1, x2 - x1);
+  ctx.save();
+  ctx.strokeStyle = col;
+  ctx.fillStyle = col;
+  ctx.lineWidth = 1;
+  ctx.beginPath();
+  ctx.moveTo(x2, y2);
+  ctx.lineTo(
+    x2 - size * Math.cos(angle - Math.PI / 7),
+    y2 - size * Math.sin(angle - Math.PI / 7)
+  );
+  ctx.lineTo(
+    x2 - size * Math.cos(angle + Math.PI / 7),
+    y2 - size * Math.sin(angle + Math.PI / 7)
+  );
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+// Draw axes + labels
+function drawAxes(ctx, ox, oy, dw, dh) {
+  ctx.save();
+  ctx.strokeStyle = 'rgba(100,160,220,0.55)';
+  ctx.lineWidth = 1.2;
+  ctx.beginPath();
+  // G axis (horizontal)
+  ctx.moveTo(ox, oy + dh); ctx.lineTo(ox + dw + 18, oy + dh);
+  // Λ axis (vertical)
+  ctx.moveTo(ox, oy + dh); ctx.lineTo(ox, oy - 18);
+  ctx.stroke();
+
+  // Arrowheads for axes
+  drawArrow(ctx, ox + dw, oy + dh, ox + dw + 18, oy + dh, 8, 'rgba(100,160,220,0.55)');
+  drawArrow(ctx, ox, oy + 0, ox, oy - 18, 8, 'rgba(100,160,220,0.55)');
+
+  // Axis labels
+  ctx.fillStyle = '#7dd3fc';
+  ctx.font = 'italic 14px Georgia,serif';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'top';
+  ctx.fillText('G̃', ox + dw + 22, oy + dh - 7);
+  ctx.textBaseline = 'middle';
+  ctx.textAlign = 'right';
+  ctx.fillText('Λ̃', ox - 8, oy - 14);
+
+  // Tick marks
+  ctx.strokeStyle = 'rgba(100,160,220,0.28)';
+  ctx.lineWidth = 0.7;
+  for (let gv = 0.25; gv <= G_MAX - 0.01; gv += 0.25) {
+    const [px] = toCanvas(gv, 0, ox, oy, dw, dh);
+    ctx.beginPath(); ctx.moveTo(px, oy + dh); ctx.lineTo(px, oy + dh + 5); ctx.stroke();
+    ctx.fillStyle = 'rgba(100,160,220,0.55)';
+    ctx.font = '10px Courier New,monospace';
+    ctx.textAlign = 'center'; ctx.textBaseline = 'top';
+    ctx.fillText(gv.toFixed(2), px, oy + dh + 7);
+  }
+  for (let lv = 0.1; lv <= L_MAX - 0.01; lv += 0.1) {
+    const [, py] = toCanvas(0, lv, ox, oy, dw, dh);
+    ctx.beginPath(); ctx.moveTo(ox, py); ctx.lineTo(ox - 5, py); ctx.stroke();
+    ctx.fillStyle = 'rgba(100,160,220,0.55)';
+    ctx.font = '10px Courier New,monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillText(lv.toFixed(1), ox - 7, py);
+  }
+
+  ctx.restore();
+}
+
+// Draw a single trajectory (array of [g,lam] points), fraction 0..1
+function drawTraj(ctx, traj, fraction, ox, oy, dw, dh, col, lw, alpha) {
+  if (traj.length < 2) return;
+  const n = Math.max(2, Math.floor(traj.length * fraction));
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.strokeStyle = col;
+  ctx.lineWidth = lw;
+  ctx.lineJoin = 'round';
+  ctx.lineCap = 'round';
+  ctx.beginPath();
+  const [x0, y0] = toCanvas(traj[0][0], traj[0][1], ox, oy, dw, dh);
+  ctx.moveTo(x0, y0);
+  for (let i = 1; i < n; i++) {
+    const [xi, yi] = toCanvas(traj[i][0], traj[i][1], ox, oy, dw, dh);
+    ctx.lineTo(xi, yi);
+  }
+  ctx.stroke();
+
+  // Arrow midway along drawn segment
+  if (n > 4) {
+    const mid = Math.floor(n / 2);
+    const [x1, y1] = toCanvas(traj[mid - 1][0], traj[mid - 1][1], ox, oy, dw, dh);
+    const [x2, y2] = toCanvas(traj[mid][0], traj[mid][1], ox, oy, dw, dh);
+    drawArrow(ctx, x1, y1, x2, y2, 6, col);
+  }
+  ctx.restore();
+}
+
+// Draw fixed point glyph
+function drawFixedPoint(ctx, ox, oy, dw, dh, T, pulse) {
+  const [fpx, fpy] = toCanvas(GSTAR, LSTAR, ox, oy, dw, dh);
+  const pulseFactor = pulse ? 1 + 0.35 * Math.sin(T * 3.5) : 1;
+  const r = 7 * pulseFactor;
+  ctx.save();
+  t2Glow('#a78bfa', 24 * pulseFactor);
+  ctx.fillStyle = '#a78bfa';
+  ctx.beginPath(); ctx.arc(fpx, fpy, r, 0, Math.PI * 2); ctx.fill();
+  t2Glow('#e0aaff', 10);
+  ctx.fillStyle = '#e0aaff';
+  ctx.beginPath(); ctx.arc(fpx, fpy, r * 0.45, 0, Math.PI * 2); ctx.fill();
+  t2NoGlow();
+
+  // Label
+  ctx.fillStyle = '#a78bfa';
+  ctx.font = '12px Courier New,monospace';
+  ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
+  ctx.fillText('g*', fpx + 10, fpy - 6);
+  ctx.restore();
+}
+
+// Compute diagram layout from canvas W, H
+function diagLayout(W, H) {
+  const cx = t2AnimCX(), cy = t2AnimCY();
+  const isWide = W > 820;
+  const dw = isWide ? Math.min(W * 0.38, 380) : Math.min(W * 0.80, 360);
+  const dh = isWide ? Math.min(H * 0.60, 380) : Math.min(H * 0.38, 260);
+  const ox = isWide ? cx - dw * 0.45 : W * 0.5 - dw * 0.5;
+  const oy = isWide ? cy - dh * 0.55 : cy - dh * 0.55;
+  return { ox, oy, dw, dh };
+}
+
+// ── Gaussian (AF) reference flow — for phase 6 ────────────────────────────────
+// Flows toward g=0, lam=0 (Gaussian FP)
+function betaG_AF(g, lam) { return -1.2 * g + 0.5 * lam; }
+function betaL_AF(g, lam) { return -0.5 * g - 1.0 * lam; }
+function buildTraj_AF(g0, lam0, steps, dt) {
+  const pts = [[g0, lam0]];
+  let g = g0, lam = lam0;
+  for (let i = 0; i < steps; i++) {
+    g += betaG_AF(g, lam) * dt;
+    lam += betaL_AF(g, lam) * dt;
+    if (Math.abs(g) > 1.2 || Math.abs(lam) > 0.6) break;
+    pts.push([g, lam]);
+  }
+  return pts;
+}
+
+const AF_STARTS = [
+  [0.90, 0.45], [0.70, 0.30], [0.50, 0.20], [0.30, 0.12],
+  [0.80, 0.10], [0.60, 0.05], [0.40, 0.40], [1.00, 0.20],
+];
+
+// ── Main draw function ─────────────────────────────────────────────────────────
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const rm = t2ReducedMotion();
+  const { ox, oy, dw, dh } = diagLayout(W, H);
+
+  // All trajectories toward UV FP (IR→UV direction: dt<0 means toward FP in our param)
+  // We integrate backward from IR starts to UV FP using dt = +0.06 (toward FP)
+  const allTrajs = buildAllTrajs(60, 0.06);
+
+  // ── Phase-specific rendering ─────────────────────────────────────────────────
+
+  if (phIdx === 0) {
+    // Phase 1: single trajectory flowing toward FP, animated
+    drawAxes(ctx, ox, oy, dw, dh);
+    const traj = allTrajs[0];
+    const frac = rm ? 1 : t2Clamp(0.05 + (T % 6) / 6, 0, 1);
+    const trajCol = 'rgba(56,189,248,0.85)';
+    drawTraj(ctx, traj, frac, ox, oy, dw, dh, trajCol, 2.2, 0.9);
+    drawFixedPoint(ctx, ox, oy, dw, dh, T, false);
+
+    // Label
+    t2Txt(ox + dw * 0.5, oy - 22, 'Weinberg (1976): g → g* ≠ 0', '#fbbf24', 13, 'center', 'Courier New,monospace');
+
+  } else if (phIdx === 1) {
+    // Phase 2: trajectory approaching FP asymptotically, slowing near FP
+    drawAxes(ctx, ox, oy, dw, dh);
+    const traj = allTrajs[4];
+    const frac = rm ? 1 : t2Clamp((T % 8) / 8, 0, 1);
+    drawTraj(ctx, traj, frac, ox, oy, dw, dh, 'rgba(56,189,248,0.8)', 2.2, 0.9);
+
+    // Draw asymptote indicator — dashed line from start to FP
+    const [fpx, fpy] = toCanvas(GSTAR, LSTAR, ox, oy, dw, dh);
+    const [sx, sy] = toCanvas(traj[0][0], traj[0][1], ox, oy, dw, dh);
+    ctx.save();
+    ctx.setLineDash([5, 6]);
+    ctx.strokeStyle = 'rgba(167,139,250,0.35)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(sx, sy); ctx.lineTo(fpx, fpy); ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.restore();
+
+    drawFixedPoint(ctx, ox, oy, dw, dh, T, false);
+    t2Txt(ox + dw * 0.5, oy - 22, 'lim_{μ→∞} g(μ) = g*   (non raggiunto)', '#38bdf8', 13, 'center', 'Courier New,monospace');
+
+  } else if (phIdx === 2) {
+    // Phase 3: safe vs unsafe trajectories
+    drawAxes(ctx, ox, oy, dw, dh);
+
+    // Safe trajectories (toward FP)
+    for (let i = 0; i < 5; i++) {
+      const frac = rm ? 1 : t2Clamp(0.1 + (T % 7) / 7, 0, 1);
+      drawTraj(ctx, allTrajs[i], frac, ox, oy, dw, dh, 'rgba(74,222,128,0.75)', 2.0, 0.85);
+    }
+
+    // Unsafe trajectory: linear divergence upward
+    const unsafePts = [];
+    for (let i = 0; i <= 40; i++) {
+      unsafePts.push([0.15 + i * 0.022, 0.05 + i * 0.013]);
+    }
+    const unsafeFrac = rm ? 1 : t2Clamp((T % 7) / 7, 0, 1);
+    drawTraj(ctx, unsafePts, unsafeFrac, ox, oy, dw, dh, 'rgba(248,113,113,0.85)', 2.2, 0.9);
+
+    // Labels
+    const [ux, uy] = toCanvas(unsafePts[Math.floor(unsafePts.length * 0.65)][0],
+      unsafePts[Math.floor(unsafePts.length * 0.65)][1], ox, oy, dw, dh);
+    ctx.save();
+    ctx.fillStyle = '#f87171';
+    ctx.font = '11px Courier New,monospace';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText('g → ∞ (non sicura)', ux + 8, uy);
+    ctx.fillStyle = '#4ade80';
+    const [sx, sy] = toCanvas(allTrajs[2][Math.floor(allTrajs[2].length * 0.5)][0],
+      allTrajs[2][Math.floor(allTrajs[2].length * 0.5)][1], ox, oy, dw, dh);
+    ctx.fillText('g → g* (sicura)', sx + 8, sy - 14);
+    ctx.restore();
+
+    drawFixedPoint(ctx, ox, oy, dw, dh, T, false);
+    t2Txt(ox + dw * 0.5, oy - 22, 'Sicure (verde) vs non-sicure (rosso)', '#94a3b8', 13, 'center', 'Courier New,monospace');
+
+  } else if (phIdx === 3) {
+    // Phase 4: full flow field — all trajectories with animated reveal
+    drawAxes(ctx, ox, oy, dw, dh);
+
+    const speed = rm ? 1 : t2Clamp((T % 10) / 10, 0, 1);
+    for (let i = 0; i < allTrajs.length; i++) {
+      const delay = i / allTrajs.length;
+      const frac = rm ? 1 : t2Clamp((speed - delay * 0.5) * 2, 0, 1);
+      const hue = 180 + (i / allTrajs.length) * 80;
+      const col = `hsla(${hue},80%,65%,0.72)`;
+      drawTraj(ctx, allTrajs[i], frac, ox, oy, dw, dh, col, 1.8, 0.8);
+    }
+
+    drawFixedPoint(ctx, ox, oy, dw, dh, T, false);
+    t2Txt(ox + dw * 0.5, oy - 22, '∂_t Γ_k = ½ Tr[(Γ_k^(2)+R_k)^{-1} ∂_t R_k]', '#7dd3fc', 12, 'center', 'Courier New,monospace');
+
+    // Wetterich label
+    ctx.save();
+    ctx.fillStyle = 'rgba(167,139,250,0.8)';
+    ctx.font = 'italic 12px Georgia,serif';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillText('Equazione di Wetterich (1993)', ox + dw, oy + dh + 28);
+    ctx.restore();
+
+  } else if (phIdx === 4) {
+    // Phase 5: all trajectories + pulsing fixed point highlighted
+    drawAxes(ctx, ox, oy, dw, dh);
+
+    for (let i = 0; i < allTrajs.length; i++) {
+      const col = 'rgba(100,180,240,0.50)';
+      drawTraj(ctx, allTrajs[i], 1, ox, oy, dw, dh, col, 1.5, 0.65);
+    }
+
+    // UV critical surface: shaded region of attraction
+    const [fpx, fpy] = toCanvas(GSTAR, LSTAR, ox, oy, dw, dh);
+    ctx.save();
+    const grad = ctx.createRadialGradient(fpx, fpy, 0, fpx, fpy, dw * 0.55);
+    grad.addColorStop(0, 'rgba(167,139,250,0.18)');
+    grad.addColorStop(1, 'rgba(167,139,250,0.0)');
+    ctx.fillStyle = grad;
+    ctx.beginPath(); ctx.arc(fpx, fpy, dw * 0.55, 0, Math.PI * 2); ctx.fill();
+    ctx.restore();
+
+    // Pulsing fixed point — larger, more dramatic
+    drawFixedPoint(ctx, ox, oy, dw, dh, T, !rm);
+
+    // Relevant direction arrows
+    const [fpX, fpY] = toCanvas(GSTAR, LSTAR, ox, oy, dw, dh);
+    ctx.save();
+    ctx.strokeStyle = '#f87171'; ctx.lineWidth = 2;
+    t2Glow('#f87171', 10);
+    // Arrow along relevant dir 1
+    drawArrow(ctx, fpX, fpY, fpX + 40, fpY + 22, 10, '#f87171');
+    drawArrow(ctx, fpX, fpY, fpX - 40, fpY - 22, 10, '#f87171');
+    // Arrow along relevant dir 2
+    drawArrow(ctx, fpX, fpY, fpX + 25, fpY - 38, 10, '#f87171');
+    drawArrow(ctx, fpX, fpY, fpX - 25, fpY + 38, 10, '#f87171');
+    t2NoGlow();
+    ctx.restore();
+
+    t2Txt(ox + dw * 0.5, oy - 22, `G̃* ≈ 0.707   Λ̃* ≈ 0.193   (2 direzioni rilevanti)`, '#a78bfa', 13, 'center', 'Courier New,monospace');
+    ctx.save();
+    ctx.fillStyle = '#f87171'; ctx.font = '11px Courier New,monospace';
+    ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+    ctx.fillText('← rilevanti', fpX + 44, fpY + 22);
+    ctx.restore();
+
+  } else if (phIdx === 5) {
+    // Phase 6: side-by-side AF (Gaussian) vs AS (non-Gaussian)
+    const isWide = W > 820;
+    const halfW = isWide ? dw * 0.95 : dw;
+    const halfH = isWide ? dh : dh * 0.88;
+    const margin = isWide ? 18 : 10;
+
+    if (isWide) {
+      // Left panel: AF (QCD) — flows to origin
+      const ox1 = ox - halfW * 0.55 - margin;
+      const oy1 = oy;
+      drawAxes(ctx, ox1, oy1, halfW * 0.85, halfH);
+
+      const afTrajs = AF_STARTS.map(([g0, l0]) => buildTraj_AF(g0, l0, 50, 0.06));
+      for (let i = 0; i < afTrajs.length; i++) {
+        const frac = rm ? 1 : t2Clamp(0.15 + (T % 8) / 8, 0, 1);
+        drawTraj(ctx, afTrajs[i], frac, ox1, oy1, halfW * 0.85, halfH, 'rgba(74,222,128,0.75)', 1.8, 0.8);
+      }
+      // Gaussian FP at origin
+      const [gfpx, gfpy] = toCanvas(0, 0, ox1, oy1, halfW * 0.85, halfH);
+      ctx.save();
+      t2Glow('#4ade80', 16); ctx.fillStyle = '#4ade80';
+      ctx.beginPath(); ctx.arc(gfpx, gfpy, 7, 0, Math.PI * 2); ctx.fill();
+      t2NoGlow();
+      ctx.fillStyle = '#4ade80'; ctx.font = '11px Courier New,monospace';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'bottom';
+      ctx.fillText('g*=0 (Gaussiano)', gfpx + 9, gfpy - 4);
+      ctx.restore();
+      t2Txt(ox1 + halfW * 0.425, oy1 - 22, 'Libertà asintotica (QCD): g→0', '#4ade80', 13, 'center', 'Courier New,monospace');
+
+      // Right panel: AS — flows to non-Gaussian FP
+      const ox2 = ox + margin;
+      const oy2 = oy;
+      drawAxes(ctx, ox2, oy2, halfW * 0.85, halfH);
+
+      for (let i = 0; i < allTrajs.length; i++) {
+        const frac = rm ? 1 : t2Clamp(0.15 + (T % 8) / 8, 0, 1);
+        const col = 'rgba(56,189,248,0.72)';
+        drawTraj(ctx, allTrajs[i], frac, ox2, oy2, halfW * 0.85, halfH, col, 1.8, 0.8);
+      }
+      drawFixedPoint(ctx, ox2, oy2, halfW * 0.85, halfH, T, !rm);
+      t2Txt(ox2 + halfW * 0.425, oy2 - 22, 'Sicurezza asintotica: g→g*≠0', '#38bdf8', 13, 'center', 'Courier New,monospace');
+
+    } else {
+      // Mobile: just draw AS diagram with labels
+      drawAxes(ctx, ox, oy, dw, dh);
+      for (let i = 0; i < allTrajs.length; i++) {
+        const frac = rm ? 1 : t2Clamp(0.1 + (T % 8) / 8, 0, 1);
+        drawTraj(ctx, allTrajs[i], frac, ox, oy, dw, dh, 'rgba(56,189,248,0.70)', 1.8, 0.8);
+      }
+      drawFixedPoint(ctx, ox, oy, dw, dh, T, !rm);
+      t2Txt(ox + dw * 0.5, oy - 22, 'AS: g→g*≠0   vs   AF: g→0', '#38bdf8', 13, 'center', 'Courier New,monospace');
+    }
+
+  } else if (phIdx === 6) {
+    // Phase 7: physical trajectory + Higgs mass annotation
+    drawAxes(ctx, ox, oy, dw, dh);
+
+    // Draw all background trajectories faint
+    for (let i = 0; i < allTrajs.length; i++) {
+      drawTraj(ctx, allTrajs[i], 1, ox, oy, dw, dh, 'rgba(100,160,220,0.30)', 1.2, 0.5);
+    }
+
+    // Highlight the physical trajectory (one specific one)
+    const physTraj = allTrajs[2];
+    const frac = rm ? 1 : t2Clamp(0.1 + (T % 9) / 9, 0, 1);
+    ctx.save();
+    t2Glow('#fbbf24', 12);
+    drawTraj(ctx, physTraj, frac, ox, oy, dw, dh, 'rgba(251,191,36,0.95)', 2.8, 1.0);
+    t2NoGlow();
+    ctx.restore();
+
+    drawFixedPoint(ctx, ox, oy, dw, dh, T, !rm);
+
+    // Higgs mass annotation at IR end of physical trajectory
+    if (frac > 0.15) {
+      const irPt = physTraj[0];
+      const [hx, hy] = toCanvas(irPt[0], irPt[1], ox, oy, dw, dh);
+      ctx.save();
+      t2Glow('#4ade80', 10);
+      ctx.fillStyle = '#4ade80';
+      ctx.beginPath(); ctx.arc(hx, hy, 6, 0, Math.PI * 2); ctx.fill();
+      t2NoGlow();
+      ctx.fillStyle = '#4ade80'; ctx.font = '11px Courier New,monospace';
+      ctx.textAlign = 'left'; ctx.textBaseline = 'middle';
+      ctx.fillText('m_H ≈ 126 GeV (pred.)', hx + 10, hy);
+      ctx.fillStyle = '#fbbf24'; ctx.font = '10px Courier New,monospace';
+      ctx.fillText('125.09 GeV (misura)', hx + 10, hy + 15);
+      ctx.restore();
+    }
+
+    // Annotation on FP side
+    const uvPt = physTraj[physTraj.length - 1];
+    const [ux, uy] = toCanvas(uvPt[0], uvPt[1], ox, oy, dw, dh);
+    ctx.save();
+    ctx.fillStyle = '#a78bfa'; ctx.font = '11px Courier New,monospace';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'middle';
+    ctx.fillText('UV: G(k)~G*/k²', ux - 10, uy - 14);
+    ctx.restore();
+
+    t2Txt(ox + dw * 0.5, oy - 22, 'Traiettoria fisica: IR → UV fixed point', '#fbbf24', 13, 'center', 'Courier New,monospace');
+
+    // Credit
+    ctx.save();
+    ctx.fillStyle = 'rgba(148,163,184,0.6)';
+    ctx.font = 'italic 11px Georgia,serif';
+    ctx.textAlign = 'right'; ctx.textBaseline = 'top';
+    ctx.fillText('Shaposhnikov & Wetterich 2010; Reuter 1998', ox + dw, oy + dh + 28);
+    ctx.restore();
+  }
+};
+
+// ── Boot ──────────────────────────────────────────────────────────────────────
+t2Init();
+</script>
+</body>
+</html>
