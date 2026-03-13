@@ -1,0 +1,662 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Supergravità (SUGRA) | Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<div id="ui">
+  <span id="ui-title">DivulgAzione · SUGRA</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">7 fasi</span>
+</div>
+
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — SUGRA</div>
+    <div class="phase-title">Supergravità: SUSY locale = gravità</div>
+    <div class="phase-body">
+      <p>La <span class="hl">supergravità</span> (SUGRA) nasce quando si chiede che la supersimmetria sia una <span class="am">simmetria locale</span> (cioè il parametro di trasformazione ε(x) dipende dal punto dello spaziotempo). Come la simmetria di gauge locale genera i bosoni di gauge, la SUSY locale genera il <span class="hl">gravitone</span> (spin 2, mediatore della gravità) e il suo superpartner: il <span class="gr">gravitino</span> (spin 3/2).</p>
+      <p>La SUGRA è il <span class="am">limite di bassa energia</span> della teoria delle stringhe: quando l'energia è molto minore di 1/l_s, i modi massivi della stringa si disaccoppiano e rimane la SUGRA.</p>
+      <code class="formula">SUSY globale → SUSY locale
+→ gravitone (spin 2) + gravitino (spin 3/2)
+L_SUGRA ~ e^{-1}(R - ψ̄_μ γ^{μνρ} ∇_ν ψ_ρ + ...)
+(Legge di Newton come termine principale)</code>
+      <div class="note">Animazione: il generatore Q locale che crea il gravitino come curva dello spazio.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — 11D</div>
+    <div class="phase-title">SUGRA massimale in 11 dimensioni</div>
+    <div class="phase-body">
+      <p>La <span class="hl">SUGRA 11D</span> è la teoria di supergravità massimale (con il numero massimo di supercariche, 32). È <span class="am">unica</span>: non ha parametri liberi. Il supermultipletto 11D contiene:</p>
+      <p>(1) il <span class="hl">gravitone</span> g_μν (44 gradi di libertà bosonic on-shell). (2) La <span class="am">3-forma antisimmetrica</span> A₃ (84 gradi di libertà). (3) Il <span class="gr">gravitino</span> ψ_μ (128 gradi di libertà fermionici).</p>
+      <p>Totale: 128 bosoni = 128 fermioni (equilibrio SUSY). Le equazioni del moto includono la 4-forma F₄ = dA₃. La SUGRA 11D è il limite di bassa energia della M-teoria.</p>
+      <code class="formula">SUGRA 11D: gravitone (44) + A₃ (84) + gravitino (128)
+Totale bosoni = fermioni = 128
+Equazione del moto: R_MN - ½g_MN R = T_MN[F₄]
+F₄ = dA₃ (field strength della 3-forma)</code>
+      <div class="note">Animazione: i campi del supermultipletto 11D visualizzati come oggetti con le loro dimensioni.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — S7</div>
+    <div class="phase-title">Compattificazione su S⁷: AdS₄×S⁷</div>
+    <div class="phase-body">
+      <p>Compattificando la SUGRA 11D su una 7-sfera <span class="hl">S⁷</span>, si ottiene la SUGRA 𝒩=8 in <span class="am">4 dimensioni</span> con spazio di vuoto <span class="gr">AdS₄×S⁷</span>. Il raggio di AdS₄ e di S⁷ sono uguali (in unità opportune).</p>
+      <p>Il gruppo di isometria di S⁷ è <span class="am">SO(8)</span>, che diventa il gruppo di simmetria R della SUGRA 4D. Questa compattificazione è rilevante per la dualità ABJM (Aharony-Bergman-Jafferis-Maldacena, 2008): la SUGRA in AdS₄ è duale a una teoria di gauge 3D (teoria di Chern-Simons con materia).</p>
+      <code class="formula">SUGRA 11D → compattifica su S⁷
+→ SUGRA 𝒩=8 in 4D su AdS₄×S⁷
+Simmetria: SO(2,3) × SO(8)
+raggio AdS₄ = raggio S⁷ = l_P (2πN)^{1/6}</code>
+      <div class="note">Animazione: sfera 7D che si compattifica lasciando una geometria AdS₄ come spazio risultante.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — S5</div>
+    <div class="phase-title">Compattificazione su S⁵: la geometria di AdS/CFT</div>
+    <div class="phase-body">
+      <p>La compattificazione più importante per AdS/CFT è quella della <span class="hl">SUGRA Tipo IIB</span> su una 5-sfera <span class="am">S⁵</span>. Si ottiene la SUGRA 𝒩=8 in <span class="hl">5 dimensioni</span> con spazio di vuoto <span class="gr">AdS₅×S⁵</span>.</p>
+      <p>Il gruppo di isometria di S⁵ è SO(6) ≅ SU(4), che diventa il gruppo di <span class="am">simmetria R</span> della 𝒩=4 SYM sul bordo. La metrica esatta della soluzione è: <code class="formula">ds² = L²(ds²_{AdS₅} + ds²_{S⁵})</code> con L il raggio di AdS (uguale al raggio di S⁵). Questa è la geometria del bulk in AdS₅/CFT₄.</p>
+      <code class="formula">SUGRA IIB → compattifica su S⁵
+→ SUGRA in 5D su AdS₅×S⁵
+ds² = L²(ds²_{AdS₅} + dΩ²_{S⁵})
+SO(2,4) × SO(6) = simmetria di AdS₅×S⁵</code>
+      <div class="note">Animazione: sfera S⁵ visibile accanto a un disco AdS₅ (geometria di Poincaré). Le due componenti della geometria totale.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — SOLUZIONE</div>
+    <div class="phase-title">La soluzione esatta: AdS₅×S⁵</div>
+    <div class="phase-body">
+      <p>La geometria <span class="hl">AdS₅×S⁵</span> è una soluzione esatta delle equazioni del moto della SUGRA IIB, con N unità di flusso della <span class="am">5-forma auto-duale</span> F₅ che scorre attraverso S⁵. Le equazioni del moto con questa sorgente impongono che il raggio sia <code class="formula">L⁴ = 4πg_s N α'²</code>.</p>
+      <p>Questo collega: <span class="hl">g_s</span> (accoppiamento della stringa), <span class="am">N</span> (numero di brane, = numero di unità di flusso), <span class="gr">α'</span> (tensione della stringa), e <span class="hl">L</span> (raggio AdS). Nel limite <code class="formula">g_s N → ∞</code> il raggio è grande e la curvatura è piccola: la SUGRA è valida.</p>
+      <code class="formula">L⁴ = 4πg_s N α'²   (raggio AdS₅ = raggio S⁵)
+λ = g²_YM N = 4πg_s N = (L/l_s)⁴
+SUGRA valida per λ ≫ 1 (curv. piccola)
+CFT perturbativa per λ ≪ 1</code>
+      <div class="note">Animazione: la geometria AdS₅×S⁵ con il raggio L che scala con N. Il raggio cresce al crescere di N.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — GRAVITINO</div>
+    <div class="phase-title">Il gravitino e la rottura di SUGRA</div>
+    <div class="phase-body">
+      <p>Quando la SUSY si rompe, il <span class="hl">gravitino</span> (il superpartner del gravitone) acquista massa attraverso il <span class="am">meccanismo di Higgs gravitazionale</span> (Super-Higgs). Il campo di Goldstone fermionico (goldstino) viene "mangiato" dal gravitino che diventa massivo.</p>
+      <p>La massa del gravitino è: <code class="formula">m_{3/2} ~ ⟨F⟩/M_P</code>, dove ⟨F⟩ è il valore di aspettazione del campo F che rompe la SUSY, e M_P è la massa di Planck. In alcuni modelli (SUGRA mediata), m_{3/2} ~ 100 GeV - 1 TeV, il che ha implicazioni per la fenomenologia del <span class="gr">gravitino</span> come dark matter.</p>
+      <code class="formula">m_{3/2} = ⟨F⟩/(√3 M_P)   (massa gravitino)
+⟨F⟩^{1/2} ~ 10^{10} GeV (med. gravitazionale)
+m_{3/2} ~ 100 GeV − 10 TeV (massa risultante)
+Gravitino come dark matter (LSP in alcuni modelli)</code>
+      <div class="note">Animazione: goldstino (freccia piccola) che viene "assorbito" dal gravitino (freccia più grande, che acquista massa).</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — EFT</div>
+    <div class="phase-title">SUGRA come teoria di campo effettiva</div>
+    <div class="phase-body">
+      <p>La SUGRA è una <span class="hl">teoria di campo effettiva</span> (EFT) valida a energie <code class="formula">E ≪ 1/l_s</code>. Oltre la scala di stringa, entrano in gioco i <span class="am">modi massivi</span> della stringa (torre di Kaluza-Klein + modi di stringa eccitati) e la SUGRA non è più sufficiente.</p>
+      <p>In AdS/CFT, si usa la SUGRA come approssimazione del lato bulk quando <span class="gr">λ = g²_YM N ≫ 1</span> (costante di 't Hooft grande). In questo regime: la curvatura di AdS è piccola (raggio grande), i modi massivi della stringa hanno massa grande e si disaccoppiano, e la SUGRA classica è una buona approssimazione.</p>
+      <code class="formula">SUGRA valida: E ≪ 1/l_s (α' → 0 con λ fisso)
+Regime AdS/CFT: λ = (L/l_s)⁴ ≫ 1
+→ SUGRA classica ≅ lato bulk
+Correzioni: O(α'/L²) = O(1/√λ)</code>
+      <div class="note">Animazione: grafico di validità con l'asse dell'energia. La SUGRA è valida sotto la scala 1/l_s, sopra entrano i modi massivi.</div>
+    </div>
+  </div>
+
+</div>
+
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · SUGRA</button>
+  <button class="btn" onclick="goPhase(2)">02 · 11D</button>
+  <button class="btn" onclick="goPhase(3)">03 · S⁷</button>
+  <button class="btn" onclick="goPhase(4)">04 · S⁵</button>
+  <button class="btn" onclick="goPhase(5)">05 · AdS₅×S⁵</button>
+  <button class="btn" onclick="goPhase(6)">06 · Gravitino</button>
+  <button class="btn" onclick="goPhase(7)">07 · EFT</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: 'SUSY locale = gravità',    desc: 'FASE 01 — SUGRA: SUSY locale genera gravitone (spin 2) + gravitino (spin 3/2)', scene: 'sugra'    },
+  { name: 'SUGRA 11D massimale',      desc: 'FASE 02 — 128 bosoni = 128 fermioni: gravitone (44) + A₃ (84) + gravitino (128)', scene: 'sugra11d' },
+  { name: 'Compattificazione su S⁷',  desc: 'FASE 03 — SUGRA 11D → 𝒩=8 in 4D su AdS₄×S⁷, simmetria SO(2,3)×SO(8)',        scene: 's7'       },
+  { name: 'Compattificazione su S⁵',  desc: 'FASE 04 — SUGRA IIB → AdS₅×S⁵, simmetria SO(2,4)×SO(6), ds²=L²(AdS₅+S⁵)',    scene: 's5'       },
+  { name: 'Soluzione AdS₅×S⁵',       desc: 'FASE 05 — L⁴ = 4πg_s N α\'², λ = (L/l_s)⁴ ≫ 1: SUGRA valida',                scene: 'soluzione'},
+  { name: 'Gravitino e rottura SUSY', desc: 'FASE 06 — Super-Higgs: m_{3/2} = ⟨F⟩/(√3 M_P), goldstino assorbito',           scene: 'gravitino'},
+  { name: 'SUGRA come EFT',           desc: 'FASE 07 — Valida per E ≪ 1/l_s; correzioni O(α\'/L²) = O(1/√λ)',               scene: 'eft'      },
+];
+
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const cx    = t2AnimCX();
+  const cy    = t2AnimCY();
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phIdx].scene;
+
+  // ── Shared layout ─────────────────────────────────────────────────────────
+  const R = Math.min(W * (W > 820 ? 0.22 : 0.36), 180);
+
+  // ── Helper: draw a curved spacetime grid ─────────────────────────────────
+  function drawCurvedGrid(ox, oy, gR, curvAmp, col, alpha) {
+    const nLines = 7;
+    const step   = (gR * 2) / (nLines - 1);
+    const a      = alpha === undefined ? 0.2 : alpha;
+    for (let i = 0; i < nLines; i++) {
+      const frac = i / (nLines - 1);
+      // Horizontal curved lines
+      ctx.beginPath();
+      for (let px = 0; px <= 60; px++) {
+        const t2  = px / 60;
+        const x   = ox - gR + t2 * gR * 2;
+        const osc = rm ? 0 : curvAmp * Math.sin(t2 * Math.PI * 1.8 + T * 0.8 + frac * 2);
+        const y   = oy - gR + i * step + osc;
+        if (px === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = 'rgba(' + col + ',' + a + ')';
+      ctx.lineWidth   = 0.8;
+      ctx.stroke();
+      // Vertical curved lines
+      ctx.beginPath();
+      for (let py = 0; py <= 60; py++) {
+        const t2  = py / 60;
+        const y   = oy - gR + t2 * gR * 2;
+        const osc = rm ? 0 : curvAmp * Math.sin(t2 * Math.PI * 1.8 + T * 0.7 + frac * 1.5);
+        const x   = ox - gR + i * step + osc;
+        if (py === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+      }
+      ctx.strokeStyle = 'rgba(' + col + ',' + (a * 0.7) + ')';
+      ctx.lineWidth   = 0.6;
+      ctx.stroke();
+    }
+  }
+
+  // ── SCENE: sugra — curved spacetime + gravitino wave ─────────────────────
+  if (scene === 'sugra') {
+    // Curved spacetime grid
+    drawCurvedGrid(cx, cy, R * 0.72, 12, '14,165,233', 0.18);
+
+    // Graviton (spin-2): symmetric wavy blob at center
+    const gpX = cx - R * 0.22;
+    const gpY = cy - R * 0.12;
+    t2Glow('#22d3ee', 18);
+    ctx.beginPath();
+    ctx.arc(gpX, gpY, 14, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(34,211,238,0.25)';
+    ctx.fill();
+    ctx.strokeStyle = '#22d3ee';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(gpX, gpY + 24, 'gravitone', '#22d3ee', 9, 'center', "'Courier New',monospace");
+    t2Txt(gpX, gpY + 36, 'spin 2', '#22d3ee', 8, 'center', "'Courier New',monospace");
+
+    // Gravitino wave: spin-3/2 as a spiral/helix
+    t2Glow('#a78bfa', 14);
+    ctx.beginPath();
+    const nPts = 80;
+    const gvX  = cx + R * 0.20;
+    const gvY  = cy + R * 0.10;
+    for (let i = 0; i <= nPts; i++) {
+      const frac  = i / nPts;
+      const theta = frac * Math.PI * 4;
+      const r2    = 18 * (rm ? 1 : (1 + 0.3 * Math.sin(T * 2 + frac * 5)));
+      const px    = gvX - 36 + frac * 72;
+      const py    = gvY + r2 * Math.sin(theta);
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.strokeStyle = '#a78bfa';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(gvX, gvY + 32, 'gravitino', '#a78bfa', 9, 'center', "'Courier New',monospace");
+    t2Txt(gvX, gvY + 44, 'spin 3/2', '#a78bfa', 8, 'center', "'Courier New',monospace");
+
+    // SUSY arrow between them
+    ctx.beginPath();
+    ctx.moveTo(gpX + 18, gpY + 5);
+    ctx.lineTo(gvX - 42, gvY);
+    ctx.strokeStyle = 'rgba(251,191,36,0.5)';
+    ctx.lineWidth   = 1.5;
+    ctx.setLineDash([5, 4]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    t2Txt((gpX + gvX - 22) * 0.5, gpY - 22, 'SUSY locale Q(x)', '#fbbf24', 9, 'center', "'Courier New',monospace");
+
+    t2Txt(cx, cy - R * 0.9, 'SUSY locale → gravitone + gravitino', '#60a5fa', 12, 'center');
+    t2Txt(cx, cy + R * 0.92, 'L_SUGRA ~ R - ψ̄_μ γ^{μνρ} ∇_ν ψ_ρ + ...', '#4a7a9b', 9, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: sugra11d — supermultiplet field content ───────────────────────
+  if (scene === 'sugra11d') {
+    // Draw 11 dimension circles
+    const dimR  = R * 0.06;
+    const rowY  = cy - R * 0.62;
+    const nDims = 11;
+    const startX = cx - (nDims - 1) * 0.5 * dimR * 2.8;
+    for (let d = 0; d < nDims; d++) {
+      const dx = startX + d * dimR * 2.8;
+      ctx.beginPath();
+      ctx.arc(dx, rowY, dimR, 0, Math.PI * 2);
+      ctx.strokeStyle = '#60a5fa';
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+      t2Txt(dx, rowY + dimR + 10, `${d + 1}`, '#60a5fa', 7, 'center', "'Courier New',monospace");
+    }
+    t2Txt(cx, rowY - dimR - 10, '11 dimensioni', '#60a5fa', 10, 'center');
+
+    // Draw 3 field blocks
+    const blocks = [
+      { label: 'gravitone\ng_μν', count: 44, col: '#22d3ee', x: cx - R * 0.7, y: cy + R * 0.02 },
+      { label: '3-forma\nA₃',    count: 84, col: '#fbbf24', x: cx,             y: cy + R * 0.02 },
+      { label: 'gravitino\nψ_μ', count: 128, col: '#a78bfa', x: cx + R * 0.7,  y: cy + R * 0.02 },
+    ];
+
+    for (const bl of blocks) {
+      const blH  = t2Clamp(bl.count * 0.6, 20, 90);
+      const blW  = 72;
+      const bx2  = bl.x - blW * 0.5;
+      const by2  = bl.y - blH * 0.5;
+      const pulse = rm ? 1 : (0.85 + 0.15 * Math.sin(T * 1.2 + bl.count * 0.01));
+      t2Glow(bl.col, 12 * pulse);
+      ctx.beginPath();
+      ctx.roundRect ? ctx.roundRect(bx2, by2, blW, blH, 6) : ctx.rect(bx2, by2, blW, blH);
+      ctx.fillStyle = bl.col + '22';
+      ctx.fill();
+      ctx.strokeStyle = bl.col;
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+      t2NoGlow();
+      // Two-line label
+      const lines = bl.label.split('\n');
+      t2Txt(bl.x, bl.y - 6,  lines[0], bl.col, 10, 'center', "'Courier New',monospace");
+      t2Txt(bl.x, bl.y + 8,  lines[1], bl.col, 9,  'center', "'Courier New',monospace");
+      t2Txt(bl.x, bl.y + blH * 0.5 + 14, `(${bl.count} GdL)`, bl.col, 9, 'center', "'Courier New',monospace");
+    }
+
+    // Balance equation
+    t2Glow('#4ade80', 10);
+    t2Txt(cx, cy + R * 0.62, '128 bosoni = 128 fermioni  (equilibrio SUSY)', '#4ade80', 11, 'center');
+    t2NoGlow();
+    t2Txt(cx, cy - R * 0.98, 'Supermultipletto SUGRA 11D', '#60a5fa', 12, 'center');
+    t2Txt(cx, cy + R * 0.82, 'F₄ = dA₃   (equazione del moto 4-forma)', '#4a7a9b', 9, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: s7 — S⁷ shrinking, AdS₄ disk appears ──────────────────────────
+  if (scene === 's7') {
+    // Animate S⁷ shrinking
+    const shrink = rm ? 0.4 : t2Clamp(0.5 + 0.45 * Math.sin(T * 0.7), 0.1, 0.95);
+    const s7R    = R * shrink;
+    const ads4R  = R * t2Clamp(0.55 - shrink * 0.35, 0.18, 0.55);
+
+    // S⁷ on the right
+    const s7x = cx + R * 0.38;
+    t2Glow('#f472b6', 16);
+    ctx.beginPath();
+    ctx.arc(s7x, cy, s7R, 0, Math.PI * 2);
+    ctx.strokeStyle = '#f472b6';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    // Equatorial circles to suggest higher dimension
+    for (let eq = 1; eq <= 2; eq++) {
+      ctx.beginPath();
+      ctx.ellipse(s7x, cy, s7R, s7R * (0.35 * eq), 0, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(244,114,182,0.35)';
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+    }
+    t2NoGlow();
+    t2Txt(s7x, cy - s7R - 14, 'S⁷', '#f472b6', 13, 'center', 'bold');
+    t2Txt(s7x, cy + s7R + 14, `r = ${(shrink).toFixed(2)} L`, '#f472b6', 9, 'center', "'Courier New',monospace");
+
+    // AdS₄ disk on the left (growing as S⁷ shrinks)
+    const ads4x = cx - R * 0.44;
+    t2Glow('#22d3ee', 14);
+    ctx.beginPath();
+    ctx.arc(ads4x, cy, ads4R, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(34,211,238,0.1)';
+    ctx.fill();
+    ctx.strokeStyle = '#22d3ee';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    // Grid lines inside AdS₄
+    for (let gr = 1; gr <= 3; gr++) {
+      ctx.beginPath();
+      ctx.arc(ads4x, cy, ads4R * gr / 4, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(34,211,238,0.18)';
+      ctx.lineWidth   = 0.7;
+      ctx.stroke();
+    }
+    t2NoGlow();
+    t2Txt(ads4x, cy - ads4R - 14, 'AdS₄', '#22d3ee', 13, 'center', 'bold');
+
+    // Product label
+    t2Txt(cx, cy, '×', '#94a3b8', 18, 'center');
+
+    t2Txt(cx, cy - R * 0.94, 'Compattificazione 11D → AdS₄×S⁷', '#60a5fa', 12, 'center');
+    t2Txt(cx, cy + R * 0.94, 'SO(2,3) × SO(8)   →   𝒩=8 SUGRA in 4D', '#4a7a9b', 9, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: s5 — AdS₅ Poincaré disk + S⁵ circle ───────────────────────────
+  if (scene === 's5') {
+    const ads5R = R * 0.56;
+    const s5R   = R * 0.26;
+    const ads5x = cx - R * 0.28;
+    const s5x   = cx + R * 0.72;
+
+    // AdS₅ Poincaré disk
+    t2Glow('#22d3ee', 12);
+    ctx.beginPath();
+    ctx.arc(ads5x, cy, ads5R, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(34,211,238,0.07)';
+    ctx.fill();
+    ctx.strokeStyle = '#22d3ee';
+    ctx.lineWidth   = 2.5;
+    ctx.stroke();
+    t2NoGlow();
+    // Hyperbolic geodesic lines inside
+    for (let g = 0; g < 4; g++) {
+      const ang1 = -Math.PI * 0.5 + (g / 4) * Math.PI;
+      const ang2 = ang1 + Math.PI * 0.85;
+      const p1x  = ads5x + ads5R * Math.cos(ang1), p1y = cy + ads5R * Math.sin(ang1);
+      const p2x  = ads5x + ads5R * Math.cos(ang2), p2y = cy + ads5R * Math.sin(ang2);
+      const gcy2 = (p1y + p2y) * 0.5;
+      const gcr2 = Math.hypot(p1x - ads5x, p1y - gcy2);
+      ctx.beginPath();
+      const sa2 = Math.atan2(p1y - gcy2, p1x - ads5x);
+      const ea2 = Math.atan2(p2y - gcy2, p2x - ads5x);
+      ctx.arc(ads5x, gcy2, gcr2, sa2, ea2, sa2 > ea2);
+      ctx.strokeStyle = 'rgba(99,102,241,0.3)';
+      ctx.lineWidth   = 0.8;
+      ctx.stroke();
+    }
+    // Concentric rings
+    for (let ri = 1; ri <= 4; ri++) {
+      ctx.beginPath();
+      ctx.arc(ads5x, cy, ads5R * ri / 5, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(99,102,241,0.15)';
+      ctx.lineWidth   = 0.6;
+      ctx.stroke();
+    }
+    t2Txt(ads5x, cy - ads5R - 16, 'AdS₅', '#22d3ee', 14, 'center', 'bold');
+    t2Txt(ads5x, cy + ads5R + 16, 'Disco di Poincaré', '#22d3ee', 9, 'center');
+    t2Txt(ads5x, cy + ads5R + 30, `raggio L`, '#22d3ee', 9, 'center', "'Courier New',monospace");
+
+    // S⁵ circle
+    t2Glow('#f472b6', 14);
+    ctx.beginPath();
+    ctx.arc(s5x, cy, s5R, 0, Math.PI * 2);
+    ctx.strokeStyle = '#f472b6';
+    ctx.lineWidth   = 2.5;
+    ctx.stroke();
+    // Equatorial ring
+    ctx.beginPath();
+    ctx.ellipse(s5x, cy, s5R, s5R * 0.3, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(244,114,182,0.4)';
+    ctx.lineWidth   = 1;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(s5x, cy - s5R - 16, 'S⁵', '#f472b6', 14, 'center', 'bold');
+    t2Txt(s5x, cy + s5R + 16, '5-sfera', '#f472b6', 9, 'center');
+    t2Txt(s5x, cy + s5R + 30, 'raggio L', '#f472b6', 9, 'center', "'Courier New',monospace");
+
+    // Product label
+    t2Txt((ads5x + s5x) * 0.5, cy + 5, '×', '#94a3b8', 20, 'center');
+
+    t2Txt(cx, cy - R * 0.98, 'Geometria del bulk: AdS₅ × S⁵', '#60a5fa', 12, 'center');
+    t2Txt(cx, cy + R * 1.0, 'SO(2,4) × SO(6) = simmetria totale', '#4a7a9b', 9, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: soluzione — AdS geometry with L scaling with N ────────────────
+  if (scene === 'soluzione') {
+    // Animate N (discrete steps 1..5) shown as a continuous oscillation
+    const nVal   = rm ? 3 : Math.max(1, Math.round(2.5 + 2.5 * Math.sin(T * 0.5)));
+    const lScale = Math.pow(nVal, 0.25); // L ~ N^{1/4}
+    const diskR  = R * t2Clamp(0.2 * lScale, 0.15, 0.75);
+
+    // AdS₅ disk
+    t2Glow('#22d3ee', 14);
+    ctx.beginPath();
+    ctx.arc(cx, cy, diskR, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(34,211,238,0.08)';
+    ctx.fill();
+    ctx.strokeStyle = '#22d3ee';
+    ctx.lineWidth   = 2.5;
+    ctx.stroke();
+    t2NoGlow();
+    // Concentric rings
+    for (let ri = 1; ri <= 5; ri++) {
+      const rr = diskR * ri / 6;
+      const pulse = rm ? 0.2 : (0.12 + 0.12 * Math.sin(T * 1.1 + ri));
+      ctx.beginPath();
+      ctx.arc(cx, cy, rr, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(99,102,241,' + pulse + ')';
+      ctx.lineWidth   = 0.7;
+      ctx.stroke();
+    }
+
+    // N label at center
+    t2Glow('#fbbf24', 16);
+    t2Txt(cx, cy + 5, `N = ${nVal}`, '#fbbf24', 14, 'center', 'bold');
+    t2NoGlow();
+
+    // L label outside
+    const lStr = `L = (4πg_s·${nVal}·α'²)^{1/4}`;
+    t2Glow('#4ade80', 10);
+    t2Txt(cx, cy - diskR - 18, `L ≈ ${(diskR / R * 2.8).toFixed(2)} l_s`, '#4ade80', 11, 'center', "'Courier New',monospace");
+    t2NoGlow();
+    t2Txt(cx, cy + diskR + 18, lStr, '#4ade80', 8, 'center', "'Courier New',monospace");
+
+    // S⁵ small circle in corner
+    const s5R2 = diskR * 0.28;
+    t2Glow('#f472b6', 10);
+    ctx.beginPath();
+    ctx.arc(cx + diskR + s5R2 + 10, cy, s5R2, 0, Math.PI * 2);
+    ctx.strokeStyle = '#f472b6';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx + diskR + s5R2 + 10, cy - s5R2 - 10, 'S⁵', '#f472b6', 9, 'center', 'bold');
+
+    t2Txt(cx, cy - R * 0.96, 'Raggio L scala con N (numero di brane)', '#60a5fa', 12, 'center');
+    t2Txt(cx, cy + R * 0.96, 'L⁴ = 4πg_s N α\'²   λ = (L/l_s)⁴ = 4πg_s N', '#4a7a9b', 9, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: gravitino — Super-Higgs: goldstino absorbed into gravitino ─────
+  if (scene === 'gravitino') {
+    // Goldstino: small arrow on the left
+    const goldX = cx - R * 0.72;
+    const goldY = cy;
+    const goldR = 10;
+    const goldPulse = rm ? 1 : (0.8 + 0.2 * Math.sin(T * 2.4));
+
+    t2Glow('#4ade80', 14 * goldPulse);
+    ctx.beginPath();
+    ctx.arc(goldX, goldY, goldR, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(74,222,128,0.3)';
+    ctx.fill();
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    t2NoGlow();
+    // Arrow from goldstino pointing right
+    ctx.beginPath();
+    ctx.moveTo(goldX + goldR, goldY);
+    ctx.lineTo(goldX + goldR + 28, goldY);
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(goldX + goldR + 22, goldY - 5);
+    ctx.lineTo(goldX + goldR + 28, goldY);
+    ctx.lineTo(goldX + goldR + 22, goldY + 5);
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    t2Txt(goldX, goldY + 22, 'goldstino', '#4ade80', 9, 'center', "'Courier New',monospace");
+    t2Txt(goldX, goldY + 34, 'spin 1/2', '#4ade80', 8, 'center', "'Courier New',monospace");
+
+    // Absorption animation
+    const absPhase = rm ? 0.5 : ((T * 0.4) % 1);
+    const midX = goldX + goldR + 36 + absPhase * 40;
+    t2Glow('#fbbf24', 10);
+    ctx.beginPath();
+    ctx.arc(midX, goldY, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#fbbf24';
+    ctx.fill();
+    t2NoGlow();
+
+    // Gravitino: larger arrow/particle on the right, with mass label
+    const gravX = cx + R * 0.36;
+    const gravY = cy;
+    const gravR = 22;
+    const massPulse = rm ? 1 : (0.85 + 0.15 * Math.sin(T * 1.5));
+    t2Glow('#a78bfa', 20 * massPulse);
+    ctx.beginPath();
+    ctx.arc(gravX, gravY, gravR, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(167,139,250,0.25)';
+    ctx.fill();
+    ctx.strokeStyle = '#a78bfa';
+    ctx.lineWidth   = 2.5;
+    ctx.stroke();
+    t2NoGlow();
+    // Spin-3/2 symbol (three prongs)
+    for (let sp = 0; sp < 3; sp++) {
+      const spAng = -Math.PI / 2 + (sp / 3) * Math.PI * 2;
+      ctx.beginPath();
+      ctx.moveTo(gravX, gravY);
+      ctx.lineTo(gravX + gravR * 0.8 * Math.cos(spAng), gravY + gravR * 0.8 * Math.sin(spAng));
+      ctx.strokeStyle = '#a78bfa';
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+    }
+    t2Txt(gravX, gravY + gravR + 16, 'gravitino massivo', '#a78bfa', 9, 'center', "'Courier New',monospace");
+    t2Txt(gravX, gravY + gravR + 28, 'spin 3/2', '#a78bfa', 8, 'center', "'Courier New',monospace");
+
+    // Mass gap label
+    t2Glow('#f472b6', 10);
+    t2Txt(gravX + gravR + 10, gravY - 16, 'm_{3/2}', '#f472b6', 10, 'left', "'Courier New',monospace");
+    t2Txt(gravX + gravR + 10, gravY - 2,  '= ⟨F⟩/(√3 M_P)', '#f472b6', 9, 'left', "'Courier New',monospace");
+    t2NoGlow();
+
+    // Arrow label
+    t2Txt(cx - R * 0.10, goldY - 22, 'Super-Higgs (assorbimento)', '#94a3b8', 9, 'center');
+
+    t2Txt(cx, cy - R * 0.82, 'Rottura di SUGRA: il gravitino acquista massa', '#60a5fa', 12, 'center');
+    t2Txt(cx, cy + R * 0.82, 'm_{3/2} ~ 100 GeV − 10 TeV  (dark matter candidato)', '#4a7a9b', 9, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: eft — energy axis with SUGRA validity region ──────────────────
+  if (scene === 'eft') {
+    const axY  = cy;
+    const axX1 = cx - R * 0.88;
+    const axX2 = cx + R * 0.88;
+    const threshX = cx + R * 0.28; // 1/l_s threshold
+
+    // Axis
+    ctx.beginPath();
+    ctx.moveTo(axX1, axY);
+    ctx.lineTo(axX2, axY);
+    ctx.strokeStyle = 'rgba(148,163,184,0.6)';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    // Arrow head
+    ctx.beginPath();
+    ctx.moveTo(axX2 - 8, axY - 5);
+    ctx.lineTo(axX2, axY);
+    ctx.lineTo(axX2 - 8, axY + 5);
+    ctx.strokeStyle = 'rgba(148,163,184,0.6)';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2Txt(axX2 + 10, axY + 4, 'E', '#94a3b8', 12, 'left', "'Courier New',monospace");
+
+    // Threshold line
+    t2Glow('#f472b6', 10);
+    ctx.beginPath();
+    ctx.moveTo(threshX, axY - R * 0.55);
+    ctx.lineTo(threshX, axY + R * 0.55);
+    ctx.strokeStyle = '#f472b6';
+    ctx.lineWidth   = 2;
+    ctx.setLineDash([6, 4]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    t2NoGlow();
+    t2Txt(threshX, axY - R * 0.6, '1/l_s', '#f472b6', 10, 'center', "'Courier New',monospace");
+    t2Txt(threshX, axY + R * 0.66, 'scala di stringa', '#f472b6', 8, 'center', "'Courier New',monospace");
+
+    // SUGRA region (left of threshold)
+    const sugraAlpha = rm ? 0.12 : (0.08 + 0.06 * Math.sin(T * 1.1));
+    ctx.fillStyle = 'rgba(34,211,238,' + sugraAlpha + ')';
+    ctx.fillRect(axX1 + 2, axY - R * 0.52, threshX - axX1 - 4, R * 1.04);
+    t2Glow('#22d3ee', 12);
+    t2Txt((axX1 + threshX) * 0.5, axY - R * 0.32, 'SUGRA valida', '#22d3ee', 12, 'center', 'bold');
+    t2Txt((axX1 + threshX) * 0.5, axY - R * 0.18, 'EFT classica', '#22d3ee', 10, 'center');
+    t2NoGlow();
+    t2Txt((axX1 + threshX) * 0.5, axY + R * 0.25, 'E ≪ 1/l_s', '#22d3ee', 9, 'center', "'Courier New',monospace");
+    t2Txt((axX1 + threshX) * 0.5, axY + R * 0.40, 'α\' → 0', '#22d3ee', 9, 'center', "'Courier New',monospace");
+
+    // Massive modes region (right of threshold)
+    const massAlpha = rm ? 0.10 : (0.06 + 0.06 * Math.sin(T * 0.9 + 1));
+    ctx.fillStyle = 'rgba(244,114,182,' + massAlpha + ')';
+    ctx.fillRect(threshX + 2, axY - R * 0.52, axX2 - threshX - 4, R * 1.04);
+    t2Glow('#f472b6', 10);
+    t2Txt((threshX + axX2) * 0.5, axY - R * 0.32, 'Modi massivi', '#f472b6', 12, 'center', 'bold');
+    t2Txt((threshX + axX2) * 0.5, axY - R * 0.18, 'della stringa', '#f472b6', 10, 'center');
+    t2NoGlow();
+    t2Txt((threshX + axX2) * 0.5, axY + R * 0.25, 'E ≳ 1/l_s', '#f472b6', 9, 'center', "'Courier New',monospace");
+    t2Txt((threshX + axX2) * 0.5, axY + R * 0.40, 'tower KK', '#f472b6', 9, 'center', "'Courier New',monospace");
+
+    // Animated particle moving along axis
+    if (!rm) {
+      const partX = t2Lerp(axX1 + 16, axX2 - 16, (T * 0.3) % 1);
+      const partCol = partX < threshX ? '#22d3ee' : '#f472b6';
+      t2Glow(partCol, 14);
+      ctx.beginPath();
+      ctx.arc(partX, axY, 6, 0, Math.PI * 2);
+      ctx.fillStyle = partCol;
+      ctx.fill();
+      t2NoGlow();
+    }
+
+    t2Txt(cx, cy - R * 0.94, 'SUGRA come EFT: validità e correzioni', '#60a5fa', 12, 'center');
+    t2Txt(cx, cy + R * 0.94, 'Correzioni O(α\'/L²) = O(1/√λ)  in AdS/CFT', '#4a7a9b', 9, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── Fallback ──────────────────────────────────────────────────────────────
+  t2Txt(cx, cy, 'DivulgAzione · SUGRA', '#60a5fa', 14, 'center');
+};
+
+t2Init();
+</script>
+</body>
+</html>

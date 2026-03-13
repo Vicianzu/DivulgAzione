@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teoria delle Stringhe | Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<div id="ui">
+  <span id="ui-title">DivulgAzione · Stringhe</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">7 fasi</span>
+</div>
+
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — STRINGHE</div>
+    <div class="phase-title">L'idea fondamentale: stringhe al posto dei punti</div>
+    <div class="phase-body">
+      <p>La teoria delle stringhe propone di <span class="hl">sostituire le particelle puntiformi</span> con oggetti estesi unidimensionali: le stringhe. La lunghezza caratteristica è la <span class="am">lunghezza di stringa</span> <code class="formula">l_s = √α'</code>, dove α' (alfa primo) è la tensione della stringa.</p>
+      <p>Le stringhe possono essere <span class="hl">aperte</span> (con due estremi liberi) o <span class="am">chiuse</span> (loop). Quando una stringa chiusa oscilla nei suoi modi fondamentali, produce lo spettro delle particelle fondamentali — incluso il <span class="gr">gravitone</span> (spin 2, massa zero), che compare automaticamente nello spettro della stringa chiusa. La gravità è incorporata dalla teoria delle stringhe in modo naturale.</p>
+      <code class="formula">l_s = √α' ≈ 10⁻³³ cm (lunghezza di stringa)
+M_n² = n/α' (spettro di massa)
+→ n=0: particelle senza massa (fotone, gravitone, ...)
+→ n>0: modi massivi (massa ~ M_P)</code>
+      <div class="note">Animazione: stringa chiusa che oscilla mostrando modi di vibrazione diversi, con il gravitone spin-2 etichettato.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — DIMENSIONI</div>
+    <div class="phase-title">La dimensione critica: perché D=10</div>
+    <div class="phase-body">
+      <p>Quando si quantizza la stringa con i metodi della meccanica quantistica, emerge un requisito di consistenza: il numero di dimensioni spaziotemporali deve essere esattamente <span class="hl">D=10</span> per la supercorda (con fermioni) o <span class="am">D=26</span> per la stringa bosonica (senza fermioni). Se D è diverso, la teoria è quantisticamente inconsistente (anomalie di Weyl sul worldsheet).</p>
+      <p>Le 6 dimensioni extra (nel caso D=10) sono invisibili perché <span class="gr">compattificate</span> su una varietà interna molto piccola (tipicamente un manifold di Calabi-Yau con diametro ~ l_s).</p>
+      <code class="formula">D = 10 (supercorda, con SUSY)
+D = 26 (stringa bosonica)
+6 dimensioni extra compattificate su CY₆
+raggio compattificazione R ~ l_s</code>
+      <div class="note">Animazione: da 10D a 4D — cerchi che si compattificano per rappresentare le dimensioni extra.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — CINQUE</div>
+    <div class="phase-title">Le cinque teorie di stringa</div>
+    <div class="phase-body">
+      <p>In 10 dimensioni esistono <span class="hl">cinque teorie di stringa</span> quantisticamente consistenti:</p>
+      <p>(1) <span class="am">Tipo I</span>: stringhe aperte + chiuse, gruppo SO(32). (2) <span class="hl">Tipo IIA</span>: stringhe chiuse non-chirali, con D-brane pari (D0, D2, D4, D6, D8). (3) <span class="hl">Tipo IIB</span>: stringhe chiuse chirali, con D-brane dispari (D(-1), D1, D3, D5, D7, D9). (4) <span class="gr">HO</span> (Heterotic SO(32)): stringa ibrida chiusa. (5) <span class="gr">HE</span> (Heterotic E₈×E₈): stringa ibrida chiusa.</p>
+      <p>Sembrano diverse ma sono tutte collegate da <span class="vi">dualità</span>.</p>
+      <code class="formula">Tipo I: SO(32), stringhe aperte+chiuse
+Tipo IIA: non-chirale, D-brane pari
+Tipo IIB: chirale, D-brane dispari
+HO: Heterotic SO(32)
+HE: Heterotic E₈×E₈</code>
+      <div class="note">Animazione: cinque nodi disposti in cerchio, ognuno etichettato con il tipo di teoria.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — T-DUALITÀ</div>
+    <div class="phase-title">Dualità T: piccolo ↔ grande</div>
+    <div class="phase-body">
+      <p>La <span class="hl">dualità T</span> afferma che la teoria di stringa compattificata su un cerchio di raggio R è fisicamente identica alla teoria compattificata su un cerchio di raggio <span class="am">α'/R</span>. Grande e piccolo sono equivalenti!</p>
+      <p>Questo ha una conseguenza sorprendente: le stringhe si comportano diversamente dai punti materiali a piccole distanze — invece di "vedere" distanze più piccole, vedono distanze più grandi. La dualità T scambia i tipi <span class="gr">IIA ↔ IIB</span> e scambia modi di Kaluza-Klein (winding) con modi di momento.</p>
+      <code class="formula">R ↔ α'/R   (dualità T)
+IIA su R ≅ IIB su α'/R
+Momento: p = n/R  ↔  Winding: M = wR/α'</code>
+      <div class="note">Animazione: un cerchio che si compatta (raggio R grande → piccolo) e si trasforma nel cerchio duale (raggio α'/R piccolo → grande).</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — S-DUALITÀ</div>
+    <div class="phase-title">Dualità S: forte ↔ debole</div>
+    <div class="phase-body">
+      <p>La <span class="hl">dualità S</span> scambia il regime di accoppiamento forte con il regime debole: <code class="formula">g_s ↔ 1/g_s</code>. Una teoria a forte accoppiamento (difficile da calcolare) è equivalente a un'altra teoria a debole accoppiamento (facile da calcolare).</p>
+      <p>Connessioni: <span class="am">Tipo I ↔ HO</span> (scambia le teorie). <span class="hl">IIB ↔ IIB</span> (autoduale!). <span class="gr">IIA a forte accoppiamento → M-teoria</span> (11 dimensioni). La dualità S è non-perturbativa: non può essere verificata perturbativamente, ma ha evidenze precise dalla corrispondenza di stati BPS (stati protetti dalla SUSY).</p>
+      <code class="formula">g_s ↔ 1/g_s   (dualità S)
+Tipo I (g_s) ≅ HO (1/g_s)
+IIB (g_s) ≅ IIB (1/g_s)  [autoduale]
+IIA (g_s→∞) → M-teoria in 11D</code>
+      <div class="note">Animazione: grafico con asse g_s. Freccia da debole (sinistra) a forte (destra) con le teorie scambiate. La linea si inverte.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — M-TEORIA</div>
+    <div class="phase-title">M-teoria: l'undicesima dimensione</div>
+    <div class="phase-body">
+      <p>Tutte e cinque le teorie di stringa sono <span class="hl">limiti</span> di un'unica teoria in <span class="am">11 dimensioni</span>: la <span class="hl">M-teoria</span>. La M-teoria non ha una formulazione completa, ma sappiamo alcune cose: il suo limite di bassa energia è la <span class="gr">SUGRA 11D</span>.</p>
+      <p>Contiene membrane 2D (M2-brane) e membrane 5D (M5-brane) invece di stringhe. La decima dimensione extra di IIA emerge dalla M-teoria quando l'accoppiamento g_s → ∞ (la dimensione ha raggio R₁₁ = g_s l_s). Perché "M"? Forse: Misteriosa, Madre, Membrana, Magia.</p>
+      <code class="formula">SUGRA 11D = limite bassa energia di M-teoria
+M-teoria → IIA: R₁₁ = g_s l_s
+M-teoria → IIB: compattificazione su T²
+M-teoria → HE: compattificazione su S¹/ℤ₂</code>
+      <div class="note">Animazione: ragno con 5 fili (le 5 teorie etichettate) che convergono al centro (M-teoria). Fili animati che vibrano.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — D-BRANE</div>
+    <div class="phase-title">Le D-brane: oggetti non-perturbativi</div>
+    <div class="phase-body">
+      <p>Le <span class="hl">D-brane</span> (Dirichlet-brane) sono <span class="am">ipersuperfici</span> su cui si ancorano le estremità delle stringhe aperte. Una Dp-brana ha p dimensioni spaziali (p+1 dimensioni spaziotemporali). Le D-brane sono oggetti non-perturbativi: la loro tensione <code class="formula">T_p ~ 1/(g_s l_s^{p+1})</code> scala con 1/g_s, quindi sono pesanti a debole accoppiamento.</p>
+      <p>Quando si sovrappongono N brane coincidenti, le N² stringhe aperte tra di esse generano una <span class="gr">teoria di gauge SU(N)</span>. Questo è il punto di partenza per la derivazione di AdS/CFT: lo stack di N D3-brane genera la teoria 𝒩=4 SYM.</p>
+      <code class="formula">Dp-brana: p dimensioni spaziali
+T_p ~ 1/(g_s l_s^{p+1})   (tensione)
+N D3-brane coincidenti → SU(N) 𝒩=4 SYM
+carica D3 → flusso della 5-forma RR</code>
+      <div class="note">Animazione: brana piatta orizzontale con stringhe aperte che vi si ancorano agli estremi. Stack di N brane.</div>
+    </div>
+  </div>
+
+</div>
+
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · Idea</button>
+  <button class="btn" onclick="goPhase(2)">02 · Dim.</button>
+  <button class="btn" onclick="goPhase(3)">03 · Cinque</button>
+  <button class="btn" onclick="goPhase(4)">04 · T-dual</button>
+  <button class="btn" onclick="goPhase(5)">05 · S-dual</button>
+  <button class="btn" onclick="goPhase(6)">06 · M-teoria</button>
+  <button class="btn" onclick="goPhase(7)">07 · D-Brane</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: "L'idea fondamentale",    desc: 'FASE 01 — Stringhe al posto dei punti: l_s = √α\', spettro di massa M_n² = n/α\'', scene: 'idea'    },
+  { name: 'La dimensione critica',  desc: 'FASE 02 — D=10 per la supercorda, 6 dimensioni extra compattificate su CY₆',      scene: 'dim'     },
+  { name: 'Cinque teorie',          desc: 'FASE 03 — Tipo I, IIA, IIB, HO, HE: cinque teorie consistenti in 10D',            scene: 'cinque'  },
+  { name: 'Dualità T',              desc: 'FASE 04 — R ↔ α\'/R: grande e piccolo sono equivalenti, IIA ↔ IIB',               scene: 'tdual'   },
+  { name: 'Dualità S',              desc: 'FASE 05 — g_s ↔ 1/g_s: forte e debole sono equivalenti, M-teoria in 11D',        scene: 'sdual'   },
+  { name: 'M-teoria',               desc: 'FASE 06 — Undicesima dimensione, limite di tutte e 5 le teorie di stringa',       scene: 'mteoria' },
+  { name: 'D-brane',                desc: 'FASE 07 — Dp-brane: T_p ~ 1/(g_s l_s^{p+1}), N D3 → SU(N) 𝒩=4 SYM',            scene: 'dbrane'  },
+];
+
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const cx    = t2AnimCX();
+  const cy    = t2AnimCY();
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phIdx].scene;
+
+  // ── Shared layout ─────────────────────────────────────────────────────────
+  const R = Math.min(W * (W > 820 ? 0.22 : 0.36), 180);
+
+  // ── SCENE: idea — closed string oscillating with vibration modes ──────────
+  if (scene === 'idea') {
+    const nModes = 3;
+    const modeLabels = ['n=0 gravitone (spin 2)', 'n=1 modo fondamentale', 'n=2 modo eccitato'];
+    const modeCols   = ['#4ade80', '#22d3ee', '#f472b6'];
+    const modeN      = [0, 1, 2];
+
+    for (let m = 0; m < nModes; m++) {
+      const offX = cx - R * 0.9 + m * R * 0.9;
+      const offY = cy;
+      const baseR = R * 0.28;
+      const n     = modeN[m];
+      const col   = modeCols[m];
+
+      ctx.beginPath();
+      const pts = 200;
+      for (let i = 0; i <= pts; i++) {
+        const theta = (i / pts) * Math.PI * 2;
+        const osc   = rm ? 0 : 0.18 * Math.sin(n * theta + T * (1.2 + n * 0.4));
+        const r     = baseR * (1 + (n > 0 ? osc : 0));
+        const px    = offX + r * Math.cos(theta);
+        const py    = offY + r * Math.sin(theta);
+        if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.closePath();
+      ctx.strokeStyle = col;
+      ctx.lineWidth   = n === 0 ? 2.5 : 1.8;
+      if (n === 0) t2Glow(col, 14);
+      ctx.stroke();
+      t2NoGlow();
+
+      // Mode label
+      t2Txt(offX, offY + baseR + 22, modeLabels[m], col, 9, 'center', "'Courier New',monospace");
+    }
+
+    // Graviton spin-2 symbol
+    t2Glow('#4ade80', 18);
+    t2Txt(cx - R * 0.9, cy - R * 0.38, 'gravitone', '#4ade80', 11, 'center');
+    t2Txt(cx - R * 0.9, cy - R * 0.28, 'spin 2, m=0', '#4ade80', 9, 'center', "'Courier New',monospace");
+    t2NoGlow();
+
+    t2Txt(cx, cy - R * 0.72, 'Modi di vibrazione della stringa chiusa', '#60a5fa', 12, 'center');
+    t2Txt(cx, cy + R * 0.72, 'M_n² = n/α\'   →   spettro di particelle', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: dim — 10 dimensions, 4 large + 6 compactifying ────────────────
+  if (scene === 'dim') {
+    const total = 10;
+    const large = 4;
+    // Arrange 10 dots in a row or two rows
+    const cols  = 5;
+    const rows  = 2;
+    const spacX = R * 0.7;
+    const spacY = R * 0.7;
+    const startX = cx - spacX * (cols - 1) * 0.5;
+    const startY = cy - spacY * 0.5;
+
+    for (let i = 0; i < total; i++) {
+      const col = i % cols;
+      const row = Math.floor(i / cols);
+      const dx  = startX + col * spacX;
+      const dy  = startY + row * spacY;
+      const isLarge = i < large;
+
+      // Animate small dims: pulsating (shrinking)
+      const phase   = rm ? 0 : Math.sin(T * 1.4 + i * 0.8);
+      const baseRad = isLarge ? 18 : (10 - (rm ? 0 : 5 * (0.5 + 0.5 * phase)));
+      const clampedR = t2Clamp(baseRad, 2, 22);
+      const col2    = isLarge ? '#22d3ee' : '#f472b6';
+
+      if (isLarge) t2Glow(col2, 16);
+      ctx.beginPath();
+      ctx.arc(dx, dy, clampedR, 0, Math.PI * 2);
+      ctx.fillStyle = col2 + (isLarge ? 'cc' : '88');
+      ctx.fill();
+      ctx.strokeStyle = col2;
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+      t2NoGlow();
+
+      // Dim label
+      const lbl = isLarge ? `x${i}` : `y${i - large}`;
+      t2Txt(dx, dy + clampedR + 14, lbl, col2, 9, 'center', "'Courier New',monospace");
+    }
+
+    // Legend
+    t2Glow('#22d3ee', 12);
+    t2Txt(cx, cy - R * 0.78, '4 dimensioni spaziotemporali (grandi)', '#22d3ee', 11, 'center');
+    t2NoGlow();
+    t2Glow('#f472b6', 10);
+    t2Txt(cx, cy + R * 0.82, '6 dimensioni extra (compattificate su CY₆)', '#f472b6', 11, 'center');
+    t2NoGlow();
+    t2Txt(cx, cy + R * 1.05, 'D = 10 (supercorda)   raggio R ~ l_s ~ 10⁻³³ cm', '#4a7a9b', 9, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: cinque — 5 theory nodes in a circle ───────────────────────────
+  if (scene === 'cinque') {
+    const theories = ['Tipo I', 'Tipo IIA', 'Tipo IIB', 'HO', 'HE'];
+    const thCols   = ['#fbbf24', '#22d3ee', '#38bdf8', '#4ade80', '#a78bfa'];
+    const nT       = theories.length;
+    const circR    = R * 0.72;
+
+    // Draw connecting duality lines
+    const dualPairs = [[0,2],[1,2],[0,3],[3,4]];
+    for (const [a, b] of dualPairs) {
+      const aAng = -Math.PI / 2 + (a / nT) * Math.PI * 2;
+      const bAng = -Math.PI / 2 + (b / nT) * Math.PI * 2;
+      const ax   = cx + circR * Math.cos(aAng);
+      const ay   = cy + circR * Math.sin(aAng);
+      const bx2  = cx + circR * Math.cos(bAng);
+      const by2  = cy + circR * Math.sin(bAng);
+      const pulse = rm ? 0.25 : (0.15 + 0.2 * Math.abs(Math.sin(T * 0.9 + a)));
+      ctx.beginPath();
+      ctx.moveTo(ax, ay);
+      ctx.lineTo(bx2, by2);
+      ctx.strokeStyle = 'rgba(148,163,184,' + pulse + ')';
+      ctx.lineWidth   = 1;
+      ctx.setLineDash([4, 4]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+      // Dual label at midpoint
+      t2Txt((ax + bx2) * 0.5, (ay + by2) * 0.5 - 8, 'dual', 'rgba(148,163,184,0.5)', 8, 'center');
+    }
+
+    // Draw theory nodes
+    for (let i = 0; i < nT; i++) {
+      const ang  = -Math.PI / 2 + (i / nT) * Math.PI * 2;
+      const nx   = cx + circR * Math.cos(ang);
+      const ny   = cy + circR * Math.sin(ang);
+      const col  = thCols[i];
+      const osc  = rm ? 0 : 3 * Math.sin(T * 1.3 + i * 1.2);
+
+      t2Glow(col, 18);
+      ctx.beginPath();
+      ctx.arc(nx + osc * Math.cos(ang), ny + osc * Math.sin(ang), 20, 0, Math.PI * 2);
+      ctx.fillStyle = col + '33';
+      ctx.fill();
+      ctx.strokeStyle = col;
+      ctx.lineWidth   = 2;
+      ctx.stroke();
+      t2NoGlow();
+
+      t2Txt(nx, ny - 6, theories[i], col, 10, 'center', "'Courier New',monospace");
+    }
+
+    t2Txt(cx, cy - R * 0.12, '5 teorie', '#60a5fa', 11, 'center');
+    t2Txt(cx, cy + R * 0.08, 'collegate da', '#60a5fa', 10, 'center');
+    t2Txt(cx, cy + R * 0.24, 'dualità', '#a78bfa', 12, 'center');
+
+    t2Txt(cx, cy - R * 1.02, 'Cinque teorie di stringa in 10D', '#60a5fa', 12, 'center');
+    t2Txt(cx, cy + R * 1.08, 'Tutte fisicamente equivalenti — connesse da dualità', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: tdual — T-duality: circle oscillating between R and α'/R ───────
+  if (scene === 'tdual') {
+    // Animate R oscillation
+    const tPhase = rm ? 0 : (Math.sin(T * 0.8) * 0.5 + 0.5); // 0..1
+    const rLeft  = R * (0.25 + 0.55 * tPhase);
+    const rRight = R * (0.25 + 0.55 * (1 - tPhase));
+
+    const lx = cx - R * 0.6;
+    const rx = cx + R * 0.6;
+
+    // Left circle (radius R)
+    t2Glow('#22d3ee', 14);
+    ctx.beginPath();
+    ctx.arc(lx, cy, rLeft, 0, Math.PI * 2);
+    ctx.strokeStyle = '#22d3ee';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    const rLabelL = (0.5 + 0.5 * tPhase).toFixed(1) + ' R';
+    t2Txt(lx, cy - rLeft - 16, rLabelL, '#22d3ee', 11, 'center', "'Courier New',monospace");
+    t2Txt(lx, cy + rLeft + 16, 'Teoria A', '#22d3ee', 10, 'center');
+    t2Txt(lx, cy + rLeft + 30, 'p = n/R', '#22d3ee', 9, 'center', "'Courier New',monospace");
+
+    // Right circle (radius α'/R — inverse)
+    t2Glow('#fbbf24', 14);
+    ctx.beginPath();
+    ctx.arc(rx, cy, rRight, 0, Math.PI * 2);
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    const rLabelR = (0.5 + 0.5 * (1 - tPhase)).toFixed(1) + ' α\'/R';
+    t2Txt(rx, cy - rRight - 16, rLabelR, '#fbbf24', 11, 'center', "'Courier New',monospace");
+    t2Txt(rx, cy + rRight + 16, 'Teoria B', '#fbbf24', 10, 'center');
+    t2Txt(rx, cy + rRight + 30, 'M = wR/α\'', '#fbbf24', 9, 'center', "'Courier New',monospace");
+
+    // Double arrow between them
+    const arrowAlpha = rm ? 0.8 : (0.5 + 0.5 * Math.sin(T * 2));
+    ctx.beginPath();
+    ctx.moveTo(lx + rLeft + 10, cy);
+    ctx.lineTo(rx - rRight - 10, cy);
+    ctx.strokeStyle = 'rgba(167,243,208,' + arrowAlpha + ')';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2Txt(cx, cy - 18, '↔', '#4ade80', 18, 'center');
+    t2Txt(cx, cy + 6, 'R ↔ α\'/R', '#4ade80', 10, 'center', "'Courier New',monospace");
+
+    t2Txt(cx, cy - R * 0.95, 'Dualità T: piccolo ↔ grande', '#60a5fa', 12, 'center');
+    t2Txt(cx, cy + R * 1.0, 'IIA su R ≅ IIB su α\'/R   (fisica identica)', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: sdual — S-duality: coupling axis with weak/strong ─────────────
+  if (scene === 'sdual') {
+    const axY  = cy;
+    const axX1 = cx - R * 0.88;
+    const axX2 = cx + R * 0.88;
+    const mid  = cx;
+
+    // Axis
+    ctx.beginPath();
+    ctx.moveTo(axX1, axY);
+    ctx.lineTo(axX2, axY);
+    ctx.strokeStyle = 'rgba(148,163,184,0.5)';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+
+    // Arrow heads
+    ctx.beginPath();
+    ctx.moveTo(axX2 - 8, axY - 5);
+    ctx.lineTo(axX2, axY);
+    ctx.lineTo(axX2 - 8, axY + 5);
+    ctx.strokeStyle = 'rgba(148,163,184,0.5)';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+
+    t2Txt(axX2 + 14, axY + 4, 'g_s', '#94a3b8', 11, 'left', "'Courier New',monospace");
+
+    // Weak / Strong labels
+    t2Txt(axX1 + 20, axY - 22, 'debole', '#4ade80', 10, 'center');
+    t2Txt(axX2 - 20, axY - 22, 'forte', '#f472b6', 10, 'center');
+
+    // Dividing line at center
+    ctx.beginPath();
+    ctx.moveTo(mid, axY - 30);
+    ctx.lineTo(mid, axY + 30);
+    ctx.strokeStyle = 'rgba(148,163,184,0.3)';
+    ctx.lineWidth   = 1;
+    ctx.setLineDash([4, 4]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Theory labels with duality arrows
+    const dualities = [
+      { left: 'Tipo I', right: 'HO', colL: '#fbbf24', colR: '#4ade80', yOff: -R * 0.3 },
+      { left: 'IIB',    right: 'IIB', colL: '#38bdf8', colR: '#38bdf8', yOff:  R * 0.0, note: 'autoduale' },
+      { left: 'IIA',    right: 'M-teoria (11D)', colL: '#22d3ee', colR: '#a78bfa', yOff:  R * 0.3 },
+    ];
+
+    for (const d of dualities) {
+      const y = axY + d.yOff;
+      // Animated flip arrow
+      const flipPhase = rm ? 0 : ((T * 0.5) % 1);
+      const arrowX    = t2Lerp(axX1 + 30, axX2 - 30, flipPhase);
+
+      ctx.beginPath();
+      ctx.moveTo(axX1 + 24, y);
+      ctx.lineTo(axX2 - 24, y);
+      ctx.strokeStyle = 'rgba(167,243,208,0.2)';
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+
+      t2Txt(axX1 + 24, y + 4, d.left,  d.colL, 10, 'left',  "'Courier New',monospace");
+      t2Txt(axX2 - 24, y + 4, d.right, d.colR, 10, 'right', "'Courier New',monospace");
+
+      if (d.note) {
+        t2Txt(mid, y + 18, d.note, 'rgba(148,163,184,0.6)', 8, 'center');
+      }
+
+      // Animated dot
+      if (!rm) {
+        t2Glow('#4ade80', 10);
+        ctx.beginPath();
+        ctx.arc(arrowX, y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = '#4ade80';
+        ctx.fill();
+        t2NoGlow();
+      }
+    }
+
+    t2Txt(cx, cy - R * 0.82, 'Dualità S: accoppiamento forte ↔ debole', '#60a5fa', 12, 'center');
+    t2Txt(cx, cy + R * 0.82, 'g_s ↔ 1/g_s   (inversione dell\'accoppiamento)', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: mteoria — M-theory spider with 5 branches ─────────────────────
+  if (scene === 'mteoria') {
+    const theories = ['IIA', 'IIB', 'Tipo I', 'HO', 'HE'];
+    const thCols   = ['#22d3ee', '#38bdf8', '#fbbf24', '#4ade80', '#a78bfa'];
+    const nT       = theories.length;
+    const armR     = R * 0.80;
+
+    for (let i = 0; i < nT; i++) {
+      const ang = -Math.PI / 2 + (i / nT) * Math.PI * 2;
+      const ex  = cx + armR * Math.cos(ang);
+      const ey  = cy + armR * Math.sin(ang);
+      const col = thCols[i];
+
+      // Vibrating arm
+      const nSeg = 20;
+      ctx.beginPath();
+      for (let s = 0; s <= nSeg; s++) {
+        const frac = s / nSeg;
+        const px0  = cx + armR * frac * Math.cos(ang);
+        const py0  = cy + armR * frac * Math.sin(ang);
+        const perp = rm ? 0 : 6 * Math.sin(s * 1.2 + T * 3 + i) * frac;
+        const px   = px0 - perp * Math.sin(ang);
+        const py   = py0 + perp * Math.cos(ang);
+        if (s === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+      }
+      ctx.strokeStyle = col;
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+
+      // Endpoint node
+      t2Glow(col, 14);
+      ctx.beginPath();
+      ctx.arc(ex, ey, 16, 0, Math.PI * 2);
+      ctx.fillStyle = col + '33';
+      ctx.fill();
+      ctx.strokeStyle = col;
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+      t2NoGlow();
+      t2Txt(ex, ey + 5, theories[i], col, 10, 'center', "'Courier New',monospace");
+    }
+
+    // Central M node
+    const mPulse = rm ? 1 : (0.8 + 0.2 * Math.sin(T * 1.6));
+    t2Glow('#f472b6', 24 * mPulse);
+    ctx.beginPath();
+    ctx.arc(cx, cy, 28, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(244,114,182,0.2)';
+    ctx.fill();
+    ctx.strokeStyle = '#f472b6';
+    ctx.lineWidth   = 2.5;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, cy + 5, 'M', '#f472b6', 18, 'center', 'bold');
+
+    t2Txt(cx, cy - R * 1.05, 'M-teoria: l\'undicesima dimensione', '#f472b6', 12, 'center');
+    t2Txt(cx, cy + R * 1.1, 'SUGRA 11D = limite bassa energia di M-teoria', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: dbrane — D-brane with open strings attached ───────────────────
+  if (scene === 'dbrane') {
+    const braneY  = cy + R * 0.22;
+    const braneX1 = cx - R * 0.85;
+    const braneX2 = cx + R * 0.85;
+    const nBranes = 3;
+    const bSpac   = 22;
+
+    // Draw N stacked branes
+    for (let b = 0; b < nBranes; b++) {
+      const by2 = braneY + b * bSpac;
+      const alpha = 1 - b * 0.25;
+      t2Glow('#fbbf24', 10 * alpha);
+      ctx.beginPath();
+      ctx.moveTo(braneX1, by2);
+      ctx.lineTo(braneX2, by2);
+      ctx.strokeStyle = 'rgba(251,191,36,' + alpha + ')';
+      ctx.lineWidth   = b === 0 ? 3 : 1.5;
+      ctx.stroke();
+      t2NoGlow();
+    }
+    t2Txt(braneX2 + 10, braneY + bSpac, 'N D3-brane', '#fbbf24', 10, 'left', "'Courier New',monospace");
+
+    // Open strings hanging between brane surfaces — endpoints on top brane
+    const nStrings = 6;
+    for (let s = 0; s < nStrings; s++) {
+      const sx = braneX1 + R * 0.28 + s * R * 0.23;
+      const topY = cy - R * 0.48;
+      const endY = braneY; // anchored on brane
+
+      ctx.beginPath();
+      const segs = 24;
+      for (let seg = 0; seg <= segs; seg++) {
+        const frac = seg / segs;
+        const px   = sx;
+        const waveAmp = rm ? 0 : 7 * Math.sin(frac * Math.PI);
+        const py   = topY + (endY - topY) * frac + (rm ? 0 : waveAmp * Math.sin(T * 2.5 + s * 1.4 + frac * 4));
+        const ppx  = px + (rm ? 0 : waveAmp * 0.4 * Math.sin(T * 2.5 + s + frac * 3));
+        if (seg === 0) ctx.moveTo(ppx, py); else ctx.lineTo(ppx, py);
+      }
+      const sCol = ['#22d3ee', '#f472b6', '#4ade80', '#a78bfa', '#fbbf24', '#38bdf8'][s % 6];
+      ctx.strokeStyle = sCol;
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+
+      // Endpoints (dots on brane)
+      t2Glow(sCol, 10);
+      ctx.beginPath();
+      ctx.arc(sx, braneY, 4, 0, Math.PI * 2);
+      ctx.fillStyle = sCol;
+      ctx.fill();
+      t2NoGlow();
+    }
+
+    // Label
+    t2Txt(cx, cy - R * 0.68, 'Stringhe aperte ancorate alla D-brana', '#22d3ee', 11, 'center');
+    t2Txt(cx, braneY - 14, '← N² stringhe tra N brane → SU(N) 𝒩=4 SYM →', '#4ade80', 9, 'center', "'Courier New',monospace");
+    t2Txt(cx, cy + R * 0.88, 'T_p ~ 1/(g_s l_s^{p+1})   (pesanti a g_s piccolo)', '#4a7a9b', 9, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── Fallback ──────────────────────────────────────────────────────────────
+  t2Txt(cx, cy, 'DivulgAzione · Stringhe', '#60a5fa', 14, 'center');
+};
+
+t2Init();
+</script>
+</body>
+</html>
