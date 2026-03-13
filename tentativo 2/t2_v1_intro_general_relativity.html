@@ -17,6 +17,7 @@
 </div>
 
 <main id="panel" role="main" aria-label="Contenuto della fase corrente" tabindex="-1">
+  <h1 class="phase-title" id="panel-phase-name"></h1>
   <div class="phase-content active" id="ph-0">
     <div class="phase-tag">Fase 01 — ① Chi è Einstein? — La storia</div>
     <div class="phase-body">
@@ -126,6 +127,7 @@ function go(n){
   document.querySelectorAll('.phase-content').forEach((el,i)=>el.classList.toggle('active',i===n));
   document.getElementById('ui-phase').textContent=PHASES[n].name;
   document.getElementById('panel').scrollTop=0;
+  const pn=document.getElementById('panel-phase-name'); if(pn) pn.textContent=PHASES[n].name;
 }
 
 function togglePause(){

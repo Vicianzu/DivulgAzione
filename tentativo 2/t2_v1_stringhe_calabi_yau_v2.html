@@ -5,6 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Stringhe → Particelle → Materia v2</title>
 <link rel="stylesheet" href="./ui.css">
+<style>#main-canvas { position: fixed; top: 0; right: 0; height: 100%; z-index: 0; }
+.phase-btn { padding: 5px 14px; border: 1px solid rgba(14,165,233,0.28); background: rgba(14,165,233,0.06); color: #7dd3fc; border-radius: 20px; cursor: pointer; font-size: 12px; font-family: 'Courier New', monospace; letter-spacing: 0.5px; transition: background 0.22s, border-color 0.22s, color 0.22s, box-shadow 0.22s; outline: none; }
+.phase-btn:hover { background: rgba(14,165,233,0.18); border-color: #0ea5e9; color: #e0f2fe; }
+.phase-btn.active { background: rgba(14,165,233,0.22); border-color: #38bdf8; color: #e0f2fe; box-shadow: 0 0 10px -3px #0ea5e9; }
+</style>
 </head>
 <body>
 
@@ -17,6 +22,7 @@
 </div>
 
 <main id="panel" role="main" aria-label="Contenuto della fase corrente" tabindex="-1">
+  <h1 class="phase-title" id="panel-phase-name"></h1>
   <div class="phase-content active" id="ph-0">
     <div class="phase-tag">Fase 01 — D-Brana e due tipi di stringa</div>
     <div class="phase-body">
@@ -107,6 +113,7 @@ function setPhase(n){
   document.querySelectorAll('.phase-content').forEach((el,i)=>el.classList.toggle('active',i===n));
   document.getElementById('ui-phase').textContent=PHASES[n].name;
   document.getElementById('panel').scrollTop=0;
+  const pn=document.getElementById('panel-phase-name'); if(pn) pn.textContent=PHASES[n].name;
   updateUI();
 }
 function updateUI(){
