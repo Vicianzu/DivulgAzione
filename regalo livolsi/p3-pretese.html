@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌌 Cosa Spiega (Tutto™) — Regalo Livolsi</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<canvas id="particle-canvas" aria-hidden="true"></canvas>
+<!-- Canvas per il confetti colorato del fine-tuning -->
+<canvas id="confetti-canvas" aria-hidden="true"></canvas>
+
+<!-- ══════════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════════ -->
+<nav role="navigation" aria-label="Navigazione principale">
+  <span class="nav-brand">🔭 Regalo Livolsi</span>
+  <a href="index.html">01 Profeta</a>
+  <a href="p2-equazione.html">02 Equazione</a>
+  <a href="p3-pretese.html" class="active" aria-current="page">03 Pretese</a>
+  <a href="p4-confronti.html">04 Confronti</a>
+  <a href="p5-redflags.html">05 Red Flag</a>
+  <a href="p6-voto.html">06 Verdetto</a>
+</nav>
+
+<div id="content">
+
+  <!-- ── HERO ── -->
+  <section class="hero" style="min-height:45vh; padding-top:60px;" aria-labelledby="p3-title">
+    <p class="section-label">🌍 Inventario delle Pretese</p>
+    <h1 id="p3-title" class="gradient-title">
+      Il Funzionale Ψ:<br>Un Solo Strumento per Regnare su Tutti
+    </h1>
+    <p style="font-size:1.05rem; color:var(--text-dim); max-width:620px; text-align:center;">
+      Analizziamo sistematicamente tutto ciò che Livolsi sostiene di aver spiegato.
+      Spoiler: non è poco.
+    </p>
+  </section>
+
+  <!-- ── CONTATORE SATIRICO ── -->
+  <section class="section" aria-labelledby="sec-counter">
+    <div class="counter-box" role="region" aria-labelledby="sec-counter">
+      <p class="section-label">📊 Statistiche in tempo reale</p>
+      <h2 id="sec-counter" style="color:var(--gold);">Problemi Irrisolti della Fisica<br>Risolti da Livolsi™</h2>
+      <div class="counter-display" id="main-counter" aria-live="polite" aria-atomic="true">0</div>
+      <p style="color:var(--text-dim); font-size:0.85rem; font-family:var(--font-mono);">
+        [aggiornato in tempo reale mentre la comunità scientifica non risponde alle email]
+      </p>
+      <div style="display:flex; gap:16px; justify-content:center; flex-wrap:wrap; margin-top:16px;">
+        <span class="badge badge-gold">🏆 Record Personale</span>
+        <span class="badge badge-violet">Zero Parametri Liberi</span>
+        <span class="badge badge-red">Nessun Esperimento Necessario</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── LE PRETESE UNA PER UNA ── -->
+  <section class="section" aria-labelledby="sec-claims">
+    <p class="section-label">🔬 Analisi Critica</p>
+    <h2 id="sec-claims">🎯 Le Grandi Pretese, una per una</h2>
+
+    <!-- Pretesa 1: velocità della luce -->
+    <div class="claim-box" aria-labelledby="claim1-title">
+      <span class="claim-icon" aria-hidden="true">💡</span>
+      <h3 id="claim1-title">La Velocità della Luce Non È una Costante</h3>
+      <p>
+        Secondo Livolsi, <strong>c</strong> non è una costante fondamentale ma un
+        "rapporto spettrale inevitabile":
+      </p>
+      <div class="equation-box" style="font-size:0.9rem; padding:16px;" role="img"
+           aria-label="c uguale a L_em diviso T_em">
+        <span class="eq-psi">c</span>
+        <span style="color:var(--text);"> = c<sub>em</sub> = </span>
+        <span class="eq-gamma">L<sub>em</sub></span>
+        <span style="color:var(--text);"> / </span>
+        <span class="eq-sum">T<sub>em</sub></span>
+      </div>
+      <p>
+        Dove L<sub>em</sub> e T<sub>em</sub> sono la <em>lunghezza</em> e il <em>tempo</em>
+        caratteristici della propagazione elettromagnetica emergenti dal funzionale Ψ.
+      </p>
+      <div class="info-box">
+        <p class="info-title">🔍 Analisi critica</p>
+        <p style="margin:0;">
+          Affermare che c "emerge" dal funzionale invece di essere postulata è interessante —
+          ma richiede di mostrare il calcolo esplicito che produce c = 299,792,458 m/s
+          come unica soluzione numerica. Questo calcolo non appare nella documentazione pubblica.
+          In alternativa, si potrebbe definire così c in qualsiasi teoria.
+        </p>
+      </div>
+      <div style="margin-top:12px;">
+        <span class="badge badge-red">❌ Calcolo numerico assente</span>
+        <span class="badge badge-violet" style="margin-left:8px;">✓ Strutturalmente coerente</span>
+      </div>
+    </div>
+
+    <!-- Pretesa 2: E=mc² -->
+    <div class="claim-box" aria-labelledby="claim2-title">
+      <span class="claim-icon" aria-hidden="true">⚡</span>
+      <h3 id="claim2-title">E = mc² Non È Fondamentale</h3>
+      <p>
+        La relazione massa-energia di Einstein è — nella teoria Ψ — un <strong>limite emergente
+        a bassa coerenza</strong>. Non una legge primaria, ma un'approssimazione valida
+        in un regime specifico del campo Ψ.
+      </p>
+      <p>
+        Questo non è necessariamente assurdo: molte teorie unificatrici riprendono le leggi
+        note come limiti. Il problema è che Livolsi non mostra <em>quale limite</em>
+        del funzionale Ψ riproduce esattamente E = mc² con i coefficienti numerici corretti.
+      </p>
+      <div class="progress-container" style="margin-top:16px;">
+        <div class="progress-label">
+          <span>Livello di Ambizione</span>
+          <span>100%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" data-target="100" role="progressbar" aria-valuenow="100"
+               aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+      <div class="progress-container">
+        <div class="progress-label">
+          <span>Calcoli di supporto pubblicati</span>
+          <span>15%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" data-target="15" style="background: linear-gradient(90deg, var(--red), #f97316);"
+               role="progressbar" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pretesa 3: Bosone di Higgs -->
+    <div class="claim-box" aria-labelledby="claim3-title">
+      <span class="claim-icon" aria-hidden="true">🔮</span>
+      <h3 id="claim3-title">Il Bosone di Higgs? Prima Eccitazione del Ψ Quartico</h3>
+      <p>
+        Il bosone di Higgs — scoperto al CERN nel 2012, 50 anni dopo essere stato predetto,
+        con migliaia di scienziati e miliardi di euro — sarebbe semplicemente la
+        <strong>prima eccitazione del funzionale quartico di Livolsi</strong>.
+      </p>
+      <p>
+        Il CERN pensa di aver trovato una particella del Meccanismo di Higgs.
+        In realtà, secondo Livolsi, ha trovato Ψ in modo eccitato, senza saperlo.
+      </p>
+      <blockquote class="quote-box" style="margin-top:16px; font-size:0.95rem;">
+        "Il CERN non sa cosa ha davvero trovato."
+        <cite>— Livolsi (parafrasi)</cite>
+      </blockquote>
+      <div class="info-box">
+        <p class="info-title">📊 Per contestualizzare</p>
+        <p style="margin:0;">
+          La massa del bosone di Higgs (≈125.1 GeV) è uno dei parametri del Modello Standard.
+          Se il funzionale Ψ ha "zero parametri liberi", deve produrre 125.1 GeV come
+          autovalore. Dove appare questo calcolo? In attesa di risposta.
+        </p>
+      </div>
+      <div style="margin-top:12px;">
+        <span class="badge badge-red">❌ Massa non calcolata</span>
+        <span class="badge badge-gold" style="margin-left:8px;">⚠️ Audace ma non falsificabile</span>
+      </div>
+    </div>
+
+    <!-- Pretesa 4: Decadimento Kaoni -->
+    <div class="claim-box" aria-labelledby="claim4-title">
+      <span class="claim-icon" aria-hidden="true">⚛️</span>
+      <h3 id="claim4-title">Decadimento K⁺ → π⁺νν̄ dalla Struttura Z₃</h3>
+      <p>
+        Il decadimento raro del Kaone carico <strong>K⁺ → π⁺νν̄</strong>
+        (rapporto di ramificazione ≈ 1.17 × 10⁻¹⁰, misurato da NA62 al CERN) emergerebbe
+        dalla struttura ciclica Z₃ del termine di traccia nel funzionale.
+      </p>
+      <p>
+        Questa è potenzialmente la pretesa più interessante — perché quel decadimento
+        è <em>misurato con precisione</em> e qualsiasi teoria che lo voglia spiegare
+        deve riprodurre quel numero. Peccato che Livolsi non fornisca il calcolo.
+      </p>
+      <div class="progress-container" style="margin-top:16px;">
+        <div class="progress-label">
+          <span>Specificità della pretesa</span>
+          <span>90%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" data-target="90" role="progressbar" aria-valuenow="90"
+               aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+      <div class="progress-container">
+        <div class="progress-label">
+          <span>Calcolo fornito</span>
+          <span>0%</span>
+        </div>
+        <div class="progress-bar">
+          <div class="progress-fill" data-target="0" style="background: var(--red);"
+               role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Pretesa 5: Fine-Tuning (con confetti) -->
+    <div class="claim-box" id="finetuning-box" aria-labelledby="claim5-title">
+      <span class="claim-icon" aria-hidden="true">🎯</span>
+      <h3 id="claim5-title">Fine-Tuning: Risolto. L'Universo Non Aveva Scelta.</h3>
+      <p>
+        Il <strong>problema del fine-tuning</strong> è uno dei grandi misteri della fisica:
+        perché le costanti fisiche hanno esattamente i valori che permettono l'esistenza
+        della materia complessa e degli esseri umani?
+      </p>
+      <p>
+        Risposta di Livolsi: il funzionale Ψ ha un'unica soluzione auto-consistente,
+        e quella soluzione corrisponde all'universo che osserviamo.
+        <strong>L'universo non aveva altra scelta.</strong>
+      </p>
+      <div class="info-box">
+        <p class="info-title">🎭 Nota filosofica</p>
+        <p style="margin:0;">
+          Questo tipo di argomento — "i valori delle costanti sono unici" — richiederebbe
+          di dimostrare che il funzionale ha <em>effettivamente</em> un'unica soluzione
+          (unicità) e che quella soluzione riproduce <em>tutti e 19</em> i parametri liberi
+          del Modello Standard. Nessuno dei due punti è dimostrato.
+          Ma è bellissima come idea. Davvero. Tre stelle su cinque per l'audacia.
+        </p>
+      </div>
+      <div style="margin-top:12px;">
+        <span class="badge badge-green">✓ Idea elegante</span>
+        <span class="badge badge-red" style="margin-left:8px;">❌ Non dimostrata</span>
+        <span class="badge badge-violet" style="margin-left:8px;">✨ Confetti meritati</span>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── ZERO PARAMETRI ── -->
+  <section class="section reveal" aria-labelledby="sec-zero">
+    <p class="section-label">🎳 Il Numero Magico</p>
+    <h2 id="sec-zero">🥇 Zero Parametri Liberi</h2>
+    <p>
+      La pretesa di "zero parametri liberi" è l'ambizione più radicale della teoria Ψ.
+      Il Modello Standard ha circa <strong>19 parametri liberi</strong> (masse, angoli di miscelamento,
+      costanti di accoppiamento) che devono essere misurati sperimentalmente.
+    </p>
+    <p>
+      Se la teoria Ψ avesse davvero zero parametri liberi, potrebbe in linea di principio
+      <em>calcolare</em> ogni osservabile della fisica delle particelle da soli principi.
+      Questo sarebbe — letteralmente — il Santo Graal della fisica teorica.
+    </p>
+
+    <div style="display:flex; gap:20px; flex-wrap:wrap; margin-top:24px;">
+      <div style="flex:1; min-width:200px; text-align:center; padding:24px; background:var(--bg2); border-radius:12px; border:1px solid rgba(34,211,238,0.3);">
+        <div style="font-size:3rem; font-weight:bold; color:var(--cyan); font-family:var(--font-mono);">19</div>
+        <div style="color:var(--text-dim); font-size:0.85rem; margin-top:8px;">Parametri liberi<br>del Modello Standard</div>
+      </div>
+      <div style="flex:0; display:flex; align-items:center; font-size:2rem; color:var(--red);">→</div>
+      <div style="flex:1; min-width:200px; text-align:center; padding:24px; background:var(--bg2); border-radius:12px; border:1px solid rgba(168,85,247,0.5); box-shadow:var(--glow-v);">
+        <div style="font-size:3rem; font-weight:bold; color:var(--violet); font-family:var(--font-mono);">0</div>
+        <div style="color:var(--text-dim); font-size:0.85rem; margin-top:8px;">Parametri liberi<br>nel funzionale Ψ</div>
+        <div style="color:var(--gold); font-size:0.75rem; font-family:var(--font-mono); margin-top:4px;">[secondo l'autore]</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NAVIGAZIONE PAGINE ── -->
+  <nav class="page-nav" aria-label="Navigazione tra pagine">
+    <a href="p2-equazione.html" aria-label="Torna alla pagina precedente: L'Equazione">← Pagina 2: L'Equazione</a>
+    <span style="color:var(--text-dim); font-size:0.85rem;">Pagina 3 di 6</span>
+    <a href="p4-confronti.html" aria-label="Vai alla pagina successiva: Confronti">Pagina 4: Confronti →</a>
+  </nav>
+
+</div><!-- /#content -->
+
+<script src="main.js"></script>
+<script>
+  /* ── Particelle ── */
+  particleCanvas('particle-canvas');
+
+  /* ── Contatore satirico: parte da 0 e arriva a un numero assurdo ── */
+  document.addEventListener('DOMContentLoaded', () => {
+    const counterEl = document.getElementById('main-counter');
+    /* Piccola pausa prima di animare */
+    setTimeout(() => {
+      animateCounter(counterEl, 247, 3000);
+    }, 400);
+  });
+
+  /* ── Confetti colorati quando la sezione fine-tuning entra nel viewport ── */
+  let confettiFired = false;
+  const ftBox = document.getElementById('finetuning-box');
+  if (ftBox) {
+    const ftObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !confettiFired) {
+          confettiFired = true;
+          colorConfettiBurst('confetti-canvas');
+          ftObserver.disconnect();
+        }
+      });
+    }, { threshold: 0.4 });
+    ftObserver.observe(ftBox);
+  }
+</script>
+
+</body>
+</html>

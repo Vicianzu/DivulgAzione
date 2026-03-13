@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🚩 Red Flag Parade — Regalo Livolsi</title>
+  <link rel="stylesheet" href="style.css" />
+  <style>
+    /* Stile specifico per l'header della pagina red flag */
+    .redflag-header-count {
+      position: fixed;
+      top: 60px;
+      right: 20px;
+      z-index: 90;
+      background: rgba(10, 10, 26, 0.9);
+      border: 1px solid rgba(248, 113, 113, 0.5);
+      border-radius: 50%;
+      width: 72px;
+      height: 72px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-family: var(--font-mono);
+      font-size: 1.6rem;
+      font-weight: bold;
+      color: var(--red);
+      text-shadow: 0 0 15px rgba(248,113,113,0.6);
+      box-shadow: 0 0 20px rgba(248,113,113,0.3);
+    }
+    .redflag-header-count small {
+      font-size: 0.5rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+<!-- Contatore fisso bandierine rosse -->
+<div class="redflag-header-count" role="status" aria-live="polite" aria-label="Numero di red flag contate">
+  <span id="flag-counter">0</span>
+  <small>🚩 flags</small>
+</div>
+
+<!-- ══════════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════════ -->
+<nav role="navigation" aria-label="Navigazione principale">
+  <span class="nav-brand">🔭 Regalo Livolsi</span>
+  <a href="index.html">01 Profeta</a>
+  <a href="p2-equazione.html">02 Equazione</a>
+  <a href="p3-pretese.html">03 Pretese</a>
+  <a href="p4-confronti.html">04 Confronti</a>
+  <a href="p5-redflags.html" class="active" aria-current="page">05 Red Flag</a>
+  <a href="p6-voto.html">06 Verdetto</a>
+</nav>
+
+<div id="content">
+
+  <!-- ── HERO ── -->
+  <section class="hero" style="min-height:40vh; padding-top:60px;" aria-labelledby="p5-title">
+    <p class="section-label">🚩 Analisi Metodologica</p>
+    <h1 id="p5-title" class="gradient-title">
+      Red Flag Parade
+    </h1>
+    <p style="font-size:1.05rem; color:var(--text-dim); max-width:620px; text-align:center;">
+      Una guida completa ai segnali di allarme epistemici della teoria Ψ.
+      Le bandierine appariranno una per una. Preparate i popcorn.
+    </p>
+  </section>
+
+  <!-- ── FUFFOMETRO ── -->
+  <section class="section" aria-labelledby="sec-fuffometro">
+    <div class="fuffometro" aria-labelledby="sec-fuffometro">
+      <h2 id="sec-fuffometro" class="fuffometro-title">📡 FUFFOMETRO — LIVELLO RILEVATO</h2>
+      <div class="fuffometro-bar" role="progressbar" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"
+           aria-label="Fuffometro al 82%">
+        <div class="fuffometro-fill" data-target="82"></div>
+      </div>
+      <p style="color:var(--text-dim); font-size:0.8rem; font-family:var(--font-mono); margin-top:8px;">
+        Livello: 82/100 — FUFFA SIGNIFICATIVA RILEVATA — Procedere con senso critico attivo
+      </p>
+    </div>
+    <div class="info-box">
+      <p class="info-title">ℹ️ Nota metodologica</p>
+      <p style="margin:0;">
+        Le "red flag" non significano automaticamente che una teoria sia sbagliata.
+        Significano che la teoria <em>non ha superato i test standard di credibilità scientifica</em>.
+        Una teoria potrebbe avere tutte queste caratteristiche ed essere comunque corretta.
+        Ma le probabilità statisticamente scendono. Molto. Molto molto.
+      </p>
+    </div>
+  </section>
+
+  <!-- ── LE RED FLAG ── -->
+  <section class="section" aria-labelledby="sec-flags">
+    <p class="section-label">🚩 L'Elenco Completo</p>
+    <h2 id="sec-flags">🚨 Le 10 Red Flag della Teoria Ψ</h2>
+
+    <!-- Red Flag 1 -->
+    <div class="redflag-item" data-flag="1" aria-labelledby="rf1-title">
+      <span class="flag-emoji" aria-hidden="true">🚩</span>
+      <div>
+        <h3 id="rf1-title" style="color:var(--red);">#1 Pubblicato su PhilArchive</h3>
+        <p>
+          Il paper principale è depositato su <strong>PhilArchive</strong>, un archivio
+          di filosofia accademica — non di fisica. Questo non è un peccato mortale,
+          ma indica che la teoria non ha trovato accoglienza negli archivi standard
+          di fisica (come arXiv.org, dove chiunque abbia un endorser può depositare).
+        </p>
+        <p style="color:var(--text-dim); font-size:0.85rem; font-family:var(--font-mono);">
+          PhilArchive = Filosofia. arXiv hep-ph = Fisica delle Particelle. Non è la stessa cosa.
+        </p>
+      </div>
+    </div>
+
+    <!-- Red Flag 2 -->
+    <div class="redflag-item" data-flag="2" aria-labelledby="rf2-title">
+      <span class="flag-emoji" aria-hidden="true">🚩</span>
+      <div>
+        <h3 id="rf2-title" style="color:var(--red);">#2 Zenodo: Self-Upload, Nessun Peer Review</h3>
+        <p>
+          Zenodo è una piattaforma open access gestita dal CERN (paradossia ironica)
+          che permette a chiunque di caricare qualsiasi cosa. Non c'è alcuna revisione
+          editoriale o di contenuto. È utile per dati e preprint, ma non equivale
+          a una pubblicazione peer-reviewed.
+        </p>
+        <p style="color:var(--text-dim); font-size:0.85rem;">
+          Contare Zenodo come "pubblicazione scientifica" è come contare un post su Medium
+          come "articolo giornalistico pubblicato da una testata".
+        </p>
+      </div>
+    </div>
+
+    <!-- Red Flag 3 — ALARM (la più grave) -->
+    <div class="redflag-item alarm" data-flag="3" aria-labelledby="rf3-title">
+      <span class="flag-emoji" aria-hidden="true">🚩</span>
+      <div>
+        <h3 id="rf3-title" style="color:var(--red);">⚠️ #3 Peer Review Reports nel Repository</h3>
+        <p>
+          Nel repository della teoria compaiono documenti intitolati "Peer Review Reports".
+          <strong>Ma questi report sono depositati dall'autore stesso.</strong>
+        </p>
+        <p>
+          Il peer review è per definizione un processo in cui revisori <em>indipendenti</em>
+          e <em>anonimi</em> valutano il lavoro. Avere "peer review reports" nel repository
+          dell'autore è una contraddizione strutturale: non si può fare il peer review di sé stessi,
+          per lo stesso motivo per cui un imputato non può essere il giudice del proprio processo.
+        </p>
+        <div style="background:rgba(248,113,113,0.1); border:1px solid rgba(248,113,113,0.4); border-radius:8px; padding:12px; margin-top:12px;">
+          <p style="color:var(--red); font-family:var(--font-mono); font-size:0.85rem; margin:0;">
+            🔴 QUESTA È LA RED FLAG PIÙ GRAVE — Compromette la credibilità dell'intero processo di validazione
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Red Flag 4 -->
+    <div class="redflag-item" data-flag="4" aria-labelledby="rf4-title">
+      <span class="flag-emoji" aria-hidden="true">🚩</span>
+      <div>
+        <h3 id="rf4-title" style="color:var(--red);">#4 "Notice of Authorship Integrity"</h3>
+        <p>
+          Livolsi ha depositato un documento legale per proteggere la paternità della teoria.
+          Questa è una scelta insolita nella pratica scientifica, dove la paternità è
+          dimostrata dai timestamp dei preprint (arXiv, Zenodo) e dalla data di pubblicazione.
+        </p>
+        <p>
+          La tutela legale della paternità teorica suggerisce un'aspettativa che la teoria
+          verrà contestata o "rubata" — il che presuppone a sua volta che la teoria sia
+          corretta e rivoluzionaria. È un ragionamento circolare.
+        </p>
+      </div>
+    </div>
+
+    <!-- Red Flag 5 -->
+    <div class="redflag-item" data-flag="5" aria-labelledby="rf5-title">
+      <span class="flag-emoji" aria-hidden="true">🚩</span>
+      <div>
+        <h3 id="rf5-title" style="color:var(--red);">#5 Terminologia Non Standard</h3>
+        <p>
+          La teoria usa termini come:
+        </p>
+        <ul style="color:var(--text-dim); padding-left:20px; margin:8px 0;">
+          <li><strong style="color:var(--text);">"Necessità Pura"</strong> — non definito operativamente</li>
+          <li><strong style="color:var(--text);">"Coerenza Globale"</strong> — evocativo ma vago</li>
+          <li><strong style="color:var(--text);">"Compilatore Adattivo"</strong> — non corrisponde a nessun formalismo fisico standard</li>
+          <li><strong style="color:var(--text);">"Rapporto Spettrale Inevitabile"</strong> — per definire c</li>
+        </ul>
+        <p>
+          In fisica, la terminologia non standard non è automaticamente un problema
+          (Feynman inventava spesso nuovi termini), ma deve essere accompagnata da
+          definizioni matematiche precise che la colleghino al formalismo esistente.
+        </p>
+      </div>
+    </div>
+
+    <!-- Red Flag 6 -->
+    <div class="redflag-item" data-flag="6" aria-labelledby="rf6-title">
+      <span class="flag-emoji" aria-hidden="true">🚩</span>
+      <div>
+        <h3 id="rf6-title" style="color:var(--red);">#6 Zero Previsioni Falsificabili Verificate</h3>
+        <p>
+          Karl Popper insegnava che la falsificabilità è il criterio per distinguere
+          la scienza dalla non-scienza. Una teoria scientifica deve fare previsioni
+          che potrebbero in linea di principio essere smentite dall'esperimento.
+        </p>
+        <p>
+          La teoria Ψ fa molte affermazioni generali ("emerge tutta la fisica") ma
+          non ha prodotto nessuna previsione numerica specifica che sia stata:
+        </p>
+        <ul style="color:var(--text-dim); padding-left:20px; margin:8px 0;">
+          <li>Calcolata esplicitamente dal funzionale</li>
+          <li>Verificata sperimentalmente in modo indipendente</li>
+          <li>Distinguibile dalle previsioni del Modello Standard</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Red Flag 7 -->
+    <div class="redflag-item" data-flag="7" aria-labelledby="rf7-title">
+      <span class="flag-emoji" aria-hidden="true">🚩</span>
+      <div>
+        <h3 id="rf7-title" style="color:var(--red);">#7 Psi Research Institute — Fondato dall'Autore</h3>
+        <p>
+          L'istituzione che sostiene la ricerca è il "Psi Research Institute",
+          fondato dall'autore stesso. Questo crea una struttura di validazione chiusa:
+        </p>
+        <p style="font-family:var(--font-mono); font-size:0.85rem; color:var(--text-dim); padding:12px; background:var(--bg3); border-radius:6px; margin-top:8px;">
+          Livolsi → fonda l'istituto → l'istituto avalla la ricerca di Livolsi → ???
+        </p>
+        <p>
+          Non è in sé disonesto, ma l'assenza di supervisione esterna e peer review
+          istituzionale riduce significativamente il valore di eventuali endorsement interni.
+        </p>
+      </div>
+    </div>
+
+    <!-- Red Flag 8 -->
+    <div class="redflag-item" data-flag="8" aria-labelledby="rf8-title">
+      <span class="flag-emoji" aria-hidden="true">🚩</span>
+      <div>
+        <h3 id="rf8-title" style="color:var(--red);">#8 Confronto Esplicito con Galileo e Planck</h3>
+        <p>
+          La documentazione della teoria include confronti espliciti dell'autore con
+          figure storiche come <strong>Galileo Galilei</strong> e <strong>Max Planck</strong>.
+          Entrambi affrontarono resistenza dalla comunità scientifica del loro tempo.
+        </p>
+        <p>
+          Il problema logico è questo: non tutto ciò che viene ignorato è rivoluzionario.
+          Per ogni Galileo ignorato, ci sono migliaia di teorie ignorate perché sbagliate.
+          "Vengo ignorato come Galileo" non implica "sono corretto come Galileo".
+        </p>
+      </div>
+    </div>
+
+    <!-- Red Flag 9 -->
+    <div class="redflag-item" data-flag="9" aria-labelledby="rf9-title">
+      <span class="flag-emoji" aria-hidden="true">🚩</span>
+      <div>
+        <h3 id="rf9-title" style="color:var(--red);">#9 Il CERN "Non Sa" Cosa Ha Trovato</h3>
+        <p>
+          L'affermazione che i fisici del CERN — migliaia di dottori in fisica, con decenni
+          di esperienza collettiva, con accesso diretto ai dati — "non sappiano" cosa hanno
+          trovato, mentre un singolo ricercatore indipendente da Praga lo sa, richiede
+          un livello di evidenza corrispondentemente straordinario.
+        </p>
+        <p>
+          Come diceva Carl Sagan: <em>"Affermazioni straordinarie richiedono prove straordinarie."</em>
+        </p>
+      </div>
+    </div>
+
+    <!-- Red Flag 10 -->
+    <div class="redflag-item" data-flag="10" aria-labelledby="rf10-title">
+      <span class="flag-emoji" aria-hidden="true">🚩</span>
+      <div>
+        <h3 id="rf10-title" style="color:var(--red);">#10 La Velocità della Luce come "Unica Logicamente Possibile"</h3>
+        <p>
+          Livolsi sostiene che il valore di c sia "l'unico logicamente possibile" —
+          che l'universo non potrebbe avere una costante c diversa.
+          Questa è un'affermazione metafisica molto forte.
+        </p>
+        <p>
+          La fisica moderna (stringhe, loop quantum gravity, cosmologia del multiverso)
+          non esclude in linea di principio universi con costanti fisiche diverse.
+          Anche se il funzionale Ψ avesse un'unica soluzione, questo non implicherebbe
+          che non esistano altri funzionali con soluzioni diverse.
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ── COSA NON È NECESSARIAMENTE UNA RED FLAG ── -->
+  <section class="section reveal" aria-labelledby="sec-notred">
+    <p class="section-label">✅ Per Completezza</p>
+    <h2 id="sec-notred">👍 Cosa NON è Necessariamente una Red Flag</h2>
+    <p>
+      Per essere onesti — e questo sito ha l'ambizione dell'onestà — vale la pena
+      notare cosa <em>non</em> costituisce di per sé un problema nella teoria Ψ:
+    </p>
+    <div class="card-grid">
+      <div class="card" style="border-color:rgba(74,222,128,0.3);" tabindex="0">
+        <span style="font-size:2rem;" aria-hidden="true">✅</span>
+        <h3 style="color:var(--green);">Correttezza Formale Interna</h3>
+        <p>
+          Il funzionale quartico è matematicamente ben definito. La struttura variazionale
+          è formalmente coerente. Prendere derivate funzionali di quel tipo di espressione
+          è un'operazione standard della fisica teorica.
+        </p>
+      </div>
+      <div class="card" style="border-color:rgba(74,222,128,0.3);" tabindex="0">
+        <span style="font-size:2rem;" aria-hidden="true">✅</span>
+        <h3 style="color:var(--green);">Ricercatore Indipendente</h3>
+        <p>
+          Non avere un'affiliazione universitaria non rende automaticamente sbagliata
+          una teoria. La storia della scienza ha esempi di outsider che hanno avuto
+          contributi reali. È raro, ma esiste.
+        </p>
+      </div>
+      <div class="card" style="border-color:rgba(74,222,128,0.3);" tabindex="0">
+        <span style="font-size:2rem;" aria-hidden="true">✅</span>
+        <h3 style="color:var(--green);">Ambizione Unificante</h3>
+        <p>
+          L'obiettivo di unificare tutta la fisica in un unico principio è anche
+          quello di Einstein, Hawking, Witten. Non è stravagante come ambizione.
+          Lo è come pretesa di averlo già realizzato.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── NAVIGAZIONE PAGINE ── -->
+  <nav class="page-nav" aria-label="Navigazione tra pagine">
+    <a href="p4-confronti.html" aria-label="Torna alla pagina precedente: Confronti">← Pagina 4: Confronti</a>
+    <span style="color:var(--text-dim); font-size:0.85rem;">Pagina 5 di 6</span>
+    <a href="p6-voto.html" aria-label="Vai alla pagina finale: Il Verdetto">Pagina 6: Il Verdetto →</a>
+  </nav>
+
+</div><!-- /#content -->
+
+<script src="main.js"></script>
+<script>
+  /* ── Particelle ── */
+  particleCanvas('particle-canvas');
+
+  /* ── Bandierine: appaiono una per una con delay progressivo
+        e incrementano il contatore in alto a destra ── */
+  document.addEventListener('DOMContentLoaded', () => {
+    const flagItems = document.querySelectorAll('.redflag-item');
+    const flagCounter = document.getElementById('flag-counter');
+    let count = 0;
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && !entry.target.classList.contains('visible')) {
+          const flagNum = parseInt(entry.target.dataset.flag || '0', 10);
+          const delay = (flagNum - 1) * 50; // delay leggero per stagger
+          setTimeout(() => {
+            entry.target.classList.add('visible');
+            /* Incrementa contatore */
+            count++;
+            if (flagCounter) flagCounter.textContent = count;
+          }, delay);
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.15 });
+
+    flagItems.forEach(item => observer.observe(item));
+  });
+</script>
+
+</body>
+</html>

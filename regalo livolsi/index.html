@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>🌌 Il Profeta del Funzionale — Regalo Livolsi</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     Canvas sfondo particelle stellari
+══════════════════════════════════════════════ -->
+<canvas id="particle-canvas" aria-hidden="true"></canvas>
+
+<!-- ══════════════════════════════════════════════
+     NAVBAR
+══════════════════════════════════════════════ -->
+<nav role="navigation" aria-label="Navigazione principale">
+  <span class="nav-brand">🔭 Regalo Livolsi</span>
+  <a href="index.html" class="active" aria-current="page">01 Profeta</a>
+  <a href="p2-equazione.html">02 Equazione</a>
+  <a href="p3-pretese.html">03 Pretese</a>
+  <a href="p4-confronti.html">04 Confronti</a>
+  <a href="p5-redflags.html">05 Red Flag</a>
+  <a href="p6-voto.html">06 Verdetto</a>
+</nav>
+
+<!-- ══════════════════════════════════════════════
+     CONTENUTO
+══════════════════════════════════════════════ -->
+<div id="content">
+
+  <!-- ── HERO ── -->
+  <section class="hero" aria-labelledby="hero-title">
+
+    <p class="section-label">⚛️ Guida Critica alla Cosmologia Variazionale</p>
+
+    <h1 id="hero-title" class="gradient-title" id="hero-words">
+      La Teoria del Tutto™<br>di Edoardo Livolsi
+    </h1>
+
+    <!-- Sottotitolo con typewriter effect -->
+    <p class="hero-subtitle mono" id="typewriter-el" role="status" aria-live="polite"></p>
+
+    <!-- Citazione in evidenza -->
+    <blockquote class="quote-box" style="max-width:600px; margin-top:32px;">
+      "L'universo non obbedisce a leggi imposte dall'esterno."
+      <cite>— Edoardo Livolsi (parafrasato dal manifesto Ψ)</cite>
+    </blockquote>
+
+    <a href="p2-equazione.html" class="btn btn-primary" aria-label="Vai alla pagina 2: L'Equazione Universale">
+      Inizia il Viaggio →
+    </a>
+
+  </section>
+
+  <!-- ── CHI È LIVOLSI ── -->
+  <section class="section reveal" aria-labelledby="sec-profilo">
+    <p class="section-label">👤 Il Protagonista</p>
+    <h2 id="sec-profilo">🧙 Chi è Edoardo Livolsi?</h2>
+    <p>
+      Edoardo Livolsi è un <strong>ricercatore indipendente</strong> con base a <strong>Praga</strong>,
+      fondatore del <em>Psi Research Institute</em>. Non è affiliato ad alcuna università tradizionale,
+      ma ha sviluppato una teoria cosmologica completa che, a suo dire, supera Einstein,
+      risolve il fine-tuning e spiega tutto ciò che il CERN non sa di aver già trovato.
+    </p>
+    <p>
+      Pubblica i suoi lavori su <strong>PhilArchive</strong> (archivio filosofico) e
+      <strong>Zenodo</strong> (piattaforma open access per depositi auto-curati).
+      Ha anche sottomesso al <em>Journal of High Energy Physics, Gravitation and Cosmology (JHEPGC)</em>
+      e — dettaglio non trascurabile — ha depositato un
+      <strong>"Notice of Authorship Integrity"</strong> per proteggere legalmente la sua teoria.
+    </p>
+
+    <!-- Card profilo con hover glow -->
+    <div class="card-grid" style="margin-top:32px;">
+      <div class="card" style="border-color: rgba(168,85,247,0.5);" tabindex="0">
+        <span style="font-size:2rem; display:block; margin-bottom:10px;">🏙️</span>
+        <h3>Sede</h3>
+        <p>Praga, Repubblica Ceca<br><span class="badge badge-violet">Ricercatore Indipendente</span></p>
+      </div>
+      <div class="card" tabindex="0">
+        <span style="font-size:2rem; display:block; margin-bottom:10px;">🏛️</span>
+        <h3>Istituto</h3>
+        <p>Psi Research Institute<br><span class="badge badge-cyan">Fondato dall'autore</span></p>
+      </div>
+      <div class="card" tabindex="0">
+        <span style="font-size:2rem; display:block; margin-bottom:10px;">📄</span>
+        <h3>Pubblicazioni</h3>
+        <p>PhilArchive · Zenodo · JHEPGC<br><span class="badge badge-gold">Auto-deposito</span></p>
+      </div>
+      <div class="card" tabindex="0">
+        <span style="font-size:2rem; display:block; margin-bottom:10px;">⚖️</span>
+        <h3>Protezione</h3>
+        <p>Notice of Authorship Integrity<br><span class="badge badge-red">Documento legale</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── TIMELINE ── -->
+  <section class="section" aria-labelledby="sec-timeline">
+    <p class="section-label">📅 Cronologia</p>
+    <h2 id="sec-timeline">🚀 L'Ascesa del Funzionale</h2>
+    <p>Come si costruisce una Teoria del Tutto™ senza laboratori, fondi pubblici o collaboratori?
+      Con un funzionale quartico, molta determinazione e un archivio open access.</p>
+
+    <div class="timeline" role="list">
+
+      <div class="timeline-item" role="listitem">
+        <div class="timeline-dot" aria-hidden="true"></div>
+        <div class="timeline-content">
+          <p class="timeline-year">📌 2022–2023</p>
+          <h3>Genesi del Funzionale</h3>
+          <p>Livolsi inizia a sviluppare il formalismo Ψ. L'idea centrale: un unico funzionale
+            quartico variazionale da cui emerge <em>tutta</em> la fisica, senza postulati esterni.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" role="listitem">
+        <div class="timeline-dot" aria-hidden="true"></div>
+        <div class="timeline-content">
+          <p class="timeline-year">📌 2024</p>
+          <h3>Il Manifesto Ψ — Prima Pubblicazione</h3>
+          <p>Deposito su PhilArchive e Zenodo dei primi paper. Compare la formula provocatoria
+            <code class="mono">1 Hz = 3α^(7/2)</code> e la riscrittura di <code class="mono">c</code>
+            come "rapporto spettrale inevitabile".</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" role="listitem">
+        <div class="timeline-dot" aria-hidden="true"></div>
+        <div class="timeline-content">
+          <p class="timeline-year">📌 2025</p>
+          <h3>Sottomissione a JHEPGC e Tutela Legale</h3>
+          <p>La teoria viene sottomessa al Journal of High Energy Physics, Gravitation and Cosmology.
+            Viene depositato il "Notice of Authorship Integrity" — scelta insolita che
+            suggerisce preoccupazioni per la ricezione della comunità scientifica.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" role="listitem">
+        <div class="timeline-dot" aria-hidden="true"></div>
+        <div class="timeline-content">
+          <p class="timeline-year">📌 2026</p>
+          <h3>Il CERN Non Sa Cosa Ha Trovato</h3>
+          <p>Livolsi afferma che il bosone di Higgs scoperto nel 2012 è in realtà la prima
+            eccitazione del suo funzionale quartico, e che il CERN non ha ancora capito
+            le implicazioni della propria scoperta. Noi sì, però.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ── PERCHÉ QUESTO SITO ── -->
+  <section class="section reveal" aria-labelledby="sec-why">
+    <p class="section-label">ℹ️ Nota Metodologica</p>
+    <h2 id="sec-why">🎁 Perché "Regalo Livolsi"?</h2>
+    <p>
+      Questo sito è un <strong>dono divulgativo alla comunità scientifica italiana</strong>.
+      Non è una derisione personale: Livolsi ha chiaramente dedicato anni di lavoro a questa teoria,
+      e la struttura matematica ha una coerenza interna non banale.
+    </p>
+    <p>
+      L'obiettivo è <strong>critico e formativo</strong>: analizzare metodicamente cosa funziona,
+      cosa non funziona, e perché certe caratteristiche della teoria (e del suo processo di pubblicazione)
+      meritano uno sguardo critico da parte di chiunque si avvicini alla divulgazione scientifica.
+    </p>
+    <div class="info-box">
+      <p class="info-title">⚠️ Tono di questo sito</p>
+      <p style="margin:0;">Scientifico-ironico. Come Feynman che spiega perché qualcosa non funziona
+        mentre ride. Non come un troll di internet.</p>
+    </div>
+  </section>
+
+  <!-- ── NAVIGAZIONE PAGINE ── -->
+  <nav class="page-nav" aria-label="Navigazione tra pagine">
+    <span style="color: var(--text-dim); font-size:0.85rem;">Pagina 1 di 6</span>
+    <a href="p2-equazione.html" aria-label="Vai alla pagina successiva: L'Equazione Universale">
+      Pagina 2: L'Equazione Universale →
+    </a>
+  </nav>
+
+</div><!-- /#content -->
+
+<script src="main.js"></script>
+<script>
+  /* ── Avvia canvas particelle ── */
+  particleCanvas('particle-canvas');
+
+  /* ── Typewriter sul sottotitolo hero ── */
+  document.addEventListener('DOMContentLoaded', () => {
+    const el = document.getElementById('typewriter-el');
+    /* Piccola pausa prima di iniziare per effetto drammatico */
+    setTimeout(() => {
+      typewriterEffect(el, 'Una guida critica per sopravvivere all\'apocalisse variazionale', 45);
+    }, 600);
+  });
+</script>
+
+</body>
+</html>
