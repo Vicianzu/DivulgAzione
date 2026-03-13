@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatività Generale — Einstein | Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<!-- Top bar -->
+<div id="ui">
+  <span id="ui-title">DivulgAzione · GR</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">8 fasi</span>
+</div>
+
+<!-- Left panel -->
+<div id="panel">
+
+  <div class="phase-content" id="ph-1">
+    <div class="phase-tag">FASE 01 — STORIA</div>
+    <div class="phase-title">Albert Einstein e la rivoluzione gravitazionale</div>
+    <div class="phase-body">
+      <p><span class="hl">Albert Einstein</span> (1879–1955) nacque a Ulm, in Germania. Nel <span class="am">1905</span> — l'<em>annus mirabilis</em> — lavorava come esaminatore di brevetti a Berna e pubblicò la Relatività Speciale, l'effetto fotoelettrico e il moto Browniano.</p>
+      <p>L'idea che portò alla <span class="hl">Relatività Generale</span> gli balenò nel <span class="am">1907</span>: "<em>il pensiero più felice della mia vita</em>". Un uomo in caduta libera non sente il proprio peso — il <span class="gr">principio di equivalenza</span>. Se la caduta libera è equivalente all'assenza di gravità, allora la gravità deve essere geometria dello spazio-tempo.</p>
+      <p>Dopo <span class="am">8 anni</span> di lotta matematica con il calcolo tensoriale di Riemann, Ricci e Levi-Civita, le equazioni di campo complete furono pubblicate il <span class="hl">25 novembre 1915</span> alla Preußische Akademie der Wissenschaften di Berlino.</p>
+      <code class="formula">G_μν + Λg_μν = (8πG/c⁴) · T_μν</code>
+      <div class="note">▸ Timeline: 1879 nascita · 1905 SR · 1907 principio di equivalenza · 1915 GR · 1919 eclipse · 1955 morte a Princeton.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — EQUIVALENZA</div>
+    <div class="phase-title">Il principio di equivalenza</div>
+    <div class="phase-body">
+      <p>Un ascensore che accelera verso l'alto nello spazio profondo è <span class="hl">fisicamente indistinguibile</span> da uno fermo in un campo gravitazionale. Questo è il <span class="am">principio di equivalenza debole</span>: tutti gli oggetti cadono alla stessa velocità indipendentemente dalla loro massa — come Galileo dimostrò dalla torre di Pisa.</p>
+      <p>Il <span class="gr">principio di equivalenza forte</span> estende questo risultato a <em>tutte</em> le leggi fisiche: nessun esperimento locale può distinguere accelerazione da gravità. Questo implica che la gravità non è una forza, ma un effetto geometrico.</p>
+      <p>Conseguenza immediata: la <span class="hl">luce si piega</span> in un campo gravitazionale, perché anche i fotoni seguono le geodetiche dello spazio-tempo curvo. La massa inerziale <span class="am">m_i</span> e la massa gravitazionale <span class="am">m_g</span> sono identiche.</p>
+      <code class="formula">F_grav = m_g · g     F_inertia = m_i · a     ⟹     m_g = m_i</code>
+      <div class="note">▸ Ascensore animato: in alto accelera verso l'alto (spazio), in basso a riposo nel campo gravitazionale terrestre — indistinguibili per l'osservatore interno.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — CURVATURA</div>
+    <div class="phase-title">Lo spazio-tempo curvo</div>
+    <div class="phase-body">
+      <p>"<em>La materia dice allo spazio-tempo come curvarsi; lo spazio-tempo dice alla materia come muoversi.</em>" — John Archibald Wheeler. La presenza di massa-energia <span class="hl">deforma il tessuto dello spazio-tempo</span>, creando quella che percepiamo come attrazione gravitazionale.</p>
+      <p>Non si tratta di una forza che agisce a distanza, come nella concezione newtoniana. È un <span class="am">effetto geometrico puro</span>: gli oggetti seguono le <span class="gr">geodetiche</span> — i cammini di lunghezza estremale — nello spazio-tempo curvo. Un pianeta non è "attratto" dal Sole; percorre la curva più dritta possibile in uno spazio-tempo deformato dalla massa solare.</p>
+      <p>In assenza di massa, le geodetiche sono rette; in presenza di massa, si incurvano. La Terra orbita attorno al Sole perché la sua traiettoria <span class="hl">rettilinea nello spazio-tempo curvo</span> corrisponde a un'ellisse nello spazio tridimensionale.</p>
+      <code class="formula">ds² = g_μν dx^μ dx^ν     (le geodetiche minimizzano il tempo proprio)</code>
+      <div class="note">▸ Griglia spazio-temporale deformata: le linee si curvano verso la massa centrale, un fotone (punto luminoso) segue la traiettoria curva.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — EQUAZIONI</div>
+    <div class="phase-title">Le equazioni di campo di Einstein</div>
+    <div class="phase-body">
+      <p>Le equazioni di campo di Einstein (1915) sono <span class="hl">10 equazioni differenziali alle derivate parziali</span> non lineari accoppiate che mettono in relazione la curvatura dello spazio-tempo con il contenuto di energia-materia. Sono le equazioni più eleganti e profonde della fisica.</p>
+      <p>Il lato sinistro descrive la <span class="am">geometria</span>: il <span class="hl">tensore di Einstein</span> G_μν = R_μν − ½g_μν R, dove R_μν è il tensore di Ricci (contrazione del tensore di Riemann) e R è la curvatura scalare. Il lato destro descrive la <span class="gr">materia-energia</span>: T_μν è il tensore energia-impulso.</p>
+      <p>La costante <span class="vi">Λ</span> (costante cosmologica, aggiunta da Einstein nel 1917) descrive l'energia del vuoto. La costante <span class="am">8πG/c⁴</span> lega geometria e fisica in un'unica equazione di straordinaria compattezza.</p>
+      <code class="formula">G_μν = 8πG/c⁴ · T_μν     (10 equazioni)
+R_μν − ½g_μν R = curvatura (sinistra)
+T_μν = materia/energia (destra)</code>
+      <div class="note">▸ La griglia deformata mostra il significato di ogni termine: G_μν (curvatura in ciano), T_μν (sorgente in ambra).</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — EDDINGTON</div>
+    <div class="phase-title">La deflessione della luce: Eddington 1919</div>
+    <div class="phase-body">
+      <p>La GR prevede che la luce segua la curvatura dello spazio-tempo. In prossimità del Sole, un raggio di luce viene deflesso di un angolo di <span class="hl">1.75 secondi d'arco</span> — esattamente il doppio della previsione newtoniana (0.87"). Questa fu la prima conferma sperimentale della GR.</p>
+      <p><span class="am">Arthur Stanley Eddington</span> organizzò due spedizioni per l'eclissi solare del <span class="gr">29 maggio 1919</span> — una a Sobral (Brasile) e una all'Isola del Principe (Africa). Misurando le posizioni apparenti delle stelle vicine al bordo solare durante l'eclissi, confermò la previsione di Einstein. Il mondo scientifico era stupito.</p>
+      <p>Il <em>Times</em> di Londra titolò: "<em>Revolution in Science — New Theory of the Universe — Newtonian Ideas Overthrown</em>". Einstein divenne una celebrità mondiale. La deflessione è ora misurata con precisione microarcsecondo dai radiotelescopi VLBI.</p>
+      <code class="formula">δφ = 4GM☉/(c²R☉) ≈ 1.75"     (luce tangente al Sole)</code>
+      <div class="note">▸ Raggio di luce (giallo) che si incurva attorno alla massa centrale (Sole): la traiettoria iperbolica è animata con deflessione visibile.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — LIGO</div>
+    <div class="phase-title">Onde gravitazionali: LIGO 2015</div>
+    <div class="phase-body">
+      <p>Due masse che accelerano generano <span class="hl">increspature nello spazio-tempo</span> che si propagano alla velocità della luce: le onde gravitazionali. Einstein le predisse nel <span class="am">1916</span> dalla linearizzazione delle equazioni di campo, ma pensava fossero troppo deboli per essere mai misurate.</p>
+      <p>Il <span class="gr">14 settembre 2015</span>, alle 09:50:45 UTC, i rilevatori <span class="hl">LIGO</span> di Hanford (Washington) e Livingston (Louisiana) registrarono simultaneamente un segnale: GW150914. Due buchi neri di ~36 e ~29 masse solari avevano spiralizzato e fuso <span class="am">1.3 miliardi di anni luce</span> di distanza, irraggiando ~3M☉ in onde gravitazionali in un decimo di secondo.</p>
+      <p>Lo strain rilevato era di soli h~10⁻²¹ — equivalente a misurare una variazione di lunghezza di 1/1000 del diametro di un protone su un braccio di 4 km. Il <span class="vi">Nobel per la Fisica 2017</span> andò a Weiss, Barish e Thorne.</p>
+      <code class="formula">h = ΔL/L ≈ 10⁻²¹     (strain rilevato da LIGO · GW150914)</code>
+      <div class="note">▸ Due buchi neri che orbitano e spiralizzano; cerchi concentrici di onde gravitazionali si propagano verso l'esterno con ampiezza decrescente.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — BLACK HOLES</div>
+    <div class="phase-title">I buchi neri: curvatura estrema</div>
+    <div class="phase-body">
+      <p>Un <span class="hl">buco nero</span> è una regione dello spazio-tempo dove la curvatura è così estrema che nulla — nemmeno la luce — può sfuggire oltre l'<span class="am">orizzonte degli eventi</span>. Karl Schwarzschild trovò la prima soluzione esatta delle equazioni di Einstein già nel <span class="gr">1916</span>, mentre era al fronte durante la Prima Guerra Mondiale.</p>
+      <p>Il raggio di Schwarzschild r_s = 2GM/c² definisce l'orizzonte degli eventi. Per il Sole, r_s ≈ 3 km; per la Terra, r_s ≈ 9 mm. Oltre r_s, tutte le geodetiche puntano verso la singolarità: lo spazio-tempo stesso "cade" verso il centro.</p>
+      <p>La prima "<span class="vi">fotografia</span>" dell'ombra di un buco nero — <span class="hl">M87*</span>, buco nero supermassiccio da 6.5 miliardi di M☉ — fu ottenuta dall'<span class="am">Event Horizon Telescope (EHT)</span> il 10 aprile 2019. L'anello luminoso è prodotto dalla <span class="gr">sfera fotonica</span> a r = 3GM/c².</p>
+      <code class="formula">r_s = 2GM/c²     (Schwarzschild, 1916)
+r_fotoni = 3GM/c²     (sfera fotonica)</code>
+      <div class="note">▸ Disco nero con anello luminoso (photon sphere) arancione/ambra; la griglia si deforma drasticamente nelle vicinanze dell'orizzonte.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-8">
+    <div class="phase-tag">FASE 08 — COSMOLOGIA</div>
+    <div class="phase-title">La costante cosmologica e l'universo in espansione</div>
+    <div class="phase-body">
+      <p>Nel <span class="am">1917</span> Einstein aggiunse la costante cosmologica <span class="hl">Λ</span> alle sue equazioni per ottenere un universo statico — allora ritenuto ovvio. Quando Hubble (1929) dimostrò che l'universo è in espansione, Einstein definì Λ "<em>il mio più grande errore</em>".</p>
+      <p>Nel <span class="gr">1998</span>, le osservazioni di supernovae di tipo Ia da parte di Perlmutter, Riess e Schmidt rivelarono qualcosa di stupefacente: l'espansione dell'universo sta <span class="hl">accelerando</span>. Questo richiede Λ > 0 — <span class="am">energia oscura</span>. Il Nobel 2011 andò a questi tre fisici.</p>
+      <p>L'energia oscura costituisce il <span class="vi">68%</span> dell'energia totale dell'universo. La materia oscura il 27%. La materia ordinaria (atomi) solo il 5%. L'equazione di Friedmann governa la dinamica cosmologica con Λ inclusa. Il futuro dell'universo dipende dal valore esatto di Λ.</p>
+      <code class="formula">H² = (ȧ/a)² = (8πG/3)ρ + Λc²/3     (Friedmann)
+H₀ ≈ 67.4 km/s/Mpc     (costante di Hubble)</code>
+      <div class="note">▸ Punti/galassie che si allontanano dall'origine con velocità crescente; cerchi concentrici in espansione accelerata, colore dal blu (vicino) al rosso (lontano/redshift).</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom navigation -->
+<div id="bottom">
+  <button class="btn" onclick="goPhase(1)">01 · Storia</button>
+  <button class="btn" onclick="goPhase(2)">02 · Equivalenza</button>
+  <button class="btn" onclick="goPhase(3)">03 · Curvatura</button>
+  <button class="btn" onclick="goPhase(4)">04 · Equazioni</button>
+  <button class="btn" onclick="goPhase(5)">05 · Eddington</button>
+  <button class="btn" onclick="goPhase(6)">06 · LIGO</button>
+  <button class="btn" onclick="goPhase(7)">07 · Buchi Neri</button>
+  <button class="btn" onclick="goPhase(8)">08 · Cosmologia</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: 'Storia',        desc: 'FASE 01 — Einstein 1879–1955: dalla SR (1905) alla GR (1915) · G_μν = 8πG/c⁴ T_μν',        scene: 'storia'    },
+  { name: 'Equivalenza',   desc: 'FASE 02 — Principio di equivalenza: m_g = m_i · ascensore ≡ campo gravitazionale',           scene: 'equiv'     },
+  { name: 'Curvatura',     desc: 'FASE 03 — Spazio-tempo curvo: ds² = g_μν dx^μ dx^ν · geodetiche = cammini liberi',           scene: 'curva'     },
+  { name: 'Equazioni',     desc: 'FASE 04 — Equazioni di campo: G_μν = 8πG/c⁴ T_μν (10 equazioni non lineari)',               scene: 'equazioni' },
+  { name: 'Eddington',     desc: 'FASE 05 — Deflessione luce: δφ = 4GM/c²R ≈ 1.75″ · eclissi 29 maggio 1919',                 scene: 'luce'      },
+  { name: 'LIGO',          desc: 'FASE 06 — Onde gravitazionali: GW150914 · h ≈ 10⁻²¹ · due buchi neri 1.3 Gly',              scene: 'onde'      },
+  { name: 'Buchi Neri',    desc: 'FASE 07 — r_s = 2GM/c² · M87* EHT 2019 · sfera fotonica r = 3GM/c²',                        scene: 'bh'        },
+  { name: 'Cosmologia',    desc: 'FASE 08 — Costante cosmologica Λ: espansione accelerata · energia oscura 68%',               scene: 'cosmo'     },
+];
+
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const cx = t2AnimCX();
+  const cy = t2AnimCY();
+  const rm = t2ReducedMotion();
+  const scene = window.T2_PHASES[phIdx].scene;
+
+  // ── helpers ────────────────────────────────────────────────────────────────
+  function drawWarpedGrid(warpStrength, showMass) {
+    const cols = 16, rows = 14;
+    const gW = Math.min(W * 0.38, 320);
+    const gH = Math.min(H * 0.6, 340);
+    const ox = cx - gW * 0.5;
+    const oy = cy - gH * 0.5;
+
+    for (let pass = 0; pass < 2; pass++) {
+      const horiz = pass === 0;
+      const n = horiz ? rows + 1 : cols + 1;
+      for (let i = 0; i <= n; i++) {
+        ctx.beginPath();
+        const steps = 40;
+        let first = true;
+        for (let s = 0; s <= steps; s++) {
+          const u = s / steps;
+          let px, py;
+          if (horiz) {
+            px = ox + u * gW;
+            py = oy + (i / n) * gH;
+          } else {
+            px = ox + (i / n) * gW;
+            py = oy + u * gH;
+          }
+          const dx = px - cx;
+          const dy = py - cy;
+          const dist = Math.sqrt(dx * dx + dy * dy) + 1;
+          const warp = warpStrength * 2200 / (dist * dist + 500);
+          const wx = px - dx * warp;
+          const wy = py - dy * warp;
+          if (first) { ctx.moveTo(wx, wy); first = false; }
+          else ctx.lineTo(wx, wy);
+        }
+        const alpha = 0.13 + 0.08 * Math.sin(T * 0.6 + i * 0.3);
+        ctx.strokeStyle = 'rgba(14,165,233,' + (rm ? 0.18 : alpha) + ')';
+        ctx.lineWidth = 0.8;
+        ctx.stroke();
+      }
+    }
+
+    if (showMass) {
+      const pulse = rm ? 1 : (0.88 + 0.12 * Math.sin(T * 1.8));
+      const r = 22 * pulse;
+      t2Glow('#fbbf24', 28);
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, r);
+      g.addColorStop(0, '#fef3c7');
+      g.addColorStop(0.5, '#fbbf24');
+      g.addColorStop(1, '#d97706');
+      ctx.fillStyle = g;
+      ctx.fill();
+      t2NoGlow();
+    }
+  }
+
+  // ── per-scene drawing ──────────────────────────────────────────────────────
+  if (scene === 'storia') {
+    // Flat grid + timeline
+    drawWarpedGrid(0.05, false);
+    // Timeline bar
+    const years = [1879, 1905, 1907, 1915, 1919, 1955];
+    const labels = ['Nascita', 'SR', 'Equiv.', 'GR', 'Eddington', 'Morte'];
+    const colors = ['#94a3b8', '#38bdf8', '#4ade80', '#fbbf24', '#a78bfa', '#f87171'];
+    const tx0 = cx - 160, tx1 = cx + 160;
+    const ty = cy + H * 0.2;
+    ctx.strokeStyle = 'rgba(148,163,184,0.4)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(tx0, ty); ctx.lineTo(tx1, ty); ctx.stroke();
+    years.forEach((y, i) => {
+      const frac = (y - 1879) / (1955 - 1879);
+      const tx = tx0 + frac * (tx1 - tx0);
+      const pulse = rm ? 1 : (0.8 + 0.2 * Math.sin(T * 1.4 + i));
+      t2Glow(colors[i], 12 * pulse);
+      ctx.beginPath(); ctx.arc(tx, ty, 5, 0, Math.PI * 2);
+      ctx.fillStyle = colors[i]; ctx.fill(); t2NoGlow();
+      t2Txt(tx, ty - 18, labels[i], colors[i], 10, 'center', 'Courier New,monospace');
+      t2Txt(tx, ty + 18, String(y), 'rgba(148,163,184,0.7)', 9, 'center', 'Courier New,monospace');
+    });
+    t2Txt(cx, cy - H * 0.15, 'G_μν = 8πG/c⁴ · T_μν', 'rgba(56,189,248,0.6)', 18, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'equiv') {
+    // Two elevator boxes
+    const bw = 60, bh = 90;
+    const leftX = cx - 100, rightX = cx + 100 - bw;
+    const by = cy - bh / 2;
+    // Left box: accelerating (arrow up)
+    ctx.strokeStyle = 'rgba(56,189,248,0.7)'; ctx.lineWidth = 2;
+    ctx.strokeRect(leftX, by, bw, bh);
+    // Person inside
+    ctx.beginPath(); ctx.arc(leftX + bw / 2, by + 22, 8, 0, Math.PI * 2);
+    ctx.strokeStyle = '#38bdf8'; ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(leftX + bw / 2, by + 30); ctx.lineTo(leftX + bw / 2, by + 55);
+    ctx.stroke();
+    // Arrow up (acceleration)
+    const arrowY = rm ? by - 20 : by - 20 - 8 * Math.sin(T * 2);
+    ctx.strokeStyle = '#4ade80'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(leftX + bw / 2, by - 5); ctx.lineTo(leftX + bw / 2, arrowY);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(leftX + bw / 2 - 6, arrowY + 8);
+    ctx.lineTo(leftX + bw / 2, arrowY);
+    ctx.lineTo(leftX + bw / 2 + 6, arrowY + 8);
+    ctx.strokeStyle = '#4ade80'; ctx.stroke();
+    t2Txt(leftX + bw / 2, by + bh + 16, 'a = g', '#4ade80', 12, 'center', 'Courier New,monospace');
+    t2Txt(leftX + bw / 2, by + bh + 30, 'spazio profondo', 'rgba(148,163,184,0.6)', 10, 'center');
+    // Right box: in gravitational field (g arrow down)
+    ctx.strokeStyle = 'rgba(251,191,36,0.7)'; ctx.lineWidth = 2;
+    ctx.strokeRect(rightX, by, bw, bh);
+    ctx.beginPath(); ctx.arc(rightX + bw / 2, by + 22, 8, 0, Math.PI * 2);
+    ctx.strokeStyle = '#fbbf24'; ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(rightX + bw / 2, by + 30); ctx.lineTo(rightX + bw / 2, by + 55);
+    ctx.stroke();
+    // Gravity lines below box
+    for (let i = 0; i < 5; i++) {
+      const lx = rightX + 8 + i * (bw - 8) / 4;
+      const ly0 = by + bh + 5;
+      const ly1 = rm ? ly0 + 12 : ly0 + 12 + 3 * Math.sin(T * 1.5 + i);
+      ctx.strokeStyle = 'rgba(251,191,36,0.4)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(lx, ly0); ctx.lineTo(lx, ly1); ctx.stroke();
+    }
+    t2Txt(rightX + bw / 2, by + bh + 16, 'g ↓', '#fbbf24', 12, 'center', 'Courier New,monospace');
+    t2Txt(rightX + bw / 2, by + bh + 30, 'campo gravitaz.', 'rgba(148,163,184,0.6)', 10, 'center');
+    // Equals sign
+    t2Txt(cx, cy, '≡', 'rgba(167,139,250,0.8)', 28, 'center');
+    t2Txt(cx, cy - H * 0.2, 'm_g = m_i', 'rgba(56,189,248,0.5)', 16, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'curva') {
+    const warp = rm ? 0.55 : (0.45 + 0.1 * Math.sin(T * 0.4));
+    drawWarpedGrid(warp, true);
+    // Photon following curved path
+    const angle = rm ? 1.2 : (T * 0.4) % (Math.PI * 2);
+    const orbitR = 70 + 25 * Math.sin(T * 0.3);
+    const px = cx + orbitR * Math.cos(angle);
+    const py = cy + orbitR * 0.55 * Math.sin(angle);
+    t2Glow('#fef08a', 14);
+    ctx.beginPath(); ctx.arc(px, py, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#fef08a'; ctx.fill();
+    t2NoGlow();
+    // Label
+    t2Txt(cx, cy + H * 0.26, 'Geodetica nello spazio-tempo curvo', 'rgba(148,163,184,0.5)', 12, 'center');
+  }
+
+  else if (scene === 'equazioni') {
+    const warp = rm ? 0.45 : (0.4 + 0.05 * Math.sin(T * 0.5));
+    drawWarpedGrid(warp, true);
+    // Overlay equation terms
+    const fade = rm ? 1 : (0.6 + 0.4 * Math.sin(T * 0.7));
+    t2Glow('#38bdf8', 8);
+    t2Txt(cx, cy - H * 0.18, 'G_μν', '#38bdf8', 20, 'center', 'Courier New,monospace');
+    t2NoGlow();
+    t2Txt(cx, cy - H * 0.12, '(curvatura)', 'rgba(56,189,248,0.5)', 11, 'center');
+    t2Txt(cx, cy - H * 0.06, '=', 'rgba(167,139,250,0.7)', 22, 'center');
+    t2Glow('#fbbf24', 8 * fade);
+    t2Txt(cx, cy, '8πG/c⁴ · T_μν', '#fbbf24', 18, 'center', 'Courier New,monospace');
+    t2NoGlow();
+    t2Txt(cx, cy + H * 0.06, '(materia/energia)', 'rgba(251,191,36,0.5)', 11, 'center');
+    t2Txt(cx, cy + H * 0.14, '10 equazioni non lineari accoppiate', 'rgba(148,163,184,0.4)', 11, 'center');
+  }
+
+  else if (scene === 'luce') {
+    drawWarpedGrid(0.35, true);
+    // Light ray bending: hyperbolic path around mass
+    ctx.beginPath();
+    const nPts = 80;
+    let first = true;
+    for (let i = 0; i < nPts; i++) {
+      const u = i / (nPts - 1);
+      const x0 = cx - 200 + u * 400;
+      const dx = x0 - cx, dy0 = -120;
+      const dist = Math.sqrt(dx * dx + dy0 * dy0) + 1;
+      const deflect = 45 / (dist * 0.035 + 1);
+      const y0 = cy - 120 + deflect;
+      if (first) { ctx.moveTo(x0, y0); first = false; }
+      else ctx.lineTo(x0, y0);
+    }
+    ctx.strokeStyle = '#fef08a';
+    ctx.lineWidth = 2;
+    t2Glow('#fef08a', 10);
+    ctx.stroke();
+    t2NoGlow();
+    // Photon on path
+    const pu = rm ? 0.5 : ((T * 0.18) % 1);
+    const px = cx - 200 + pu * 400;
+    const pdx = px - cx;
+    const pdist = Math.sqrt(pdx * pdx + 120 * 120) + 1;
+    const pdefl = 45 / (pdist * 0.035 + 1);
+    const py = cy - 120 + pdefl;
+    t2Glow('#ffffff', 18);
+    ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#ffffff'; ctx.fill();
+    t2NoGlow();
+    t2Txt(cx - 140, cy - 140, 'δφ ≈ 1.75"', '#fbbf24', 13, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'onde') {
+    // Two orbiting bodies
+    const sep = 55;
+    const orbAngle = rm ? 0.5 : T * 0.9;
+    const bx1 = cx + sep * Math.cos(orbAngle);
+    const by1 = cy + sep * 0.5 * Math.sin(orbAngle);
+    const bx2 = cx - sep * Math.cos(orbAngle);
+    const by2 = cy - sep * 0.5 * Math.sin(orbAngle);
+    // Gravitational waves: concentric ellipses
+    const nWaves = 8;
+    for (let w = 0; w < nWaves; w++) {
+      const phase = rm ? w / nWaves : ((T * 0.5 + w / nWaves) % 1);
+      const rw = phase * Math.min(W * 0.4, H * 0.42);
+      const alpha = (1 - phase) * 0.55;
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, rw, rw * 0.6, 0, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(167,139,250,' + alpha + ')';
+      ctx.lineWidth = 1.5 * (1 - phase * 0.6);
+      ctx.stroke();
+    }
+    // Bodies
+    [{ x: bx1, y: by1, r: 14, col: '#fbbf24' }, { x: bx2, y: by2, r: 12, col: '#38bdf8' }].forEach(b => {
+      t2Glow(b.col, 20);
+      ctx.beginPath(); ctx.arc(b.x, b.y, b.r, 0, Math.PI * 2);
+      ctx.fillStyle = b.col; ctx.fill();
+      t2NoGlow();
+    });
+    t2Txt(cx, cy + H * 0.26, 'GW150914 · h ≈ 10⁻²¹ · 1.3 Gly', 'rgba(148,163,184,0.5)', 12, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'bh') {
+    // Warped grid near black hole
+    drawWarpedGrid(0.9, false);
+    const bhR = 38;
+    const ringR = 62;
+    // Accretion / photon ring glow
+    const ringPulse = rm ? 1 : (0.85 + 0.15 * Math.sin(T * 1.2));
+    t2Glow('#f97316', 30 * ringPulse);
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, ringR, ringR * 0.38, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = '#f97316';
+    ctx.lineWidth = 6 * ringPulse;
+    ctx.stroke();
+    t2NoGlow();
+    // Black disk
+    ctx.beginPath(); ctx.arc(cx, cy, bhR, 0, Math.PI * 2);
+    ctx.fillStyle = '#000000'; ctx.fill();
+    ctx.strokeStyle = 'rgba(0,0,0,0.8)'; ctx.lineWidth = 1; ctx.stroke();
+    // Photon orbiting ring
+    if (!rm) {
+      const pAngle = T * 1.5;
+      const prx = cx + ringR * Math.cos(pAngle);
+      const pry = cy + ringR * 0.38 * Math.sin(pAngle);
+      t2Glow('#ffffff', 12);
+      ctx.beginPath(); ctx.arc(prx, pry, 3, 0, Math.PI * 2);
+      ctx.fillStyle = '#fff'; ctx.fill();
+      t2NoGlow();
+    }
+    t2Txt(cx, cy + H * 0.24, 'r_s = 2GM/c²  ·  M87*  ·  EHT 2019', 'rgba(148,163,184,0.5)', 12, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'cosmo') {
+    // Expanding universe dots
+    const nGal = 55;
+    if (!window._grGalaxies) {
+      window._grGalaxies = [];
+      for (let i = 0; i < nGal; i++) {
+        const angle = Math.random() * Math.PI * 2;
+        const r = 10 + Math.random() * 0.9;
+        window._grGalaxies.push({
+          angle, baseR: r,
+          col: `hsl(${200 + Math.random() * 80},80%,60%)`,
+          sz: 2 + Math.random() * 3,
+        });
+      }
+    }
+    const expansion = rm ? 1.5 : (1.0 + (T % 6) * 0.18);
+    window._grGalaxies.forEach(g => {
+      const r = g.baseR * expansion * Math.min(W, H) * 0.025;
+      const gx = cx + r * Math.cos(g.angle);
+      const gy = cy + r * Math.sin(g.angle);
+      if (gx < 0 || gx > W || gy < 0 || gy > H) return;
+      const redness = Math.min(1, expansion * 0.35);
+      const col = `rgba(${Math.round(100 + 155 * redness)},${Math.round(150 - 100 * redness)},255,0.8)`;
+      t2Glow(col, 6);
+      ctx.beginPath(); ctx.arc(gx, gy, g.sz, 0, Math.PI * 2);
+      ctx.fillStyle = col; ctx.fill();
+      t2NoGlow();
+    });
+    // Origin dot
+    t2Glow('#fbbf24', 16);
+    ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#fbbf24'; ctx.fill();
+    t2NoGlow();
+    t2Txt(cx, cy + H * 0.26, 'H² = (8πG/3)ρ + Λc²/3  ·  energia oscura 68%', 'rgba(148,163,184,0.45)', 11, 'center', 'Courier New,monospace');
+  }
+};
+
+t2Init();
+</script>
+</body>
+</html>

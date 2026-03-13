@@ -1,0 +1,572 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meccanica Quantistica | Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<!-- Top bar -->
+<div id="ui">
+  <span id="ui-title">DivulgAzione · QM</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">10 fasi</span>
+</div>
+
+<!-- Left panel -->
+<div id="panel">
+
+  <div class="phase-content" id="ph-1">
+    <div class="phase-tag">FASE 01 — CRISI</div>
+    <div class="phase-title">La crisi della fisica classica: 1900–1913</div>
+    <div class="phase-body">
+      <p>Alla fine dell'Ottocento, la fisica sembrava completa. Ma tre esperimenti smentirono clamorosamente le previsioni classiche: il <span class="hl">corpo nero</span> (la "catastrofe ultravioletta"), l'<span class="am">effetto fotoelettrico</span> e la <span class="gr">stabilità dell'atomo</span>.</p>
+      <p><span class="hl">Max Planck</span> (1900) salvò il corpo nero postulando che l'energia venga emessa in <span class="am">pacchetti discreti</span> (quanti): E = hν. <span class="hl">Albert Einstein</span> (1905) spiegò l'effetto fotoelettrico ipotizzando che la luce stessa sia fatta di quanti — i <span class="gr">fotoni</span> — con energia E = hν. Questa scoperta gli valse il Nobel 1921.</p>
+      <p><span class="hl">Niels Bohr</span> (1913) propose che gli elettroni orbitino attorno al nucleo solo in certi livelli <span class="vi">quantizzati</span>, emettendo o assorbendo fotoni quando saltano tra livelli. Il modello di Bohr predice esattamente lo spettro dell'idrogeno — il primo trionfo della quantizzazione.</p>
+      <code class="formula">E = hν     (Planck, 1900)
+E_n = −13.6 eV/n²     (livelli idrogeno, Bohr)
+λ = h/p     (de Broglie, 1924)</code>
+      <div class="note">▸ Le tre anomalie: spettro del corpo nero (UV catastrophe), fotoemissione istantanea, spettro discreto dell'idrogeno — nessuna spiegazione classica.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — FUNZIONE D'ONDA</div>
+    <div class="phase-title">La funzione d'onda e la sovrapposizione</div>
+    <div class="phase-body">
+      <p>La <span class="hl">funzione d'onda</span> ψ(x,t) descrive completamente lo stato quantistico di un sistema. Non è una proprietà fisica direttamente osservabile — è un'entità matematica complessa. La sua interpretazione è probabilistica: <span class="am">|ψ(x,t)|²</span> è la densità di probabilità di trovare la particella in x al tempo t.</p>
+      <p>Prima della misura, il sistema è in <span class="gr">sovrapposizione quantistica</span>: la particella non si trova in nessuna posizione definita, ma in tutte le posizioni simultaneamente, pesate da ψ. La misura "<span class="vi">collassa</span>" la funzione d'onda: dopo la misura, il sistema si trova in uno stato definito.</p>
+      <p>La funzione d'onda evolve secondo l'<span class="hl">equazione di Schrödinger</span> (1926) in modo deterministico e lineare — fino alla misura. Questa "dualità" tra evoluzione deterministica e collasso probabilistico è il cuore del <span class="am">problema della misura</span> in QM.</p>
+      <code class="formula">P(x,t) = |ψ(x,t)|²     (probabilità)
+∫_{-∞}^{+∞} |ψ(x,t)|² dx = 1     (normalizzazione)
+iℏ ∂ψ/∂t = −(ℏ²/2m)∂²ψ/∂x² + V(x)ψ</code>
+      <div class="note">▸ Pacchetto d'onda gaussiano animato: l'inviluppo si sposta e allarga nel tempo (dispersione), |ψ|² mostra la distribuzione di probabilità.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — INDETERMINAZIONE</div>
+    <div class="phase-title">Il principio di indeterminazione di Heisenberg</div>
+    <div class="phase-body">
+      <p><span class="hl">Werner Heisenberg</span> (1927) dimostrò che esistono coppie di osservabili — posizione e quantità di moto, energia e tempo — che <span class="am">non possono essere misurate simultaneamente</span> con precisione arbitraria. Questo non è un limite tecnologico: è una proprietà fondamentale della natura.</p>
+      <p>La ragione è profonda: posizione e quantità di moto sono osservabili <span class="gr">non commutanti</span>. I loro operatori soddisfano la relazione di commutazione canonica [x̂, p̂] = iℏ, da cui deriva matematicamente la disuguaglianza di Heisenberg. Localizzare una particella richiede lunghezze d'onda corte → grandi quantità di moto.</p>
+      <p>Conseguenze fisiche cruciali: l'<span class="hl">energia di punto zero</span> (gli atomi non collassano), la <span class="am">stabilità dell'atomo di idrogeno</span> (l'elettrone non può cadere nel nucleo), e l'<span class="vi">effetto tunnel</span> (le particelle attraversano barriere classicamente proibite).</p>
+      <code class="formula">Δx · Δp ≥ ℏ/2     (posizione–quantità di moto)
+ΔE · Δt ≥ ℏ/2     (energia–tempo)
+[x̂, p̂] = iℏ     (commutatore canonico)</code>
+      <div class="note">▸ Stato compresso (squeezed state): ellisse di incertezza Δx × Δp = ℏ/2, mostrando il trade-off tra le due incertezze — comprimere una significa allargare l'altra.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — DUALITÀ</div>
+    <div class="phase-title">La dualità onda-corpuscolo</div>
+    <div class="phase-body">
+      <p>Ogni particella è anche un'onda (<span class="hl">de Broglie</span>, 1924). L'esperimento della <span class="am">doppia fenditura</span> è il test definitivo: un singolo elettrone inviato contro due fenditure produce — dopo molti elettroni — una <span class="gr">figura di interferenza</span> come se fosse un'onda, anche se ogni elettrone viene rilevato come una particella puntiforme.</p>
+      <p>Il paradosso: se si piazza un rilevatore per scoprire attraverso quale fenditura passa l'elettrone, la figura di interferenza <span class="vi">scompare</span>. L'atto di misura distrugge la coerenza quantistica. L'elettrone non "sceglie" la fenditura — si trova in sovrapposizione di entrambi i cammini, interferendo con se stesso.</p>
+      <p>Questo fenomeno è alla base della <span class="hl">crittografia quantistica</span> e del <span class="am">calcolo quantistico</span>: la sovrapposizione consente di elaborare simultaneamente tutte le possibilità. L'interferenza quantistica è la risorsa computazionale fondamentale.</p>
+      <code class="formula">λ = h/p     (lunghezza d'onda de Broglie)
+ψ_tot = ψ₁ + ψ₂     (sovrapposizione due cammini)
+I ∝ |ψ₁ + ψ₂|² = |ψ₁|² + |ψ₂|² + 2Re(ψ₁*ψ₂)</code>
+      <div class="note">▸ Doppia fenditura animata: l'onda incidente si divide, interferisce e produce la figura di diffrazione a destra; il rilevatore "collassa" l'onda in un punto.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — SPIN</div>
+    <div class="phase-title">Lo spin: momento angolare intrinseco</div>
+    <div class="phase-body">
+      <p>Lo <span class="hl">spin</span> è una proprietà puramente quantistica senza analogo classico — non è una rotazione reale della particella, ma un <span class="am">momento angolare intrinseco</span>. L'esperimento di <span class="gr">Stern-Gerlach</span> (1922) fu la prima dimostrazione diretta: un fascio di atomi d'argento passato attraverso un campo magnetico non uniforme si divide in esattamente <span class="hl">due fasci</span> — non in una distribuzione continua come prevedeva la meccanica classica.</p>
+      <p>I fermioni (elettroni, quark, neutrini) hanno spin ½: i possibili valori di S_z sono +ℏ/2 ("su") e −ℏ/2 ("giù"). Il <span class="vi">principio di esclusione di Pauli</span> (1925) afferma che due fermioni identici non possono occupare lo stesso stato quantistico — questo è responsabile della struttura della materia, della tavola periodica e della stabilità delle stelle di neutroni.</p>
+      <p>I bosoni (fotoni, bosoni W/Z, Higgs) hanno spin intero (0, 1, 2...) e non seguono il principio di Pauli — anzi, tendono a condensarsi nello stesso stato: il condensato di Bose-Einstein.</p>
+      <code class="formula">Ŝ² |s, m_s⟩ = ℏ² s(s+1) |s, m_s⟩
+Ŝ_z |s, m_s⟩ = m_s ℏ |s, m_s⟩     m_s = ±½ (spin ½)
+[Ŝ_x, Ŝ_y] = iℏ Ŝ_z     (algebra di spin)</code>
+      <div class="note">▸ Apparato di Stern-Gerlach: magnete con campo non uniforme, il fascio di particelle si divide in due traiettorie distinte — spin up e spin down.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — STANDARD MODEL</div>
+    <div class="phase-title">Il Modello Standard delle particelle</div>
+    <div class="phase-body">
+      <p>Il <span class="hl">Modello Standard</span> (MS) è la teoria quantistica che descrive tutte le particelle fondamentali conosciute e 3 delle 4 forze fondamentali (elettromagnetica, debole, forte — esclude la gravità). È la teoria fisica più riuscita mai costruita: le sue previsioni sono state confermate sperimentalmente con precisione straordinaria.</p>
+      <p>Le particelle di <span class="am">materia</span> sono fermioni (spin ½): 6 <span class="hl">quark</span> (up, down, charm, strange, top, bottom) che formano protoni e neutroni; 6 <span class="gr">leptoni</span> (elettrone, muone, tau e i relativi neutrini). Le particelle di <span class="vi">forza</span> sono bosoni (spin intero): fotone (EM), bosoni W±/Z₀ (forza debole), 8 gluoni (forza forte). Il <span class="am">bosone di Higgs</span> (spin 0) dà massa alle particelle.</p>
+      <p>La struttura matematica è quella di una <span class="hl">teoria di gauge</span> con gruppo di simmetria SU(3)_C × SU(2)_L × U(1)_Y — la simmetria di colore × isospin debole × ipercaricha. La rottura spontanea di simmetria SU(2)_L × U(1)_Y → U(1)_EM genera le masse dei bosoni W e Z.</p>
+      <code class="formula">SU(3)_C × SU(2)_L × U(1)_Y     (gauge group del MS)
+17 particelle fondamentali: 6q + 6l + γ + W± + Z + g×8 + H</code>
+      <div class="note">▸ Tabella delle 17 particelle fondamentali disposta in 4 colonne: 3 generazioni di fermioni + bosoni di gauge + Higgs.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — QCD</div>
+    <div class="phase-title">Cromodinamica quantistica: il colore</div>
+    <div class="phase-body">
+      <p>La <span class="hl">Cromodinamica Quantistica</span> (QCD) descrive la <span class="am">forza forte</span> tramite la carica di colore (rosso, verde, blu). I quark portano carica di colore; i <span class="gr">gluoni</span> (8 tipi) sono i mediatori della forza e portano essi stessi carica di colore — diversamente dai fotoni che non portano carica elettrica.</p>
+      <p>Il <span class="vi">confinamento dei quark</span>: i quark sono sempre legati in <span class="hl">adroni colorless</span> (bianchi) — protoni (uud), neutroni (udd), pioni (qq̄). Separare due quark richiede energia infinita: si crea una nuova coppia quark-antiquark prima che si separino. Il confinamento è uno dei grandi problemi non risolti in fisica: il problema del "mass gap" nella QCD è tra i 7 problemi del millennio del Clay Institute.</p>
+      <p>La <span class="am">libertà asintotica</span> (Gross, Politzer, Wilczek — Nobel 2004): ad alte energie, la costante di accoppiamento α_s diminuisce — i quark si comportano come particelle quasi libere. Questo è il contrario dell'elettromagnetismo, dove α_s cresce con l'energia.</p>
+      <code class="formula">α_s(Q²) = 12π / [(33−2n_f) ln(Q²/Λ²_QCD)]
+Λ_QCD ≈ 200 MeV     (scala di confinamento)</code>
+      <div class="note">▸ Tre quark colorati (rosso, verde, blu) in un triangolo con scambio di gluoni (molle animate); insieme formano un protone bianco = confinamento di colore.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-8">
+    <div class="phase-tag">FASE 08 — ENTANGLEMENT</div>
+    <div class="phase-title">L'entanglement quantistico</div>
+    <div class="phase-body">
+      <p>Due particelle entangled condividono uno stato quantistico <span class="hl">non separabile</span>: misurare una determina istantaneamente lo stato dell'altra, indipendentemente dalla distanza. Einstein chiamò questo "<em>spooky action at a distance</em>" e lo usò per attaccare la QM (paradosso EPR, 1935).</p>
+      <p>Il <span class="am">teorema di Bell</span> (1964) dimostrò che nessuna teoria a <span class="gr">variabili nascoste locali</span> può riprodurre tutte le previsioni della QM. <span class="hl">Alain Aspect</span> et al. (1982) confermò sperimentalmente la violazione delle disuguaglianze di Bell — la QM è genuinamente non-locale. Il Nobel 2022 andò ad Aspect, Clauser e Zeilinger per questi esperimenti.</p>
+      <p>L'entanglement è la risorsa fondamentale del <span class="vi">calcolo quantistico</span>, della <span class="am">crittografia quantistica</span> (QKD) e della <span class="hl">teletrasportazione quantistica</span>. Non viola la relatività speciale: non si può usare per trasmettere informazione più veloce della luce.</p>
+      <code class="formula">|Ψ⁻⟩ = (|↑↓⟩ − |↓↑⟩)/√2     (singoletto di Bell)
+|Φ⁺⟩ = (|00⟩ + |11⟩)/√2     (stato di Bell)
+⟨Ŝ_A · Ŝ_B⟩ = −3ℏ²/4     (singoletto)</code>
+      <div class="note">▸ Due punti luminosi separati, collegati da una linea di correlazione; le oscillazioni anti-correlate mostrano l'entanglement: quando uno è "su", l'altro è "giù".</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-9">
+    <div class="phase-tag">FASE 09 — QED</div>
+    <div class="phase-title">Elettrodinamica quantistica: la teoria più precisa</div>
+    <div class="phase-body">
+      <p>La <span class="hl">Elettrodinamica Quantistica</span> (QED) descrive l'interazione elettromagnetica come scambio di <span class="am">fotoni virtuali</span> tra cariche. È la teoria più precisa mai costruita: il momento magnetico anomalo dell'elettrone è calcolato a 12 cifre decimali di accordo con l'esperimento.</p>
+      <p>La QED fu sviluppata da <span class="hl">Feynman</span>, <span class="gr">Schwinger</span> e <span class="vi">Tomonaga</span> (Nobel 1965) negli anni '40-'50, risolvendone le divergenze tramite la tecnica della <span class="am">rinormalizzazione</span>. I <span class="hl">diagrammi di Feynman</span> sono una rappresentazione grafica dei termini perturbativi: ogni diagramma corrisponde a un'ampiezza di transizione.</p>
+      <p>La costante di struttura fine <span class="am">α ≈ 1/137</span> è la costante di accoppiamento della QED — determina la forza dell'interazione elettromagnetica. Il fatto che sia piccola (≪ 1) rende la teoria perturbativa (la serie in potenze di α) convergente e precisa.</p>
+      <code class="formula">α = e²/(4πε₀ℏc) ≈ 1/137.035999084
+(g−2)/2 ≈ α/(2π) − 0.328 α²/π² + ...     (momento anomalo)
+Accordo teoria–esperimento: 12 cifre decimali</code>
+      <div class="note">▸ Vertice di Feynman: elettrone (linea continua), fotone (linea ondulata), il vertice di interazione e→e+γ — l'elemento base di tutti i diagrammi QED.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-10">
+    <div class="phase-tag">FASE 10 — HIGGS</div>
+    <div class="phase-title">Il bosone di Higgs: l'origine della massa</div>
+    <div class="phase-body">
+      <p>Il <span class="hl">meccanismo di Higgs</span> (Higgs, Brout, Englert — 1964, Nobel 2013) spiega perché le particelle hanno massa. Il <span class="am">campo di Higgs</span> permea tutto lo spazio; le particelle acquistano massa attraverso la loro interazione con esso — più forte è l'accoppiamento, maggiore è la massa. Il fotone non interagisce con il campo di Higgs e rimane privo di massa.</p>
+      <p>Il meccanismo si basa sulla <span class="gr">rottura spontanea di simmetria</span>: il potenziale del campo di Higgs ha la forma di un "<span class="vi">cappello messicano</span>" (Mexican hat). Il vuoto fisico si trova in un minimo non simmetrico, scegliendo spontaneamente un valore di aspettativa del vuoto <span class="am">v ≈ 246 GeV</span>. Questo rompe SU(2)_L × U(1)_Y → U(1)_EM.</p>
+      <p>Il <span class="hl">bosone di Higgs</span> è la fluttuazione quantistica del campo attorno al suo valore di vuoto. Fu scoperto al CERN-LHC il <span class="am">4 luglio 2012</span>, con massa m_H = 125.09 GeV — confermando l'ultima particella mancante del Modello Standard dopo 48 anni di ricerca.</p>
+      <code class="formula">V(φ) = −μ²|φ|² + λ|φ|⁴     (potenziale Mexican hat)
+m = g_f v/√2     v = (−μ²/λ)^{½} ≈ 246 GeV
+m_H = √(2λ) v ≈ 125 GeV     (CERN-LHC, 2012)</code>
+      <div class="note">▸ Potenziale a cappello messicano in 3D che ruota: il minimo circolare rappresenta i possibili valori del vuoto; la particella di Higgs è la fluttuazione radiale.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom navigation -->
+<div id="bottom">
+  <button class="btn" onclick="goPhase(1)">01 · Crisi</button>
+  <button class="btn" onclick="goPhase(2)">02 · ψ</button>
+  <button class="btn" onclick="goPhase(3)">03 · Δx·Δp</button>
+  <button class="btn" onclick="goPhase(4)">04 · Dualità</button>
+  <button class="btn" onclick="goPhase(5)">05 · Spin</button>
+  <button class="btn" onclick="goPhase(6)">06 · MS</button>
+  <button class="btn" onclick="goPhase(7)">07 · QCD</button>
+  <button class="btn" onclick="goPhase(8)">08 · Entangl.</button>
+  <button class="btn" onclick="goPhase(9)">09 · QED</button>
+  <button class="btn" onclick="goPhase(10)">10 · Higgs</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: 'Crisi Classica',     desc: 'FASE 01 — Planck 1900: E=hν · Einstein fotone · Bohr E_n=−13.6/n² eV',               scene: 'crisi'   },
+  { name: 'Funzione d\'Onda',   desc: 'FASE 02 — ψ(x,t): P = |ψ|² · sovrapposizione · equazione di Schrödinger',              scene: 'psi'     },
+  { name: 'Indeterminazione',   desc: 'FASE 03 — Heisenberg 1927: Δx·Δp ≥ ℏ/2 · [x̂,p̂] = iℏ · energia di punto zero',         scene: 'heis'    },
+  { name: 'Dualità',            desc: 'FASE 04 — λ = h/p (de Broglie) · doppia fenditura · collasso della funzione d\'onda',   scene: 'duali'   },
+  { name: 'Spin',               desc: 'FASE 05 — Stern-Gerlach 1922: S_z = ±ℏ/2 · principio di esclusione di Pauli',           scene: 'spin'    },
+  { name: 'Modello Standard',   desc: 'FASE 06 — SU(3)×SU(2)×U(1): 17 particelle, 3 forze, 3 generazioni',                    scene: 'ms'      },
+  { name: 'QCD',                desc: 'FASE 07 — α_s(Q²): confinamento · libertà asintotica · Nobel 2004',                    scene: 'qcd'     },
+  { name: 'Entanglement',       desc: 'FASE 08 — |Ψ⟩=(|00⟩+|11⟩)/√2 · Bell 1964 · Aspect 1982 · Nobel 2022',                 scene: 'entang'  },
+  { name: 'QED',                desc: 'FASE 09 — α ≈ 1/137 · (g-2)/2: 12 cifre · Feynman-Schwinger-Tomonaga 1965',            scene: 'qed'     },
+  { name: 'Higgs',              desc: 'FASE 10 — m_H ≈ 125 GeV · CERN-LHC 2012 · V(φ) = −μ²|φ|² + λ|φ|⁴',                   scene: 'higgs'   },
+];
+
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const cx = t2AnimCX();
+  const cy = t2AnimCY();
+  const rm = t2ReducedMotion();
+  const scene = window.T2_PHASES[phIdx].scene;
+
+  // ── wave packet helper ─────────────────────────────────────────────────────
+  function drawWavePacket(ox, oy, width, amp, k, phase, col, lineWidth) {
+    ctx.beginPath();
+    const nPts = 120;
+    for (let i = 0; i <= nPts; i++) {
+      const u = i / nPts;
+      const x = ox - width / 2 + u * width;
+      const env = Math.exp(-Math.pow((x - ox) / (width * 0.22), 2));
+      const y = oy - amp * env * Math.sin(k * (x - ox) + phase);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = col; ctx.lineWidth = lineWidth || 2; ctx.stroke();
+  }
+
+  if (scene === 'crisi') {
+    // Bohr atom energy levels
+    const levels = [1, 2, 3, 4, 5];
+    const levelColors = ['#fbbf24', '#38bdf8', '#4ade80', '#a78bfa', '#f87171'];
+    const nucleusR = 14;
+    t2Glow('#fbbf24', 22);
+    ctx.beginPath(); ctx.arc(cx, cy, nucleusR, 0, Math.PI * 2);
+    ctx.fillStyle = '#fbbf24'; ctx.fill();
+    t2NoGlow();
+    t2Txt(cx, cy, '+', '#000', 14, 'center', 'Courier New,monospace');
+    levels.forEach((n, i) => {
+      const r = nucleusR * 2.2 + n * 28;
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(${i===0?'251,191,36':i===1?'56,189,248':i===2?'74,222,128':i===3?'167,139,250':'248,113,113'},0.25)`;
+      ctx.lineWidth = 1; ctx.stroke();
+      // electron on nth orbit
+      if (i === 0) {
+        const eAngle = rm ? 0.7 : T * (2.5 / n);
+        const ex = cx + r * Math.cos(eAngle);
+        const ey = cy + r * Math.sin(eAngle);
+        t2Glow(levelColors[i], 14);
+        ctx.beginPath(); ctx.arc(ex, ey, 5, 0, Math.PI * 2);
+        ctx.fillStyle = levelColors[i]; ctx.fill();
+        t2NoGlow();
+      }
+      t2Txt(cx + r + 14, cy, 'n=' + n, levelColors[i], 10, 'left', 'Courier New,monospace');
+      t2Txt(cx - r - 14, cy, (-13.6 / (n * n)).toFixed(2) + ' eV', levelColors[i], 9, 'right', 'Courier New,monospace');
+    });
+    t2Txt(cx, cy + H * 0.27, 'E = hν  ·  E_n = −13.6/n² eV  ·  λ = h/p', 'rgba(56,189,248,0.5)', 12, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'psi') {
+    // Travelling gaussian wave packet
+    const xOff = rm ? 0 : ((T * 35) % (W * 0.45)) - W * 0.22;
+    const wx = cx + xOff;
+    const width = Math.min(W * 0.42, 260);
+    const phase = rm ? 0 : T * 4;
+    // probability density envelope (filled)
+    ctx.beginPath();
+    const nPts = 120;
+    for (let i = 0; i <= nPts; i++) {
+      const u = i / nPts;
+      const x = cx - W * 0.22 - width / 2 + (W * 0.44 + width) * u;
+      const env = Math.exp(-Math.pow((x - wx) / (width * 0.22), 2));
+      const y = cy - 55 * env;
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    for (let i = nPts; i >= 0; i--) {
+      const u = i / nPts;
+      const x = cx - W * 0.22 - width / 2 + (W * 0.44 + width) * u;
+      ctx.lineTo(x, cy);
+    }
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(14,165,233,0.08)'; ctx.fill();
+    // ψ wave
+    drawWavePacket(wx, cy, width, 52, 0.14, phase, '#38bdf8', 2);
+    // |ψ|² envelope
+    ctx.beginPath();
+    for (let i = 0; i <= 120; i++) {
+      const u = i / 120;
+      const x = cx - W * 0.22 - width / 2 + (W * 0.44 + width) * u;
+      const env = Math.exp(-Math.pow((x - wx) / (width * 0.22), 2));
+      const y = cy - 55 * env;
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = 'rgba(251,191,36,0.55)'; ctx.lineWidth = 1.5; ctx.stroke();
+    // Axis
+    ctx.strokeStyle = 'rgba(148,163,184,0.25)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(cx - W * 0.24, cy); ctx.lineTo(cx + W * 0.24, cy); ctx.stroke();
+    t2Txt(cx + W * 0.24, cy - 8, 'x', 'rgba(148,163,184,0.4)', 12, 'right');
+    t2Txt(cx - W * 0.23, cy - 40, 'ψ(x,t)', '#38bdf8', 12, 'left', 'Courier New,monospace');
+    t2Txt(cx - W * 0.23, cy - 22, '|ψ|²', '#fbbf24', 11, 'left', 'Courier New,monospace');
+  }
+
+  else if (scene === 'heis') {
+    // Squeezed state ellipse
+    const squeeze = rm ? 1 : (0.45 + 0.55 * (Math.sin(T * 0.5) * 0.5 + 0.5));
+    const ax = 90 / squeeze, ay = 90 * squeeze;
+    t2Glow('#4ade80', 12);
+    ctx.beginPath(); ctx.ellipse(cx, cy, ax, ay, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = '#4ade80'; ctx.lineWidth = 2; ctx.stroke();
+    t2NoGlow();
+    ctx.fillStyle = 'rgba(74,222,128,0.06)'; ctx.fill();
+    // Axes
+    ctx.strokeStyle = 'rgba(148,163,184,0.3)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(cx - 120, cy); ctx.lineTo(cx + 120, cy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx, cy - 120); ctx.lineTo(cx, cy + 120); ctx.stroke();
+    t2Txt(cx + 125, cy, 'x', 'rgba(148,163,184,0.5)', 13, 'left');
+    t2Txt(cx, cy - 125, 'p', 'rgba(148,163,184,0.5)', 13, 'center');
+    // Labels
+    t2Txt(cx + ax + 10, cy + 10, 'Δx', '#38bdf8', 12, 'left', 'Courier New,monospace');
+    t2Txt(cx - 10, cy - ay - 10, 'Δp', '#fbbf24', 12, 'right', 'Courier New,monospace');
+    t2Txt(cx, cy + H * 0.28, 'Δx · Δp ≥ ℏ/2 = costante', 'rgba(74,222,128,0.55)', 13, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'duali') {
+    // Double slit
+    const slitX = cx - 60;
+    const screenX = cx + 100;
+    const slit1Y = cy - 22, slit2Y = cy + 22;
+    const srcX = cx - W * 0.22;
+    // Incoming wave
+    for (let wi = 0; wi < 5; wi++) {
+      const wphase = rm ? wi * 0.6 : T * 3 - wi * 0.6;
+      const wR = 18 + wi * 16;
+      ctx.beginPath();
+      ctx.arc(srcX, cy, wR, -Math.PI * 0.45, Math.PI * 0.45);
+      ctx.strokeStyle = `rgba(56,189,248,${0.5 - wi * 0.08})`; ctx.lineWidth = 1.2; ctx.stroke();
+    }
+    // Slit barrier
+    ctx.fillStyle = 'rgba(30,50,80,0.85)';
+    ctx.fillRect(slitX - 6, cy - H * 0.18, 12, H * 0.18 - 30);
+    ctx.fillRect(slitX - 6, cy - 14, 12, 28);
+    ctx.fillRect(slitX - 6, cy + 30, 12, H * 0.18 - 30);
+    ctx.strokeStyle = 'rgba(56,189,248,0.4)'; ctx.lineWidth = 1.5;
+    ctx.strokeRect(slitX - 6, cy - H * 0.18, 12, H * 0.18 - 30);
+    ctx.strokeRect(slitX - 6, cy - 14, 12, 28);
+    ctx.strokeRect(slitX - 6, cy + 30, 12, H * 0.18 - 30);
+    // Interference on screen
+    const nFringes = 30;
+    for (let fi = 0; fi < nFringes; fi++) {
+      const fy = cy - H * 0.2 + (fi / (nFringes - 1)) * H * 0.4;
+      const d1 = Math.sqrt((screenX - slitX) ** 2 + (fy - slit1Y) ** 2);
+      const d2 = Math.sqrt((screenX - slitX) ** 2 + (fy - slit2Y) ** 2);
+      const phase = rm ? 0 : T * 2;
+      const intens = Math.pow(Math.cos((d1 - d2) * 0.18 + phase * 0), 2);
+      ctx.beginPath();
+      ctx.arc(screenX + 5, fy, 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(251,191,36,${intens * 0.8})`;
+      ctx.fill();
+    }
+    // Screen
+    ctx.strokeStyle = 'rgba(251,191,36,0.3)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(screenX, cy - H * 0.2); ctx.lineTo(screenX, cy + H * 0.2); ctx.stroke();
+    t2Txt(cx, cy + H * 0.28, 'λ = h/p  ·  ψ_tot = ψ₁ + ψ₂  ·  I ∝ |ψ₁+ψ₂|²', 'rgba(148,163,184,0.5)', 11, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'spin') {
+    // Stern-Gerlach apparatus
+    const magY = cy - 55, magH = 110;
+    const magX0 = cx - 50, magX1 = cx + 50;
+    // Magnet poles
+    ctx.fillStyle = 'rgba(56,189,248,0.15)';
+    ctx.fillRect(magX0, magY - 30, magX1 - magX0, 28);
+    ctx.fillRect(magX0, magY + magH, magX1 - magX0, 28);
+    ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 1.5;
+    ctx.strokeRect(magX0, magY - 30, magX1 - magX0, 28);
+    ctx.strokeRect(magX0, magY + magH, magX1 - magX0, 28);
+    t2Txt(cx, magY - 16, 'N', '#38bdf8', 14, 'center', 'Courier New,monospace');
+    t2Txt(cx, magY + magH + 14, 'S', '#f87171', 14, 'center', 'Courier New,monospace');
+    // Field gradient lines
+    for (let fi = 0; fi < 7; fi++) {
+      const fx = magX0 + (fi / 6) * (magX1 - magX0);
+      ctx.strokeStyle = 'rgba(167,139,250,0.2)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(fx, magY); ctx.lineTo(fx, magY + magH); ctx.stroke();
+    }
+    // Incoming beam
+    const beamX = cx - 140;
+    ctx.strokeStyle = 'rgba(251,191,36,0.6)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(beamX, cy); ctx.lineTo(magX0, cy); ctx.stroke();
+    // Split beams
+    const splitEnd = cx + 140;
+    ctx.strokeStyle = '#4ade80'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(magX1, cy); ctx.lineTo(splitEnd, cy - 38); ctx.stroke();
+    ctx.strokeStyle = '#f87171'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(magX1, cy); ctx.lineTo(splitEnd, cy + 38); ctx.stroke();
+    t2Glow('#4ade80', 12);
+    ctx.beginPath(); ctx.arc(splitEnd, cy - 38, 6, 0, Math.PI * 2);
+    ctx.fillStyle = '#4ade80'; ctx.fill();
+    t2NoGlow();
+    t2Glow('#f87171', 12);
+    ctx.beginPath(); ctx.arc(splitEnd, cy + 38, 6, 0, Math.PI * 2);
+    ctx.fillStyle = '#f87171'; ctx.fill();
+    t2NoGlow();
+    t2Txt(splitEnd + 16, cy - 38, 'spin ↑', '#4ade80', 12, 'left', 'Courier New,monospace');
+    t2Txt(splitEnd + 16, cy + 38, 'spin ↓', '#f87171', 12, 'left', 'Courier New,monospace');
+    t2Txt(cx, cy + H * 0.27, 'S_z = ±ℏ/2  ·  Principio di Pauli', 'rgba(148,163,184,0.5)', 12, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'ms') {
+    // Standard model particle table as a grid of dots
+    const particles = [
+      // quarks
+      { name:'u', col:'#f87171', x:0, y:0 }, { name:'c', col:'#f87171', x:1, y:0 }, { name:'t', col:'#f87171', x:2, y:0 },
+      { name:'d', col:'#fb923c', x:0, y:1 }, { name:'s', col:'#fb923c', x:1, y:1 }, { name:'b', col:'#fb923c', x:2, y:1 },
+      // leptons
+      { name:'e⁻', col:'#4ade80', x:0, y:2 }, { name:'μ', col:'#4ade80', x:1, y:2 }, { name:'τ', col:'#4ade80', x:2, y:2 },
+      { name:'νₑ', col:'#34d399', x:0, y:3 }, { name:'ν_μ', col:'#34d399', x:1, y:3 }, { name:'ν_τ', col:'#34d399', x:2, y:3 },
+      // bosons
+      { name:'γ', col:'#fbbf24', x:3, y:0 }, { name:'W', col:'#a78bfa', x:3, y:1 },
+      { name:'Z', col:'#a78bfa', x:3, y:2 }, { name:'g', col:'#38bdf8', x:3, y:3 },
+      { name:'H', col:'#f472b6', x:4, y:1.5 },
+    ];
+    const gx0 = cx - 140, gy0 = cy - 80, gsx = 56, gsy = 46;
+    particles.forEach((p, pi) => {
+      const px = gx0 + p.x * gsx, py = gy0 + p.y * gsy;
+      const pulse = rm ? 1 : (0.7 + 0.3 * Math.sin(T * 1.1 + pi * 0.6));
+      t2Glow(p.col, 10 * pulse);
+      ctx.beginPath(); ctx.arc(px, py, 14, 0, Math.PI * 2);
+      ctx.fillStyle = p.col + '33'; ctx.fill();
+      ctx.strokeStyle = p.col; ctx.lineWidth = 2 * pulse; ctx.stroke();
+      t2NoGlow();
+      t2Txt(px, py, p.name, p.col, 11, 'center', 'Courier New,monospace');
+    });
+    // Labels
+    t2Txt(gx0 + 56, gy0 - 22, 'quark', 'rgba(248,113,113,0.6)', 10, 'center');
+    t2Txt(gx0 + 56, gy0 + 2 * gsy + 22, 'leptoni', 'rgba(74,222,128,0.6)', 10, 'center');
+    t2Txt(gx0 + 3 * gsx, gy0 - 22, 'bosoni', 'rgba(251,191,36,0.6)', 10, 'center');
+  }
+
+  else if (scene === 'qcd') {
+    // Three colored quarks forming a proton/neutron triangle
+    const qR = 18, bondR = 85;
+    const qColors = ['#f87171', '#4ade80', '#38bdf8'];
+    const qNames = ['r', 'g', 'b'];
+    const qAngles = [-Math.PI / 2, Math.PI / 6, Math.PI * 5 / 6];
+    const qPositions = qAngles.map(a => ({ x: cx + bondR * Math.cos(a), y: cy + bondR * Math.sin(a) }));
+    // Gluon spring lines between quarks
+    [[0,1],[1,2],[2,0]].forEach(([a,b]) => {
+      const ax = qPositions[a].x, ay = qPositions[a].y;
+      const bx = qPositions[b].x, by = qPositions[b].y;
+      const nSprings = 10;
+      ctx.beginPath();
+      for (let si = 0; si <= nSprings * 4; si++) {
+        const u = si / (nSprings * 4);
+        const mx = ax + (bx - ax) * u;
+        const my = ay + (by - ay) * u;
+        const perp = { x: -(by - ay), y: bx - ax };
+        const pLen = Math.sqrt(perp.x ** 2 + perp.y ** 2);
+        const springAmp = rm ? 8 : (8 + 3 * Math.sin(T * 2));
+        const ox2 = perp.x / pLen * springAmp * Math.sin(u * Math.PI * nSprings * 2);
+        const oy2 = perp.y / pLen * springAmp * Math.sin(u * Math.PI * nSprings * 2);
+        si === 0 ? ctx.moveTo(mx + ox2, my + oy2) : ctx.lineTo(mx + ox2, my + oy2);
+      }
+      ctx.strokeStyle = 'rgba(251,191,36,0.5)'; ctx.lineWidth = 1.5; ctx.stroke();
+    });
+    // Quark circles
+    qPositions.forEach((q, i) => {
+      const pulse = rm ? 1 : (0.8 + 0.2 * Math.sin(T * 1.5 + i * 2));
+      t2Glow(qColors[i], 18 * pulse);
+      ctx.beginPath(); ctx.arc(q.x, q.y, qR, 0, Math.PI * 2);
+      ctx.fillStyle = qColors[i]; ctx.fill();
+      t2NoGlow();
+      t2Txt(q.x, q.y, qNames[i], '#000', 12, 'center', 'Courier New,monospace');
+    });
+    // Colorless label
+    t2Txt(cx, cy, 'bianco', 'rgba(255,255,255,0.4)', 12, 'center');
+    t2Txt(cx, cy + H * 0.26, 'confinamento: αs(Q²) → 0 per Q→∞', 'rgba(148,163,184,0.5)', 12, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'entang') {
+    // Two correlated oscillating dots
+    const sep = Math.min(W * 0.22, 150);
+    const phase1 = rm ? 0 : T * 1.5;
+    const phase2 = phase1 + Math.PI; // anti-correlated
+    const y1 = cy + 40 * Math.sin(phase1);
+    const y2 = cy + 40 * Math.sin(phase2);
+    const col1 = y1 < cy ? '#38bdf8' : '#f87171';
+    const col2 = y2 < cy ? '#38bdf8' : '#f87171';
+    // Correlation line
+    ctx.strokeStyle = 'rgba(167,139,250,0.3)'; ctx.lineWidth = 1.5;
+    ctx.setLineDash([6, 5]);
+    ctx.beginPath(); ctx.moveTo(cx - sep, cy); ctx.lineTo(cx + sep, cy); ctx.stroke();
+    ctx.setLineDash([]);
+    // Dots
+    [[cx - sep, y1, col1, '↑'], [cx + sep, y2, col2, '↓']].forEach(([x, y, col, lbl]) => {
+      t2Glow(col, 20);
+      ctx.beginPath(); ctx.arc(x, y, 14, 0, Math.PI * 2);
+      ctx.fillStyle = col; ctx.fill();
+      t2NoGlow();
+      t2Txt(x, y, lbl, '#000', 15, 'center', 'Courier New,monospace');
+    });
+    // Distance label
+    t2Txt(cx, cy - 60, '← correlazione quantistica →', 'rgba(167,139,250,0.55)', 12, 'center');
+    t2Txt(cx, cy + H * 0.25, '|Ψ⟩ = (|↑↓⟩ − |↓↑⟩)/√2  ·  Bell 1964', 'rgba(56,189,248,0.5)', 13, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'qed') {
+    // Feynman vertex: e- + e- → e- + e- (t-channel photon)
+    const vx = cx, vy = cy;
+    // Incoming electrons
+    const lineLen = 90;
+    ctx.strokeStyle = '#4ade80'; ctx.lineWidth = 2.5;
+    ctx.beginPath(); ctx.moveTo(vx - lineLen, vy - 50); ctx.lineTo(vx, vy); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(vx - lineLen, vy + 50); ctx.lineTo(vx, vy); ctx.stroke();
+    // Outgoing electrons
+    ctx.beginPath(); ctx.moveTo(vx, vy); ctx.lineTo(vx + lineLen, vy - 50); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(vx, vy); ctx.lineTo(vx + lineLen, vy + 50); ctx.stroke();
+    // Virtual photon (wavy line) - horizontal
+    const nWaves = 8;
+    ctx.beginPath();
+    for (let wi = 0; wi <= nWaves * 8; wi++) {
+      const u = wi / (nWaves * 8);
+      const px = vx - 60 + u * 120;
+      const py = vy + 14 * Math.sin(u * Math.PI * nWaves * 2 + (rm ? 0 : T * 3));
+      wi === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 2; ctx.stroke();
+    // Vertex dot
+    t2Glow('#ffffff', 16);
+    ctx.beginPath(); ctx.arc(vx, vy, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff'; ctx.fill();
+    t2NoGlow();
+    // Labels
+    t2Txt(vx - lineLen - 8, vy - 50, 'e⁻', '#4ade80', 13, 'right', 'Courier New,monospace');
+    t2Txt(vx - lineLen - 8, vy + 50, 'e⁻', '#4ade80', 13, 'right', 'Courier New,monospace');
+    t2Txt(vx + lineLen + 8, vy - 50, 'e⁻', '#4ade80', 13, 'left', 'Courier New,monospace');
+    t2Txt(vx + lineLen + 8, vy + 50, 'e⁻', '#4ade80', 13, 'left', 'Courier New,monospace');
+    t2Txt(cx, vy + 38, 'γ', '#fbbf24', 15, 'center', 'Courier New,monospace');
+    t2Txt(cx, cy + H * 0.26, 'α ≈ 1/137  ·  accordo: 12 cifre decimali', 'rgba(251,191,36,0.5)', 12, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'higgs') {
+    // Mexican hat potential (2D cross-section rotating in 3D)
+    const nPts = 120;
+    const potR = Math.min(W * 0.22, 140);
+    const rotAngle = rm ? 0.3 : T * 0.35;
+    // Draw V(φ) = -μ²φ² + λφ⁴ as a 2D curve
+    ctx.beginPath();
+    for (let i = 0; i <= nPts; i++) {
+      const u = i / nPts;
+      const phi = (u - 0.5) * 2 * potR * 0.9;
+      const Vphi = -0.5 * Math.pow(phi / potR, 2) + 0.25 * Math.pow(phi / potR, 4);
+      const px = cx + phi * Math.cos(rotAngle);
+      const py = cy + Vphi * potR * 1.4 - phi * 0.25 * Math.sin(rotAngle);
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.strokeStyle = '#a78bfa'; ctx.lineWidth = 2.5; ctx.stroke();
+    // Minima markers
+    const minPhi = potR * 0.7;
+    [[-minPhi, '#f472b6'], [minPhi, '#38bdf8']].forEach(([phi, col]) => {
+      const Vphi = -0.5 * Math.pow(phi / potR, 2) + 0.25 * Math.pow(phi / potR, 4);
+      const px = cx + phi * Math.cos(rotAngle);
+      const py = cy + Vphi * potR * 1.4 - phi * 0.25 * Math.sin(rotAngle);
+      const pulse = rm ? 1 : (0.8 + 0.2 * Math.sin(T * 2));
+      t2Glow(col, 14 * pulse);
+      ctx.beginPath(); ctx.arc(px, py, 6, 0, Math.PI * 2);
+      ctx.fillStyle = col; ctx.fill();
+      t2NoGlow();
+    });
+    // Particle at vacuum
+    if (!rm) {
+      const vacAngle = T * 0.6;
+      const vpx = cx + minPhi * Math.cos(vacAngle + rotAngle) * 0.9;
+      const vpy = cy - potR * 0.19 - minPhi * 0.22 * Math.sin(vacAngle + rotAngle) * 0.9;
+      t2Glow('#f472b6', 18);
+      ctx.beginPath(); ctx.arc(vpx, vpy, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#f472b6'; ctx.fill();
+      t2NoGlow();
+    }
+    t2Txt(cx, cy + H * 0.27, 'V(φ) = −μ²|φ|² + λ|φ|⁴  ·  v ≈ 246 GeV  ·  m_H ≈ 125 GeV', 'rgba(167,139,250,0.5)', 11, 'center', 'Courier New,monospace');
+  }
+};
+
+t2Init();
+</script>
+</body>
+</html>

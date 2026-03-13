@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatività Speciale — Einstein 1905 | Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<!-- Top bar -->
+<div id="ui">
+  <span id="ui-title">DivulgAzione · SR</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">6 fasi</span>
+</div>
+
+<!-- Left panel -->
+<div id="panel">
+
+  <div class="phase-content" id="ph-1">
+    <div class="phase-tag">FASE 01 — CONTESTO</div>
+    <div class="phase-title">Il problema dell'etere e la crisi del 1800</div>
+    <div class="phase-body">
+      <p>Nel XIX secolo i fisici credevano che la luce si propagasse attraverso un mezzo pervasivo chiamato "<span class="hl">etere luminifero</span>" — analogo all'aria per il suono. Le equazioni di Maxwell (1865) predicevano che la velocità della luce era c = 1/√(ε₀μ₀) ≈ 3×10⁸ m/s, ma rispetto a cosa?</p>
+      <p><span class="am">Albert Michelson</span> e <span class="am">Edward Morley</span> realizzarono nel <span class="gr">1887</span> l'esperimento più preciso dell'epoca: un interferometro diviso in due bracci perpendicolari di 11 m ciascuno. Se la Terra si muovesse nell'etere, la velocità della luce dovrebbe differire nelle due direzioni — producendo un'interferenza osservabile. Il risultato: <span class="vi">nessuna differenza</span>. La velocità della luce è identica in ogni direzione.</p>
+      <p>Lorentz e FitzGerald proposero che la materia si <span class="hl">contraesse</span> nella direzione del moto nell'etere — una soluzione ad hoc. La <span class="am">crisi</span> era profonda: le leggi di Newton erano incompatibili con le equazioni di Maxwell. Serviva una rivoluzione concettuale.</p>
+      <code class="formula">c = 1/√(ε₀μ₀) ≈ 2.998 × 10⁸ m/s     (costante in ogni sistema)
+Δφ_MM = 0     (nessuna differenza di fase rilevata nel 1887)</code>
+      <div class="note">▸ Interferometro di Michelson-Morley: due bracci perpendicolari con specchi, la luce si divide e si ricombina — la figura di interferenza non cambia ruotando l'apparato.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — POSTULATI</div>
+    <div class="phase-title">I due postulati della relatività speciale</div>
+    <div class="phase-body">
+      <p><span class="hl">Albert Einstein</span> nel <span class="am">1905</span> risolse la contraddizione con due postulati sorprendentemente semplici, senza assumere l'esistenza dell'etere:</p>
+      <p><span class="gr">Postulato 1 — Principio di relatività:</span> le leggi della fisica sono le stesse in tutti i sistemi di riferimento inerziali. Non esiste un sistema di riferimento assoluto preferito. Ogni osservatore in moto rettilineo uniforme ha piena legittimità di considerarsi "in quiete".</p>
+      <p><span class="gr">Postulato 2 — Costanza della velocità della luce:</span> la velocità della luce nel vuoto <span class="am">c ≈ 3×10⁸ m/s</span> è la stessa per tutti gli osservatori inerziali, indipendentemente dal moto della sorgente o dell'osservatore. Questo è radicalmente diverso dal comportamento delle onde classiche.</p>
+      <p>Da questi due soli postulati seguono — con pura matematica — la <span class="hl">dilatazione del tempo</span>, la <span class="vi">contrazione delle lunghezze</span>, la <span class="am">relatività della simultaneità</span> e E = mc².</p>
+      <code class="formula">(1) Leggi fisiche: invarianti in tutti i sistemi inerziali
+(2) c = 2.998×10⁸ m/s = costante universale     ∀ osservatori</code>
+      <div class="note">▸ Due sistemi di riferimento in moto relativo: due orologi sincronizzati alla partenza mostrano tick diversi per un osservatore esterno — la simultaneità è relativa.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — TEMPO</div>
+    <div class="phase-title">La dilatazione del tempo</div>
+    <div class="phase-body">
+      <p>Un orologio in moto rispetto a un osservatore <span class="hl">ticchetta più lentamente</span>. Il fattore di Lorentz γ = 1/√(1−v²/c²) quantifica questo effetto: per v = 0.9c, γ ≈ 2.29; per v = 0.99c, γ ≈ 7.09; per v → c, γ → ∞.</p>
+      <p>La prova sperimentale più elegante è quella dei <span class="am">muoni cosmici</span>. I muoni vengono creati nell'alta atmosfera (≈15 km) dalle collisioni dei raggi cosmici. Il loro tempo di vita proprio è solo τ₀ ≈ 2.2 μs — il che classicamente permetterebbe a un muone di percorrere solo ~660 m prima di decadere. Invece, grazie alla dilatazione del tempo relativistica, li rileviamo a livello del suolo: nel loro sistema di riferimento vivono τ₀, ma nel nostro τ = γτ₀.</p>
+      <p>La dilatazione del tempo è usata nel <span class="hl">GPS</span>: i satelliti in orbita (v ≈ 3.9 km/s, h ≈ 20200 km) devono correggere sia l'effetto relativistico speciale (−7.2 μs/giorno) sia quello della GR (+45.9 μs/giorno) per mantenere la precisione metrica.</p>
+      <code class="formula">Δt' = γ Δt     (tempo nel sistema in moto)
+γ = 1/√(1−β²)     β = v/c
+v = 0.9c → γ ≈ 2.29  ·  v = 0.99c → γ ≈ 7.09</code>
+      <div class="note">▸ Due orologi affiancati: quello a sinistra è fermo (tick regolari), quello a destra si muove a v=0.8c (tick rallentati). Le lancette mostrano il tempo proprio di ciascuno.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — LUNGHEZZA</div>
+    <div class="phase-title">La contrazione delle lunghezze (Lorentz)</div>
+    <div class="phase-body">
+      <p>Un oggetto in moto rispetto a un osservatore appare <span class="hl">contratto nella direzione del moto</span> di un fattore 1/γ. Per v = 0.9c, un oggetto si contrae al 44% della sua lunghezza a riposo; per v = 0.99c, al 14%. La lunghezza trasversale non varia.</p>
+      <p>Questo non è un'illusione ottica né un effetto di segnalazione — è una <span class="am">realtà geometrica</span> dello spazio-tempo: osservatori in moto relativo misurano genuinamente lunghezze spaziali diverse per lo stesso oggetto. Il paradosso del garage (un'auto più lunga del garage) si risolve con la <span class="vi">relatività della simultaneità</span>: i due estremi dell'auto sono misurati contemporaneamente solo nel sistema dell'osservatore.</p>
+      <p>La contrazione di Lorentz e la dilatazione del tempo sono i due volti della stessa realtà quattrodimensionale: la geometria dello <span class="hl">spazio-tempo di Minkowski</span>. Sono inevitabili conseguenze dell'invarianza dell'intervallo ds² = c²dt² − dx².</p>
+      <code class="formula">L = L₀/γ = L₀ √(1−v²/c²)     (lunghezza misurata)
+v = 0.9c → L = 0.44 L₀     (44% della lunghezza a riposo)
+v = 0.99c → L = 0.14 L₀</code>
+      <div class="note">▸ Un righello che si muove orizzontalmente: la sua lunghezza misurata decresce con la velocità, mentre l'altezza rimane invariata — contrazione solo nella direzione di moto.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — MINKOWSKI</div>
+    <div class="phase-title">Lo spazio-tempo di Minkowski e i coni luce</div>
+    <div class="phase-body">
+      <p><span class="hl">Hermann Minkowski</span> (1907) unificò spazio e tempo in un'unica struttura quadridimensionale: lo <span class="am">spazio-tempo</span>. In questa geometria, la velocità della luce è un'<span class="gr">asimptota</span> — la frontiera causale dell'universo. L'<span class="hl">intervallo spazio-temporale</span> ds² = c²dt² − dx² − dy² − dz² è un invariante: tutti gli osservatori inerziali assegnano lo stesso valore a ds² per qualsiasi coppia di eventi.</p>
+      <p>Il <span class="vi">cono luce</span> divide lo spazio-tempo in tre regioni: <span class="hl">tempo-simile</span> (ds² > 0: causalmente connesse, dentro il cono), <span class="am">luce-simile</span> (ds² = 0: sul cono, percorsi dei fotoni), e <span class="vi">spazio-simile</span> (ds² < 0: fuori dal cono, non causalmente connesse). Nessun segnale fisico può connettere eventi spazio-simili — la causalità è garantita.</p>
+      <p>Le <span class="gr">linee del mondo</span> (worldlines) di particelle massive sono sempre all'interno del cono luce. Più la velocità si avvicina a c, più la worldline si inclina verso il bordo del cono — il limite c è geometricamente inaccessibile per le masse reali.</p>
+      <code class="formula">ds² = c²dt² − dx² − dy² − dz² = invariante
+ds² > 0: tempo-simile     ds² = 0: luce-simile     ds² < 0: spazio-simile</code>
+      <div class="note">▸ Diagramma di Minkowski (ct vs x): assi ortogonali, cono luce a 45° in ambra, worldline di una particella in ciano che si inclina verso il cono aumentando la velocità.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — ENERGIA</div>
+    <div class="phase-title">E = mc²: massa ed energia</div>
+    <div class="phase-body">
+      <p>La conseguenza più famosa della SR: <span class="hl">massa ed energia sono equivalenti</span> e interconvertibili. Un corpo a riposo possiede energia E₀ = mc² — una quantità enorme. 1 kg di materia corrisponde a 9×10¹⁶ J — l'energia di una bomba atomica di 20 megatoni (Tsar Bomba ne aveva 50). In moto, l'energia totale è E = γmc².</p>
+      <p>Applicazioni fondamentali: la <span class="am">fissione nucleare</span> (solo lo 0.1% della massa si converte in energia — ma basta per una bomba atomica); la <span class="gr">fusione nucleare</span> (converte ~0.7% della massa — alimenta le stelle e il Sole); la <span class="hl">fisica delle particelle</span> (le collisioni ad LHC convertono energia cinetica in nuove particelle massive); la <span class="vi">PET medica</span> (positroni si annichilano con elettroni → due fotoni γ da 511 keV ciascuno).</p>
+      <p>La relazione energetica completa E² = (pc)² + (mc²)² vale per qualsiasi particella: per fotoni (m=0), E = pc; per particelle massive a riposo (p=0), E = mc². Il <span class="am">quadrivettore energia-impulso</span> è la forma covariante di questa relazione.</p>
+      <code class="formula">E₀ = mc²     (energia a riposo)
+E = γmc²     (energia totale in moto)
+E² = (pc)² + (mc²)²     (relazione covariante)</code>
+      <div class="note">▸ Un punto massiccio fermo che "esplode" in fotoni irraggiati radialmente (particelle γ): conversione di massa in energia, E = mc².</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom navigation -->
+<div id="bottom">
+  <button class="btn" onclick="goPhase(1)">01 · Etere</button>
+  <button class="btn" onclick="goPhase(2)">02 · Postulati</button>
+  <button class="btn" onclick="goPhase(3)">03 · Tempo</button>
+  <button class="btn" onclick="goPhase(4)">04 · Lunghezza</button>
+  <button class="btn" onclick="goPhase(5)">05 · Minkowski</button>
+  <button class="btn" onclick="goPhase(6)">06 · E=mc²</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: 'Etere',       desc: 'FASE 01 — Michelson-Morley 1887: c = costante in ogni direzione · crisi dell\'etere',       scene: 'etere'   },
+  { name: 'Postulati',   desc: 'FASE 02 — Einstein 1905: relatività + costanza di c → dilatazione, contrazione, E=mc²',      scene: 'post'    },
+  { name: 'Tempo',       desc: 'FASE 03 — Δt\' = γΔt · γ = 1/√(1−β²) · muoni cosmici · correzione GPS',                     scene: 'tempo'   },
+  { name: 'Lunghezza',   desc: 'FASE 04 — L = L₀/γ · v=0.9c → L=0.44L₀ · contrazione di Lorentz · spazio-tempo',           scene: 'lungh'   },
+  { name: 'Minkowski',   desc: 'FASE 05 — ds² = c²dt²−dx²: invariante · cono luce · causalità · worldlines',               scene: 'mink'    },
+  { name: 'E = mc²',     desc: 'FASE 06 — E = γmc² · E² = (pc)² + (mc²)² · fissione, fusione, PET medica',                 scene: 'emc2'    },
+];
+
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const cx = t2AnimCX();
+  const cy = t2AnimCY();
+  const rm = t2ReducedMotion();
+  const scene = window.T2_PHASES[phIdx].scene;
+
+  // ── Helpers ────────────────────────────────────────────────────────────────
+  function drawMinkowskiAxes(col) {
+    col = col || 'rgba(148,163,184,0.3)';
+    const axLen = Math.min(W * 0.25, 180);
+    ctx.strokeStyle = col; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.moveTo(cx, cy + axLen); ctx.lineTo(cx, cy - axLen); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx - axLen, cy); ctx.lineTo(cx + axLen, cy); ctx.stroke();
+    t2Txt(cx + axLen + 8, cy, 'x', 'rgba(148,163,184,0.5)', 13, 'left');
+    t2Txt(cx, cy - axLen - 10, 'ct', 'rgba(148,163,184,0.5)', 13, 'center');
+  }
+
+  function drawLightCone(axLen) {
+    axLen = axLen || Math.min(W * 0.25, 180);
+    t2Glow('#fbbf24', 8);
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + axLen, cy - axLen); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx - axLen, cy - axLen); ctx.stroke();
+    // Past cone (dashed)
+    ctx.setLineDash([5, 5]);
+    ctx.strokeStyle = 'rgba(251,191,36,0.4)'; ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx + axLen, cy + axLen); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx, cy); ctx.lineTo(cx - axLen, cy + axLen); ctx.stroke();
+    ctx.setLineDash([]);
+    t2NoGlow();
+    // Cone fill
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + axLen, cy - axLen);
+    ctx.lineTo(cx - axLen, cy - axLen);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(251,191,36,0.05)'; ctx.fill();
+  }
+
+  if (scene === 'etere') {
+    // Michelson-Morley interferometer
+    const armLen = 90;
+    // Beam splitter
+    const bsx = cx, bsy = cy;
+    t2Glow('#38bdf8', 10);
+    ctx.beginPath(); ctx.arc(bsx, bsy, 7, 0, Math.PI * 2);
+    ctx.fillStyle = '#38bdf8'; ctx.fill();
+    t2NoGlow();
+    // Horizontal arm (parallel to "ether wind")
+    ctx.strokeStyle = 'rgba(56,189,248,0.6)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(bsx, bsy); ctx.lineTo(bsx + armLen, bsy); ctx.stroke();
+    // Mirror H
+    ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(bsx + armLen, bsy - 14); ctx.lineTo(bsx + armLen, bsy + 14); ctx.stroke();
+    // Vertical arm
+    ctx.strokeStyle = 'rgba(74,222,128,0.6)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(bsx, bsy); ctx.lineTo(bsx, bsy - armLen); ctx.stroke();
+    // Mirror V
+    ctx.strokeStyle = '#4ade80'; ctx.lineWidth = 3;
+    ctx.beginPath(); ctx.moveTo(bsx - 14, bsy - armLen); ctx.lineTo(bsx + 14, bsy - armLen); ctx.stroke();
+    // Detector
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(bsx - 14, bsy); ctx.lineTo(bsx - armLen * 0.5, bsy); ctx.stroke();
+    ctx.beginPath(); ctx.arc(bsx - armLen * 0.5, bsy, 8, 0, Math.PI * 2);
+    ctx.strokeStyle = '#fbbf24'; ctx.fill(); ctx.stroke();
+    t2Txt(bsx - armLen * 0.5, bsy + 20, 'Δφ = 0', '#fbbf24', 12, 'center', 'Courier New,monospace');
+    // Animated light pulse on arms
+    if (!rm) {
+      const pt = T % 2;
+      if (pt < 1) {
+        const px = bsx + pt * armLen;
+        t2Glow('#38bdf8', 14);
+        ctx.beginPath(); ctx.arc(px, bsy, 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#38bdf8'; ctx.fill();
+        t2NoGlow();
+      } else {
+        const py = bsy - (pt - 1) * armLen;
+        t2Glow('#4ade80', 14);
+        ctx.beginPath(); ctx.arc(bsx, py, 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#4ade80'; ctx.fill();
+        t2NoGlow();
+      }
+    }
+    // Ether wind arrow
+    t2Txt(cx + armLen * 0.6, cy + 45, '→ "vento etere"', 'rgba(167,139,250,0.45)', 12, 'left');
+    t2Txt(cx, cy + H * 0.25, 'c = costante in ogni direzione — etere non esiste', 'rgba(148,163,184,0.5)', 12, 'center');
+  }
+
+  else if (scene === 'post') {
+    // Two reference frames moving apart
+    drawMinkowskiAxes();
+    // Frame A (at rest)
+    const fAx = cx - 90;
+    ctx.strokeStyle = 'rgba(56,189,248,0.6)'; ctx.lineWidth = 2;
+    ctx.strokeRect(fAx - 22, cy - 40, 44, 80);
+    t2Txt(fAx, cy - 55, 'S (fermo)', '#38bdf8', 11, 'center', 'Courier New,monospace');
+    // Clock A
+    const tickA = rm ? 0 : Math.floor(T * 1.5) % 12;
+    ctx.beginPath(); ctx.arc(fAx, cy, 18, 0, Math.PI * 2);
+    ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(fAx, cy);
+    ctx.lineTo(fAx + 13 * Math.cos(tickA * Math.PI / 6 - Math.PI / 2), cy + 13 * Math.sin(tickA * Math.PI / 6 - Math.PI / 2));
+    ctx.stroke();
+    // Frame B (moving)
+    const bOffset = rm ? 90 : 90 + 20 * Math.sin(T * 0.5);
+    const fBx = cx + bOffset * 0.8;
+    const tickB = rm ? 0 : Math.floor(T * 0.6) % 12;
+    ctx.strokeStyle = 'rgba(251,191,36,0.6)'; ctx.lineWidth = 2;
+    ctx.strokeRect(fBx - 22, cy - 40, 44, 80);
+    t2Txt(fBx, cy - 55, "S' (v=0.8c)", '#fbbf24', 11, 'center', 'Courier New,monospace');
+    ctx.beginPath(); ctx.arc(fBx, cy, 18, 0, Math.PI * 2);
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(fBx, cy);
+    ctx.lineTo(fBx + 13 * Math.cos(tickB * Math.PI / 6 - Math.PI / 2), cy + 13 * Math.sin(tickB * Math.PI / 6 - Math.PI / 2));
+    ctx.stroke();
+    // c arrow
+    t2Glow('#ffffff', 10);
+    t2Txt(cx, cy + H * 0.22, 'c = costante per entrambi', '#fff', 13, 'center');
+    t2NoGlow();
+  }
+
+  else if (scene === 'tempo') {
+    // Two clocks, one slower
+    const gamma = 1.667; // v = 0.8c
+    const cAx = cx - 85, cBx = cx + 85;
+    // Ticks
+    const tickA = rm ? 0 : T * 1.2;
+    const tickB = rm ? 0 : T * 1.2 / gamma;
+    function drawClock(px, py, tick, col, label) {
+      const r = 36;
+      t2Glow(col, 10);
+      ctx.beginPath(); ctx.arc(px, py, r, 0, Math.PI * 2);
+      ctx.strokeStyle = col; ctx.lineWidth = 2; ctx.stroke();
+      t2NoGlow();
+      // Hour marks
+      for (let m = 0; m < 12; m++) {
+        const ma = m * Math.PI / 6;
+        ctx.beginPath();
+        ctx.moveTo(px + (r - 6) * Math.cos(ma), py + (r - 6) * Math.sin(ma));
+        ctx.lineTo(px + r * Math.cos(ma), py + r * Math.sin(ma));
+        ctx.strokeStyle = col; ctx.lineWidth = 1; ctx.stroke();
+      }
+      // Minute hand
+      const angle = (tick % 1) * Math.PI * 2 - Math.PI / 2;
+      ctx.beginPath();
+      ctx.moveTo(px, py);
+      ctx.lineTo(px + (r - 8) * Math.cos(angle), py + (r - 8) * Math.sin(angle));
+      ctx.strokeStyle = col; ctx.lineWidth = 2.5; ctx.stroke();
+      // Center dot
+      ctx.beginPath(); ctx.arc(px, py, 3, 0, Math.PI * 2);
+      ctx.fillStyle = col; ctx.fill();
+      t2Txt(px, py + r + 16, label, col, 11, 'center', 'Courier New,monospace');
+    }
+    drawClock(cAx, cy, tickA, '#38bdf8', 'S (fermo)');
+    drawClock(cBx, cy, tickB, '#fbbf24', "S' (v=0.8c)");
+    // Labels
+    t2Txt(cAx, cy - 65, 'Δt', '#38bdf8', 14, 'center', 'Courier New,monospace');
+    t2Txt(cBx, cy - 65, "Δt' = Δt/γ", '#fbbf24', 14, 'center', 'Courier New,monospace');
+    t2Txt(cx, cy + H * 0.26, 'γ = 1/√(1−β²) ≈ 1.667  per v=0.8c', 'rgba(148,163,184,0.5)', 12, 'center', 'Courier New,monospace');
+    // Muon label
+    t2Txt(cx, cy - H * 0.22, 'Muoni cosmici: Δt\' = γ·τ₀ ≈ 16 μs  (vs τ₀ = 2.2 μs)', 'rgba(74,222,128,0.45)', 12, 'center');
+  }
+
+  else if (scene === 'lungh') {
+    // Ruler contracting as velocity increases
+    const v = rm ? 0.8 : t2Clamp(0.1 + 0.85 * (0.5 + 0.5 * Math.sin(T * 0.35)), 0.05, 0.98);
+    const gamma = 1 / Math.sqrt(1 - v * v);
+    const L0 = Math.min(W * 0.32, 210);
+    const L = L0 / gamma;
+    const rulerY = cy;
+    const rulerH = 28;
+    // Rest length indicator (faint)
+    ctx.strokeStyle = 'rgba(148,163,184,0.2)'; ctx.lineWidth = 1; ctx.setLineDash([5, 5]);
+    ctx.strokeRect(cx - L0 / 2, rulerY - rulerH / 2, L0, rulerH);
+    ctx.setLineDash([]);
+    t2Txt(cx, rulerY - rulerH / 2 - 10, 'L₀ (riposo)', 'rgba(148,163,184,0.35)', 10, 'center');
+    // Moving ruler (contracted)
+    const rGrad = ctx.createLinearGradient(cx - L / 2, 0, cx + L / 2, 0);
+    rGrad.addColorStop(0, '#38bdf8');
+    rGrad.addColorStop(0.5, '#7dd3fc');
+    rGrad.addColorStop(1, '#38bdf8');
+    ctx.fillStyle = rGrad;
+    ctx.fillRect(cx - L / 2, rulerY - rulerH / 2, L, rulerH);
+    ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2;
+    ctx.strokeRect(cx - L / 2, rulerY - rulerH / 2, L, rulerH);
+    // Ruler tick marks
+    const nTicks = 10;
+    for (let ti = 0; ti <= nTicks; ti++) {
+      const tx = cx - L / 2 + (ti / nTicks) * L;
+      const th = ti % 5 === 0 ? rulerH * 0.6 : rulerH * 0.35;
+      ctx.strokeStyle = 'rgba(0,0,0,0.5)'; ctx.lineWidth = 1;
+      ctx.beginPath(); ctx.moveTo(tx, rulerY - th / 2); ctx.lineTo(tx, rulerY + th / 2); ctx.stroke();
+    }
+    // Velocity arrow
+    const arrowX = cx + L / 2 + 15;
+    t2Glow('#4ade80', 8);
+    ctx.strokeStyle = '#4ade80'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(arrowX, rulerY); ctx.lineTo(arrowX + 30, rulerY); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(arrowX + 30, rulerY - 6); ctx.lineTo(arrowX + 42, rulerY); ctx.lineTo(arrowX + 30, rulerY + 6); ctx.fill();
+    t2NoGlow();
+    // Labels
+    t2Txt(cx, rulerY + rulerH / 2 + 18, `L = L₀/γ = ${(L / L0 * 100).toFixed(0)}% L₀`, '#fbbf24', 14, 'center', 'Courier New,monospace');
+    t2Txt(cx, rulerY + rulerH / 2 + 36, `v = ${(v * 100).toFixed(0)}%c   γ = ${gamma.toFixed(2)}`, 'rgba(148,163,184,0.6)', 12, 'center', 'Courier New,monospace');
+    t2Txt(cx, cy - H * 0.22, 'L = L₀ √(1 − v²/c²)', 'rgba(56,189,248,0.55)', 16, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'mink') {
+    const axLen = Math.min(W * 0.25, 175);
+    drawMinkowskiAxes();
+    drawLightCone(axLen);
+    // Region labels
+    t2Txt(cx + axLen * 0.55, cy - axLen * 0.3, 'futuro', 'rgba(251,191,36,0.4)', 11, 'center');
+    t2Txt(cx + axLen * 0.7, cy + 12, 'spazio-simile', 'rgba(148,163,184,0.3)', 10, 'left');
+    t2Txt(cx - axLen * 0.7, cy + 12, 'spazio-simile', 'rgba(148,163,184,0.3)', 10, 'right');
+    // Worldlines
+    const wVelocities = [0.0, 0.5, 0.85];
+    const wColors = ['#38bdf8', '#4ade80', '#a78bfa'];
+    wVelocities.forEach((v, vi) => {
+      const slope = v < 0.001 ? 0.001 : v; // dx/d(ct) = v/c
+      ctx.beginPath(); ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + axLen * slope, cy - axLen);
+      ctx.strokeStyle = wColors[vi]; ctx.lineWidth = 2;
+      ctx.stroke();
+      t2Txt(cx + axLen * slope + 8, cy - axLen * 0.5, v === 0 ? 'v=0' : `v=${v}c`, wColors[vi], 10, 'left', 'Courier New,monospace');
+    });
+    // Animated observer on v=0.5c worldline
+    if (!rm) {
+      const wt = (T * 0.25) % 1;
+      const wx = cx + axLen * 0.5 * wt;
+      const wy = cy - axLen * wt;
+      t2Glow('#4ade80', 14);
+      ctx.beginPath(); ctx.arc(wx, wy, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#4ade80'; ctx.fill();
+      t2NoGlow();
+    }
+    t2Txt(cx, cy + H * 0.27, 'ds² = c²dt² − dx²: invariante per ogni osservatore', 'rgba(148,163,184,0.5)', 12, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'emc2') {
+    // Mass converting to energy: dot exploding into photons
+    const explodePhase = rm ? 0.6 : (T * 0.5) % 1;
+    const nPhotons = 12;
+    if (explodePhase < 0.35) {
+      // Mass dot
+      const massR = 22 * (1 - explodePhase / 0.35 * 0.5);
+      t2Glow('#fbbf24', 24);
+      ctx.beginPath(); ctx.arc(cx, cy, massR, 0, Math.PI * 2);
+      const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, massR);
+      g.addColorStop(0, '#fef3c7');
+      g.addColorStop(1, '#fbbf24');
+      ctx.fillStyle = g; ctx.fill();
+      t2NoGlow();
+      t2Txt(cx, cy + massR + 20, 'mc²', '#fbbf24', 14, 'center', 'Courier New,monospace');
+    } else {
+      // Photons radiating outward
+      const rad = (explodePhase - 0.35) / 0.65 * Math.min(W * 0.3, 200);
+      for (let i = 0; i < nPhotons; i++) {
+        const angle = (i / nPhotons) * Math.PI * 2;
+        const px = cx + rad * Math.cos(angle);
+        const py = cy + rad * Math.sin(angle);
+        const alpha = 1 - (explodePhase - 0.35) / 0.65;
+        t2Glow('#fef08a', 12 * alpha);
+        ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(254,240,138,${alpha})`; ctx.fill();
+        t2NoGlow();
+        // Short trail
+        const trailLen = 18;
+        ctx.strokeStyle = `rgba(254,240,138,${alpha * 0.5})`;
+        ctx.lineWidth = 1.5;
+        ctx.beginPath();
+        ctx.moveTo(px, py);
+        ctx.lineTo(px - trailLen * Math.cos(angle), py - trailLen * Math.sin(angle));
+        ctx.stroke();
+      }
+      // Flash
+      if (explodePhase < 0.45) {
+        const flashAlpha = 1 - (explodePhase - 0.35) / 0.1;
+        ctx.beginPath(); ctx.arc(cx, cy, 30 * (1 - flashAlpha * 0.5), 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${flashAlpha * 0.4})`; ctx.fill();
+      }
+    }
+    // Axes for Minkowski diagram hint
+    drawMinkowskiAxes('rgba(148,163,184,0.15)');
+    t2Txt(cx, cy - H * 0.24, 'E = mc²', '#fbbf24', 28, 'center', 'Courier New,monospace');
+    t2Glow('#fbbf24', 20);
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(cx, cy - H * 0.24, 52, 0, Math.PI * 2); ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, cy + H * 0.26, 'E² = (pc)² + (mc²)²  ·  E₀ = mc²  ·  E = γmc²', 'rgba(251,191,36,0.5)', 12, 'center', 'Courier New,monospace');
+  }
+};
+
+t2Init();
+</script>
+</body>
+</html>
