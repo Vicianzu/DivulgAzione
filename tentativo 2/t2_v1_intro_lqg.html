@@ -389,3 +389,918 @@ t2Init();
 </script>
 </body>
 </html>
+<title>Loop Quantum Gravity — Gravità Quantistica a Loop — v2</title>
+<link rel="stylesheet" href="./ui.css">
+</head>
+<body>
+
+<canvas id="canvas" aria-hidden="true"></canvas>
+
+<div id="ui" role="banner">
+  <div id="ui-title">Loop Quantum Gravity</div>
+  <div id="ui-phase" aria-live="polite"></div>
+  <div id="ui-badge">8 fasi</div>
+</div>
+
+<main id="panel" role="main" aria-label="Contenuto della fase corrente" tabindex="-1">
+  <h1 class="phase-title" id="panel-phase-name"></h1>
+  <div class="phase-content active" id="ph-0">
+    <div class="phase-tag">Fase 01 — ① La sfida: quantizzare la gravità</div>
+    <div class="phase-body">
+      <p>Come unire la Meccanica Quantistica con la Relatività Generale? Ogni tentativo di quantizzare la gravità perturbativamente porta a divergenze UV insanabili. La LQG è uno dei tentativi più seri.</p>
+      <p class="note">Visualizzazione: conflitto tra MQ e RG visualizzato.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-1">
+    <div class="phase-tag">Fase 02 — ② Ashtekar e le variabili di connessione (1986)</div>
+    <div class="phase-body">
+      <p>Abhay Ashtekar riformula la RG con variabili di connessione A^i_a invece della metrica g_μν — come Maxwell riscrisse l'elettromagnetismo con i potenziali vettori. Equazione: A^i_a = Γ^i_a + iK^i_a.</p>
+      <p class="note">Visualizzazione: variabili di connessione di Ashtekar.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">Fase 03 — ③ Rovelli, Smolin e i Loop di Wilson (1988–1990)</div>
+    <div class="phase-body">
+      <p>Le equazioni quantizzate hanno come soluzioni naturali i loop di Wilson: W[γ] = Tr(P exp ∮_γ A). Questi loop sono le 'linee di forza' quantizzate della gravità.</p>
+      <p class="note">Visualizzazione: loop di Wilson come linee di forza della gravità.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">Fase 04 — ④ Le Spin Networks — Lo Spazio è una Rete</div>
+    <div class="phase-body">
+      <p>Lo spazio a scala di Planck non è un continuo ma una rete quantistica. Nodi e archi del grafo portano numeri quantici di spin j = 0, ½, 1, 3/2, ... Ogni arco determina l'area della superficie che attraversa.</p>
+      <p class="note">Visualizzazione: rete di spin con nodi e archi quantistici.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">Fase 05 — ⑤ Spazio Discreto — Area e Volume Quantizzati</div>
+    <div class="phase-body">
+      <p>L'area è quantizzata: A = 8πγ l²_P Σ√(j(j+1)). Il volume pure. Lo spazio ha una struttura granulare minima alla scala di Planck l_P ≈ 1.6×10⁻³⁵ m. L'area minima ≈ 10⁻⁷⁰ m².</p>
+      <p class="note">Visualizzazione: granularità dello spazio alla scala di Planck.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">Fase 06 — ⑥ Le Spin Foams — Lo Spaziotempo è una Schiuma</div>
+    <div class="phase-body">
+      <p>Le spin networks evolvono nel tempo creando una spin foam: struttura 4D di vertici, archi, facce, celle. Come il path integral di Feynman somma sui percorsi, la LQG somma su tutte le geometrie (modello EPRL).</p>
+      <p class="note">Visualizzazione: spin foam come evoluzione temporale della rete.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">Fase 07 — ⑦ Background Independence</div>
+    <div class="phase-body">
+      <p>La LQG non presuppone uno spaziotempo fisso (background-independent). Lo spaziotempo emerge dalla rete stessa. Contrasto con la Teoria delle Stringhe, che vive su uno sfondo fisso.</p>
+      <p class="note">Visualizzazione: indipendenza dal background — lo spaziotempo emerge dalla rete.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">Fase 08 — ⑧ Predizioni e Sfide aperte</div>
+    <div class="phase-body">
+      <p>Predizioni testabili: dispersione della luce gamma (Fermi-LAT), Big Bounce (cosmologia LQG), entropia buchi neri S = A/4l²_P. La sfida principale: recuperare il limite classico della Relatività Generale.</p>
+      <p class="note">Visualizzazione: predizioni testabili con Fermi-LAT e cosmologia LQG.</p>
+    </div>
+  </div>
+</main>
+
+<div id="bottom" role="navigation">
+  <button class="btn active"   onclick="go(0)">① La sfida</button>
+  <button class="btn"          onclick="go(1)">② Ashtekar 1986</button>
+  <button class="btn"          onclick="go(2)">③ Loop di Wilson</button>
+  <button class="btn"          onclick="go(3)">④ Spin Networks</button>
+  <button class="btn"          onclick="go(4)">⑤ Spazio discreto</button>
+  <button class="btn"          onclick="go(5)">⑥ Spin Foams</button>
+  <button class="btn"          onclick="go(6)">⑦ Background indep.</button>
+  <button class="btn"          onclick="go(7)">⑧ Predizioni</button>
+  <button class="btn"    id="btn-pause" onclick="togglePause()">⏸ Pausa</button>
+</div>
+
+<script>
+
+const cv=document.getElementById('canvas');
+const cx=cv.getContext('2d');
+let W,H;
+function resize(){
+  const pW=document.getElementById('panel').offsetWidth;
+  W=cv.width=Math.round(window.innerWidth-pW);
+  H=cv.height=window.innerHeight;
+}
+resize(); window.addEventListener('resize',resize);
+
+let ph=0, T=0, pT=0, paused=false;
+const AUTO_ADVANCE_FRAMES=520;
+
+const PHASES=[
+  { name:"① La sfida: quantizzare la gravità",
+    desc:"Come unire la Meccanica Quantistica con la Relatività Generale? Ogni tentativo di quantizzare la gravità perturbativamente porta a divergenze UV insanabili. La LQG è uno dei tentativi più seri." },
+  { name:"② Ashtekar e le variabili di connessione (1986)",
+    desc:"Abhay Ashtekar riformula la RG con variabili di connessione A^i_a invece della metrica g_μν — come Maxwell riscrisse l'elettromagnetismo con i potenziali vettori. Equazione: A^i_a = Γ^i_a + iK^i_a." },
+  { name:"③ Rovelli, Smolin e i Loop di Wilson (1988–1990)",
+    desc:"Le equazioni quantizzate hanno come soluzioni naturali i loop di Wilson: W[γ] = Tr(P exp ∮_γ A). Questi loop sono le 'linee di forza' quantizzate della gravità — curve chiuse che portano informazione geometrica." },
+  { name:"④ Le Spin Networks — Lo Spazio è una Rete",
+    desc:"Lo spazio a scala di Planck non è un continuo ma una rete quantistica. Nodi e archi del grafo portano numeri quantici di spin j = 0, ½, 1, 3/2, ... Ogni arco determina l'area della superficie che attraversa." },
+  { name:"⑤ Spazio Discreto — Area e Volume Quantizzati",
+    desc:"L'area è quantizzata: A = 8πγ l²_P Σ√(j(j+1)). Il volume pure. Lo spazio ha una struttura granulare minima alla scala di Planck l_P ≈ 1.6×10⁻³⁵ m. L'area minima ≈ 10⁻⁷⁰ m²." },
+  { name:"⑥ Le Spin Foams — Lo Spaziotempo è una Schiuma",
+    desc:"Le spin networks evolvono nel tempo creando una spin foam: struttura 4D di vertici, archi, facce, celle. Come il path integral di Feynman somma sui percorsi, la LQG somma su tutte le geometrie (modello EPRL)." },
+  { name:"⑦ Background Independence",
+    desc:"La LQG non presuppone uno spaziotempo fisso (background-independent). Lo spaziotempo emerge dalla rete stessa. Contrasto con la Teoria delle Stringhe, che vive su uno sfondo fisso. L'invarianza di diffeomorfismo è realizzata esattamente." },
+  { name:"⑧ Predizioni e Sfide aperte",
+    desc:"Predizioni testabili: dispersione della luce gamma (Fermi-LAT), Big Bounce (cosmologia LQG), entropia buchi neri S = A/4l²_P. La sfida principale: recuperare il limite classico e la Relatività Generale a bassa energia." }
+];
+
+function go(n){
+  ph=n; pT=0;
+  document.querySelectorAll('.btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+  document.querySelectorAll('.phase-content').forEach((el,i)=>el.classList.toggle('active',i===n));
+  document.getElementById('ui-phase').textContent=PHASES[n].name;
+  document.getElementById('panel').scrollTop=0;
+  const pn=document.getElementById('panel-phase-name'); if(pn) pn.textContent=PHASES[n].name;
+  updateUI();
+}
+function updateUI(){
+}
+function togglePause(){
+  paused=!paused;
+  document.getElementById('btn-pause').textContent=paused?'▶ Riprendi':'⏸ Pausa';
+}
+
+// ── helpers ───────────────────────────────────────────────
+function lbl(x,y,txt,col,sz,al='center',bold=false){
+  cx.fillStyle=col;
+  cx.font=`${bold?'bold ':''}${sz}px Georgia,serif`;
+  cx.textAlign=al; cx.fillText(txt,x,y);
+}
+function gw(c,b){cx.shadowColor=c;cx.shadowBlur=b;}
+function ng(){cx.shadowBlur=0;}
+
+let _stars=null;
+function stars(){
+  if(!_stars)_stars=Array.from({length:180},()=>({
+    x:Math.random()*3000,y:Math.random()*2000,
+    r:Math.random()*1.3+0.2,o:Math.random()*0.4+0.1
+  }));
+  _stars.forEach(s=>{
+    cx.beginPath();cx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    cx.fillStyle=`rgba(255,255,255,${s.o*(0.5+0.5*Math.sin(T*0.3+s.x*0.01))})`;
+    cx.fill();
+  });
+}
+
+function bg(){
+  const g=cx.createRadialGradient(W/2,H/2,80,W/2,H/2,Math.max(W,H)*0.9);
+  g.addColorStop(0,'#020816');g.addColorStop(1,'#000010');
+  cx.fillStyle=g;cx.fillRect(0,0,W,H);
+}
+
+// ── FASE 0: La sfida ──────────────────────────────────────
+function ph0(){
+  const cx2=W*0.5, cy2=H*0.52;
+
+  // sinistra: Meccanica Quantistica (onde/particelle)
+  const lx=W*0.22, ly=cy2;
+  cx.fillStyle='rgba(8,14,30,0.85)';
+  cx.beginPath();cx.roundRect(lx-W*0.15,ly-H*0.2,W*0.3,H*0.4,10);cx.fill();
+  cx.strokeStyle='#38bdf8';cx.lineWidth=1.5;cx.stroke();
+  lbl(lx,ly-H*0.15,'Meccanica Quantistica','#38bdf8',13,'center',true);
+
+  // onda quantistica
+  cx.beginPath();
+  for(let i=0;i<=200;i++){
+    const fx=i/200;
+    const x=lx-W*0.12+W*0.24*fx;
+    const y=ly-H*0.04+Math.sin(fx*Math.PI*6-T*3)*H*0.06*Math.exp(-8*Math.pow(fx-0.5,2));
+    i===0?cx.moveTo(x,y):cx.lineTo(x,y);
+  }
+  cx.strokeStyle='#38bdf8';cx.lineWidth=2;gw('#38bdf8',8);cx.stroke();ng();
+
+  // particelle
+  for(let p=0;p<6;p++){
+    const a=(p/6)*Math.PI*2+T*0.5;
+    const r=W*0.06;
+    const px=lx+r*Math.cos(a)*0.7, py=ly+H*0.06+r*Math.sin(a)*0.35;
+    cx.beginPath();cx.arc(px,py,4,0,Math.PI*2);
+    cx.fillStyle=`hsl(${190+p*20},90%,65%)`;gw(`hsl(${190+p*20},90%,65%)`,8);cx.fill();ng();
+  }
+  lbl(lx,ly+H*0.14,'Planck, Bohr, Heisenberg','#64748b',9,'center');
+  lbl(lx,ly+H*0.17,'ΔxΔp ≥ ℏ/2','#60a5fa',10,'center');
+
+  // destra: Relatività Generale (griglia curva)
+  const rx=W*0.78, ry=cy2;
+  cx.fillStyle='rgba(8,14,30,0.85)';
+  cx.beginPath();cx.roundRect(rx-W*0.15,ry-H*0.2,W*0.3,H*0.4,10);cx.fill();
+  cx.strokeStyle='#f59e0b';cx.lineWidth=1.5;cx.stroke();
+  lbl(rx,ry-H*0.15,'Relatività Generale','#f59e0b',13,'center',true);
+
+  // griglia warped
+  const cols=10, rows=8, gW=W*0.24, gH=H*0.2;
+  for(let r=0;r<=rows;r++){
+    cx.beginPath();
+    for(let c=0;c<=cols;c++){
+      const fx=c/cols, fy=r/rows;
+      const dx=fx-0.5, dy=fy-0.5;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      const warp=0.3*Math.exp(-dist*dist*10);
+      const px=(fx-0.5)*gW+rx;
+      const py=(fy-0.5)*gH+ry+H*0.04+warp*gH*0.8;
+      c===0?cx.moveTo(px,py):cx.lineTo(px,py);
+    }
+    cx.strokeStyle=`rgba(245,158,11,${0.1+0.2*(r/rows)})`;cx.lineWidth=0.8;cx.stroke();
+  }
+  for(let c=0;c<=cols;c++){
+    cx.beginPath();
+    for(let r=0;r<=rows;r++){
+      const fx=c/cols, fy=r/rows;
+      const dx=fx-0.5, dy=fy-0.5;
+      const dist=Math.sqrt(dx*dx+dy*dy);
+      const warp=0.3*Math.exp(-dist*dist*10);
+      const px=(fx-0.5)*gW+rx;
+      const py=(fy-0.5)*gH+ry+H*0.04+warp*gH*0.8;
+      r===0?cx.moveTo(px,py):cx.lineTo(px,py);
+    }
+    cx.strokeStyle=`rgba(245,158,11,${0.1+0.2*(c/cols)})`;cx.lineWidth=0.8;cx.stroke();
+  }
+  lbl(rx,ry+H*0.14,'Einstein, 1915','#64748b',9,'center');
+  lbl(rx,ry+H*0.17,'Gμν = 8πG Tμν','#f59e0b',10,'center');
+
+  // centro: punto interrogativo
+  const qr=Math.min(W*0.08,H*0.14);
+  const pulse=1+0.08*Math.sin(T*1.5);
+  const qGrad=cx.createRadialGradient(cx2,cy2,5,cx2,cy2,qr*pulse);
+  qGrad.addColorStop(0,'rgba(167,139,250,0.3)');
+  qGrad.addColorStop(0.5,'rgba(167,139,250,0.1)');
+  qGrad.addColorStop(1,'rgba(167,139,250,0)');
+  cx.beginPath();cx.arc(cx2,cy2,qr*pulse,0,Math.PI*2);
+  cx.fillStyle=qGrad;cx.fill();
+  cx.fillStyle='rgba(8,14,30,0.7)';
+  cx.beginPath();cx.arc(cx2,cy2,qr*0.9,0,Math.PI*2);cx.fill();
+  lbl(cx2,cy2+12,'?','#a78bfa',60,'center',true);
+  gw('#a78bfa',30);
+  lbl(cx2,cy2+12,'?','#a78bfa',60,'center',true);
+  ng();
+
+  // frecce verso il centro
+  const aw=W*0.1;
+  cx.beginPath();cx.moveTo(lx+W*0.15,cy2);cx.lineTo(cx2-aw,cy2);
+  cx.strokeStyle='rgba(167,139,250,0.5)';cx.lineWidth=2;
+  cx.setLineDash([6,6]);cx.stroke();cx.setLineDash([]);
+  cx.beginPath();cx.moveTo(rx-W*0.15,cy2);cx.lineTo(cx2+aw,cy2);
+  cx.strokeStyle='rgba(167,139,250,0.5)';cx.lineWidth=2;
+  cx.setLineDash([6,6]);cx.stroke();cx.setLineDash([]);
+
+  lbl(cx2,H*0.1,'La Grande Sfida della Fisica Teorica','#f1f5f9',19,'center',true);
+  lbl(cx2,H*0.1+26,'Come unire la Meccanica Quantistica con la Relatività Generale?','#94a3b8',12);
+
+  // box LQG risposta
+  cx.fillStyle='rgba(8,14,30,0.92)';
+  cx.beginPath();cx.roundRect(cx2-W*0.2,H*0.82,W*0.4,54,8);cx.fill();
+  cx.strokeStyle='#a78bfa';cx.lineWidth=1;cx.stroke();
+  lbl(cx2,H*0.82+18,'Loop Quantum Gravity (LQG)','#a78bfa',13,'center',true);
+  lbl(cx2,H*0.82+36,'Quantizza lo spazio-tempo senza presupporre uno sfondo fisso','#94a3b8',10,'center');
+  lbl(cx2,H*0.82+50,'Ashtekar 1986 · Rovelli & Smolin 1988–1990','#475569',9,'center');
+
+  // box problema divergenze
+  cx.fillStyle='rgba(239,68,68,0.08)';
+  cx.beginPath();cx.roundRect(cx2-W*0.14,cy2+H*0.22,W*0.28,44,6);cx.fill();
+  cx.strokeStyle='rgba(239,68,68,0.4)';cx.lineWidth=1;cx.stroke();
+  lbl(cx2,cy2+H*0.22+14,'Problema: Divergenze UV','#ef4444',11,'center',true);
+  lbl(cx2,cy2+H*0.22+30,'La gravità perturbativa è non-rinormalizzabile','#94a3b8',9,'center');
+  lbl(cx2,cy2+H*0.22+44,'→ infiniti in ogni calcolo','#ef4444',9,'center');
+}
+
+// ── FASE 1: Ashtekar ──────────────────────────────────────
+function ph1(){
+  const ox=W*0.5, oy=H*0.5;
+
+  // Timeline verticale
+  cx.beginPath();cx.moveTo(W*0.12,H*0.2);cx.lineTo(W*0.12,H*0.82);
+  cx.strokeStyle='rgba(245,158,11,0.3)';cx.lineWidth=2;cx.stroke();
+
+  // marker 1986
+  const markerY=H*0.35;
+  cx.beginPath();cx.arc(W*0.12,markerY,8,0,Math.PI*2);
+  cx.fillStyle='#f59e0b';gw('#f59e0b',12);cx.fill();ng();
+  lbl(W*0.12+18,markerY+5,'1986','#f59e0b',13,'left',true);
+
+  // sinistra: metrica (griglia curva)
+  const lx=W*0.3, ly=H*0.45;
+  cx.fillStyle='rgba(8,14,30,0.8)';
+  cx.beginPath();cx.roundRect(lx-W*0.14,ly-H*0.18,W*0.28,H*0.36,8);cx.fill();
+  cx.strokeStyle='rgba(100,116,139,0.5)';cx.lineWidth=1;cx.stroke();
+  lbl(lx,ly-H*0.14,'Prima di Ashtekar','#64748b',11,'center',true);
+  lbl(lx,ly-H*0.1,'Variabili: metrica g_μν','#94a3b8',10,'center');
+
+  // griglia metrica deformata
+  const mCols=8, mRows=6, mW=W*0.22, mH=H*0.18;
+  for(let r=0;r<=mRows;r++){
+    cx.beginPath();
+    for(let c=0;c<=mCols;c++){
+      const fx=c/mCols, fy=r/mRows;
+      const dx=fx-0.5,dy=fy-0.5;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      const warp=0.2*Math.exp(-d*d*8);
+      const px=(fx-0.5)*mW+lx;
+      const py=(fy-0.5)*mH+ly+H*0.04+warp*mH*0.8;
+      c===0?cx.moveTo(px,py):cx.lineTo(px,py);
+    }
+    cx.strokeStyle='rgba(100,116,139,0.4)';cx.lineWidth=0.7;cx.stroke();
+  }
+  for(let c=0;c<=mCols;c++){
+    cx.beginPath();
+    for(let r=0;r<=mRows;r++){
+      const fx=c/mCols, fy=r/mRows;
+      const dx=fx-0.5,dy=fy-0.5;
+      const d=Math.sqrt(dx*dx+dy*dy);
+      const warp=0.2*Math.exp(-d*d*8);
+      const px=(fx-0.5)*mW+lx;
+      const py=(fy-0.5)*mH+ly+H*0.04+warp*mH*0.8;
+      r===0?cx.moveTo(px,py):cx.lineTo(px,py);
+    }
+    cx.strokeStyle='rgba(100,116,139,0.4)';cx.lineWidth=0.7;cx.stroke();
+  }
+  lbl(lx,ly+H*0.14,'Equazioni complesse,','#475569',9,'center');
+  lbl(lx,ly+H*0.17,'difficile da quantizzare','#ef4444',9,'center');
+
+  // freccia al centro
+  cx.beginPath();cx.moveTo(lx+W*0.15,ly);cx.lineTo(ox-W*0.06,oy);
+  cx.strokeStyle='rgba(245,158,11,0.5)';cx.lineWidth=2;cx.stroke();
+  lbl(ox-W*0.06,oy-14,'Ashtekar','#f59e0b',10,'center');
+  lbl(ox-W*0.06,oy,'riformula','#f59e0b',10,'center');
+
+  // destra: connessione (frecce colorate su nodi)
+  const rx=W*0.72, ry=H*0.45;
+  cx.fillStyle='rgba(8,14,30,0.8)';
+  cx.beginPath();cx.roundRect(rx-W*0.14,ry-H*0.18,W*0.28,H*0.36,8);cx.fill();
+  cx.strokeStyle='rgba(245,158,11,0.5)';cx.lineWidth=1;cx.stroke();
+  lbl(rx,ry-H*0.14,'Dopo Ashtekar','#f59e0b',11,'center',true);
+  lbl(rx,ry-H*0.1,'Variabili: connessione A^i_a','#fde68a',10,'center');
+
+  // nodi e frecce (connessione)
+  const nodes=[[rx-W*0.08,ry-H*0.02],[rx,ry-H*0.06],[rx+W*0.08,ry-H*0.02],[rx-W*0.04,ry+H*0.06],[rx+W*0.04,ry+H*0.06]];
+  const connLinks=[[0,1],[1,2],[0,3],[2,4],[1,3],[1,4],[3,4]];
+  connLinks.forEach(([a,b])=>{
+    const col=`hsl(${(a*60+T*20)%360},80%,60%)`;
+    cx.beginPath();cx.moveTo(nodes[a][0],nodes[a][1]);cx.lineTo(nodes[b][0],nodes[b][1]);
+    cx.strokeStyle=col;cx.lineWidth=2;gw(col,6);cx.stroke();ng();
+    // freccia direzionale
+    const mx=(nodes[a][0]+nodes[b][0])/2, my=(nodes[a][1]+nodes[b][1])/2;
+    const angle=Math.atan2(nodes[b][1]-nodes[a][1],nodes[b][0]-nodes[a][0]);
+    cx.save();cx.translate(mx,my);cx.rotate(angle);
+    cx.beginPath();cx.moveTo(-6,0);cx.lineTo(0,-4);cx.lineTo(6,0);cx.lineTo(0,4);
+    cx.fillStyle=col;cx.fill();cx.restore();
+  });
+  nodes.forEach(([nx,ny],i)=>{
+    cx.beginPath();cx.arc(nx,ny,6,0,Math.PI*2);
+    cx.fillStyle=`hsl(${i*60},80%,60%)`;gw(`hsl(${i*60},80%,60%)`,8);cx.fill();ng();
+  });
+  lbl(rx,ry+H*0.14,'Equazioni più semplici,','#475569',9,'center');
+  lbl(rx,ry+H*0.17,'struttura per quantizzare','#4ade80',9,'center');
+
+  // formula chiave
+  cx.fillStyle='rgba(8,14,30,0.92)';
+  cx.beginPath();cx.roundRect(ox-W*0.22,H*0.82,W*0.44,54,8);cx.fill();
+  cx.strokeStyle='#f59e0b';cx.lineWidth=1;cx.stroke();
+  lbl(ox,H*0.82+16,'Variabili di Ashtekar (1986)','#f59e0b',12,'center',true);
+  lbl(ox,H*0.82+34,'A^i_a = Γ^i_a + iK^i_a','#fde68a',13,'center',true);
+  lbl(ox,H*0.82+50,'connessione = connessione di Levi-Civita + curvatura estrinseca','#64748b',9,'center');
+
+  lbl(ox,H*0.1,'Abhay Ashtekar (1986)','#f1f5f9',18,'center',true);
+  lbl(ox,H*0.1+26,'Nuove variabili per la Relatività Generale — connessioni invece della metrica','#94a3b8',12);
+  lbl(ox,H*0.1+42,"\"Come Maxwell riscrisse l'EM con i potenziali, Ashtekar riscrisse la RG con le connessioni\"",'#475569',10,'center');
+}
+
+// ── FASE 2: Loop di Wilson ────────────────────────────────
+function ph2(){
+  const ox=W*0.5, oy=H*0.5;
+  const R=Math.min(W*0.22,H*0.24);
+
+  // ritratti testuali Rovelli & Smolin
+  const portraitY=H*0.28;
+  cx.fillStyle='rgba(8,14,30,0.85)';
+  cx.beginPath();cx.roundRect(W*0.06,portraitY-H*0.1,W*0.18,H*0.2,8);cx.fill();
+  cx.strokeStyle='rgba(167,139,250,0.4)';cx.lineWidth=1;cx.stroke();
+  lbl(W*0.15,portraitY-H*0.06,'Carlo','#a78bfa',13,'center',true);
+  lbl(W*0.15,portraitY-H*0.02,'Rovelli','#a78bfa',13,'center',true);
+  lbl(W*0.15,portraitY+H*0.02,'Torino/Aix','#64748b',9,'center');
+  lbl(W*0.15,portraitY+H*0.06,'1988–1990','#475569',9,'center');
+
+  cx.fillStyle='rgba(8,14,30,0.85)';
+  cx.beginPath();cx.roundRect(W*0.76,portraitY-H*0.1,W*0.18,H*0.2,8);cx.fill();
+  cx.strokeStyle='rgba(167,139,250,0.4)';cx.lineWidth=1;cx.stroke();
+  lbl(W*0.85,portraitY-H*0.06,'Lee','#a78bfa',13,'center',true);
+  lbl(W*0.85,portraitY-H*0.02,'Smolin','#a78bfa',13,'center',true);
+  lbl(W*0.85,portraitY+H*0.02,'Perimeter Inst.','#64748b',9,'center');
+  lbl(W*0.85,portraitY+H*0.06,'1988–1990','#475569',9,'center');
+
+  // animazione loop di Wilson: curva chiusa con particella che scorre
+  const nPts=120;
+  // disegna la curva γ
+  cx.beginPath();
+  for(let i=0;i<=nPts;i++){
+    const a=(i/nPts)*Math.PI*2;
+    const r=R*(1+0.2*Math.sin(3*a)+0.1*Math.cos(5*a));
+    const px=ox+r*Math.cos(a);
+    const py=oy+0.55*r*Math.sin(a);
+    i===0?cx.moveTo(px,py):cx.lineTo(px,py);
+  }
+  cx.closePath();
+  cx.strokeStyle='#a78bfa';cx.lineWidth=3;gw('#a78bfa',14);cx.stroke();ng();
+
+  // riempimento leggero
+  cx.fillStyle='rgba(167,139,250,0.06)';cx.fill();
+
+  // label γ sul loop
+  lbl(ox+R*0.65,oy-R*0.5,'γ','#c4b5fd',16,'center',true);
+
+  // particella (punto di luce) che scorre lungo il loop
+  const progress=(T*0.4)%(Math.PI*2);
+  const pr=R*(1+0.2*Math.sin(3*progress)+0.1*Math.cos(5*progress));
+  const ppx=ox+pr*Math.cos(progress);
+  const ppy=oy+0.55*pr*Math.sin(progress);
+  // scia luminosa
+  for(let s=0;s<20;s++){
+    const sp=(progress-s*0.06+Math.PI*2*10)%(Math.PI*2);
+    const sr=R*(1+0.2*Math.sin(3*sp)+0.1*Math.cos(5*sp));
+    const sx=ox+sr*Math.cos(sp), sy=oy+0.55*sr*Math.sin(sp);
+    cx.beginPath();cx.arc(sx,sy,2.5*(1-s/20),0,Math.PI*2);
+    cx.fillStyle=`rgba(196,181,253,${0.7*(1-s/20)})`;cx.fill();
+  }
+  cx.beginPath();cx.arc(ppx,ppy,7,0,Math.PI*2);
+  const pGrad=cx.createRadialGradient(ppx,ppy,0,ppx,ppy,7);
+  pGrad.addColorStop(0,'#fff');pGrad.addColorStop(0.4,'#c4b5fd');pGrad.addColorStop(1,'rgba(167,139,250,0)');
+  cx.fillStyle=pGrad;gw('#c4b5fd',16);cx.fill();ng();
+
+  // frecce direzionali sul loop
+  for(let f=0;f<6;f++){
+    const fa=(f/6)*Math.PI*2;
+    const fr=R*(1+0.2*Math.sin(3*fa)+0.1*Math.cos(5*fa));
+    const fx=ox+fr*Math.cos(fa), fy=oy+0.55*fr*Math.sin(fa);
+    const da=fa+0.15;
+    const dr=R*(1+0.2*Math.sin(3*da)+0.1*Math.cos(5*da));
+    const dx=ox+dr*Math.cos(da), dy=oy+0.55*dr*Math.sin(da);
+    const angle=Math.atan2(dy-fy,dx-fx);
+    cx.save();cx.translate(fx,fy);cx.rotate(angle);
+    cx.beginPath();cx.moveTo(-5,0);cx.lineTo(0,-4);cx.lineTo(5,0);cx.lineTo(0,4);
+    cx.fillStyle='rgba(167,139,250,0.6)';cx.fill();cx.restore();
+  }
+
+  lbl(ox,H*0.1,'Loop di Wilson — Rovelli & Smolin (1988–1990)','#f1f5f9',18,'center',true);
+  lbl(ox,H*0.1+26,'Le soluzioni naturali delle equazioni quantizzate della gravità sono loop chiusi','#94a3b8',12);
+
+  // formula W[γ]
+  cx.fillStyle='rgba(8,14,30,0.92)';
+  cx.beginPath();cx.roundRect(ox-W*0.22,H*0.77,W*0.44,62,8);cx.fill();
+  cx.strokeStyle='#a78bfa';cx.lineWidth=1;cx.stroke();
+  lbl(ox,H*0.77+16,'Loop di Wilson','#a78bfa',12,'center',true);
+  lbl(ox,H*0.77+36,'W[γ] = Tr(P exp ∮_γ A)','#c4b5fd',14,'center',true);
+  lbl(ox,H*0.77+52,'P = path ordering  ·  A = connessione di Ashtekar','#64748b',9,'center');
+
+  lbl(ox,oy,'integrali di linea della connessione','#94a3b8',11,'center');
+  lbl(ox,oy+20,'"linee di forza" quantizzate dello spazio','#a78bfa',11,'center');
+}
+
+// ── FASE 3: Spin Networks ─────────────────────────────────
+function ph3(){
+  const ox=W*0.5, oy=H*0.5;
+
+  // definisci i nodi della spin network
+  const nodes=[
+    {x:ox,       y:oy-H*0.22, col:'#4ade80'},
+    {x:ox-W*0.18,y:oy-H*0.08, col:'#60a5fa'},
+    {x:ox+W*0.18,y:oy-H*0.08, col:'#f97316'},
+    {x:ox-W*0.26,y:oy+H*0.1,  col:'#4ade80'},
+    {x:ox,       y:oy+H*0.12, col:'#f97316'},
+    {x:ox+W*0.26,y:oy+H*0.1,  col:'#60a5fa'},
+    {x:ox-W*0.1, y:oy+H*0.26, col:'#a78bfa'},
+    {x:ox+W*0.1, y:oy+H*0.26, col:'#4ade80'},
+    {x:ox-W*0.32,y:oy-H*0.02, col:'#60a5fa'},
+    {x:ox+W*0.32,y:oy-H*0.02, col:'#f97316'},
+  ];
+
+  // archi con etichette di spin
+  const links=[
+    {a:0,b:1,j:'1',  col:'#c4b5fd'},
+    {a:0,b:2,j:'½',  col:'#60a5fa'},
+    {a:1,b:3,j:'3/2',col:'#f59e0b'},
+    {a:1,b:4,j:'1',  col:'#a78bfa'},
+    {a:2,b:4,j:'½',  col:'#4ade80'},
+    {a:2,b:5,j:'2',  col:'#60a5fa'},
+    {a:3,b:6,j:'½',  col:'#c4b5fd'},
+    {a:4,b:6,j:'1',  col:'#f97316'},
+    {a:4,b:7,j:'3/2',col:'#4ade80'},
+    {a:5,b:7,j:'1',  col:'#a78bfa'},
+    {a:3,b:8,j:'½',  col:'#60a5fa'},
+    {a:1,b:8,j:'2',  col:'#f59e0b'},
+    {a:2,b:9,j:'1',  col:'#c4b5fd'},
+    {a:5,b:9,j:'½',  col:'#4ade80'},
+    {a:6,b:7,j:'1',  col:'#a78bfa'},
+  ];
+
+  // disegna archi
+  links.forEach(({a,b,j,col},idx)=>{
+    const n1=nodes[a], n2=nodes[b];
+    const pulse=0.6+0.4*Math.sin(T*1.2+idx*0.4);
+    cx.beginPath();cx.moveTo(n1.x,n1.y);cx.lineTo(n2.x,n2.y);
+    cx.strokeStyle=col;cx.lineWidth=2.5;
+    cx.globalAlpha=pulse;gw(col,8);cx.stroke();ng();cx.globalAlpha=1;
+
+    // etichetta spin al centro dell'arco
+    const mx=(n1.x+n2.x)/2+8, my=(n1.y+n2.y)/2-8;
+    cx.fillStyle='rgba(8,14,30,0.7)';
+    cx.beginPath();cx.roundRect(mx-10,my-10,20,14,3);cx.fill();
+    lbl(mx,my,'j='+j,col,8,'center',true);
+  });
+
+  // disegna nodi
+  nodes.forEach(({x,y,col},i)=>{
+    const pulse=1+0.1*Math.sin(T*1.5+i*0.8);
+    cx.beginPath();cx.arc(x,y,9*pulse,0,Math.PI*2);
+    const nGrad=cx.createRadialGradient(x,y,0,x,y,9*pulse);
+    nGrad.addColorStop(0,'#fff');nGrad.addColorStop(0.3,col);nGrad.addColorStop(1,col+'44');
+    cx.fillStyle=nGrad;gw(col,12);cx.fill();ng();
+  });
+
+  lbl(ox,H*0.08,'Spin Networks — Lo Spazio è una Rete Quantistica','#f1f5f9',18,'center',true);
+  lbl(ox,H*0.08+26,'A scala di Planck lo spazio non è un continuo, ma una rete di nodi e archi con numeri quantici di spin','#94a3b8',11,'center');
+
+  // box formula area
+  cx.fillStyle='rgba(8,14,30,0.92)';
+  cx.beginPath();cx.roundRect(ox-W*0.24,H*0.84,W*0.48,54,8);cx.fill();
+  cx.strokeStyle='#4ade80';cx.lineWidth=1;cx.stroke();
+  lbl(ox,H*0.84+16,'Area quantizzata','#4ade80',12,'center',true);
+  lbl(ox,H*0.84+34,'A = 8πγ l²_P  Σᵢ √(jᵢ(jᵢ+1))','#a7f3d0',14,'center',true);
+  lbl(ox,H*0.84+50,'ogni arco contribuisce con il proprio numero quantico di spin jᵢ','#64748b',9,'center');
+
+  // legenda in basso a destra
+  cx.fillStyle='rgba(8,14,30,0.85)';
+  cx.beginPath();cx.roundRect(W*0.76,H*0.5,W*0.18,H*0.18,7);cx.fill();
+  cx.strokeStyle='rgba(167,139,250,0.3)';cx.lineWidth=1;cx.stroke();
+  lbl(W*0.85,H*0.5+14,'Legenda','#a78bfa',10,'center',true);
+  [{col:'#4ade80',txt:'Nodo tipo A'},{col:'#60a5fa',txt:'Nodo tipo B'},{col:'#f97316',txt:'Nodo tipo C'}].forEach(({col,txt},i)=>{
+    cx.beginPath();cx.arc(W*0.79,H*0.5+26+i*18,5,0,Math.PI*2);
+    cx.fillStyle=col;cx.fill();
+    lbl(W*0.82,H*0.5+30+i*18,txt,'#94a3b8',9,'left');
+  });
+}
+
+// ── FASE 4: Spazio discreto ───────────────────────────────
+function ph4(){
+  const ox=W*0.5, oy=H*0.5;
+
+  // sinistra: spazio classico continuo (griglia fine)
+  const lx=W*0.22, ly=oy;
+  cx.fillStyle='rgba(8,14,30,0.8)';
+  cx.beginPath();cx.roundRect(lx-W*0.16,ly-H*0.22,W*0.32,H*0.44,8);cx.fill();
+  cx.strokeStyle='rgba(100,116,139,0.4)';cx.lineWidth=1;cx.stroke();
+  lbl(lx,ly-H*0.18,'Spazio classico','#64748b',12,'center',true);
+  lbl(lx,ly-H*0.14,'Continuo liscio','#94a3b8',10,'center');
+
+  const gSz=18, gCols=10, gRows=10;
+  const gStartX=lx-W*0.12, gStartY=ly-H*0.06;
+  for(let r=0;r<=gRows;r++){
+    cx.beginPath();
+    cx.moveTo(gStartX,gStartY+r*gSz);cx.lineTo(gStartX+gCols*gSz,gStartY+r*gSz);
+    cx.strokeStyle='rgba(100,116,139,0.3)';cx.lineWidth=0.5;cx.stroke();
+  }
+  for(let c=0;c<=gCols;c++){
+    cx.beginPath();
+    cx.moveTo(gStartX+c*gSz,gStartY);cx.lineTo(gStartX+c*gSz,gStartY+gRows*gSz);
+    cx.strokeStyle='rgba(100,116,139,0.3)';cx.lineWidth=0.5;cx.stroke();
+  }
+  lbl(lx,ly+H*0.17,'Area: qualsiasi valore reale','#475569',9,'center');
+  lbl(lx,ly+H*0.2,'A ∈ ℝ continuo','#64748b',9,'center');
+
+  // destra: spazio quantizzato (poliedri)
+  const rx=W*0.78, ry=oy;
+  cx.fillStyle='rgba(8,14,30,0.8)';
+  cx.beginPath();cx.roundRect(rx-W*0.16,ry-H*0.22,W*0.32,H*0.44,8);cx.fill();
+  cx.strokeStyle='rgba(167,139,250,0.5)';cx.lineWidth=1;cx.stroke();
+  lbl(rx,ry-H*0.18,'Spazio quantizzato LQG','#a78bfa',12,'center',true);
+  lbl(rx,ry-H*0.14,'Granulare — scala di Planck','#c4b5fd',10,'center');
+
+  // poliedri semplici (tetraedri/ottaedri proiettati in 2D)
+  const polyData=[
+    {cx:rx-W*0.08,cy:ry-H*0.06,r:W*0.04,col:'#a78bfa',sides:3},
+    {cx:rx+W*0.06,cy:ry-H*0.08,r:W*0.035,col:'#60a5fa',sides:4},
+    {cx:rx-W*0.02,cy:ry+H*0.06,r:W*0.045,col:'#4ade80',sides:3},
+    {cx:rx+W*0.09,cy:ry+H*0.04,r:W*0.033,col:'#f97316',sides:5},
+    {cx:rx-W*0.1, cy:ry+H*0.08,r:W*0.03, col:'#a78bfa',sides:4},
+    {cx:rx+W*0.02,cy:ry-H*0.0, r:W*0.038,col:'#c4b5fd',sides:3},
+  ];
+  polyData.forEach(({cx:pcx,cy:pcy,r,col,sides},idx)=>{
+    const pulse=1+0.06*Math.sin(T*1.2+idx*0.7);
+    cx.beginPath();
+    for(let s=0;s<sides;s++){
+      const a=(s/sides)*Math.PI*2-Math.PI/2+T*0.1*(idx%2===0?1:-1);
+      const px=pcx+r*pulse*Math.cos(a);
+      const py=pcy+r*pulse*0.7*Math.sin(a);
+      s===0?cx.moveTo(px,py):cx.lineTo(px,py);
+    }
+    cx.closePath();
+    cx.fillStyle=col+'22';gw(col,8);cx.fill();ng();
+    cx.strokeStyle=col;cx.lineWidth=1.5;cx.stroke();
+  });
+  lbl(rx,ry+H*0.17,'Area: valori discreti','#4ade80',9,'center');
+  lbl(rx,ry+H*0.2,'A = 8πγl²_P √(j(j+1))','#a78bfa',9,'center');
+
+  // centro: spettro discreto degli autovalori
+  lbl(ox,H*0.08,'Spazio Discreto — Area e Volume Quantizzati','#f1f5f9',18,'center',true);
+  lbl(ox,H*0.08+26,'La LQG predice che l\'area e il volume hanno spettro discreto alla scala di Planck','#94a3b8',11,'center');
+
+  // grafico spettro autovalori area (linee orizzontali discrete)
+  const specX=ox-W*0.04, specY=H*0.52;
+  const specW=W*0.08, specH=H*0.28;
+  const jValues=[0.5,1,1.5,2,2.5,3];
+  lbl(specX,specY-20,'Autovalori area','#a78bfa',10,'center',true);
+  jValues.forEach((j,idx)=>{
+    const area=Math.sqrt(j*(j+1));
+    const y2=specY+specH-specH*(area/Math.sqrt(jValues[jValues.length-1]*(jValues[jValues.length-1]+1)))-20;
+    const pulse=0.6+0.4*Math.sin(T*1.5+idx*0.5);
+    cx.beginPath();cx.moveTo(specX-specW/2,y2);cx.lineTo(specX+specW/2,y2);
+    cx.strokeStyle=`rgba(167,139,250,${pulse})`;cx.lineWidth=1.5;gw('#a78bfa',4);cx.stroke();ng();
+    lbl(specX+specW/2+8,y2+4,'j='+j,'#c4b5fd',8,'left');
+  });
+
+  // box scala di Planck
+  cx.fillStyle='rgba(8,14,30,0.92)';
+  cx.beginPath();cx.roundRect(ox-W*0.22,H*0.84,W*0.44,52,8);cx.fill();
+  cx.strokeStyle='#a78bfa';cx.lineWidth=1;cx.stroke();
+  lbl(ox,H*0.84+14,'Lunghezza di Planck','#a78bfa',11,'center',true);
+  lbl(ox,H*0.84+32,'l_P = √(ℏG/c³) ≈ 1.6 × 10⁻³⁵ m','#c4b5fd',12,'center',true);
+  lbl(ox,H*0.84+48,'Area minima ≈ l²_P ≈ 10⁻⁷⁰ m² — il granulo più piccolo dello spazio','#64748b',9,'center');
+}
+
+// ── FASE 5: Spin Foams ────────────────────────────────────
+function ph5(){
+  const ox=W*0.5, oy=H*0.52;
+
+  lbl(ox,H*0.09,'Spin Foams — Lo Spaziotempo è una Schiuma','#f1f5f9',18,'center',true);
+  lbl(ox,H*0.09+26,'Le spin networks evolvono nel tempo e generano la spin foam: la geometria 4D quantistica','#94a3b8',11,'center');
+
+  // disegna una spin foam stilizzata: strati di spin network con connessioni verticali
+  const layers=3;
+  const layerH=H*0.2;
+  const layerOffsets=[-layerH*1.1, 0, layerH*1.1];
+
+  const baseNodes=[
+    {x:ox-W*0.15, y:oy}, {x:ox-W*0.03, y:oy-H*0.06},
+    {x:ox+W*0.09, y:oy}, {x:ox-W*0.09, y:oy+H*0.07},
+    {x:ox+W*0.18, y:oy-H*0.04}, {x:ox+W*0.04, y:oy+H*0.09}
+  ];
+  const baseLinks=[[0,1],[1,2],[2,4],[1,3],[3,5],[5,2],[0,3],[4,5]];
+
+  layerOffsets.forEach((yOff,li)=>{
+    const alpha=li===1?1:0.4;
+    cx.globalAlpha=alpha;
+    const lnodes=baseNodes.map(n=>({x:n.x,y:n.y+yOff}));
+
+    // archi spin network
+    baseLinks.forEach(([a,b],idx)=>{
+      const n1=lnodes[a], n2=lnodes[b];
+      const col=`hsl(${260+idx*15},70%,60%)`;
+      cx.beginPath();cx.moveTo(n1.x,n1.y);cx.lineTo(n2.x,n2.y);
+      cx.strokeStyle=col;cx.lineWidth=2;gw(col,5);cx.stroke();ng();
+    });
+    // nodi
+    lnodes.forEach(({x,y},i)=>{
+      cx.beginPath();cx.arc(x,y,7,0,Math.PI*2);
+      const col=`hsl(${270+i*20},80%,65%)`;
+      cx.fillStyle=col;gw(col,8);cx.fill();ng();
+    });
+    cx.globalAlpha=1;
+  });
+
+  // connessioni verticali tra layer (eventi quantistici = vertici spin foam)
+  const vertices=[
+    [baseNodes[1].x,baseNodes[1].y+layerOffsets[0], baseNodes[1].x,baseNodes[1].y+layerOffsets[1]],
+    [baseNodes[3].x,baseNodes[3].y+layerOffsets[0], baseNodes[3].x,baseNodes[3].y+layerOffsets[1]],
+    [baseNodes[2].x,baseNodes[2].y+layerOffsets[1], baseNodes[2].x,baseNodes[2].y+layerOffsets[2]],
+    [baseNodes[5].x,baseNodes[5].y+layerOffsets[1], baseNodes[5].x,baseNodes[5].y+layerOffsets[2]],
+    [baseNodes[0].x,baseNodes[0].y+layerOffsets[1], baseNodes[0].x,baseNodes[0].y+layerOffsets[2]],
+  ];
+  vertices.forEach(([x1,y1,x2,y2],idx)=>{
+    cx.beginPath();cx.moveTo(x1,y1);cx.lineTo(x2,y2);
+    cx.strokeStyle='rgba(196,181,253,0.5)';cx.lineWidth=1.5;
+    cx.setLineDash([4,6]);cx.stroke();cx.setLineDash([]);
+
+    // vertice come punto glow
+    const vy=(y1+y2)/2+15*Math.sin(T*0.8+idx);
+    const vx=(x1+x2)/2;
+    cx.beginPath();cx.arc(vx,vy,5,0,Math.PI*2);
+    cx.fillStyle='#f59e0b';gw('#f59e0b',12);cx.fill();ng();
+  });
+
+  // etichette layer
+  lbl(W*0.08,oy+layerOffsets[0],'t₁','#c4b5fd',11,'center');
+  lbl(W*0.08,oy+layerOffsets[1],'t₂','#a78bfa',13,'center',true);
+  lbl(W*0.08,oy+layerOffsets[2],'t₃','#c4b5fd',11,'center');
+
+  // legenda vertici
+  cx.beginPath();cx.arc(W*0.86,H*0.52,6,0,Math.PI*2);
+  cx.fillStyle='#f59e0b';gw('#f59e0b',8);cx.fill();ng();
+  lbl(W*0.9,H*0.52+4,'Vertice','#f59e0b',9,'left');
+  lbl(W*0.9,H*0.52+16,'(evento quantistico)','#64748b',8,'left');
+
+  // box modello EPRL
+  cx.fillStyle='rgba(8,14,30,0.92)';
+  cx.beginPath();cx.roundRect(ox-W*0.25,H*0.84,W*0.5,54,8);cx.fill();
+  cx.strokeStyle='#7c3aed';cx.lineWidth=1;cx.stroke();
+  lbl(ox,H*0.84+16,'Modello EPRL (2008)','#7c3aed',12,'center',true);
+  lbl(ox,H*0.84+34,'Engle · Pereira · Rovelli · Livine','#94a3b8',10,'center');
+  lbl(ox,H*0.84+50,'Z = Σ_{spin foams} A(vertici)·A(archi)·A(facce) — somma su tutte le geometrie','#64748b',9,'center');
+
+  // freccia tempo
+  cx.beginPath();
+  cx.moveTo(W*0.06,oy+layerOffsets[0]);
+  cx.lineTo(W*0.06,oy+layerOffsets[2]+20);
+  cx.strokeStyle='rgba(196,181,253,0.4)';cx.lineWidth=1.5;cx.stroke();
+  // punta freccia
+  cx.beginPath();cx.moveTo(W*0.06,oy+layerOffsets[2]+20);
+  cx.lineTo(W*0.06-5,oy+layerOffsets[2]+6);cx.lineTo(W*0.06+5,oy+layerOffsets[2]+6);
+  cx.fillStyle='rgba(196,181,253,0.4)';cx.fill();
+  lbl(W*0.06,oy+layerOffsets[0]-14,'t','#c4b5fd',10,'center');
+}
+
+// ── FASE 6: Background independence ──────────────────────
+function ph6(){
+  const ox=W*0.5, oy=H*0.5;
+
+  lbl(ox,H*0.09,'Background Independence','#f1f5f9',18,'center',true);
+  lbl(ox,H*0.09+26,'La LQG non presuppone uno spaziotempo fisso — lo spaziotempo emerge dalla rete stessa','#94a3b8',11,'center');
+  lbl(ox,H*0.09+42,'"Lo spaziotempo non è il palcoscenico — È la fisica stessa"','#a78bfa',11,'center');
+
+  // sinistra: Teoria delle Stringhe (sfondo fisso)
+  const lx=W*0.25, ly=oy;
+  cx.fillStyle='rgba(8,14,30,0.85)';
+  cx.beginPath();cx.roundRect(lx-W*0.17,ly-H*0.24,W*0.34,H*0.48,10);cx.fill();
+  cx.strokeStyle='rgba(56,189,248,0.4)';cx.lineWidth=1.5;cx.stroke();
+  lbl(lx,ly-H*0.2,'Teoria delle Stringhe','#38bdf8',13,'center',true);
+  lbl(lx,ly-H*0.16,'Background-DEPENDENT','#94a3b8',10,'center');
+
+  // griglia fissa (sfondo rigido)
+  const gSize=16;
+  const g2Cols=12, g2Rows=9;
+  const g2StartX=lx-W*0.14, g2StartY=ly-H*0.1;
+  for(let r=0;r<=g2Rows;r++){
+    cx.beginPath();
+    cx.moveTo(g2StartX,g2StartY+r*gSize);cx.lineTo(g2StartX+g2Cols*gSize,g2StartY+r*gSize);
+    cx.strokeStyle='rgba(56,189,248,0.2)';cx.lineWidth=0.8;cx.stroke();
+  }
+  for(let c=0;c<=g2Cols;c++){
+    cx.beginPath();
+    cx.moveTo(g2StartX+c*gSize,g2StartY);cx.lineTo(g2StartX+c*gSize,g2StartY+g2Rows*gSize);
+    cx.strokeStyle='rgba(56,189,248,0.2)';cx.lineWidth=0.8;cx.stroke();
+  }
+
+  // stringa sul fondo fisso
+  cx.beginPath();
+  const strX=lx, strY=ly+H*0.02;
+  for(let i=0;i<=100;i++){
+    const t=i/100;
+    const x=strX-W*0.06+W*0.12*t;
+    const y=strY+Math.sin(t*Math.PI*4+T*2)*H*0.04;
+    i===0?cx.moveTo(x,y):cx.lineTo(x,y);
+  }
+  cx.strokeStyle='#60a5fa';cx.lineWidth=3;gw('#60a5fa',10);cx.stroke();ng();
+
+  lbl(lx,ly+H*0.18,'Lo spaziotempo è DATO','#475569',10,'center');
+  lbl(lx,ly+H*0.21,'Le stringhe vibrano su di esso','#64748b',9,'center');
+
+  // destra: LQG (senza sfondo)
+  const rx=W*0.75, ry=oy;
+  cx.fillStyle='rgba(8,14,30,0.85)';
+  cx.beginPath();cx.roundRect(rx-W*0.17,ry-H*0.24,W*0.34,H*0.48,10);cx.fill();
+  cx.strokeStyle='rgba(167,139,250,0.5)';cx.lineWidth=1.5;cx.stroke();
+  lbl(rx,ry-H*0.2,'Loop Quantum Gravity','#a78bfa',13,'center',true);
+  lbl(rx,ry-H*0.16,'Background-INDEPENDENT','#4ade80',10,'center');
+
+  // spin network senza sfondo (solo rete su nero)
+  const snNodes=[
+    {x:rx-W*0.1, y:ry-H*0.06},{x:rx+W*0.0, y:ry-H*0.1},
+    {x:rx+W*0.1, y:ry-H*0.02},{x:rx-W*0.05,y:ry+H*0.05},
+    {x:rx+W*0.08,y:ry+H*0.07},{x:rx-W*0.12,y:ry+H*0.1},
+  ];
+  const snLinks=[[0,1],[1,2],[2,4],[1,3],[3,5],[5,0],[3,4],[0,2]];
+  snLinks.forEach(([a,b])=>{
+    const n1=snNodes[a], n2=snNodes[b];
+    cx.beginPath();cx.moveTo(n1.x,n1.y);cx.lineTo(n2.x,n2.y);
+    cx.strokeStyle='rgba(167,139,250,0.7)';cx.lineWidth=2;gw('#a78bfa',6);cx.stroke();ng();
+  });
+  snNodes.forEach(({x,y},i)=>{
+    const pulse=1+0.1*Math.sin(T*1.3+i);
+    cx.beginPath();cx.arc(x,y,7*pulse,0,Math.PI*2);
+    cx.fillStyle='#a78bfa';gw('#a78bfa',10);cx.fill();ng();
+  });
+  lbl(rx,ry+H*0.18,'Lo spaziotempo EMERGE','#4ade80',10,'center');
+  lbl(rx,ry+H*0.21,'dalla rete stessa','#a78bfa',9,'center');
+
+  // invarianza di diffeomorfismo
+  cx.fillStyle='rgba(8,14,30,0.92)';
+  cx.beginPath();cx.roundRect(ox-W*0.22,H*0.84,W*0.44,54,8);cx.fill();
+  cx.strokeStyle='#4ade80';cx.lineWidth=1;cx.stroke();
+  lbl(ox,H*0.84+16,'Invarianza di Diffeomorfismo','#4ade80',12,'center',true);
+  lbl(ox,H*0.84+34,'La teoria è invariante sotto riparametrizzazioni dello spaziotempo','#94a3b8',10,'center');
+  lbl(ox,H*0.84+50,'Non ci sono coordinate privilegiate — la fisica è relazionale','#64748b',9,'center');
+
+  // freccia centrale di confronto
+  cx.beginPath();cx.moveTo(lx+W*0.17,oy);cx.lineTo(rx-W*0.17,oy);
+  cx.strokeStyle='rgba(255,255,255,0.15)';cx.lineWidth=1;
+  cx.setLineDash([6,6]);cx.stroke();cx.setLineDash([]);
+  lbl(ox,oy,'vs','#475569',14,'center');
+}
+
+// ── FASE 7: Predizioni ────────────────────────────────────
+function ph7(){
+  const ox=W*0.5;
+
+  lbl(ox,H*0.08,'Predizioni e Sfide aperte','#f1f5f9',18,'center',true);
+  lbl(ox,H*0.08+26,'La LQG è matematicamente consistente — ma la verifica sperimentale diretta rimane una sfida enorme','#94a3b8',11,'center');
+
+  // 3 box di predizioni (in verde)
+  const predictions=[
+    {title:'Dispersione luce γ', body:`La luce gamma di alta energia\nviaggia leggermente più lenta\n(spazio-tempo granulare).\nTestabile con Fermi-LAT.`, col:'#4ade80'},
+    {title:'Big Bounce (LQC)', body:`La singolarità del Big Bang\nè rimossa. L'universo rimbalza\nda una fase di contrazione.\nCosmologia quantistica a loop.`, col:'#38bdf8'},
+    {title:'Entropia buchi neri', body:`S = A / 4l²_P\nDerivata in LQG contando\ngli stati di spin network\nsull'orizzonte degli eventi.`, col:'#f59e0b'},
+  ];
+
+  predictions.forEach(({title,body,col},i)=>{
+    const bx=W*0.08+i*W*0.3, by=H*0.2;
+    cx.fillStyle='rgba(8,14,30,0.9)';
+    cx.beginPath();cx.roundRect(bx,by,W*0.26,H*0.3,8);cx.fill();
+    cx.strokeStyle=col;cx.lineWidth=1.5;cx.stroke();
+    lbl(bx+W*0.13,by+18,title,col,12,'center',true);
+    const lines=body.split('\n');
+    lines.forEach((line,li)=>{
+      lbl(bx+W*0.13,by+40+li*16,line,'#94a3b8',9,'center');
+    });
+    // icona glow
+    gw(col,15);
+    cx.beginPath();cx.arc(bx+W*0.13,by+16,6,0,Math.PI*2);
+    cx.fillStyle=col;cx.fill();ng();
+  });
+
+  // Big Bounce animato
+  const bbX=W*0.08+1*W*0.3+W*0.13, bbY=H*0.38;
+  const bbPhase=(T*0.5)%(Math.PI*2);
+  const bbR=W*0.04*Math.abs(Math.sin(bbPhase))+W*0.005;
+  const bbGrad=cx.createRadialGradient(bbX,bbY,0,bbX,bbY,bbR);
+  bbGrad.addColorStop(0,'#fff');bbGrad.addColorStop(0.3,'#38bdf8');bbGrad.addColorStop(1,'rgba(56,189,248,0)');
+  cx.beginPath();cx.arc(bbX,bbY,bbR,0,Math.PI*2);
+  cx.fillStyle=bbGrad;gw('#38bdf8',20);cx.fill();ng();
+
+  // 2 box sfide aperte (in rosso)
+  const challenges=[
+    {title:'Limite classico', body:`Recuperare la Relatività Generale\na bassa energia dalla LQG.\nI gravitoni come fluttuazioni\ndelle spin networks.`, col:'#ef4444'},
+    {title:'Propagatori gravitazionali', body:`Calcolare la funzione a due punti\ngravitonale dalla teoria completa.\nCollegare alle osservazioni\nastrofisiche.`, col:'#ef4444'},
+  ];
+
+  challenges.forEach(({title,body,col},i)=>{
+    const bx=W*0.15+i*W*0.36, by=H*0.58;
+    cx.fillStyle='rgba(8,14,30,0.9)';
+    cx.beginPath();cx.roundRect(bx,by,W*0.3,H*0.24,8);cx.fill();
+    cx.strokeStyle=col+'66';cx.lineWidth=1.5;cx.stroke();
+    lbl(bx+W*0.15,by+16,title,col,11,'center',true);
+    const lines=body.split('\n');
+    lines.forEach((line,li)=>{
+      lbl(bx+W*0.15,by+34+li*15,line,'#94a3b8',9,'center');
+    });
+  });
+
+  lbl(W*0.5,H*0.56,'⚠ Sfide Aperte','#ef4444',12,'center',true);
+
+  // timeline basso
+  cx.fillStyle='rgba(8,14,30,0.92)';
+  cx.beginPath();cx.roundRect(ox-W*0.3,H*0.87,W*0.6,40,8);cx.fill();
+  cx.strokeStyle='rgba(167,139,250,0.3)';cx.lineWidth=1;cx.stroke();
+  const timeline=[
+    {y:'1968',t:'Ponzano-Regge',col:'#64748b'},
+    {y:'1986',t:'Ashtekar',col:'#f59e0b'},
+    {y:'1990',t:'Loop (Rovelli-Smolin)',col:'#a78bfa'},
+    {y:'1995',t:'Spin networks',col:'#60a5fa'},
+    {y:'2008',t:'EPRL model',col:'#4ade80'},
+    {y:'2010+',t:'LQC / Big Bounce',col:'#38bdf8'},
+  ];
+  timeline.forEach(({y,t,col},i)=>{
+    const tx=ox-W*0.28+i*(W*0.56/5);
+    lbl(tx,H*0.87+14,y,col,8,'center',true);
+    lbl(tx,H*0.87+28,t,'#64748b',7,'center');
+  });
+}
+
+// ── MAIN LOOP ─────────────────────────────────────────────
+function draw(){
+  cx.clearRect(0,0,W,H); bg(); stars();
+  switch(ph){
+    case 0:ph0();break; case 1:ph1();break; case 2:ph2();break;
+    case 3:ph3();break; case 4:ph4();break; case 5:ph5();break;
+    case 6:ph6();break; case 7:ph7();break;
+  }
+  if(!paused){ T+=0.022; pT++; }
+  if(pT>AUTO_ADVANCE_FRAMES&&ph<7&&!paused) go(ph+1);
+  requestAnimationFrame(draw);
+}
+
+go(0); draw();
+
+</script>
+</body>
+</html>

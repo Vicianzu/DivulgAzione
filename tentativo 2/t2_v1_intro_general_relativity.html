@@ -456,3 +456,1090 @@ t2Init();
 </script>
 </body>
 </html>
+<title>Relatività Generale — Albert Einstein — v2</title>
+<link rel="stylesheet" href="./ui.css">
+</head>
+<body>
+
+<canvas id="canvas" aria-hidden="true"></canvas>
+
+<div id="ui" role="banner">
+  <div id="ui-title">Relatività Generale</div>
+  <div id="ui-phase" aria-live="polite"></div>
+  <div id="ui-badge">8 fasi</div>
+</div>
+
+<main id="panel" role="main" aria-label="Contenuto della fase corrente" tabindex="-1">
+  <h1 class="phase-title" id="panel-phase-name"></h1>
+  <div class="phase-content active" id="ph-0">
+    <div class="phase-tag">Fase 01 — ① Chi è Einstein? — La storia</div>
+    <div class="phase-body">
+      <p>Timeline animata della vita di Einstein: 1879–1955. Dal giovane curioso di Ulm al padre della Relatività Generale, rivoluzionando la nostra comprensione dello spazio, del tempo e della gravità.</p>
+      <p class="note">Visualizzazione: timeline animata della vita di Einstein.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-1">
+    <div class="phase-tag">Fase 02 — ② Il Principio di Equivalenza</div>
+    <div class="phase-body">
+      <p>Un ascensore che accelera nello spazio è indistinguibile da uno fermo in un campo gravitazionale. 'Il pensiero più felice della mia vita' — Albert Einstein, 1907. Equazione fondamentale: a = g.</p>
+      <p class="note">Visualizzazione: ascensore in accelerazione equivalente a campo gravitazionale.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">Fase 03 — ③ Lo Spazio-Tempo Curvo</div>
+    <div class="phase-body">
+      <p>La materia dice allo spazio-tempo come curvarsi; lo spazio-tempo dice alla materia come muoversi. La griglia si deforma attorno a una massa: i pianeti seguono geodetiche curve.</p>
+      <p class="note">Visualizzazione: griglia spazio-temporale deformata da una massa.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">Fase 04 — ④ Le Equazioni di Campo di Einstein</div>
+    <div class="phase-body">
+      <p>G_μν = 8πG/c⁴ · T_μν — 10 equazioni differenziali non lineari che collegano la geometria dello spazio-tempo alla distribuzione di materia ed energia. Pubblicate nel novembre 1915.</p>
+      <p class="note">Visualizzazione: equazioni di campo visualizzate con tensori.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">Fase 05 — ⑤ La Deflessione della Luce</div>
+    <div class="phase-body">
+      <p>La luce segue le geodetiche dello spazio-tempo curvo. Einstein previde una deflessione di 1.75 arcosecondi attorno al Sole — confermata da Arthur Eddington durante l'eclisse del 29 maggio 1919.</p>
+      <p class="note">Visualizzazione: deflessione della luce attorno al Sole nell'eclisse del 1919.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">Fase 06 — ⑥ Le Onde Gravitazionali</div>
+    <div class="phase-body">
+      <p>Due oggetti massicci in spirale generano increspature dello spazio-tempo che si propagano alla velocità della luce. Einstein le predisse nel 1916. LIGO le rilevò il 14 settembre 2015 (GW150914).</p>
+      <p class="note">Visualizzazione: spirale di stelle con emissione di onde gravitazionali.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">Fase 07 — ⑦ I Buchi Neri</div>
+    <div class="phase-body">
+      <p>Una regione dello spazio-tempo dove la curvatura è così intensa che nulla — nemmeno la luce — può sfuggire. Raggio di Schwarzschild: r_s = 2GM/c². La foto di M87* (EHT 2019) ha confermato la loro esistenza.</p>
+      <p class="note">Visualizzazione: buco nero con orizzonte degli eventi e accrescimento.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">Fase 08 — ⑧ La Costante Cosmologica e l'Universo</div>
+    <div class="phase-body">
+      <p>Einstein aggiunse Λ nel 1917 per un universo statico, poi la definì 'il più grande errore'. Ma nel 1998 l'espansione accelerata dell'universo richiese proprio Λ. Equazione di Friedmann: H² = (8πG/3)ρ + Λc²/3.</p>
+      <p class="note">Visualizzazione: espansione dell'universo con costante cosmologica.</p>
+    </div>
+  </div>
+</main>
+
+<div id="bottom" role="navigation">
+  <button class="btn active" onclick="go(0)">① Einstein</button>
+  <button class="btn" onclick="go(1)">② Equivalenza</button>
+  <button class="btn" onclick="go(2)">③ Spazio-Tempo</button>
+  <button class="btn" onclick="go(3)">④ Equazioni</button>
+  <button class="btn" onclick="go(4)">⑤ Luce</button>
+  <button class="btn" onclick="go(5)">⑥ Onde Gravitaz.</button>
+  <button class="btn" onclick="go(6)">⑦ Buchi Neri</button>
+  <button class="btn" onclick="go(7)">⑧ Cosmo</button>
+  <button id="pause-btn" onclick="togglePause()">⏸ Pausa</button>
+</div>
+
+<script>
+
+const cv = document.getElementById('canvas');
+const cx = cv.getContext('2d');
+let W, H;
+function resize(){
+  const pW=document.getElementById('panel').offsetWidth;
+  W=cv.width=Math.round(window.innerWidth-pW);
+  H=cv.height=window.innerHeight;
+}
+resize(); window.addEventListener('resize', resize);
+
+let ph = 0, T = 0, pT = 0, paused = false;
+
+const PHASES = [
+  { name:"① Chi è Einstein? — La storia",
+    desc:"Timeline animata della vita di Einstein: 1879–1955. Dal giovane curioso di Ulm al padre della Relatività Generale, rivoluzionando la nostra comprensione dello spazio, del tempo e della gravità." },
+  { name:"② Il Principio di Equivalenza",
+    desc:"Un ascensore che accelera nello spazio è indistinguibile da uno fermo in un campo gravitazionale. 'Il pensiero più felice della mia vita' — Albert Einstein, 1907. Equazione fondamentale: a = g." },
+  { name:"③ Lo Spazio-Tempo Curvo",
+    desc:"La materia dice allo spazio-tempo come curvarsi; lo spazio-tempo dice alla materia come muoversi. (J.A. Wheeler). La griglia si deforma attorno a una massa: i pianeti seguono geodetiche curve." },
+  { name:"④ Le Equazioni di Campo di Einstein",
+    desc:"G_μν = 8πG/c⁴ · T_μν — 10 equazioni differenziali non lineari che collegano la geometria dello spazio-tempo (sinistra) alla distribuzione di materia ed energia (destra). Pubblicate nel novembre 1915." },
+  { name:"⑤ La Deflessione della Luce",
+    desc:"La luce segue le geodetiche dello spazio-tempo curvo. Einstein previde una deflessione di 1.75 arcosecondi attorno al Sole — confermata da Arthur Eddington durante l'eclisse solare del 29 maggio 1919." },
+  { name:"⑥ Le Onde Gravitazionali",
+    desc:"Due oggetti massicci in spirale generano increspature dello spazio-tempo che si propagano alla velocità della luce. Einstein le predisse nel 1916. LIGO le rilevò per la prima volta il 14 settembre 2015 (GW150914)." },
+  { name:"⑦ I Buchi Neri",
+    desc:"Una regione dello spazio-tempo dove la curvatura è così intensa che nulla — nemmeno la luce — può sfuggire. Raggio di Schwarzschild: r_s = 2GM/c². La foto di M87* (EHT 2019) ha confermato la loro esistenza." },
+  { name:"⑧ La Costante Cosmologica e l'Universo",
+    desc:"Einstein aggiunse Λ nel 1917 per un universo statico, poi la definì 'il più grande errore'. Ma nel 1998 l'espansione accelerata dell'universo richiese proprio Λ. Equazione di Friedmann: H² = (8πG/3)ρ + Λc²/3." }
+];
+
+function go(n){
+  ph = n; pT = 0;
+  document.querySelectorAll('.btn').forEach((b,i) => b.classList.toggle('active', i === n));
+  document.querySelectorAll('.phase-content').forEach((el,i)=>el.classList.toggle('active',i===n));
+  document.getElementById('ui-phase').textContent=PHASES[n].name;
+  document.getElementById('panel').scrollTop=0;
+  const pn=document.getElementById('panel-phase-name'); if(pn) pn.textContent=PHASES[n].name;
+}
+
+function togglePause(){
+  paused = !paused;
+  document.getElementById('pause-btn').textContent = paused ? '▶ Riprendi' : '⏸ Pausa';
+}
+
+// ── helpers ──────────────────────────────────────────────
+function lbl(x,y,txt,col,sz,al='center',bold=false){
+  cx.fillStyle = col;
+  cx.font = `${bold?'bold ':''}${sz}px Georgia,serif`;
+  cx.textAlign = al; cx.fillText(txt, x, y);
+}
+function gw(col,blur){ cx.shadowColor=col; cx.shadowBlur=blur; }
+function ng(){ cx.shadowBlur=0; }
+
+const STAR_COUNT = 180;
+const AUTO_ADVANCE_FRAMES = 520;
+
+let _stars = null;
+function stars(){
+  if(!_stars) _stars = Array.from({length:STAR_COUNT}, ()=>({
+    x:Math.random()*Math.max(window.screen.width,3000),
+    y:Math.random()*Math.max(window.screen.height,2000),
+    r:Math.random()*1.3+0.2, o:Math.random()*0.4+0.1
+  }));
+  _stars.forEach(s=>{
+    cx.beginPath(); cx.arc(s.x, s.y, s.r, 0, Math.PI*2);
+    cx.fillStyle = `rgba(255,255,255,${s.o*(0.5+0.5*Math.sin(T*0.3+s.x*0.01))})`;
+    cx.fill();
+  });
+}
+
+function bg(){
+  const g = cx.createRadialGradient(W/2,H/2,80,W/2,H/2,Math.max(W,H)*0.9);
+  g.addColorStop(0,'#020920'); g.addColorStop(1,'#000010');
+  cx.fillStyle=g; cx.fillRect(0,0,W,H);
+}
+
+// ── FASE 0: Chi è Einstein? — Timeline ──────────────────
+const EVENTS = [
+  { year:1879, label:"Nasce a Ulm, Germania", col:'#f59e0b' },
+  { year:1905, label:"Annus Mirabilis:\nRS, E=mc², fotoelettrico", col:'#fbbf24' },
+  { year:1907, label:"Principio di Equivalenza:\n'il pensiero più felice'", col:'#fde68a' },
+  { year:1915, label:"Equazioni di campo\ndella RG pubblicate", col:'#a78bfa' },
+  { year:1919, label:"Eddington conferma\nla deflessione della luce", col:'#60a5fa' },
+  { year:1921, label:"Nobel per la Fisica\n(effetto fotoelettrico)", col:'#4ade80' },
+  { year:1955, label:"Muore a Princeton,\nNew Jersey", col:'#94a3b8' },
+];
+
+function ph0(){
+  const cx2 = W*0.5 - 60, cy2 = H*0.5;
+  const timelineY = cy2 + 30;
+  const xStart = W*0.08, xEnd = W*0.70;
+  const tLen = xEnd - xStart;
+  const yearMin = 1875, yearMax = 1960;
+
+  // Titolo "Albert Einstein"
+  cx.font = 'bold 42px Georgia,serif';
+  cx.textAlign = 'center';
+  gw('#f59e0b', 30);
+  cx.fillStyle = '#f59e0b';
+  cx.fillText('Albert Einstein', W/2 - 50, H*0.14);
+  ng();
+  lbl(W/2 - 50, H*0.14+28, '1879 – 1955', '#fde68a', 16);
+
+  // Linea del tempo
+  cx.beginPath();
+  cx.moveTo(xStart, timelineY);
+  cx.lineTo(xEnd + 20, timelineY);
+  cx.strokeStyle = '#334155';
+  cx.lineWidth = 2;
+  cx.stroke();
+
+  // Freccia
+  cx.beginPath();
+  cx.moveTo(xEnd+20, timelineY-5);
+  cx.lineTo(xEnd+30, timelineY);
+  cx.lineTo(xEnd+20, timelineY+5);
+  cx.fillStyle='#334155'; cx.fill();
+
+  // Animazione: eventi che appaiono progressivamente
+  const showCount = Math.min(EVENTS.length, Math.floor(pT/60)+1);
+  EVENTS.slice(0, showCount).forEach((ev, i) => {
+    const fx = xStart + (ev.year - yearMin)/(yearMax-yearMin)*tLen;
+    const above = i%2===0;
+    const lineH = above ? -90 : 90;
+    const textY = timelineY + lineH + (above ? -12 : 20);
+
+    // linea verticale
+    cx.beginPath();
+    cx.moveTo(fx, timelineY);
+    cx.lineTo(fx, timelineY + lineH*0.8);
+    cx.strokeStyle = ev.col+'99';
+    cx.lineWidth = 1;
+    cx.stroke();
+
+    // cerchio
+    cx.beginPath();
+    cx.arc(fx, timelineY, 6, 0, Math.PI*2);
+    cx.fillStyle = ev.col;
+    gw(ev.col, 15);
+    cx.fill();
+    ng();
+
+    // Anno
+    lbl(fx, timelineY + lineH*0.85 + (above?-20:30), ev.year.toString(), ev.col, 12, 'center', true);
+
+    // Testo (multilinea)
+    ev.label.split('\n').forEach((line, li) => {
+      lbl(fx, textY + li*14, line, '#cbd5e1', 10);
+    });
+  });
+
+  // Ritratto stilizzato Einstein (a destra)
+  const px = W*0.82, py = H*0.4;
+  drawEinsteinPortrait(px, py);
+}
+
+function drawEinsteinPortrait(cx2, cy2){
+  // Corpo/giacca
+  cx.beginPath();
+  cx.ellipse(cx2, cy2+75, 50, 70, 0, 0, Math.PI*2);
+  cx.fillStyle = '#1e293b';
+  cx.fill();
+
+  // Testa
+  cx.beginPath();
+  cx.ellipse(cx2, cy2, 42, 52, 0, 0, Math.PI*2);
+  cx.fillStyle = '#c4a882';
+  cx.fill();
+
+  // Capelli (bianchi e selvaggi)
+  for(let a = -Math.PI*0.1; a <= Math.PI*1.1; a += 0.3){
+    const hx = cx2 + Math.cos(a)*44 + (Math.random()-0.5)*8;
+    const hy = cy2 - 30 + Math.sin(a)*(-38) + (Math.random()-0.5)*6;
+    cx.beginPath();
+    cx.arc(hx, hy, 6, 0, Math.PI*2);
+    cx.fillStyle = '#e5e7eb';
+    cx.fill();
+  }
+
+  // Occhi
+  cx.beginPath(); cx.ellipse(cx2-14, cy2-5, 8, 6, 0, 0, Math.PI*2);
+  cx.fillStyle='white'; cx.fill();
+  cx.beginPath(); cx.ellipse(cx2+14, cy2-5, 8, 6, 0, 0, Math.PI*2);
+  cx.fillStyle='white'; cx.fill();
+  cx.beginPath(); cx.arc(cx2-14, cy2-5, 4, 0, Math.PI*2);
+  cx.fillStyle='#1e293b'; cx.fill();
+  cx.beginPath(); cx.arc(cx2+14, cy2-5, 4, 0, Math.PI*2);
+  cx.fillStyle='#1e293b'; cx.fill();
+
+  // Baffi
+  cx.beginPath();
+  cx.moveTo(cx2-20, cy2+15);
+  cx.quadraticCurveTo(cx2, cy2+22, cx2+20, cy2+15);
+  cx.strokeStyle='#9ca3af'; cx.lineWidth=3; cx.stroke();
+
+  // Lingua (iconica)
+  cx.beginPath();
+  cx.ellipse(cx2, cy2+28, 9, 11, 0, 0, Math.PI);
+  cx.fillStyle='#ef4444'; cx.fill();
+
+  lbl(cx2, cy2+145, '— Albert Einstein —', '#f59e0b', 12);
+}
+
+// ── FASE 1: Principio di Equivalenza ──────────────────
+function ph1(){
+  const mid = W/2;
+
+  lbl(mid, H*0.12, 'Il Principio di Equivalenza', '#f59e0b', 22, 'center', true);
+  lbl(mid, H*0.12+32, '"Il pensiero più felice della mia vita" — Einstein, 1907', '#fde68a', 13);
+
+  // Box equazione
+  cx.strokeStyle='#f59e0b44'; cx.lineWidth=1;
+  cx.strokeRect(mid-80, H*0.17, 160, 36);
+  lbl(mid, H*0.17+23, 'a  =  g', '#fde68a', 20, 'center', true);
+
+  const elevW = 110, elevH = 160;
+
+  // --- Ascensore SINISTRA: spazio, accelera su ---
+  const lx = W*0.22, ly = H*0.52;
+  drawElevator(lx, ly, elevW, elevH, '#1e40af', true);
+
+  // stella di sfondo (spazio)
+  cx.fillStyle='rgba(255,255,255,0.3)';
+  for(let i=0;i<20;i++){
+    const sx = lx - 160 + (i%5)*60 + Math.sin(T+i)*3;
+    const sy = ly - 100 + Math.floor(i/5)*60;
+    cx.beginPath(); cx.arc(sx,sy,1.2,0,Math.PI*2); cx.fill();
+  }
+
+  // Freccia di accelerazione (in alto)
+  const arrX = lx + elevW/2 + 35;
+  cx.beginPath();
+  cx.moveTo(arrX, ly + elevH*0.5);
+  cx.lineTo(arrX, ly - elevH*0.1);
+  cx.strokeStyle='#60a5fa'; cx.lineWidth=2.5; cx.stroke();
+  cx.beginPath();
+  cx.moveTo(arrX-7, ly - elevH*0.1 + 10);
+  cx.lineTo(arrX, ly - elevH*0.1);
+  cx.lineTo(arrX+7, ly - elevH*0.1 + 10);
+  cx.strokeStyle='#60a5fa'; cx.lineWidth=2; cx.stroke();
+  lbl(arrX+25, ly + elevH*0.2, 'a ↑', '#60a5fa', 14);
+
+  // pallina che "cade" nel riferimento dell'ascensore
+  const ballProgress = (T*0.5) % 1;
+  const ballY1 = ly - elevH*0.3 + ballProgress * elevH*0.55;
+  cx.beginPath(); cx.arc(lx + elevW/2, ballY1, 8, 0, Math.PI*2);
+  cx.fillStyle='#fbbf24'; gw('#fbbf24',12); cx.fill(); ng();
+
+  lbl(lx + elevW/2, ly + elevH + 25, 'Spazio', '#94a3b8', 12);
+  lbl(lx + elevW/2, ly + elevH + 42, '(accelera verso l\'alto)', '#64748b', 10);
+
+  // --- Ascensore DESTRA: Terra, campo gravitazionale ---
+  const rx = W*0.65, ry = H*0.52;
+  drawElevator(rx, ry, elevW, elevH, '#065f46', false);
+
+  // Terra sotto
+  cx.beginPath();
+  cx.ellipse(rx + elevW/2, ry + elevH + 50, 80, 18, 0, 0, Math.PI*2);
+  const earthGrad = cx.createRadialGradient(rx+elevW/2, ry+elevH+50, 0, rx+elevW/2, ry+elevH+50, 80);
+  earthGrad.addColorStop(0,'#1d4ed8');
+  earthGrad.addColorStop(0.5,'#166534');
+  earthGrad.addColorStop(1,'#1d4ed8');
+  cx.fillStyle = earthGrad;
+  gw('#60a5fa',15); cx.fill(); ng();
+  lbl(rx+elevW/2, ry+elevH+55, '🌍', '#fff', 16);
+
+  // frecce g verso il basso
+  const garr = rx + elevW/2 + 35;
+  cx.beginPath();
+  cx.moveTo(garr, ry - elevH*0.05);
+  cx.lineTo(garr, ry + elevH*0.55);
+  cx.strokeStyle='#4ade80'; cx.lineWidth=2.5; cx.stroke();
+  cx.beginPath();
+  cx.moveTo(garr-7, ry + elevH*0.55 - 10);
+  cx.lineTo(garr, ry + elevH*0.55);
+  cx.lineTo(garr+7, ry + elevH*0.55 - 10);
+  cx.strokeStyle='#4ade80'; cx.lineWidth=2; cx.stroke();
+  lbl(garr+25, ry + elevH*0.3, 'g ↓', '#4ade80', 14);
+
+  // pallina che cade (stessa traiettoria)
+  const ballY2 = ry - elevH*0.3 + ballProgress * elevH*0.55;
+  cx.beginPath(); cx.arc(rx + elevW/2, ballY2, 8, 0, Math.PI*2);
+  cx.fillStyle='#fbbf24'; gw('#fbbf24',12); cx.fill(); ng();
+
+  lbl(rx + elevW/2, ry + elevH + 25, 'Terra', '#94a3b8', 12);
+  lbl(rx + elevW/2, ry + elevH + 42, '(campo gravitazionale)', '#64748b', 10);
+
+  // "=" centrale
+  lbl(W/2, H*0.5 + 20, '≡', '#f59e0b', 40, 'center', true);
+  lbl(W/2, H*0.5 + 55, 'localmente\nindistinguibili', '#94a3b8', 11);
+}
+
+function drawElevator(x, y, w, h, col, inSpace){
+  // sfondo
+  cx.fillStyle = '#0f172a';
+  cx.fillRect(x, y-h, w, h);
+  // bordi
+  cx.strokeStyle = col;
+  cx.lineWidth = 3;
+  cx.strokeRect(x, y-h, w, h);
+  // linee orizzontali interne (pareti)
+  cx.strokeStyle = col+'44';
+  cx.lineWidth = 1;
+  for(let i=1;i<4;i++){
+    cx.beginPath();
+    cx.moveTo(x, y-h+i*(h/4));
+    cx.lineTo(x+w, y-h+i*(h/4));
+    cx.stroke();
+  }
+  // personaggio stilizzato
+  const px2 = x+w*0.4, py2 = y - 20;
+  // piedi
+  cx.beginPath(); cx.moveTo(px2-8, py2); cx.lineTo(px2-8, py2-18);
+  cx.moveTo(px2+8, py2); cx.lineTo(px2+8, py2-18);
+  cx.strokeStyle='#94a3b8'; cx.lineWidth=2; cx.stroke();
+  // corpo
+  cx.beginPath(); cx.moveTo(px2, py2-18); cx.lineTo(px2, py2-42);
+  cx.stroke();
+  // braccia
+  cx.beginPath(); cx.moveTo(px2-14, py2-32); cx.lineTo(px2+14, py2-32);
+  cx.stroke();
+  // testa
+  cx.beginPath(); cx.arc(px2, py2-50, 10, 0, Math.PI*2);
+  cx.fillStyle='#c4a882'; cx.fill();
+}
+
+// ── FASE 2: Spazio-Tempo Curvo ────────────────────────
+function ph2(){
+  const cx2 = W/2 - 80, cy2 = H/2 + 10;
+  const gridSize = Math.min(W*0.55, H*0.65);
+  const N = 14;
+  const step = gridSize / N;
+
+  lbl(W/2 - 80, H*0.1, 'Lo Spazio-Tempo Curvo', '#a78bfa', 22, 'center', true);
+
+  // Massa centrale (sole)
+  const massR = 28;
+  const sunGrad = cx.createRadialGradient(cx2, cy2, 0, cx2, cy2, massR*2.5);
+  sunGrad.addColorStop(0,'#fde68a');
+  sunGrad.addColorStop(0.4,'#f59e0b');
+  sunGrad.addColorStop(1,'rgba(245,158,11,0)');
+  cx.fillStyle = sunGrad;
+  cx.fillRect(cx2-massR*3, cy2-massR*3, massR*6, massR*6);
+  cx.beginPath(); cx.arc(cx2, cy2, massR, 0, Math.PI*2);
+  const sunInner = cx.createRadialGradient(cx2,cy2,0,cx2,cy2,massR);
+  sunInner.addColorStop(0,'#fff7ed');
+  sunInner.addColorStop(0.5,'#fde68a');
+  sunInner.addColorStop(1,'#f59e0b');
+  cx.fillStyle=sunInner; gw('#fbbf24',30); cx.fill(); ng();
+
+  lbl(cx2, cy2 + massR + 18, 'Sole', '#fde68a', 12);
+
+  // Griglia deformata (rubber sheet)
+  const x0 = cx2 - gridSize/2, y0 = cy2 - gridSize/2;
+  cx.lineWidth = 0.8;
+
+  for(let i=0; i<=N; i++){
+    cx.beginPath();
+    let started = false;
+    for(let j=0; j<=N; j++){
+      const gx = x0 + j*step;
+      const gy = y0 + i*step;
+      const [dx2, dy2] = warp(gx, gy, cx2, cy2, gridSize);
+      if(!started){ cx.moveTo(dx2, dy2); started=true; }
+      else cx.lineTo(dx2, dy2);
+    }
+    const dist2 = Math.abs(i - N/2) / (N/2);
+    cx.strokeStyle = `rgba(139,92,246,${0.2+dist2*0.4})`;
+    cx.stroke();
+  }
+  for(let j=0; j<=N; j++){
+    cx.beginPath();
+    let started = false;
+    for(let i=0; i<=N; i++){
+      const gx = x0 + j*step;
+      const gy = y0 + i*step;
+      const [dx2, dy2] = warp(gx, gy, cx2, cy2, gridSize);
+      if(!started){ cx.moveTo(dx2, dy2); started=true; }
+      else cx.lineTo(dx2, dy2);
+    }
+    const dist2 = Math.abs(j - N/2) / (N/2);
+    cx.strokeStyle = `rgba(139,92,246,${0.2+dist2*0.4})`;
+    cx.stroke();
+  }
+
+  // Pianeta in orbita
+  const orbitR = gridSize*0.31;
+  const angle = T * 0.4;
+  const px3 = cx2 + Math.cos(angle) * orbitR;
+  const py3 = cy2 + Math.sin(angle) * orbitR * 0.38;
+  cx.beginPath(); cx.arc(px3, py3, 9, 0, Math.PI*2);
+  const pGrad = cx.createRadialGradient(px3,py3,0,px3,py3,9);
+  pGrad.addColorStop(0,'#60a5fa'); pGrad.addColorStop(1,'#1d4ed8');
+  cx.fillStyle=pGrad; gw('#60a5fa',12); cx.fill(); ng();
+
+  // Traccia orbita
+  cx.beginPath();
+  cx.ellipse(cx2, cy2, orbitR, orbitR*0.38, 0, 0, Math.PI*2);
+  cx.strokeStyle='rgba(96,165,250,0.2)'; cx.lineWidth=1; cx.stroke();
+
+  // Pannello destra: metrica Schwarzschild
+  const px4 = W*0.78, py4 = H*0.28;
+  cx.strokeStyle='#4c1d9566'; cx.lineWidth=1;
+  cx.strokeRect(px4-120, py4, 240, 160);
+  cx.fillStyle='rgba(76,29,149,0.15)'; cx.fillRect(px4-120, py4, 240, 160);
+  lbl(px4, py4+20, 'Metrica di Schwarzschild', '#a78bfa', 11, 'center', true);
+  lbl(px4, py4+45, 'ds² = -(1-r_s/r)c²dt²', '#e2e8f0', 11);
+  lbl(px4, py4+62, '+ (1-r_s/r)⁻¹dr²', '#e2e8f0', 11);
+  lbl(px4, py4+79, '+ r²dΩ²', '#e2e8f0', 11);
+  lbl(px4, py4+103, 'r_s = 2GM/c²', '#fde68a', 13, 'center', true);
+  lbl(px4, py4+125, '(Raggio di Schwarzschild)', '#94a3b8', 10);
+  lbl(px4, py4+148, '☞ r→r_s : singolarità', '#ef444499', 10);
+
+  // Quote Wheeler
+  lbl(W/2-80, H*0.88, '"La materia dice allo spazio-tempo come curvarsi;', '#94a3b8', 11);
+  lbl(W/2-80, H*0.88+16, 'lo spazio-tempo dice alla materia come muoversi." — J.A. Wheeler', '#94a3b8', 11);
+}
+
+function warp(gx, gy, cx2, cy2, size){
+  const dx2 = gx - cx2, dy2 = gy - cy2;
+  const r = Math.sqrt(dx2*dx2 + dy2*dy2);
+  const maxR = size*0.48;
+  if(r < 5) return [cx2, cy2];
+  const strength = Math.min(1, 55 / r);
+  return [gx - dx2*strength*0.62, gy - dy2*strength*0.62];
+}
+
+// ── FASE 3: Equazioni di Campo ────────────────────────
+function ph3(){
+  // Titolo
+  lbl(W/2, H*0.1, 'Le Equazioni di Campo di Einstein', '#a78bfa', 22, 'center', true);
+  lbl(W/2, H*0.1+30, 'Novembre 1915 — La rivoluzione della gravità', '#94a3b8', 13);
+
+  // Equazione centrale con glow
+  cx.font = 'bold 32px Georgia,serif';
+  cx.textAlign = 'center';
+  gw('#a78bfa', 25);
+  cx.fillStyle = '#e9d5ff';
+  cx.fillText('G', W/2-140, H*0.28);
+  ng();
+  cx.font = '18px Georgia,serif';
+  cx.fillStyle = '#c4b5fd';
+  cx.fillText('μν', W/2-120, H*0.28+8);
+  cx.font = 'bold 30px Georgia,serif';
+  cx.fillStyle = '#e2e8f0';
+  cx.fillText('=', W/2-70, H*0.28);
+  cx.font = '22px Georgia,serif';
+  cx.fillStyle = '#fde68a';
+  cx.fillText('8πG', W/2-20, H*0.28-8);
+  cx.fillText('────', W/2-10, H*0.28+2);
+  cx.fillText('c⁴', W/2-8, H*0.28+22);
+  cx.font = 'bold 32px Georgia,serif';
+  cx.fillStyle = '#4ade80';
+  gw('#4ade80',20);
+  cx.fillText('T', W/2+75, H*0.28);
+  ng();
+  cx.font = '18px Georgia,serif';
+  cx.fillStyle = '#86efac';
+  cx.fillText('μν', W/2+92, H*0.28+8);
+
+  // Box spiegazione termini
+  const boxY = H*0.35;
+  const boxes = [
+    { x: W*0.12, label:'G_μν', name:'Tensore di Einstein', desc:'Curvatura dello\nspazio-tempo', col:'#a78bfa' },
+    { x: W*0.40, label:'8πG/c⁴', name:'Costante di accoppiamento', desc:'Lega geometria\nalla materia', col:'#f59e0b' },
+    { x: W*0.68, label:'T_μν', name:'Tensore Energia-Impulso', desc:'Distribuzione di\nmateria ed energia', col:'#4ade80' },
+  ];
+  boxes.forEach(b=>{
+    cx.strokeStyle = b.col+'55'; cx.lineWidth=1;
+    cx.strokeRect(b.x-75, boxY, 150, 95);
+    cx.fillStyle = b.col+'12'; cx.fillRect(b.x-75, boxY, 150, 95);
+    lbl(b.x, boxY+22, b.label, b.col, 16, 'center', true);
+    lbl(b.x, boxY+42, b.name, '#e2e8f0', 9.5);
+    b.desc.split('\n').forEach((d,i)=> lbl(b.x, boxY+60+i*14, d, '#94a3b8', 10));
+  });
+
+  // Animazione sinistra: griglia curva
+  const lx2 = W*0.19, ly2 = H*0.67;
+  const gs = 100, ns = 7;
+  const sp = gs/ns;
+  for(let ii=0;ii<=ns;ii++){
+    cx.beginPath();
+    for(let jj=0;jj<=ns;jj++){
+      const gx2=lx2-gs/2+jj*sp, gy2=ly2-gs/2+ii*sp;
+      const [wx,wy] = warp(gx2,gy2,lx2,ly2,gs);
+      jj===0?cx.moveTo(wx,wy):cx.lineTo(wx,wy);
+    }
+    cx.strokeStyle='rgba(139,92,246,0.5)'; cx.lineWidth=0.8; cx.stroke();
+  }
+  for(let jj=0;jj<=ns;jj++){
+    cx.beginPath();
+    for(let ii=0;ii<=ns;ii++){
+      const gx2=lx2-gs/2+jj*sp, gy2=ly2-gs/2+ii*sp;
+      const [wx,wy] = warp(gx2,gy2,lx2,ly2,gs);
+      ii===0?cx.moveTo(wx,wy):cx.lineTo(wx,wy);
+    }
+    cx.strokeStyle='rgba(139,92,246,0.5)'; cx.lineWidth=0.8; cx.stroke();
+  }
+  cx.beginPath(); cx.arc(lx2,ly2,10,0,Math.PI*2);
+  cx.fillStyle='#f59e0b'; gw('#f59e0b',15); cx.fill(); ng();
+  lbl(lx2, ly2+70, 'Geometria (G_μν)', '#a78bfa', 11);
+
+  // Frecce bidirezionali
+  const arrowCx = W/2;
+  cx.beginPath();
+  cx.moveTo(arrowCx-50, ly2);
+  cx.lineTo(arrowCx+50, ly2);
+  cx.strokeStyle='#f59e0b'; cx.lineWidth=2; cx.stroke();
+  [arrowCx-50, arrowCx+50].forEach((ax,dir)=>{
+    cx.beginPath();
+    if(dir===0){
+      cx.moveTo(ax+10, ly2-6); cx.lineTo(ax, ly2); cx.lineTo(ax+10, ly2+6);
+    } else {
+      cx.moveTo(ax-10, ly2-6); cx.lineTo(ax, ly2); cx.lineTo(ax-10, ly2+6);
+    }
+    cx.strokeStyle='#f59e0b'; cx.lineWidth=2; cx.stroke();
+  });
+
+  // Animazione destra: particelle che si muovono
+  const rx2 = W*0.81, ry2 = ly2;
+  for(let p=0;p<12;p++){
+    const a=p/12*Math.PI*2+T*0.4;
+    const rr=30+15*Math.sin(T+p);
+    const ppx=rx2+Math.cos(a)*rr, ppy=ry2+Math.sin(a)*rr*0.5;
+    cx.beginPath(); cx.arc(ppx,ppy,4,0,Math.PI*2);
+    cx.fillStyle=`hsl(${140+p*10},70%,60%)`; gw(`hsl(${140+p*10},70%,60%)`,8); cx.fill(); ng();
+  }
+  lbl(rx2, ry2+70, 'Materia (T_μν)', '#4ade80', 11);
+
+  // Box 10 equazioni
+  const eq10x = W*0.5, eq10y = H*0.78;
+  cx.strokeStyle='#a78bfa33'; cx.lineWidth=1;
+  cx.strokeRect(eq10x-180, eq10y, 360, 55);
+  cx.fillStyle='rgba(139,92,246,0.06)'; cx.fillRect(eq10x-180, eq10y, 360, 55);
+  lbl(eq10x, eq10y+18, '10 equazioni differenziali alle derivate parziali non-lineari accoppiate', '#94a3b8', 10);
+  lbl(eq10x, eq10y+36, '(μ,ν = 0,1,2,3 → 16 componenti → 10 indipendenti per simmetria)', '#64748b', 9.5);
+}
+
+// ── FASE 4: Deflessione della Luce ───────────────────
+function ph4(){
+  lbl(W/2, H*0.1, 'La Deflessione della Luce', '#fde68a', 22, 'center', true);
+  lbl(W/2, H*0.1+30, 'Confermata da Arthur Eddington — Eclisse solare, 29 maggio 1919', '#94a3b8', 13);
+
+  const scx = W*0.45, scy = H*0.48;
+  const sunR = 38;
+
+  // Glow del sole
+  const sGrad = cx.createRadialGradient(scx,scy,0,scx,scy,sunR*4);
+  sGrad.addColorStop(0,'rgba(253,230,138,0.4)');
+  sGrad.addColorStop(1,'rgba(245,158,11,0)');
+  cx.fillStyle=sGrad; cx.fillRect(scx-sunR*4, scy-sunR*4, sunR*8, sunR*8);
+  cx.beginPath(); cx.arc(scx,scy,sunR,0,Math.PI*2);
+  const sSurf = cx.createRadialGradient(scx,scy,0,scx,scy,sunR);
+  sSurf.addColorStop(0,'#fff7ed'); sSurf.addColorStop(0.6,'#fde68a'); sSurf.addColorStop(1,'#f59e0b');
+  cx.fillStyle=sSurf; gw('#fde68a',25); cx.fill(); ng();
+  lbl(scx, scy+sunR+18, '☀ Sole', '#fde68a', 12);
+
+  // Previsione Newton (retta tratteggiata)
+  const lightY1 = scy - sunR - 60;
+  cx.setLineDash([6,5]);
+  cx.beginPath();
+  cx.moveTo(W*0.05, lightY1);
+  cx.lineTo(W*0.95, lightY1);
+  cx.strokeStyle='rgba(253,230,138,0.3)'; cx.lineWidth=2; cx.stroke();
+  cx.setLineDash([]);
+  lbl(W*0.06, lightY1-10, 'Newton (0.87 arcsec)', '#94a3b8', 10, 'left');
+
+  // Raggio di luce curvo (Einstein) — animato
+  const t2 = (T * 0.6) % (Math.PI*2);
+  const progress = (Math.sin(t2) * 0.5 + 0.5);
+  const rayX = W*0.05 + progress*(W*0.9);
+
+  // Traccia il percorso curvo
+  cx.beginPath();
+  const steps2 = 80;
+  for(let i=0;i<=steps2;i++){
+    const rx3 = W*0.05 + i/steps2*(W*0.9);
+    const dx3 = rx3 - scx;
+    const dist = Math.sqrt(dx3*dx3+(lightY1-scy)*(lightY1-scy));
+    const deflect = 55*sunR / Math.max(dist,sunR*0.5);
+    const ry3 = lightY1 + deflect;
+    i===0 ? cx.moveTo(rx3,ry3) : cx.lineTo(rx3,ry3);
+  }
+  cx.strokeStyle='#fde68a'; cx.lineWidth=2.5; gw('#fde68a',15); cx.stroke(); ng();
+
+  // Pallino della luce in movimento
+  const lx3 = W*0.05 + progress*(W*0.9);
+  const ldx = lx3 - scx;
+  const ldist = Math.sqrt(ldx*ldx+(lightY1-scy)*(lightY1-scy));
+  const ldeflect = 55*sunR / Math.max(ldist,sunR*0.5);
+  const ly3 = lightY1 + ldeflect;
+  cx.beginPath(); cx.arc(lx3, ly3, 6, 0, Math.PI*2);
+  cx.fillStyle='#fde68a'; gw('#fde68a',20); cx.fill(); ng();
+
+  lbl(W*0.06, lightY1 + 12, 'Einstein: 1.75 arcsec', '#fde68a', 10, 'left');
+
+  // Angolo di deflessione
+  const deflAngle = Math.atan2(55*sunR/Math.max(Math.abs(scx-W*0.95),1), W*0.95-scx);
+  cx.beginPath();
+  cx.arc(W*0.88, lightY1, 30, -deflAngle, 0);
+  cx.strokeStyle='#f59e0b'; cx.lineWidth=1.5; cx.stroke();
+  lbl(W*0.88+40, lightY1+8, '1.75"', '#f59e0b', 11, 'left');
+
+  // Eclisse del 1919 (cerchio solare con stelle displaced)
+  const ecx = W*0.82, ecy = H*0.67;
+  lbl(ecx, ecy-90, 'Eclisse 1919 — Eddington', '#94a3b8', 11);
+  // corona solare
+  const ecGrad = cx.createRadialGradient(ecx,ecy,20,ecx,ecy,55);
+  ecGrad.addColorStop(0,'rgba(253,230,138,0)');
+  ecGrad.addColorStop(0.6,'rgba(253,230,138,0.15)');
+  ecGrad.addColorStop(1,'rgba(253,230,138,0)');
+  cx.fillStyle=ecGrad; cx.fillRect(ecx-55,ecy-55,110,110);
+  // disco lunare
+  cx.beginPath(); cx.arc(ecx,ecy,22,0,Math.PI*2);
+  cx.fillStyle='#0f172a'; cx.fill();
+  cx.strokeStyle='rgba(253,230,138,0.4)'; cx.lineWidth=2; cx.stroke();
+  // stelle attorno (displaced)
+  for(let si=0;si<8;si++){
+    const sa = si/8*Math.PI*2;
+    const sr = 45+Math.sin(T*0.2+si)*2;
+    const sx3=ecx+Math.cos(sa)*sr, sy3=ecy+Math.sin(sa)*sr;
+    cx.beginPath(); cx.arc(sx3,sy3,2.5,0,Math.PI*2);
+    cx.fillStyle='#fde68a'; gw('#fde68a',6); cx.fill(); ng();
+    // freccia displacement
+    const dispR = 4;
+    cx.beginPath();
+    cx.moveTo(sx3,sy3);
+    cx.lineTo(sx3+Math.cos(sa)*dispR, sy3+Math.sin(sa)*dispR);
+    cx.strokeStyle='#60a5fa'; cx.lineWidth=1; cx.stroke();
+  }
+
+  // Box risultato
+  const bx5 = W*0.12, by5 = H*0.7;
+  cx.strokeStyle='#fde68a44'; cx.lineWidth=1;
+  cx.strokeRect(bx5, by5, 260, 75);
+  cx.fillStyle='rgba(253,230,138,0.05)'; cx.fillRect(bx5, by5, 260, 75);
+  lbl(bx5+130, by5+20, '🏆 Eddington 1919', '#fde68a', 13, 'center', true);
+  lbl(bx5+130, by5+40, 'Deflessione misurata: 1.75 ± 0.3 arcsec', '#94a3b8', 10);
+  lbl(bx5+130, by5+57, 'Previsione Einstein: 1.75 arcsec ✓', '#4ade80', 10);
+  lbl(bx5+130, by5+72, '(Newton avrebbe previsto solo 0.87 arcsec)', '#64748b', 9.5);
+}
+
+// ── FASE 5: Onde Gravitazionali ───────────────────────
+function ph5(){
+  lbl(W/2, H*0.09, 'Le Onde Gravitazionali', '#60a5fa', 22, 'center', true);
+  lbl(W/2, H*0.09+30, 'Einstein 1916 → LIGO: GW150914 — 14 settembre 2015', '#94a3b8', 13);
+
+  const scx2 = W*0.42, scy2 = H*0.44;
+
+  // Sistema binario: due buchi neri in spirale
+  const orbitPhase = T * 0.7;
+  const orbitR2 = 55 + Math.max(0, 40 - pT*0.08);
+  const bh1x = scx2 + Math.cos(orbitPhase)*orbitR2;
+  const bh1y = scy2 + Math.sin(orbitPhase)*orbitR2*0.4;
+  const bh2x = scx2 - Math.cos(orbitPhase)*orbitR2;
+  const bh2y = scy2 - Math.sin(orbitPhase)*orbitR2*0.4;
+
+  // Traccia spirale
+  cx.beginPath();
+  for(let si=0; si<200; si++){
+    const sa = orbitPhase - si*0.05;
+    const sr = orbitR2 + si*0.5;
+    const sx3=scx2+Math.cos(sa)*sr, sy3=scy2+Math.sin(sa)*sr*0.4;
+    si===0?cx.moveTo(sx3,sy3):cx.lineTo(sx3,sy3);
+  }
+  cx.strokeStyle='rgba(96,165,250,0.1)'; cx.lineWidth=1; cx.stroke();
+
+  // Onde gravitazionali circolari
+  for(let wi=1; wi<=7; wi++){
+    const wr = (60 + wi*50 + (T*35)%(50)) % 400;
+    if(wr > 10 && wr < Math.max(W,H)){
+      const alpha = Math.max(0, 0.4*(1 - wr/350));
+      cx.beginPath();
+      cx.ellipse(scx2, scy2, wr, wr*0.5, 0, 0, Math.PI*2);
+      cx.strokeStyle=`rgba(96,165,250,${alpha})`;
+      cx.lineWidth = 1.5;
+      gw('#60a5fa', 5); cx.stroke(); ng();
+    }
+  }
+
+  // Buchi neri
+  [bh1x,bh2x].forEach((bx3,bi)=>{
+    const by3 = bi===0?bh1y:bh2y;
+    const bhR = 14;
+    const bhGrad = cx.createRadialGradient(bx3,by3,0,bx3,by3,bhR*2.5);
+    bhGrad.addColorStop(0,'rgba(239,68,68,0.3)');
+    bhGrad.addColorStop(0.5,'rgba(239,68,68,0)');
+    cx.fillStyle=bhGrad; cx.fillRect(bx3-bhR*2.5,by3-bhR*2.5,bhR*5,bhR*5);
+    cx.beginPath(); cx.arc(bx3,by3,bhR,0,Math.PI*2);
+    cx.fillStyle='#000'; gw('#ef4444',20); cx.fill(); ng();
+    cx.beginPath(); cx.arc(bx3,by3,bhR,0,Math.PI*2);
+    cx.strokeStyle='rgba(239,68,68,0.6)'; cx.lineWidth=2; cx.stroke();
+  });
+
+  // Etichette
+  lbl(scx2, scy2-orbitR2*0.5-30, 'Inspiral', '#94a3b8', 10);
+  if(orbitR2 < 30) lbl(scx2, scy2-20, 'MERGER!', '#ef4444', 16, 'center', true);
+
+  // Segnale GW in basso (chirp)
+  const sigY = H*0.72, sigH = 60;
+  const sigX0 = W*0.08, sigX1 = W*0.75;
+  lbl(W*0.42, sigY-18, 'Segnale GW — forma d\'onda chirp', '#60a5fa', 11);
+
+  cx.beginPath();
+  cx.moveTo(sigX0, sigY);
+  for(let xi=0; xi<= sigX1-sigX0; xi++){
+    const p = xi/(sigX1-sigX0);
+    const freq = 3 + p*18;
+    const amp = p*sigH*0.5;
+    const phase2 = T*0.5;
+    const sy4 = sigY + amp*Math.sin(xi*freq*0.05 + phase2);
+    cx.lineTo(sigX0+xi, sy4);
+  }
+  cx.strokeStyle='#60a5fa'; cx.lineWidth=1.8; gw('#60a5fa',8); cx.stroke(); ng();
+
+  // Etichette chirp
+  lbl(sigX0+20, sigY+sigH*0.6+15, 'Inspiral', '#64748b', 9, 'left');
+  lbl(sigX0+(sigX1-sigX0)*0.65, sigY+sigH*0.6+15, 'Merger', '#ef4444', 9);
+  lbl(sigX0+(sigX1-sigX0)*0.85, sigY+sigH*0.6+15, 'Ringdown', '#94a3b8', 9);
+
+  // Box LIGO
+  const lbx = W*0.78, lby = H*0.55;
+  cx.strokeStyle='#60a5fa44'; cx.lineWidth=1;
+  cx.strokeRect(lbx-90, lby, 180, 130);
+  cx.fillStyle='rgba(96,165,250,0.05)'; cx.fillRect(lbx-90, lby, 180, 130);
+  lbl(lbx, lby+20, '🌊 LIGO 2015', '#60a5fa', 13, 'center', true);
+  lbl(lbx, lby+40, 'GW150914', '#e2e8f0', 11);
+  lbl(lbx, lby+58, '2 buchi neri:', '#94a3b8', 10);
+  lbl(lbx, lby+73, '36 M☉ + 29 M☉', '#e2e8f0', 10);
+  lbl(lbx, lby+91, '→ 62 M☉ + onde', '#4ade80', 10);
+  lbl(lbx, lby+108, 'Distanza: ~1.3 mld ly', '#94a3b8', 9.5);
+  lbl(lbx, lby+123, 'ΔL/L ~ 10⁻²¹', '#fde68a', 10);
+}
+
+// ── FASE 6: Buchi Neri ────────────────────────────────
+function ph6(){
+  lbl(W/2-60, H*0.09, 'I Buchi Neri', '#ef4444', 22, 'center', true);
+  lbl(W/2-60, H*0.09+30, 'Event Horizon Telescope — M87* (2019) · Sgr A* (2022)', '#94a3b8', 13);
+
+  const bcx = W*0.38, bcy = H*0.5;
+  const rs = 60; // raggio di Schwarzschild visivo
+
+  // Disco di accrescimento (particelle in orbita)
+  for(let di=0; di<3; di++){
+    const innerR = rs*1.5 + di*25;
+    const outerR = innerR + 22;
+    const ang0 = T*(0.5 - di*0.1);
+    cx.beginPath();
+    cx.ellipse(bcx, bcy, outerR, outerR*0.28, 0.3, 0, Math.PI*2);
+    const diskGrad = cx.createLinearGradient(bcx-outerR,bcy,bcx+outerR,bcy);
+    const temps = ['rgba(253,186,116,0.7)','rgba(249,115,22,0.8)','rgba(239,68,68,0.6)'];
+    diskGrad.addColorStop(0,temps[di]);
+    diskGrad.addColorStop(0.5,'rgba(255,255,200,0.9)');
+    diskGrad.addColorStop(1,temps[di]);
+    cx.fillStyle=diskGrad;
+    gw(temps[di],8); cx.fill(); ng();
+  }
+
+  // Particelle del disco
+  for(let p=0;p<30;p++){
+    const pa = p/30*Math.PI*2 + T*(0.3+p*0.008);
+    const pr = rs*1.5 + (p%3)*25 + Math.sin(T+p)*4;
+    const px5=bcx+Math.cos(pa)*pr, py5=bcy+Math.sin(pa)*pr*0.28;
+    cx.beginPath(); cx.arc(px5,py5,2.5,0,Math.PI*2);
+    const temp2 = p/30;
+    cx.fillStyle=`hsl(${30-temp2*30},90%,${60+temp2*20}%)`;
+    cx.fill();
+  }
+
+  // Effetto lensing — raggi di luce curvati
+  for(let li=0; li<8; li++){
+    const la = li/8*Math.PI*2;
+    const lRay = 180;
+    cx.beginPath();
+    for(let s3=0; s3<=30; s3++){
+      const p2 = s3/30;
+      const lx4 = bcx + Math.cos(la + p2*0.4)*lRay*p2;
+      const ly4 = bcy + Math.sin(la + p2*0.4)*lRay*p2*0.6;
+      const dr = Math.sqrt((lx4-bcx)**2+(ly4-bcy)**2);
+      if(dr < rs*0.85) break;
+      s3===0 ? cx.moveTo(lx4,ly4) : cx.lineTo(lx4,ly4);
+    }
+    cx.strokeStyle=`rgba(253,230,138,${0.15+li*0.03})`; cx.lineWidth=1;
+    gw('#fde68a',3); cx.stroke(); ng();
+  }
+
+  // Alone fotosfera
+  const pGrad2 = cx.createRadialGradient(bcx,bcy,rs*0.85,bcx,bcy,rs*1.4);
+  pGrad2.addColorStop(0,'rgba(253,230,138,0.5)');
+  pGrad2.addColorStop(0.4,'rgba(245,158,11,0.2)');
+  pGrad2.addColorStop(1,'rgba(245,158,11,0)');
+  cx.fillStyle=pGrad2; cx.fillRect(bcx-rs*1.5,bcy-rs*1.5,rs*3,rs*3);
+
+  // Orizzonte degli eventi
+  cx.beginPath(); cx.arc(bcx,bcy,rs,0,Math.PI*2);
+  cx.fillStyle='#000'; gw('#ef4444',18); cx.fill(); ng();
+  cx.beginPath(); cx.arc(bcx,bcy,rs,0,Math.PI*2);
+  cx.strokeStyle='rgba(239,68,68,0.6)'; cx.lineWidth=2; cx.stroke();
+
+  // Singolarità
+  cx.beginPath(); cx.arc(bcx,bcy,4,0,Math.PI*2);
+  cx.fillStyle='#fff'; cx.fill();
+
+  // Jet relativistico (poli)
+  for(let side=0;side<2;side++){
+    const jDir = side===0?-1:1;
+    const jetGrad = cx.createLinearGradient(bcx,bcy,bcx+W*0.06*Math.cos(T*0.1),bcy+jDir*H*0.25);
+    jetGrad.addColorStop(0,'rgba(96,165,250,0.8)');
+    jetGrad.addColorStop(0.5,'rgba(167,139,250,0.4)');
+    jetGrad.addColorStop(1,'rgba(96,165,250,0)');
+    cx.beginPath();
+    cx.moveTo(bcx-12, bcy);
+    cx.lineTo(bcx+12, bcy);
+    cx.lineTo(bcx+20, bcy+jDir*H*0.25);
+    cx.lineTo(bcx-20, bcy+jDir*H*0.25);
+    cx.closePath();
+    cx.fillStyle=jetGrad; gw('#60a5fa',12); cx.fill(); ng();
+  }
+  lbl(bcx+35, bcy-H*0.22, 'Jet', '#60a5fa', 10);
+
+  // Labels
+  lbl(bcx, bcy+rs+20, 'Orizzonte degli eventi', '#ef4444', 11);
+  lbl(bcx, bcy+rs+35, `r_s = 2GM/c²`, '#fde68a', 10);
+
+  // Pannello destra
+  const rpx = W*0.73, rpy = H*0.22;
+  cx.strokeStyle='#ef444444'; cx.lineWidth=1;
+  cx.strokeRect(rpx-110, rpy, 220, 220);
+  cx.fillStyle='rgba(239,68,68,0.04)'; cx.fillRect(rpx-110, rpy, 220, 220);
+  lbl(rpx, rpy+20, 'Dati M87*', '#ef4444', 14, 'center', true);
+  lbl(rpx, rpy+42, 'EHT 2019', '#94a3b8', 11);
+  lbl(rpx, rpy+65, 'Massa: 6.5 × 10⁹ M☉', '#e2e8f0', 10);
+  lbl(rpx, rpy+82, 'Distanza: 55 Mly', '#94a3b8', 10);
+  lbl(rpx, rpy+99, 'r_s ~ 190 AU', '#fde68a', 10);
+  lbl(rpx, rpy+120, 'Sgr A* (Via Lattea)', '#ef4444', 12, 'center', true);
+  lbl(rpx, rpy+138, 'Massa: 4 × 10⁶ M☉', '#e2e8f0', 10);
+  lbl(rpx, rpy+155, 'EHT 2022', '#94a3b8', 10);
+  lbl(rpx, rpy+178, '"Nulla può sfuggire —', '#94a3b8', 10);
+  lbl(rpx, rpy+193, 'nemmeno la luce."', '#94a3b8', 10);
+  lbl(rpx, rpy+212, '— J. Michell, 1783', '#64748b', 9.5);
+
+  // Citazione
+  lbl(W/2-60, H*0.9, '"Un buco nero è una regione dello spaziotempo dove la curvatura è così intensa', '#64748b', 10);
+  lbl(W/2-60, H*0.9+14, 'che nulla — nemmeno la luce — può sfuggire." — R. Penrose, Nobel Fisica 2020', '#64748b', 10);
+}
+
+// ── FASE 7: Costante Cosmologica ──────────────────────
+function ph7(){
+  lbl(W/2, H*0.09, 'La Costante Cosmologica e l\'Universo in Espansione', '#4ade80', 20, 'center', true);
+  lbl(W/2, H*0.09+28, 'Einstein 1917 → Hubble 1929 → Supernove Ia 1998 → espansione accelerata', '#94a3b8', 12);
+
+  // Universo che si espande: galassie che si allontanano
+  const ucx = W*0.42, ucy = H*0.47;
+  const expansionR = 80 + pT*0.4;
+
+  // Galaxy positions (relative to center, expanding)
+  const galaxies = [
+    {rx:0.5, ry:0}, {rx:-0.6, ry:0.3}, {rx:0.7, ry:-0.5},
+    {rx:-0.4, ry:-0.6}, {rx:0.3, ry:0.7}, {rx:-0.8, ry:-0.2},
+    {rx:0.9, ry:0.4}, {rx:-0.3, ry:0.85}, {rx:0.1, ry:-0.9},
+  ];
+
+  // Linee di Hubble (velocità di recessione)
+  galaxies.forEach(g => {
+    const gx3 = ucx + g.rx*expansionR*0.8;
+    const gy3 = ucy + g.ry*expansionR*0.5;
+    const dist3 = Math.sqrt(g.rx*g.rx+g.ry*g.ry);
+    if(dist3 > 0.1){
+      cx.beginPath();
+      cx.moveTo(ucx, ucy);
+      cx.lineTo(gx3, gy3);
+      cx.strokeStyle=`rgba(74,222,128,0.12)`;
+      cx.lineWidth=1; cx.stroke();
+      // Freccia velocità
+      const vLen = dist3*18;
+      const angle2 = Math.atan2(g.ry, g.rx);
+      cx.beginPath();
+      cx.moveTo(gx3, gy3);
+      cx.lineTo(gx3+Math.cos(angle2)*vLen, gy3+Math.sin(angle2)*vLen*0.6);
+      cx.strokeStyle=`rgba(74,222,128,0.4)`;
+      cx.lineWidth=1.5; cx.stroke();
+    }
+    // Galassia
+    drawGalaxy(gx3, gy3, 10);
+  });
+
+  // Centro: Via Lattea
+  drawGalaxy(ucx, ucy, 16);
+  lbl(ucx, ucy+22, '🌌 Noi', '#4ade80', 10);
+
+  // Equazioni
+  const eqX = W*0.78, eqY = H*0.28;
+  cx.strokeStyle='#4ade8033'; cx.lineWidth=1;
+  cx.strokeRect(eqX-120, eqY, 240, 175);
+  cx.fillStyle='rgba(74,222,128,0.04)'; cx.fillRect(eqX-120, eqY, 240, 175);
+
+  lbl(eqX, eqY+20, 'Equazioni cosmologiche', '#4ade80', 12, 'center', true);
+  lbl(eqX, eqY+42, 'G_μν + Λg_μν = 8πG/c⁴ T_μν', '#e2e8f0', 11);
+  lbl(eqX, eqY+62, '(Einstein con Λ)', '#94a3b8', 9.5);
+  lbl(eqX, eqY+85, 'Friedmann:', '#4ade80', 11, 'center', true);
+  lbl(eqX, eqY+103, 'H² = (8πG/3)ρ + Λc²/3', '#fde68a', 11);
+  lbl(eqX, eqY+123, 'Legge di Hubble:', '#4ade80', 11, 'center', true);
+  lbl(eqX, eqY+141, 'v = H₀ · d', '#fde68a', 13);
+  lbl(eqX, eqY+160, 'H₀ ≈ 70 km/s/Mpc', '#94a3b8', 10);
+
+  // Timeline cosmica
+  const tlY = H*0.76, tlX0 = W*0.06, tlX1 = W*0.88;
+  lbl(W/2, tlY-22, 'Timeline cosmica', '#4ade80', 11);
+
+  const tlEvents2 = [
+    { p:0.01, label:'Big\nBang', col:'#ef4444', sub:'13.8 Ga' },
+    { p:0.08, label:'Inflazione', col:'#f59e0b', sub:'10⁻³² s' },
+    { p:0.25, label:'Nucleosintesi', col:'#fde68a', sub:'3 min' },
+    { p:0.45, label:'Ricombinazione\n(CMB)', col:'#a78bfa', sub:'380k aa' },
+    { p:0.62, label:'Prime stelle', col:'#60a5fa', sub:'~200M aa' },
+    { p:0.78, label:'Accelerazione\n(Λ domina)', col:'#4ade80', sub:'~5 Ga fa' },
+    { p:0.99, label:'Oggi', col:'#e2e8f0', sub:'13.8 Ga' },
+  ];
+
+  // Linea
+  cx.beginPath();
+  cx.moveTo(tlX0, tlY); cx.lineTo(tlX1, tlY);
+  cx.strokeStyle='#1e293b'; cx.lineWidth=3; cx.stroke();
+
+  // Gradiente espansione
+  const tlGrad = cx.createLinearGradient(tlX0,tlY,tlX1,tlY);
+  tlGrad.addColorStop(0,'#ef4444');
+  tlGrad.addColorStop(0.5,'#a78bfa');
+  tlGrad.addColorStop(1,'#4ade80');
+  cx.beginPath();
+  cx.moveTo(tlX0, tlY); cx.lineTo(tlX1, tlY);
+  cx.strokeStyle=tlGrad; cx.lineWidth=2; cx.stroke();
+
+  tlEvents2.forEach((ev, ei) => {
+    const ex = tlX0 + ev.p*(tlX1-tlX0);
+    const above2 = ei%2===0;
+    cx.beginPath(); cx.arc(ex, tlY, 5, 0, Math.PI*2);
+    cx.fillStyle=ev.col; gw(ev.col,10); cx.fill(); ng();
+    const textY2 = above2 ? tlY-60 : tlY+25;
+    ev.label.split('\n').forEach((l2,li)=>{
+      lbl(ex, textY2+li*13, l2, ev.col, 9);
+    });
+    lbl(ex, above2?tlY-25:tlY+52, ev.sub, '#64748b', 8.5);
+  });
+
+  // Nota su Λ
+  lbl(W/2, H*0.91, '⚠ Einstein definì Λ "il più grande errore della mia vita"...', '#f59e0b', 10);
+  lbl(W/2, H*0.91+15, 'ma nel 1998 la scoperta dell\'espansione accelerata (Nobel 2011) lo riabilitò.', '#94a3b8', 10);
+}
+
+function drawGalaxy(gx, gy, size){
+  const arms = 3;
+  for(let arm=0; arm<arms; arm++){
+    const baseAngle = arm/arms*Math.PI*2 + T*0.1;
+    for(let p=0; p<15; p++){
+      const pr = p/15;
+      const a = baseAngle + pr*Math.PI*1.2;
+      const r = pr*size;
+      const gpx=gx+Math.cos(a)*r, gpy=gy+Math.sin(a)*r*0.4;
+      cx.beginPath(); cx.arc(gpx,gpy,1,0,Math.PI*2);
+      cx.fillStyle=`rgba(148,163,184,${0.4+pr*0.5})`;
+      cx.fill();
+    }
+  }
+  cx.beginPath(); cx.arc(gx,gy,size*0.3,0,Math.PI*2);
+  cx.fillStyle='rgba(253,230,138,0.6)'; cx.fill();
+}
+
+// ── DRAW LOOP ─────────────────────────────────────────
+function draw(){
+  bg();
+  stars();
+
+  switch(ph){
+    case 0: ph0(); break;
+    case 1: ph1(); break;
+    case 2: ph2(); break;
+    case 3: ph3(); break;
+    case 4: ph4(); break;
+    case 5: ph5(); break;
+    case 6: ph6(); break;
+    case 7: ph7(); break;
+  }
+
+  if(!paused){
+    T += 0.022;
+    pT++;
+    if(pT > AUTO_ADVANCE_FRAMES && ph < 7) go(ph+1);
+  }
+
+  requestAnimationFrame(draw);
+}
+
+go(0);
+draw();
+
+</script>
+</body>
+</html>

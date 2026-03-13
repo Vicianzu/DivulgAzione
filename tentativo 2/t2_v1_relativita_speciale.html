@@ -426,3 +426,905 @@ t2Init();
 </script>
 </body>
 </html>
+<title>Relatività Speciale — Einstein 1905 — v2</title>
+<link rel="stylesheet" href="./ui.css">
+</head>
+<body>
+
+<canvas id="canvas" aria-hidden="true"></canvas>
+
+<div id="ui" role="banner">
+  <div id="ui-title">Relatività Speciale</div>
+  <div id="ui-phase" aria-live="polite"></div>
+  <div id="ui-badge">8 fasi</div>
+</div>
+
+<main id="panel" role="main" aria-label="Contenuto della fase corrente" tabindex="-1">
+  <h1 class="phase-title" id="panel-phase-name"></h1>
+  <div class="phase-content active" id="ph-0">
+    <div class="phase-tag">Fase 01 — La Crisi della Fisica Classica</div>
+    <div class="phase-body">
+      <p>Newton: tempo assoluto, spazio assoluto. Ma l'esperimento Michelson-Morley (1887) dimostrò che la velocità della luce è costante. L'etere non esiste.</p>
+      <p class="note">Visualizzazione: interferometro di Michelson-Morley e luce isotropa.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-1">
+    <div class="phase-tag">Fase 02 — I Due Postulati di Einstein (1905)</div>
+    <div class="phase-body">
+      <p>① Le leggi della fisica sono identiche in tutti i sistemi inerziali. ② La velocità della luce c è costante in tutti i sistemi inerziali, indipendentemente dal moto della sorgente.</p>
+      <p class="note">Visualizzazione: due postulati visualizzati con sistemi inerziali.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">Fase 03 — Dilatazione del Tempo</div>
+    <div class="phase-body">
+      <p>Un orologio in moto ticchetta più lentamente. t' = γ·t dove γ = 1/√(1−v²/c²). A v→c, γ→∞ e il tempo si ferma. Verificato con muoni cosmici e orologi atomici sugli aerei.</p>
+      <p class="note">Visualizzazione: orologi in moto rallentati dal fattore γ.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">Fase 04 — Contrazione delle Lunghezze</div>
+    <div class="phase-body">
+      <p>Un righello in moto si accorcia nella direzione del moto: L' = L₀/γ = L₀·√(1−v²/c²). Lunghezza propria L₀ vs lunghezza contratta L'. Le dimensioni trasversali restano invariate.</p>
+      <p class="note">Visualizzazione: righello contratto nella direzione del moto.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">Fase 05 — La Simultaneità è Relativa</div>
+    <div class="phase-body">
+      <p>Due eventi simultanei per un osservatore non lo sono per un altro in moto relativo. Il treno di Einstein: due fulmini colpiscono le estremità — osservatori diversi li vedono in ordini diversi.</p>
+      <p class="note">Visualizzazione: simultaneità relativa nel treno di Einstein.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">Fase 06 — Diagramma di Minkowski e Cono Luce</div>
+    <div class="phase-body">
+      <p>Lo spaziotempo è un'unità indissolubile. Il cono luce divide futuro assoluto, passato assoluto e regione spacelike. L'invariante s² = c²t² − x² è uguale per tutti gli osservatori.</p>
+      <p class="note">Visualizzazione: diagramma di Minkowski con cono luce.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">Fase 07 — E = mc² — L'Equivalenza Massa-Energia</div>
+    <div class="phase-body">
+      <p>Energia totale: E² = (pc)² + (mc²)². A riposo (p=0): E = mc². Per il fotone (m=0): E = pc. Un kg di materia equivale a 9×10¹⁶ joule.</p>
+      <p class="note">Visualizzazione: conversione massa↔energia.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">Fase 08 — Trasformazioni di Lorentz</div>
+    <div class="phase-body">
+      <p>Come spazio e tempo si trasformano passando da un sistema all'altro: x'=γ(x−vt), t'=γ(t−vx/c²). Nel limite v≪c si recuperano le trasformazioni di Galileo. L'invariante s² è preservato.</p>
+      <p class="note">Visualizzazione: trasformazione di coordinate tra sistemi inerziali.</p>
+    </div>
+  </div>
+</main>
+
+<div id="bottom" role="navigation">
+  <button class="btn active"  onclick="go(0)">① Crisi classica</button>
+  <button class="btn"         onclick="go(1)">② Postulati</button>
+  <button class="btn"         onclick="go(2)">③ Dilatazione tempo</button>
+  <button class="btn"         onclick="go(3)">④ Contrazione lunghezze</button>
+  <button class="btn"         onclick="go(4)">⑤ Simultaneità relativa</button>
+  <button class="btn"         onclick="go(5)">⑥ Diagramma Minkowski</button>
+  <button class="btn"         onclick="go(6)">⑦ E = mc²</button>
+  <button class="btn"         onclick="go(7)">⑧ Trasformazioni Lorentz</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()">⏸ Pausa</button>
+</div>
+
+<script>
+
+const cv=document.getElementById('canvas');
+const cx=cv.getContext('2d');
+let W,H;
+function resize(){
+  const pW=document.getElementById('panel').offsetWidth;
+  W=cv.width=Math.round(window.innerWidth-pW);
+  H=cv.height=window.innerHeight;
+}
+resize(); window.addEventListener('resize',resize);
+
+let ph=0, T=0, pT=0;
+
+const PHASES=[
+  { name:"La Crisi della Fisica Classica",
+    desc:"Newton: tempo assoluto, spazio assoluto. Ma l'esperimento Michelson-Morley (1887) dimostrò che la velocità della luce è costante, indipendente dal moto dell'osservatore. L'etere non esiste.",
+    gamma:"1", vc:"0", year:"1887" },
+  { name:"I Due Postulati di Einstein (1905)",
+    desc:"① Le leggi della fisica sono identiche in tutti i sistemi di riferimento inerziali. ② La velocità della luce c è costante in tutti i sistemi inerziali, indipendentemente dal moto della sorgente.",
+    gamma:"1", vc:"0", year:"1905" },
+  { name:"Dilatazione del Tempo",
+    desc:"Un orologio in moto ticchetta più lentamente. t' = γ·t dove γ = 1/√(1-v²/c²). A v→c, γ→∞ e il tempo si ferma. Verificato con muoni cosmici e orologi atomici sugli aerei.",
+    gamma:"variabile", vc:"0.8", year:"1905" },
+  { name:"Contrazione delle Lunghezze",
+    desc:"Un righello in moto si accorcia nella direzione del moto: L' = L₀/γ = L₀·√(1-v²/c²). Lunghezza propria L₀ vs lunghezza contratta L'. Le dimensioni trasversali restano invariate.",
+    gamma:"variabile", vc:"0.8", year:"1905" },
+  { name:"La Simultaneità è Relativa",
+    desc:"Due eventi simultanei per un osservatore non lo sono per un altro in moto relativo. Il treno di Einstein: due fulmini colpiscono le estremità — osservatori diversi li vedono in ordini diversi.",
+    gamma:"1.67", vc:"0.8", year:"1905" },
+  { name:"Diagramma di Minkowski e Cono Luce",
+    desc:"Lo spaziotempo è un'unità indissolubile. Il cono luce divide futuro assoluto, passato assoluto e regione spacelike. L'invariante s² = c²t² - x² è uguale per tutti gli osservatori.",
+    gamma:"∞", vc:"→c", year:"1908" },
+  { name:"E = mc² — L'Equivalenza Massa-Energia",
+    desc:"Energia totale: E² = (pc)² + (mc²)². A riposo (p=0): E = mc². Per il fotone (m=0): E = pc. Un kg di materia equivale a 9×10¹⁶ joule — l'energia di una bomba atomica.",
+    gamma:"variabile", vc:"variabile", year:"1905" },
+  { name:"Trasformazioni di Lorentz",
+    desc:"Come spazio e tempo si trasformano passando da un sistema all'altro: x'=γ(x-vt), t'=γ(t-vx/c²). Nel limite v≪c si recuperano le trasformazioni di Galileo. L'invariante s² è preservato.",
+    gamma:"γ(v)", vc:"qualsiasi", year:"1904" }
+];
+
+function go(n){
+  ph=n; pT=0;
+  document.querySelectorAll('.btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+  document.querySelectorAll('.phase-content').forEach((el,i)=>el.classList.toggle('active',i===n));
+  document.getElementById('ui-phase').textContent=PHASES[n].name;
+  document.getElementById('panel').scrollTop=0;
+  const pn=document.getElementById('panel-phase-name'); if(pn) pn.textContent=PHASES[n].name;
+  const p=PHASES[n];
+  updateUI();
+}
+function updateUI(){
+}
+
+function lbl(x,y,txt,col,sz,al='center',bold=false){
+  cx.fillStyle=col;
+  cx.font=`${bold?'bold ':''}${sz}px Georgia,serif`;
+  cx.textAlign=al; cx.fillText(txt,x,y);
+}
+function glow(c,b){cx.shadowColor=c;cx.shadowBlur=b;}
+function ng(){cx.shadowBlur=0;}
+
+let _stars=null;
+function stars(){
+  if(!_stars)_stars=Array.from({length:180},()=>({
+    x:Math.random()*3000,y:Math.random()*2000,
+    r:Math.random()*1.3+0.2,o:Math.random()*0.4+0.1
+  }));
+  _stars.forEach(s=>{
+    cx.beginPath();cx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    cx.fillStyle=`rgba(255,255,255,${s.o*(0.5+0.5*Math.sin(T*0.3+s.x*0.01))})`;
+    cx.fill();
+  });
+}
+
+function bg(){
+  const g=cx.createRadialGradient(W/2,H/2,80,W/2,H/2,Math.max(W,H)*0.9);
+  g.addColorStop(0,'#020920');g.addColorStop(1,'#000010');
+  cx.fillStyle=g;cx.fillRect(0,0,W,H);
+}
+
+// ── FASE 0: Crisi della fisica classica ─────────────────
+function ph0(){
+  const cx2=W*0.5, cy2=H*0.5;
+
+  // Griglia newtoniana
+  const gs=55;
+  cx.strokeStyle='rgba(56,189,248,0.13)';cx.lineWidth=1;
+  for(let x=0;x<W;x+=gs){
+    cx.beginPath();cx.moveTo(x,70);cx.lineTo(x,H-50);cx.stroke();
+  }
+  for(let y=70;y<H-50;y+=gs){
+    cx.beginPath();cx.moveTo(0,y);cx.lineTo(W,y);cx.stroke();
+  }
+
+  // Titolo Newton
+  lbl(W*0.25,H*0.15,'MECCANICA DI NEWTON','#38bdf8',14,'center',true);
+  lbl(W*0.25,H*0.15+20,'Tempo assoluto · Spazio assoluto · Etere','#475569',11,'center');
+
+  // Orologio classico (sinistra)
+  const clkX=W*0.25, clkY=H*0.45, clkR=65;
+  cx.beginPath();cx.arc(clkX,clkY,clkR,0,Math.PI*2);
+  const g1=cx.createRadialGradient(clkX,clkY,5,clkX,clkY,clkR);
+  g1.addColorStop(0,'#0c1a2e');g1.addColorStop(1,'#020920');
+  cx.fillStyle=g1;cx.fill();
+  cx.strokeStyle='#38bdf8';cx.lineWidth=2;glow('#38bdf8',12);cx.stroke();ng();
+  // tacche
+  for(let i=0;i<12;i++){
+    const a=i/12*Math.PI*2-Math.PI/2;
+    cx.beginPath();cx.moveTo(clkX+Math.cos(a)*(clkR-12),clkY+Math.sin(a)*(clkR-12));
+    cx.lineTo(clkX+Math.cos(a)*(clkR-4),clkY+Math.sin(a)*(clkR-4));
+    cx.strokeStyle='#38bdf8';cx.lineWidth=2;cx.stroke();
+  }
+  // lancette
+  const sec=T*0.04, min=T*0.006;
+  cx.beginPath();cx.moveTo(clkX,clkY);
+  cx.lineTo(clkX+Math.cos(sec-Math.PI/2)*clkR*0.75,clkY+Math.sin(sec-Math.PI/2)*clkR*0.75);
+  cx.strokeStyle='#e2e8f0';cx.lineWidth=2;glow('#fff',8);cx.stroke();ng();
+  cx.beginPath();cx.moveTo(clkX,clkY);
+  cx.lineTo(clkX+Math.cos(min-Math.PI/2)*clkR*0.55,clkY+Math.sin(min-Math.PI/2)*clkR*0.55);
+  cx.strokeStyle='#7dd3fc';cx.lineWidth=3;cx.stroke();
+  lbl(clkX,clkY+clkR+18,'Orologio di Newton','#64748b',11,'center');
+  lbl(clkX,clkY+clkR+32,'Tempo assoluto, uguale ovunque','#334155',10,'center');
+
+  // Frecce di simultaneità assoluta
+  const fY=H*0.73;
+  lbl(W*0.25,fY-15,'Simultaneità assoluta','#f59e0b',12,'center',true);
+  for(let i=-2;i<=2;i++){
+    const fx=W*0.25+i*60;
+    cx.beginPath();cx.moveTo(fx,fY);cx.lineTo(fx,fY+35);
+    cx.strokeStyle='#f59e0b';cx.lineWidth=1.5;glow('#f59e0b',6);cx.stroke();ng();
+    cx.beginPath();cx.moveTo(fx-5,fY+35);cx.lineTo(fx,fY+42);cx.lineTo(fx+5,fY+35);
+    cx.fillStyle='#f59e0b';cx.fill();
+  }
+  lbl(W*0.25,fY+55,'t = const per tutti','#64748b',10,'center');
+
+  // Separatore
+  cx.beginPath();cx.moveTo(W*0.5,H*0.12);cx.lineTo(W*0.5,H*0.9);
+  cx.strokeStyle='rgba(100,116,139,0.3)';cx.lineWidth=1;cx.setLineDash([6,4]);cx.stroke();cx.setLineDash([]);
+
+  // Michelson-Morley (destra)
+  lbl(W*0.75,H*0.15,'MICHELSON-MORLEY 1887','#ef4444',14,'center',true);
+  lbl(W*0.75,H*0.15+20,'Il problema dell\'etere','#475569',11,'center');
+
+  // Apparato interferometrico semplificato
+  const mmX=W*0.75, mmY=H*0.43, arm=80;
+  // specchio centrale
+  cx.beginPath();cx.arc(mmX,mmY,8,0,Math.PI*2);
+  cx.fillStyle='#e2e8f0';glow('#fff',10);cx.fill();ng();
+  // braccio orizzontale
+  cx.beginPath();cx.moveTo(mmX,mmY);cx.lineTo(mmX+arm,mmY);
+  cx.strokeStyle='#38bdf8';cx.lineWidth=2;glow('#38bdf8',8);cx.stroke();ng();
+  // specchio fine
+  cx.beginPath();cx.moveTo(mmX+arm,mmY-12);cx.lineTo(mmX+arm,mmY+12);
+  cx.strokeStyle='#e2e8f0';cx.lineWidth=3;cx.stroke();
+  // braccio verticale
+  cx.beginPath();cx.moveTo(mmX,mmY);cx.lineTo(mmX,mmY-arm);
+  cx.strokeStyle='#a78bfa';cx.lineWidth=2;glow('#a78bfa',8);cx.stroke();ng();
+  cx.beginPath();cx.moveTo(mmX-12,mmY-arm);cx.lineTo(mmX+12,mmY-arm);
+  cx.strokeStyle='#e2e8f0';cx.lineWidth=3;cx.stroke();
+  // raggio di luce animato
+  const lightPos=(T*3)%arm;
+  cx.beginPath();cx.arc(mmX+lightPos,mmY,4,0,Math.PI*2);
+  cx.fillStyle='#fde68a';glow('#fde68a',15);cx.fill();ng();
+  // risultato
+  cx.fillStyle='rgba(239,68,68,0.15)';
+  cx.beginPath();cx.roundRect(mmX-120,mmY+arm*0.3,240,60,8);cx.fill();
+  cx.strokeStyle='#ef4444';cx.lineWidth=1;cx.stroke();
+  lbl(mmX,mmY+arm*0.3+18,'RISULTATO: Δv = 0','#ef4444',13,'center',true);
+  lbl(mmX,mmY+arm*0.3+36,'Nessuna differenza di velocità!','#94a3b8',11,'center');
+  lbl(mmX,mmY+arm*0.3+52,'L\'etere non esiste.','#64748b',10,'center');
+
+  // Freccia verso paradosso
+  lbl(W*0.75,H*0.78,'La velocità della luce è costante?','#f59e0b',13,'center',true);
+  lbl(W*0.75,H*0.78+18,'c = 299.792.458 m/s — sempre uguale?','#64748b',11,'center');
+
+  // Box crisi
+  cx.fillStyle='rgba(124,58,237,0.1)';
+  cx.beginPath();cx.roundRect(W*0.5-160,H*0.87,320,40,8);cx.fill();
+  cx.strokeStyle='#7c3aed';cx.lineWidth=1;cx.stroke();
+  lbl(W*0.5,H*0.87+16,'La crisi della fisica classica richiede una nuova teoria','#a78bfa',11,'center',true);
+  lbl(W*0.5,H*0.87+30,'→ Einstein 1905: Relatività Speciale','#64748b',10,'center');
+}
+
+// ── FASE 1: Postulati di Einstein ────────────────────────
+function ph1(){
+  const cx2=W*0.5, cy2=H*0.5;
+
+  lbl(cx2,H*0.1,'I DUE POSTULATI DI EINSTEIN — 1905','#38bdf8',18,'center',true);
+  lbl(cx2,H*0.1+24,'"Sull\'elettrodinamica dei corpi in moto"','#475569',11,'center');
+
+  // Postulato 1 (sinistra)
+  const p1x=W*0.27, p1y=H*0.38, p1r=90;
+  const a1=T*0.006;
+  // anello pulsante
+  cx.beginPath();cx.arc(p1x,p1y,p1r+8*Math.sin(T*0.06),0,Math.PI*2);
+  cx.strokeStyle=`rgba(245,158,11,0.3)`;cx.lineWidth=2;cx.stroke();
+  cx.beginPath();cx.arc(p1x,p1y,p1r,0,Math.PI*2);
+  const g1=cx.createRadialGradient(p1x,p1y,10,p1x,p1y,p1r);
+  g1.addColorStop(0,'rgba(245,158,11,0.3)');g1.addColorStop(1,'rgba(245,158,11,0.05)');
+  cx.fillStyle=g1;cx.fill();
+  cx.strokeStyle='#f59e0b';cx.lineWidth=2;glow('#f59e0b',15);cx.stroke();ng();
+
+  // Due sistemi inerziali in moto relativo
+  for(let s=0;s<2;s++){
+    const sx=p1x+(s===0?-38:38), sy=p1y+(s===0?-20:20);
+    const sc=s===0?'#f59e0b':'#a78bfa';
+    cx.fillStyle='rgba(8,14,30,0.8)';
+    cx.beginPath();cx.roundRect(sx-28,sy-14,56,28,5);cx.fill();
+    cx.strokeStyle=sc;cx.lineWidth=1.5;cx.stroke();
+    lbl(sx,sy+5,s===0?'S':'S\'',sc,14,'center',true);
+    // velocità
+    if(s===1){
+      cx.beginPath();cx.moveTo(sx+28,sy);cx.lineTo(sx+50,sy);
+      cx.strokeStyle='#a78bfa';cx.lineWidth=1.5;cx.stroke();
+      cx.beginPath();cx.moveTo(sx+46,sy-4);cx.lineTo(sx+54,sy);cx.lineTo(sx+46,sy+4);
+      cx.fillStyle='#a78bfa';cx.fill();
+      lbl(sx+54,sy-8,'v','#a78bfa',10,'left');
+    }
+  }
+  // Etichetta: leggi uguali
+  cx.beginPath();cx.moveTo(p1x-18,p1y+10);cx.lineTo(p1x+18,p1y+10);
+  cx.strokeStyle='#f59e0b';cx.lineWidth=2;cx.stroke();
+  lbl(p1x,p1y+10,'≡','#f59e0b',20,'center',true);
+
+  lbl(p1x,p1y+p1r+18,'I° POSTULATO','#f59e0b',13,'center',true);
+  lbl(p1x,p1y+p1r+34,'Principio di Relatività','#94a3b8',11,'center');
+  lbl(p1x,p1y+p1r+50,'Le leggi fisiche sono identiche','#64748b',10,'center');
+  lbl(p1x,p1y+p1r+63,'in tutti i sistemi inerziali','#64748b',10,'center');
+
+  // Postulato 2 (destra)
+  const p2x=W*0.73, p2y=H*0.38, p2r=90;
+  cx.beginPath();cx.arc(p2x,p2y,p2r+8*Math.sin(T*0.06+Math.PI),0,Math.PI*2);
+  cx.strokeStyle='rgba(56,189,248,0.3)';cx.lineWidth=2;cx.stroke();
+  cx.beginPath();cx.arc(p2x,p2y,p2r,0,Math.PI*2);
+  const g2=cx.createRadialGradient(p2x,p2y,10,p2x,p2y,p2r);
+  g2.addColorStop(0,'rgba(56,189,248,0.3)');g2.addColorStop(1,'rgba(56,189,248,0.05)');
+  cx.fillStyle=g2;cx.fill();
+  cx.strokeStyle='#38bdf8';cx.lineWidth=2;glow('#38bdf8',15);cx.stroke();ng();
+
+  // Raggio di luce che si propaga
+  const lightT=(T*1.8)%160-80;
+  cx.beginPath();cx.arc(p2x+lightT*0.7,p2y,6,0,Math.PI*2);
+  cx.fillStyle='#fde68a';glow('#fde68a',20);cx.fill();ng();
+  // Scia
+  cx.beginPath();cx.moveTo(p2x+lightT*0.7-30,p2y);cx.lineTo(p2x+lightT*0.7,p2y);
+  cx.strokeStyle='rgba(253,230,138,0.4)';cx.lineWidth=2;cx.stroke();
+
+  lbl(p2x,p2y,'c','#fde68a',28,'center',true);
+
+  lbl(p2x,p2y+p2r+18,'II° POSTULATO','#38bdf8',13,'center',true);
+  lbl(p2x,p2y+p2r+34,'Invarianza della Velocità della Luce','#94a3b8',11,'center');
+  lbl(p2x,p2y+p2r+50,'c = 299.792.458 m/s','#38bdf8',11,'center',true);
+  lbl(p2x,p2y+p2r+63,'costante in tutti i sistemi','#64748b',10,'center');
+
+  // Connessione tra i due
+  cx.beginPath();cx.moveTo(p1x+p1r,p1y);cx.lineTo(p2x-p2r,p2y);
+  cx.strokeStyle='rgba(167,139,250,0.4)';cx.lineWidth=1;cx.setLineDash([5,4]);cx.stroke();cx.setLineDash([]);
+  lbl(cx2,p1y,'INSIEME','#a78bfa',12,'center',true);
+  lbl(cx2,p1y+16,'⟹ Relatività Speciale','#64748b',11,'center');
+
+  // Equazione centrale in basso
+  cx.fillStyle='rgba(8,14,30,0.92)';
+  cx.beginPath();cx.roundRect(cx2-200,H*0.82,400,50,10);cx.fill();
+  cx.strokeStyle='#38bdf8';cx.lineWidth=1;cx.stroke();
+  lbl(cx2,H*0.82+18,'c = cost  ⟹  spazio e tempo NON sono assoluti','#38bdf8',13,'center',true);
+  lbl(cx2,H*0.82+36,'La simultaneità, il tempo e le lunghezze dipendono dall\'osservatore','#64748b',10,'center');
+}
+
+// ── FASE 2: Dilatazione del Tempo ────────────────────────
+function ph2(){
+  const cx2=W*0.5, cy2=H*0.5;
+
+  lbl(cx2,H*0.1,'DILATAZIONE DEL TEMPO','#38bdf8',18,'center',true);
+  lbl(cx2,H*0.1+22,'t\' = γ·t   dove   γ = 1/√(1 − v²/c²)','#7dd3fc',13,'center');
+
+  // Fattore gamma animato (v ciclico)
+  const vRatio=0.5+0.45*Math.abs(Math.sin(T*0.015));
+  const gamma=1/Math.sqrt(1-vRatio*vRatio);
+
+  // Orologio fermo (sinistra)
+  const c1x=W*0.28, c1y=H*0.46, cr=70;
+  cx.beginPath();cx.arc(c1x,c1y,cr,0,Math.PI*2);
+  const gc1=cx.createRadialGradient(c1x,c1y,5,c1x,c1y,cr);
+  gc1.addColorStop(0,'#0c1a2e');gc1.addColorStop(1,'#020920');
+  cx.fillStyle=gc1;cx.fill();
+  cx.strokeStyle='#f59e0b';cx.lineWidth=2.5;glow('#f59e0b',14);cx.stroke();ng();
+  for(let i=0;i<12;i++){
+    const a=i/12*Math.PI*2-Math.PI/2;
+    cx.beginPath();cx.moveTo(c1x+Math.cos(a)*(cr-14),c1y+Math.sin(a)*(cr-14));
+    cx.lineTo(c1x+Math.cos(a)*(cr-4),c1y+Math.sin(a)*(cr-4));
+    cx.strokeStyle='#f59e0b';cx.lineWidth=2;cx.stroke();
+  }
+  // lancette (veloci, orologio fermo)
+  const s1=T*0.05, m1=T*0.0083;
+  cx.beginPath();cx.moveTo(c1x,c1y);
+  cx.lineTo(c1x+Math.cos(s1-Math.PI/2)*cr*0.75,c1y+Math.sin(s1-Math.PI/2)*cr*0.75);
+  cx.strokeStyle='#e2e8f0';cx.lineWidth=2;glow('#fff',8);cx.stroke();ng();
+  cx.beginPath();cx.moveTo(c1x,c1y);
+  cx.lineTo(c1x+Math.cos(m1-Math.PI/2)*cr*0.55,c1y+Math.sin(m1-Math.PI/2)*cr*0.55);
+  cx.strokeStyle='#f59e0b';cx.lineWidth=3;cx.stroke();
+  lbl(c1x,c1y+cr+18,'OSSERVATORE FERMO','#f59e0b',12,'center',true);
+  lbl(c1x,c1y+cr+34,'v = 0','#64748b',11,'center');
+  lbl(c1x,c1y+cr+48,'t (tempo proprio)','#94a3b8',10,'center');
+
+  // Orologio in moto (destra)
+  const c2x=W*0.72, c2y=H*0.46;
+  // animazione treno
+  const trainX=W*0.72+Math.sin(T*0.03)*40;
+  cx.fillStyle='rgba(167,139,250,0.15)';
+  cx.beginPath();cx.roundRect(trainX-85,c2y-25,170,50,8);cx.fill();
+  cx.strokeStyle='rgba(167,139,250,0.5)';cx.lineWidth=1;cx.stroke();
+  lbl(trainX,c2y,'→ v='+(vRatio*100).toFixed(0)+'% c','#a78bfa',10,'center');
+
+  cx.beginPath();cx.arc(c2x,c2y,cr,0,Math.PI*2);
+  const gc2=cx.createRadialGradient(c2x,c2y,5,c2x,c2y,cr);
+  gc2.addColorStop(0,'#0c1a2e');gc2.addColorStop(1,'#020920');
+  cx.fillStyle=gc2;cx.fill();
+  cx.strokeStyle='#a78bfa';cx.lineWidth=2.5;glow('#a78bfa',14);cx.stroke();ng();
+  for(let i=0;i<12;i++){
+    const a=i/12*Math.PI*2-Math.PI/2;
+    cx.beginPath();cx.moveTo(c2x+Math.cos(a)*(cr-14),c2y+Math.sin(a)*(cr-14));
+    cx.lineTo(c2x+Math.cos(a)*(cr-4),c2y+Math.sin(a)*(cr-4));
+    cx.strokeStyle='#a78bfa';cx.lineWidth=2;cx.stroke();
+  }
+  // lancette dilatate (più lente di un fattore gamma)
+  const s2=T*0.05/gamma, m2=T*0.0083/gamma;
+  cx.beginPath();cx.moveTo(c2x,c2y);
+  cx.lineTo(c2x+Math.cos(s2-Math.PI/2)*cr*0.75,c2y+Math.sin(s2-Math.PI/2)*cr*0.75);
+  cx.strokeStyle='#e2e8f0';cx.lineWidth=2;glow('#fff',8);cx.stroke();ng();
+  cx.beginPath();cx.moveTo(c2x,c2y);
+  cx.lineTo(c2x+Math.cos(m2-Math.PI/2)*cr*0.55,c2y+Math.sin(m2-Math.PI/2)*cr*0.55);
+  cx.strokeStyle='#a78bfa';cx.lineWidth=3;cx.stroke();
+  lbl(c2x,c2y+cr+18,'OSSERVATORE IN MOTO','#a78bfa',12,'center',true);
+  lbl(c2x,c2y+cr+34,'v = '+(vRatio*100).toFixed(0)+'% c','#64748b',11,'center');
+  lbl(c2x,c2y+cr+48,'t\' = t/'+gamma.toFixed(2)+' (tempo rallentato)','#94a3b8',10,'center');
+
+  // Frecce di confronto
+  cx.beginPath();cx.moveTo(c1x+cr+10,c1y);cx.lineTo(c2x-cr-10,c2y);
+  cx.strokeStyle='rgba(74,222,128,0.4)';cx.lineWidth=1;cx.setLineDash([5,4]);cx.stroke();cx.setLineDash([]);
+  lbl(cx2,c1y,'γ = '+gamma.toFixed(3),'#4ade80',15,'center',true);
+  lbl(cx2,c1y+20,'t\' = t / '+gamma.toFixed(2),'#4ade80',12,'center');
+
+  // Barra velocità
+  const barW=300, barX=cx2-barW/2, barY=H*0.75;
+  cx.fillStyle='rgba(8,14,30,0.7)';cx.beginPath();cx.roundRect(barX-20,barY-30,barW+40,80,8);cx.fill();
+  cx.strokeStyle='#1e3a5f';cx.lineWidth=1;cx.stroke();
+  lbl(cx2,barY-14,'velocità v','#64748b',10,'center');
+  // sfondo barra
+  cx.fillStyle='#1e293b';cx.beginPath();cx.roundRect(barX,barY,barW,12,6);cx.fill();
+  // riempimento
+  const fillW=vRatio*barW;
+  const barGrad=cx.createLinearGradient(barX,barY,barX+fillW,barY);
+  barGrad.addColorStop(0,'#4ade80');barGrad.addColorStop(0.7,'#f59e0b');barGrad.addColorStop(1,'#ef4444');
+  cx.fillStyle=barGrad;cx.beginPath();cx.roundRect(barX,barY,fillW,12,6);cx.fill();
+  lbl(barX-5,barY+9,'0','#475569',9,'right');lbl(barX+barW+5,barY+9,'c','#ef4444',9,'left');
+  lbl(cx2,barY+32,'v = '+(vRatio*100).toFixed(1)+'% c    →    γ = '+gamma.toFixed(3),'#e2e8f0',12,'center',true);
+  lbl(cx2,barY+50,'A v → c: γ → ∞, il tempo si ferma','#ef4444',11,'center');
+  lbl(cx2,barY+64,'Paradosso dei gemelli: il gemello astronauta invecchia meno','#475569',10,'center');
+}
+
+// ── FASE 3: Contrazione delle Lunghezze ──────────────────
+function ph3(){
+  const cx2=W*0.5, cy2=H*0.5;
+
+  lbl(cx2,H*0.1,'CONTRAZIONE DELLE LUNGHEZZE','#38bdf8',18,'center',true);
+  lbl(cx2,H*0.1+22,'L\' = L₀ · √(1 − v²/c²) = L₀/γ','#7dd3fc',13,'center');
+
+  const vRatio=0.5+0.4*Math.abs(Math.sin(T*0.012));
+  const gamma=1/Math.sqrt(1-vRatio*vRatio);
+
+  const L0=240;
+  const Lp=L0/gamma;
+
+  // Righello fermo (lunghezza propria)
+  const r1Y=H*0.36, r1X=cx2;
+  cx.fillStyle='rgba(245,158,11,0.2)';
+  cx.beginPath();cx.roundRect(r1X-L0/2,r1Y-18,L0,36,6);cx.fill();
+  cx.strokeStyle='#f59e0b';cx.lineWidth=2;glow('#f59e0b',10);cx.stroke();ng();
+  // tacche
+  for(let i=0;i<=10;i++){
+    const tx=r1X-L0/2+i*L0/10;
+    cx.beginPath();cx.moveTo(tx,r1Y-18);cx.lineTo(tx,r1Y-18+(i===0||i===10?36:18));
+    cx.strokeStyle='#f59e0b';cx.lineWidth=1;cx.stroke();
+  }
+  // frecce di lunghezza
+  const arrY=r1Y-28;
+  cx.beginPath();cx.moveTo(r1X-L0/2,arrY);cx.lineTo(r1X+L0/2,arrY);
+  cx.strokeStyle='#f59e0b';cx.lineWidth=1.5;cx.stroke();
+  cx.beginPath();cx.moveTo(r1X-L0/2+8,arrY-4);cx.lineTo(r1X-L0/2,arrY);cx.lineTo(r1X-L0/2+8,arrY+4);
+  cx.fillStyle='#f59e0b';cx.fill();
+  cx.beginPath();cx.moveTo(r1X+L0/2-8,arrY-4);cx.lineTo(r1X+L0/2,arrY);cx.lineTo(r1X+L0/2-8,arrY+4);
+  cx.fillStyle='#f59e0b';cx.fill();
+  lbl(r1X,arrY-10,'L₀ = lunghezza propria','#f59e0b',11,'center',true);
+  lbl(r1X,r1Y+28,'v = 0  (a riposo)','#64748b',10,'center');
+  lbl(r1X,r1Y+42,'Il righello non si muove: lunghezza propria L₀','#475569',9,'center');
+
+  // Freccia verso il basso
+  cx.beginPath();cx.moveTo(cx2,r1Y+50);cx.lineTo(cx2,H*0.56-10);
+  cx.strokeStyle='rgba(100,116,139,0.5)';cx.lineWidth=1;cx.setLineDash([4,4]);cx.stroke();cx.setLineDash([]);
+  lbl(cx2,H*0.56-18,'In moto a v = '+(vRatio*100).toFixed(1)+'% c','#a78bfa',11,'center');
+
+  // Righello in moto (contratto)
+  const r2Y=H*0.63, r2X=cx2;
+  // animazione: si muove
+  const moveX=Math.sin(T*0.025)*60;
+  cx.fillStyle='rgba(167,139,250,0.2)';
+  cx.beginPath();cx.roundRect(r2X-Lp/2+moveX,r2Y-18,Lp,36,6);cx.fill();
+  cx.strokeStyle='#a78bfa';cx.lineWidth=2;glow('#a78bfa',10);cx.stroke();ng();
+  for(let i=0;i<=10;i++){
+    const tx=r2X-Lp/2+moveX+i*Lp/10;
+    cx.beginPath();cx.moveTo(tx,r2Y-18);cx.lineTo(tx,r2Y-18+(i===0||i===10?36:18));
+    cx.strokeStyle='#a78bfa';cx.lineWidth=1;cx.stroke();
+  }
+  // freccia velocità
+  cx.beginPath();cx.moveTo(r2X+Lp/2+moveX+8,r2Y);cx.lineTo(r2X+Lp/2+moveX+36,r2Y);
+  cx.strokeStyle='#a78bfa';cx.lineWidth=2;cx.stroke();
+  cx.beginPath();cx.moveTo(r2X+Lp/2+moveX+30,r2Y-5);cx.lineTo(r2X+Lp/2+moveX+40,r2Y);cx.lineTo(r2X+Lp/2+moveX+30,r2Y+5);
+  cx.fillStyle='#a78bfa';cx.fill();
+  lbl(r2X+Lp/2+moveX+50,r2Y+4,'v','#a78bfa',12);
+
+  // frecce lunghezza contratta
+  const arr2Y=r2Y-28;
+  cx.beginPath();cx.moveTo(r2X-Lp/2+moveX,arr2Y);cx.lineTo(r2X+Lp/2+moveX,arr2Y);
+  cx.strokeStyle='#a78bfa';cx.lineWidth=1.5;cx.stroke();
+  cx.beginPath();cx.moveTo(r2X-Lp/2+moveX+8,arr2Y-4);cx.lineTo(r2X-Lp/2+moveX,arr2Y);cx.lineTo(r2X-Lp/2+moveX+8,arr2Y+4);
+  cx.fillStyle='#a78bfa';cx.fill();
+  cx.beginPath();cx.moveTo(r2X+Lp/2+moveX-8,arr2Y-4);cx.lineTo(r2X+Lp/2+moveX,arr2Y);cx.lineTo(r2X+Lp/2+moveX-8,arr2Y+4);
+  cx.fillStyle='#a78bfa';cx.fill();
+  lbl(r2X+moveX,arr2Y-10,'L\' = L₀/γ = L₀·√(1−v²/c²)','#a78bfa',11,'center',true);
+  lbl(r2X,r2Y+28,'γ = '+gamma.toFixed(3)+'   →   L\' = L₀/'+gamma.toFixed(2)+' = '+(L0/gamma).toFixed(1)+'px','#4ade80',11,'center',true);
+  lbl(r2X,r2Y+42,'La direzione trasversale (⊥) non cambia','#475569',10,'center');
+
+  // Box formula in basso
+  cx.fillStyle='rgba(8,14,30,0.9)';
+  cx.beginPath();cx.roundRect(cx2-220,H*0.83,440,50,10);cx.fill();
+  cx.strokeStyle='#4ade80';cx.lineWidth=1;cx.stroke();
+  lbl(cx2,H*0.83+16,'Contrazione di Lorentz-FitzGerald','#4ade80',13,'center',true);
+  lbl(cx2,H*0.83+34,'A v → c:  L\' → 0  |  A v = 0:  L\' = L₀ (limite classico)','#64748b',11,'center');
+}
+
+// ── FASE 4: Simultaneità relativa ────────────────────────
+function ph4(){
+  const cx2=W*0.5, cy2=H*0.5;
+
+  lbl(cx2,H*0.1,'LA SIMULTANEITÀ È RELATIVA','#38bdf8',18,'center',true);
+  lbl(cx2,H*0.1+22,'Lo stesso evento è visto diversamente da osservatori in moto relativo','#475569',11,'center');
+
+  const trainSpeed=0.7;
+  const trainX=((T*1.2)%(W+300))-150;
+  const trainW=220, trainH=50, trainY=H*0.42;
+
+  // Terra — binari
+  cx.beginPath();cx.moveTo(0,trainY+trainH+5);cx.lineTo(W,trainY+trainH+5);
+  cx.strokeStyle='#475569';cx.lineWidth=3;cx.stroke();
+  // traversine
+  for(let x=0;x<W;x+=30){
+    cx.beginPath();cx.moveTo(x,trainY+trainH);cx.lineTo(x,trainY+trainH+12);
+    cx.strokeStyle='#334155';cx.lineWidth=2;cx.stroke();
+  }
+
+  // Treno
+  cx.fillStyle='rgba(167,139,250,0.2)';
+  cx.beginPath();cx.roundRect(trainX-trainW/2,trainY-trainH/2,trainW,trainH,8);cx.fill();
+  cx.strokeStyle='#a78bfa';cx.lineWidth=2;glow('#a78bfa',10);cx.stroke();ng();
+  // finestrini
+  for(let i=0;i<3;i++){
+    cx.fillStyle='rgba(56,189,248,0.2)';
+    cx.beginPath();cx.roundRect(trainX-80+i*55,trainY-16,40,28,4);cx.fill();
+    cx.strokeStyle='#38bdf8';cx.lineWidth=1;cx.stroke();
+  }
+  // freccia velocità
+  cx.beginPath();cx.moveTo(trainX+trainW/2+5,trainY);cx.lineTo(trainX+trainW/2+35,trainY);
+  cx.strokeStyle='#a78bfa';cx.lineWidth=2;cx.stroke();
+  cx.beginPath();cx.moveTo(trainX+trainW/2+28,trainY-5);cx.lineTo(trainX+trainW/2+38,trainY);cx.lineTo(trainX+trainW/2+28,trainY+5);
+  cx.fillStyle='#a78bfa';cx.fill();
+  lbl(trainX,trainY,'→ v = 0.7c','#a78bfa',10,'center');
+
+  // Osservatore sul treno (rosa)
+  cx.fillStyle='#a78bfa';
+  cx.beginPath();cx.arc(trainX,trainY+2,7,0,Math.PI*2);cx.fill();
+  lbl(trainX,trainY-trainH/2-10,'Bob (sul treno)','#a78bfa',11,'center',true);
+
+  // Fulmini sulle estremità (periodici)
+  const flashT=(T%120);
+  const leftEnd=trainX-trainW/2;
+  const rightEnd=trainX+trainW/2;
+
+  // Fulmine sinistro
+  if(flashT<30){
+    const alpha=Math.max(0,1-flashT/30);
+    glow('#fde68a',30*alpha);
+    cx.strokeStyle=`rgba(253,230,138,${alpha})`;cx.lineWidth=2;
+    cx.beginPath();
+    cx.moveTo(leftEnd,trainY-trainH/2-40);cx.lineTo(leftEnd-8,trainY-trainH/2-20);
+    cx.lineTo(leftEnd+5,trainY-trainH/2-10);cx.lineTo(leftEnd,trainY-trainH/2);
+    cx.stroke();ng();
+    cx.fillStyle=`rgba(253,230,138,${alpha})`;
+    lbl(leftEnd-20,trainY-trainH/2-50,'⚡ A','#fde68a',14,'center',true);
+  }
+  // Fulmine destro (leggermente dopo per Bob, simultanei per Alice)
+  if(flashT<30){
+    const alpha2=Math.max(0,1-flashT/30);
+    glow('#fde68a',30*alpha2);
+    cx.strokeStyle=`rgba(253,230,138,${alpha2})`;cx.lineWidth=2;
+    cx.beginPath();
+    cx.moveTo(rightEnd,trainY-trainH/2-40);cx.lineTo(rightEnd+8,trainY-trainH/2-20);
+    cx.lineTo(rightEnd-5,trainY-trainH/2-10);cx.lineTo(rightEnd,trainY-trainH/2);
+    cx.stroke();ng();
+    cx.fillStyle=`rgba(253,230,138,${alpha2})`;
+    lbl(rightEnd+20,trainY-trainH/2-50,'⚡ B','#fde68a',14,'center',true);
+  }
+
+  // Osservatore a terra (Alice)
+  const aliceX=W*0.5;
+  cx.fillStyle='#f59e0b';
+  cx.beginPath();cx.arc(aliceX,trainY+trainH+25,8,0,Math.PI*2);cx.fill();
+  lbl(aliceX,trainY+trainH+45,'Alice (a terra)','#f59e0b',11,'center',true);
+
+  // Box spiegazione
+  cx.fillStyle='rgba(8,14,30,0.9)';
+  cx.beginPath();cx.roundRect(W*0.1,H*0.66,W*0.38,H*0.22,10);cx.fill();
+  cx.strokeStyle='#f59e0b';cx.lineWidth=1;cx.stroke();
+  lbl(W*0.29,H*0.66+16,'ALICE (terra)','#f59e0b',12,'center',true);
+  lbl(W*0.29,H*0.66+34,'A e B simultanei','#e2e8f0',11,'center');
+  lbl(W*0.29,H*0.66+50,'La luce da A e B arriva','#94a3b8',10,'center');
+  lbl(W*0.29,H*0.66+64,'nello stesso momento','#94a3b8',10,'center');
+  lbl(W*0.29,H*0.66+82,'t_A = t_B','#4ade80',13,'center',true);
+
+  cx.fillStyle='rgba(8,14,30,0.9)';
+  cx.beginPath();cx.roundRect(W*0.52,H*0.66,W*0.38,H*0.22,10);cx.fill();
+  cx.strokeStyle='#a78bfa';cx.lineWidth=1;cx.stroke();
+  lbl(W*0.71,H*0.66+16,'BOB (treno)','#a78bfa',12,'center',true);
+  lbl(W*0.71,H*0.66+34,'B prima di A','#e2e8f0',11,'center');
+  lbl(W*0.71,H*0.66+50,'Si muove verso B, la luce','#94a3b8',10,'center');
+  lbl(W*0.71,H*0.66+64,'da B arriva prima','#94a3b8',10,'center');
+  lbl(W*0.71,H*0.66+82,'t\'_B < t\'_A','#ef4444',13,'center',true);
+
+  lbl(cx2,H*0.92,'La simultaneità non è assoluta: dipende dall\'osservatore','#a78bfa',12,'center',true);
+  lbl(cx2,H*0.92+16,'→ Non esiste un "adesso" universale','#64748b',10,'center');
+}
+
+// ── FASE 5: Diagramma di Minkowski ───────────────────────
+function ph5(){
+  const cx2=W*0.5, cy2=H*0.5;
+  const ox=W*0.48, oy=H*0.54;
+  const scale=Math.min(W,H)*0.28;
+
+  lbl(cx2,H*0.06,'DIAGRAMMA DI MINKOWSKI — CONO LUCE','#38bdf8',18,'center',true);
+  lbl(cx2,H*0.06+22,'Lo spaziotempo come entità unificata — Minkowski 1908','#475569',11,'center');
+
+  // Asse ct (verticale)
+  cx.beginPath();cx.moveTo(ox,oy+scale*0.8);cx.lineTo(ox,oy-scale);
+  cx.strokeStyle='#e2e8f0';cx.lineWidth=2;cx.stroke();
+  cx.beginPath();cx.moveTo(ox-5,oy-scale+8);cx.lineTo(ox,oy-scale);cx.lineTo(ox+5,oy-scale+8);
+  cx.strokeStyle='#e2e8f0';cx.lineWidth=2;cx.stroke();
+  lbl(ox,oy-scale-12,'ct','#e2e8f0',14,'center',true);
+
+  // Asse x (orizzontale)
+  cx.beginPath();cx.moveTo(ox-scale*0.9,oy);cx.lineTo(ox+scale*0.9,oy);
+  cx.strokeStyle='#e2e8f0';cx.lineWidth=2;cx.stroke();
+  cx.beginPath();cx.moveTo(ox+scale*0.9-8,oy-5);cx.lineTo(ox+scale*0.9,oy);cx.lineTo(ox+scale*0.9-8,oy+5);
+  cx.strokeStyle='#e2e8f0';cx.lineWidth=2;cx.stroke();
+  lbl(ox+scale*0.9+14,oy+4,'x','#e2e8f0',14,'center',true);
+
+  // Zone colorate
+  // Futuro (sopra)
+  cx.beginPath();cx.moveTo(ox,oy);cx.lineTo(ox-scale*0.75,oy-scale*0.75);cx.lineTo(ox,oy-scale*0.9);cx.lineTo(ox+scale*0.75,oy-scale*0.75);cx.closePath();
+  cx.fillStyle='rgba(74,222,128,0.08)';cx.fill();
+  // Passato (sotto)
+  cx.beginPath();cx.moveTo(ox,oy);cx.lineTo(ox-scale*0.75,oy+scale*0.65);cx.lineTo(ox,oy+scale*0.75);cx.lineTo(ox+scale*0.75,oy+scale*0.65);cx.closePath();
+  cx.fillStyle='rgba(167,139,250,0.08)';cx.fill();
+  // Spacelike (lati)
+  cx.beginPath();cx.moveTo(ox,oy);cx.lineTo(ox-scale*0.75,oy-scale*0.75);cx.lineTo(ox-scale*0.9,oy);cx.lineTo(ox-scale*0.75,oy+scale*0.65);cx.closePath();
+  cx.fillStyle='rgba(239,68,68,0.06)';cx.fill();
+  cx.beginPath();cx.moveTo(ox,oy);cx.lineTo(ox+scale*0.75,oy-scale*0.75);cx.lineTo(ox+scale*0.9,oy);cx.lineTo(ox+scale*0.75,oy+scale*0.65);cx.closePath();
+  cx.fillStyle='rgba(239,68,68,0.06)';cx.fill();
+
+  // Cono luce (45° — la luce)
+  cx.beginPath();cx.moveTo(ox,oy);cx.lineTo(ox-scale*0.85,oy-scale*0.85);
+  cx.strokeStyle='#fde68a';cx.lineWidth=2;glow('#fde68a',10);cx.stroke();ng();
+  cx.beginPath();cx.moveTo(ox,oy);cx.lineTo(ox+scale*0.85,oy-scale*0.85);
+  cx.strokeStyle='#fde68a';cx.lineWidth=2;glow('#fde68a',10);cx.stroke();ng();
+  cx.beginPath();cx.moveTo(ox,oy);cx.lineTo(ox-scale*0.75,oy+scale*0.75);
+  cx.strokeStyle='rgba(253,230,138,0.5)';cx.lineWidth=1.5;cx.setLineDash([4,4]);cx.stroke();cx.setLineDash([]);
+  cx.beginPath();cx.moveTo(ox,oy);cx.lineTo(ox+scale*0.75,oy+scale*0.75);
+  cx.strokeStyle='rgba(253,230,138,0.5)';cx.lineWidth=1.5;cx.setLineDash([4,4]);cx.stroke();cx.setLineDash([]);
+
+  // Worldline particella ferma (verticale)
+  cx.beginPath();cx.moveTo(ox,oy+scale*0.6);cx.lineTo(ox,oy-scale*0.8);
+  cx.strokeStyle='#f59e0b';cx.lineWidth=2.5;glow('#f59e0b',8);cx.stroke();ng();
+  lbl(ox+10,oy-scale*0.5,'particella','#f59e0b',9,'left');
+  lbl(ox+10,oy-scale*0.5+12,'a riposo','#f59e0b',9,'left');
+
+  // Worldline particella in moto (diagonale)
+  const ang=0.55;
+  cx.beginPath();cx.moveTo(ox-scale*0.5*Math.sin(ang),oy+scale*0.5*Math.cos(ang));
+  cx.lineTo(ox+scale*0.7*Math.sin(ang),oy-scale*0.7*Math.cos(ang));
+  cx.strokeStyle='#a78bfa';cx.lineWidth=2.5;glow('#a78bfa',8);cx.stroke();ng();
+  lbl(ox+scale*0.7*Math.sin(ang)+12,oy-scale*0.7*Math.cos(ang),'particella','#a78bfa',9,'left');
+  lbl(ox+scale*0.7*Math.sin(ang)+12,oy-scale*0.7*Math.cos(ang)+12,'in moto (v<c)','#a78bfa',9,'left');
+
+  // Punto evento sul cono (animato)
+  const lightT2=((T*0.6)%(scale*0.7));
+  cx.beginPath();cx.arc(ox+lightT2,oy-lightT2,5,0,Math.PI*2);
+  cx.fillStyle='#fde68a';glow('#fde68a',18);cx.fill();ng();
+
+  // Labels zone
+  lbl(ox,oy-scale*0.55,'FUTURO ASSOLUTO','#4ade80',10,'center',true);
+  lbl(ox,oy+scale*0.4,'PASSATO ASSOLUTO','#a78bfa',10,'center',true);
+  lbl(ox-scale*0.65,oy,'SPACELIKE','#ef4444',9,'center',true);
+  lbl(ox+scale*0.65,oy,'SPACELIKE','#ef4444',9,'center',true);
+  lbl(ox+scale*0.4,oy-scale*0.35,'c (luce)','#fde68a',9,'left');
+
+  // Invariante spaziotemporale
+  cx.fillStyle='rgba(8,14,30,0.92)';
+  cx.beginPath();cx.roundRect(W*0.62,H*0.12,W*0.35,65,8);cx.fill();
+  cx.strokeStyle='#4ade80';cx.lineWidth=1;cx.stroke();
+  lbl(W*0.795,H*0.12+16,'Invariante spaziotemporale','#4ade80',12,'center',true);
+  lbl(W*0.795,H*0.12+34,'s² = c²t² − x² − y² − z²','#e2e8f0',13,'center',true);
+  lbl(W*0.795,H*0.12+52,'uguale per tutti gli osservatori','#64748b',10,'center');
+
+  lbl(cx2,H*0.9,'45° = velocità della luce c  |  Nulla supera il bordo del cono','#64748b',10,'center');
+}
+
+// ── FASE 6: E = mc² ──────────────────────────────────────
+function ph6(){
+  const cx2=W*0.5, cy2=H*0.5;
+
+  lbl(cx2,H*0.08,'E = mc²  —  L\'EQUIVALENZA MASSA-ENERGIA','#38bdf8',18,'center',true);
+  lbl(cx2,H*0.08+22,'Einstein 1905  |  E² = (pc)² + (mc²)²','#7dd3fc',13,'center');
+
+  // Animazione particella che accelera
+  const vRatio=0.3+0.6*((Math.sin(T*0.02)+1)/2);
+  const gamma=1/Math.sqrt(Math.max(0.001,1-vRatio*vRatio)); // 0.001 clamps denominator away from zero
+
+  // Particella animata
+  const pX=W*0.15+vRatio*W*0.45;
+  const pR=8+gamma*3;
+
+  // Scia di accelerazione
+  const trailLen=60;
+  for(let i=trailLen;i>0;i--){
+    const alpha=i/trailLen*0.5;
+    cx.beginPath();cx.arc(pX-i*2,cy2,pR*(1-i/trailLen*0.5),0,Math.PI*2);
+    cx.fillStyle=`rgba(56,189,248,${alpha*0.3})`;cx.fill();
+  }
+  // particella
+  const pGrad=cx.createRadialGradient(pX,cy2,1,pX,cy2,pR);
+  pGrad.addColorStop(0,'#fde68a');pGrad.addColorStop(0.4,'#f59e0b');pGrad.addColorStop(1,'rgba(245,158,11,0.2)');
+  cx.beginPath();cx.arc(pX,cy2,pR,0,Math.PI*2);
+  cx.fillStyle=pGrad;glow('#f59e0b',20);cx.fill();ng();
+
+  // Massa relativistica (cerchio esterno)
+  cx.beginPath();cx.arc(pX,cy2,pR+gamma*2,0,Math.PI*2);
+  cx.strokeStyle=`rgba(239,68,68,${Math.min(1,gamma*0.3)})`;cx.lineWidth=1.5;cx.stroke();
+
+  // Etichetta massa
+  lbl(pX,cy2-pR-gamma*2-10,'m_rel = γ·m₀ = '+gamma.toFixed(2)+'·m₀','#ef4444',10,'center');
+  lbl(pX,cy2+pR+gamma*2+14,'v = '+(vRatio*100).toFixed(0)+'% c','#64748b',10,'center');
+
+  // Acceleratore semplificato (tubo)
+  cx.beginPath();cx.roundRect(W*0.12,cy2-16,W*0.62,32,16);
+  cx.strokeStyle='rgba(56,189,248,0.25)';cx.lineWidth=1;cx.stroke();
+  // magneti
+  for(let i=0;i<8;i++){
+    const mx=W*0.12+i*(W*0.62/7);
+    cx.fillStyle='rgba(124,58,237,0.3)';
+    cx.beginPath();cx.roundRect(mx-6,cy2-22,12,44,3);cx.fill();
+    cx.strokeStyle='rgba(167,139,250,0.5)';cx.lineWidth=1;cx.stroke();
+  }
+
+  // Equazioni principali
+  const eqX=W*0.82, eqY=H*0.28;
+  cx.fillStyle='rgba(8,14,30,0.9)';
+  cx.beginPath();cx.roundRect(eqX-130,eqY-15,260,160,10);cx.fill();
+  cx.strokeStyle='#38bdf8';cx.lineWidth=1;cx.stroke();
+
+  lbl(eqX,eqY+5,'ENERGIA TOTALE','#38bdf8',11,'center',true);
+  lbl(eqX,eqY+26,'E² = (pc)² + (mc²)²','#e2e8f0',14,'center',true);
+  lbl(eqX,eqY+52,'v = 0  (p=0):','#64748b',10,'center');
+  lbl(eqX,eqY+68,'E = mc²','#4ade80',16,'center',true);
+  lbl(eqX,eqY+90,'m = 0 (fotone):','#64748b',10,'center');
+  lbl(eqX,eqY+106,'E = pc','#a78bfa',14,'center',true);
+  lbl(eqX,eqY+128,'E(v) = γmc²','#f59e0b',12,'center');
+  lbl(eqX,eqY+144,'= '+gamma.toFixed(2)+'·mc²','#f59e0b',11,'center');
+
+  // Esempio numerico
+  cx.fillStyle='rgba(8,14,30,0.9)';
+  cx.beginPath();cx.roundRect(W*0.06,H*0.72,W*0.55,H*0.15,10);cx.fill();
+  cx.strokeStyle='#4ade80';cx.lineWidth=1;cx.stroke();
+  lbl(W*0.335,H*0.72+16,'ESEMPIO: 1 kg di materia','#4ade80',12,'center',true);
+  lbl(W*0.335,H*0.72+36,'E = mc² = 1 × (3×10⁸)² = 9×10¹⁶ joule','#e2e8f0',12,'center',true);
+  lbl(W*0.335,H*0.72+56,'≈ 21 megatoni (bomba H)  |  energia solare per 3 anni','#94a3b8',10,'center');
+  lbl(W*0.335,H*0.72+72,'Fusione nucleare nel Sole: Δm → E = mc² (0.7% della massa)','#64748b',10,'center');
+
+  // Barra energia
+  const barW2=300, barX2=W*0.82-150, barY2=H*0.77;
+  cx.fillStyle='rgba(8,14,30,0.9)';cx.beginPath();cx.roundRect(barX2-20,barY2-20,barW2+40,60,8);cx.fill();
+  cx.strokeStyle='#1e3a5f';cx.lineWidth=1;cx.stroke();
+  lbl(W*0.82,barY2-8,'Energia: E = '+gamma.toFixed(2)+'·mc²','#f59e0b',10,'center');
+  cx.fillStyle='#1e293b';cx.beginPath();cx.roundRect(barX2,barY2,barW2,12,6);cx.fill();
+  const eGrad=cx.createLinearGradient(barX2,barY2,barX2+barW2,barY2);
+  eGrad.addColorStop(0,'#4ade80');eGrad.addColorStop(0.5,'#f59e0b');eGrad.addColorStop(1,'#ef4444');
+  const fillE=Math.min(1,(gamma-1)/3)*barW2;
+  cx.fillStyle=eGrad;cx.beginPath();cx.roundRect(barX2,barY2,fillE,12,6);cx.fill();
+  lbl(barX2-5,barY2+9,'mc²','#475569',9,'right');lbl(barX2+barW2+5,barY2+9,'∞','#ef4444',9,'left');
+  lbl(W*0.82,barY2+30,'γ = '+gamma.toFixed(3)+'  →  v = '+(vRatio*100).toFixed(1)+'% c','#e2e8f0',11,'center');
+}
+
+// ── FASE 7: Trasformazioni di Lorentz ────────────────────
+function ph7(){
+  const cx2=W*0.5, cy2=H*0.5;
+
+  lbl(cx2,H*0.07,'TRASFORMAZIONI DI LORENTZ','#38bdf8',18,'center',true);
+  lbl(cx2,H*0.07+22,'Come cambiano spazio e tempo passando da S a S\'','#475569',11,'center');
+
+  const vRatio=0.5+0.35*Math.abs(Math.sin(T*0.01));
+  const gamma=1/Math.sqrt(1-vRatio*vRatio);
+  const beta=vRatio;
+
+  // Box equazioni
+  const eqX=W*0.22, eqW=300;
+  cx.fillStyle='rgba(8,14,30,0.92)';
+  cx.beginPath();cx.roundRect(eqX-eqW/2,H*0.18,eqW,165,10);cx.fill();
+  cx.strokeStyle='#f59e0b';cx.lineWidth=1;cx.stroke();
+  lbl(eqX,H*0.18+16,'TRASFORMAZIONI DI LORENTZ','#f59e0b',11,'center',true);
+  lbl(eqX,H*0.18+38,'x\' = γ(x − vt)','#e2e8f0',14,'center',true);
+  lbl(eqX,H*0.18+62,'t\' = γ(t − vx/c²)','#e2e8f0',14,'center',true);
+  lbl(eqX,H*0.18+86,'y\' = y','#94a3b8',13,'center');
+  lbl(eqX,H*0.18+106,'z\' = z','#94a3b8',13,'center');
+  lbl(eqX,H*0.18+128,'γ = '+gamma.toFixed(3),'#4ade80',12,'center',true);
+  lbl(eqX,H*0.18+148,'β = v/c = '+beta.toFixed(3),'#4ade80',12,'center');
+
+  // Limite galileiano
+  cx.fillStyle='rgba(8,14,30,0.92)';
+  cx.beginPath();cx.roundRect(eqX-eqW/2,H*0.18+175,eqW,75,10);cx.fill();
+  cx.strokeStyle='#475569';cx.lineWidth=1;cx.stroke();
+  lbl(eqX,H*0.18+175+16,'LIMITE CLASSICO v ≪ c','#64748b',10,'center',true);
+  lbl(eqX,H*0.18+175+32,'x\' ≈ x − vt  (Galileo)','#475569',11,'center');
+  lbl(eqX,H*0.18+175+48,'t\' ≈ t         (assoluto)','#475569',11,'center');
+  lbl(eqX,H*0.18+175+64,'γ → 1   quando v/c → 0','#334155',10,'center');
+
+  // Griglia di Minkowski deformata (boost di Lorentz)
+  const gox=W*0.62, goy=H*0.55, gS=120;
+  lbl(gox,H*0.17,'BOOST DI LORENTZ (griglia shear)','#38bdf8',12,'center',true);
+
+  // Griglia S (originale)
+  cx.strokeStyle='rgba(56,189,248,0.2)';cx.lineWidth=1;
+  for(let i=-4;i<=4;i++){
+    cx.beginPath();cx.moveTo(gox+i*gS/4,goy-gS);cx.lineTo(gox+i*gS/4,goy+gS);cx.stroke();
+    cx.beginPath();cx.moveTo(gox-gS,goy+i*gS/4);cx.lineTo(gox+gS,goy+i*gS/4);cx.stroke();
+  }
+  lbl(gox+gS+8,goy,'x','#38bdf8',11,'left');
+  lbl(gox,goy-gS-8,'ct','#38bdf8',11,'center');
+
+  // Assi S' shear (Lorentz-boostati)
+  const shX=beta*gamma, shT=beta*gamma;
+  // Asse x' (inclinato verso destra)
+  cx.beginPath();cx.moveTo(gox-gS,goy+shX*gS);cx.lineTo(gox+gS,goy-shX*gS);
+  cx.strokeStyle='#f59e0b';cx.lineWidth=2;glow('#f59e0b',8);cx.stroke();ng();
+  // Asse ct' (inclinato verso sinistra)
+  cx.beginPath();cx.moveTo(gox-shT*gS,goy+gS);cx.lineTo(gox+shT*gS,goy-gS);
+  cx.strokeStyle='#a78bfa';cx.lineWidth=2;glow('#a78bfa',8);cx.stroke();ng();
+
+  // Griglia S' deformata
+  cx.strokeStyle='rgba(245,158,11,0.15)';cx.lineWidth=1;
+  for(let i=-3;i<=3;i++){
+    // linee parallele a x'
+    cx.beginPath();cx.moveTo(gox-gS+i*gS/3*shT,goy+gS-i*gS/3);
+    cx.lineTo(gox+gS+i*gS/3*shT,goy-gS-i*gS/3);cx.stroke();
+    // linee parallele a ct'
+    cx.beginPath();cx.moveTo(gox-gS+i*gS/3,goy+shX*gS+i*gS/3*shX);
+    cx.lineTo(gox+gS+i*gS/3,goy-shX*gS+i*gS/3*shX);cx.stroke();
+  }
+
+  lbl(gox+gS*shT+8,goy-gS,'ct\'','#a78bfa',11,'left');
+  lbl(gox+gS+8,goy-shX*gS,'x\'','#f59e0b',11,'left');
+
+  // Cono luce (fisso a 45°)
+  cx.beginPath();cx.moveTo(gox,goy);cx.lineTo(gox+gS,goy-gS);
+  cx.strokeStyle='#fde68a';cx.lineWidth=2;glow('#fde68a',10);cx.stroke();ng();
+  cx.beginPath();cx.moveTo(gox,goy);cx.lineTo(gox-gS,goy-gS);
+  cx.strokeStyle='#fde68a';cx.lineWidth=2;glow('#fde68a',10);cx.stroke();ng();
+  lbl(gox+gS/2+10,goy-gS/2-10,'c','#fde68a',11,'center');
+
+  // Invariante spaziotemporale
+  cx.fillStyle='rgba(8,14,30,0.9)';
+  cx.beginPath();cx.roundRect(W*0.44,H*0.82,W*0.52,65,8);cx.fill();
+  cx.strokeStyle='#4ade80';cx.lineWidth=1;cx.stroke();
+  lbl(W*0.7,H*0.82+16,'INVARIANTE SPAZIOTEMPORALE','#4ade80',12,'center',true);
+  lbl(W*0.7,H*0.82+36,'s² = c²t² − x² − y² − z² = cost','#e2e8f0',14,'center',true);
+  lbl(W*0.7,H*0.82+54,'Uguale in tutti i sistemi di riferimento inerziali','#64748b',10,'center');
+
+  // Confronto con Galileo in basso
+  lbl(W*0.22,H*0.9,'Galileo: t\' = t (sbagliato per v~c)','#334155',10,'center');
+  lbl(W*0.22,H*0.9+14,'Lorentz: t\' = γ(t−vx/c²) (corretto)','#4ade80',10,'center');
+}
+
+// ── MAIN LOOP ─────────────────────────────────────────────
+function draw(){
+  cx.clearRect(0,0,W,H); bg(); stars();
+  switch(ph){
+    case 0:ph0();break; case 1:ph1();break; case 2:ph2();break;
+    case 3:ph3();break; case 4:ph4();break; case 5:ph5();break;
+    case 6:ph6();break; case 7:ph7();break;
+  }
+  T+=0.022; pT++;
+  if(pT>520&&ph<7) go(ph+1);
+  requestAnimationFrame(draw);
+}
+
+go(0); draw();
+
+</script>
+</body>
+</html>

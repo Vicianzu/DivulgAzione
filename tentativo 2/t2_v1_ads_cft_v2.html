@@ -549,3 +549,717 @@ t2Init();
 </script>
 </body>
 </html>
+<title>AdS/CFT — Stack di Brane e Gola AdS — v2</title>
+<link rel="stylesheet" href="./ui.css">
+</head>
+<body>
+
+<canvas id="canvas" aria-hidden="true"></canvas>
+
+<div id="ui" role="banner">
+  <div id="ui-title">AdS/CFT v2</div>
+  <div id="ui-phase" aria-live="polite"></div>
+  <div id="ui-badge">6 fasi</div>
+</div>
+
+<main id="panel" role="main" aria-label="Contenuto della fase corrente" tabindex="-1">
+  <h1 class="phase-title" id="panel-phase-name"></h1>
+  <div class="phase-content active" id="ph-0">
+    <div class="phase-tag">Fase 01 — Cos'è una D₃-Brana</div>
+    <div class="phase-body">
+      <p>Una D3-brana è un oggetto 3+1D su cui si ancorano gli estremi delle stringhe aperte. È piatta e non deforma lo spaziotempo. Le stringhe chiuse si propagano liberamente nel bulk 10D.</p>
+      <p class="note">Visualizzazione: D3-brana singola con stringhe aperte ancorate.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-1">
+    <div class="phase-tag">Fase 02 — Stack di N D₃-Brane</div>
+    <div class="phase-body">
+      <p>N brane coincidenti: le N² stringhe aperte tra di esse generano il campo di gauge SU(N). Quando N→∞ e λ=gₛN≫1, la teoria di gauge diventa fortemente accoppiata.</p>
+      <p class="note">Visualizzazione: stack di N brane con campo di gauge emergente.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">Fase 03 — Curvatura dello spaziotempo e Gola AdS</div>
+    <div class="phase-body">
+      <p>Lo stack di N brane genera la metrica ds²=H(r)^(−½)η_μν dx^μdx^ν + H(r)^(½)(dr²+r²dΩ₅²). Vicino alle brane si forma la 'gola' con curvatura negativa — la geometria AdS.</p>
+      <p class="note">Visualizzazione: formazione della gola AdS attorno alle brane.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">Fase 04 — Near-Horizon Limit</div>
+    <div class="phase-body">
+      <p>Nel limite r≪L: H(r)≈L⁴/r⁴. La metrica diventa AdS₅. Con z=L²/r: ds²=(L²/z²)(η_μν dx^μdx^ν+dz²). Il bordo AdS è a z→0 (UV della CFT).</p>
+      <p class="note">Visualizzazione: near-horizon limit e metrica AdS₅.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">Fase 05 — Geometria AdS₅×S⁵</div>
+    <div class="phase-body">
+      <p>La gola converge alla geometria prodotto AdS₅×S⁵. AdS₅ ha curvatura negativa costante R=−20/L². Le isometrie SO(2,4)×SO(6) coincidono con le simmetrie della teoria 𝒩=4 SYM.</p>
+      <p class="note">Visualizzazione: geometria prodotto AdS₅×S⁵.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">Fase 06 — La Dualità: due facce della stessa fisica</div>
+    <div class="phase-body">
+      <p>Le N brane ammettono DUE descrizioni equivalenti: (1) Stringa IIB nella geometria AdS₅×S⁵ [bulk con gravità] ↔ (2) Teoria di gauge 𝒩=4 SU(N) SYM in 4D [bordo senza gravità].</p>
+      <p class="note">Visualizzazione: dualità completa gravità↔gauge.</p>
+    </div>
+  </div>
+</main>
+
+<div id="bottom" role="navigation">
+  <button class="btn active" onclick="go(0)">① Cos'è una D-Brana</button>
+  <button class="btn"        onclick="go(1)">② Stack N brane</button>
+  <button class="btn"        onclick="go(2)">③ Curvatura + Gola AdS</button>
+  <button class="btn"        onclick="go(3)">④ Near-horizon limit</button>
+  <button class="btn"        onclick="go(4)">⑤ Geometria AdS₅×S⁵</button>
+  <button class="btn"        onclick="go(5)">⑥ Dualità olografica</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()">⏸ Pausa</button>
+</div>
+
+<script>
+
+const cv=document.getElementById('canvas');
+const c=cv.getContext('2d');
+let W,H;
+function resize(){
+  const pW=document.getElementById('panel').offsetWidth;
+  W=cv.width=Math.round(window.innerWidth-pW);
+  H=cv.height=window.innerHeight;
+}
+resize(); window.addEventListener('resize',resize);
+
+let ph=0,T=0,pT=0;
+let N_branes=1;
+
+const PHASES=[
+  { name:"Cos'è una D₃-Brana",
+    desc:"Una D3-brana è un oggetto 3+1D su cui si ancorano gli estremi delle stringhe aperte. È piatta e non deforma lo spaziotempo (per N=1 piccolo). Le stringhe chiuse invece si propagano liberamente nel bulk 10D.",
+    n:1, geo:"R¹·⁹ piatto" },
+  { name:"Stack di N D₃-Brane",
+    desc:"N brane coincidenti: le N² stringhe aperte tra di esse generano il campo di gauge SU(N). La massa-energia totale scala come N·Tₐ. Quando N→∞ e λ=gₛN≫1, la teoria di gauge diventa fortemente accoppiata e la descrizione duale è gravitazionale.",
+    n:8, geo:"SU(N) gauge" },
+  { name:"Curvatura dello spaziotempo e Gola AdS",
+    desc:"Lo stack di N brane genera la metrica: ds²=H(r)^(-½)η_μν dx^μdx^ν + H(r)^(½)(dr²+r²dΩ₅²) con H(r)=1+L⁴/r⁴. Lontano: spazio piatto. Vicino alle brane: si forma la 'gola' (throat) con curvatura negativa — la geometria AdS.",
+    n:8, geo:"H(r)=1+L⁴/r⁴" },
+  { name:"Near-Horizon Limit",
+    desc:"Nel limite r≪L: H(r)≈L⁴/r⁴. La metrica diventa AdS₅: ds²=(r²/L²)(-dt²+dx²)+(L²/r²)dr². Con z=L²/r: ds²=(L²/z²)(η_μν dx^μdx^ν+dz²). Il bordo AdS è a z→0 (UV della CFT), il centro (IR) a z→∞.",
+    n:8, geo:"AdS₅×S⁵" },
+  { name:"Geometria AdS₅×S⁵",
+    desc:"La gola converge alla geometria prodotto AdS₅×S⁵. AdS₅ ha curvatura negativa costante R=-20/L². S⁵ è una 5-sfera di raggio L. Le isometrie SO(2,4)×SO(6) coincidono esattamente con le simmetrie della teoria 𝒩=4 SYM sul bordo.",
+    n:8, geo:"AdS₅×S⁵" },
+  { name:"La Dualità: due facce della stessa fisica",
+    desc:"Le N brane ammettono DUE descrizioni equivalenti: (1) Stringa IIB nella geometria AdS₅×S⁵ [bulk con gravità] ↔ (2) Teoria di gauge 𝒩=4 SU(N) SYM in 4D [bordo senza gravità]. Questa è la corrispondenza AdS/CFT di Maldacena (1997).",
+    n:8, geo:"AdS/CFT" },
+];
+
+function go(n){
+  ph=n; pT=0; N_branes=PHASES[n].n;
+  document.querySelectorAll('.btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+  document.querySelectorAll('.phase-content').forEach((el,i)=>el.classList.toggle('active',i===n));
+  document.getElementById('ui-phase').textContent=PHASES[n].name;
+  document.getElementById('panel').scrollTop=0;
+  const pn=document.getElementById('panel-phase-name'); if(pn) pn.textContent=PHASES[n].name;
+}
+
+function lbl(x,y,txt,col,sz,al='center',bold=false){
+  c.fillStyle=col; c.font=`${bold?'bold ':''}${sz}px Georgia,serif`;
+  c.textAlign=al; c.fillText(txt,x,y);
+}
+function gw(col,b){c.shadowColor=col;c.shadowBlur=b;}
+function ng(){c.shadowBlur=0;}
+
+// stelle
+let _st=null;
+function stars(){
+  if(!_st)_st=Array.from({length:160},()=>({x:Math.random()*3000,y:Math.random()*2000,r:Math.random()*1.2+0.2,o:Math.random()*0.35+0.08}));
+  _st.forEach(s=>{c.beginPath();c.arc(s.x,s.y,s.r,0,Math.PI*2);c.fillStyle=`rgba(255,255,255,${s.o*(0.5+0.5*Math.sin(T*0.3+s.x*.01))})`;c.fill();});
+}
+function bgDraw(){
+  const g=c.createRadialGradient(W/2,H/2,80,W/2,H/2,Math.max(W,H));
+  g.addColorStop(0,'#020920');g.addColorStop(1,'#000010');
+  c.fillStyle=g;c.fillRect(0,0,W,H);
+}
+
+// ─── FASE 0: singola brana ────────────────────────────────
+function ph0(){
+  const ox=W*.5, oy=H*.5;
+  const bW=W*.62, bH=32;
+
+  // griglia Minkowski piatta
+  drawFlatGrid(ox,oy,W*.72,H*.5,0);
+
+  // brana
+  drawBrana(ox,oy,bW,bH,'#f59e0b',0.9,1);
+
+  // stringhe aperte (su di essa)
+  for(let i=0;i<5;i++){
+    const sx=ox-bW*.35+i*bW*.17+Math.sin(T*0.8+i)*8;
+    const amp=35+8*Math.sin(T*1.5+i*1.2);
+    drawOpenStr(sx,oy,sx+Math.cos(T*0.4+i)*12,oy-amp,i%2===0?'#f97316':'#a78bfa');
+  }
+
+  // stringa chiusa (nel bulk sopra)
+  const clX=ox+W*.22, clY=oy-H*.22;
+  drawClosedStr(clX,clY,22,'#fde68a',2);
+  lbl(clX,clY-34,'stringa chiusa','#fde68a',11,'center');
+  lbl(clX,clY-20,'(bulk libero)','#b45309',10,'center');
+
+  // annotazioni
+  lbl(ox,oy-bH/2-16,'Stringhe aperte ancorano i loro estremi alla D₃-Brana','#f59e0b',12,'center',true);
+  lbl(ox,oy+bH/2+18,'D₃-Brana (3+1 dimensioni)','#fde68a',13,'center',true);
+  lbl(ox,oy+bH/2+34,'La brana singola è PIATTA — non curva lo spaziotempo','#64748b',11,'center');
+
+  // freccia con N=1
+  const bx2=W*.08, by2=H*.3;
+  c.fillStyle='rgba(8,14,30,0.88)';
+  c.beginPath();c.roundRect(bx2,by2,170,78,8);c.fill();
+  c.strokeStyle='#f59e0b44';c.lineWidth=1;c.stroke();
+  lbl(bx2+85,by2+18,'N = 1','#f59e0b',16,'center',true);
+  lbl(bx2+85,by2+36,'Tensione: T₃ ~ 1/(gₛα\'²)','#94a3b8',10,'center');
+  lbl(bx2+85,by2+52,'Carica RR: Q = 1','#64748b',10,'center');
+  lbl(bx2+85,by2+68,'Curv. spaziotemps.: ≈ 0','#4ade80',10,'center');
+
+  lbl(W*.5,H*.1,'La D₃-Brana','#f1f5f9',20,'center',true);
+  lbl(W*.5,H*.1+24,'Oggetto 3+1 dimensionale su cui si ancorano le stringhe aperte','#64748b',12,'center');
+}
+
+// ─── FASE 1: stack N brane ─────────────────────────────────
+function ph1(){
+  const ox=W*.44, oy=H*.5;
+  const N=8, sep=22, bW=W*.52, bH=24;
+
+  // stringhe tra brane
+  for(let i=0;i<N-1;i++){
+    const y0=oy-(N/2)*sep+i*sep+sep/2;
+    const y1=oy-(N/2)*sep+(i+1)*sep+sep/2;
+    for(let s=0;s<4;s++){
+      const sx=ox-bW*.38+s*bW*.25;
+      c.beginPath();
+      for(let k=0;k<=40;k++){
+        const f=k/40, env=Math.sin(Math.PI*f);
+        const xw=sx+18*env*Math.sin(3*Math.PI*f-T*3.5+s*1.2);
+        const yw=y0+(y1-y0)*f;
+        k===0?c.moveTo(xw,yw):c.lineTo(xw,yw);
+      }
+      c.strokeStyle=`hsl(${20+s*50},80%,60%)`; c.lineWidth=1.5;
+      gw(`hsl(${20+s*50},80%,60%)`,5);c.stroke();ng();
+    }
+  }
+
+  // brane
+  for(let i=0;i<N;i++){
+    const by=oy-(N/2)*sep+i*sep;
+    const alpha=0.5+0.35*(i/(N-1));
+    drawBrana(ox,by,bW,bH,'#f59e0b',alpha,i);
+    if(i===0||i===N-1) lbl(ox+bW/2+8,by+bH/2,'D₃','#fde68a',9,'left');
+  }
+
+  // parentesi N
+  const topY=oy-(N/2)*sep, botY=oy+(N/2)*sep+bH;
+  c.beginPath();c.moveTo(ox-bW/2-22,topY);c.lineTo(ox-bW/2-30,topY);c.lineTo(ox-bW/2-30,botY);c.lineTo(ox-bW/2-22,botY);
+  c.strokeStyle='rgba(245,158,11,0.6)';c.lineWidth=2;c.stroke();
+  lbl(ox-bW/2-44,(topY+botY)/2,'N','#f59e0b',18,'center',true);
+
+  // pannello SU(N)
+  const px=W*.76, py=H*.28;
+  c.fillStyle='rgba(8,14,30,0.92)';c.beginPath();c.roundRect(px,py,W*.2,H*.42,10);c.fill();
+  c.strokeStyle='#f59e0b44';c.lineWidth=1;c.stroke();
+  lbl(px+W*.1,py+20,'Campo di Gauge','#f59e0b',13,'center',true);
+  lbl(px+W*.1,py+36,'SU(N)','#fde68a',22,'center',true);
+  lbl(px+W*.1,py+62,'N² stringhe aperte','#94a3b8',10,'center');
+  lbl(px+W*.1,py+76,'(N²−1 bosoni di gauge)','#64748b',9,'center');
+  c.fillStyle='#1e293b';c.beginPath();c.roundRect(px+14,py+92,W*.2-28,1,1);c.fill();
+  lbl(px+W*.1,py+108,'λ = gₛN','#4ade80',12,'center',true);
+  lbl(px+W*.1,py+124,"'t Hooft coupling",'#64748b',9,'center');
+  c.fillStyle='#1e293b';c.beginPath();c.roundRect(px+14,py+136,W*.2-28,1,1);c.fill();
+  lbl(px+W*.1,py+152,'N→∞, gₛ→0','#a78bfa',11,'center',true);
+  lbl(px+W*.1,py+168,'λ=gₛN fisso','#7c3aed',10,'center');
+  lbl(px+W*.1,py+188,'↓','#4ade80',14,'center');
+  lbl(px+W*.1,py+206,'Gauge fortemente','#38bdf8',10,'center',true);
+  lbl(px+W*.1,py+220,'accoppiata','#38bdf8',10,'center');
+  lbl(px+W*.1,py+236,'↕ duale a','#4ade80',10,'center');
+  lbl(px+W*.1,py+252,'Gravità classica','#a78bfa',10,'center',true);
+  lbl(px+W*.1,py+268,'in AdS₅×S⁵','#7c3aed',10,'center');
+
+  lbl(W*.5,H*.1,'Stack di N D₃-Brane','#f1f5f9',20,'center',true);
+  lbl(W*.5,H*.1+24,'N brane coincidenti → N² stringhe aperte → campo SU(N) → duale alla gravità','#64748b',12,'center');
+}
+
+// ─── FASE 2: CURVATURA + GOLA ADS (animazione principale) ──
+function ph2(){
+  const ox=W*.5, oy=H*.36;
+
+  // ─ Griglia Minkowski warped in tempo reale ─
+  // La griglia si deforma con la funzione warp factor H(r) = 1 + L^4/r^4
+  const gW=W*.78, gH=H*.44;
+  const cols=28, rows=20;
+  const L4=0.028; // parametro visivo
+  const throatDepth=H*.38; // profondità visiva della gola
+
+  // calcola punto griglia con warp
+  function gridPt(fi,fj){
+    const dx=fi-0.5, dy=fj-0.5;
+    const r2=dx*dx+dy*dy+0.0001;
+    const r=Math.sqrt(r2);
+    const H_r=1+L4/(r2*r2*16); // H(r) = 1 + L^4/r^4 (normalizzato)
+    // la deformazione è verso il basso (terza dimensione visiva)
+    const warpZ=throatDepth*(H_r-1)/(H_r); // mappatura in profondità
+    const pulse=1+0.025*Math.sin(T*1.2+r*8); // leggera pulsazione
+    return {
+      x: ox+(dx*gW)*pulse,
+      y: oy+(dy*gH)*pulse + warpZ*0.72,
+      z: warpZ,
+      Hr: H_r
+    };
+  }
+
+  // disegna griglia con z-depth (colore e spessore variano)
+  // righe orizzontali
+  for(let j=0;j<=rows;j++){
+    c.beginPath();
+    for(let i=0;i<=cols;i++){
+      const {x,y,z,Hr}=gridPt(i/cols, j/rows);
+      const depth=Math.min(z/throatDepth,1);
+      i===0?c.moveTo(x,y):c.lineTo(x,y);
+    }
+    // colore varia da blu (piatto) a viola (warped)
+    const fj=j/rows, cjdx=Math.abs(fj-0.5)*2;
+    const r=Math.floor(56+cjdx*68), g2=Math.floor(189-cjdx*120), b2=Math.floor(248-cjdx*50);
+    c.strokeStyle=`rgba(${r},${g2},${b2},${0.15+cjdx*0.25})`;
+    c.lineWidth=0.8+cjdx*0.6;
+    c.stroke();
+  }
+  // colonne verticali
+  for(let i=0;i<=cols;i++){
+    c.beginPath();
+    for(let j=0;j<=rows;j++){
+      const {x,y,z}=gridPt(i/cols, j/rows);
+      const fi=i/cols, cidx=Math.abs(fi-0.5)*2;
+      j===0?c.moveTo(x,y):c.lineTo(x,y);
+    }
+    const fi=i/cols, cidx=Math.abs(fi-0.5)*2;
+    const r=Math.floor(56+cidx*68), g2=Math.floor(189-cidx*120), b2=Math.floor(248-cidx*50);
+    c.strokeStyle=`rgba(${r},${g2},${b2},${0.15+cidx*0.25})`;
+    c.lineWidth=0.8+cidx*0.6;
+    c.stroke();
+  }
+
+  // ─ Gola AdS 3D sotto la griglia ─
+  // Rappresentazione della gola come imbuto iperbolico
+  const throatOx=ox, throatOy=oy+H*.12;
+  const nSlices=28;
+  for(let s=0;s<=nSlices;s++){
+    const f=s/nSlices; // 0=bordo (lontano) 1=fondo gola (vicino brane)
+    const z=f*throatDepth*1.0;
+    // raggio della gola: iperbolico ~ L²/r ~ L²/(L²(1-f)) = 1/(1-f) → diventa stretto vicino
+    const throatR=(gW*.42)*(1-f*0.82);
+    const alpha=0.1+f*0.5;
+    const col_r=Math.floor(124+f*60), col_g=Math.floor(58-f*30), col_b=Math.floor(237+f*10);
+    c.beginPath();
+    c.ellipse(throatOx, throatOy+z*0.5, throatR, throatR*0.22, 0, 0, Math.PI*2);
+    c.strokeStyle=`rgba(${col_r},${col_g},${col_b},${alpha})`;
+    c.lineWidth=f<0.1?2:0.8+f;
+    c.stroke();
+    // riempi leggermente l'interno
+    if(s>0){
+      const fPrev=(s-1)/nSlices;
+      const zPrev=fPrev*throatDepth*1.0;
+      const rPrev=(gW*.42)*(1-fPrev*0.82);
+      c.beginPath();
+      c.moveTo(throatOx-rPrev, throatOy+zPrev*0.5);
+      c.lineTo(throatOx-throatR, throatOy+z*0.5);
+      c.lineTo(throatOx+throatR, throatOy+z*0.5);
+      c.lineTo(throatOx+rPrev, throatOy+zPrev*0.5);
+      c.closePath();
+      c.fillStyle=`rgba(${col_r},${col_g},${col_b},${0.025+f*0.04})`;
+      c.fill();
+    }
+  }
+
+  // linee verticali della gola (generatrici)
+  for(let k=0;k<16;k++){
+    const a=(k/16)*Math.PI*2;
+    c.beginPath();
+    for(let s=0;s<=40;s++){
+      const f=s/40;
+      const z=f*throatDepth;
+      const r=(gW*.42)*(1-f*0.82);
+      const x2=throatOx+r*Math.cos(a);
+      const y2=throatOy+z*0.5+r*0.22*Math.sin(a);
+      s===0?c.moveTo(x2,y2):c.lineTo(x2,y2);
+    }
+    const dep=0.15+0.35*(k%4)/3;
+    c.strokeStyle=`rgba(167,139,250,${dep})`;
+    c.lineWidth=0.7;
+    c.setLineDash([4,6]);c.stroke();c.setLineDash([]);
+  }
+
+  // ─ Stack brane al fondo della gola ─
+  const bOy=throatOy+throatDepth*0.5;
+  const bW2=gW*.24;
+  for(let i=0;i<5;i++){
+    const by=bOy-10+i*7;
+    const al=0.5+0.3*(i/4);
+    c.beginPath();c.roundRect(throatOx-bW2/2,by,bW2,10,2);
+    const bg=c.createLinearGradient(throatOx-bW2/2,by,throatOx+bW2/2,by+10);
+    bg.addColorStop(0,`rgba(245,158,11,${al*.8})`);
+    bg.addColorStop(1,`rgba(180,83,9,${al*.6})`);
+    c.fillStyle=bg;gw('#f59e0b',8);c.fill();ng();
+  }
+  lbl(throatOx, bOy+42,'Stack N D₃-Brane','#fde68a',11,'center',true);
+  lbl(throatOx, bOy+56,'(sorgente della curvatura)','#b45309',9,'center');
+
+  // ─ Annotazioni a lato ─
+  // freccia "r" radiale
+  c.beginPath();
+  c.moveTo(ox+gW*.42+8, oy);
+  c.lineTo(ox+gW*.42+8, oy+throatDepth*.52);
+  c.strokeStyle='rgba(148,163,184,0.5)';c.lineWidth=1.5;c.stroke();
+  // punta
+  c.beginPath();c.moveTo(ox+gW*.42+3,oy+throatDepth*.52);
+  c.lineTo(ox+gW*.42+8,oy+throatDepth*.52+10);
+  c.lineTo(ox+gW*.42+13,oy+throatDepth*.52);
+  c.fillStyle='rgba(148,163,184,0.5)';c.fill();
+  lbl(ox+gW*.42+28, oy+8,'r ≫ L','#f59e0b',11,'left');
+  lbl(ox+gW*.42+28, oy+8+14,'spazio piatto','#64748b',9,'left');
+  lbl(ox+gW*.42+28, oy+throatDepth*.26,'r ~ L','#94a3b8',11,'left');
+  lbl(ox+gW*.42+28, oy+throatDepth*.26+14,'transizione','#64748b',9,'left');
+  lbl(ox+gW*.42+28, oy+throatDepth*.50,'r ≪ L','#a78bfa',11,'left');
+  lbl(ox+gW*.42+28, oy+throatDepth*.50+14,'gola AdS','#7c3aed',9,'left');
+
+  // metrica
+  const mx=W*.02, my2=H*.68;
+  c.fillStyle='rgba(8,14,30,0.92)';c.beginPath();c.roundRect(mx,my2,W*.38,H*.22,10);c.fill();
+  c.strokeStyle='#1e3a5f';c.lineWidth=1;c.stroke();
+  lbl(mx+W*.19,my2+18,'Metrica dello Stack N D₃-Brane','#38bdf8',12,'center',true);
+  lbl(mx+W*.19,my2+38,'ds² = H(r)^(-½) η_μν dx^μdx^ν','#c4b5fd',11,'center',true);
+  lbl(mx+W*.19,my2+54,'      + H(r)^(½) (dr²+r²dΩ₅²)','#c4b5fd',11,'center',true);
+  lbl(mx+W*.19,my2+74,'H(r) = 1 + L⁴/r⁴','#4ade80',13,'center',true);
+  lbl(mx+W*.19,my2+94,'L⁴ = 4πgₛNα\'²','#94a3b8',10,'center');
+  lbl(mx+W*.19,my2+110,'r→∞: H→1 (piatto)   r→0: H→L⁴/r⁴ (AdS)','#64748b',10,'center');
+
+  lbl(W*.5,H*.04,'Curvatura dello Spaziotempo e Gola AdS','#f1f5f9',18,'center',true);
+  lbl(W*.5,H*.04+22,'Lo stack di N brane deforma la griglia di Minkowski: nasce la "gola" (throat) con curvatura negativa','#64748b',11,'center');
+}
+
+// ─── FASE 3: near-horizon limit ────────────────────────────
+function ph3(){
+  const ox=W*.5, oy=H*.48;
+  const R=Math.min(W*.32,H*.3);
+
+  // due rappresentazioni: sinistra = full solution, destra = AdS
+  // divider
+  c.beginPath();c.moveTo(ox,H*.12);c.lineTo(ox,H*.88);
+  c.strokeStyle='rgba(100,116,139,0.3)';c.lineWidth=1;c.setLineDash([6,6]);c.stroke();c.setLineDash([]);
+  lbl(ox,H*.12-8,'→ Near-Horizon Limit →','#4ade80',12,'center',true);
+
+  // --- lato sinistro: soluzione completa ---
+  const lx=W*.22;
+  // griglia flat + throat piccolo
+  drawMiniGrid(lx,oy,W*.36,H*.44,0.04);
+  // brana
+  c.beginPath();c.ellipse(lx,oy+H*.16,W*.14,10,0,0,Math.PI*2);
+  const bg=c.createRadialGradient(lx,oy+H*.16,2,lx,oy+H*.16,W*.14);
+  bg.addColorStop(0,'#fde68a');bg.addColorStop(1,'rgba(180,83,9,0.3)');
+  c.fillStyle=bg;gw('#f59e0b',10);c.fill();ng();
+  lbl(lx,oy-R*.4,'Soluzione completa','#94a3b8',13,'center',true);
+  lbl(lx,oy-R*.4+18,'H(r) = 1 + L⁴/r⁴','#c4b5fd',12,'center',true);
+  lbl(lx,H*.78,'Spazio piatto +','#f59e0b',10,'center');
+  lbl(lx,H*.78+14,'gola piccola','#f59e0b',10,'center');
+
+  // --- lato destro: limite AdS ---
+  const rx=W*.78;
+  // disco AdS puro
+  for(let k=1;k<=7;k++){
+    const r2=R*(k/7);
+    c.beginPath();c.arc(rx,oy,r2,0,Math.PI*2);
+    c.strokeStyle=`rgba(124,58,237,${0.15+0.08*k})`;
+    c.lineWidth=k===1?2:0.8;c.stroke();
+  }
+  c.beginPath();c.arc(rx,oy,R,0,Math.PI*2);
+  c.strokeStyle='#38bdf8';c.lineWidth=2.5;gw('#38bdf8',12);c.stroke();ng();
+  // geodetiche
+  for(let g=0;g<10;g++){
+    const a=(g/10)*Math.PI*2+T*0.05;
+    c.beginPath();c.moveTo(rx+R*Math.cos(a),oy+R*.45*Math.sin(a));c.lineTo(rx,oy);
+    c.strokeStyle='rgba(74,222,128,0.12)';c.lineWidth=1;c.stroke();
+  }
+  lbl(rx,oy-R-20,'Limite Near-Horizon','#94a3b8',13,'center',true);
+  lbl(rx,oy-R-4,'H(r) ≈ L⁴/r⁴','#c4b5fd',12,'center',true);
+  lbl(rx,oy,'AdS₅ puro','#a78bfa',14,'center',true);
+  lbl(rx,oy+18,'(+ S⁵)','#7c3aed',11,'center');
+  lbl(rx,H*.78,'Geometria AdS','#a78bfa',10,'center');
+  lbl(rx,H*.78+14,'curvatura negativa','#7c3aed',10,'center');
+
+  // box matematica
+  c.fillStyle='rgba(8,14,30,0.92)';c.beginPath();c.roundRect(W*.2,H*.82,W*.6,H*.1,10);c.fill();
+  c.strokeStyle='#4ade80';c.lineWidth=1;c.stroke();
+  lbl(W*.5,H*.82+16,'r≪L: H≈L⁴/r⁴  →  ds² = r²/L²(−dt²+dx²)+L²/r²dr²+L²dΩ₅²','#4ade80',11,'center',true);
+  lbl(W*.5,H*.82+34,'Cambio: z=L²/r  →  ds² = L²/z² (η_μν dx^μdx^ν + dz²) + L²dΩ₅²  =  AdS₅ × S⁵','#94a3b8',10,'center');
+
+  lbl(W*.5,H*.07,'Near-Horizon Limit: il "1" scompare','#f1f5f9',18,'center',true);
+  lbl(W*.5,H*.07+22,'Vicino alle brane (r≪L): H(r)≈L⁴/r⁴ — la geometria diventa esattamente AdS₅×S⁵','#64748b',12,'center');
+}
+
+// ─── FASE 4: AdS5 × S5 ────────────────────────────────────
+function ph4(){
+  const ox=W*.38, oy=H*.5;
+  const R=Math.min(W*.28,H*.32);
+
+  // AdS5 (disco)
+  for(let k=1;k<=8;k++){
+    const r2=R*(k/8);
+    c.beginPath();c.arc(ox,oy,r2,0,Math.PI*2);
+    c.strokeStyle=`rgba(124,58,237,${0.12+0.1*(k/8)})`;
+    c.lineWidth=k===1?2:0.8;c.stroke();
+  }
+  c.beginPath();c.arc(ox,oy,R,0,Math.PI*2);
+  c.strokeStyle='#7c3aed';c.lineWidth=3;gw('#7c3aed',14);c.stroke();ng();
+
+  // geodetiche nel disco
+  for(let g=0;g<12;g++){
+    const a=(g/12)*Math.PI*2+T*0.04;
+    const bx3=ox+R*Math.cos(a),by3=oy+R*.55*Math.sin(a);
+    c.beginPath();c.moveTo(bx3,by3);c.lineTo(ox,oy);
+    c.strokeStyle='rgba(74,222,128,0.09)';c.lineWidth=1;c.stroke();
+  }
+
+  // bordo luminoso con operatori
+  for(let p=0;p<14;p++){
+    const a=(p/14)*Math.PI*2+T*0.12;
+    c.beginPath();c.arc(ox+R*Math.cos(a),oy+R*.55*Math.sin(a),3+Math.sin(T*2+p),0,Math.PI*2);
+    c.fillStyle=`hsl(${200+p*12},90%,70%)`;gw(`hsl(${200+p*12},90%,60%)`,6);c.fill();ng();
+  }
+
+  lbl(ox,oy,'AdS₅','#a78bfa',22,'center',true);
+  lbl(ox,oy+24,'Curvatura: R=−20/L²','#7c3aed',10,'center');
+  lbl(ox,oy+38,'Isometria: SO(2,4)','#64748b',9,'center');
+  lbl(ox,oy-R-22,'BULK (5D con gravità)','#7c3aed',12,'center',true);
+  lbl(ox,oy+R*.55+22,'BORDO: CFT₄  SO(2,4)≅conf.4D','#38bdf8',11,'center',true);
+
+  // S5 (a destra)
+  const sx=W*.76, sy=H*.5, sR=R*.58;
+  for(let l=0;l<10;l++){
+    const a=(l/10)*Math.PI;
+    c.beginPath();c.ellipse(sx,sy,sR*Math.sin(a)+2,sR,0,0,Math.PI*2);
+    c.strokeStyle=`rgba(56,189,248,${0.08+0.14*(l%2)})`;c.lineWidth=0.8;c.stroke();
+  }
+  for(let l=0;l<8;l++){
+    const a=(l/8)*Math.PI*2+T*0.15;
+    c.beginPath();c.ellipse(sx,sy,sR,sR*.45,a,0,Math.PI*2);
+    c.strokeStyle=`rgba(56,189,248,0.12)`;c.lineWidth=0.7;c.stroke();
+  }
+  c.beginPath();c.arc(sx,sy,sR,0,Math.PI*2);
+  c.strokeStyle='#38bdf8';c.lineWidth=2;gw('#38bdf8',10);c.stroke();ng();
+  lbl(sx,sy,'S⁵','#38bdf8',20,'center',true);
+  lbl(sx,sy+20,'Raggio L','#60a5fa',10,'center');
+  lbl(sx,sy+34,'Isometria: SO(6)','#64748b',9,'center');
+  lbl(sx,sy-sR-18,'Sfera 5D compatta','#38bdf8',11,'center',true);
+
+  // simbolo ×
+  lbl((ox+sx)/2,sy,'×','#4ade80',28,'center',true);
+
+  // box isometrie
+  c.fillStyle='rgba(8,14,30,0.92)';c.beginPath();c.roundRect(W*.08,H*.8,W*.84,H*.12,10);c.fill();
+  c.strokeStyle='#1e3a5f';c.lineWidth=1;c.stroke();
+  lbl(W*.5,H*.8+16,'Isometrie AdS₅×S⁵:  SO(2,4) × SO(6)  ≅  Simmetrie 𝒩=4 SYM:  Conforme(4D) × R-simmetria SU(4)','#4ade80',11,'center',true);
+  lbl(W*.5,H*.8+34,'L⁴=4πgₛNα\'²   •   L/lₛ=(4πgₛN)^(¼)   •   Nel limite N→∞,gₛ→0: geometria classica (ℏ→0)','#64748b',10,'center');
+
+  lbl(W*.5,H*.07,'AdS₅ × S⁵','#f1f5f9',22,'center',true);
+  lbl(W*.5,H*.07+26,'La geometria near-horizon si fattorizza nel prodotto di due spazi a curvatura costante','#64748b',12,'center');
+}
+
+// ─── FASE 5: dualità completa ──────────────────────────────
+function ph5(){
+  const ox=W*.5, oy=H*.5;
+  // due cerchi dualità
+  const R=Math.min(W*.23,H*.26);
+  const lx=W*.24, rx=W*.76;
+
+  // BULK
+  c.beginPath();c.arc(lx,oy,R,0,Math.PI*2);
+  const bG=c.createRadialGradient(lx,oy,10,lx,oy,R);
+  bG.addColorStop(0,'rgba(124,58,237,0.3)');bG.addColorStop(1,'rgba(14,0,40,0.4)');
+  c.fillStyle=bG;c.fill();
+  c.strokeStyle='#7c3aed';c.lineWidth=2;gw('#7c3aed',12);c.stroke();ng();
+  for(let p=0;p<5;p++){
+    const a=(p/5)*Math.PI*2+T*0.25*(p%2?1:-1);
+    const r2=R*(0.25+0.4*(p%3)/2);
+    c.beginPath();c.arc(lx+r2*Math.cos(a),oy+r2*.7*Math.sin(a),5,0,Math.PI*2);
+    c.fillStyle=`hsl(${250+p*20},80%,70%)`;gw(`hsl(${250+p*20},80%,60%)`,8);c.fill();ng();
+  }
+  lbl(lx,oy-14,'Stringa IIB','#a78bfa',13,'center',true);
+  lbl(lx,oy+4,'in AdS₅×S⁵','#7c3aed',11,'center');
+  lbl(lx,oy-R-20,'BULK','#7c3aed',14,'center',true);
+  lbl(lx,oy+R+16,'Gravità quantistica','#64748b',10,'center');
+  lbl(lx,oy+R+28,'5 dimensioni','#64748b',9,'center');
+
+  // CFT
+  c.beginPath();c.arc(rx,oy,R,0,Math.PI*2);
+  const bG2=c.createRadialGradient(rx,oy,10,rx,oy,R);
+  bG2.addColorStop(0,'rgba(56,189,248,0.28)');bG2.addColorStop(1,'rgba(0,14,40,0.4)');
+  c.fillStyle=bG2;c.fill();
+  c.strokeStyle='#38bdf8';c.lineWidth=2;gw('#38bdf8',12);c.stroke();ng();
+  for(let l=0;l<7;l++){
+    const a=(l/7)*Math.PI*2+T*0.2;
+    const r2=R*(0.3+0.45*(l%3)/2);
+    c.beginPath();
+    for(let k=0;k<=30;k++){
+      const f=k/30,rw=r2+10*Math.sin(3*Math.PI*f+T*2.5+l);
+      const x2=rx+rw*Math.cos(a+f*.3),y2=oy+rw*.7*Math.sin(a+f*.3);
+      k===0?c.moveTo(x2,y2):c.lineTo(x2,y2);
+    }
+    c.strokeStyle=`rgba(56,189,248,${0.15+0.1*(l%2)})`;c.lineWidth=1.2;c.stroke();
+  }
+  lbl(rx,oy-14,'𝒩=4 SYM','#38bdf8',13,'center',true);
+  lbl(rx,oy+4,'SU(N), d=4','#60a5fa',11,'center');
+  lbl(rx,oy-R-20,'BORDO','#38bdf8',14,'center',true);
+  lbl(rx,oy+R+16,'Teoria di gauge','#64748b',10,'center');
+  lbl(rx,oy+R+28,'4 dimensioni','#64748b',9,'center');
+
+  // frecce e simbolo
+  const midX=ox;
+  c.beginPath();c.moveTo(lx+R+8,oy-6);c.lineTo(midX-20,oy-6);
+  c.strokeStyle='rgba(74,222,128,0.6)';c.lineWidth=2;c.stroke();
+  c.beginPath();c.moveTo(midX+20,oy+6);c.lineTo(rx-R-8,oy+6);
+  c.strokeStyle='rgba(74,222,128,0.6)';c.lineWidth=2;c.stroke();
+  lbl(midX,oy,'⇔','#4ade80',32,'center',true);
+  lbl(midX,oy+32,'Maldacena 1997','#4ade80',10,'center');
+
+  // origine comune: stack brane
+  c.fillStyle='rgba(8,14,30,0.92)';c.beginPath();c.roundRect(ox-110,H*.12,220,48,8);c.fill();
+  c.strokeStyle='#f59e0b66';c.lineWidth=1;c.stroke();
+  lbl(ox,H*.12+16,'Origine comune:','#f59e0b',11,'center',true);
+  lbl(ox,H*.12+32,'Stack N D₃-Brane in tipo IIB','#fde68a',12,'center',true);
+
+  // frecce dall'origine
+  c.beginPath();c.moveTo(ox-30,H*.12+48);c.lineTo(lx+20,oy-R-8);
+  c.strokeStyle='rgba(245,158,11,0.35)';c.lineWidth=1;c.setLineDash([4,5]);c.stroke();c.setLineDash([]);
+  c.beginPath();c.moveTo(ox+30,H*.12+48);c.lineTo(rx-20,oy-R-8);
+  c.strokeStyle='rgba(245,158,11,0.35)';c.lineWidth=1;c.setLineDash([4,5]);c.stroke();c.setLineDash([]);
+
+  lbl(lx,H*.22,'Descrizione','#64748b',10,'center');
+  lbl(lx,H*.22+13,'gravitazionale','#64748b',10,'center');
+  lbl(rx,H*.22,'Descrizione','#64748b',10,'center');
+  lbl(rx,H*.22+13,'di gauge','#64748b',10,'center');
+
+  // formula
+  c.fillStyle='rgba(8,14,30,0.92)';c.beginPath();c.roundRect(W*.12,H*.84,W*.76,H*.1,10);c.fill();
+  c.strokeStyle='#4ade80';c.lineWidth=1;c.stroke();
+  lbl(W*.5,H*.84+18,'⟨e∫d⁴x J(x)O(x)⟩CFT = Zstringa[φ|z=0 = J]','#4ade80',13,'center',true);
+  lbl(W*.5,H*.84+36,'(GKPW: Gubser-Klebanov-Polyakov 1998, Witten 1998)','#64748b',10,'center');
+
+  lbl(W*.5,H*.05,'La Dualità AdS/CFT','#f1f5f9',20,'center',true);
+  lbl(W*.5,H*.05+22,'Lo stesso stack di N brane ammette due descrizioni equivalenti e complementari','#64748b',12,'center');
+}
+
+// ─── UTILITIES ───────────────────────────────────────────
+function drawFlatGrid(ox,oy,gW,gH,warp){
+  const cols=16,rows=10;
+  for(let j=0;j<=rows;j++){
+    c.beginPath();
+    for(let i=0;i<=cols;i++){
+      const x=ox-gW/2+(i/cols)*gW, y=oy-gH/2+(j/rows)*gH;
+      i===0?c.moveTo(x,y):c.lineTo(x,y);
+    }
+    c.strokeStyle='rgba(56,189,248,0.12)';c.lineWidth=0.7;c.stroke();
+  }
+  for(let i=0;i<=cols;i++){
+    c.beginPath();
+    for(let j=0;j<=rows;j++){
+      const x=ox-gW/2+(i/cols)*gW, y=oy-gH/2+(j/rows)*gH;
+      j===0?c.moveTo(x,y):c.lineTo(x,y);
+    }
+    c.strokeStyle='rgba(56,189,248,0.12)';c.lineWidth=0.7;c.stroke();
+  }
+}
+
+function drawMiniGrid(ox,oy,gW,gH,L4){
+  const cols=14,rows=10;
+  for(let j=0;j<=rows;j++){
+    c.beginPath();
+    for(let i=0;i<=cols;i++){
+      const fx=i/cols,fy=j/rows,dx=fx-.5,dy=fy-.5;
+      const r2=dx*dx+dy*dy+.001;
+      const Hr=1+L4/(r2*r2*4);
+      const wZ=(Hr-1)/Hr*H*.18;
+      const x=ox+(fx-.5)*gW, y=oy+(fy-.5)*gH+wZ;
+      i===0?c.moveTo(x,y):c.lineTo(x,y);
+    }
+    c.strokeStyle='rgba(56,189,248,0.15)';c.lineWidth=0.7;c.stroke();
+  }
+  for(let i=0;i<=cols;i++){
+    c.beginPath();
+    for(let j=0;j<=rows;j++){
+      const fx=i/cols,fy=j/rows,dx=fx-.5,dy=fy-.5;
+      const r2=dx*dx+dy*dy+.001;
+      const Hr=1+L4/(r2*r2*4);
+      const wZ=(Hr-1)/Hr*H*.18;
+      const x=ox+(fx-.5)*gW, y=oy+(fy-.5)*gH+wZ;
+      j===0?c.moveTo(x,y):c.lineTo(x,y);
+    }
+    c.strokeStyle='rgba(56,189,248,0.15)';c.lineWidth=0.7;c.stroke();
+  }
+}
+
+function drawBrana(ox,oy,bW,bH,col,alpha,idx){
+  c.beginPath();c.ellipse(ox,oy+bH/2+3,bW/2,bH*.18,0,0,Math.PI*2);
+  c.fillStyle='rgba(0,0,0,0.25)';c.fill();
+  c.beginPath();c.roundRect(ox-bW/2,oy,bW,bH,3);
+  const bg=c.createLinearGradient(ox-bW/2,oy,ox+bW/2,oy+bH);
+  bg.addColorStop(0,`rgba(245,158,11,${alpha*.9})`);
+  bg.addColorStop(.5,`rgba(253,230,138,${alpha})`);
+  bg.addColorStop(1,`rgba(180,83,9,${alpha*.7})`);
+  c.fillStyle=bg;gw(col,8*(alpha));c.fill();ng();
+  c.strokeStyle=`rgba(253,230,138,${alpha*.5})`;c.lineWidth=1;c.stroke();
+}
+
+function drawOpenStr(x1,y1,x2,y2,col){
+  c.beginPath();
+  const steps=30;
+  for(let k=0;k<=steps;k++){
+    const f=k/steps,env=Math.sin(Math.PI*f);
+    const xw=x1+(x2-x1)*f+env*10*Math.sin(3*Math.PI*f-T*3.5);
+    const yw=y1+(y2-y1)*f;
+    k===0?c.moveTo(xw,yw):c.lineTo(xw,yw);
+  }
+  c.strokeStyle=col;c.lineWidth=1.5;gw(col,6);c.stroke();ng();
+  c.beginPath();c.arc(x1,y1,4,0,Math.PI*2);c.fillStyle='#fff';gw('#fff',5);c.fill();ng();
+  c.beginPath();c.arc(x2,y2,4,0,Math.PI*2);c.fillStyle=col;gw(col,5);c.fill();ng();
+}
+
+function drawClosedStr(ox,oy,r,col,mode){
+  c.beginPath();
+  for(let i=0;i<=200;i++){
+    const a=(i/200)*Math.PI*2;
+    const d=1+.18*Math.sin(mode*a-T*2.5)+.07*Math.cos(2*mode*a+T*1.5);
+    const x=ox+r*d*Math.cos(a), y=oy+r*d*.62*Math.sin(a);
+    i===0?c.moveTo(x,y):c.lineTo(x,y);
+  }
+  c.closePath();c.strokeStyle=col;c.lineWidth=2;
+  c.setLineDash([5,4]);gw(col,10);c.stroke();ng();c.setLineDash([]);
+}
+
+// ─── LOOP ─────────────────────────────────────────────────
+let paused = false;
+function togglePause(){
+  paused = !paused;
+  document.getElementById('btn-pause').textContent = paused ? '▶ Riprendi' : '⏸ Pausa';
+}
+function draw(){
+  c.clearRect(0,0,W,H);bgDraw();stars();
+  switch(ph){
+    case 0:ph0();break;case 1:ph1();break;case 2:ph2();break;
+    case 3:ph3();break;case 4:ph4();break;case 5:ph5();break;
+  }
+  T+=0.007;if(!paused)pT++;
+  if(pT>1800&&ph<5&&!paused)go(ph+1);
+  requestAnimationFrame(draw);
+}
+go(0);draw();
+
+</script>
+</body>
+</html>

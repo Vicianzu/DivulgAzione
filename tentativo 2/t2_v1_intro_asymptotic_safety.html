@@ -623,3 +623,804 @@ t2Init();
 </script>
 </body>
 </html>
+<title>Asymptotic Safety — Sicurezza Asintotica della Gravità — v2</title>
+<link rel="stylesheet" href="./ui.css">
+</head>
+<body>
+
+<canvas id="canvas" aria-hidden="true"></canvas>
+
+<div id="ui" role="banner">
+  <div id="ui-title">Asymptotic Safety</div>
+  <div id="ui-phase" aria-live="polite"></div>
+  <div id="ui-badge">7 fasi</div>
+</div>
+
+<main id="panel" role="main" aria-label="Contenuto della fase corrente" tabindex="-1">
+  <h1 class="phase-title" id="panel-phase-name"></h1>
+  <div class="phase-content active" id="ph-0">
+    <div class="phase-tag">Fase 01 — Chi è Weinberg?</div>
+    <div class="phase-body">
+      <p>Steven Weinberg (1933–2021): padre del Modello Standard (1967), premio Nobel 1973, propose la Asymptotic Safety nel 1976 nelle lezioni di Erice.</p>
+      <p class="note">Visualizzazione: timeline della vita e carriera di Weinberg.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-1">
+    <div class="phase-tag">Fase 02 — Perché "Asintotica"?</div>
+    <div class="phase-body">
+      <p>"Asintotica" viene dal greco: si avvicina a un valore ma non lo tocca mai. Le costanti di accoppiamento fluiscono verso un punto fisso senza raggiungerlo.</p>
+      <p class="note">Visualizzazione: approccio asintotico al punto fisso nel grafico del flusso RG.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">Fase 03 — Perché "Safety"?</div>
+    <div class="phase-body">
+      <p>La teoria è al sicuro (safe) dalle divergenze infinite. A differenza delle teorie non-safe in cui g→∞, qui g→g* (finito), rendendo la teoria predittiva a tutte le scale.</p>
+      <p class="note">Visualizzazione: confronto tra teoria safe e non-safe nel piano di fase.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">Fase 04 — RG Flow — Flusso del Gruppo di Rinormalizzazione</div>
+    <div class="phase-body">
+      <p>Le costanti di accoppiamento G (gravitazionale) e Λ (cosmologica) cambiano con la scala di energia μ. Il flusso RG descrive questa evoluzione nel piano delle fasi.</p>
+      <p class="note">Visualizzazione: flusso RG delle costanti G e Λ nel piano delle fasi.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">Fase 05 — Il Punto Fisso UV</div>
+    <div class="phase-body">
+      <p>A energie altissime (scala di Planck e oltre) il flusso RG converge a un punto fisso UV non-Gaussiano g*. Le direzioni rilevanti definiscono i parametri fisici della teoria.</p>
+      <p class="note">Visualizzazione: punto fisso UV non-Gaussiano con attrattore.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">Fase 06 — Libertà Asintotica vs Sicurezza Asintotica</div>
+    <div class="phase-body">
+      <p>Nella libertà asintotica (QCD) g→0: punto fisso Gaussiano. Nella sicurezza asintotica g→g*≠0: punto fisso non-Gaussiano. Entrambe le teorie sono UV-complete.</p>
+      <p class="note">Visualizzazione: confronto tra libertà asintotica (QCD) e sicurezza asintotica.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">Fase 07 — Martin Reuter e l'equazione di Wetterich</div>
+    <div class="phase-body">
+      <p>Reuter (1998) applicò il gruppo di rinormalizzazione funzionale (FRG) alla gravità. L'equazione di Wetterich ∂t Γk = ½ Tr[(Γk⁽²⁾+Rk)⁻¹ ∂t Rk] governa l'evoluzione del potenziale effettivo.</p>
+      <p class="note">Visualizzazione: equazione di Wetterich e potenziale effettivo Γk.</p>
+    </div>
+  </div>
+</main>
+
+<div id="bottom" role="navigation">
+  <button class="btn active"  onclick="go(0)">① Chi è Weinberg?</button>
+  <button class="btn"         onclick="go(1)">② Perché "Asintotica"?</button>
+  <button class="btn"         onclick="go(2)">③ Perché "Safety"?</button>
+  <button class="btn"         onclick="go(3)">④ RG Flow</button>
+  <button class="btn"         onclick="go(4)">⑤ Punto Fisso UV</button>
+  <button class="btn"         onclick="go(5)">⑥ Libertà vs Sicurezza</button>
+  <button class="btn"         onclick="go(6)">⑦ Reuter &amp; Wetterich</button>
+  <button class="btn-pause"   id="pauseBtn" onclick="togglePause()">⏸ Pausa</button>
+</div>
+
+<script>
+
+const cv = document.getElementById('canvas');
+const cx = cv.getContext('2d');
+let W, H;
+function resize(){
+  const pW=document.getElementById('panel').offsetWidth;
+  W=cv.width=Math.round(window.innerWidth-pW);
+  H=cv.height=window.innerHeight;
+}
+resize(); window.addEventListener('resize', resize);
+
+let ph = 0, T = 0, pT = 0, paused = false;
+
+const PHASES = [
+  { name:"Chi è Weinberg?",
+    desc:"Steven Weinberg (1933–2021): padre del Modello Standard (1967), premio Nobel 1973, propose la Asymptotic Safety nel 1976 nelle lezioni di Erice." },
+  { name:"Perché \"Asintotica\"?",
+    desc:"\"Asintotica\" viene dal greco: si avvicina a un valore ma non lo tocca mai. Le costanti di accoppiamento fluiscono verso un punto fisso senza raggiungerlo." },
+  { name:"Perché \"Safety\"?",
+    desc:"La teoria è al sicuro (safe) dalle divergenze infinite. A differenza delle teorie non-safe in cui g→∞, qui g→g* (finito), rendendo la teoria predittiva a tutte le scale." },
+  { name:"RG Flow — Flusso del Gruppo di Rinormalizzazione",
+    desc:"Le costanti di accoppiamento G (gravitazionale) e Λ (cosmologica) cambiano con la scala di energia μ. Il flusso RG descrive questa evoluzione nel piano delle fasi." },
+  { name:"Il Punto Fisso UV",
+    desc:"A energie altissime (scala di Planck e oltre) il flusso RG converge a un punto fisso UV non-Gaussiano g* = (G*, Λ*). Le direzioni rilevanti definiscono i parametri fisici della teoria." },
+  { name:"Libertà Asintotica vs Sicurezza Asintotica",
+    desc:"Nella libertà asintotica (QCD) g→0: punto fisso Gaussiano. Nella sicurezza asintotica g→g*≠0: punto fisso non-Gaussiano. Entrambe le teorie sono UV-complete e predittive." },
+  { name:"Martin Reuter e l'equazione di Wetterich",
+    desc:"Reuter (1998) applicò il gruppo di rinormalizzazione funzionale (FRG) alla gravità. L'equazione di Wetterich ∂t Γk = ½ Tr[(Γk⁽²⁾+Rk)⁻¹ ∂t Rk] governa l'evoluzione del potenziale effettivo." }
+];
+
+function go(n){
+  ph = n; pT = 0;
+  document.querySelectorAll('.btn').forEach((b, i) => b.classList.toggle('active', i === n));
+  document.querySelectorAll('.phase-content').forEach((el,i)=>el.classList.toggle('active',i===n));
+  document.getElementById('ui-phase').textContent=PHASES[n].name;
+  document.getElementById('panel').scrollTop=0;
+  const pn=document.getElementById('panel-phase-name'); if(pn) pn.textContent=PHASES[n].name;
+  updateUI();
+}
+function updateUI(){
+}
+function togglePause(){
+  paused = !paused;
+  document.getElementById('pauseBtn').textContent = paused ? '▶ Riprendi' : '⏸ Pausa';
+}
+
+// ── helpers ───────────────────────────────────────────────
+function lbl(x, y, txt, col, sz, al = 'center', bold = false){
+  cx.fillStyle = col;
+  cx.font = `${bold ? 'bold ' : ''}${sz}px Georgia,serif`;
+  cx.textAlign = al; cx.fillText(txt, x, y);
+}
+function glow(c, b){ cx.shadowColor = c; cx.shadowBlur = b; }
+function ng(){ cx.shadowBlur = 0; }
+
+let _stars = null;
+function stars(){
+  if(!_stars) _stars = Array.from({length:180}, () => ({
+    x: Math.random() * 3000, y: Math.random() * 2000,
+    r: Math.random() * 1.3 + 0.2, o: Math.random() * 0.4 + 0.1
+  }));
+  _stars.forEach(s => {
+    cx.beginPath(); cx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+    cx.fillStyle = `rgba(255,255,255,${s.o * (0.5 + 0.5 * Math.sin(T * 0.3 + s.x * 0.01))})`;
+    cx.fill();
+  });
+}
+
+function bg(){
+  const g = cx.createRadialGradient(W/2, H/2, 80, W/2, H/2, Math.max(W, H) * 0.9);
+  g.addColorStop(0, '#020920'); g.addColorStop(1, '#000010');
+  cx.fillStyle = g; cx.fillRect(0, 0, W, H);
+}
+
+// arrow helper
+function arrow(x1, y1, x2, y2, col, lw){
+  const angle = Math.atan2(y2 - y1, x2 - x1);
+  const len = Math.sqrt((x2-x1)**2 + (y2-y1)**2);
+  if(len < 1) return;
+  cx.beginPath(); cx.moveTo(x1, y1); cx.lineTo(x2, y2);
+  cx.strokeStyle = col; cx.lineWidth = lw;
+  cx.stroke();
+  cx.beginPath();
+  const hs = lw * 4 + 3;
+  cx.moveTo(x2, y2);
+  cx.lineTo(x2 - hs * Math.cos(angle - 0.4), y2 - hs * Math.sin(angle - 0.4));
+  cx.lineTo(x2 - hs * Math.cos(angle + 0.4), y2 - hs * Math.sin(angle + 0.4));
+  cx.closePath(); cx.fillStyle = col; cx.fill();
+}
+
+// ── FASE 0: Chi è Weinberg ────────────────────────────────
+function ph0(){
+  const cx2 = W * 0.38, cy2 = H * 0.52;
+  const panelRight = W - 240;
+
+  // titolo
+  lbl(cx2, H * 0.1, 'Steven Weinberg', '#f59e0b', 26, 'center', true);
+  lbl(cx2, H * 0.1 + 32, '1933 — 2021', '#94a3b8', 14, 'center');
+
+  // ritratto stilizzato: cerchio luminoso
+  const pr = Math.min(W * 0.11, H * 0.13);
+  const px = cx2, py = cy2 - H * 0.04;
+  cx.beginPath(); cx.arc(px, py, pr, 0, Math.PI * 2);
+  const rg = cx.createRadialGradient(px, py, pr * 0.2, px, py, pr);
+  rg.addColorStop(0, '#fde68a'); rg.addColorStop(0.5, '#f59e0b'); rg.addColorStop(1, 'rgba(180,83,9,0)');
+  cx.fillStyle = rg; glow('#f59e0b', 30); cx.fill(); ng();
+  // silhouette
+  cx.beginPath(); cx.arc(px, py - pr * 0.18, pr * 0.32, 0, Math.PI * 2);
+  cx.fillStyle = 'rgba(253,230,138,0.7)'; cx.fill();
+  cx.beginPath();
+  cx.arc(px, py + pr * 0.55, pr * 0.6, Math.PI, 0);
+  cx.fillStyle = 'rgba(253,230,138,0.5)'; cx.fill();
+
+  // timeline
+  const tEvents = [
+    { year:'1933', text:'Nasce a New York', col:'#64748b' },
+    { year:'1967', text:'Modello Standard (SM)', col:'#38bdf8' },
+    { year:'1973', text:'Premio Nobel per la Fisica', col:'#f59e0b' },
+    { year:'1976', text:'Asymptotic Safety — Erice', col:'#a78bfa' },
+    { year:'1979', text:'Teoria Elettrodebole unificata', col:'#4ade80' },
+  ];
+
+  const tlX = cx2 + pr * 1.5 + 30, tlX2 = Math.min(tlX + 260, panelRight - 20);
+  const tlY = cy2 - H * 0.2;
+  const tlStep = H * 0.1;
+
+  // linea verticale timeline
+  cx.beginPath(); cx.moveTo(tlX, tlY - 10); cx.lineTo(tlX, tlY + tlStep * (tEvents.length - 1) + 10);
+  cx.strokeStyle = '#1e3a5f'; cx.lineWidth = 2; cx.stroke();
+
+  tEvents.forEach((ev, i) => {
+    const ty = tlY + i * tlStep;
+    const pulse = i === 3 ? 0.8 + 0.2 * Math.sin(T * 2) : 1;
+    const r2 = i === 3 ? 8 : 5;
+
+    // cerchio
+    cx.beginPath(); cx.arc(tlX, ty, r2 * pulse, 0, Math.PI * 2);
+    cx.fillStyle = ev.col; glow(ev.col, i === 3 ? 15 : 6); cx.fill(); ng();
+
+    // connettore
+    cx.beginPath(); cx.moveTo(tlX + r2, ty); cx.lineTo(tlX + 20, ty);
+    cx.strokeStyle = ev.col + '88'; cx.lineWidth = 1; cx.stroke();
+
+    // anno e testo
+    lbl(tlX + 26, ty - 5, ev.year, ev.col, 12, 'left', true);
+    lbl(tlX + 26, ty + 11, ev.text, '#94a3b8', 11, 'left');
+  });
+
+  // citazione
+  const qx = W * 0.5, qy = H * 0.87;
+  const qw = Math.min(500, panelRight - qx - 10);
+  cx.fillStyle = 'rgba(8,14,30,0.9)';
+  cx.beginPath(); cx.roundRect(qx - qw/2, qy - 18, qw, 52, 8); cx.fill();
+  cx.strokeStyle = '#f59e0b44'; cx.lineWidth = 1; cx.stroke();
+  lbl(qx, qy, '"Una teoria non-rinormalizzabile potrebbe essere ugualmente', '#94a3b8', 11, 'center');
+  lbl(qx, qy + 16, 'fondamentale se ammette un punto fisso UV non-Gaussiano."', '#94a3b8', 11, 'center');
+  lbl(qx, qy + 34, '— S. Weinberg, Erice 1976', '#f59e0b', 10, 'center');
+}
+
+// ── FASE 1: Perché "Asintotica"? ─────────────────────────
+function ph1(){
+  const panelRight = W - 240;
+  const gx = W * 0.08, gy = H * 0.18;
+  const gw = panelRight - gx - 20, gh = H * 0.58;
+
+  lbl(W * 0.45, H * 0.1, 'Perché "Asintotica"?', '#38bdf8', 22, 'center', true);
+  lbl(W * 0.45, H * 0.1 + 26, 'Le costanti di accoppiamento si avvicinano asintoticamente a un valore fisso', '#94a3b8', 12, 'center');
+
+  // assi
+  cx.strokeStyle = '#1e3a5f'; cx.lineWidth = 1.5;
+  cx.beginPath(); cx.moveTo(gx, gy); cx.lineTo(gx, gy + gh); cx.stroke();
+  cx.beginPath(); cx.moveTo(gx, gy + gh); cx.lineTo(gx + gw, gy + gh); cx.stroke();
+
+  // etichette assi
+  lbl(gx + gw / 2, gy + gh + 28, 'Scala di energia μ  (log)', '#64748b', 11, 'center');
+  cx.save(); cx.translate(gx - 40, gy + gh / 2); cx.rotate(-Math.PI / 2);
+  lbl(0, 0, 'Costante di accoppiamento g', '#64748b', 11, 'center');
+  cx.restore();
+
+  // linea asintotica (punto fisso g*)
+  const gStar = gy + gh * 0.28;
+  cx.beginPath(); cx.setLineDash([8, 6]);
+  cx.moveTo(gx, gStar); cx.lineTo(gx + gw, gStar);
+  cx.strokeStyle = '#a78bfa'; cx.lineWidth = 1.5; cx.stroke();
+  cx.setLineDash([]);
+  lbl(gx + gw + 6, gStar + 4, 'g* (punto fisso)', '#a78bfa', 11, 'left');
+
+  // curva che si assesta sull'asintoto
+  const nPts = 200;
+  cx.beginPath();
+  for(let i = 0; i <= nPts; i++){
+    const frac = i / nPts;
+    const x = gx + frac * gw;
+    // decadimento esponenziale verso g*
+    const g0 = gy + gh * 0.85;
+    const y = gStar + (g0 - gStar) * Math.exp(-frac * 5);
+    i === 0 ? cx.moveTo(x, y) : cx.lineTo(x, y);
+  }
+  cx.strokeStyle = '#38bdf8'; cx.lineWidth = 2.5; glow('#38bdf8', 10); cx.stroke(); ng();
+
+  // punto mobile che scorre lungo la curva
+  const tFrac = (T * 0.018) % 1;
+  const mx = gx + tFrac * gw;
+  const g0v = gy + gh * 0.85;
+  const my = gStar + (g0v - gStar) * Math.exp(-tFrac * 5);
+  cx.beginPath(); cx.arc(mx, my, 6, 0, Math.PI * 2);
+  cx.fillStyle = '#38bdf8'; glow('#38bdf8', 20); cx.fill(); ng();
+
+  // ticchettini asse x
+  ['IR\n(basse E)', 'μ₁', 'μ₂', 'Planck\n10¹⁹GeV'].forEach((t, i) => {
+    const tx = gx + (i + 1) * gw * 0.22;
+    cx.beginPath(); cx.moveTo(tx, gy + gh); cx.lineTo(tx, gy + gh + 6);
+    cx.strokeStyle = '#334155'; cx.lineWidth = 1; cx.stroke();
+    lbl(tx, gy + gh + 18, t, '#475569', 9, 'center');
+  });
+
+  // box esplicativo
+  const bx = gx + gw * 0.5, by = gy + gh * 0.5;
+  cx.fillStyle = 'rgba(8,14,30,0.88)';
+  cx.beginPath(); cx.roundRect(bx - 100, by - 20, 200, 60, 8); cx.fill();
+  cx.strokeStyle = '#38bdf8' + '44'; cx.lineWidth = 1; cx.stroke();
+  lbl(bx, by, 'La curva si avvicina a g*', '#38bdf8', 11, 'center', true);
+  lbl(bx, by + 16, 'ma non lo raggiunge mai:', '#94a3b8', 10, 'center');
+  lbl(bx, by + 32, '"asintotica" dal greco ἀσύμπτωτος', '#64748b', 10, 'center');
+
+  // box nota matematica
+  const nx = gx + gw * 0.5, ny = H * 0.84;
+  cx.fillStyle = 'rgba(8,14,30,0.9)';
+  cx.beginPath(); cx.roundRect(nx - 160, ny - 14, 320, 40, 8); cx.fill();
+  cx.strokeStyle = '#a78bfa' + '55'; cx.lineWidth = 1; cx.stroke();
+  lbl(nx, ny + 2, 'lim_{μ→∞} g(μ) = g*  (finito, non-Gaussiano)', '#a78bfa', 12, 'center', true);
+  lbl(nx, ny + 20, 'La teoria rimane definita e predittiva a tutte le scale', '#64748b', 10, 'center');
+}
+
+// ── FASE 2: Perché "Safety"? ─────────────────────────────
+function ph2(){
+  const panelRight = W - 240;
+  const midX = panelRight / 2 + W * 0.04;
+
+  lbl(midX, H * 0.1, 'Perché "Safety"?', '#38bdf8', 22, 'center', true);
+  lbl(midX, H * 0.1 + 26, 'La teoria è al sicuro dalle divergenze — confronto visivo', '#94a3b8', 12, 'center');
+
+  const ph = H * 0.15, gw2 = (panelRight - W * 0.08 - 40) / 2;
+  const lX = W * 0.08, rX = lX + gw2 + 40;
+  const gh2 = H * 0.55;
+
+  // ── pannello SINISTRA: teoria NON-safe ──
+  cx.fillStyle = 'rgba(239,68,68,0.06)';
+  cx.beginPath(); cx.roundRect(lX, ph, gw2, gh2, 10); cx.fill();
+  cx.strokeStyle = '#ef4444'; cx.lineWidth = 1.5; cx.stroke();
+  lbl(lX + gw2/2, ph + 22, '⚠ Teoria NON-Safe', '#ef4444', 14, 'center', true);
+  lbl(lX + gw2/2, ph + 40, 'g(μ) → ∞  (divergenza UV)', '#94a3b8', 11, 'center');
+
+  // curva divergente
+  const dAx = lX + 30, dAy = ph + gh2 - 40, dAw = gw2 - 60, dAh = gh2 - 80;
+  cx.beginPath();
+  cx.moveTo(dAx, dAy); cx.lineTo(dAx, ph + 55);
+  cx.strokeStyle = '#334155'; cx.lineWidth = 1; cx.stroke();
+  cx.beginPath();
+  cx.moveTo(dAx, dAy); cx.lineTo(dAx + dAw, dAy);
+  cx.stroke();
+
+  const nPts = 80;
+  cx.beginPath();
+  for(let i = 0; i <= nPts; i++){
+    const f = i / nPts;
+    const x = dAx + f * dAw;
+    // esponenziale divergente — capped visivamente
+    const val = Math.min(f * f * f * 5, 1.0);
+    const y = dAy - val * dAh;
+    i === 0 ? cx.moveTo(x, y) : cx.lineTo(x, y);
+  }
+  cx.strokeStyle = '#ef4444'; cx.lineWidth = 2.5; glow('#ef4444', 12); cx.stroke(); ng();
+
+  // punto mobile divergente
+  const tFracD = ((T * 0.013) % 1);
+  const mxD = dAx + tFracD * dAw;
+  const valD = Math.min(tFracD * tFracD * tFracD * 5, 1.0);
+  const myD = dAy - valD * dAh;
+  cx.beginPath(); cx.arc(mxD, myD, 6, 0, Math.PI * 2);
+  cx.fillStyle = '#ef4444'; glow('#ef4444', 20); cx.fill(); ng();
+
+  // freccia verticale che punta su (divergenza)
+  if(tFracD > 0.7){
+    const pulse = 0.7 + 0.3 * Math.sin(T * 4);
+    cx.globalAlpha = pulse;
+    arrow(dAx + dAw * 0.85, myD + 30, dAx + dAw * 0.85, myD - 20, '#ef4444', 1.5);
+    lbl(dAx + dAw * 0.85 + 8, myD + 10, '∞', '#ef4444', 18, 'left', true);
+    cx.globalAlpha = 1;
+  }
+
+  lbl(dAx + dAw/2, dAy + 18, 'E (log)', '#475569', 9, 'center');
+  lbl(lX + gw2/2, ph + gh2 - 16, 'Divergenza UV — teoria non predittiva', '#ef4444', 10, 'center');
+
+  // ── pannello DESTRA: teoria SAFE ──
+  cx.fillStyle = 'rgba(74,222,128,0.06)';
+  cx.beginPath(); cx.roundRect(rX, ph, gw2, gh2, 10); cx.fill();
+  cx.strokeStyle = '#4ade80'; cx.lineWidth = 1.5; cx.stroke();
+  lbl(rX + gw2/2, ph + 22, '✓ Teoria SAFE', '#4ade80', 14, 'center', true);
+  lbl(rX + gw2/2, ph + 40, 'g(μ) → g*  (punto fisso)', '#94a3b8', 11, 'center');
+
+  // curva convergente
+  const sAx = rX + 30, sAy = ph + gh2 - 40, sAw = gw2 - 60, sAh = gh2 - 80;
+  cx.beginPath();
+  cx.moveTo(sAx, sAy); cx.lineTo(sAx, ph + 55);
+  cx.strokeStyle = '#334155'; cx.lineWidth = 1; cx.stroke();
+  cx.beginPath();
+  cx.moveTo(sAx, sAy); cx.lineTo(sAx + sAw, sAy);
+  cx.stroke();
+
+  // asintoto g*
+  const gStarY = sAy - sAh * 0.55;
+  cx.beginPath(); cx.setLineDash([7, 5]);
+  cx.moveTo(sAx, gStarY); cx.lineTo(sAx + sAw, gStarY);
+  cx.strokeStyle = '#a78bfa'; cx.lineWidth = 1; cx.stroke();
+  cx.setLineDash([]);
+  lbl(sAx + sAw + 5, gStarY + 4, 'g*', '#a78bfa', 10, 'left');
+
+  cx.beginPath();
+  for(let i = 0; i <= nPts; i++){
+    const f = i / nPts;
+    const x = sAx + f * sAw;
+    const y = gStarY + (sAy - gStarY) * Math.exp(-f * 5);
+    i === 0 ? cx.moveTo(x, y) : cx.lineTo(x, y);
+  }
+  cx.strokeStyle = '#4ade80'; cx.lineWidth = 2.5; glow('#4ade80', 12); cx.stroke(); ng();
+
+  // punto mobile convergente
+  const tFracS = ((T * 0.013) % 1);
+  const mxS = sAx + tFracS * sAw;
+  const myS = gStarY + (sAy - gStarY) * Math.exp(-tFracS * 5);
+  cx.beginPath(); cx.arc(mxS, myS, 6, 0, Math.PI * 2);
+  cx.fillStyle = '#4ade80'; glow('#4ade80', 20); cx.fill(); ng();
+
+  lbl(sAx + sAw/2, sAy + 18, 'E (log)', '#475569', 9, 'center');
+  lbl(rX + gw2/2, ph + gh2 - 16, 'Punto fisso finito — teoria predittiva', '#4ade80', 10, 'center');
+
+  // messaggio sotto
+  const by2 = ph + gh2 + 22, bx2 = midX;
+  cx.fillStyle = 'rgba(8,14,30,0.9)';
+  cx.beginPath(); cx.roundRect(bx2 - 230, by2, 460, 38, 8); cx.fill();
+  cx.strokeStyle = '#4ade80' + '55'; cx.lineWidth = 1; cx.stroke();
+  lbl(bx2, by2 + 14, '"Safety" = sicurezza dalle divergenze.  La gravità rimane predittiva fino alla scala di Planck.', '#94a3b8', 11, 'center');
+  lbl(bx2, by2 + 30, 'La teoria è UV-completa senza richiedere una scala di taglio artificiale.', '#64748b', 10, 'center');
+}
+
+// ── FASE 3: RG Flow ──────────────────────────────────────
+function ph3(){
+  const panelRight = W - 240;
+  const cx0 = (panelRight + W * 0.04) / 2, cy0 = H * 0.54;
+  const gw3 = Math.min((panelRight - W * 0.08) * 0.7, 440);
+  const gh3 = Math.min(H * 0.55, 340);
+  const x0 = cx0 - gw3 / 2, y0 = cy0 - gh3 / 2;
+
+  lbl(cx0, H * 0.1, 'RG Flow — Piano delle Fasi (G, Λ)', '#38bdf8', 22, 'center', true);
+  lbl(cx0, H * 0.1 + 26, 'Le costanti di accoppiamento gravitazionale G e cosmologica Λ fluiscono con la scala μ', '#94a3b8', 12, 'center');
+
+  // sfondo piano
+  cx.fillStyle = 'rgba(8,14,30,0.7)';
+  cx.beginPath(); cx.roundRect(x0, y0, gw3, gh3, 10); cx.fill();
+  cx.strokeStyle = '#1e3a5f'; cx.lineWidth = 1; cx.stroke();
+
+  // assi
+  cx.strokeStyle = '#334155'; cx.lineWidth = 1;
+  cx.beginPath(); cx.moveTo(x0, cy0); cx.lineTo(x0 + gw3, cy0); cx.stroke();
+  cx.beginPath(); cx.moveTo(cx0, y0); cx.lineTo(cx0, y0 + gh3); cx.stroke();
+  lbl(x0 + gw3 + 8, cy0 + 4, 'G (Newt.)', '#64748b', 10, 'left');
+  lbl(cx0, y0 - 10, 'Λ (cosmol.)', '#64748b', 10, 'center');
+
+  // punto fisso UV
+  const fpX = cx0 - gw3 * 0.12, fpY = cy0 - gh3 * 0.28;
+  // alone pulsante
+  const pulse = 0.7 + 0.3 * Math.sin(T * 2);
+  for(let r = 3; r >= 1; r--){
+    cx.beginPath(); cx.arc(fpX, fpY, 18 * r * pulse, 0, Math.PI * 2);
+    cx.fillStyle = `rgba(167,139,250,${0.06 / r})`;
+    cx.fill();
+  }
+  cx.beginPath(); cx.arc(fpX, fpY, 8, 0, Math.PI * 2);
+  cx.fillStyle = '#a78bfa'; glow('#a78bfa', 25); cx.fill(); ng();
+  lbl(fpX + 16, fpY - 12, 'UV Fixed Point', '#a78bfa', 11, 'left', true);
+  lbl(fpX + 16, fpY + 4, '(G*, Λ*)', '#c4b5fd', 10, 'left');
+
+  // punto fisso Gaussiano (origine)
+  cx.beginPath(); cx.arc(cx0, cy0, 5, 0, Math.PI * 2);
+  cx.fillStyle = '#38bdf8'; glow('#38bdf8', 10); cx.fill(); ng();
+  lbl(cx0 + 10, cy0 + 14, 'Gaussiano (0,0)', '#38bdf8', 9, 'left');
+
+  // campo di frecce RG flow
+  const rows = 7, cols = 9;
+  const stepX = gw3 / (cols + 1), stepY = gh3 / (rows + 1);
+  for(let r = 1; r <= rows; r++){
+    for(let c = 1; c <= cols; c++){
+      const fx = x0 + c * stepX, fy = y0 + r * stepY;
+      // vettore verso il punto fisso UV, con perturbazione
+      const dx = fpX - fx, dy = fpY - fy;
+      const dist = Math.sqrt(dx*dx + dy*dy);
+      if(dist < 12) continue;
+      const norm = Math.min(1, 40 / dist);
+      const vx = dx / dist * norm * stepX * 0.5;
+      const vy = dy / dist * norm * stepY * 0.5;
+
+      // animazione: offset temporale
+      const tOff = ((T * 0.5 + c * 0.3 + r * 0.4) % 1);
+      const alpha = 0.3 + 0.4 * (0.5 + 0.5 * Math.sin(T * 1.5 + c + r));
+
+      const col = dist < 80 ? '#a78bfa' : '#38bdf8';
+      cx.globalAlpha = alpha;
+      arrow(fx - vx * tOff, fy - vy * tOff, fx + vx * (1 - tOff), fy + vy * (1 - tOff), col, 1);
+      cx.globalAlpha = 1;
+    }
+  }
+
+  // legenda
+  const lgy = y0 + gh3 + 16;
+  const lgx = cx0;
+  cx.fillStyle = 'rgba(8,14,30,0.88)';
+  cx.beginPath(); cx.roundRect(lgx - 180, lgy, 360, 36, 7); cx.fill();
+  cx.strokeStyle = '#1e293b'; cx.lineWidth = 1; cx.stroke();
+  lbl(lgx, lgy + 13, '→  Traiettorie RG: evoluzione di (G, Λ) con μ', '#38bdf8', 10, 'center');
+  lbl(lgx, lgy + 27, 'Il flusso converge verso UV Fixed Point a energie di Planck', '#64748b', 10, 'center');
+}
+
+// ── FASE 4: Punto Fisso UV ───────────────────────────────
+function ph4(){
+  const panelRight = W - 240;
+  const cx0 = (panelRight + W * 0.04) / 2, cy0 = H * 0.52;
+
+  // usa un radius fisso ben centrato
+  const Rv = Math.min((panelRight - W * 0.08) * 0.38, H * 0.3);
+
+  lbl(cx0, H * 0.1, 'Il Punto Fisso UV Non-Gaussiano', '#a78bfa', 22, 'center', true);
+  lbl(cx0, H * 0.1 + 26, 'Le traiettorie del flusso RG convergono da direzioni diverse al punto fisso UV', '#94a3b8', 12, 'center');
+
+  // punto fisso
+  const pulse = 0.8 + 0.2 * Math.sin(T * 2.5);
+  for(let rr = 4; rr >= 1; rr--){
+    cx.beginPath(); cx.arc(cx0, cy0, Rv * 0.12 * rr * pulse, 0, Math.PI * 2);
+    cx.fillStyle = `rgba(167,139,250,${0.08 / rr})`; cx.fill();
+  }
+  cx.beginPath(); cx.arc(cx0, cy0, 10, 0, Math.PI * 2);
+  cx.fillStyle = '#a78bfa'; glow('#a78bfa', 30); cx.fill(); ng();
+  lbl(cx0, cy0 + 22, 'UV Fixed Point  g* = (G*, Λ*)', '#a78bfa', 12, 'center', true);
+
+  // traiettorie convergenti da angoli diversi (rilevanti: rosse, irrilevanti: grigie)
+  const nTraj = 14;
+  for(let i = 0; i < nTraj; i++){
+    const angle = (i / nTraj) * Math.PI * 2;
+    const isRelevant = i % 3 < 2; // 2 su 3 rilevanti
+    const col = isRelevant ? '#f59e0b' : '#475569';
+    const glow2 = isRelevant ? '#f59e0b' : null;
+
+    // traiettoria spirale verso il punto fisso
+    const tOff = (T * 0.3 + i * 0.7) % (2 * Math.PI * 2);
+    const nSteps = 60;
+    cx.beginPath();
+    for(let s = 0; s <= nSteps; s++){
+      const frac = s / nSteps;
+      const r = Rv * (1 - frac * 0.92);
+      const a = angle + frac * 0.8 * (i % 2 === 0 ? 1 : -1);
+      const sx = cx0 + r * Math.cos(a);
+      const sy = cy0 + r * Math.sin(a);
+      s === 0 ? cx.moveTo(sx, sy) : cx.lineTo(sx, sy);
+    }
+    if(glow2){ glow(glow2, 6); }
+    cx.strokeStyle = col; cx.lineWidth = isRelevant ? 1.8 : 1;
+    cx.globalAlpha = isRelevant ? 0.85 : 0.4;
+    cx.stroke(); ng(); cx.globalAlpha = 1;
+
+    // punto mobile lungo la traiettoria
+    const mobFrac = (T * 0.18 + i * 0.7) % 1;
+    const r2 = Rv * (1 - mobFrac * 0.92);
+    const a2 = angle + mobFrac * 0.8 * (i % 2 === 0 ? 1 : -1);
+    cx.beginPath(); cx.arc(cx0 + r2 * Math.cos(a2), cy0 + r2 * Math.sin(a2), 3, 0, Math.PI * 2);
+    cx.fillStyle = col; cx.globalAlpha = 0.7 + 0.3 * Math.sin(T * 3 + i); cx.fill();
+    cx.globalAlpha = 1;
+  }
+
+  // legenda direzioni
+  const legendX = panelRight - 10, legendY = H * 0.3;
+  cx.fillStyle = 'rgba(8,14,30,0.9)';
+  cx.beginPath(); cx.roundRect(legendX - 190, legendY - 16, 190, 80, 8); cx.fill();
+  cx.strokeStyle = '#1e293b'; cx.lineWidth = 1; cx.stroke();
+  lbl(legendX - 95, legendY, 'Direzioni del flusso:', '#94a3b8', 11, 'center', true);
+  cx.beginPath(); cx.moveTo(legendX - 180, legendY + 18); cx.lineTo(legendX - 150, legendY + 18);
+  cx.strokeStyle = '#f59e0b'; cx.lineWidth = 2; cx.stroke();
+  lbl(legendX - 145, legendY + 22, 'Rilevanti (fluiscono verso g*)', '#f59e0b', 10, 'left');
+  cx.beginPath(); cx.moveTo(legendX - 180, legendY + 38); cx.lineTo(legendX - 150, legendY + 38);
+  cx.strokeStyle = '#475569'; cx.lineWidth = 1.5; cx.stroke();
+  lbl(legendX - 145, legendY + 42, 'Irrilevanti (non fisicamente indip.)', '#64748b', 10, 'left');
+  lbl(legendX - 95, legendY + 60, '# dir. rilevanti = # parametri fisici', '#4ade80', 10, 'center');
+
+  // nota: numero finito di parametri
+  const nx2 = cx0, ny2 = H * 0.85;
+  cx.fillStyle = 'rgba(8,14,30,0.9)';
+  cx.beginPath(); cx.roundRect(nx2 - 200, ny2 - 14, 400, 42, 8); cx.fill();
+  cx.strokeStyle = '#4ade80' + '55'; cx.lineWidth = 1; cx.stroke();
+  lbl(nx2, ny2 + 4, 'Il numero di direzioni rilevanti è FINITO → teoria predittiva', '#4ade80', 12, 'center', true);
+  lbl(nx2, ny2 + 22, 'Solo un numero finito di osservabili da misurare sperimentalmente', '#64748b', 10, 'center');
+}
+
+// ── FASE 5: Libertà Asintotica vs Sicurezza Asintotica ───
+function ph5(){
+  const panelRight = W - 240;
+  const midX = (panelRight + W * 0.04) / 2;
+
+  lbl(midX, H * 0.1, 'Libertà Asintotica vs Sicurezza Asintotica', '#38bdf8', 20, 'center', true);
+  lbl(midX, H * 0.1 + 26, 'Due meccanismi diversi per la stessa proprietà: UV-completezza', '#94a3b8', 12, 'center');
+
+  const ph5H = H * 0.15, gw5 = (panelRight - W * 0.08 - 40) / 2;
+  const lX5 = W * 0.08, rX5 = lX5 + gw5 + 40;
+  const gh5 = H * 0.5;
+
+  // ── pannello SINISTRA: QCD, Libertà Asintotica ──
+  cx.fillStyle = 'rgba(56,189,248,0.05)';
+  cx.beginPath(); cx.roundRect(lX5, ph5H, gw5, gh5, 10); cx.fill();
+  cx.strokeStyle = '#38bdf8'; cx.lineWidth = 1.5; cx.stroke();
+  lbl(lX5 + gw5/2, ph5H + 22, 'QCD — Libertà Asintotica', '#38bdf8', 13, 'center', true);
+  lbl(lX5 + gw5/2, ph5H + 40, 'Gross, Politzer, Wilczek 1973', '#94a3b8', 10, 'center');
+  lbl(lX5 + gw5/2, ph5H + 54, 'g → 0  (punto fisso Gaussiano)', '#60a5fa', 11, 'center');
+
+  // grafico β-function QCD: β(g) = -b₀ g³ (negativa per g>0)
+  const axL = lX5 + 30, axY5 = ph5H + gh5 - 50, axW = gw5 - 60, axH5 = gh5 - 120;
+  cx.strokeStyle = '#1e3a5f'; cx.lineWidth = 1;
+  cx.beginPath(); cx.moveTo(axL, axY5 - axH5); cx.lineTo(axL, axY5); cx.lineTo(axL + axW, axY5); cx.stroke();
+  // linea zero
+  const zeroY5 = axY5 - axH5 * 0.5;
+  cx.beginPath(); cx.setLineDash([5, 4]);
+  cx.moveTo(axL, zeroY5); cx.lineTo(axL + axW, zeroY5);
+  cx.strokeStyle = '#334155'; cx.lineWidth = 1; cx.stroke();
+  cx.setLineDash([]);
+  lbl(axL - 14, zeroY5 + 4, '0', '#475569', 9, 'right');
+  lbl(axL + axW/2, axY5 + 16, 'g', '#475569', 10, 'center');
+  lbl(axL - 10, axY5 - axH5 - 8, 'β(g)', '#475569', 10, 'right');
+
+  // curva β QCD: negativa, va verso 0
+  cx.beginPath();
+  for(let i = 0; i <= 80; i++){
+    const f = i / 80;
+    const g = f * 1.5;
+    const beta = -0.8 * g * g * g + 0.05 * g * g * g * g * g;
+    const x = axL + f * axW;
+    const y = zeroY5 - beta * axH5 * 0.55;
+    i === 0 ? cx.moveTo(x, y) : cx.lineTo(x, y);
+  }
+  cx.strokeStyle = '#38bdf8'; cx.lineWidth = 2.5; glow('#38bdf8', 10); cx.stroke(); ng();
+
+  // punto fisso g=0
+  cx.beginPath(); cx.arc(axL, zeroY5, 6, 0, Math.PI * 2);
+  cx.fillStyle = '#38bdf8'; glow('#38bdf8', 15); cx.fill(); ng();
+  lbl(axL + 10, zeroY5 - 8, 'g*=0', '#38bdf8', 10, 'left');
+
+  // freccia verso 0
+  arrow(axL + axW * 0.6, zeroY5 + 10, axL + 20, zeroY5 + 10, '#38bdf8', 1.5);
+  lbl(axL + axW * 0.4, zeroY5 + 24, 'g → 0  (UV)', '#60a5fa', 9, 'center');
+
+  // ── pannello DESTRA: Asymptotic Safety ──
+  cx.fillStyle = 'rgba(167,139,250,0.05)';
+  cx.beginPath(); cx.roundRect(rX5, ph5H, gw5, gh5, 10); cx.fill();
+  cx.strokeStyle = '#a78bfa'; cx.lineWidth = 1.5; cx.stroke();
+  lbl(rX5 + gw5/2, ph5H + 22, 'Gravità — Sicurezza Asintotica', '#a78bfa', 13, 'center', true);
+  lbl(rX5 + gw5/2, ph5H + 40, 'Weinberg 1976 / Reuter 1998', '#94a3b8', 10, 'center');
+  lbl(rX5 + gw5/2, ph5H + 54, 'g → g*≠0  (punto fisso non-Gaussiano)', '#c4b5fd', 11, 'center');
+
+  const axR = rX5 + 30, axYR = ph5H + gh5 - 50, axWR = gw5 - 60, axHR = gh5 - 120;
+  cx.strokeStyle = '#1e3a5f'; cx.lineWidth = 1;
+  cx.beginPath(); cx.moveTo(axR, axYR - axHR); cx.lineTo(axR, axYR); cx.lineTo(axR + axWR, axYR); cx.stroke();
+  const zeroYR = axYR - axHR * 0.5;
+  cx.beginPath(); cx.setLineDash([5, 4]);
+  cx.moveTo(axR, zeroYR); cx.lineTo(axR + axWR, zeroYR);
+  cx.strokeStyle = '#334155'; cx.lineWidth = 1; cx.stroke();
+  cx.setLineDash([]);
+  lbl(axR - 14, zeroYR + 4, '0', '#475569', 9, 'right');
+  lbl(axR + axWR/2, axYR + 16, 'g', '#475569', 10, 'center');
+  lbl(axR - 10, axYR - axHR - 8, 'β(g)', '#475569', 10, 'right');
+
+  // curva β AS: cambia segno, annulla a g*
+  const gStarFrac = 0.42;
+  cx.beginPath();
+  for(let i = 0; i <= 80; i++){
+    const f = i / 80;
+    const g = f * 1.5;
+    const gStar2 = gStarFrac * 1.5;
+    const beta = 0.6 * g * (g - gStar2) * (1 - g * 0.4);
+    const x = axR + f * axWR;
+    const y = zeroYR - beta * axHR * 0.45;
+    i === 0 ? cx.moveTo(x, y) : cx.lineTo(x, y);
+  }
+  cx.strokeStyle = '#a78bfa'; cx.lineWidth = 2.5; glow('#a78bfa', 10); cx.stroke(); ng();
+
+  // punto fisso g*
+  const fpXR = axR + gStarFrac * axWR;
+  cx.beginPath(); cx.arc(fpXR, zeroYR, 7 * (0.85 + 0.15 * Math.sin(T * 2)), 0, Math.PI * 2);
+  cx.fillStyle = '#a78bfa'; glow('#a78bfa', 20); cx.fill(); ng();
+  lbl(fpXR, zeroYR - 14, 'g*', '#a78bfa', 11, 'center', true);
+
+  // freccia verso g*
+  arrow(axR + axWR * 0.8, zeroYR + 10, fpXR + 12, zeroYR + 10, '#a78bfa', 1.5);
+  lbl(axR + axWR * 0.7, zeroYR + 24, 'g → g*  (UV)', '#c4b5fd', 9, 'center');
+
+  // box confronto
+  const cY = ph5H + gh5 + 14, cX = midX;
+  cx.fillStyle = 'rgba(8,14,30,0.9)';
+  cx.beginPath(); cx.roundRect(cX - 240, cY, 480, 40, 8); cx.fill();
+  cx.strokeStyle = '#1e3a5f'; cx.lineWidth = 1; cx.stroke();
+  lbl(cX, cY + 14, 'Entrambe le teorie sono UV-complete  ·  QCD: g*=0 (Gaussiano)  ·  AS Gravity: g*≠0 (non-Gaussiano)', '#94a3b8', 10, 'center');
+  lbl(cX, cY + 28, 'La β-function si annulla al punto fisso: β(g*) = 0', '#4ade80', 10, 'center', true);
+}
+
+// ── FASE 6: Reuter e Wetterich ──────────────────────────
+function ph6(){
+  const panelRight = W - 240;
+  const cx0 = (panelRight + W * 0.04) / 2;
+
+  lbl(cx0, H * 0.08, 'Martin Reuter e l\'equazione di Wetterich', '#38bdf8', 20, 'center', true);
+  lbl(cx0, H * 0.08 + 26, 'Reuter (1998) applicò il FRG (Functional Renormalization Group) alla gravità quantistica', '#94a3b8', 12, 'center');
+
+  // box equazione principale di Wetterich
+  const eqX = cx0, eqY = H * 0.21;
+  const eqW = Math.min(560, panelRight - W * 0.08 - 20);
+  cx.fillStyle = 'rgba(8,14,30,0.95)';
+  cx.beginPath(); cx.roundRect(eqX - eqW/2, eqY - 18, eqW, 56, 10); cx.fill();
+  cx.strokeStyle = '#a78bfa'; cx.lineWidth = 2; glow('#a78bfa', 8); cx.stroke(); ng();
+  lbl(eqX, eqY, 'Equazione di Wetterich (FRGE):', '#a78bfa', 12, 'center', true);
+  lbl(eqX, eqY + 18, '∂t Γk = ½ Tr [ (Γk⁽²⁾ + Rk)⁻¹ · ∂t Rk ]', '#e2e8f0', 14, 'center', true);
+
+  // tre box con le variabili chiave
+  const items = [
+    { sym:'Γk', name:'Effective avg. action', desc:'Potenziale effettivo alla scala k', col:'#38bdf8' },
+    { sym:'Rk', name:'Regulator / cutoff IR', desc:'Sopprime le fluttuazioni a p < k', col:'#4ade80' },
+    { sym:'∂t', name:'Derivata rispetto a t=log(k/k₀)', desc:'Flusso con la scala di energia k', col:'#f59e0b' },
+  ];
+  const boxY = H * 0.34, boxW = Math.min(eqW * 0.28, 160);
+  const totalW = items.length * boxW + (items.length - 1) * 16;
+  const startX = cx0 - totalW / 2;
+  items.forEach((it, i) => {
+    const bx2 = startX + i * (boxW + 16);
+    cx.fillStyle = 'rgba(8,14,30,0.88)';
+    cx.beginPath(); cx.roundRect(bx2, boxY, boxW, 72, 8); cx.fill();
+    cx.strokeStyle = it.col + '88'; cx.lineWidth = 1; cx.stroke();
+    lbl(bx2 + boxW/2, boxY + 20, it.sym, it.col, 18, 'center', true);
+    lbl(bx2 + boxW/2, boxY + 40, it.name, it.col, 9, 'center', true);
+    lbl(bx2 + boxW/2, boxY + 56, it.desc, '#64748b', 9, 'center');
+  });
+
+  // visualizzazione: potenziale effettivo che evolve con k
+  const plotX = W * 0.08, plotY = H * 0.5;
+  const plotW = panelRight - W * 0.08 - 20, plotH = H * 0.3;
+
+  cx.fillStyle = 'rgba(8,14,30,0.7)';
+  cx.beginPath(); cx.roundRect(plotX, plotY, plotW, plotH, 10); cx.fill();
+  cx.strokeStyle = '#1e293b'; cx.lineWidth = 1; cx.stroke();
+
+  lbl(plotX + plotW/2, plotY + 14, 'Evoluzione del potenziale effettivo Γk con la scala k', '#94a3b8', 11, 'center', true);
+
+  // assi
+  const axX2 = plotX + 40, axY2 = plotY + plotH - 28, axW2 = plotW - 56, axH2 = plotH - 55;
+  cx.strokeStyle = '#334155'; cx.lineWidth = 1;
+  cx.beginPath(); cx.moveTo(axX2, axY2 - axH2); cx.lineTo(axX2, axY2); cx.lineTo(axX2 + axW2, axY2); cx.stroke();
+  lbl(axX2 + axW2/2, axY2 + 14, 'campo ϕ (curvatura R)', '#475569', 9, 'center');
+  cx.save(); cx.translate(axX2 - 24, axY2 - axH2/2); cx.rotate(-Math.PI/2);
+  lbl(0, 0, 'Γk(ϕ)', '#475569', 9, 'center');
+  cx.restore();
+
+  // curve Γk a diverse scale k
+  const kScales = [
+    { k: 0.9, col: '#ef4444', label: 'k≫mPl (UV)' },
+    { k: 0.5, col: '#f59e0b', label: 'k ~ mPl' },
+    { k: 0.2, col: '#4ade80', label: 'k → 0 (IR)' },
+  ];
+  const tMod = (T * 0.008) % 1;
+
+  kScales.forEach((ks, ki) => {
+    const animK = ks.k * (1 - 0.3 * tMod * ki);
+    cx.beginPath();
+    for(let i = 0; i <= 80; i++){
+      const f = (i / 80 - 0.5) * 2;
+      const x = axX2 + (i / 80) * axW2;
+      const mass2 = (1 - animK) * 0.4;
+      const lambda = 0.15 + animK * 0.35;
+      const pot = mass2 * f * f + lambda * f * f * f * f - 0.05 * animK;
+      const y = axY2 - (pot + 0.15) * axH2 * 0.7;
+      i === 0 ? cx.moveTo(x, Math.max(axY2 - axH2, Math.min(axY2, y))) :
+                cx.lineTo(x, Math.max(axY2 - axH2, Math.min(axY2, y)));
+    }
+    cx.strokeStyle = ks.col; cx.lineWidth = ki === 0 ? 2 : 1.5;
+    cx.globalAlpha = 0.85; glow(ks.col, 5); cx.stroke(); ng(); cx.globalAlpha = 1;
+    lbl(axX2 + axW2 * (0.15 + ki * 0.28), axY2 - axH2 + 12 + ki * 14, ks.label, ks.col, 9, 'center');
+  });
+
+  // nota finale
+  const nfY = H * 0.85;
+  cx.fillStyle = 'rgba(8,14,30,0.9)';
+  cx.beginPath(); cx.roundRect(cx0 - 200, nfY - 12, 400, 40, 8); cx.fill();
+  cx.strokeStyle = '#a78bfa' + '55'; cx.lineWidth = 1; cx.stroke();
+  lbl(cx0, nfY + 4, 'Reuter trovò evidenza numerica del punto fisso UV', '#94a3b8', 11, 'center');
+  lbl(cx0, nfY + 20, 'con la troncazione Einstein-Hilbert: Γk = (2κk²)⁻¹ ∫√g (−R + 2Λk)', '#64748b', 10, 'center');
+}
+
+// ── MAIN LOOP ─────────────────────────────────────────────
+function draw(){
+  cx.clearRect(0, 0, W, H); bg(); stars();
+  switch(ph){
+    case 0: ph0(); break;
+    case 1: ph1(); break;
+    case 2: ph2(); break;
+    case 3: ph3(); break;
+    case 4: ph4(); break;
+    case 5: ph5(); break;
+    case 6: ph6(); break;
+  }
+  if(!paused){
+    T += 0.022; pT++;
+    if(pT > 520 && ph < 6) go(ph + 1);
+  }
+  requestAnimationFrame(draw);
+}
+
+go(0); draw();
+
+</script>
+</body>
+</html>

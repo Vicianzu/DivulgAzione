@@ -376,3 +376,685 @@ t2Init();
 </script>
 </body>
 </html>
+<title>Stringhe → Particelle → Materia — v2</title>
+<link rel="stylesheet" href="./ui.css">
+<style>#main-canvas { position: fixed; top: 0; right: 0; height: 100%; z-index: 0; }
+.phase-btn { padding: 5px 14px; border: 1px solid rgba(14,165,233,0.28); background: rgba(14,165,233,0.06); color: #7dd3fc; border-radius: 20px; cursor: pointer; font-size: 12px; font-family: 'Courier New', monospace; letter-spacing: 0.5px; transition: background 0.22s, border-color 0.22s, color 0.22s, box-shadow 0.22s; outline: none; }
+.phase-btn:hover { background: rgba(14,165,233,0.18); border-color: #0ea5e9; color: #e0f2fe; }
+.phase-btn.active { background: rgba(14,165,233,0.22); border-color: #38bdf8; color: #e0f2fe; box-shadow: 0 0 10px -3px #0ea5e9; }
+</style>
+</head>
+<body>
+
+<canvas id="main-canvas" aria-hidden="true"></canvas>
+
+<div id="ui" role="banner">
+  <div id="ui-title">Stringhe &amp; Calabi-Yau</div>
+  <div id="ui-phase" aria-live="polite"></div>
+  <div id="ui-badge">6 fasi</div>
+</div>
+
+<main id="panel" role="main" aria-label="Contenuto della fase corrente" tabindex="-1">
+  <h1 class="phase-title" id="panel-phase-name"></h1>
+  <div class="phase-content active" id="ph-0">
+    <div class="phase-tag">Fase 01 — Stringa nella Calabi-Yau</div>
+    <div class="phase-body">
+      <p>Una stringa quantistica è intrappolata nella geometria della varietà di Calabi-Yau. La forma dello spazio ne condiziona i modi di vibrazione.</p>
+      <p class="note">Visualizzazione: stringa quantistica nella geometria Calabi-Yau.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-1">
+    <div class="phase-tag">Fase 02 — Modi di vibrazione</div>
+    <div class="phase-body">
+      <p>La stringa vibra in armoniche discrete. Ogni modo n=1,2,3... corrisponde a un'energia e a proprietà quantistiche diverse (spin, carica, massa).</p>
+      <p class="note">Visualizzazione: armoniche di vibrazione della stringa.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">Fase 03 — Campi quantistici</div>
+    <div class="phase-body">
+      <p>Ogni modo di vibrazione eccita un campo quantistico nello spazio 4D. Il campo permea tutto l'universo come un'onda stazionaria.</p>
+      <p class="note">Visualizzazione: campi quantistici eccitati nello spazio 4D.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">Fase 04 — Spettro delle particelle</div>
+    <div class="phase-body">
+      <p>Le eccitazioni dei campi producono quanti — le particelle elementari: quark (u,d,s), elettroni, neutrini, gluoni, fotoni.</p>
+      <p class="note">Visualizzazione: spettro di particelle elementari emergenti.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">Fase 05 — Atomi</div>
+    <div class="phase-body">
+      <p>I quark si confinano in protoni e neutroni (QCD). Protoni e neutroni formano nuclei. Gli elettroni si legano ai nuclei → atomi stabili.</p>
+      <p class="note">Visualizzazione: formazione di atomi da quark e nuclei.</p>
+    </div>
+  </div>
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">Fase 06 — Materia barionica</div>
+    <div class="phase-body">
+      <p>Gli atomi si aggregano per gravità ed elettromagnetismo → molecole, gas, polvere, stelle, pianeti. Tutta la materia che vedi è vibrazione di stringhe.</p>
+      <p class="note">Visualizzazione: aggregazione di materia barionica.</p>
+    </div>
+  </div>
+</main>
+
+<div id="bottom" role="navigation">
+  <button class="phase-btn active" onclick="setPhase(0)">① Stringa nella CY</button>
+  <button class="phase-btn" onclick="setPhase(1)">② Modi di vibrazione</button>
+  <button class="phase-btn" onclick="setPhase(2)">③ Campi quantistici</button>
+  <button class="phase-btn" onclick="setPhase(3)">④ Particelle</button>
+  <button class="phase-btn" onclick="setPhase(4)">⑤ Atomi</button>
+  <button class="phase-btn" onclick="setPhase(5)">⑥ Materia barionica</button>
+  <button class="phase-btn" id="btn-pause" onclick="togglePause()">⏸ Pausa</button>
+</div>
+
+<script>
+
+const canvas = document.getElementById('main-canvas');
+const ctx = canvas.getContext('2d');
+
+let W, H;
+function resize(){
+  const pW=document.getElementById('panel').offsetWidth;
+  W=canvas.width=Math.round(window.innerWidth-pW);
+  H=canvas.height=window.innerHeight;
+}
+resize();
+window.addEventListener('resize', resize);
+
+// ─── STATO ──────────────────────────────────────────────
+let phase = 0;
+let t = 0;
+let particles = [];
+let quanta = [];
+let atoms = [];
+let baryons = [];
+let phaseT = 0; // timer locale per fase
+
+const PHASES = [
+  { name: "Stringa nella Calabi-Yau", desc: "Una stringa quantistica è intrappolata nella geometria della varietà di Calabi-Yau. La forma dello spazio ne condiziona i modi di vibrazione." },
+  { name: "Modi di vibrazione", desc: "La stringa vibra in armoniche discrete. Ogni modo n=1,2,3... corrisponde a un'energia e a proprietà quantistiche diverse (spin, carica, massa)." },
+  { name: "Campi quantistici", desc: "Ogni modo di vibrazione eccita un campo quantistico nello spazio 4D. Il campo permea tutto l'universo come un'onda stazionaria." },
+  { name: "Spettro delle particelle", desc: "Le eccitazioni dei campi producono quanti — le particelle elementari: quark (u,d,s), elettroni, neutrini, gluoni, fotoni." },
+  { name: "Atomi", desc: "I quark si confinano in protoni e neutroni (QCD). Protoni e neutroni formano nuclei. Gli elettroni si legano ai nuclei → atomi stabili." },
+  { name: "Materia barionica", desc: "Gli atomi si aggregano per gravità ed elettromagnetismo → molecole, gas, polvere, stelle, pianeti. Tutta la materia che vedi è vibrazione di stringhe." }
+];
+
+function setPhase(n) {
+  phase = n;
+  phaseT = 0;
+  particles = [];
+  quanta = [];
+  atoms = [];
+  baryons = [];
+  document.querySelectorAll('.phase-btn').forEach((b, i) => b.classList.toggle('active', i === n));
+  document.querySelectorAll('.phase-content').forEach((el,i)=>el.classList.toggle('active',i===n));
+  document.getElementById('ui-phase').textContent=PHASES[n].name;
+  document.getElementById('panel').scrollTop=0;
+  const pn=document.getElementById('panel-phase-name'); if(pn) pn.textContent=PHASES[n].name;
+  updateUI();
+}
+
+function updateUI() {
+}
+
+// ─── PALETTE ────────────────────────────────────────────
+const COLORS = {
+  string:  '#a78bfa',
+  cy:      '#7c3aed',
+  quark_u: '#f59e0b',
+  quark_d: '#3b82f6',
+  quark_s: '#10b981',
+  electron:'#60a5fa',
+  neutrino:'#a78bfa',
+  gluon:   '#f97316',
+  photon:  '#fde68a',
+  proton:  '#ef4444',
+  neutron: '#64748b',
+  atom:    '#38bdf8',
+  field:   '#4ade80',
+};
+
+// ─── DISEGNO CALABI-YAU (semplificato) ──────────────────
+function drawCY(cx, cy, r, alpha) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.translate(cx, cy);
+
+  // alone esterno
+  let grd = ctx.createRadialGradient(0,0,r*0.3, 0,0,r*1.4);
+  grd.addColorStop(0, 'rgba(124,58,237,0.15)');
+  grd.addColorStop(1, 'rgba(124,58,237,0)');
+  ctx.beginPath(); ctx.arc(0,0,r*1.4,0,Math.PI*2);
+  ctx.fillStyle = grd; ctx.fill();
+
+  // corpo
+  const pts = 7;
+  for(let k=0; k<3; k++){
+    ctx.beginPath();
+    const ro = r * (1 - k*0.18);
+    for(let i=0; i<=pts*4; i++){
+      const a = (i/pts)*Math.PI*2;
+      const wave = 1 + 0.18*Math.sin(pts*a + t*0.4 + k) + 0.08*Math.sin(2*pts*a - t*0.3);
+      const x = ro*wave*Math.cos(a);
+      const y = ro*wave*0.6*Math.sin(a);
+      i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = k===0 ? '#7c3aed' : k===1 ? '#a78bfa' : '#c4b5fd';
+    ctx.lineWidth = k===0 ? 2 : 1;
+    ctx.globalAlpha = alpha * (k===0 ? 0.8 : 0.4);
+    ctx.stroke();
+  }
+
+  // buco centrale
+  ctx.beginPath();
+  ctx.ellipse(0, 0, r*0.22, r*0.14, 0, 0, Math.PI*2);
+  ctx.fillStyle = '#000008';
+  ctx.globalAlpha = alpha;
+  ctx.fill();
+  ctx.strokeStyle = '#ddd6fe';
+  ctx.lineWidth = 1;
+  ctx.globalAlpha = alpha*0.4;
+  ctx.stroke();
+
+  ctx.restore();
+}
+
+// ─── DISEGNO STRINGA ────────────────────────────────────
+function drawString(cx, cy, length, mode, col, amp) {
+  ctx.save();
+  ctx.translate(cx, cy);
+  ctx.beginPath();
+  const steps = 200;
+  for(let i=0; i<=steps; i++){
+    const x = (i/steps - 0.5)*length;
+    const envelope = Math.sin(Math.PI * i/steps);
+    const y = amp * envelope * Math.sin(mode * Math.PI * i/steps + t*3);
+    i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+  }
+  ctx.strokeStyle = col;
+  ctx.lineWidth = 2.5;
+  ctx.shadowColor = col;
+  ctx.shadowBlur = 10;
+  ctx.stroke();
+
+  // end points
+  ctx.beginPath(); ctx.arc(-length/2, 0, 4, 0, Math.PI*2);
+  ctx.beginPath(); ctx.arc(length/2, 0, 4, 0, Math.PI*2);
+  ctx.fillStyle = col; ctx.fill();
+  ctx.restore();
+}
+
+// ─── FASE 0: stringa nella CY ───────────────────────────
+function drawPhase0() {
+  const cx = W/2, cy = H/2;
+  drawCY(cx, cy, 160, 1);
+
+  // stringa curva dentro la CY
+  ctx.save();
+  ctx.translate(cx, cy);
+  for(let s=0; s<3; s++){
+    ctx.beginPath();
+    const off = s * 0.6;
+    for(let i=0; i<=200; i++){
+      const a = (i/200)*Math.PI*2;
+      const r = 60 + 30*Math.sin(3*a + t*0.5 + off) + 15*Math.cos(5*a - t*0.3);
+      const x = r*Math.cos(a);
+      const y = r*0.55*Math.sin(a);
+      i===0 ? ctx.moveTo(x,y) : ctx.lineTo(x,y);
+    }
+    ctx.strokeStyle = s===0 ? '#a78bfa' : s===1 ? '#818cf8' : '#c4b5fd';
+    ctx.lineWidth = 2;
+    ctx.globalAlpha = 0.7 - s*0.2;
+    ctx.shadowColor = '#7c3aed';
+    ctx.shadowBlur = 12;
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  // etichette
+  label(cx, cy - 200, 'Varietà di Calabi-Yau', '#c4b5fd', 16);
+  label(cx, cy - 175, '6 dimensioni compattificate', '#7c3aed', 12);
+  label(cx, cy + 195, 'Stringa chiusa — vibra nella geometria compatta', '#a78bfa', 13);
+  label(cx, cy + 215, 'La topologia della CY determina i modi permessi', '#64748b', 11);
+}
+
+// ─── FASE 1: modi di vibrazione ─────────────────────────
+function drawPhase1() {
+  const modes = [
+    { n:1, col:'#a78bfa', label:'n=1  →  Modo fondamentale', sub:'Gravitone (spin 2) / Dilaton', y: H*0.25 },
+    { n:2, col:'#60a5fa', label:'n=2  →  Prima armonica',    sub:'Fotone / Bosone W,Z (spin 1)', y: H*0.50 },
+    { n:3, col:'#f59e0b', label:'n=3  →  Seconda armonica',  sub:'Quark / Elettrone (spin ½)',   y: H*0.75 },
+  ];
+
+  modes.forEach(m => {
+    drawString(W*0.42, m.y, 300, m.n, m.col, 28 + 8*(phaseT%200)/200);
+    label(W*0.7, m.y - 10, m.label, m.col, 14);
+    label(W*0.7, m.y + 10, m.sub, '#64748b', 11);
+
+    // nodi
+    for(let k=1; k<m.n; k++){
+      const nx = W*0.42 - 150 + (k/m.n)*300;
+      ctx.beginPath();
+      ctx.arc(nx, m.y, 5, 0, Math.PI*2);
+      ctx.fillStyle = '#ffffff';
+      ctx.globalAlpha = 0.6;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    }
+  });
+
+  // CY piccola a sinistra
+  drawCY(W*0.12, H*0.5, 75, 0.8);
+  label(W*0.12, H*0.5+90, 'CY filtra', '#7c3aed', 11);
+  label(W*0.12, H*0.5+105, 'i modi', '#7c3aed', 11);
+
+  // freccia CY → stringhe
+  arrow(W*0.19, H*0.5, W*0.27, H*0.25, '#7c3aed');
+  arrow(W*0.19, H*0.5, W*0.27, H*0.50, '#7c3aed');
+  arrow(W*0.19, H*0.5, W*0.27, H*0.75, '#7c3aed');
+}
+
+// ─── FASE 2: campi quantistici ──────────────────────────
+function drawPhase2() {
+  // sfondo griglia spaziotemporale
+  ctx.save();
+  ctx.globalAlpha = 0.15;
+  ctx.strokeStyle = '#1e293b';
+  ctx.lineWidth = 1;
+  for(let x=0; x<W; x+=60) { ctx.beginPath(); ctx.moveTo(x,60); ctx.lineTo(x,H-60); ctx.stroke(); }
+  for(let y=60; y<H-60; y+=60) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W,y); ctx.stroke(); }
+  ctx.restore();
+
+  const fields = [
+    { col:'#4ade80', freq:1.0, amp:0.35, yFrac:0.30, name:'Campo di Higgs (scalare, spin 0)', energy:'~125 GeV' },
+    { col:'#60a5fa', freq:1.8, amp:0.25, yFrac:0.50, name:'Campo elettromagnetico (spin 1)', energy:'0 massa' },
+    { col:'#f59e0b', freq:2.5, amp:0.20, yFrac:0.70, name:'Campo di Dirac — quark (spin ½)', energy:'~5 MeV–175 GeV' },
+  ];
+
+  fields.forEach(f => {
+    const y0 = H * f.yFrac;
+    const amp = (H*0.12) * f.amp * (1 + 0.2*Math.sin(t*0.5));
+
+    // onda di campo
+    ctx.save();
+    ctx.beginPath();
+    for(let i=0; i<=W; i+=2){
+      const yw = y0 + amp * Math.sin(f.freq * (i/W)*Math.PI*8 - t*2.5);
+      i===0 ? ctx.moveTo(i, yw) : ctx.lineTo(i, yw);
+    }
+    ctx.strokeStyle = f.col;
+    ctx.lineWidth = 2.5;
+    ctx.shadowColor = f.col;
+    ctx.shadowBlur = 15;
+    ctx.globalAlpha = 0.85;
+    ctx.stroke();
+
+    // area sotto
+    ctx.beginPath();
+    ctx.moveTo(0, y0);
+    for(let i=0; i<=W; i+=2){
+      const yw = y0 + amp * Math.sin(f.freq * (i/W)*Math.PI*8 - t*2.5);
+      ctx.lineTo(i, yw);
+    }
+    ctx.lineTo(W, y0);
+    ctx.closePath();
+    ctx.fillStyle = f.col;
+    ctx.globalAlpha = 0.06;
+    ctx.fill();
+    ctx.restore();
+
+    label(W - 270, y0 - 22, f.name, f.col, 13);
+    label(W - 270, y0 + 4,  f.energy, '#64748b', 11);
+  });
+
+  label(W/2, H*0.12, 'I campi quantistici permeano tutto lo spazio 4D', '#94a3b8', 14);
+  label(W/2, H*0.12+20, 'Le oscillazioni del campo = quanti = particelle', '#64748b', 12);
+}
+
+// ─── FASE 3: particelle ─────────────────────────────────
+function drawPhase3() {
+  if(phaseT % 18 === 0 && quanta.length < 40){
+    const types = [
+      { name:'u', col:COLORS.quark_u, r:8,  mass:'2.3 MeV',   spin:'½', charge:'+⅔' },
+      { name:'d', col:COLORS.quark_d, r:8,  mass:'4.8 MeV',   spin:'½', charge:'-⅓' },
+      { name:'e⁻',col:COLORS.electron,r:7,  mass:'0.511 MeV', spin:'½', charge:'-1' },
+      { name:'γ', col:COLORS.photon,  r:6,  mass:'0',         spin:'1',  charge:'0' },
+      { name:'g', col:COLORS.gluon,   r:7,  mass:'0',         spin:'1',  charge:'col' },
+      { name:'ν', col:COLORS.neutrino,r:5,  mass:'~0',        spin:'½', charge:'0' },
+    ];
+    const tp = types[Math.floor(Math.random()*types.length)];
+    quanta.push({
+      x: W*0.15 + Math.random()*W*0.05,
+      y: H*0.3 + Math.random()*H*0.4,
+      vx: 1.2 + Math.random()*1.5,
+      vy: (Math.random()-0.5)*1.2,
+      ...tp,
+      age: 0,
+      trail: []
+    });
+  }
+
+  // CY sorgente a sinistra
+  drawCY(W*0.12, H/2, 90, 0.9);
+  label(W*0.12, H/2 + 110, 'Sorgente', '#7c3aed', 12);
+
+  quanta.forEach((q,i) => {
+    q.trail.push({x:q.x, y:q.y});
+    if(q.trail.length > 25) q.trail.shift();
+    q.x += q.vx; q.y += q.vy;
+    q.age++;
+
+    // trail
+    q.trail.forEach((pt,ti)=>{
+      ctx.beginPath();
+      ctx.arc(pt.x, pt.y, q.r*0.4, 0, Math.PI*2);
+      ctx.fillStyle = q.col;
+      ctx.globalAlpha = (ti/q.trail.length)*0.3;
+      ctx.fill();
+      ctx.globalAlpha = 1;
+    });
+
+    // cerchio particella
+    ctx.beginPath();
+    ctx.arc(q.x, q.y, q.r, 0, Math.PI*2);
+    const gr = ctx.createRadialGradient(q.x-q.r*0.3, q.y-q.r*0.3, 1, q.x, q.y, q.r);
+    gr.addColorStop(0,'#ffffff');
+    gr.addColorStop(0.4, q.col);
+    gr.addColorStop(1,'rgba(0,0,8,0.3)');
+    ctx.fillStyle = gr;
+    ctx.shadowColor = q.col;
+    ctx.shadowBlur = 12;
+    ctx.fill();
+    ctx.shadowBlur = 0;
+
+    // etichetta
+    ctx.fillStyle = '#ffffff';
+    ctx.font = `bold ${q.r<7?9:10}px sans-serif`;
+    ctx.textAlign = 'center';
+    ctx.fillText(q.name, q.x, q.y + q.r*0.4);
+
+    // scheda info al volo
+    if(q.x > W*0.35 && q.x < W*0.36){
+      ctx.fillStyle = '#1e293b';
+      ctx.beginPath();
+      ctx.roundRect(q.x+12, q.y-30, 120, 60, 6);
+      ctx.fill();
+      ctx.strokeStyle = q.col;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+      ctx.fillStyle = q.col;
+      ctx.font = 'bold 11px sans-serif';
+      ctx.textAlign = 'left';
+      ctx.fillText(q.name==='e⁻'?'Elettrone':q.name==='γ'?'Fotone':q.name==='g'?'Gluone':q.name==='ν'?'Neutrino':'Quark '+q.name, q.x+17, q.y-14);
+      ctx.fillStyle='#94a3b8';
+      ctx.font='10px sans-serif';
+      ctx.fillText('massa: '+q.mass, q.x+17, q.y+1);
+      ctx.fillText('spin: '+q.spin+'  carica: '+q.charge, q.x+17, q.y+15);
+      ctx.fillText('modo vibraz. n='+((i%3)+1), q.x+17, q.y+29);
+    }
+
+    if(q.x > W + 20 || q.y < 60 || q.y > H-60) quanta.splice(i,1);
+  });
+}
+
+// ─── FASE 4: atomi ──────────────────────────────────────
+function drawPhase4() {
+  // schema QCD: 3 quark → protone
+  const protonX = W*0.25, protonY = H*0.38;
+  drawProton(protonX, protonY, 55, 'Protone\nuud', [COLORS.quark_u, COLORS.quark_u, COLORS.quark_d]);
+
+  const neutronX = W*0.25, neutronY = H*0.65;
+  drawProton(neutronX, neutronY, 55, 'Neutrone\nudd', [COLORS.quark_u, COLORS.quark_d, COLORS.quark_d]);
+
+  // freccia confinamento
+  label(W*0.25, H*0.15, 'Confinamento QCD', '#f97316', 13);
+  label(W*0.25, H*0.175,'3 quark → adrone (barione)', '#64748b', 11);
+
+  // nucleo
+  const nucX = W*0.52, nucY = H*0.5;
+  // gluoni tra p e n
+  drawWiggly(protonX+60, protonY, nucX-35, H*0.42, '#f97316', 'g');
+  drawWiggly(neutronX+60, neutronY, nucX-35, H*0.58, '#f97316', 'g');
+
+  ctx.beginPath();
+  ctx.arc(nucX, nucY, 42, 0, Math.PI*2);
+  const gn = ctx.createRadialGradient(nucX-10,nucY-10,5,nucX,nucY,42);
+  gn.addColorStop(0,'#7f1d1d'); gn.addColorStop(1,'#450a0a');
+  ctx.fillStyle=gn; ctx.fill();
+  ctx.strokeStyle='#ef4444'; ctx.lineWidth=2; ctx.stroke();
+  label(nucX, nucY-12, 'Nucleo', '#fca5a5', 13);
+  label(nucX, nucY+5,  '¹H (idrogeno)', '#64748b', 10);
+  label(nucX, nucY+20, 'p=1, n=0', '#64748b', 10);
+
+  // elettrone in orbita
+  const eR = 130, eA = t*1.2;
+  const ex = nucX + eR*Math.cos(eA), ey = nucY + eR*0.45*Math.sin(eA);
+  ctx.beginPath();
+  ctx.ellipse(nucX,nucY,eR,eR*0.45,0,0,Math.PI*2);
+  ctx.strokeStyle='#1d4ed8'; ctx.lineWidth=1; ctx.setLineDash([4,4]);
+  ctx.globalAlpha=0.4; ctx.stroke(); ctx.setLineDash([]); ctx.globalAlpha=1;
+  ctx.beginPath(); ctx.arc(ex,ey,9,0,Math.PI*2);
+  const ge=ctx.createRadialGradient(ex-3,ey-3,1,ex,ey,9);
+  ge.addColorStop(0,'#ffffff'); ge.addColorStop(1,COLORS.electron);
+  ctx.fillStyle=ge; ctx.shadowColor=COLORS.electron; ctx.shadowBlur=14; ctx.fill(); ctx.shadowBlur=0;
+  ctx.fillStyle='#fff'; ctx.font='bold 9px sans-serif'; ctx.textAlign='center';
+  ctx.fillText('e⁻',ex,ey+3);
+
+  // fotone emesso
+  const phX = nucX + eR*Math.cos(eA+2), phY = nucY + eR*0.45*Math.sin(eA+2);
+  if(Math.sin(t*1.2)>0.95){
+    ctx.beginPath(); ctx.arc(phX,phY,5,0,Math.PI*2);
+    ctx.fillStyle=COLORS.photon; ctx.globalAlpha=0.8; ctx.fill(); ctx.globalAlpha=1;
+    ctx.fillStyle=COLORS.photon; ctx.font='9px sans-serif'; ctx.fillText('γ',phX+10,phY);
+  }
+
+  label(W*0.52, H*0.82, 'Atomo di Idrogeno', '#38bdf8', 14);
+  label(W*0.52, H*0.82+18, 'Il fotone γ media la forza EM (legame e⁻ ↔ nucleo)', '#64748b', 11);
+
+  // freccia verso fase 5
+  label(W*0.82, H*0.5, '→ aggregazione', '#475569', 12);
+  label(W*0.82, H*0.5+16, '→ molecole', '#475569', 12);
+  label(W*0.82, H*0.5+32, '→ materia', '#475569', 12);
+}
+
+function drawProton(cx,cy,r,lbl,colors){
+  // glow
+  let g=ctx.createRadialGradient(cx,cy,r*0.2,cx,cy,r*1.6);
+  g.addColorStop(0,'rgba(239,68,68,0.2)'); g.addColorStop(1,'rgba(0,0,0,0)');
+  ctx.beginPath(); ctx.arc(cx,cy,r*1.6,0,Math.PI*2); ctx.fillStyle=g; ctx.fill();
+  ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2);
+  const pg=ctx.createRadialGradient(cx-r*0.3,cy-r*0.3,3,cx,cy,r);
+  pg.addColorStop(0,'#7f1d1d'); pg.addColorStop(1,'#1c0a0a');
+  ctx.fillStyle=pg; ctx.fill();
+  ctx.strokeStyle='#ef4444'; ctx.lineWidth=2; ctx.stroke();
+
+  const angles=[Math.PI/6, Math.PI*5/6, Math.PI*3/2];
+  colors.forEach((c,i)=>{
+    const qx=cx+r*0.45*Math.cos(angles[i]+t*0.3);
+    const qy=cy+r*0.45*Math.sin(angles[i]+t*0.3);
+    // linea gluone
+    const nx=cx+r*0.45*Math.cos(angles[(i+1)%3]+t*0.3);
+    const ny=cy+r*0.45*Math.sin(angles[(i+1)%3]+t*0.3);
+    ctx.beginPath(); ctx.moveTo(qx,qy); ctx.lineTo(nx,ny);
+    ctx.strokeStyle='rgba(249,115,22,0.4)'; ctx.lineWidth=1.5; ctx.setLineDash([3,3]); ctx.stroke(); ctx.setLineDash([]);
+    // quark
+    ctx.beginPath(); ctx.arc(qx,qy,8,0,Math.PI*2);
+    ctx.fillStyle=c; ctx.shadowColor=c; ctx.shadowBlur=8; ctx.fill(); ctx.shadowBlur=0;
+    ctx.fillStyle='#fff'; ctx.font='bold 8px sans-serif'; ctx.textAlign='center';
+    ctx.fillText(i===2?'d':'u',qx,qy+3);
+  });
+  const lines=lbl.split('\n');
+  label(cx,cy+r+16,lines[0],'#fca5a5',12);
+  if(lines[1]) label(cx,cy+r+30,lines[1],'#7f1d1d',10);
+}
+
+function drawWiggly(x1,y1,x2,y2,col,lbl){
+  const dx=x2-x1, dy=y2-y1, len=Math.sqrt(dx*dx+dy*dy);
+  const steps=20;
+  ctx.save(); ctx.beginPath();
+  for(let i=0;i<=steps;i++){
+    const f=i/steps;
+    const px=x1+dx*f, py=y1+dy*f;
+    const perp=12*Math.sin(i*1.2+t*3)*Math.cos(Math.PI*f);
+    const nx=-dy/len*perp, ny=dx/len*perp;
+    i===0?ctx.moveTo(px+nx,py+ny):ctx.lineTo(px+nx,py+ny);
+  }
+  ctx.strokeStyle=col; ctx.lineWidth=2; ctx.globalAlpha=0.7; ctx.stroke();
+  ctx.restore();
+}
+
+// ─── FASE 5: materia barionica ──────────────────────────
+function drawPhase5() {
+  // nebulosa / nube di gas in background
+  for(let i=0;i<5;i++){
+    const bx=W*0.1+i*W*0.2, by=H*0.5+Math.sin(i)*H*0.1;
+    const br=60+i*15;
+    const bg=ctx.createRadialGradient(bx,by,5,bx,by,br);
+    bg.addColorStop(0,'rgba(30,58,138,0.25)'); bg.addColorStop(1,'rgba(0,0,0,0)');
+    ctx.beginPath(); ctx.arc(bx,by,br,0,Math.PI*2); ctx.fillStyle=bg; ctx.fill();
+  }
+
+  // disegna atomi/molecole che si aggregano
+  const atomDefs=[
+    {x:W*0.12,y:H*0.3,r:18,col:'#1d4ed8',lbl:'H'},
+    {x:W*0.22,y:H*0.28,r:18,col:'#1d4ed8',lbl:'H'},
+    {x:W*0.17,y:H*0.42,r:22,col:'#7c3aed',lbl:'He'},
+    {x:W*0.32,y:H*0.35,r:20,col:'#0369a1',lbl:'C'},
+    {x:W*0.42,y:H*0.30,r:18,col:'#15803d',lbl:'O'},
+    {x:W*0.52,y:H*0.40,r:18,col:'#b45309',lbl:'N'},
+    {x:W*0.62,y:H*0.33,r:16,col:'#7c2d12',lbl:'Fe'},
+    {x:W*0.72,y:H*0.38,r:20,col:'#6b21a8',lbl:'Si'},
+  ];
+
+  atomDefs.forEach(a=>{
+    // legame
+    atomDefs.forEach(b=>{
+      const d=Math.sqrt((a.x-b.x)**2+(a.y-b.y)**2);
+      if(d>0&&d<100){
+        ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y);
+        ctx.strokeStyle='rgba(100,116,139,0.25)'; ctx.lineWidth=1; ctx.stroke();
+      }
+    });
+    const ag=ctx.createRadialGradient(a.x-a.r*0.3,a.y-a.r*0.3,2,a.x,a.y,a.r);
+    ag.addColorStop(0,'rgba(255,255,255,0.4)'); ag.addColorStop(1,a.col);
+    ctx.beginPath(); ctx.arc(a.x,a.y,a.r,0,Math.PI*2);
+    ctx.fillStyle=ag; ctx.shadowColor=a.col; ctx.shadowBlur=10; ctx.fill(); ctx.shadowBlur=0;
+    ctx.strokeStyle='rgba(255,255,255,0.2)'; ctx.lineWidth=1; ctx.stroke();
+    ctx.fillStyle='#fff'; ctx.font=`bold ${a.r*0.75}px sans-serif`; ctx.textAlign='center';
+    ctx.fillText(a.lbl,a.x,a.y+a.r*0.3);
+  });
+
+  // struttura stellare a destra
+  const sx=W*0.78, sy=H*0.52;
+  // fotosfera
+  const starR=90+5*Math.sin(t*0.8);
+  for(let layer=3;layer>=0;layer--){
+    const sg=ctx.createRadialGradient(sx,sy,0,sx,sy,starR*(1+layer*0.3));
+    if(layer===0){
+      sg.addColorStop(0,'#fffde7');
+      sg.addColorStop(0.3,'#fde68a');
+      sg.addColorStop(0.7,'#f59e0b');
+      sg.addColorStop(1,'rgba(245,158,11,0)');
+    } else {
+      sg.addColorStop(0,`rgba(245,158,11,${0.06-layer*0.015})`);
+      sg.addColorStop(1,'rgba(0,0,0,0)');
+    }
+    ctx.beginPath(); ctx.arc(sx,sy,starR*(1+layer*0.3),0,Math.PI*2);
+    ctx.fillStyle=sg; ctx.fill();
+  }
+  label(sx, sy+starR+30, 'Stella (nucleosintesi)', '#fde68a', 13);
+  label(sx, sy+starR+48, 'Le reazioni nucleari fuse\natomi più pesanti', '#64748b', 11);
+
+  // pianeta
+  const pR=30, pA=t*0.25, pOrb=160;
+  const px=sx+pOrb*Math.cos(pA), py=sy+pOrb*0.4*Math.sin(pA);
+  ctx.beginPath(); ctx.ellipse(sx,sy,pOrb,pOrb*0.4,0,0,Math.PI*2);
+  ctx.strokeStyle='rgba(100,116,139,0.2)'; ctx.lineWidth=1; ctx.setLineDash([3,6]); ctx.stroke(); ctx.setLineDash([]);
+  const pg2=ctx.createRadialGradient(px-8,py-8,2,px,py,pR);
+  pg2.addColorStop(0,'#60a5fa'); pg2.addColorStop(0.5,'#1d4ed8'); pg2.addColorStop(1,'#0c1445');
+  ctx.beginPath(); ctx.arc(px,py,pR,0,Math.PI*2);
+  ctx.fillStyle=pg2; ctx.shadowColor='#3b82f6'; ctx.shadowBlur=15; ctx.fill(); ctx.shadowBlur=0;
+  label(px,py+pR+16,'Pianeta','#93c5fd',11);
+
+  // titolo
+  label(W/2, H*0.13, 'Materia Barionica', '#e2e8f0', 20);
+  label(W/2, H*0.13+26, 'Molecole • Gas • Stelle • Pianeti — tutto è vibrazione di stringhe', '#64748b', 12);
+
+  // catena esplicativa
+  const chain=['Stringa','→ Quark','→ Protone','→ Nucleo','→ Atomo','→ Molecola','→ Stella'];
+  chain.forEach((s,i)=>{
+    const cx2=W*0.05 + i*(W*0.9/chain.length);
+    ctx.fillStyle = i===0?'#a78bfa':i<3?COLORS.quark_u:i<5?'#ef4444':'#60a5fa';
+    ctx.font=`bold ${i===0?12:11}px sans-serif`;
+    ctx.textAlign='center';
+    ctx.fillText(s, cx2+30, H*0.9);
+  });
+}
+
+// ─── HELPERS ────────────────────────────────────────────
+function label(x,y,txt,col,size){
+  ctx.fillStyle=col; ctx.font=`${size}px Georgia, serif`;
+  ctx.textAlign='center'; ctx.fillText(txt,x,y);
+}
+function arrow(x1,y1,x2,y2,col){
+  ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2);
+  ctx.strokeStyle=col; ctx.lineWidth=1.5; ctx.globalAlpha=0.5; ctx.stroke(); ctx.globalAlpha=1;
+}
+
+// ─── LOOP PRINCIPALE ────────────────────────────────────
+let paused = false;
+function togglePause(){
+  paused = !paused;
+  document.getElementById('btn-pause').textContent = paused ? '▶ Riprendi' : '⏸ Pausa';
+}
+function draw() {
+  ctx.clearRect(0,0,W,H);
+
+  // sfondo gradiente
+  const bg=ctx.createRadialGradient(W/2,H/2,50,W/2,H/2,Math.max(W,H)*0.8);
+  bg.addColorStop(0,'#020617'); bg.addColorStop(1,'#000008');
+  ctx.fillStyle=bg; ctx.fillRect(0,0,W,H);
+
+  // stelle di sfondo
+  if(!window._stars){
+    window._stars=Array.from({length:120},()=>({
+      x:Math.random()*2000,y:Math.random()*1200,
+      r:Math.random()*1.5+0.3,o:Math.random()*0.6+0.1
+    }));
+  }
+  window._stars.forEach(s=>{
+    ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(255,255,255,${s.o*(0.7+0.3*Math.sin(t*0.5+s.x))})`;
+    ctx.fill();
+  });
+
+  switch(phase){
+    case 0: drawPhase0(); break;
+    case 1: drawPhase1(); break;
+    case 2: drawPhase2(); break;
+    case 3: drawPhase3(); break;
+    case 4: drawPhase4(); break;
+    case 5: drawPhase5(); break;
+  }
+
+  t += 0.007;
+  if(!paused) phaseT++;
+
+  // avanzamento automatico
+  if(phaseT > 1800 && phase < 5 && !paused){
+    setPhase(phase+1);
+  }
+
+  updateUI();
+  requestAnimationFrame(draw);
+}
+
+draw();
+
+</script>
+</body>
+</html>
