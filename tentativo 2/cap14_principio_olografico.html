@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Principio Olografico e il Futuro | AdS/CFT — Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="ui">
+  <span id="ui-title">DivulgAzione · AdS/CFT</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">7 fasi</span>
+</div>
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — 'T HOOFT E SUSSKIND</div>
+    <div class="phase-title">Il principio olografico ('t Hooft-Susskind 1993-1995)</div>
+    <div class="phase-body">
+      <p>Il principio olografico nasce dalla termodinamica dei buchi neri. Bekenstein e Hawking avevano dimostrato che l'<span class="hl">entropia di un buco nero</span> è proporzionale all'area dell'orizzonte, non al volume — un fatto profondamente misterioso. Perché l'entropia, che misura i gradi di libertà del sistema, scala con l'area e non con il volume?</p>
+      <code class="formula">S_BH = A / (4 l²_P)  = A / (4G_N ℏ/c³)
+→ S ∝ Area (non Volume!)
+Principio di Bekenstein: S_max di qualsiasi sistema
+  di dimensione R è ≤ A/(4l²_P) = πR²/l²_P
+→ limite olografico dell'entropia</code>
+      <p>'t Hooft (1993) e Susskind (1995) generalizzarono questa osservazione in un principio fondamentale: <span class="am">l'informazione contenuta in un volume di spazio non supera quella codificabile sulla sua superficie di bordo</span>. Il numero massimo di gradi di libertà in un volume è proporzionale all'area della superficie che lo racchiude, in unità di Planck.</p>
+      <p>Questo non è solo un limite tecnico: suggerisce che <span class="gr">la descrizione fondamentale della realtà fisica è bidimensionale</span> — il volume tridimensionale è una proiezione olografica di informazione bidimensionale.</p>
+      <div class="note">Animazione: volume 3D con informazione distribuita nel volume, poi "proiezione" sulla superficie 2D che contiene tutta l'informazione — come un ologramma.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — OLOGRAMMA E OLOGRAFIA</div>
+    <div class="phase-title">Dall'ologramma ottico alla holografia quantistica</div>
+    <div class="phase-body">
+      <p>Un <span class="hl">ologramma ottico</span> è una lastra fotografica 2D che contiene tutte le informazioni 3D di un oggetto. La luce di riferimento e quella riflessa dall'oggetto formano un pattern di interferenza sulla lastra; quando si illumina la lastra, si ricostruisce l'immagine 3D. L'informazione 3D è codificata in 2D.</p>
+      <code class="formula">Ologramma ottico:
+  lastra 2D → oggetto 3D (illlusione ottica)
+Holografia quantistica ('t Hooft, Susskind):
+  bordo (d dim.) → bulk (d+1 dim.) (reale!)
+→ analogia: profondità emerge, non è fondamentale
+Differenza: holografia quantistica è fisica reale</code>
+      <p>La <span class="am">holografia quantistica</span> è analoga ma fondamentalmente diversa: non è un'illusione ottica ma una <span class="hl">realtà fisica</span>. Lo spazio tridimensionale e la gravità che vi opera emergono genuinamente dai gradi di libertà bidimensionali sul bordo. Non c'è nessuna terza dimensione "nascosta" — la terza dimensione emerge dall'entanglement e dalle correlazioni quantistiche sul bordo.</p>
+      <p>AdS/CFT è la realizzazione matematica concreta di questa idea: una CFT (d-dim, senza gravità) genera completamente la geometria AdS (d+1 dim, con gravità). Il bulk tridimensionale è un modo di organizzare l'informazione del bordo bidimensionale.</p>
+      <div class="note">Animazione: confronto tra ologramma ottico (lastra 2D → immagine 3D) e holografia quantistica (CFT 2D → AdS 3D) — analogia e differenza.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — ADS/CFT COME OLOGRAFIA</div>
+    <div class="phase-title">AdS/CFT: la realizzazione concreta dell'olografia</div>
+    <div class="phase-body">
+      <p>AdS/CFT è l'esempio più concreto e verificabile del principio olografico. La corrispondenza afferma che la <span class="hl">gravità in AdS_{d+1}</span> è equivalente alla <span class="am">CFT_d sul bordo</span>. La dimensione extra — la direzione radiale di AdS — <span class="gr">emerge</span> dalla scala di rinormalizzazione della CFT.</p>
+      <code class="formula">d_bulk = d_bordo + 1  (la dim. extra emerge)
+Gravità in AdS₅×S⁵  ≡  𝒩=4 SYM in 4D (bordo)
+Ogni oggetto AdS ↔ operatore CFT (il Dizionario)
+Geometria AdS ↔ stato quantistico della CFT
+→ la gravità è emergente, non fondamentale</code>
+      <p>Il punto chiave: <span class="hl">la gravità non è fondamentale</span> in questa visione. È un fenomeno emergente — come la termodinamica emerge dalla meccanica statistica delle particelle, la gravità emerge dalle correlazioni quantistiche dei gradi di libertà del bordo. La geometria stessa è emergente.</p>
+      <p>Questo è l'inverso di come la fisica era stata sempre concepita: invece di mettere la materia in uno spazio-tempo dato, lo spazio-tempo emerge dalla materia (o meglio: dalla struttura di entanglement dello stato quantistico). La gravità e la geometria sono <span class="vi">fenomeni collettivi</span>.</p>
+      <div class="note">Animazione: emergenza della dimensione radiale dalla scala di rinormalizzazione della CFT — i livelli di energia della CFT si trasformano nella direzione z di AdS.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — OLTRE ADS</div>
+    <div class="phase-title">Olografia nel mondo reale: oltre AdS</div>
+    <div class="phase-body">
+      <p>Il nostro universo <span class="hl">non è AdS</span>: ha una costante cosmologica positiva Λ > 0, e la geometria è di de Sitter (dS), non anti-de Sitter. Estendere l'holografia a de Sitter è un problema fondamentale aperto della fisica teorica.</p>
+      <code class="formula">Nostro universo: Λ > 0 → de Sitter (dS)
+AdS/CFT: Λ < 0 → bordo spaziale (tipo-spazio)
+dS/CFT: Λ > 0 → bordo temporale? (Strominger 2001)
+Flat space holography: Λ = 0 → BMS group
+Celestial holography: scattering amplitudes → 2D CFT</code>
+      <p>Tentativi di estendere l'holografia: <span class="am">dS/CFT</span> (Strominger 2001): il "bordo" dello spazio de Sitter è una sezione temporale all'infinito futuro; la CFT duale è euclídea e mal capita. <span class="hl">Celestial holography</span>: le ampiezze di scattering in spazio piatto corrispondono a correlatori di una CFT 2D sulla sfera celeste. <span class="gr">Flat space holography</span>: usa il gruppo BMS (simmetrie asintotiche dello spazio piatto).</p>
+      <p>Nessuna di queste costruzioni è matura come AdS/CFT, ma tutte suggeriscono che l'holografia è un principio universale — non un accidente della geometria AdS. Il nostro universo è probabilmente olografico, anche se non sappiamo ancora come.</p>
+      <div class="note">Animazione: confronto tra geometrie — AdS (curva negativa), flat (piatta), dS (curva positiva) — con i diversi tipi di bordo olografico per ciascuna.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — TENSOR NETWORKS</div>
+    <div class="phase-title">Spazio-tempo come rete di entanglement (MERA)</div>
+    <div class="phase-body">
+      <p>Swingle (2012) ha proposto una connessione precisa tra la struttura geometrica di AdS e le <span class="hl">tensor networks MERA</span> (Multi-scale Entanglement Renormalization Ansatz) — reti tensoriali che implementano il gruppo di rinormalizzazione quantistica.</p>
+      <code class="formula">MERA: rete tensoriale per RG della CFT
+Struttura geometrica di MERA ~ AdS iperbolico
+geometria = MERA network
+S_A = #taglie nella rete ~ log |A|  (AdS₃)
+→ Area ∝ numero di legami tagliati = entropia RT</code>
+      <p>L'intuizione: una rete MERA organizza gli stati della CFT in livelli di scala energetica, con tensori che implementano la rinormalizzazione tra un livello e l'altro. Questa organizzazione ha una struttura geometrica naturalmente <span class="am">iperbolica</span> — come lo spazio AdS. La formula RT emerge naturalmente: l'entropia di entanglement di una regione corrisponde al minimo numero di legami che tagliano la rete tra A e Ā — ovvero all'area minimale in AdS.</p>
+      <p>Le tensor networks hanno permesso di costruire <span class="gr">modelli giocattolo esatti</span> di olografia (HaPPY code, 2015) che implementano la struttura di codice a correzione di errori e la ricostruzione del bulk. Lo spazio <span class="vi">è letteralmente fatto di entanglement</span>.</p>
+      <div class="note">Animazione: rete MERA a struttura iperbolica con nodi e legami — i legami tagliati da una curva danno l'entropia di entanglement, come la superficie RT.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — IMPLICAZIONI</div>
+    <div class="phase-title">Implicazioni fondamentali: tutto è emergente</div>
+    <div class="phase-body">
+      <p>Se il principio olografico è corretto — e AdS/CFT fornisce una dimostrazione di principio convincente — le implicazioni per la nostra comprensione della realtà fisica sono rivoluzionarie:</p>
+      <code class="formula">1. Lo spazio-tempo è emergente (non fondamentale)
+2. La gravità è emergente (come la termodinamica)
+3. La dimensionalità è emergente (d+1 da d)
+4. La fisica fondamentale è una QFT senza gravità
+   su un bordo in meno dimensioni
+5. La geometria = struttura di entanglement</code>
+      <p>La <span class="hl">visione classica</span>: esiste uno spazio-tempo fondamentale (il continuum di Minkowski o qualcosa del genere) su cui le particelle si muovono e la gravità agisce. <span class="am">La visione olografica</span>: lo spazio-tempo è un concetto derivato — emerge dalla struttura di entanglement di una teoria quantistica fondamentale che non contiene gravità e vive in meno dimensioni.</p>
+      <p>Come la temperatura non è un concetto fondamentale (emerge dal moto disordinato delle particelle), così la gravità e la geometria non sono fondamentali — emergono dalla <span class="gr">termodinamica quantistica dell'informazione</span> codificata sul bordo. La realtà è informazione.</p>
+      <div class="note">Animazione: collasso della visione classica (griglia 3D dello spazio-tempo) nella visione olografica (rete 2D di entanglement) — la geometria si dissolve nel substrato quantistico.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — FUTURO</div>
+    <div class="phase-title">Domande aperte e il futuro della ricerca</div>
+    <div class="phase-body">
+      <p>AdS/CFT e il principio olografico hanno trasformato la fisica teorica degli ultimi 30 anni. Ma molte questioni fondamentali rimangono aperte, e il campo è ancora in piena evoluzione.</p>
+      <code class="formula">Domande aperte:
+• Holografia per de Sitter / spazio piatto?
+• Risoluzione completa del paradosso del firewall?
+• Connessione con la fisica sperimentale (LHC, LIGO)?
+• Gravità quantistica olografica nel laboratorio?
+• Misura dell'olografia (esperimenti analogici)?
+• Teoria M e olografia in 11 dimensioni?</code>
+      <p><span class="hl">Applicazioni già realizzate</span>: viscosità del quark-gluon plasma (RHIC), superconduttori olografici, trasporto in sistemi a forte accoppiamento. Sperimento su computer quantistico: wormhole attraversabile simulato su Google Sycamore (2022). <span class="am">Frontiere attive</span>: cosmologia olografica, olografia celestiale, black hole information in modelli toy, TN nella materia condensata.</p>
+      <p>La domanda più profonda rimane: <span class="gr">qual è il principio fondamentale?</span> AdS/CFT è un esempio concreto, ma la formulazione universale del principio olografico — valida per qualsiasi geometria e qualsiasi contesto fisico — è ancora sconosciuta. La risposta cambierà la nostra comprensione della realtà.</p>
+      <div class="note">Animazione: mappa delle questioni aperte — nodi interconnessi che rappresentano le diverse frontiere della ricerca olografica attuale.</div>
+    </div>
+  </div>
+
+</div>
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · 't Hooft</button>
+  <button class="btn" onclick="goPhase(2)">02 · Ologramma</button>
+  <button class="btn" onclick="goPhase(3)">03 · AdS come Olog.</button>
+  <button class="btn" onclick="goPhase(4)">04 · Oltre AdS</button>
+  <button class="btn" onclick="goPhase(5)">05 · MERA</button>
+  <button class="btn" onclick="goPhase(6)">06 · Implicazioni</button>
+  <button class="btn" onclick="goPhase(7)">07 · Futuro</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+window.T2_PHASES = [
+  { name: 'Principio Olografico',        desc: 'FASE 01 — S ≤ A/(4l²_P): informazione codificata sul bordo (1993-95)', scene: 'thooft'     },
+  { name: 'Ologramma vs Holografia',     desc: 'FASE 02 — ologramma ottico ↔ holografia quantistica: realtà vs illusione', scene: 'ologramma'  },
+  { name: 'AdS/CFT come Holografia',     desc: 'FASE 03 — d_bulk = d_bordo+1: la dimensione extra emerge dalla CFT',    scene: 'adscft'     },
+  { name: 'Holografia oltre AdS',        desc: 'FASE 04 — dS/CFT, flat space holography, celestial holography',         scene: 'oltrads'    },
+  { name: 'MERA e Tensor Networks',      desc: 'FASE 05 — geometria = MERA network (Swingle 2012): RT da tensor count', scene: 'mera'       },
+  { name: 'Implicazioni Fondamentali',   desc: 'FASE 06 — spazio, gravità, dimensionalità: tutto emergente',            scene: 'implicazioni'},
+  { name: 'Domande Aperte e il Futuro',  desc: 'FASE 07 — frontiere della ricerca olografica: dS, firewall, lab',       scene: 'futuro'     },
+];
+
+window.t2Draw = function(T, phaseIdx, ctx, W, H) {
+  const cx    = t2AnimCX();
+  const cy    = t2AnimCY();
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phaseIdx].scene;
+
+  // ── 'T HOOFT — volume codificato sulla superficie ─────────────────────────
+  if (scene === 'thooft') {
+    // 3D cube schematic (isometric)
+    const s   = 44;
+    const ox  = cx - s * 0.5;
+    const oy  = cy;
+    const cos = Math.cos(Math.PI / 6);
+    const sin = Math.sin(Math.PI / 6);
+
+    // Cube faces
+    const faces = [
+      // Front face
+      { verts: [[ox, oy], [ox + s, oy], [ox + s, oy - s], [ox, oy - s]], col: 'rgba(14,165,233,0.05)' },
+      // Top face
+      { verts: [[ox, oy - s], [ox + s, oy - s], [ox + s + s * cos, oy - s - s * sin], [ox + s * cos, oy - s - s * sin]], col: 'rgba(14,165,233,0.08)' },
+      // Right face
+      { verts: [[ox + s, oy], [ox + s + s * cos, oy - s * sin], [ox + s + s * cos, oy - s - s * sin], [ox + s, oy - s]], col: 'rgba(14,165,233,0.06)' },
+    ];
+
+    for (const f of faces) {
+      ctx.beginPath();
+      ctx.moveTo(f.verts[0][0], f.verts[0][1]);
+      for (let i = 1; i < f.verts.length; i++) ctx.lineTo(f.verts[i][0], f.verts[i][1]);
+      ctx.closePath();
+      ctx.fillStyle   = f.col;
+      ctx.fill();
+      ctx.strokeStyle = '#0ea5e9';
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+    }
+
+    // Dots inside (volume DOF)
+    const nDots = 6;
+    for (let i = 0; i < nDots; i++) {
+      const dx  = ox + 10 + (i % 3) * (s / 2.5);
+      const dy  = oy - 10 - Math.floor(i / 3) * (s / 2.5);
+      const pulse = rm ? 0.7 : 0.4 + 0.4 * Math.sin(T * 1.5 + i * 0.8);
+      ctx.beginPath();
+      ctx.arc(dx, dy, 3, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(167,139,250,${pulse})`;
+      ctx.fill();
+    }
+
+    // Surface highlight (right + top)
+    t2Glow('#4ade80', 8);
+    ctx.beginPath();
+    ctx.moveTo(ox + s, oy);
+    ctx.lineTo(ox + s + s * cos, oy - s * sin);
+    ctx.lineTo(ox + s + s * cos, oy - s - s * sin);
+    ctx.lineTo(ox + s, oy - s);
+    ctx.closePath();
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+
+    t2Txt(cx, cy + s * 0.5 + 20, 'S ≤ A/(4l²_P)', '#4ade80', 10, 'center');
+    t2Txt(cx, cy + s * 0.5 + 36, 'informazione: sul bordo, non nel volume', '#94a3b8', 8, 'center');
+    return;
+  }
+
+  // ── OLOGRAMMA — confronto ottico vs quantistico ────────────────────────────
+  if (scene === 'ologramma') {
+    const lX = cx - W * 0.16;
+    const rX = cx + W * 0.16;
+
+    // Left: optical hologram
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth   = 1;
+    ctx.strokeRect(lX - 18, cy - 30, 36, 60);
+    t2Txt(lX, cy, 'lastra', '#fbbf24', 9, 'center');
+    t2Txt(lX, cy + 16, '2D', '#fbbf24', 9, 'center');
+    // Arrow
+    ctx.beginPath();
+    ctx.moveTo(lX + 24, cy);
+    ctx.lineTo(lX + 50, cy);
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(lX + 50, cy);
+    ctx.lineTo(lX + 43, cy - 4);
+    ctx.moveTo(lX + 50, cy);
+    ctx.lineTo(lX + 43, cy + 4);
+    ctx.stroke();
+    t2Txt(lX + 37, cy - 12, 'luce', '#fbbf24', 7, 'center');
+    // 3D image dot
+    ctx.beginPath();
+    ctx.arc(lX + 60, cy, 8, 0, Math.PI * 2);
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth   = 1;
+    ctx.setLineDash([2, 2]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    t2Txt(lX + 60, cy + 18, 'immagine 3D\n(illusione)', '#fbbf24', 7, 'center');
+    t2Txt(lX, cy - 40, 'Ologramma ottico', '#fbbf24', 8, 'center');
+
+    // Right: quantum holography
+    ctx.beginPath();
+    ctx.arc(rX, cy, 24, 0, Math.PI * 2);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2Txt(rX, cy - 4, 'CFT', '#0ea5e9', 9, 'center');
+    t2Txt(rX, cy + 12, 'd dim.', '#0ea5e9', 8, 'center');
+    // Arrow up
+    ctx.beginPath();
+    ctx.moveTo(rX, cy - 30);
+    ctx.lineTo(rX, cy - 60);
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(rX, cy - 60);
+    ctx.lineTo(rX - 4, cy - 53);
+    ctx.moveTo(rX, cy - 60);
+    ctx.lineTo(rX + 4, cy - 53);
+    ctx.stroke();
+    // AdS circle (larger)
+    t2Glow('#a78bfa', 6);
+    ctx.beginPath();
+    ctx.arc(rX, cy - 85, 20, 0, Math.PI * 2);
+    ctx.strokeStyle = '#a78bfa';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(rX, cy - 85, 'AdS', '#a78bfa', 8, 'center');
+    t2Txt(rX, cy - 105, 'd+1 dim.', '#a78bfa', 7, 'center');
+    t2Txt(rX, cy + 36, 'Holografia quantistica\n(realtà fisica!)', '#4ade80', 8, 'center');
+    return;
+  }
+
+  // ── ADSCFT OLOGRAFIA — emergenza radiale ──────────────────────────────────
+  if (scene === 'adscft') {
+    // CFT boundary (circle)
+    t2Glow('#0ea5e9', 6);
+    ctx.beginPath();
+    ctx.arc(cx, cy, 75, 0, Math.PI * 2);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, cy - 82, 'bordo CFT (d dim.)', '#0ea5e9', 9, 'center');
+
+    // Radial direction emerges (lines from center)
+    const nR = 8;
+    for (let i = 0; i < nR; i++) {
+      const ang    = (i / nR) * Math.PI * 2;
+      const pulse  = rm ? 0.4 : 0.2 + 0.3 * Math.sin(T * 1.2 + i * 0.5);
+      const rOuter = 75;
+      const rInner = 8;
+      ctx.beginPath();
+      ctx.moveTo(cx + rInner * Math.cos(ang), cy + rInner * Math.sin(ang));
+      ctx.lineTo(cx + rOuter * Math.cos(ang), cy + rOuter * Math.sin(ang));
+      ctx.strokeStyle = `rgba(167,139,250,${pulse})`;
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+    }
+
+    // z direction label
+    t2Txt(cx + 40, cy, '← z →', '#a78bfa', 8, 'center');
+    t2Txt(cx, cy, 'bulk AdS\n(d+1 dim.)', '#a78bfa', 8, 'center');
+    t2Txt(cx, cy + 85, 'd_bulk = d_bordo + 1 (emerge)', '#94a3b8', 9, 'center');
+    return;
+  }
+
+  // ── OLTRE ADS — geometrie diverse ─────────────────────────────────────────
+  if (scene === 'oltrads') {
+    const items = [
+      { x: cx - W * 0.20, y: cy, label: 'AdS\nΛ<0', col: '#0ea5e9', r: 30 },
+      { x: cx,            y: cy, label: 'Flat\nΛ=0', col: '#4ade80', r: 30 },
+      { x: cx + W * 0.20, y: cy, label: 'dS\nΛ>0',  col: '#fbbf24', r: 30 },
+    ];
+
+    for (const it of items) {
+      // Different "curvature" visualization
+      if (it.label.startsWith('AdS')) {
+        // Concave circle
+        t2Glow(it.col, 8);
+        ctx.beginPath();
+        ctx.arc(it.x, it.y, it.r, 0, Math.PI * 2);
+        ctx.strokeStyle = it.col;
+        ctx.lineWidth   = 2;
+        ctx.stroke();
+        t2NoGlow();
+        // Geodesics (concave)
+        for (let i = 0; i < 3; i++) {
+          const ang = (i / 3) * Math.PI * 2;
+          ctx.beginPath();
+          ctx.arc(it.x + it.r * 0.7 * Math.cos(ang), it.y + it.r * 0.7 * Math.sin(ang), it.r * 0.4, 0, Math.PI * 2);
+          ctx.strokeStyle = `${it.col}44`;
+          ctx.lineWidth   = 1;
+          ctx.stroke();
+        }
+      } else if (it.label.startsWith('Flat')) {
+        t2Glow(it.col, 6);
+        ctx.strokeRect(it.x - it.r, it.y - it.r, it.r * 2, it.r * 2);
+        ctx.strokeStyle = it.col;
+        ctx.lineWidth   = 2;
+        ctx.strokeRect(it.x - it.r, it.y - it.r, it.r * 2, it.r * 2);
+        t2NoGlow();
+        // Grid lines
+        ctx.strokeStyle = `${it.col}44`;
+        ctx.lineWidth   = 0.5;
+        for (let g = -1; g <= 1; g++) {
+          ctx.beginPath();
+          ctx.moveTo(it.x - it.r, it.y + g * (it.r * 0.5));
+          ctx.lineTo(it.x + it.r, it.y + g * (it.r * 0.5));
+          ctx.moveTo(it.x + g * (it.r * 0.5), it.y - it.r);
+          ctx.lineTo(it.x + g * (it.r * 0.5), it.y + it.r);
+          ctx.stroke();
+        }
+      } else {
+        // dS: convex sphere
+        t2Glow(it.col, 8);
+        ctx.beginPath();
+        ctx.arc(it.x, it.y, it.r, 0, Math.PI * 2);
+        ctx.strokeStyle = it.col;
+        ctx.lineWidth   = 2;
+        ctx.stroke();
+        t2NoGlow();
+        ctx.beginPath();
+        ctx.ellipse(it.x, it.y, it.r, it.r * 0.3, 0, 0, Math.PI * 2);
+        ctx.strokeStyle = `${it.col}55`;
+        ctx.lineWidth   = 1;
+        ctx.stroke();
+      }
+      t2Txt(it.x, it.y + it.r + 18, it.label.replace('\n', ' '), it.col, 9, 'center');
+    }
+
+    t2Txt(cx, cy + 60, 'holografia per de Sitter: questione aperta', '#94a3b8', 9, 'center');
+    return;
+  }
+
+  // ── MERA — tensor network iperbolica ──────────────────────────────────────
+  if (scene === 'mera') {
+    const layers  = 5;
+    const nodesByLayer = [16, 8, 4, 2, 1];
+    const allNodes = [];
+
+    for (let l = 0; l < layers; l++) {
+      const n      = nodesByLayer[l];
+      const y      = cy + 50 - l * 30;
+      const xSpan  = Math.min(W * 0.35, 160) * (1 - l * 0.12);
+      const row    = [];
+      for (let i = 0; i < n; i++) {
+        const x = cx - xSpan * 0.5 + (n > 1 ? i * (xSpan / (n - 1)) : 0);
+        row.push({ x, y, l });
+      }
+      allNodes.push(row);
+    }
+
+    // Draw edges (layer to layer)
+    for (let l = 0; l < layers - 1; l++) {
+      const lo = allNodes[l];
+      const hi = allNodes[l + 1];
+      for (const hu of hi) {
+        const nearest = lo.slice().sort((a, b) => Math.abs(a.x - hu.x) - Math.abs(b.x - hu.x)).slice(0, 2);
+        for (const nd of nearest) {
+          const pulse = rm ? 0.3 : 0.15 + 0.2 * Math.sin(T * 1.4 + nd.x * 0.02);
+          ctx.beginPath();
+          ctx.moveTo(nd.x, nd.y);
+          ctx.lineTo(hu.x, hu.y);
+          ctx.strokeStyle = `rgba(74,222,128,${pulse})`;
+          ctx.lineWidth   = 0.8;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw RT cut on bottom layer
+    const cutX = cx + 20;
+    t2Glow('#f43f5e', 8);
+    ctx.beginPath();
+    ctx.moveTo(cutX, cy + 50 + 12);
+    ctx.lineTo(cutX, cy + 50 - 12);
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+
+    // Draw nodes
+    for (let l = 0; l < layers; l++) {
+      for (const nd of allNodes[l]) {
+        const col = l === 0 ? '#0ea5e9' : l === layers - 1 ? '#fbbf24' : '#4ade80';
+        ctx.beginPath();
+        ctx.arc(nd.x, nd.y, 3, 0, Math.PI * 2);
+        ctx.fillStyle = col;
+        ctx.fill();
+      }
+    }
+
+    t2Txt(cx, cy + 50 + 24, 'UV (CFT)', '#0ea5e9', 8, 'center');
+    t2Txt(cx, cy + 50 - (layers - 1) * 30 - 16, 'deep bulk (IR)', '#fbbf24', 8, 'center');
+    t2Txt(cx, cy + 50 + 40, 'taglio rosso = area RT = S_entangl.', '#f43f5e', 8, 'center');
+    return;
+  }
+
+  // ── IMPLICAZIONI — spazio-tempo che si dissolve ────────────────────────────
+  if (scene === 'implicazioni') {
+    const t0   = rm ? 0.5 : (0.5 + 0.4 * Math.sin(T * 0.4));
+    const fade = t0;
+
+    // Classical spacetime (grid) - fades out
+    if (1 - fade > 0.05) {
+      ctx.globalAlpha = 1 - fade;
+      const gStep = 30;
+      const gN    = 5;
+      ctx.strokeStyle = '#334155';
+      ctx.lineWidth   = 0.8;
+      for (let i = -gN; i <= gN; i++) {
+        ctx.beginPath();
+        ctx.moveTo(cx + i * gStep, cy - gN * gStep);
+        ctx.lineTo(cx + i * gStep, cy + gN * gStep);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(cx - gN * gStep, cy + i * gStep);
+        ctx.lineTo(cx + gN * gStep, cy + i * gStep);
+        ctx.stroke();
+      }
+      t2Txt(cx, cy - gN * gStep - 14, 'spazio-tempo classico', '#334155', 9, 'center');
+      ctx.globalAlpha = 1;
+    }
+
+    // Entanglement network (fades in)
+    if (fade > 0.05) {
+      ctx.globalAlpha = fade;
+      const nNodes = 12;
+      const rNet   = 55;
+      const nodes  = [];
+      for (let i = 0; i < nNodes; i++) {
+        const ang = (i / nNodes) * Math.PI * 2;
+        const r   = rNet * (0.6 + 0.4 * Math.random());
+        nodes.push({ x: cx + r * Math.cos(ang), y: cy + r * Math.sin(ang) });
+      }
+      // Edges
+      for (let i = 0; i < nNodes; i++) {
+        for (let j = i + 1; j < nNodes; j++) {
+          const dx   = nodes[j].x - nodes[i].x;
+          const dy   = nodes[j].y - nodes[i].y;
+          const dist = Math.sqrt(dx * dx + dy * dy);
+          if (dist < 70) {
+            const pulse = rm ? 0.4 : 0.2 + 0.3 * Math.sin(T * 1.5 + i * 0.4 + j * 0.3);
+            ctx.beginPath();
+            ctx.moveTo(nodes[i].x, nodes[i].y);
+            ctx.lineTo(nodes[j].x, nodes[j].y);
+            ctx.strokeStyle = `rgba(74,222,128,${pulse})`;
+            ctx.lineWidth   = 1;
+            ctx.stroke();
+          }
+        }
+      }
+      // Nodes
+      for (const nd of nodes) {
+        ctx.beginPath();
+        ctx.arc(nd.x, nd.y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = '#0ea5e9';
+        ctx.fill();
+      }
+      ctx.globalAlpha = 1;
+      t2Txt(cx, cy + rNet + 24, 'rete di entanglement emergente', '#4ade80', 9, 'center');
+    }
+
+    t2Txt(cx, cy + 95, 'spazio-tempo: fenomeno collettivo emergente', '#94a3b8', 8, 'center');
+    return;
+  }
+
+  // ── FUTURO — mappa delle questioni aperte ─────────────────────────────────
+  if (scene === 'futuro') {
+    // Central node
+    t2Glow('#fbbf24', 14);
+    ctx.beginPath();
+    ctx.arc(cx, cy, 22, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(251,191,36,0.1)';
+    ctx.fill();
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, cy - 4, 'Olografia', '#fbbf24', 8, 'center');
+    t2Txt(cx, cy + 10, 'quantistica', '#fbbf24', 7, 'center');
+
+    // Surrounding nodes (open questions)
+    const questions = [
+      { label: 'dS/CFT', col: '#0ea5e9', ang: -Math.PI / 2 },
+      { label: 'Firewall', col: '#f43f5e', ang: -Math.PI / 6 },
+      { label: 'Lab QG', col: '#4ade80', ang: Math.PI / 6 },
+      { label: 'Teoria M', col: '#a78bfa', ang: Math.PI / 2 },
+      { label: 'Celestial', col: '#fbbf24', ang: Math.PI * 5/6 },
+      { label: 'Flat space', col: '#0d9488', ang: -Math.PI * 5/6 },
+    ];
+
+    const outerR = 75;
+    for (const q of questions) {
+      const qx    = cx + outerR * Math.cos(q.ang);
+      const qy    = cy + outerR * Math.sin(q.ang);
+      const pulse = rm ? 1 : 0.7 + 0.3 * Math.sin(T * 1.3 + q.ang * 2);
+
+      // Edge to center
+      ctx.beginPath();
+      ctx.moveTo(cx + 22 * Math.cos(q.ang), cy + 22 * Math.sin(q.ang));
+      ctx.lineTo(qx - 14 * Math.cos(q.ang), qy - 14 * Math.sin(q.ang));
+      ctx.strokeStyle = `${q.col}55`;
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+
+      // Node
+      t2Glow(q.col, 6 * pulse);
+      ctx.beginPath();
+      ctx.arc(qx, qy, 14, 0, Math.PI * 2);
+      ctx.strokeStyle = q.col;
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+      t2NoGlow();
+      t2Txt(qx, qy, q.label, q.col, 7, 'center');
+    }
+    t2Txt(cx, cy + outerR + 28, 'frontiere aperte della ricerca olografica', '#94a3b8', 8, 'center');
+    return;
+  }
+};
+
+t2Init();
+</script>
+</body>
+</html>

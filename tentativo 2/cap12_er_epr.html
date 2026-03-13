@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ER = EPR e Wormhole Quantistici | AdS/CFT — Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="ui">
+  <span id="ui-title">DivulgAzione · AdS/CFT</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">7 fasi</span>
+</div>
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — EINSTEIN-ROSEN (1935)</div>
+    <div class="phase-title">Il ponte di Einstein-Rosen: wormhole non attraversabile</div>
+    <div class="phase-body">
+      <p>Nel 1935 Einstein e Rosen analizzarono la soluzione di Schwarzschild estesa e scoprirono qualcosa di inaspettato: l'estensione massimale della metrica contiene <span class="hl">due regioni asintoticamente piatte</span> connesse da un "ponte" — quello che oggi chiamiamo wormhole di Einstein-Rosen o <span class="am">ponte ER</span>.</p>
+      <code class="formula">ds² = −(1−2M/r)dt² + dr²/(1−2M/r) + r²dΩ²
+Estensione di Kruskal: due regioni esterne + wormhole
+Diagramma di Penrose: 4 regioni (I,II,III,IV)
+Wormhole NON attraversabile: nessun segnale può passare</code>
+      <p>Il wormhole ER è <span class="hl">non attraversabile</span>: non è possibile inviare segnali o materia da una regione all'altra attraverso il collo del wormhole — il collo si chiude troppo velocemente. Classicamente, le due regioni sono causalmente disconnesse. Il wormhole esiste geometricamente ma non crea un collegamento fisico tra le due regioni.</p>
+      <p>Questo parve un semplice artefatto matematico dell'estensione massimale, senza significato fisico. Ma nel 2013 Maldacena e Susskind scoprirono un collegamento profondo con un altro risultato di Einstein del 1935.</p>
+      <div class="note">Animazione: diagramma di Penrose del buco nero eterno con le quattro regioni (I,II,III,IV) e il wormhole visibile tra le regioni I e III.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — EINSTEIN-PODOLSKY-ROSEN (1935)</div>
+    <div class="phase-title">Le coppie EPR: entanglement non-locale</div>
+    <div class="phase-body">
+      <p>Nello stesso anno 1935, Einstein, Podolsky e Rosen pubblicarono il famoso <span class="hl">paradosso EPR</span>: due particelle preparate in uno stato entangled mostrano correlazioni non-classiche anche se separate da grandi distanze. Einstein lo chiamò "azione fantasma a distanza" — lo turbava profondamente.</p>
+      <code class="formula">|Ψ⟩ = (|↑⟩_A|↓⟩_B − |↓⟩_A|↑⟩_B) / √2
+Misura di A → collasso istantaneo di B
+Bell (1964): correlazioni EPR non spiegabili con
+variabili nascoste locali → QM non-locale</code>
+      <p>John Bell (1964) dimostrò che le correlazioni EPR non possono essere replicate da nessuna teoria con <span class="am">variabili nascoste locali</span>: la meccanica quantistica è genuinamente non-locale. Le disuguaglianze di Bell sono state violate sperimentalmente (Aspect et al. 1982, con loophole closing negli anni 2010).</p>
+      <p>La coppia EPR <span class="gr">non trasmette informazione</span> più veloce della luce (il principio di causalità è preservato), ma le correlazioni sono reali e non classiche. EPR e ER furono pubblicati nello stesso anno dallo stesso autore — nessuna connessione era sospettata.</p>
+      <div class="note">Animazione: coppia di particelle entangled che si allontanano, con il "filo" quantistico di entanglement che le collega anche a grande distanza.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — ER = EPR (2013)</div>
+    <div class="phase-title">La congettura ER=EPR di Maldacena-Susskind</div>
+    <div class="phase-body">
+      <p>Nel 2013, Juan Maldacena e Leonard Susskind proposero una congettura rivoluzionaria: il <span class="hl">ponte di Einstein-Rosen</span> (wormhole geometrico) e l'<span class="am">entanglement di Einstein-Podolsky-Rosen</span> sono <span class="gr">la stessa cosa</span>, descritta in due linguaggi diversi.</p>
+      <code class="formula">ER ↔ EPR
+Wormhole ER = rappresentazione geometrica dell'entanglement EPR
+Ogni coppia entangled è connessa da un ER (micro-wormhole)
+→ ER non attraversabile ↔ EPR non trasmette info</code>
+      <p>La congettura afferma che <span class="hl">qualsiasi coppia di sistemi entangled</span> è connessa da un wormhole di Einstein-Rosen — anche se microscopico e non-attraversabile. L'entanglement e la connettività geometrica sono due facce della stessa medaglia.</p>
+      <p>Il wormhole è <span class="vi">non-attraversabile</span> perché l'entanglement EPR non trasmette informazione più veloce della luce — entrambe le descrizioni rispettano la causalità. Ma la struttura geometrica è reale: l'entanglement crea un ponte geometrico tra i due sistemi.</p>
+      <div class="note">Animazione: transizione da coppia EPR (punti entangled separati) a wormhole ER (geometria connessa) — le due descrizioni si trasformano l'una nell'altra.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — BUCO NERO ETERNO</div>
+    <div class="phase-title">Il buco nero eterno in AdS e lo stato TFD</div>
+    <div class="phase-body">
+      <p>In AdS/CFT, il buco nero eterno di Schwarzschild-AdS ha <span class="hl">due bordi asintotici</span> — due copie del bordo CFT. Lo stato quantistico corrispondente è lo <span class="am">stato termofield double (TFD)</span>: un entanglement massimale tra le due CFT.</p>
+      <code class="formula">|TFD⟩ = (1/√Z) Σ_n e^{−βE_n/2} |n⟩_L |n⟩_R
+β = 1/(k_B T)  temperatura inversa del buco nero
+|TFD⟩: entangled massimalmente tra CFT_L e CFT_R
+S_entanglement = S_BH = A/(4G_N)</code>
+      <p>Lo stato TFD è il prototipo dell'ER=EPR: due sistemi (CFT_L e CFT_R) <span class="hl">massimalmente entangled</span> corrispondono a due spaziotempo asintotici <span class="gr">connessi da un wormhole</span> (il buco nero eterno). La temperatura del buco nero è la temperatura termica delle due CFT.</p>
+      <p>L'entropia di entanglement del TFD è uguale all'entropia di Bekenstein-Hawking del buco nero — un risultato consistente con la formula RT. Il buco nero eterno in AdS è <span class="vi">l'esempio più chiaro di ER=EPR</span>.</p>
+      <div class="note">Animazione: diagramma di Penrose AdS con le due regioni asintotiche (bordo L e bordo R) connesse dal wormhole — e lo stato TFD che le correla.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — WORMHOLE E ENTANGLEMENT</div>
+    <div class="phase-title">Ampiezza del wormhole = quantità di entanglement</div>
+    <div class="phase-body">
+      <p>ER=EPR prevede una corrispondenza quantitativa: la <span class="hl">grandezza e traversabilità del wormhole</span> dipende dalla <span class="am">quantità di entanglement</span> tra i due sistemi. Entanglement massimale → wormhole ampio; entanglement ridotto → wormhole stretto e non-attraversabile.</p>
+      <code class="formula">S_entanglement ↔ lunghezza/larghezza del wormhole
+Entanglement = 0: wormhole scompare, bulk disconnesso
+Entanglement max (TFD): wormhole eterno, buco nero AdS
+Wormhole attraversabile: entanglement speciale (non prodotto locale)</code>
+      <p>Una conseguenza: è possibile rendere un wormhole <span class="hl">attraversabile</span>? Gao, Jafferis e Wall (2017) hanno dimostrato che sì — interagendo con i due bordi della CFT tramite un'interazione quantistica, si può aprire il wormhole momentaneamente. Questo è stato realizzato in forma analogica su un computer quantistico (Google Sycamore, 2022).</p>
+      <p>Questo apre la possibilità di comunicare attraverso un wormhole — <span class="gr">ma solo se si usa un canale quantistico</span>, non classico. Il wormhole attraversabile trasmette informazione, ma in modo compatibile con la causalità relativistica.</p>
+      <div class="note">Animazione: wormhole che si allarga e restringe al variare dell'entanglement tra i due bordi — parametro continuo che controlla la geometria.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — SPAZIO-TEMPO EMERGENTE</div>
+    <div class="phase-title">Lo spazio-tempo emerge dall'entanglement</div>
+    <div class="phase-body">
+      <p>ER=EPR, combinato con la formula RT e la bulk reconstruction, porta a una conclusione radicale: <span class="hl">lo spazio-tempo non è fondamentale</span>. È una struttura emergente dalle correlazioni quantistiche tra i gradi di libertà fondamentali (i gradi di libertà della CFT).</p>
+      <code class="formula">Entanglement → connettività geometrica del bulk
+No entanglement → spazio-tempo disconnesso
+Togliere entanglement → rompere lo spazio-tempo
+geometria = rete di entanglement (Swingle 2012)
+→ lo spazio è "tessuto" di correlazioni quantistiche</code>
+      <p>Swingle (2012) ha formalizzato questa idea con le <span class="am">tensor networks</span>: la struttura del vuoto di entanglement della CFT è organizzata secondo una rete tensoriale (MERA) il cui grafo è iperbolico — come AdS. Lo spazio-tempo di AdS <span class="hl">è</span> la struttura del RG della CFT, visualizzata geometricamente.</p>
+      <p>Implicazione: la <span class="gr">geometria è l'entanglement</span>. Per creare nuovo spazio-tempo, si crea nuovo entanglement; per distruggerlo, si rimuove l'entanglement. Questa è la visione più profonda che emerge da AdS/CFT: la gravità e lo spazio-tempo sono fenomeni emergenti.</p>
+      <div class="note">Animazione: rete di entanglement (nodi e archi) che si riorganizza nella struttura iperbolica di AdS — la geometria emerge dai pattern di correlazione.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — LIMITI</div>
+    <div class="phase-title">Limiti e controversie: ER=EPR è una congettura</div>
+    <div class="phase-body">
+      <p>ER=EPR rimane una <span class="hl">congettura brillante ma non dimostrata rigorosamente</span>. Ci sono molte questioni aperte. Come si applica a stati di entanglement non-massimale? Come si generalizza al di là delle geometrie AdS? Come è compatibile con il paradosso del firewall?</p>
+      <code class="formula">Questioni aperte:
+1. Generalizzazione fuori da AdS/CFT
+2. Wormhole di particelle EPR ordinarie?
+3. Compatibilità con AMPS (firewall paradox)
+AMPS (2012): unitarietà + no-drama + RG → contraddizione</code>
+      <p>Il <span class="am">paradosso del firewall AMPS</span> (Almheiri-Marolf-Polchinski-Sully, 2012) ha stimolato gran parte dello sviluppo recente: se l'informazione esce dal buco nero nella radiazione (unitarietà), allora il principio di monogamia dell'entanglement è violato all'orizzonte. La soluzione proposta da Maldacena-Susskind via ER=EPR è che l'identità ER=EPR risolve il paradosso — ma non c'è consenso.</p>
+      <p>Il campo è molto attivo. ER=EPR ha stimolato nuove idee sulla <span class="gr">natura dello spazio-tempo quantistico</span>, sui wormhole attraversabili, e sulla connessione tra informazione quantistica e gravità. È un esempio di come un'intuizione fisica brillante, anche senza dimostrazione rigorosa, possa guidare la ricerca frontiera.</p>
+      <div class="note">Animazione: triangolo delle tre assunzioni AMPS (unitarietà, no-drama, RG) con frecce che indicano la contraddizione — il nodo irrisolto del paradosso.</div>
+    </div>
+  </div>
+
+</div>
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · Einstein-Rosen</button>
+  <button class="btn" onclick="goPhase(2)">02 · EPR</button>
+  <button class="btn" onclick="goPhase(3)">03 · ER=EPR</button>
+  <button class="btn" onclick="goPhase(4)">04 · Buco Nero</button>
+  <button class="btn" onclick="goPhase(5)">05 · Wormhole</button>
+  <button class="btn" onclick="goPhase(6)">06 · Emergenza</button>
+  <button class="btn" onclick="goPhase(7)">07 · Limiti</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+window.T2_PHASES = [
+  { name: 'Ponte Einstein-Rosen (1935)',    desc: 'FASE 01 — wormhole non attraversabile dalla metrica Schwarzschild', scene: 'er'       },
+  { name: 'Coppia EPR (1935)',              desc: 'FASE 02 — |Ψ⟩=(|↑↓⟩-|↓↑⟩)/√2: entanglement non-locale',          scene: 'epr'      },
+  { name: 'ER=EPR (Maldacena-Susskind)',    desc: 'FASE 03 — ER ↔ EPR: wormhole = entanglement (2013)',               scene: 'erepr'    },
+  { name: 'Buco Nero Eterno e TFD',         desc: 'FASE 04 — |TFD⟩ = Σe^{-βEn/2}|n⟩_L|n⟩_R: buco nero eterno AdS', scene: 'tfd'      },
+  { name: 'Wormhole e Entanglement',        desc: 'FASE 05 — S_entangl. ↔ larghezza wormhole; wormhole attraversabile', scene: 'wormhole' },
+  { name: 'Spazio-Tempo Emergente',         desc: 'FASE 06 — geometria = rete di entanglement (Swingle 2012)',        scene: 'emergente' },
+  { name: 'Limiti e Controversie',          desc: 'FASE 07 — AMPS firewall paradox: ER=EPR congettura aperta',        scene: 'limiti'   },
+];
+
+window.t2Draw = function(T, phaseIdx, ctx, W, H) {
+  const cx    = t2AnimCX();
+  const cy    = t2AnimCY();
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phaseIdx].scene;
+
+  // ── ER — diagramma di Penrose schematico ──────────────────────────────────
+  if (scene === 'er') {
+    const s = Math.min(W * 0.16, H * 0.22);
+    // Draw 4 quadrants
+    const corners = [
+      { x: cx,     y: cy - s, label: 'II\n(futuro)',  col: '#f43f5e' },
+      { x: cx + s, y: cy,     label: 'I (est.)',      col: '#0ea5e9' },
+      { x: cx,     y: cy + s, label: 'III\n(pass.)',  col: '#64748b' },
+      { x: cx - s, y: cy,     label: 'III\' (est.)',  col: '#a78bfa' },
+    ];
+    // Draw diamond shape
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - s);
+    ctx.lineTo(cx + s, cy);
+    ctx.lineTo(cx, cy + s);
+    ctx.lineTo(cx - s, cy);
+    ctx.closePath();
+    ctx.strokeStyle = '#334155';
+    ctx.lineWidth   = 1;
+    ctx.stroke();
+    ctx.fillStyle   = 'rgba(14,165,233,0.04)';
+    ctx.fill();
+
+    // Singularity (top and bottom)
+    t2Glow('#f43f5e', 8);
+    ctx.beginPath();
+    ctx.moveTo(cx - s * 0.7, cy - s * 0.3);
+    ctx.lineTo(cx + s * 0.7, cy - s * 0.3);
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 2;
+    ctx.setLineDash([4, 3]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    t2NoGlow();
+    t2Txt(cx, cy - s * 0.3 - 12, 'singolarità', '#f43f5e', 8, 'center');
+
+    // Horizon lines
+    ctx.beginPath();
+    ctx.moveTo(cx - s * 0.6, cy - s * 0.4);
+    ctx.lineTo(cx + s * 0.2, cy + s * 0.4);
+    ctx.moveTo(cx + s * 0.6, cy - s * 0.4);
+    ctx.lineTo(cx - s * 0.2, cy + s * 0.4);
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    t2Txt(cx + s * 0.55, cy, 'orizzonte', '#fbbf24', 8, 'left');
+
+    // Region labels
+    t2Txt(cx + s * 0.55, cy, '', '#0ea5e9', 9, 'center');
+    t2Txt(cx + s * 0.42, cy, 'I', '#0ea5e9', 10, 'center');
+    t2Txt(cx - s * 0.42, cy, 'III\'', '#a78bfa', 10, 'center');
+    t2Txt(cx, cy - s * 0.6, 'II', '#f43f5e', 10, 'center');
+    t2Txt(cx, cy + s * 0.6, 'IV', '#64748b', 10, 'center');
+
+    // Wormhole label
+    t2Txt(cx, cy + s + 18, 'wormhole ER tra I e III\'', '#94a3b8', 9, 'center');
+    return;
+  }
+
+  // ── EPR — coppia entangled ─────────────────────────────────────────────────
+  if (scene === 'epr') {
+    const d    = W * 0.18;
+    const pxA  = cx - d;
+    const pxB  = cx + d;
+
+    // Particle A
+    t2Glow('#0ea5e9', 14);
+    ctx.beginPath();
+    ctx.arc(pxA, cy, 14, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(14,165,233,0.2)';
+    ctx.fill();
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(pxA, cy, '↑', '#0ea5e9', 14, 'center');
+    t2Txt(pxA, cy + 26, 'A', '#0ea5e9', 9, 'center');
+
+    // Particle B
+    t2Glow('#f43f5e', 14);
+    ctx.beginPath();
+    ctx.arc(pxB, cy, 14, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(244,63,94,0.2)';
+    ctx.fill();
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(pxB, cy, '↓', '#f43f5e', 14, 'center');
+    t2Txt(pxB, cy + 26, 'B', '#f43f5e', 9, 'center');
+
+    // Entanglement "thread"
+    const nWaves = 20;
+    ctx.beginPath();
+    for (let i = 0; i <= nWaves; i++) {
+      const frac = i / nWaves;
+      const x    = pxA + 14 + frac * (pxB - pxA - 28);
+      const y    = cy + (rm ? 0 : 8 * Math.sin(frac * Math.PI * 4 + T * 2));
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    t2Glow('#4ade80', 6);
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, cy - 28, 'entanglement EPR', '#4ade80', 9, 'center');
+    t2Txt(cx, cy + 46, '|Ψ⟩ = (|↑↓⟩ − |↓↑⟩)/√2', '#94a3b8', 10, 'center');
+    return;
+  }
+
+  // ── ER=EPR — transizione ───────────────────────────────────────────────────
+  if (scene === 'erepr') {
+    const frac = rm ? 0.5 : (0.5 + 0.5 * Math.sin(T * 0.5));
+    const d    = W * 0.16;
+    const pxA  = cx - d;
+    const pxB  = cx + d;
+
+    // EPR representation (fades out)
+    const ealpha = 1 - frac;
+    if (ealpha > 0.05) {
+      ctx.globalAlpha = ealpha;
+      ctx.beginPath();
+      ctx.arc(pxA, cy, 12, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(14,165,233,0.2)';
+      ctx.fill();
+      ctx.strokeStyle = '#0ea5e9';
+      ctx.lineWidth   = 2;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(pxB, cy, 12, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(244,63,94,0.2)';
+      ctx.fill();
+      ctx.strokeStyle = '#f43f5e';
+      ctx.lineWidth   = 2;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(pxA + 12, cy);
+      ctx.lineTo(pxB - 12, cy);
+      ctx.strokeStyle = '#4ade80';
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
+
+    // ER wormhole representation (fades in)
+    const walpha = frac;
+    if (walpha > 0.05) {
+      ctx.globalAlpha = walpha;
+      const wY = cy - 30;
+      // Two "mouths"
+      t2Glow('#a78bfa', 10);
+      ctx.beginPath();
+      ctx.ellipse(pxA, wY, 20, 12, 0, 0, Math.PI * 2);
+      ctx.strokeStyle = '#a78bfa';
+      ctx.lineWidth   = 2;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.ellipse(pxB, wY, 20, 12, 0, 0, Math.PI * 2);
+      ctx.strokeStyle = '#a78bfa';
+      ctx.lineWidth   = 2;
+      ctx.stroke();
+      t2NoGlow();
+      // Tube
+      ctx.beginPath();
+      ctx.moveTo(pxA, wY - 12);
+      ctx.bezierCurveTo(pxA, wY - 40, pxB, wY - 40, pxB, wY - 12);
+      ctx.moveTo(pxA, wY + 12);
+      ctx.bezierCurveTo(pxA, wY + 40, pxB, wY + 40, pxB, wY + 12);
+      ctx.strokeStyle = '#a78bfa';
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+    }
+
+    t2Glow('#fbbf24', 10);
+    t2Txt(cx, cy + 55, 'ER = EPR', '#fbbf24', 16, 'center');
+    t2NoGlow();
+    t2Txt(cx, cy + 76, 'wormhole = entanglement', '#94a3b8', 10, 'center');
+    return;
+  }
+
+  // ── TFD — buco nero eterno in AdS ─────────────────────────────────────────
+  if (scene === 'tfd') {
+    // Two boundary circles
+    const lX = cx - W * 0.18;
+    const rX = cx + W * 0.18;
+
+    t2Glow('#0ea5e9', 8);
+    ctx.beginPath();
+    ctx.arc(lX, cy, 32, 0, Math.PI * 2);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(lX, cy, 'CFT_L', '#0ea5e9', 9, 'center');
+
+    t2Glow('#0ea5e9', 8);
+    ctx.beginPath();
+    ctx.arc(rX, cy, 32, 0, Math.PI * 2);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(rX, cy, 'CFT_R', '#0ea5e9', 9, 'center');
+
+    // Wormhole connection in bulk
+    const nLines = 5;
+    for (let i = 0; i < nLines; i++) {
+      const yOff  = -20 + i * 10;
+      const pulse = rm ? 0.5 : 0.3 + 0.3 * Math.sin(T * 1.2 + i * 0.5);
+      ctx.beginPath();
+      ctx.moveTo(lX + 32, cy + yOff);
+      ctx.bezierCurveTo(lX + 60, cy + yOff, rX - 60, cy + yOff, rX - 32, cy + yOff);
+      ctx.strokeStyle = `rgba(167,139,250,${pulse})`;
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+    }
+
+    // Horizon markers
+    ctx.beginPath();
+    ctx.rect(cx - 16, cy - 22, 32, 44);
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 1;
+    ctx.setLineDash([3, 3]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    t2Txt(cx, cy, 'BH', '#f43f5e', 8, 'center');
+
+    t2Txt(cx, cy + 60, '|TFD⟩ = Σ e^{-βEn/2} |n⟩_L|n⟩_R', '#94a3b8', 9, 'center');
+    t2Txt(cx, cy + 76, 'entanglement max ↔ wormhole eterno', '#a78bfa', 9, 'center');
+    return;
+  }
+
+  // ── WORMHOLE — apre e chiude ───────────────────────────────────────────────
+  if (scene === 'wormhole') {
+    const entangl = rm ? 0.7 : 0.5 + 0.5 * Math.sin(T * 0.6);
+    const throatR = 8 + entangl * 30;
+    const mouthX1 = cx - W * 0.15;
+    const mouthX2 = cx + W * 0.15;
+
+    // Wormhole shape
+    t2Glow('#a78bfa', 10 * entangl);
+    ctx.beginPath();
+    ctx.ellipse(mouthX1, cy, 22, 12, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = '#a78bfa';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.ellipse(mouthX2, cy, 22, 12, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = '#a78bfa';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+
+    // Tube with width = entanglement
+    const midY = cy;
+    const tubeH = throatR;
+    ctx.beginPath();
+    ctx.moveTo(mouthX1, midY - 12);
+    ctx.bezierCurveTo(mouthX1 + 30, midY - tubeH, mouthX2 - 30, midY - tubeH, mouthX2, midY - 12);
+    ctx.moveTo(mouthX1, midY + 12);
+    ctx.bezierCurveTo(mouthX1 + 30, midY + tubeH, mouthX2 - 30, midY + tubeH, mouthX2, midY + 12);
+    ctx.strokeStyle = '#a78bfa';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+
+    t2Txt(cx, cy - tubeH - 24, `entanglement: ${(entangl * 100).toFixed(0)}%`, '#4ade80', 9, 'center');
+    t2Txt(cx, cy + tubeH + 24, `larghezza wormhole: ${(throatR).toFixed(0)}`, '#a78bfa', 9, 'center');
+    t2Txt(cx, cy + tubeH + 42, 'S_entangl. ↔ larghezza del wormhole', '#94a3b8', 8, 'center');
+    return;
+  }
+
+  // ── EMERGENTE — rete di entanglement ──────────────────────────────────────
+  if (scene === 'emergente') {
+    // Draw a MERA-like network (hyperbolic layers)
+    const layers  = 4;
+    const baseY   = cy + 50;
+    const nodesByLayer = [8, 4, 2, 1];
+    const nodePositions = [];
+
+    for (let l = 0; l < layers; l++) {
+      const n    = nodesByLayer[l];
+      const y    = baseY - l * 36;
+      const xSpan = (160 * (1 - l * 0.2));
+      const row  = [];
+      for (let i = 0; i < n; i++) {
+        const x = cx - xSpan * 0.5 + (n > 1 ? i * (xSpan / (n - 1)) : 0);
+        row.push({ x, y });
+      }
+      nodePositions.push(row);
+    }
+
+    // Draw edges
+    for (let l = 0; l < layers - 1; l++) {
+      const lower = nodePositions[l];
+      const upper = nodePositions[l + 1];
+      for (const u of upper) {
+        const nearest = lower.slice().sort((a, b) => Math.abs(a.x - u.x) - Math.abs(b.x - u.x)).slice(0, 2);
+        for (const n of nearest) {
+          const pulse = rm ? 0.3 : 0.15 + 0.2 * Math.sin(T * 1.5 + n.x * 0.01);
+          ctx.beginPath();
+          ctx.moveTo(n.x, n.y);
+          ctx.lineTo(u.x, u.y);
+          ctx.strokeStyle = `rgba(74,222,128,${pulse})`;
+          ctx.lineWidth   = 1;
+          ctx.stroke();
+        }
+      }
+    }
+
+    // Draw nodes
+    for (let l = 0; l < layers; l++) {
+      for (const nd of nodePositions[l]) {
+        const col = l === 0 ? '#0ea5e9' : l === layers - 1 ? '#fbbf24' : '#4ade80';
+        ctx.beginPath();
+        ctx.arc(nd.x, nd.y, 4, 0, Math.PI * 2);
+        ctx.fillStyle = col;
+        ctx.fill();
+      }
+    }
+
+    t2Txt(cx, baseY + 20, 'UV (CFT)', '#0ea5e9', 8, 'center');
+    t2Txt(cx, baseY - (layers - 1) * 36 - 16, 'deep bulk (IR)', '#fbbf24', 8, 'center');
+    t2Txt(cx, baseY + 36, 'MERA ≈ geometria iperbolica di AdS', '#94a3b8', 8, 'center');
+    return;
+  }
+
+  // ── LIMITI — triangolo AMPS ────────────────────────────────────────────────
+  if (scene === 'limiti') {
+    // Triangle of assumptions
+    const trH  = H * 0.2;
+    const trB  = W * 0.2;
+    const apex = { x: cx, y: cy - trH * 0.6 };
+    const bl   = { x: cx - trB, y: cy + trH * 0.4 };
+    const br   = { x: cx + trB, y: cy + trH * 0.4 };
+
+    // Draw triangle
+    const pulse = rm ? 1 : 0.7 + 0.3 * Math.sin(T * 1.2);
+    ctx.beginPath();
+    ctx.moveTo(apex.x, apex.y);
+    ctx.lineTo(bl.x, bl.y);
+    ctx.lineTo(br.x, br.y);
+    ctx.closePath();
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    ctx.fillStyle   = 'rgba(244,63,94,0.05)';
+    ctx.fill();
+
+    // Labels at corners
+    t2Txt(apex.x, apex.y - 14, 'Unitarietà', '#0ea5e9', 9, 'center');
+    t2Txt(bl.x, bl.y + 14, 'No-drama', '#4ade80', 9, 'center');
+    t2Txt(br.x, br.y + 14, 'Rel. Generale', '#fbbf24', 9, 'center');
+
+    // Contradiction symbol at center
+    t2Glow('#f43f5e', 14 * pulse);
+    t2Txt(cx, cy, '✗', '#f43f5e', 22, 'center');
+    t2NoGlow();
+
+    t2Txt(cx, cy + trH * 0.4 + 32, 'AMPS (2012): le tre assunzioni si contraddicono', '#94a3b8', 9, 'center');
+    t2Txt(cx, cy + trH * 0.4 + 48, 'ER=EPR propone una risoluzione — dibattuto', '#64748b', 8, 'center');
+    return;
+  }
+};
+
+t2Init();
+</script>
+</body>
+</html>

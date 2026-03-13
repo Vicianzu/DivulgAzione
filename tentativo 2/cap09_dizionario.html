@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Dizionario AdS/CFT | AdS/CFT — Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="ui">
+  <span id="ui-title">DivulgAzione · AdS/CFT</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">8 fasi</span>
+</div>
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — PANORAMICA</div>
+    <div class="phase-title">Il Dizionario AdS/CFT</div>
+    <div class="phase-body">
+      <p>La corrispondenza AdS/CFT non è solo una metafora: è un <span class="hl">dizionario preciso</span> che traduce ogni oggetto fisico di una teoria nell'oggetto corrispondente dell'altra. Come un dizionario bilingue, ogni termine in AdS ha il suo equivalente in CFT e viceversa.</p>
+      <p>La formula fondamentale del dizionario è la <span class="am">prescrizione GKPW</span> (Gubser-Klebanov-Polyakov-Witten, 1998): la funzione di partizione della stringa in AdS con condizione al bordo φ₀ è uguale alla funzione generatrice dei correlatori della CFT con sorgente φ₀.</p>
+      <code class="formula">Z_stringa[AdS, φ₀] = ⟨exp(∫φ₀ O d⁴x)⟩_CFT
+bulk: gravità + campi
+bordo: operatori quantistici O
+φ₀ → sorgente di O</code>
+      <p>Questa formula è la <span class="gr">chiave di volta</span> della dualità: permette di calcolare quantità della CFT (funzioni di correlazione) a partire dalla geometria classica di AdS.</p>
+      <div class="note">Animazione: due "mondi" separati (bulk e bordo) con frecce bidirezionali animate che mostrano la traduzione di oggetti fisici.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — MASSA/DIMENSIONE</div>
+    <div class="phase-title">Dimensione conforme e massa: Δ(Δ−d) = m²L²</div>
+    <div class="phase-body">
+      <p>La prima voce del dizionario traduce la <span class="hl">massa di un campo scalare nel bulk</span> nella <span class="am">dimensione conforme dell'operatore sul bordo</span>. La relazione è codificata dall'equazione di Klein-Gordon in AdS con curvatura:</p>
+      <code class="formula">Δ(Δ − d) = m²L²
+Δ = d/2 + √(d²/4 + m²L²)
+m = 0 → Δ = d  (campo privo di massa)
+m² = −d²/4L² → limite unitario (BF bound)</code>
+      <p>Dove d è la dimensione del bordo (d=4 per AdS₅), L è il raggio AdS. Notare che <span class="hl">masse negative sono ammesse</span> finché m² ≥ −d²/(4L²) (limite di Breitenlöhner-Freedman). Un campo di massa m nel bulk corrisponde a un operatore di dimensione conforme Δ sul bordo — questa è una corrispondenza esatta, verificabile.</p>
+      <p>Esempio: il gravitone (m=0, spin-2) corrisponde al <span class="gr">tensore energia-impulso T_μν</span> (Δ=d, operatore primario conservato).</p>
+      <div class="note">Animazione: piano massa-dimensione con curva iperbolica Δ(Δ-d) = m²L², con punti evidenziati per campi notevoli.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — BORDO</div>
+    <div class="phase-title">Condizioni al bordo: sorgente e valore di aspettazione</div>
+    <div class="phase-body">
+      <p>Il comportamento di un campo scalare φ nelle vicinanze del bordo di AdS ha una struttura universale a <span class="hl">due termini</span>. Il modo che diverge è la <span class="am">sorgente</span> dell'operatore nella CFT; il modo che decade è il <span class="hl">valore di aspettazione</span> dell'operatore.</p>
+      <code class="formula">φ(r→∞) ~ r^{d-Δ} φ₀(x) + r^{-Δ} ⟨O(x)⟩ + …
+φ₀(x) → sorgente dell'operatore O
+⟨O(x)⟩ → risposta (VEV dell'operatore)
+z = L²/r → coordinata di Poincaré</code>
+      <p>In coordinate di Poincaré (z→0 al bordo): φ ~ z^{d-Δ} φ₀ + z^Δ ⟨O⟩. La sorgente φ₀ si può scegliere liberamente — corrisponde a <span class="gr">deformare la CFT</span> aggiungendo il termine ∫φ₀ O all'azione. Il campo nel bulk "trasporta" questa sorgente dall'interno alla frontiera.</p>
+      <p>Questo collegamento è preciso: variando l'azione di stringa rispetto alla sorgente φ₀ si ottengono le <span class="vi">funzioni di correlazione</span> della CFT.</p>
+      <div class="note">Animazione: campo scalare che si propaga radialmente dal bulk verso il bordo, con il profilo che cambia forma avvicinandosi al bordo.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — CORRELATORI</div>
+    <div class="phase-title">Funzioni di Green: la geometria calcola i correlatori</div>
+    <div class="phase-body">
+      <p>Il risultato più potente del dizionario: le <span class="hl">funzioni di correlazione</span> della CFT (oggetti della teoria quantistica dei campi) si calcolano tramite una semplice prescrizione geometrica in AdS.</p>
+      <code class="formula">⟨O(x₁) O(x₂) … O(xₙ)⟩_CFT
+  = δⁿ log Z_grav / δφ₀(x₁)…δφ₀(xₙ) |_{φ₀=0}
+Propagatore bulk-bordo: K(z,x; x') ~ z^Δ/((z²+|x-x'|²)^Δ)
+⟨OO⟩ ~ 1/|x₁-x₂|^{2Δ}  (fissato da sim. conf.)</code>
+      <p>Per calcolare il correlatore a N punti nella CFT fortemente accoppiata, basta risolvere le equazioni del moto classiche in AdS (SUGRA), calcolare l'azione on-shell, e derivare rispetto alle sorgenti. È come calcolare diagrammi di <span class="am">Feynman nel bulk</span> — ma invece dei propagatori QFT, si usano i propagatori geometrici di AdS.</p>
+      <p>I correlatori a 2 e 3 punti degli operatori protetti dalla SUSY sono stati verificati e concordano con i calcoli diretti in 𝒩=4 SYM — questo è stato il primo <span class="gr">test quantitativo</span> della dualità.</p>
+      <div class="note">Animazione: propagatori nel bulk AdS (linee curve) che terminano al bordo, con vertici di interazione, schematizzando i "diagrammi di Witten".</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — TEMPERATURA</div>
+    <div class="phase-title">Buco nero AdS = CFT a temperatura finita</div>
+    <div class="phase-body">
+      <p>Una delle traduzioni più eleganti del dizionario: aggiungere un <span class="hl">buco nero di Schwarzschild in AdS</span> corrisponde nella CFT a <span class="am">portare il sistema a temperatura finita</span>. La temperatura di Hawking del buco nero e la temperatura della CFT sono esattamente uguali.</p>
+      <code class="formula">ds² = -(r²/L²-r₀²/r²)dt² + dr²/(r²/L²-r₀²/r²) + r²dΩ²
+T_Hawking = (d r₀)/(4πL²)  =  T_CFT
+S_BH = A/(4G_N) = S_termico CFT
+r₀ → 0 : T → 0 (stato fondamentale)</code>
+      <p>La metrica del buco nero planar di AdS descrive la <span class="hl">CFT a T>0</span>. L'orizzonte degli eventi corrisponde allo stato termico della CFT. Questo ha avuto applicazioni fenomenologiche importanti: la viscosità del quark-gluon plasma (QGP) del RHIC a T ~ 10¹² K è stata calcolata tramite AdS/CFT con un buco nero corrispondente.</p>
+      <p>L'entropia termica della CFT è uguale all'entropia di Bekenstein-Hawking del buco nero — una verifica di consistenza fondamentale del dizionario.</p>
+      <div class="note">Animazione: buco nero nel bulk AdS con orizzonte illuminato, e gli stati termici (linee rosse) sul bordo corrispondenti.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — GAUGE</div>
+    <div class="phase-title">Campi di gauge nel bulk ↔ correnti conservate sul bordo</div>
+    <div class="phase-body">
+      <p>Un'altra voce fondamentale del dizionario: i <span class="hl">campi di gauge in AdS</span> corrispondono alle <span class="am">correnti conservate</span> nella CFT. Il gravitone (spin 2) corrisponde al tensore energia-impulso T_μν; un campo di gauge U(1) corrisponde a una corrente U(1) conservata J_μ.</p>
+      <code class="formula">Gravitone in AdS  ↔  T_μν (conservato, dim. d)
+Campo U(1) in AdS ↔  J_μ (corrente conservata)
+SU(N) gauge in AdS ↔  corrente non-abeliana J^a_μ
+∂_μ J^μ = 0  ↔  invarianza di gauge in AdS</code>
+      <p>La <span class="hl">simmetria di gauge nel bulk</span> corrisponde alla <span class="gr">simmetria globale sul bordo</span>. Questo è intuitivo: le simmetrie di gauge del bulk sono ridondanze della descrizione, mentre le simmetrie globali del bordo sono simmetrie fisiche reali con correnti conservate associate.</p>
+      <p>In 𝒩=4 SYM: il gruppo di R-simmetria SU(4) sul bordo corrisponde ai campi di gauge di SU(4) nel bulk di AdS₅×S⁵, che provengono dalla compattificazione su S⁵.</p>
+      <div class="note">Animazione: campo di gauge nel bulk (linee ondulate colorate) che terminano al bordo come correnti conservate con frecce animate.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — WILSON</div>
+    <div class="phase-title">Wilson loops: linee di Wilson ↔ stringhe nel bulk</div>
+    <div class="phase-body">
+      <p>Le <span class="hl">linee di Wilson</span> nella CFT sono osservabili non-locali che misurano la risposta del vuoto a una carica di prova esterna che percorre un loop chiuso C. Sono uno strumento fondamentale per studiare il confinamento nelle teorie di gauge.</p>
+      <code class="formula">⟨W[C]⟩_CFT = e^{−S_stringa[C]}
+W[C] = Tr P exp(i∮_C A_μ dx^μ)
+S_stringa = area minima in AdS con ∂Σ = C
+Potenziale quark-antiquark: V(R) ~ −√λ/R</code>
+      <p>La prescrizione del dizionario (Maldacena 1998, Rey-Yee 1998): il valore di aspettazione della linea di Wilson <span class="am">⟨W[C]⟩</span> nella CFT è uguale all'esponenziale negativo dell'area della <span class="hl">superficie minima nel bulk</span> di AdS che ha come bordo il loop C sul bordo. È la stessa struttura della formula di Ryu-Takayanagi per l'entropia di entanglement!</p>
+      <p>Per un loop rettangolare (quark-antiquark), il calcolo AdS dà il potenziale di <span class="gr">Coulomb relativisticamente corretto</span> V(R) ~ −√λ/R — un risultato non-perturbativo difficilissimo da ottenere direttamente in gauge theory.</p>
+      <div class="note">Animazione: loop chiuso sul bordo e stringa nel bulk che si "appende" al loop, con la superficie minima evidenziata.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-8">
+    <div class="phase-tag">FASE 08 — DUALITÀ FORTE-DEBOLE</div>
+    <div class="phase-title">Dualità forte-debole: il regalo e la difficoltà</div>
+    <div class="phase-body">
+      <p>La caratteristica più potente e più frustrante del dizionario AdS/CFT è che è una <span class="hl">dualità forte-debole</span>: quando la CFT è fortemente accoppiata, la descrizione AdS è classica e calcolabile; quando la CFT è debolmente accoppiata, la descrizione AdS è quantistica e difficile.</p>
+      <code class="formula">λ = g²_YM N  (accoppiamento di 't Hooft)
+λ ≫ 1 (CFT forte) ↔ R⁴/α'² ≫ 1 (SUGRA classica)
+λ ≪ 1 (CFT debole) ↔ R⁴/α'² ≪ 1 (stringa quantistica)
+→ i calcoli facili da un lato sono difficili dall'altro</code>
+      <p>Il <span class="am">regalo</span>: permette di calcolare proprietà della CFT fortemente accoppiata — inaccessibili con i metodi perturbativi standard — usando la SUGRA classica. Applicazioni: viscosità del plasma di quark-gluon, transizioni di fase, proprietà termiche dei superconduttori olografici, ecc.</p>
+      <p>La <span class="gr">difficoltà</span>: non si può verificare la dualità nei casi più interessanti perché non si sa come calcolare entrambi i lati contemporaneamente. Le verifiche quantitative sono possibili solo per operatori <span class="vi">protetti dalla SUSY</span> (BPS) la cui dimensione non dipende dall'accoppiamento.</p>
+      <div class="note">Animazione: cursore che scorre dal regime λ≪1 (CFT perturbativa, AdS quantistica) a λ≫1 (CFT forte, AdS classica), con le due descrizioni che si illuminano alternativamente.</div>
+    </div>
+  </div>
+
+</div>
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · Panoramica</button>
+  <button class="btn" onclick="goPhase(2)">02 · Δ vs m</button>
+  <button class="btn" onclick="goPhase(3)">03 · Bordo</button>
+  <button class="btn" onclick="goPhase(4)">04 · Correlatori</button>
+  <button class="btn" onclick="goPhase(5)">05 · Temperatura</button>
+  <button class="btn" onclick="goPhase(6)">06 · Gauge</button>
+  <button class="btn" onclick="goPhase(7)">07 · Wilson</button>
+  <button class="btn" onclick="goPhase(8)">08 · Forte/Debole</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+window.T2_PHASES = [
+  { name: 'Il Dizionario AdS/CFT',            desc: 'FASE 01 — Z_stringa[AdS,φ₀] = ⟨exp(∫φ₀ O)⟩_CFT (GKPW 1998)', scene: 'panoramica'   },
+  { name: 'Dimensione Conforme e Massa',       desc: 'FASE 02 — Δ(Δ−d) = m²L²: campo bulk ↔ operatore bordo',         scene: 'massa'        },
+  { name: 'Condizioni al Bordo',               desc: 'FASE 03 — φ(r→∞) ~ r^{d-Δ}φ₀ + r^{-Δ}⟨O⟩',                    scene: 'bordo'        },
+  { name: 'Funzioni di Green',                 desc: 'FASE 04 — ⟨O…O⟩ = δⁿZ_grav/δφ₀…δφ₀: geometria calcola correlatori', scene: 'correlatori' },
+  { name: 'Buco Nero = CFT Termica',           desc: 'FASE 05 — T_Hawking = T_CFT: buco nero AdS ↔ stato termico',    scene: 'temperatura'  },
+  { name: 'Gauge in AdS ↔ Correnti CFT',       desc: 'FASE 06 — gravitone ↔ T_μν; A_μ ↔ J_μ conservata',             scene: 'gauge'        },
+  { name: 'Wilson Loops e Stringhe',           desc: 'FASE 07 — ⟨W[C]⟩ = e^{-S_stringa[C]}: area minima nel bulk',   scene: 'wilson'       },
+  { name: 'Dualità Forte-Debole',              desc: 'FASE 08 — λ≫1: CFT forte ↔ SUGRA classica; λ≪1: viceversa',    scene: 'forteDebole'  },
+];
+
+window.t2Draw = function(T, phaseIdx, ctx, W, H) {
+  const cx    = t2AnimCX();
+  const cy    = t2AnimCY();
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phaseIdx].scene;
+
+  // ── PANORAMICA — bulk e bordo con frecce bidirezionali ────────────────────
+  if (scene === 'panoramica') {
+    const bulkX  = cx - W * 0.18;
+    const bordoX = cx + W * 0.18;
+    const rBulk  = 55;
+    const rBordo = 38;
+
+    // Bulk circle
+    t2Glow('#a78bfa', 16);
+    ctx.beginPath();
+    ctx.arc(bulkX, cy, rBulk, 0, Math.PI * 2);
+    ctx.strokeStyle = '#a78bfa';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(bulkX, cy - 4, 'BULK', '#a78bfa', 12, 'center');
+    t2Txt(bulkX, cy + 12, 'AdS', '#64748b', 10, 'center');
+
+    // Bordo circle
+    t2Glow('#0ea5e9', 16);
+    ctx.beginPath();
+    ctx.arc(bordoX, cy, rBordo, 0, Math.PI * 2);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(bordoX, cy - 4, 'BORDO', '#0ea5e9', 12, 'center');
+    t2Txt(bordoX, cy + 12, 'CFT', '#64748b', 10, 'center');
+
+    // Bidirectional arrows
+    const arrowY1 = cy - 18;
+    const arrowY2 = cy + 18;
+    const x1 = bulkX + rBulk + 6;
+    const x2 = bordoX - rBordo - 6;
+    const pulse = rm ? 1 : 0.5 + 0.5 * Math.sin(T * 2);
+
+    // Arrow right (bulk → bordo)
+    t2Glow('#4ade80', 8 * pulse);
+    ctx.beginPath();
+    ctx.moveTo(x1, arrowY1);
+    ctx.lineTo(x2, arrowY1);
+    ctx.strokeStyle = `rgba(74,222,128,${0.5 + 0.5 * pulse})`;
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x2, arrowY1);
+    ctx.lineTo(x2 - 8, arrowY1 - 5);
+    ctx.moveTo(x2, arrowY1);
+    ctx.lineTo(x2 - 8, arrowY1 + 5);
+    ctx.stroke();
+    t2NoGlow();
+
+    // Arrow left (bordo → bulk)
+    t2Glow('#fbbf24', 8 * (1 - pulse + 0.5));
+    ctx.beginPath();
+    ctx.moveTo(x2, arrowY2);
+    ctx.lineTo(x1, arrowY2);
+    ctx.strokeStyle = `rgba(251,191,36,${0.5 + 0.5 * (1 - pulse + 0.5)})`;
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x1, arrowY2);
+    ctx.lineTo(x1 + 8, arrowY2 - 5);
+    ctx.moveTo(x1, arrowY2);
+    ctx.lineTo(x1 + 8, arrowY2 + 5);
+    ctx.stroke();
+    t2NoGlow();
+
+    t2Txt(cx, arrowY1 - 12, 'φ → O', '#4ade80', 9, 'center');
+    t2Txt(cx, arrowY2 + 12, '⟨O⟩ ← G', '#fbbf24', 9, 'center');
+    t2Txt(cx, cy + rBulk + 32, 'Z_stringa[φ₀] = ⟨e^{∫φ₀O}⟩_CFT', '#94a3b8', 10, 'center');
+    return;
+  }
+
+  // ── MASSA — curva iperbolica Δ(Δ-d) = m²L² ────────────────────────────────
+  if (scene === 'massa') {
+    const d    = 4;
+    const axW  = W * 0.28;
+    const axH  = H * 0.22;
+    const ox   = cx - axW * 0.5;
+    const oy   = cy + axH * 0.5;
+
+    // Axes
+    ctx.strokeStyle = '#334155';
+    ctx.lineWidth   = 1;
+    ctx.beginPath();
+    ctx.moveTo(ox, oy);
+    ctx.lineTo(ox + axW, oy);
+    ctx.moveTo(ox, oy);
+    ctx.lineTo(ox, oy - axH);
+    ctx.stroke();
+    t2Txt(ox + axW + 14, oy, 'm²L²', '#94a3b8', 9, 'left');
+    t2Txt(ox, oy - axH - 12, 'Δ', '#94a3b8', 9, 'center');
+
+    // Curve Δ = d/2 + sqrt(d²/4 + m²L²)
+    const mMax  = 6;
+    ctx.beginPath();
+    for (let i = 0; i <= 60; i++) {
+      const m2L2 = (i / 60) * mMax;
+      const Delta = d / 2 + Math.sqrt(d * d / 4 + m2L2);
+      const px    = ox + (m2L2 / mMax) * axW;
+      const py    = oy - ((Delta - d / 2) / (d / 2 + Math.sqrt(d * d / 4 + mMax))) * axH;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    t2Glow('#0ea5e9', 8);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+
+    // BF bound point
+    const bfX = ox;
+    const bfY = oy - axH * 0;
+    ctx.beginPath();
+    ctx.arc(bfX, oy, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#f43f5e';
+    ctx.fill();
+    t2Txt(bfX + 10, oy + 2, 'BF bound', '#f43f5e', 9, 'left');
+
+    // Moving point on curve
+    if (!rm) {
+      const tC    = ((T * 0.4) % 1);
+      const m2L2C = tC * mMax;
+      const DeltaC = d / 2 + Math.sqrt(d * d / 4 + m2L2C);
+      const pxC    = ox + (m2L2C / mMax) * axW;
+      const pyC    = oy - ((DeltaC - d / 2) / (d / 2 + Math.sqrt(d * d / 4 + mMax))) * axH;
+      t2Glow('#fbbf24', 12);
+      ctx.beginPath();
+      ctx.arc(pxC, pyC, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#fbbf24';
+      ctx.fill();
+      t2NoGlow();
+      t2Txt(pxC + 10, pyC, `Δ=${DeltaC.toFixed(1)}`, '#fbbf24', 9, 'left');
+    }
+
+    t2Txt(cx, cy + axH * 0.5 + 32, 'Δ(Δ−d) = m²L²', '#94a3b8', 10, 'center');
+    return;
+  }
+
+  // ── BORDO — campo che si propaga dal bulk al bordo ─────────────────────────
+  if (scene === 'bordo') {
+    // Draw AdS disk (schematic)
+    t2Glow('#a78bfa', 8);
+    ctx.beginPath();
+    ctx.arc(cx, cy, 70, 0, Math.PI * 2);
+    ctx.strokeStyle = '#a78bfa';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, cy - 78, 'bordo (r→∞)', '#0ea5e9', 9, 'center');
+
+    // Radial lines representing field profile
+    const nLines = 8;
+    for (let i = 0; i < nLines; i++) {
+      const ang    = (i / nLines) * Math.PI * 2;
+      const phase0 = rm ? 0 : T * 1.2 + i * 0.4;
+      const amp    = 18 + 10 * Math.sin(phase0);
+      const x1     = cx + 14 * Math.cos(ang);
+      const y1     = cy + 14 * Math.sin(ang);
+      const x2     = cx + (70 + amp) * Math.cos(ang);
+      const y2     = cy + (70 + amp) * Math.sin(ang);
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.strokeStyle = 'rgba(14,165,233,0.4)';
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+    }
+
+    // Center label
+    t2Txt(cx, cy, 'φ(r)', '#a78bfa', 10, 'center');
+
+    // Boundary labels
+    t2Txt(cx + 90, cy, 'r^{d-Δ}φ₀', '#4ade80', 9, 'left');
+    t2Txt(cx + 90, cy + 16, '+ r^{-Δ}⟨O⟩', '#fbbf24', 9, 'left');
+    return;
+  }
+
+  // ── CORRELATORI — propagatori di Witten ────────────────────────────────────
+  if (scene === 'correlatori') {
+    // Boundary line at top
+    const bordoY = cy - 60;
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+    ctx.beginPath();
+    ctx.moveTo(cx - 100, bordoY);
+    ctx.lineTo(cx + 100, bordoY);
+    ctx.stroke();
+    t2Txt(cx, bordoY - 12, 'bordo CFT', '#0ea5e9', 9, 'center');
+
+    // Bulk vertex
+    const vx = cx;
+    const vy = cy + 20;
+    ctx.beginPath();
+    ctx.arc(vx, vy, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#fbbf24';
+    ctx.fill();
+    t2Txt(vx + 12, vy, 'vertice', '#fbbf24', 9, 'left');
+
+    // Propagators to 3 boundary points
+    const bPoints = [cx - 80, cx - 10, cx + 70];
+    const cols    = ['#0ea5e9', '#4ade80', '#f43f5e'];
+    for (let i = 0; i < bPoints.length; i++) {
+      const bx     = bPoints[i];
+      const phase0 = rm ? 0 : T * 0.8 + i;
+      const arc    = 1 + 0.15 * Math.sin(phase0);
+      t2Glow(cols[i], 6);
+      ctx.beginPath();
+      ctx.moveTo(bx, bordoY);
+      ctx.quadraticCurveTo((bx + vx) * 0.5 + 20 * Math.sin(i), (bordoY + vy) * 0.5, vx, vy);
+      ctx.strokeStyle = cols[i];
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+      t2NoGlow();
+      // Endpoint dot on boundary
+      ctx.beginPath();
+      ctx.arc(bx, bordoY, 4, 0, Math.PI * 2);
+      ctx.fillStyle = cols[i];
+      ctx.fill();
+      t2Txt(bx, bordoY - 14, `x${i+1}`, cols[i], 9, 'center');
+    }
+
+    t2Txt(cx, vy + 40, '⟨O(x₁)O(x₂)O(x₃)⟩ = δ³Z/δφ₀³', '#94a3b8', 9, 'center');
+    return;
+  }
+
+  // ── TEMPERATURA — buco nero AdS ────────────────────────────────────────────
+  if (scene === 'temperatura') {
+    // Event horizon
+    const horizR = 45;
+    const pulse  = rm ? 1 : 0.85 + 0.15 * Math.sin(T * 1.5);
+
+    t2Glow('#f43f5e', 20 * pulse);
+    ctx.beginPath();
+    ctx.arc(cx, cy, horizR * pulse, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(244,63,94,0.15)';
+    ctx.fill();
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, cy, 'orizzonte', '#f43f5e', 9, 'center');
+    t2Txt(cx, cy + 16, 'T_H = T_CFT', '#fbbf24', 9, 'center');
+
+    // Hawking radiation particles
+    if (!rm) {
+      const nPart = 8;
+      for (let i = 0; i < nPart; i++) {
+        const ang  = T * 1.1 + i * (Math.PI * 2 / nPart);
+        const dist = horizR + 18 + ((T * 0.5 + i * 0.7) % 1) * 35;
+        const px   = cx + dist * Math.cos(ang);
+        const py   = cy + dist * Math.sin(ang);
+        ctx.beginPath();
+        ctx.arc(px, py, 2, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(251,191,36,0.7)';
+        ctx.fill();
+      }
+    }
+
+    // Boundary label
+    t2Glow('#0ea5e9', 6);
+    ctx.beginPath();
+    ctx.arc(cx, cy, horizR + 68, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(14,165,233,0.4)';
+    ctx.lineWidth   = 1;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, cy - horizR - 76, 'CFT termica T = T_H', '#0ea5e9', 9, 'center');
+    return;
+  }
+
+  // ── GAUGE — campo di gauge nel bulk → corrente sul bordo ──────────────────
+  if (scene === 'gauge') {
+    const bordoY = cy - 55;
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+    ctx.beginPath();
+    ctx.moveTo(cx - 120, bordoY);
+    ctx.lineTo(cx + 120, bordoY);
+    ctx.stroke();
+    t2Txt(cx, bordoY - 12, 'bordo CFT — correnti conservate J_μ', '#0ea5e9', 9, 'center');
+
+    // Gauge field lines in bulk (wavy)
+    const nLines = 5;
+    for (let i = 0; i < nLines; i++) {
+      const xBase  = cx - 80 + i * 40;
+      const phase0 = rm ? 0 : T * 1.5 + i * 0.7;
+      ctx.beginPath();
+      const steps = 30;
+      for (let s = 0; s <= steps; s++) {
+        const frac = s / steps;
+        const yS   = bordoY + frac * 80;
+        const xS   = xBase + Math.sin(frac * Math.PI * 4 + phase0) * 7;
+        if (s === 0) ctx.moveTo(xS, yS); else ctx.lineTo(xS, yS);
+      }
+      ctx.strokeStyle = 'rgba(167,139,250,0.6)';
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+      // Endpoint dot
+      ctx.beginPath();
+      ctx.arc(xBase, bordoY, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#4ade80';
+      ctx.fill();
+    }
+
+    t2Txt(cx, cy + 50, 'A_μ (gauge, bulk) ↔ J_μ (corrente, bordo)', '#94a3b8', 9, 'center');
+    t2Txt(cx, cy + 66, 'gravitone ↔ T_μν', '#a78bfa', 9, 'center');
+    return;
+  }
+
+  // ── WILSON — loop sul bordo e stringa nel bulk ─────────────────────────────
+  if (scene === 'wilson') {
+    // Boundary loop (ellipse)
+    const loopA = 80;
+    const loopB = 24;
+    const bordoY = cy - 60;
+
+    t2Glow('#4ade80', 10);
+    ctx.beginPath();
+    ctx.ellipse(cx, bordoY, loopA, loopB, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, bordoY, 'W[C] — bordo', '#4ade80', 9, 'center');
+
+    // String surface in bulk (simplified as filled shape)
+    ctx.beginPath();
+    ctx.moveTo(cx - loopA, bordoY);
+    const steps = 40;
+    for (let s = 0; s <= steps; s++) {
+      const frac  = s / steps;
+      const ang   = Math.PI + frac * Math.PI;
+      const bxS   = cx + loopA * Math.cos(ang);
+      const depthY = cy + 40 + 20 * Math.sin(frac * Math.PI);
+      ctx.lineTo(bxS, depthY);
+    }
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(14,165,233,0.08)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(14,165,233,0.3)';
+    ctx.lineWidth   = 1;
+    ctx.stroke();
+
+    t2Txt(cx, cy + 50, 'S_stringa = area minima in AdS', '#0ea5e9', 9, 'center');
+    t2Txt(cx, cy + 66, '⟨W[C]⟩ = e^{−S_stringa[C]}', '#94a3b8', 10, 'center');
+    return;
+  }
+
+  // ── FORTE-DEBOLE — interpolazione tra regimi ───────────────────────────────
+  if (scene === 'forteDebole') {
+    const barW  = W * 0.35;
+    const barH  = 12;
+    const barX  = cx - barW * 0.5;
+    const barY  = cy;
+
+    // Background bar
+    const grad = ctx.createLinearGradient(barX, barY, barX + barW, barY);
+    grad.addColorStop(0,   '#0ea5e9');
+    grad.addColorStop(0.5, '#a78bfa');
+    grad.addColorStop(1,   '#f43f5e');
+    ctx.fillStyle   = grad;
+    ctx.fillRect(barX, barY - barH * 0.5, barW, barH);
+
+    // Cursor
+    const tC    = rm ? 0.7 : (0.5 + 0.4 * Math.sin(T * 0.5));
+    const curX  = barX + tC * barW;
+    t2Glow('#fbbf24', 14);
+    ctx.beginPath();
+    ctx.moveTo(curX, barY - barH);
+    ctx.lineTo(curX, barY + barH);
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(curX, barY - barH - 10, `λ`, '#fbbf24', 11, 'center');
+
+    // Labels
+    t2Txt(barX, barY + barH + 18, 'λ≪1\nCFT debole\nStringa QM', '#0ea5e9', 9, 'center');
+    t2Txt(barX + barW, barY + barH + 18, 'λ≫1\nCFT forte\nSUGRA classica', '#f43f5e', 9, 'center');
+
+    // Side labels
+    t2Txt(barX - 20, barY + barH + 18, '←', '#94a3b8', 11, 'right');
+    t2Txt(barX + barW + 20, barY + barH + 18, '→', '#94a3b8', 11, 'left');
+
+    t2Txt(cx, cy - 45, 'Dualità forte-debole', '#f0f9ff', 12, 'center');
+    t2Txt(cx, cy - 28, 'calcolare da un lato = difficile dall\'altro', '#94a3b8', 9, 'center');
+    return;
+  }
+};
+
+t2Init();
+</script>
+</body>
+</html>

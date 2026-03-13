@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ricostruzione del Bulk | AdS/CFT — Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="ui">
+  <span id="ui-title">DivulgAzione · AdS/CFT</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">7 fasi</span>
+</div>
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — IL PROBLEMA</div>
+    <div class="phase-title">Ricostruire il bulk: una dimensione in più</div>
+    <div class="phase-body">
+      <p>La dualità AdS/CFT afferma che la gravità in AdS_{d+1} è equivalente alla CFT_d sul bordo. Ma questo pone una domanda fondamentale: dati gli <span class="hl">operatori CFT sul bordo d-dimensionale</span>, come si ricostruisce la <span class="am">geometria del bulk (d+1)-dimensionale</span>? Il bulk ha una dimensione in più — la direzione radiale di AdS.</p>
+      <p>Il problema della bulk reconstruction è: trovare un campo φ(z,x) nel bulk (dove z è la coordinata radiale) in termini degli <span class="gr">operatori O(x')</span> della CFT sul bordo. Il risultato non può essere locale: ogni punto del bulk è "visto" da molti punti del bordo.</p>
+      <code class="formula">φ(z, x)  =  ? (dato O(x') su tutto il bordo)
+z → 0: φ ~ z^{d-Δ} O(x)  (limite al bordo)
+z → ∞: bulk profondo = IR della CFT
+Problema: inversione della trasformata non-locale</code>
+      <p>Questo non è solo un esercizio tecnico: rispondere a questa domanda ha aperto connessioni profonde tra la dualità AdS/CFT e la <span class="vi">teoria dei codici quantistici a correzione di errori</span>.</p>
+      <div class="note">Animazione: bordo 2D con operatori e bulk 3D con un punto nel profondo da ricostruire — collegamento geometrico tramite linee dal bordo al punto.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — HKLL</div>
+    <div class="phase-title">Il nucleo di smearing HKLL (2006)</div>
+    <div class="phase-body">
+      <p>Hamilton, Kabat, Lifschytz e Lowe (HKLL, 2006) trovarono la soluzione per la ricostruzione perturbativa: un campo del bulk si ottiene come una media pesata (<span class="hl">smearing</span>) degli operatori del bordo con un nucleo K.</p>
+      <code class="formula">φ(z, x) = ∫_bordo K(z,x | x') O(x') dx'
+K(z,x|x') = nucleo di smearing (HKLL)
+K ~ z^Δ / (z² + |x-x'|²)^Δ  (in AdS globale)
+Equazione del moto: (□_AdS - m²) φ = 0</code>
+      <p>Il nucleo K è determinato richiedendo che φ(z,x) soddisfi le equazioni del moto in AdS e abbia il comportamento al bordo corretto. La formula HKLL è un'inversione esplicita della mappa bulk-bordo: instead of computing boundary data from bulk fields, it computes bulk fields from boundary data.</p>
+      <p>Importante: K(z,x|x') ha supporto sull'intero bordo. Ogni punto del bulk riceve contributi da <span class="am">tutti i punti del bordo</span> — il bulk è globalmente non-locale dal punto di vista del bordo.</p>
+      <div class="note">Animazione: cono di smearing dal punto nel bulk verso l'intero bordo, con il nucleo K che indica il peso di ciascun punto del bordo.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — PROFONDITÀ</div>
+    <div class="phase-title">Dipendenza dalla profondità: più profondo = più smearing</div>
+    <div class="phase-body">
+      <p>Una proprietà chiave del nucleo K: più il punto bulk è <span class="hl">profondo nell'interno di AdS</span> (grande z), più lo smearing è <span class="am">esteso sul bordo</span>. I punti vicini al bordo si ricostruiscono da una piccola regione del bordo; i punti profondi richiedono tutto il bordo.</p>
+      <code class="formula">z piccolo (vicino al bordo): K quasi-locale
+z grande (profondo nel bulk): K si estende su tutto il bordo
+Larghezza dello smearing ~ z
+→ deep bulk = informazione globale della CFT</code>
+      <p>Questo è fisicamente intuitivo: i punti vicini al bordo corrispondono a <span class="hl">alta energia (UV)</span> della CFT, dove la fisica è quasi locale. I punti profondi corrispondono a <span class="gr">bassa energia (IR)</span>, dove le correlazioni sono a lungo raggio e richiedono informazioni globali.</p>
+      <p>La struttura dello smearing riflette il <span class="vi">gruppo di rinormalizzazione</span>: la direzione radiale z di AdS è la scala RG della CFT. Questo è un tema che tornerà nel capitolo sull'emergenza della radiale.</p>
+      <div class="note">Animazione: tre punti a diverse profondità nel bulk con i rispettivi coni di smearing — più profondo = cono più allargato sul bordo.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — AMBIGUITÀ</div>
+    <div class="phase-title">Ambiguità di gauge: la ricostruzione non è unica</div>
+    <div class="phase-body">
+      <p>La ricostruzione HKLL non è unica: c'è una <span class="hl">libertà di gauge</span>. Si può aggiungere al nucleo K qualsiasi soluzione omogenea dell'equazione del moto (una soluzione φ_hom con (□_AdS - m²)φ_hom = 0 e φ_hom|_{bordo} = 0) senza cambiare il campo al bordo.</p>
+      <code class="formula">φ(z,x) → φ(z,x) + φ_hom(z,x)
+dove (□ - m²) φ_hom = 0  e  φ_hom|_{bordo} = 0
+→ stesso operatore O(x) al bordo
+→ diverse ricostruzioni nel bulk: ambiguità!</code>
+      <p>Questa ambiguità non è un difetto della costruzione: è <span class="am">fisica e profonda</span>. Corrisponde alla libertà nella scelta della base degli stati nella teoria CFT. Due operatori nel bulk che differiscono per un termine di questo tipo non possono essere distinti da misure fatte sul bordo.</p>
+      <p>Questa ambiguità è connessa alla <span class="gr">dualità di sub-regioni</span>: lo stesso punto del bulk può essere ricostruito in molti modi diversi a partire da diverse sotto-regioni del bordo, e tutte queste ricostruzioni sono fisicamente equivalenti.</p>
+      <div class="note">Animazione: molteplici curve di ricostruzione che convergono allo stesso punto del bulk ma hanno traiettorie diverse nel bulk — stessa sorgente, diverse ricostruzioni.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — CODICI QUANTISTICI</div>
+    <div class="phase-title">Bulk reconstruction e correzione di errori quantistici</div>
+    <div class="phase-body">
+      <p>Almheiri, Dong, Harlow (2015) hanno mostrato che la struttura della bulk reconstruction è <span class="hl">identica</span> a quella di un codice quantistico a correzione di errori. Un punto nel bulk può essere ricostruito da qualsiasi sotto-regione "sufficientemente grande" del bordo.</p>
+      <code class="formula">Codice quantistico: spazio logico ⊂ spazio fisico
+Bulk = codice logico; Bordo = spazio fisico
+φ_bulk ricostruibile da qualsiasi regione A se A ⊃ ∂EW(A)
+→ struttura di "quantum error correcting code" (QECC)</code>
+      <p>L'intuizione: il bulk è come un registro quantistico che codifica l'informazione del bordo in modo <span class="am">ridondante</span>. Come in un codice a correzione di errori, si può perdere una parte del bordo (un "errore") e ancora ricostruire il bulk, purché la parte rimanente sia sufficiente.</p>
+      <p>Questa struttura ha implicazioni profonde per il paradosso dell'informazione dei buchi neri: l'informazione non si perde, ma è <span class="gr">codificata in modo ridondante</span> nei gradi di libertà del bordo, proprio come in un codice a correzione di errori.</p>
+      <div class="note">Animazione: regioni del bordo A, B, C che "vedono" diverse parti del bulk — ciascuna regione ricostruisce il proprio cuneo di entanglement nel bulk.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — ENTANGLEMENT WEDGE</div>
+    <div class="phase-title">L'entanglement wedge: cosa vede ogni regione del bordo</div>
+    <div class="phase-body">
+      <p>Il concetto chiave che unifica bulk reconstruction e entanglement è l'<span class="hl">entanglement wedge</span>: la regione del bulk ricostruibile da una sotto-regione A del bordo. È definita dalla geometria di AdS attraverso la superficie di Ryu-Takayanagi.</p>
+      <code class="formula">EW(A) = dominio di dipendenza di Σ_A
+Σ_A = regione del bulk con ∂Σ_A = A ∪ γ_A
+γ_A = superficie RT minimale di A
+φ(X) ricostruibile da A ⟺ X ∈ EW(A)</code>
+      <p>La <span class="am">entanglement wedge reconstruction</span> (Faulkner-Lewkowycz-Maldacena, Wall, e altri): un operatore nel punto X del bulk può essere ricostruito unicamente dalla regione A del bordo se e solo se X si trova nell'entanglement wedge di A. Questo è ora un teorema (con alcune assunzioni tecniche).</p>
+      <p>La struttura dell'entanglement wedge rivela qualcosa di profondo: la <span class="gr">geometria del bulk emerge dall'entanglement del bordo</span>. La divisione del bulk in entanglement wedge riflette la struttura dell'entanglement della CFT sul bordo.</p>
+      <div class="note">Animazione: regione A sul bordo con la sua superficie RT γ_A e l'entanglement wedge EW(A) nel bulk evidenziati — la "visione" geometrica di A nel bulk.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — RADIALE</div>
+    <div class="phase-title">Emergenza della direzione radiale: AdS = RG flow della CFT</div>
+    <div class="phase-body">
+      <p>Una delle intuizioni più profonde sulla bulk reconstruction: la <span class="hl">direzione radiale di AdS</span> non è una dimensione spaziale fondamentale — <span class="am">emerge dalla scala di energia della CFT</span>, ovvero dal flusso del gruppo di rinormalizzazione (RG).</p>
+      <code class="formula">z → 0 (bordo di AdS)    ↔  UV della CFT (alta energia)
+z → ∞ (centro di AdS)   ↔  IR della CFT (bassa energia)
+RG flow della CFT ↔ propagazione radiale in AdS
+scala RG μ ↔ 1/z</code>
+      <p>Swingle (2012) ha reso questa intuizione precisa con le <span class="hl">tensor networks MERA</span> (Multi-scale Entanglement Renormalization Ansatz): la struttura geometrica di una rete MERA che implementa il RG flow della CFT è naturalmente iperbolica — come AdS!</p>
+      <p>L'emergenza: non c'è una dimensione extra "nascosta" nell'universo — essa emerge dall'organizzazione degli stati della CFT per scale di energia. Lo spazio AdS <span class="gr">è il RG della CFT</span> visualizzato geometricamente. Questo è uno degli argomenti più convincenti che la geometria è emergente e non fondamentale.</p>
+      <div class="note">Animazione: flusso RG della CFT (livelli di scala energetica) che si trasforma nella geometria iperbolica di AdS — la direzione radiale emerge dalla scala.</div>
+    </div>
+  </div>
+
+</div>
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · Problema</button>
+  <button class="btn" onclick="goPhase(2)">02 · HKLL</button>
+  <button class="btn" onclick="goPhase(3)">03 · Profondità</button>
+  <button class="btn" onclick="goPhase(4)">04 · Ambiguità</button>
+  <button class="btn" onclick="goPhase(5)">05 · Codici QM</button>
+  <button class="btn" onclick="goPhase(6)">06 · EW</button>
+  <button class="btn" onclick="goPhase(7)">07 · Radiale</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+window.T2_PHASES = [
+  { name: 'Il Problema della Ricostruzione', desc: 'FASE 01 — dati O(x) sul bordo, ricostruire φ(z,x) nel bulk', scene: 'problema'   },
+  { name: 'Nucleo di Smearing HKLL',         desc: 'FASE 02 — φ(X) = ∫K(X|x)O(x)dx (Hamilton-Kabat-Lifschytz-Lowe)', scene: 'hkll'      },
+  { name: 'Dipendenza dalla Profondità',     desc: 'FASE 03 — profondo nel bulk = smearing più esteso sul bordo',     scene: 'profondita' },
+  { name: 'Ambiguità di Gauge',              desc: 'FASE 04 — φ → φ+φ_hom: ricostruzione non unica ma fisica',       scene: 'ambiguita'  },
+  { name: 'Codici Quantistici',              desc: 'FASE 05 — bulk reconstruction = quantum error correcting code',   scene: 'codici'     },
+  { name: 'Entanglement Wedge',              desc: 'FASE 06 — EW(A) = regione bulk ricostruibile da A (RT bound.)',   scene: 'ew'         },
+  { name: 'Emergenza della Radiale',         desc: 'FASE 07 — direzione radiale AdS ↔ scala RG della CFT',           scene: 'radiale'    },
+];
+
+window.t2Draw = function(T, phaseIdx, ctx, W, H) {
+  const cx    = t2AnimCX();
+  const cy    = t2AnimCY();
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phaseIdx].scene;
+
+  // ── PROBLEMA — bordo 2D e bulk 3D ─────────────────────────────────────────
+  if (scene === 'problema') {
+    // Boundary line
+    const bordoY = cy - 65;
+    t2Glow('#0ea5e9', 8);
+    ctx.beginPath();
+    ctx.moveTo(cx - 110, bordoY);
+    ctx.lineTo(cx + 110, bordoY);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, bordoY - 14, 'bordo CFT (d dim.)', '#0ea5e9', 9, 'center');
+
+    // Bulk region
+    ctx.fillStyle = 'rgba(167,139,250,0.05)';
+    ctx.fillRect(cx - 110, bordoY, 220, 100);
+    t2Txt(cx, bordoY + 55, 'bulk AdS (d+1 dim.)', '#a78bfa', 9, 'center');
+
+    // Operators on boundary
+    const opXs  = [cx - 70, cx - 20, cx + 40, cx + 90];
+    for (const ox of opXs) {
+      ctx.beginPath();
+      ctx.arc(ox, bordoY, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#4ade80';
+      ctx.fill();
+    }
+
+    // Point in bulk
+    const bulkPx = cx + 20;
+    const bulkPy = bordoY + 55;
+    t2Glow('#fbbf24', 16);
+    ctx.beginPath();
+    ctx.arc(bulkPx, bulkPy, 6, 0, Math.PI * 2);
+    ctx.fillStyle = '#fbbf24';
+    ctx.fill();
+    t2NoGlow();
+
+    // Lines from operators to bulk point
+    for (const ox of opXs) {
+      const pulse = rm ? 0.4 : 0.2 + 0.3 * Math.abs(Math.sin(T * 1.2 + ox * 0.01));
+      ctx.beginPath();
+      ctx.moveTo(ox, bordoY);
+      ctx.lineTo(bulkPx, bulkPy);
+      ctx.strokeStyle = `rgba(74,222,128,${pulse})`;
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+    }
+    t2Txt(bulkPx + 14, bulkPy, 'φ(z,x)?', '#fbbf24', 9, 'left');
+    return;
+  }
+
+  // ── HKLL — cono di smearing ────────────────────────────────────────────────
+  if (scene === 'hkll') {
+    const bordoY = cy - 65;
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+    ctx.beginPath();
+    ctx.moveTo(cx - 110, bordoY);
+    ctx.lineTo(cx + 110, bordoY);
+    ctx.stroke();
+
+    // Bulk point
+    const bx = cx;
+    const by = bordoY + 60;
+    t2Glow('#fbbf24', 14);
+    ctx.beginPath();
+    ctx.arc(bx, by, 6, 0, Math.PI * 2);
+    ctx.fillStyle = '#fbbf24';
+    ctx.fill();
+    t2NoGlow();
+    t2Txt(bx + 10, by + 2, 'φ(z,x)', '#fbbf24', 9, 'left');
+
+    // Smearing cone on boundary
+    const nBpts = 12;
+    for (let i = 0; i < nBpts; i++) {
+      const bpx   = cx - 110 + (i / (nBpts - 1)) * 220;
+      const dist  = Math.abs(bpx - bx);
+      const kVal  = Math.exp(-dist * dist / (2 * 50 * 50));
+      const alpha = rm ? kVal * 0.7 : kVal * (0.4 + 0.3 * Math.sin(T * 1.5 + i * 0.5));
+      ctx.beginPath();
+      ctx.moveTo(bpx, bordoY);
+      ctx.lineTo(bx, by);
+      ctx.strokeStyle = `rgba(14,165,233,${alpha})`;
+      ctx.lineWidth   = 1 + kVal;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(bpx, bordoY, 3 + kVal * 3, 0, Math.PI * 2);
+      ctx.fillStyle   = `rgba(74,222,128,${alpha})`;
+      ctx.fill();
+    }
+
+    t2Txt(cx, bordoY + 100, 'φ(z,x) = ∫K(z,x|x\') O(x\') dx\'', '#94a3b8', 10, 'center');
+    return;
+  }
+
+  // ── PROFONDITÀ — punti a diverse profondità ────────────────────────────────
+  if (scene === 'profondita') {
+    const bordoY = cy - 75;
+    t2Glow('#0ea5e9', 6);
+    ctx.beginPath();
+    ctx.moveTo(cx - 120, bordoY);
+    ctx.lineTo(cx + 120, bordoY);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+
+    const depths   = [20, 50, 80];
+    const colsD    = ['#4ade80', '#fbbf24', '#f43f5e'];
+    const halfWidths = [30, 65, 110];
+
+    for (let d = 0; d < depths.length; d++) {
+      const by   = bordoY + depths[d];
+      const hw   = halfWidths[d];
+      const pulse = rm ? 1 : 0.7 + 0.3 * Math.sin(T * 1.2 + d);
+
+      // Bulk point
+      t2Glow(colsD[d], 10 * pulse);
+      ctx.beginPath();
+      ctx.arc(cx, by, 5, 0, Math.PI * 2);
+      ctx.fillStyle = colsD[d];
+      ctx.fill();
+      t2NoGlow();
+
+      // Smearing extent on boundary
+      const bLeft  = Math.max(cx - 120, cx - hw);
+      const bRight = Math.min(cx + 120, cx + hw);
+      t2Glow(colsD[d], 4);
+      ctx.beginPath();
+      ctx.moveTo(bLeft, bordoY);
+      ctx.lineTo(bRight, bordoY);
+      ctx.strokeStyle = colsD[d];
+      ctx.lineWidth   = 2.5;
+      ctx.stroke();
+      t2NoGlow();
+
+      // Lines to boundary extent
+      ctx.beginPath();
+      ctx.moveTo(cx, by);
+      ctx.lineTo(bLeft, bordoY);
+      ctx.moveTo(cx, by);
+      ctx.lineTo(bRight, bordoY);
+      ctx.strokeStyle = `${colsD[d]}44`;
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+
+      t2Txt(cx + 90, by, `z=${depths[d]/10}`, colsD[d], 8, 'left');
+    }
+    t2Txt(cx, bordoY + 100, 'z grande → smearing esteso', '#94a3b8', 9, 'center');
+    return;
+  }
+
+  // ── AMBIGUITÀ — molteplici ricostruzioni ────────────────────────────────────
+  if (scene === 'ambiguita') {
+    const bordoY = cy - 60;
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+    ctx.beginPath();
+    ctx.moveTo(cx - 110, bordoY);
+    ctx.lineTo(cx + 110, bordoY);
+    ctx.stroke();
+
+    const bx = cx;
+    const by = bordoY + 70;
+    t2Glow('#fbbf24', 14);
+    ctx.beginPath();
+    ctx.arc(bx, by, 6, 0, Math.PI * 2);
+    ctx.fillStyle = '#fbbf24';
+    ctx.fill();
+    t2NoGlow();
+    t2Txt(bx, by + 18, 'stesso φ(bordo)', '#fbbf24', 8, 'center');
+
+    // Multiple reconstruction curves
+    const curves = [
+      { color: '#0ea5e9', offset: 0 },
+      { color: '#a78bfa', offset: 20 },
+      { color: '#4ade80', offset: -20 },
+    ];
+    for (const c of curves) {
+      ctx.beginPath();
+      ctx.moveTo(cx - 90, bordoY);
+      ctx.quadraticCurveTo(cx - 90 + c.offset, bordoY + 35, bx, by);
+      ctx.strokeStyle = `${c.color}88`;
+      ctx.lineWidth   = 1.5;
+      ctx.setLineDash([4, 3]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    t2Txt(cx, by + 40, 'φ + φ_hom: stessa sorgente, bulk diverso', '#94a3b8', 9, 'center');
+    return;
+  }
+
+  // ── CODICI QUANTISTICI — regioni del bordo ─────────────────────────────────
+  if (scene === 'codici') {
+    // Boundary circle
+    const R = 70;
+    t2Glow('#0ea5e9', 6);
+    ctx.beginPath();
+    ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    t2NoGlow();
+
+    // Color 3 arcs for regions A, B, C
+    const colsR = ['#4ade80', '#fbbf24', '#f43f5e'];
+    const labels = ['A', 'B', 'C'];
+    for (let i = 0; i < 3; i++) {
+      const ang0 = i * (Math.PI * 2 / 3);
+      const ang1 = ang0 + Math.PI * 2 / 3;
+      t2Glow(colsR[i], 6);
+      ctx.beginPath();
+      ctx.arc(cx, cy, R, ang0, ang1);
+      ctx.strokeStyle = colsR[i];
+      ctx.lineWidth   = 5;
+      ctx.stroke();
+      t2NoGlow();
+      const labelAng = ang0 + Math.PI / 3;
+      t2Txt(cx + (R + 20) * Math.cos(labelAng), cy + (R + 20) * Math.sin(labelAng), labels[i], colsR[i], 11, 'center');
+    }
+
+    // Bulk regions
+    const innerR = 40;
+    for (let i = 0; i < 3; i++) {
+      const ang0 = i * (Math.PI * 2 / 3);
+      const ang1 = ang0 + Math.PI * 2 / 3;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.arc(cx, cy, innerR, ang0, ang1);
+      ctx.closePath();
+      ctx.fillStyle = `${colsR[i]}22`;
+      ctx.fill();
+      ctx.strokeStyle = `${colsR[i]}55`;
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+    }
+
+    t2Txt(cx, cy, 'bulk', '#94a3b8', 8, 'center');
+    t2Txt(cx, cy + R + 28, 'EW(A) ricostruibile da A', '#94a3b8', 9, 'center');
+    return;
+  }
+
+  // ── ENTANGLEMENT WEDGE ─────────────────────────────────────────────────────
+  if (scene === 'ew') {
+    const bordoY = cy - 60;
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(cx - 120, bordoY);
+    ctx.lineTo(cx + 120, bordoY);
+    ctx.stroke();
+
+    // Region A on boundary
+    t2Glow('#4ade80', 8);
+    ctx.beginPath();
+    ctx.moveTo(cx - 70, bordoY);
+    ctx.lineTo(cx + 60, bordoY);
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth   = 4;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx - 5, bordoY - 14, 'A', '#4ade80', 11, 'center');
+
+    // RT surface (geodesic arc)
+    const pulse = rm ? 0 : T * 0.8;
+    ctx.beginPath();
+    ctx.arc(cx - 5, bordoY, 65, 0.1, Math.PI - 0.1);
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 2;
+    ctx.setLineDash([4, 3]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    t2Txt(cx - 5, bordoY + 50, 'γ_A (RT)', '#f43f5e', 9, 'center');
+
+    // Entanglement wedge (filled region inside arc)
+    ctx.beginPath();
+    ctx.moveTo(cx - 70, bordoY);
+    ctx.arc(cx - 5, bordoY, 65, Math.PI, 0);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(74,222,128,0.06)';
+    ctx.fill();
+    t2Txt(cx - 5, bordoY + 30, 'EW(A)', '#4ade80', 10, 'center');
+    t2Txt(cx, bordoY + 85, 'EW(A) = regione bulk ricostruibile da A', '#94a3b8', 9, 'center');
+    return;
+  }
+
+  // ── RADIALE — RG flow ↔ direzione radiale ──────────────────────────────────
+  if (scene === 'radiale') {
+    // Left side: RG flow of CFT
+    const leftX  = cx - W * 0.16;
+    const levels = 5;
+    for (let l = 0; l < levels; l++) {
+      const y      = cy - 50 + l * 25;
+      const scale  = 1 - l * 0.15;
+      const lW     = 60 * scale;
+      const pulse  = rm ? 1 : 0.7 + 0.3 * Math.sin(T * 1.2 + l * 0.6);
+      ctx.beginPath();
+      ctx.rect(leftX - lW * 0.5, y - 8, lW, 16);
+      ctx.strokeStyle = `rgba(14,165,233,${0.3 + 0.5 * scale * pulse})`;
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+      t2Txt(leftX, y + 1, l === 0 ? 'UV' : l === levels - 1 ? 'IR' : `μ_${l}`, '#94a3b8', 8, 'center');
+    }
+    t2Txt(leftX, cy - 66, 'RG flow CFT', '#0ea5e9', 9, 'center');
+
+    // Arrow →
+    const arAng = rm ? 0.5 : 0.5 + 0.05 * Math.sin(T * 2);
+    t2Glow('#4ade80', 6);
+    ctx.beginPath();
+    ctx.moveTo(cx - 20, cy);
+    ctx.lineTo(cx + 20, cy);
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(cx + 20, cy);
+    ctx.lineTo(cx + 12, cy - 5);
+    ctx.moveTo(cx + 20, cy);
+    ctx.lineTo(cx + 12, cy + 5);
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, cy - 14, '≡', '#4ade80', 11, 'center');
+
+    // Right side: AdS radial direction
+    const rightX = cx + W * 0.16;
+    t2Glow('#a78bfa', 6);
+    ctx.beginPath();
+    ctx.moveTo(rightX, cy - 55);
+    ctx.lineTo(rightX, cy + 55);
+    ctx.strokeStyle = '#a78bfa';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(rightX, cy - 65, 'bordo (UV)', '#0ea5e9', 8, 'center');
+    t2Txt(rightX, cy + 65, 'centro (IR)', '#f43f5e', 8, 'center');
+    t2Txt(rightX + 14, cy, '↕ z', '#a78bfa', 9, 'left');
+    t2Txt(cx, cy + 85, 'z → ∞: deep bulk = IR della CFT', '#94a3b8', 9, 'center');
+    return;
+  }
+};
+
+t2Init();
+</script>
+</body>
+</html>
