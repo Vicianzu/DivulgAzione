@@ -19,7 +19,6 @@
 <main id="panel" role="main" aria-label="Contenuto della fase corrente" tabindex="-1">
   <div class="phase-content active" id="ph-0">
     <div class="phase-tag">Fase 01 — Stringa nella Calabi-Yau</div>
-    <h1 class="phase-title">Stringa nella Calabi-Yau</h1>
     <div class="phase-body">
       <p>Una stringa quantistica è intrappolata nella geometria della varietà di Calabi-Yau. La forma dello spazio ne condiziona i modi di vibrazione.</p>
       <p class="note">Visualizzazione: stringa quantistica nella geometria Calabi-Yau.</p>
@@ -27,7 +26,6 @@
   </div>
   <div class="phase-content" id="ph-1">
     <div class="phase-tag">Fase 02 — Modi di vibrazione</div>
-    <h1 class="phase-title">Modi di vibrazione</h1>
     <div class="phase-body">
       <p>La stringa vibra in armoniche discrete. Ogni modo n=1,2,3... corrisponde a un'energia e a proprietà quantistiche diverse (spin, carica, massa).</p>
       <p class="note">Visualizzazione: armoniche di vibrazione della stringa.</p>
@@ -35,7 +33,6 @@
   </div>
   <div class="phase-content" id="ph-2">
     <div class="phase-tag">Fase 03 — Campi quantistici</div>
-    <h1 class="phase-title">Campi quantistici</h1>
     <div class="phase-body">
       <p>Ogni modo di vibrazione eccita un campo quantistico nello spazio 4D. Il campo permea tutto l'universo come un'onda stazionaria.</p>
       <p class="note">Visualizzazione: campi quantistici eccitati nello spazio 4D.</p>
@@ -43,7 +40,6 @@
   </div>
   <div class="phase-content" id="ph-3">
     <div class="phase-tag">Fase 04 — Spettro delle particelle</div>
-    <h1 class="phase-title">Spettro delle particelle</h1>
     <div class="phase-body">
       <p>Le eccitazioni dei campi producono quanti — le particelle elementari: quark (u,d,s), elettroni, neutrini, gluoni, fotoni.</p>
       <p class="note">Visualizzazione: spettro di particelle elementari emergenti.</p>
@@ -51,7 +47,6 @@
   </div>
   <div class="phase-content" id="ph-4">
     <div class="phase-tag">Fase 05 — Atomi</div>
-    <h1 class="phase-title">Atomi</h1>
     <div class="phase-body">
       <p>I quark si confinano in protoni e neutroni (QCD). Protoni e neutroni formano nuclei. Gli elettroni si legano ai nuclei → atomi stabili.</p>
       <p class="note">Visualizzazione: formazione di atomi da quark e nuclei.</p>
@@ -59,7 +54,6 @@
   </div>
   <div class="phase-content" id="ph-5">
     <div class="phase-tag">Fase 06 — Materia barionica</div>
-    <h1 class="phase-title">Materia barionica</h1>
     <div class="phase-body">
       <p>Gli atomi si aggregano per gravità ed elettromagnetismo → molecole, gas, polvere, stelle, pianeti. Tutta la materia che vedi è vibrazione di stringhe.</p>
       <p class="note">Visualizzazione: aggregazione di materia barionica.</p>
@@ -124,10 +118,6 @@ function setPhase(n) {
 }
 
 function updateUI() {
-  document.getElementById('stat-phase').textContent = (phase+1) + '/6';
-  document.getElementById('stat-mode').textContent = phase >= 1 ? `n=${(phase%3)+1}` : '—';
-  document.getElementById('stat-particles').textContent = particles.length + quanta.length;
-  document.getElementById('stat-energy').textContent = ['E₀','E₁','E₂','E₃','E₄','E₅'][phase];
 }
 
 // ─── PALETTE ────────────────────────────────────────────

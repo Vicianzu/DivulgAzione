@@ -19,7 +19,6 @@
 <main id="panel" role="main" aria-label="Contenuto della fase corrente" tabindex="-1">
   <div class="phase-content active" id="ph-0">
     <div class="phase-tag">Fase 01 — Cos'è una D₃-Brana</div>
-    <h1 class="phase-title">Cos'è una D₃-Brana</h1>
     <div class="phase-body">
       <p>Una D3-brana è un oggetto 3+1D su cui si ancorano gli estremi delle stringhe aperte. È piatta e non deforma lo spaziotempo. Le stringhe chiuse si propagano liberamente nel bulk 10D.</p>
       <p class="note">Visualizzazione: D3-brana singola con stringhe aperte ancorate.</p>
@@ -27,7 +26,6 @@
   </div>
   <div class="phase-content" id="ph-1">
     <div class="phase-tag">Fase 02 — Stack di N D₃-Brane</div>
-    <h1 class="phase-title">Stack di N D₃-Brane</h1>
     <div class="phase-body">
       <p>N brane coincidenti: le N² stringhe aperte tra di esse generano il campo di gauge SU(N). Quando N→∞ e λ=gₛN≫1, la teoria di gauge diventa fortemente accoppiata.</p>
       <p class="note">Visualizzazione: stack di N brane con campo di gauge emergente.</p>
@@ -35,7 +33,6 @@
   </div>
   <div class="phase-content" id="ph-2">
     <div class="phase-tag">Fase 03 — Curvatura dello spaziotempo e Gola AdS</div>
-    <h1 class="phase-title">Curvatura dello spaziotempo e Gola AdS</h1>
     <div class="phase-body">
       <p>Lo stack di N brane genera la metrica ds²=H(r)^(−½)η_μν dx^μdx^ν + H(r)^(½)(dr²+r²dΩ₅²). Vicino alle brane si forma la 'gola' con curvatura negativa — la geometria AdS.</p>
       <p class="note">Visualizzazione: formazione della gola AdS attorno alle brane.</p>
@@ -43,7 +40,6 @@
   </div>
   <div class="phase-content" id="ph-3">
     <div class="phase-tag">Fase 04 — Near-Horizon Limit</div>
-    <h1 class="phase-title">Near-Horizon Limit</h1>
     <div class="phase-body">
       <p>Nel limite r≪L: H(r)≈L⁴/r⁴. La metrica diventa AdS₅. Con z=L²/r: ds²=(L²/z²)(η_μν dx^μdx^ν+dz²). Il bordo AdS è a z→0 (UV della CFT).</p>
       <p class="note">Visualizzazione: near-horizon limit e metrica AdS₅.</p>
@@ -51,15 +47,13 @@
   </div>
   <div class="phase-content" id="ph-4">
     <div class="phase-tag">Fase 05 — Geometria AdS₅×S⁵</div>
-    <h1 class="phase-title">Geometria AdS₅×S⁵</h1>
     <div class="phase-body">
       <p>La gola converge alla geometria prodotto AdS₅×S⁵. AdS₅ ha curvatura negativa costante R=−20/L². Le isometrie SO(2,4)×SO(6) coincidono con le simmetrie della teoria 𝒩=4 SYM.</p>
       <p class="note">Visualizzazione: geometria prodotto AdS₅×S⁵.</p>
     </div>
   </div>
   <div class="phase-content" id="ph-5">
-    <div class="phase-tag">Fase 06 — La Dualità: due facce della stessa fisic</div>
-    <h1 class="phase-title">La Dualità: due facce della stessa fisica</h1>
+    <div class="phase-tag">Fase 06 — La Dualità: due facce della stessa fisica</div>
     <div class="phase-body">
       <p>Le N brane ammettono DUE descrizioni equivalenti: (1) Stringa IIB nella geometria AdS₅×S⁵ [bulk con gravità] ↔ (2) Teoria di gauge 𝒩=4 SU(N) SYM in 4D [bordo senza gravità].</p>
       <p class="note">Visualizzazione: dualità completa gravità↔gauge.</p>
@@ -119,10 +113,6 @@ function go(n){
   document.querySelectorAll('.phase-content').forEach((el,i)=>el.classList.toggle('active',i===n));
   document.getElementById('ui-phase').textContent=PHASES[n].name;
   document.getElementById('panel').scrollTop=0;
-  document.getElementById('s-phase').textContent=(n+1)+'/6';
-  document.getElementById('s-n').textContent='N='+PHASES[n].n;
-  document.getElementById('s-l').textContent=n>=1?'L⁴~gₛNα\'²':'—';
-  document.getElementById('s-geo').textContent=PHASES[n].geo;
 }
 
 function lbl(x,y,txt,col,sz,al='center',bold=false){

@@ -19,7 +19,6 @@
 <main id="panel" role="main" aria-label="Contenuto della fase corrente" tabindex="-1">
   <div class="phase-content active" id="ph-0">
     <div class="phase-tag">Fase 01 — La Crisi della Fisica Classica</div>
-    <h1 class="phase-title">La Crisi della Fisica Classica</h1>
     <div class="phase-body">
       <p>Newton: tempo assoluto, spazio assoluto. Ma l'esperimento Michelson-Morley (1887) dimostrò che la velocità della luce è costante. L'etere non esiste.</p>
       <p class="note">Visualizzazione: interferometro di Michelson-Morley e luce isotropa.</p>
@@ -27,7 +26,6 @@
   </div>
   <div class="phase-content" id="ph-1">
     <div class="phase-tag">Fase 02 — I Due Postulati di Einstein (1905)</div>
-    <h1 class="phase-title">I Due Postulati di Einstein (1905)</h1>
     <div class="phase-body">
       <p>① Le leggi della fisica sono identiche in tutti i sistemi inerziali. ② La velocità della luce c è costante in tutti i sistemi inerziali, indipendentemente dal moto della sorgente.</p>
       <p class="note">Visualizzazione: due postulati visualizzati con sistemi inerziali.</p>
@@ -35,7 +33,6 @@
   </div>
   <div class="phase-content" id="ph-2">
     <div class="phase-tag">Fase 03 — Dilatazione del Tempo</div>
-    <h1 class="phase-title">Dilatazione del Tempo</h1>
     <div class="phase-body">
       <p>Un orologio in moto ticchetta più lentamente. t' = γ·t dove γ = 1/√(1−v²/c²). A v→c, γ→∞ e il tempo si ferma. Verificato con muoni cosmici e orologi atomici sugli aerei.</p>
       <p class="note">Visualizzazione: orologi in moto rallentati dal fattore γ.</p>
@@ -43,7 +40,6 @@
   </div>
   <div class="phase-content" id="ph-3">
     <div class="phase-tag">Fase 04 — Contrazione delle Lunghezze</div>
-    <h1 class="phase-title">Contrazione delle Lunghezze</h1>
     <div class="phase-body">
       <p>Un righello in moto si accorcia nella direzione del moto: L' = L₀/γ = L₀·√(1−v²/c²). Lunghezza propria L₀ vs lunghezza contratta L'. Le dimensioni trasversali restano invariate.</p>
       <p class="note">Visualizzazione: righello contratto nella direzione del moto.</p>
@@ -51,7 +47,6 @@
   </div>
   <div class="phase-content" id="ph-4">
     <div class="phase-tag">Fase 05 — La Simultaneità è Relativa</div>
-    <h1 class="phase-title">La Simultaneità è Relativa</h1>
     <div class="phase-body">
       <p>Due eventi simultanei per un osservatore non lo sono per un altro in moto relativo. Il treno di Einstein: due fulmini colpiscono le estremità — osservatori diversi li vedono in ordini diversi.</p>
       <p class="note">Visualizzazione: simultaneità relativa nel treno di Einstein.</p>
@@ -59,7 +54,6 @@
   </div>
   <div class="phase-content" id="ph-5">
     <div class="phase-tag">Fase 06 — Diagramma di Minkowski e Cono Luce</div>
-    <h1 class="phase-title">Diagramma di Minkowski e Cono Luce</h1>
     <div class="phase-body">
       <p>Lo spaziotempo è un'unità indissolubile. Il cono luce divide futuro assoluto, passato assoluto e regione spacelike. L'invariante s² = c²t² − x² è uguale per tutti gli osservatori.</p>
       <p class="note">Visualizzazione: diagramma di Minkowski con cono luce.</p>
@@ -67,7 +61,6 @@
   </div>
   <div class="phase-content" id="ph-6">
     <div class="phase-tag">Fase 07 — E = mc² — L'Equivalenza Massa-Energia</div>
-    <h1 class="phase-title">E = mc² — L'Equivalenza Massa-Energia</h1>
     <div class="phase-body">
       <p>Energia totale: E² = (pc)² + (mc²)². A riposo (p=0): E = mc². Per il fotone (m=0): E = pc. Un kg di materia equivale a 9×10¹⁶ joule.</p>
       <p class="note">Visualizzazione: conversione massa↔energia.</p>
@@ -75,7 +68,6 @@
   </div>
   <div class="phase-content" id="ph-7">
     <div class="phase-tag">Fase 08 — Trasformazioni di Lorentz</div>
-    <h1 class="phase-title">Trasformazioni di Lorentz</h1>
     <div class="phase-body">
       <p>Come spazio e tempo si trasformano passando da un sistema all'altro: x'=γ(x−vt), t'=γ(t−vx/c²). Nel limite v≪c si recuperano le trasformazioni di Galileo. L'invariante s² è preservato.</p>
       <p class="note">Visualizzazione: trasformazione di coordinate tra sistemi inerziali.</p>
@@ -142,11 +134,7 @@ function go(n){
   document.querySelectorAll('.phase-content').forEach((el,i)=>el.classList.toggle('active',i===n));
   document.getElementById('ui-phase').textContent=PHASES[n].name;
   document.getElementById('panel').scrollTop=0;
-  document.getElementById('s-phase').textContent=(n+1)+'/8';
   const p=PHASES[n];
-  document.getElementById('s-gamma').textContent=p.gamma;
-  document.getElementById('s-vc').textContent=p.vc;
-  document.getElementById('s-year').textContent=p.year;
   updateUI();
 }
 function updateUI(){
@@ -377,8 +365,6 @@ function ph2(){
   // Fattore gamma animato (v ciclico)
   const vRatio=0.5+0.45*Math.abs(Math.sin(T*0.015));
   const gamma=1/Math.sqrt(1-vRatio*vRatio);
-  document.getElementById('s-gamma').textContent=gamma.toFixed(2);
-  document.getElementById('s-vc').textContent=vRatio.toFixed(2);
 
   // Orologio fermo (sinistra)
   const c1x=W*0.28, c1y=H*0.46, cr=70;
@@ -470,8 +456,6 @@ function ph3(){
 
   const vRatio=0.5+0.4*Math.abs(Math.sin(T*0.012));
   const gamma=1/Math.sqrt(1-vRatio*vRatio);
-  document.getElementById('s-gamma').textContent=gamma.toFixed(2);
-  document.getElementById('s-vc').textContent=vRatio.toFixed(2);
 
   const L0=240;
   const Lp=L0/gamma;
@@ -737,8 +721,6 @@ function ph6(){
   // Animazione particella che accelera
   const vRatio=0.3+0.6*((Math.sin(T*0.02)+1)/2);
   const gamma=1/Math.sqrt(Math.max(0.001,1-vRatio*vRatio)); // 0.001 clamps denominator away from zero
-  document.getElementById('s-gamma').textContent=gamma.toFixed(2);
-  document.getElementById('s-vc').textContent=vRatio.toFixed(2);
 
   // Particella animata
   const pX=W*0.15+vRatio*W*0.45;
@@ -823,8 +805,6 @@ function ph7(){
 
   const vRatio=0.5+0.35*Math.abs(Math.sin(T*0.01));
   const gamma=1/Math.sqrt(1-vRatio*vRatio);
-  document.getElementById('s-gamma').textContent=gamma.toFixed(2);
-  document.getElementById('s-vc').textContent=vRatio.toFixed(2);
   const beta=vRatio;
 
   // Box equazioni

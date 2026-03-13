@@ -19,7 +19,6 @@
 <main id="panel" role="main" aria-label="Contenuto della fase corrente" tabindex="-1">
   <div class="phase-content active" id="ph-0">
     <div class="phase-tag">Fase 01 — ① Chi è Einstein? — La storia</div>
-    <h1 class="phase-title">① Chi è Einstein? — La storia</h1>
     <div class="phase-body">
       <p>Timeline animata della vita di Einstein: 1879–1955. Dal giovane curioso di Ulm al padre della Relatività Generale, rivoluzionando la nostra comprensione dello spazio, del tempo e della gravità.</p>
       <p class="note">Visualizzazione: timeline animata della vita di Einstein.</p>
@@ -27,7 +26,6 @@
   </div>
   <div class="phase-content" id="ph-1">
     <div class="phase-tag">Fase 02 — ② Il Principio di Equivalenza</div>
-    <h1 class="phase-title">② Il Principio di Equivalenza</h1>
     <div class="phase-body">
       <p>Un ascensore che accelera nello spazio è indistinguibile da uno fermo in un campo gravitazionale. 'Il pensiero più felice della mia vita' — Albert Einstein, 1907. Equazione fondamentale: a = g.</p>
       <p class="note">Visualizzazione: ascensore in accelerazione equivalente a campo gravitazionale.</p>
@@ -35,7 +33,6 @@
   </div>
   <div class="phase-content" id="ph-2">
     <div class="phase-tag">Fase 03 — ③ Lo Spazio-Tempo Curvo</div>
-    <h1 class="phase-title">③ Lo Spazio-Tempo Curvo</h1>
     <div class="phase-body">
       <p>La materia dice allo spazio-tempo come curvarsi; lo spazio-tempo dice alla materia come muoversi. La griglia si deforma attorno a una massa: i pianeti seguono geodetiche curve.</p>
       <p class="note">Visualizzazione: griglia spazio-temporale deformata da una massa.</p>
@@ -43,7 +40,6 @@
   </div>
   <div class="phase-content" id="ph-3">
     <div class="phase-tag">Fase 04 — ④ Le Equazioni di Campo di Einstein</div>
-    <h1 class="phase-title">④ Le Equazioni di Campo di Einstein</h1>
     <div class="phase-body">
       <p>G_μν = 8πG/c⁴ · T_μν — 10 equazioni differenziali non lineari che collegano la geometria dello spazio-tempo alla distribuzione di materia ed energia. Pubblicate nel novembre 1915.</p>
       <p class="note">Visualizzazione: equazioni di campo visualizzate con tensori.</p>
@@ -51,7 +47,6 @@
   </div>
   <div class="phase-content" id="ph-4">
     <div class="phase-tag">Fase 05 — ⑤ La Deflessione della Luce</div>
-    <h1 class="phase-title">⑤ La Deflessione della Luce</h1>
     <div class="phase-body">
       <p>La luce segue le geodetiche dello spazio-tempo curvo. Einstein previde una deflessione di 1.75 arcosecondi attorno al Sole — confermata da Arthur Eddington durante l'eclisse del 29 maggio 1919.</p>
       <p class="note">Visualizzazione: deflessione della luce attorno al Sole nell'eclisse del 1919.</p>
@@ -59,7 +54,6 @@
   </div>
   <div class="phase-content" id="ph-5">
     <div class="phase-tag">Fase 06 — ⑥ Le Onde Gravitazionali</div>
-    <h1 class="phase-title">⑥ Le Onde Gravitazionali</h1>
     <div class="phase-body">
       <p>Due oggetti massicci in spirale generano increspature dello spazio-tempo che si propagano alla velocità della luce. Einstein le predisse nel 1916. LIGO le rilevò il 14 settembre 2015 (GW150914).</p>
       <p class="note">Visualizzazione: spirale di stelle con emissione di onde gravitazionali.</p>
@@ -67,7 +61,6 @@
   </div>
   <div class="phase-content" id="ph-6">
     <div class="phase-tag">Fase 07 — ⑦ I Buchi Neri</div>
-    <h1 class="phase-title">⑦ I Buchi Neri</h1>
     <div class="phase-body">
       <p>Una regione dello spazio-tempo dove la curvatura è così intensa che nulla — nemmeno la luce — può sfuggire. Raggio di Schwarzschild: r_s = 2GM/c². La foto di M87* (EHT 2019) ha confermato la loro esistenza.</p>
       <p class="note">Visualizzazione: buco nero con orizzonte degli eventi e accrescimento.</p>
@@ -75,7 +68,6 @@
   </div>
   <div class="phase-content" id="ph-7">
     <div class="phase-tag">Fase 08 — ⑧ La Costante Cosmologica e l'Universo</div>
-    <h1 class="phase-title">⑧ La Costante Cosmologica e l'Universo</h1>
     <div class="phase-body">
       <p>Einstein aggiunse Λ nel 1917 per un universo statico, poi la definì 'il più grande errore'. Ma nel 1998 l'espansione accelerata dell'universo richiese proprio Λ. Equazione di Friedmann: H² = (8πG/3)ρ + Λc²/3.</p>
       <p class="note">Visualizzazione: espansione dell'universo con costante cosmologica.</p>
@@ -134,7 +126,6 @@ function go(n){
   document.querySelectorAll('.phase-content').forEach((el,i)=>el.classList.toggle('active',i===n));
   document.getElementById('ui-phase').textContent=PHASES[n].name;
   document.getElementById('panel').scrollTop=0;
-  document.getElementById('s-phase').textContent = (n+1)+'/8';
 }
 
 function togglePause(){

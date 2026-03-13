@@ -19,47 +19,41 @@
 <main id="panel" role="main" aria-label="Contenuto della fase corrente" tabindex="-1">
   <div class="phase-content active" id="ph-0">
     <div class="phase-tag">Fase 01 — ① La sfida: quantizzare la gravità</div>
-    <h1 class="phase-title">① La sfida: quantizzare la gravità</h1>
     <div class="phase-body">
       <p>Come unire la Meccanica Quantistica con la Relatività Generale? Ogni tentativo di quantizzare la gravità perturbativamente porta a divergenze UV insanabili. La LQG è uno dei tentativi più seri.</p>
       <p class="note">Visualizzazione: conflitto tra MQ e RG visualizzato.</p>
     </div>
   </div>
   <div class="phase-content" id="ph-1">
-    <div class="phase-tag">Fase 02 — ② Ashtekar e le variabili di connessione</div>
-    <h1 class="phase-title">② Ashtekar e le variabili di connessione (1986)</h1>
+    <div class="phase-tag">Fase 02 — ② Ashtekar e le variabili di connessione (1986)</div>
     <div class="phase-body">
       <p>Abhay Ashtekar riformula la RG con variabili di connessione A^i_a invece della metrica g_μν — come Maxwell riscrisse l'elettromagnetismo con i potenziali vettori. Equazione: A^i_a = Γ^i_a + iK^i_a.</p>
       <p class="note">Visualizzazione: variabili di connessione di Ashtekar.</p>
     </div>
   </div>
   <div class="phase-content" id="ph-2">
-    <div class="phase-tag">Fase 03 — ③ Rovelli, Smolin e i Loop di Wilson (19</div>
-    <h1 class="phase-title">③ Rovelli, Smolin e i Loop di Wilson (1988–1990)</h1>
+    <div class="phase-tag">Fase 03 — ③ Rovelli, Smolin e i Loop di Wilson (1988–1990)</div>
     <div class="phase-body">
       <p>Le equazioni quantizzate hanno come soluzioni naturali i loop di Wilson: W[γ] = Tr(P exp ∮_γ A). Questi loop sono le 'linee di forza' quantizzate della gravità.</p>
       <p class="note">Visualizzazione: loop di Wilson come linee di forza della gravità.</p>
     </div>
   </div>
   <div class="phase-content" id="ph-3">
-    <div class="phase-tag">Fase 04 — ④ Le Spin Networks — Lo Spazio è una Ret</div>
-    <h1 class="phase-title">④ Le Spin Networks — Lo Spazio è una Rete</h1>
+    <div class="phase-tag">Fase 04 — ④ Le Spin Networks — Lo Spazio è una Rete</div>
     <div class="phase-body">
       <p>Lo spazio a scala di Planck non è un continuo ma una rete quantistica. Nodi e archi del grafo portano numeri quantici di spin j = 0, ½, 1, 3/2, ... Ogni arco determina l'area della superficie che attraversa.</p>
       <p class="note">Visualizzazione: rete di spin con nodi e archi quantistici.</p>
     </div>
   </div>
   <div class="phase-content" id="ph-4">
-    <div class="phase-tag">Fase 05 — ⑤ Spazio Discreto — Area e Volume Quanti</div>
-    <h1 class="phase-title">⑤ Spazio Discreto — Area e Volume Quantizzati</h1>
+    <div class="phase-tag">Fase 05 — ⑤ Spazio Discreto — Area e Volume Quantizzati</div>
     <div class="phase-body">
       <p>L'area è quantizzata: A = 8πγ l²_P Σ√(j(j+1)). Il volume pure. Lo spazio ha una struttura granulare minima alla scala di Planck l_P ≈ 1.6×10⁻³⁵ m. L'area minima ≈ 10⁻⁷⁰ m².</p>
       <p class="note">Visualizzazione: granularità dello spazio alla scala di Planck.</p>
     </div>
   </div>
   <div class="phase-content" id="ph-5">
-    <div class="phase-tag">Fase 06 — ⑥ Le Spin Foams — Lo Spaziotempo è una S</div>
-    <h1 class="phase-title">⑥ Le Spin Foams — Lo Spaziotempo è una Schiuma</h1>
+    <div class="phase-tag">Fase 06 — ⑥ Le Spin Foams — Lo Spaziotempo è una Schiuma</div>
     <div class="phase-body">
       <p>Le spin networks evolvono nel tempo creando una spin foam: struttura 4D di vertici, archi, facce, celle. Come il path integral di Feynman somma sui percorsi, la LQG somma su tutte le geometrie (modello EPRL).</p>
       <p class="note">Visualizzazione: spin foam come evoluzione temporale della rete.</p>
@@ -67,7 +61,6 @@
   </div>
   <div class="phase-content" id="ph-6">
     <div class="phase-tag">Fase 07 — ⑦ Background Independence</div>
-    <h1 class="phase-title">⑦ Background Independence</h1>
     <div class="phase-body">
       <p>La LQG non presuppone uno spaziotempo fisso (background-independent). Lo spaziotempo emerge dalla rete stessa. Contrasto con la Teoria delle Stringhe, che vive su uno sfondo fisso.</p>
       <p class="note">Visualizzazione: indipendenza dal background — lo spaziotempo emerge dalla rete.</p>
@@ -75,7 +68,6 @@
   </div>
   <div class="phase-content" id="ph-7">
     <div class="phase-tag">Fase 08 — ⑧ Predizioni e Sfide aperte</div>
-    <h1 class="phase-title">⑧ Predizioni e Sfide aperte</h1>
     <div class="phase-body">
       <p>Predizioni testabili: dispersione della luce gamma (Fermi-LAT), Big Bounce (cosmologia LQG), entropia buchi neri S = A/4l²_P. La sfida principale: recuperare il limite classico della Relatività Generale.</p>
       <p class="note">Visualizzazione: predizioni testabili con Fermi-LAT e cosmologia LQG.</p>
@@ -135,7 +127,6 @@ function go(n){
   document.querySelectorAll('.phase-content').forEach((el,i)=>el.classList.toggle('active',i===n));
   document.getElementById('ui-phase').textContent=PHASES[n].name;
   document.getElementById('panel').scrollTop=0;
-  document.getElementById('s-phase').textContent=(n+1)+'/8';
   updateUI();
 }
 function updateUI(){

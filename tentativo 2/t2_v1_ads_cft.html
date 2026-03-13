@@ -19,7 +19,6 @@
 <main id="panel" role="main" aria-label="Contenuto della fase corrente" tabindex="-1">
   <div class="phase-content active" id="ph-0">
     <div class="phase-tag">Fase 01 — Stack di N D3-Brane</div>
-    <h1 class="phase-title">Stack di N D3-Brane</h1>
     <div class="phase-body">
       <p>N D3-brane identiche si sovrappongono. Le stringhe aperte tese tra di esse generano il campo di gauge SU(N). L'accoppiamento cresce con N.</p>
       <p class="note">Visualizzazione: N brane sovrapposte con stringhe aperte tra di esse.</p>
@@ -27,7 +26,6 @@
   </div>
   <div class="phase-content" id="ph-1">
     <div class="phase-tag">Fase 02 — Le brane curvano lo spaziotempo</div>
-    <h1 class="phase-title">Le brane curvano lo spaziotempo</h1>
     <div class="phase-body">
       <p>Lo stack massiccio di brane deforma la metrica: crea un 'pozzo gravitazionale' nelle 10 dimensioni. La curvatura è proporzionale a N·gₛ·α'².</p>
       <p class="note">Visualizzazione: pozzo gravitazionale nelle 10 dimensioni.</p>
@@ -35,7 +33,6 @@
   </div>
   <div class="phase-content" id="ph-2">
     <div class="phase-tag">Fase 03 — Geometria Anti-de Sitter (AdS₅×S⁵)</div>
-    <h1 class="phase-title">Geometria Anti-de Sitter (AdS₅×S⁵)</h1>
     <div class="phase-body">
       <p>Vicino alle brane la geometria diventa AdS₅×S⁵. AdS è uno spaziotempo iperbolico a curvatura negativa costante. La costante cosmologica è Λ&lt;0.</p>
       <p class="note">Visualizzazione: geometria iperbolica AdS₅×S⁵.</p>
@@ -43,15 +40,13 @@
   </div>
   <div class="phase-content" id="ph-3">
     <div class="phase-tag">Fase 04 — Bulk e Bordo</div>
-    <h1 class="phase-title">Bulk e Bordo</h1>
     <div class="phase-body">
       <p>Il Bulk è l'interno AdS₅ (5D, con gravità). Il Bordo è il confine a r→∞: uno spaziotempo piatto 4D su cui vive la CFT.</p>
       <p class="note">Visualizzazione: separazione bulk (interno) e bordo (confine).</p>
     </div>
   </div>
   <div class="phase-content" id="ph-4">
-    <div class="phase-tag">Fase 05 — Dualità: gravità nel bulk ↔ CFT sul bord</div>
-    <h1 class="phase-title">Dualità: gravità nel bulk ↔ CFT sul bordo</h1>
+    <div class="phase-tag">Fase 05 — Dualità: gravità nel bulk ↔ CFT sul bordo</div>
     <div class="phase-body">
       <p>Maldacena: la stringa IIB nel bulk AdS₅×S⁵ è ESATTAMENTE equivalente alla teoria di gauge 𝒩=4 Super Yang-Mills 4D sul bordo.</p>
       <p class="note">Visualizzazione: corrispondenza duale gravità↔gauge.</p>
@@ -59,7 +54,6 @@
   </div>
   <div class="phase-content" id="ph-5">
     <div class="phase-tag">Fase 06 — Dizionario AdS/CFT</div>
-    <h1 class="phase-title">Dizionario AdS/CFT</h1>
     <div class="phase-body">
       <p>Ogni oggetto bulk ha un corrispondente sul bordo. Massa bulk ↔ dimensione operatore CFT. Black hole AdS ↔ stato termico CFT.</p>
       <p class="note">Visualizzazione: dizionario di corrispondenze bulk↔bordo.</p>
@@ -67,7 +61,6 @@
   </div>
   <div class="phase-content" id="ph-6">
     <div class="phase-tag">Fase 07 — Il principio olografico completo</div>
-    <h1 class="phase-title">Il principio olografico completo</h1>
     <div class="phase-body">
       <p>La fisica del bulk 5D è completamente codificata sul bordo 4D. Come un ologramma 3D su una lastra 2D. La gravità è emergente.</p>
       <p class="note">Visualizzazione: principio olografico completo.</p>
@@ -141,7 +134,6 @@ function go(n){
   document.querySelectorAll('.phase-content').forEach((el,i)=>el.classList.toggle('active',i===n));
   document.getElementById('ui-phase').textContent=PHASES[n].name;
   document.getElementById('panel').scrollTop=0;
-  document.getElementById('s-phase').textContent=(n+1)+'/7';
   updateUI();
 }
 function updateUI(){

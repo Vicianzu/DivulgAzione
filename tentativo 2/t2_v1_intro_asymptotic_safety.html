@@ -19,7 +19,6 @@
 <main id="panel" role="main" aria-label="Contenuto della fase corrente" tabindex="-1">
   <div class="phase-content active" id="ph-0">
     <div class="phase-tag">Fase 01 — Chi è Weinberg?</div>
-    <h1 class="phase-title">Chi è Weinberg?</h1>
     <div class="phase-body">
       <p>Steven Weinberg (1933–2021): padre del Modello Standard (1967), premio Nobel 1973, propose la Asymptotic Safety nel 1976 nelle lezioni di Erice.</p>
       <p class="note">Visualizzazione: timeline della vita e carriera di Weinberg.</p>
@@ -27,7 +26,6 @@
   </div>
   <div class="phase-content" id="ph-1">
     <div class="phase-tag">Fase 02 — Perché "Asintotica"?</div>
-    <h1 class="phase-title">Perché "Asintotica"?</h1>
     <div class="phase-body">
       <p>"Asintotica" viene dal greco: si avvicina a un valore ma non lo tocca mai. Le costanti di accoppiamento fluiscono verso un punto fisso senza raggiungerlo.</p>
       <p class="note">Visualizzazione: approccio asintotico al punto fisso nel grafico del flusso RG.</p>
@@ -35,15 +33,13 @@
   </div>
   <div class="phase-content" id="ph-2">
     <div class="phase-tag">Fase 03 — Perché "Safety"?</div>
-    <h1 class="phase-title">Perché "Safety"?</h1>
     <div class="phase-body">
       <p>La teoria è al sicuro (safe) dalle divergenze infinite. A differenza delle teorie non-safe in cui g→∞, qui g→g* (finito), rendendo la teoria predittiva a tutte le scale.</p>
       <p class="note">Visualizzazione: confronto tra teoria safe e non-safe nel piano di fase.</p>
     </div>
   </div>
   <div class="phase-content" id="ph-3">
-    <div class="phase-tag">Fase 04 — RG Flow — Flusso del Gruppo di Rinormali</div>
-    <h1 class="phase-title">RG Flow — Flusso del Gruppo di Rinormalizzazione</h1>
+    <div class="phase-tag">Fase 04 — RG Flow — Flusso del Gruppo di Rinormalizzazione</div>
     <div class="phase-body">
       <p>Le costanti di accoppiamento G (gravitazionale) e Λ (cosmologica) cambiano con la scala di energia μ. Il flusso RG descrive questa evoluzione nel piano delle fasi.</p>
       <p class="note">Visualizzazione: flusso RG delle costanti G e Λ nel piano delle fasi.</p>
@@ -51,15 +47,13 @@
   </div>
   <div class="phase-content" id="ph-4">
     <div class="phase-tag">Fase 05 — Il Punto Fisso UV</div>
-    <h1 class="phase-title">Il Punto Fisso UV</h1>
     <div class="phase-body">
       <p>A energie altissime (scala di Planck e oltre) il flusso RG converge a un punto fisso UV non-Gaussiano g*. Le direzioni rilevanti definiscono i parametri fisici della teoria.</p>
       <p class="note">Visualizzazione: punto fisso UV non-Gaussiano con attrattore.</p>
     </div>
   </div>
   <div class="phase-content" id="ph-5">
-    <div class="phase-tag">Fase 06 — Libertà Asintotica vs Sicurezza Asintoti</div>
-    <h1 class="phase-title">Libertà Asintotica vs Sicurezza Asintotica</h1>
+    <div class="phase-tag">Fase 06 — Libertà Asintotica vs Sicurezza Asintotica</div>
     <div class="phase-body">
       <p>Nella libertà asintotica (QCD) g→0: punto fisso Gaussiano. Nella sicurezza asintotica g→g*≠0: punto fisso non-Gaussiano. Entrambe le teorie sono UV-complete.</p>
       <p class="note">Visualizzazione: confronto tra libertà asintotica (QCD) e sicurezza asintotica.</p>
@@ -67,7 +61,6 @@
   </div>
   <div class="phase-content" id="ph-6">
     <div class="phase-tag">Fase 07 — Martin Reuter e l'equazione di Wetterich</div>
-    <h1 class="phase-title">Martin Reuter e l'equazione di Wetterich</h1>
     <div class="phase-body">
       <p>Reuter (1998) applicò il gruppo di rinormalizzazione funzionale (FRG) alla gravità. L'equazione di Wetterich ∂t Γk = ½ Tr[(Γk⁽²⁾+Rk)⁻¹ ∂t Rk] governa l'evoluzione del potenziale effettivo.</p>
       <p class="note">Visualizzazione: equazione di Wetterich e potenziale effettivo Γk.</p>
@@ -123,7 +116,6 @@ function go(n){
   document.querySelectorAll('.phase-content').forEach((el,i)=>el.classList.toggle('active',i===n));
   document.getElementById('ui-phase').textContent=PHASES[n].name;
   document.getElementById('panel').scrollTop=0;
-  document.getElementById('s-phase').textContent = (n + 1) + '/7';
   updateUI();
 }
 function updateUI(){
