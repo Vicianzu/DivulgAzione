@@ -1,0 +1,818 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teoria di Campo Conforme (CFT) | Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="ui">
+  <span id="ui-title">DivulgAzione · CFT</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">8 fasi</span>
+</div>
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — CONFORME</div>
+    <div class="phase-title">L'invarianza conforme</div>
+    <div class="phase-body">
+      <p>Le <span class="hl">trasformazioni conformi</span> sono trasformazioni che preservano gli angoli ma non le distanze — un cambiamento di scala locale. Il <span class="am">gruppo conforme</span> in 4D include: (1) <span class="hl">Poincaré</span> (10 parametri): traslazioni e rotazioni. (2) <span class="am">Dilatazioni</span> (1 parametro): x → λx. (3) <span class="gr">Trasformazioni conformi speciali</span> (SCT, 4 parametri): x<sup>μ</sup> → (x<sup>μ</sup> − b<sup>μ</sup>x²)/(1 − 2b·x + b²x²). Totale: <span class="vi">15 parametri</span> = dimensione del gruppo SO(2,4). Una teoria è conforme se la sua azione è invariante sotto tutte queste trasformazioni — equivalentemente, il tensore energia-impulso è privo di traccia: T<sup>μ</sup><sub>μ</sub> = 0.</p>
+      <code class="formula">Gruppo conforme 4D = SO(2,4), 15 parametri:
+• Poincaré: 10 (traslazioni + rotazioni/boost)
+• Dilatazione: 1 (x → λx)
+• SCT: 4 (x → (x-bx²)/(1-2bx+b²x²))
+Condizione: T^μ_μ = 0 (traccia nulla)</code>
+      <div class="note">Animazione: griglia che si trasforma conformemente — angoli preservati ma scala locale cambia.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — OPERATORI</div>
+    <div class="phase-title">Gli operatori primari e le dimensioni conformi</div>
+    <div class="phase-body">
+      <p>In una CFT, i mattoni fondamentali sono gli <span class="hl">operatori primari</span>. Ogni operatore primario O(x) è caratterizzato dalla sua <span class="am">dimensione conforme Δ</span> (un numero reale positivo) e dallo spin l. Sotto dilatazione x→λx:</p>
+      <code class="formula">O_Δ(x) → λ^{-Δ} O_Δ(λx)   [dilatazione]
+O(x) → |∂x'/∂x|^{Δ/d} O(x')   [gen. conforme]
+Dati CFT: {Δᵢ, lᵢ, C^k_{ij}}
+(dimensioni, spin, costanti OPE)</code>
+      <p>Gli operatori <span class="gr">discendenti</span> si ottengono applicando P<sub>μ</sub> (traslazioni) agli operatori primari — sono anch'essi operatori della teoria ma non sono "nuovi" mattoni. Lo spettro degli operatori primari {Δ<sub>i</sub>, l<sub>i</sub>} classifica completamente la CFT (dati CFT).</p>
+      <div class="note">Animazione: un operatore O(x) che si ridimensiona (dilatazione) mentre la sua forma cambia secondo Δ.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — CORRELATORI</div>
+    <div class="phase-title">Funzioni di correlazione: fissate dalla simmetria</div>
+    <div class="phase-body">
+      <p>L'<span class="hl">invarianza conforme</span> fissa quasi completamente la forma delle funzioni di correlazione. A <span class="am">2 punti</span>: ⟨O(x)O(y)⟩ = C<sub>O</sub>/|x−y|<sup>2Δ</sup> — completamente determinata! A <span class="hl">3 punti</span>: determinata a meno della costante C<sub>123</sub> (costante OPE). A <span class="gr">4 punti</span>: compare una funzione arbitraria dei <span class="vi">cross-ratios</span> (rapporti anarmonici) — non fissata dalla simmetria.</p>
+      <code class="formula">⟨O(x)O(y)⟩ = C_O / |x−y|^{2Δ}
+⟨O₁O₂O₃⟩ = C₁₂₃ / (|x₁₂|^{a} |x₁₃|^{b} |x₂₃|^{c})
+⟨O₁O₂O₃O₄⟩ = f(u,v) / (prodotto di potenze)
+u = |x₁₂|²|x₃₄|²/(|x₁₃|²|x₂₄|²)  (cross-ratio)</code>
+      <div class="note">Animazione: linee di correlazione tra punti — correlatore a 2 punti come linea, a 3 punti come triangolo, a 4 punti come quadrato con diagonali.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — VIRASORO</div>
+    <div class="phase-title">L'algebra di Virasoro in 2D</div>
+    <div class="phase-body">
+      <p>In <span class="hl">2 dimensioni spaziotemporali</span>, il gruppo conforme diventa <span class="am">infinito-dimensionale</span>: ci sono infiniti parametri di trasformazione (qualunque funzione olomorfa z→f(z) è una trasformazione conforme). I generatori L<sub>n</sub> (n∈ℤ) soddisfano l'<span class="hl">algebra di Virasoro</span>:</p>
+      <code class="formula">[L_m, L_n] = (m-n)L_{m+n} + c/12 (m³−m) δ_{m+n,0}
+c = 1 (bosone libero), c = 1/2 (fermione Majorana)
+Stato fondamentale: L₀|h⟩ = h|h⟩ (peso conforme h)
+Teor. c: c_{UV} > c_{IR} lungo flusso RG</code>
+      <p>La <span class="am">carica centrale c</span> misura il numero effettivo di gradi di libertà della CFT 2D. Il teorema c di Zamolodchikov: il flusso RG in 2D riduce sempre c.</p>
+      <div class="note">Animazione: rappresentazione dell'algebra — generatori L_n come onde con frequenza n che si combinano.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — PUNTO FISSO</div>
+    <div class="phase-title">CFT come punto fisso del gruppo di rinormalizzazione</div>
+    <div class="phase-body">
+      <p>Una <span class="hl">CFT</span> è precisamente il <span class="am">punto fisso</span> del gruppo di rinormalizzazione (RG). Il flusso RG descrive come la teoria cambia con la scala di energia: a ogni scala l'accoppiamento assume un valore diverso. Un punto fisso è dove il flusso si ferma:</p>
+      <code class="formula">β(g) = μ ∂g/∂μ   (funzione beta)
+Punto fisso: β(g*) = 0
+CFT: teoria al punto fisso → scale invariant
+Flusso RG: CFT_{UV} → massa → CFT_{IR}</code>
+      <p>Al punto fisso, la teoria è <span class="gr">invariante per scala</span> — uguale a tutte le scale. Non c'è una scala caratteristica. Fisicamente: la teoria descrive un sistema critico, privo di lunghezza di correlazione.</p>
+      <div class="note">Animazione: diagramma del flusso RG in 2D (spazio degli accoppiamenti) con il punto fisso come attrattore.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — N4SYM</div>
+    <div class="phase-title">𝒩=4 SYM: la CFT di AdS/CFT</div>
+    <div class="phase-body">
+      <p>La teoria <span class="hl">𝒩=4 Super Yang-Mills</span> è una CFT eccezionale: è conforme per <span class="am">qualsiasi valore</span> di g<sub>YM</sub> e N — non solo al punto fisso. La funzione beta è esattamente zero a tutti gli ordini:</p>
+      <code class="formula">β(g_YM) = 0   (esatta, tutti gli ordini)
+λ = g²_YM N → λ ≪ 1: perturbativa
+λ ≫ 1: SUGRA classica in AdS₅
+Simmetria: PSU(2,2|4) (superconforme)</code>
+      <p>La costante di accoppiamento di <span class="am">'t Hooft</span> λ = g²<sub>YM</sub> N determina il regime fisico. A <span class="gr">λ grande</span>: equivalente a SUGRA classica in AdS₅ (AdS/CFT). La teoria ha anche simmetria <span class="vi">superconforme</span> PSU(2,2|4): 32 supercariche.</p>
+      <div class="note">Animazione: il punto fisso dell'𝒩=4 SYM — un punto in un grafico (g, λ) con le frecce del flusso RG che lo circondano tutte con β=0.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — BOOTSTRAP</div>
+    <div class="phase-title">Il bootstrap conforme: trovare tutte le CFT</div>
+    <div class="phase-body">
+      <p>Il <span class="hl">bootstrap conforme</span> è un programma per determinare sistematicamente tutte le CFT consistenti. La chiave è l'<span class="am">OPE (Operator Product Expansion)</span>: il prodotto di due operatori vicini è espandibile in una serie di operatori:</p>
+      <code class="formula">O_i(x)O_j(0) ~ Σ_k C^k_{ij} |x|^{Δ_k-Δ_i-Δ_j} O_k(0)
+Crossing symmetry: vincoli su {Δ_k, C^k_{ij}}
+Bootstrap: max/min Δ soggetto a positività
+→ bounds precisi sullo spazio delle CFT</code>
+      <p>La consistenza della OPE (simmetria di crossing) impone vincoli sugli esponenti Δ e le costanti C. Usando la <span class="gr">disuguaglianza di bootstrap</span> (Rattazzi-Rychkov-Tonni-Vichi 2008), si possono ottenere bounds precisi sulle dimensioni degli operatori — in molti casi con precisione &gt; 10 cifre significative!</p>
+      <div class="note">Animazione: grafico del "bootstrap island" — regione permessa nel piano (Δ_σ, Δ_ε) per il modello di Ising 3D.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-8">
+    <div class="phase-tag">FASE 08 — TEOREMA C</div>
+    <div class="phase-title">Il teorema c e i gradi di libertà</div>
+    <div class="phase-body">
+      <p>Il <span class="hl">teorema c</span> di Zamolodchikov (1986, 2D): c è una funzione monotonamente <span class="am">decrescente</span> lungo il flusso RG. Ovvero: c<sub>UV</sub> ≥ c<sub>IR</sub>. La CFT UV ha sempre più gradi di libertà della CFT IR. In <span class="hl">4D</span>, il teorema analogo è il <span class="am">teorema a</span> (Cardy 1988, dimostrato da Komargodski-Schwimmer 2011): la <span class="gr">carica anomala a</span> (coefficiente dell'anomalia di Weyl) decresce lungo il flusso.</p>
+      <code class="formula">Teorema c (2D): c_{UV} ≥ c_{IR}   [Zamolodchikov 1986]
+Teorema a (4D): a_{UV} ≥ a_{IR}   [KS 2011]
+Entropia: s ~ c T^{d-1}
+Anomalia di Weyl: W = a E₄ - c W²_μνρσ + ...</code>
+      <div class="note">Animazione: flusso RG con le CFT UV (grande c) e IR (piccola c) ai due estremi, con c che decresce lungo il flusso.</div>
+    </div>
+  </div>
+
+</div>
+
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · Conforme</button>
+  <button class="btn" onclick="goPhase(2)">02 · Operatori</button>
+  <button class="btn" onclick="goPhase(3)">03 · Correlatori</button>
+  <button class="btn" onclick="goPhase(4)">04 · Virasoro</button>
+  <button class="btn" onclick="goPhase(5)">05 · Pt. Fisso</button>
+  <button class="btn" onclick="goPhase(6)">06 · N=4SYM</button>
+  <button class="btn" onclick="goPhase(7)">07 · Bootstrap</button>
+  <button class="btn" onclick="goPhase(8)">08 · Teorema c</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: 'L\'invarianza conforme',            desc: 'FASE 01 — Gruppo SO(2,4), 15 parametri: Poincaré + dilatazioni + SCT; T^μ_μ = 0',          scene: 'conforme'  },
+  { name: 'Operatori primari',                 desc: 'FASE 02 — O_Δ(x) → λ^{-Δ} O(λx): spettro {Δᵢ, lᵢ, C^k_ij} classifica la CFT',            scene: 'operatori' },
+  { name: 'Funzioni di correlazione',          desc: 'FASE 03 — ⟨O(x)O(y)⟩ = C_O/|x−y|^{2Δ}: fissate dalla simmetria conforme',                  scene: 'correlatori'},
+  { name: 'Algebra di Virasoro',               desc: 'FASE 04 — [L_m,L_n]=(m-n)L_{m+n}+c/12(m³-m)δ: carica centrale c in 2D',                   scene: 'virasoro'  },
+  { name: 'CFT come punto fisso RG',           desc: 'FASE 05 — β(g*) = 0: punto fisso del gruppo di rinormalizzazione',                          scene: 'pfisso'    },
+  { name: '𝒩=4 SYM come CFT',                 desc: 'FASE 06 — β(g_YM)=0 esatta: λ=g²N, λ≫1 ↔ SUGRA in AdS₅',                                   scene: 'n4sym'     },
+  { name: 'Bootstrap conforme',                desc: 'FASE 07 — OPE + crossing symmetry → bounds su Δ con precisione > 10 cifre',                  scene: 'bootstrap' },
+  { name: 'Teorema c',                         desc: 'FASE 08 — c_{UV} ≥ c_{IR}: gradi di libertà decrescono lungo flusso RG',                    scene: 'teoremac'  },
+];
+
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const cx    = t2AnimCX();
+  const cy    = t2AnimCY();
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phIdx].scene;
+
+  const R = Math.min(W * (W > 820 ? 0.20 : 0.36), 175);
+
+  function lbl(x, y, s, col, sz, align, font) {
+    t2Txt(x, y, s, col, sz, align || 'center', font || 'Georgia,serif');
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SCENE: conforme — griglia con trasformazione conforme
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (scene === 'conforme') {
+    const n    = 8;
+    const size = R * 1.6;
+    const step = size / n;
+    const ox   = cx - size * 0.5;
+    const oy   = cy - size * 0.5;
+    const tFrac = rm ? 0.5 : (0.5 + 0.5 * Math.sin(T * 0.5));
+
+    // Draw conformally transformed grid
+    // Use Möbius-like: map (u,v) → (u + tFrac*scale*u/(u²+v²+eps), v + tFrac*scale*v/(u²+v²+eps))
+    const scale = 0.5;
+    function confMap(u, v) {
+      const r2 = u * u + v * v + 0.3;
+      const du = tFrac * scale * u / r2;
+      const dv = tFrac * scale * v / r2;
+      return [u + du, v + dv];
+    }
+
+    ctx.strokeStyle = 'rgba(99,102,241,0.45)';
+    ctx.lineWidth   = 0.9;
+
+    // Vertical lines
+    for (let i = 0; i <= n; i++) {
+      const u0 = -1 + 2 * i / n;
+      ctx.beginPath();
+      for (let j = 0; j <= 30; j++) {
+        const v0 = -1 + 2 * j / 30;
+        const [mu, mv] = confMap(u0, v0);
+        const sx = cx + mu * size * 0.5;
+        const sy = cy + mv * size * 0.5;
+        j === 0 ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy);
+      }
+      ctx.stroke();
+    }
+    // Horizontal lines
+    for (let j = 0; j <= n; j++) {
+      const v0 = -1 + 2 * j / n;
+      ctx.beginPath();
+      for (let i = 0; i <= 30; i++) {
+        const u0 = -1 + 2 * i / 30;
+        const [mu, mv] = confMap(u0, v0);
+        const sx = cx + mu * size * 0.5;
+        const sy = cy + mv * size * 0.5;
+        i === 0 ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy);
+      }
+      ctx.stroke();
+    }
+
+    // Highlight a right angle to show angle preservation
+    const ang1 = -0.4, ang2 = 0.4;
+    const [m1x, m1y] = confMap(ang1, 0.0);
+    const [m2x, m2y] = confMap(0.0,  ang2);
+    const [m0x, m0y] = confMap(ang1, ang2);
+    const sx1 = cx + m1x * size * 0.5, sy1 = cy + m1y * size * 0.5;
+    const sx2 = cx + m2x * size * 0.5, sy2 = cy + m2y * size * 0.5;
+    const sx0 = cx + m0x * size * 0.5, sy0 = cy + m0y * size * 0.5;
+    t2Glow('#fbbf24', 14);
+    ctx.beginPath();
+    ctx.moveTo(sx1, sy1); ctx.lineTo(sx0, sy0); ctx.lineTo(sx2, sy2);
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    lbl(sx0 + 12, sy0, '∡ preservato', '#fbbf24', 9, 'left');
+
+    lbl(cx, cy - R * 1.3, 'Trasformazione conforme — angoli preservati', '#60a5fa', 13);
+    lbl(cx, cy + R * 1.3, 'x^μ → (x^μ − b^μ x²)/(1 − 2b·x + b²x²)', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SCENE: operatori — operatore primario con dilatazione
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (scene === 'operatori') {
+    // Draw multiple operators at different scales (showing the Δ spectrum)
+    const ops = [
+      { x: cx - R * 0.7, y: cy - R * 0.3, delta: 1.0, col: '#22d3ee',  lab: 'Δ=1' },
+      { x: cx,           y: cy + R * 0.2,  delta: 2.0, col: '#f59e0b',  lab: 'Δ=2' },
+      { x: cx + R * 0.7, y: cy - R * 0.4,  delta: 3.0, col: '#a78bfa',  lab: 'Δ=3' },
+    ];
+
+    // Animated dilatation
+    const lambda = rm ? 1 : (0.7 + 0.5 * Math.abs(Math.sin(T * 0.7)));
+
+    for (const op of ops) {
+      // Base operator circle (before scaling)
+      const baseR = R * 0.12;
+      const scaledR = baseR * Math.pow(lambda, -op.delta * 0.25);
+
+      ctx.beginPath();
+      ctx.arc(op.x, op.y, scaledR, 0, Math.PI * 2);
+      ctx.strokeStyle = op.col;
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+      ctx.fillStyle   = op.col + '33';
+      ctx.fill();
+
+      t2Glow(op.col, 14);
+      ctx.beginPath();
+      ctx.arc(op.x, op.y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = op.col;
+      ctx.fill();
+      t2NoGlow();
+
+      lbl(op.x, op.y - scaledR - 12, 'O(x)', op.col, 10, 'center', "'Courier New',monospace");
+      lbl(op.x, op.y + scaledR + 14, op.lab, op.col, 11, 'center', "'Courier New',monospace");
+    }
+
+    // Arrow showing dilatation x → λx
+    const dArrowY = cy + R * 0.85;
+    ctx.beginPath();
+    ctx.moveTo(cx - R * 0.5, dArrowY);
+    ctx.lineTo(cx + R * 0.5, dArrowY);
+    ctx.strokeStyle = '#94a3b8';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    lbl(cx, dArrowY + 14, 'x → λx  (λ = ' + lambda.toFixed(2) + ')', '#94a3b8', 10, 'center', "'Courier New',monospace");
+
+    // Lambda indicator
+    const lPulse = rm ? 1 : (0.6 + 0.4 * Math.sin(T * 1.5));
+    t2Glow('#fbbf24', 12 * lPulse);
+    lbl(cx, cy - R * 1.1, 'O_Δ(x) → λ^{−Δ} O_Δ(λx)', '#fbbf24', 12, 'center', "'Courier New',monospace");
+    t2NoGlow();
+
+    lbl(cx, cy - R * 1.3, 'Operatori primari — dilatazione conforme', '#60a5fa', 13);
+    return;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SCENE: correlatori — struttura correlatori 2, 3, 4 punti
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (scene === 'correlatori') {
+    const spread = R * 0.6;
+
+    // 2-point correlator (top-left)
+    const c2x = cx - R * 0.85, c2y = cy - R * 0.55;
+    const p2a = { x: c2x - spread * 0.4, y: c2y };
+    const p2b = { x: c2x + spread * 0.4, y: c2y };
+    const intens2 = rm ? 0.5 : (0.3 + 0.4 * Math.abs(Math.sin(T * 1.1)));
+    ctx.beginPath();
+    ctx.moveTo(p2a.x, p2a.y);
+    ctx.lineTo(p2b.x, p2b.y);
+    ctx.strokeStyle = 'rgba(34,211,238,' + intens2 + ')';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    for (const p of [p2a, p2b]) {
+      ctx.beginPath(); ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#22d3ee'; ctx.fill();
+    }
+    lbl(c2x, c2y - 18, '2 punti', '#22d3ee', 10);
+    lbl(c2x, c2y + 20, '⟨OO⟩ = C/|x−y|^{2Δ}', '#4a7a9b', 8, 'center', "'Courier New',monospace");
+
+    // 3-point correlator (top-right)
+    const c3x = cx + R * 0.85, c3y = cy - R * 0.45;
+    const r3  = spread * 0.42;
+    const p3  = [0, 1, 2].map(i => ({
+      x: c3x + r3 * Math.cos(-Math.PI / 2 + i * Math.PI * 2 / 3),
+      y: c3y + r3 * Math.sin(-Math.PI / 2 + i * Math.PI * 2 / 3),
+    }));
+    const intens3 = rm ? 0.5 : (0.3 + 0.35 * Math.abs(Math.sin(T * 0.9 + 0.5)));
+    for (let i = 0; i < 3; i++) {
+      const j = (i + 1) % 3;
+      ctx.beginPath();
+      ctx.moveTo(p3[i].x, p3[i].y);
+      ctx.lineTo(p3[j].x, p3[j].y);
+      ctx.strokeStyle = 'rgba(251,191,36,' + intens3 + ')';
+      ctx.lineWidth   = 1.8;
+      ctx.stroke();
+    }
+    for (const p of p3) {
+      ctx.beginPath(); ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#fbbf24'; ctx.fill();
+    }
+    lbl(c3x, c3y - r3 - 14, '3 punti', '#fbbf24', 10);
+    lbl(c3x, c3y + r3 + 18, '⟨O₁O₂O₃⟩ = C₁₂₃/(...)', '#4a7a9b', 8, 'center', "'Courier New',monospace");
+
+    // 4-point correlator (bottom)
+    const c4x = cx, c4y = cy + R * 0.55;
+    const r4  = spread * 0.42;
+    const p4  = [0, 1, 2, 3].map(i => ({
+      x: c4x + r4 * Math.cos(-Math.PI * 0.25 + i * Math.PI * 0.5),
+      y: c4y + r4 * Math.sin(-Math.PI * 0.25 + i * Math.PI * 0.5),
+    }));
+    const intens4 = rm ? 0.5 : (0.25 + 0.3 * Math.abs(Math.sin(T * 0.8 + 1)));
+    // Square edges
+    for (let i = 0; i < 4; i++) {
+      const j = (i + 1) % 4;
+      ctx.beginPath();
+      ctx.moveTo(p4[i].x, p4[i].y);
+      ctx.lineTo(p4[j].x, p4[j].y);
+      ctx.strokeStyle = 'rgba(167,139,250,' + (intens4 + 0.1) + ')';
+      ctx.lineWidth   = 1.8;
+      ctx.stroke();
+    }
+    // Diagonals
+    for (const [i, j] of [[0, 2], [1, 3]]) {
+      ctx.beginPath();
+      ctx.moveTo(p4[i].x, p4[i].y);
+      ctx.lineTo(p4[j].x, p4[j].y);
+      ctx.strokeStyle = 'rgba(244,114,182,' + intens4 + ')';
+      ctx.lineWidth   = 1.2;
+      ctx.setLineDash([4, 3]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    for (const p of p4) {
+      ctx.beginPath(); ctx.arc(p.x, p.y, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#a78bfa'; ctx.fill();
+    }
+    lbl(c4x, c4y - r4 - 14, '4 punti', '#a78bfa', 10);
+    lbl(c4x, c4y + r4 + 18, '⟨O₁O₂O₃O₄⟩ = f(u,v)/(...)', '#4a7a9b', 8, 'center', "'Courier New',monospace");
+    lbl(c4x + r4 + 10, c4y, 'cross-ratio u,v', '#f472b6', 8, 'left');
+
+    lbl(cx, cy - R * 1.3, 'Correlatori CFT — struttura fissata dalla simmetria', '#60a5fa', 13);
+    return;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SCENE: virasoro — onde per i generatori L_n
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (scene === 'virasoro') {
+    const modes  = [-2, -1, 0, 1, 2];
+    const colors = ['#f472b6', '#f59e0b', '#22d3ee', '#4ade80', '#a78bfa'];
+    const waveW  = R * 1.7;
+    const waveH  = R * 0.22;
+    const spacing = R * 0.45;
+    const startY = cy - spacing * (modes.length - 1) * 0.5;
+
+    for (let mi = 0; mi < modes.length; mi++) {
+      const n    = modes[mi];
+      const wY   = startY + mi * spacing;
+      const col  = colors[mi];
+      const freq = Math.abs(n) + 0.5;
+      const phase2 = rm ? 0 : T * 1.5;
+
+      // Axis line
+      ctx.beginPath();
+      ctx.moveTo(cx - waveW * 0.5, wY);
+      ctx.lineTo(cx + waveW * 0.5, wY);
+      ctx.strokeStyle = 'rgba(71,85,105,0.4)';
+      ctx.lineWidth   = 0.7;
+      ctx.stroke();
+
+      // Wave
+      ctx.beginPath();
+      for (let i = 0; i <= 80; i++) {
+        const xf = i / 80;
+        const wx = cx - waveW * 0.5 + xf * waveW;
+        const wy = wY + waveH * Math.sin(freq * xf * Math.PI * 2 - phase2 * (n < 0 ? -1 : 1));
+        i === 0 ? ctx.moveTo(wx, wy) : ctx.lineTo(wx, wy);
+      }
+      const aWave = rm ? 0.7 : (0.5 + 0.3 * Math.abs(Math.sin(T * 0.8 + mi)));
+      ctx.strokeStyle = col;
+      ctx.lineWidth   = n === 0 ? 2 : 1.3;
+      ctx.globalAlpha = aWave;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      lbl(cx - waveW * 0.5 - 30, wY, 'L_' + n, col, 11, 'center', "'Courier New',monospace");
+    }
+
+    // Superposition wave
+    const supY = startY + modes.length * spacing + 10;
+    ctx.beginPath();
+    for (let i = 0; i <= 80; i++) {
+      const xf = i / 80;
+      const wx = cx - waveW * 0.5 + xf * waveW;
+      let sum = 0;
+      for (let mi = 0; mi < modes.length; mi++) {
+        const n = modes[mi];
+        const freq = Math.abs(n) + 0.5;
+        const phase2 = rm ? 0 : T * 1.5;
+        sum += 0.3 * Math.sin(freq * xf * Math.PI * 2 - phase2 * (n < 0 ? -1 : 1));
+      }
+      const wy = supY + waveH * sum;
+      i === 0 ? ctx.moveTo(wx, wy) : ctx.lineTo(wx, wy);
+    }
+    t2Glow('#ffffff', 10);
+    ctx.strokeStyle = '#f0f9ff';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    lbl(cx - waveW * 0.5 - 30, supY, 'Σ', '#f0f9ff', 11, 'center', "'Courier New',monospace");
+    lbl(cx, supY + 22, 'sovrapposizione', '#94a3b8', 9);
+
+    lbl(cx, cy - R * 1.3, 'Algebra di Virasoro — generatori L_n', '#60a5fa', 13);
+    lbl(cx, cy + R * 1.35, '[L_m, L_n] = (m−n)L_{m+n} + c/12(m³−m)δ_{m+n,0}', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SCENE: pfisso — flusso RG nel piano degli accoppiamenti
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (scene === 'pfisso') {
+    const axR  = R * 1.1;
+    const fpx  = cx + R * 0.2;  // fixed point position
+    const fpy  = cy - R * 0.15;
+
+    // Axes
+    ctx.beginPath();
+    ctx.moveTo(cx - axR, cy + axR * 0.5);
+    ctx.lineTo(cx + axR, cy + axR * 0.5);
+    ctx.strokeStyle = 'rgba(148,163,184,0.5)';
+    ctx.lineWidth   = 1.2;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(cx - axR + 14, cy - axR * 0.6);
+    ctx.lineTo(cx - axR + 14, cy + axR * 0.5);
+    ctx.stroke();
+    lbl(cx + axR + 6, cy + axR * 0.5, 'g₁', '#94a3b8', 11, 'left');
+    lbl(cx - axR + 14, cy - axR * 0.6 - 14, 'g₂', '#94a3b8', 11);
+
+    // RG flow vector field
+    const nGrid = 7;
+    for (let ii = 0; ii < nGrid; ii++) {
+      for (let jj = 0; jj < nGrid; jj++) {
+        const gx = cx - axR * 0.8 + ii * (axR * 1.6 / (nGrid - 1));
+        const gy = cy - axR * 0.45 + jj * (axR * 0.85 / (nGrid - 1));
+        const dx = gx - fpx;
+        const dy = gy - fpy;
+        const dist = Math.hypot(dx, dy) + 1;
+        // Flow: attracted to fixed point
+        const vx = -dx / dist * 14;
+        const vy = -dy / dist * 14;
+        const len = Math.hypot(vx, vy);
+        const alpha = 0.25 + 0.2 * (1 - dist / (axR * 1.5));
+        ctx.beginPath();
+        ctx.moveTo(gx, gy);
+        ctx.lineTo(gx + vx, gy + vy);
+        ctx.strokeStyle = 'rgba(99,102,241,' + t2Clamp(alpha, 0.1, 0.5) + ')';
+        ctx.lineWidth   = 0.9;
+        ctx.stroke();
+        // Arrowhead
+        const ang = Math.atan2(vy, vx);
+        ctx.beginPath();
+        ctx.moveTo(gx + vx, gy + vy);
+        ctx.lineTo(gx + vx - 5 * Math.cos(ang - 0.4), gy + vy - 5 * Math.sin(ang - 0.4));
+        ctx.lineTo(gx + vx - 5 * Math.cos(ang + 0.4), gy + vy - 5 * Math.sin(ang + 0.4));
+        ctx.closePath();
+        ctx.fillStyle = 'rgba(99,102,241,' + t2Clamp(alpha, 0.1, 0.5) + ')';
+        ctx.fill();
+      }
+    }
+
+    // Fixed point (attractor)
+    const fpPulse = rm ? 1 : (0.7 + 0.3 * Math.sin(T * 2.0));
+    t2Glow('#22d3ee', 24 * fpPulse);
+    ctx.beginPath();
+    ctx.arc(fpx, fpy, 8, 0, Math.PI * 2);
+    ctx.fillStyle = '#22d3ee';
+    ctx.fill();
+    t2NoGlow();
+    lbl(fpx + 14, fpy - 14, 'g* (punto fisso)', '#22d3ee', 10, 'left');
+    lbl(fpx + 14, fpy,      'β(g*) = 0',        '#22d3ee', 10, 'left', "'Courier New',monospace");
+
+    // A trajectory spiraling to fixed point
+    if (!rm) {
+      const traj = 40;
+      ctx.beginPath();
+      for (let k = 0; k <= traj; k++) {
+        const angle = k * 0.25 + T * 0.8;
+        const rad   = axR * 0.6 * (1 - k / traj);
+        const tx    = fpx + rad * Math.cos(angle);
+        const ty    = fpy + rad * Math.sin(angle);
+        k === 0 ? ctx.moveTo(tx, ty) : ctx.lineTo(tx, ty);
+      }
+      ctx.strokeStyle = 'rgba(251,191,36,0.6)';
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+    }
+
+    lbl(cx, cy - R * 1.3, 'Flusso RG — punto fisso della CFT', '#60a5fa', 13);
+    lbl(cx, cy + R * 1.25, 'β(g) = μ ∂g/∂μ = 0  al punto fisso', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SCENE: n4sym — β=0 per 𝒩=4 SYM
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (scene === 'n4sym') {
+    const axR  = R * 1.0;
+    const fpx  = cx;
+    const fpy  = cy;
+
+    // Axes: g_YM (x) and λ=g²N (y)
+    ctx.beginPath();
+    ctx.moveTo(cx - axR, cy + axR * 0.5);
+    ctx.lineTo(cx + axR, cy + axR * 0.5);
+    ctx.strokeStyle = 'rgba(148,163,184,0.5)';
+    ctx.lineWidth   = 1.2;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(cx - axR * 0.7, cy - axR * 0.6);
+    ctx.lineTo(cx - axR * 0.7, cy + axR * 0.5);
+    ctx.stroke();
+    lbl(cx + axR + 6, cy + axR * 0.5,   'g_YM', '#94a3b8', 11, 'left');
+    lbl(cx - axR * 0.7, cy - axR * 0.6 - 14, 'λ', '#94a3b8', 11);
+
+    // For N=4 SYM: ANY value of g_YM is a fixed point (β=0 everywhere)
+    // Draw β=0 line (the entire g-axis is fixed!)
+    const lineY = cy;
+    t2Glow('#4ade80', 12);
+    ctx.beginPath();
+    ctx.moveTo(cx - axR * 0.9, lineY);
+    ctx.lineTo(cx + axR * 0.9, lineY);
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth   = 2.5;
+    ctx.stroke();
+    t2NoGlow();
+    lbl(cx + axR * 0.95, lineY, 'β = 0', '#4ade80', 10, 'left', "'Courier New',monospace");
+
+    // Arrows all staying horizontal (no flow)
+    const nPts = 8;
+    for (let ii = 0; ii < nPts; ii++) {
+      const gv = -axR * 0.8 + ii * (axR * 1.6 / (nPts - 1));
+      const gx = cx + gv;
+      const gy = cy;
+      // No vertical flow — arrow = horizontal (staying)
+      const pulse = rm ? 0.6 : (0.3 + 0.3 * Math.abs(Math.sin(T * 1.2 + ii * 0.4)));
+      ctx.beginPath();
+      ctx.arc(gx, gy, 4, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(74,222,128,' + (0.4 + pulse * 0.4) + ')';
+      ctx.fill();
+    }
+
+    // Regime labels
+    lbl(cx - axR * 0.5, lineY - 22, 'λ ≪ 1: perturbativa', '#94a3b8', 9);
+    lbl(cx + axR * 0.4, lineY - 22, 'λ ≫ 1: SUGRA in AdS₅', '#f97316', 9);
+
+    // Vertical dashed separator
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - axR * 0.55);
+    ctx.lineTo(cx, cy + axR * 0.45);
+    ctx.strokeStyle = 'rgba(148,163,184,0.3)';
+    ctx.lineWidth   = 1;
+    ctx.setLineDash([4, 4]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Superconformal label
+    const sPulse = rm ? 1 : (0.7 + 0.3 * Math.sin(T * 1.5));
+    t2Glow('#f472b6', 16 * sPulse);
+    lbl(cx, cy + axR * 0.22, 'PSU(2,2|4)', '#f472b6', 12, 'center', "'Courier New',monospace");
+    t2NoGlow();
+    lbl(cx, cy + axR * 0.38, '(simmetria superconforme)', '#f472b6', 9);
+
+    lbl(cx, cy - R * 1.25, '𝒩=4 SYM — CFT esatta per qualsiasi g', '#60a5fa', 13);
+    lbl(cx, cy + R * 1.25, 'β(g_YM) = 0  (esatta, tutti gli ordini perturbativi)', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SCENE: bootstrap — bootstrap island nel piano (Δ_σ, Δ_ε)
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (scene === 'bootstrap') {
+    const plotW = R * 1.8;
+    const plotH = R * 1.4;
+    const ox2   = cx - plotW * 0.5;
+    const oy2   = cy + plotH * 0.5;
+
+    // Axes
+    ctx.beginPath();
+    ctx.moveTo(ox2, oy2);
+    ctx.lineTo(ox2 + plotW + 10, oy2);
+    ctx.strokeStyle = 'rgba(148,163,184,0.6)';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(ox2, oy2);
+    ctx.lineTo(ox2, oy2 - plotH - 10);
+    ctx.stroke();
+    lbl(ox2 + plotW + 20, oy2, 'Δ_σ', '#94a3b8', 12, 'left');
+    lbl(ox2, oy2 - plotH - 22, 'Δ_ε', '#94a3b8', 12);
+
+    // Tick marks
+    const nTick = 4;
+    for (let ti = 1; ti <= nTick; ti++) {
+      const tx = ox2 + ti * plotW / nTick;
+      const ty = oy2 - ti * plotH / nTick;
+      ctx.beginPath();
+      ctx.moveTo(tx, oy2 - 4); ctx.lineTo(tx, oy2 + 4);
+      ctx.strokeStyle = 'rgba(148,163,184,0.4)'; ctx.lineWidth = 1; ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(ox2 - 4, ty); ctx.lineTo(ox2 + 4, ty);
+      ctx.stroke();
+    }
+    // Axis values (Ising 3D: Δ_σ ≈ 0.518, Δ_ε ≈ 1.413)
+    lbl(ox2 + plotW * 0.25, oy2 + 14, '0.4', '#64748b', 8);
+    lbl(ox2 + plotW * 0.5,  oy2 + 14, '0.5', '#64748b', 8);
+    lbl(ox2 + plotW * 0.75, oy2 + 14, '0.6', '#64748b', 8);
+    lbl(ox2 - 18, oy2 - plotH * 0.25, '1.0', '#64748b', 8, 'right');
+    lbl(ox2 - 18, oy2 - plotH * 0.55, '1.4', '#64748b', 8, 'right');
+    lbl(ox2 - 18, oy2 - plotH * 0.85, '1.8', '#64748b', 8, 'right');
+
+    // Excluded region (above bootstrap bound curve)
+    ctx.beginPath();
+    // Draw a curve representing the bootstrap bound
+    const boundPts = [];
+    for (let bi = 0; bi <= 40; bi++) {
+      const fx = bi / 40;
+      const bx3 = ox2 + fx * plotW;
+      // Bootstrap bound: Δ_ε ≥ some function of Δ_σ
+      const bound = 1.0 + 0.8 * (fx - 0.5) * (fx - 0.5) * 2.5 + 0.3 * fx;
+      const by3   = oy2 - bound * plotH * 0.52;
+      boundPts.push({ x: bx3, y: by3 });
+    }
+    ctx.beginPath();
+    ctx.moveTo(ox2, oy2);
+    for (const bp of boundPts) ctx.lineTo(bp.x, bp.y);
+    ctx.lineTo(ox2 + plotW, oy2);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(239,68,68,0.15)';
+    ctx.fill();
+    // Bound curve
+    ctx.beginPath();
+    ctx.moveTo(boundPts[0].x, boundPts[0].y);
+    for (const bp of boundPts) ctx.lineTo(bp.x, bp.y);
+    ctx.strokeStyle = '#ef4444';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    lbl(cx + R * 0.5, cy, 'regione esclusa', '#ef4444', 9);
+    lbl(cx + R * 0.5, cy + 14, '(bootstrap bound)', '#ef4444', 8);
+
+    // Allowed region
+    lbl(cx - R * 0.3, cy + R * 0.5, 'regione permessa', '#4ade80', 9);
+
+    // Bootstrap island (tiny allowed region around Ising point)
+    const isingX = ox2 + plotW * 0.52;  // Δ_σ ≈ 0.518
+    const isingY = oy2 - plotH * 0.54;  // Δ_ε ≈ 1.413
+    const islandPulse = rm ? 1 : (1 + 0.1 * Math.sin(T * 2.0));
+    t2Glow('#fbbf24', 22 * islandPulse);
+    ctx.beginPath();
+    ctx.ellipse(isingX, isingY, 14 * islandPulse, 8 * islandPulse, 0.3, 0, Math.PI * 2);
+    ctx.fillStyle = '#fbbf24';
+    ctx.globalAlpha = 0.8;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    t2NoGlow();
+    lbl(isingX + 18, isingY - 10, 'Ising 3D', '#fbbf24', 9, 'left');
+    lbl(isingX + 18, isingY + 4,  'Δ_σ≈0.518', '#fbbf24', 8, 'left', "'Courier New',monospace");
+    lbl(isingX + 18, isingY + 16, 'Δ_ε≈1.413', '#fbbf24', 8, 'left', "'Courier New',monospace");
+
+    lbl(cx, cy - R * 1.3, 'Bootstrap conforme — isola di Ising 3D', '#60a5fa', 13);
+    return;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SCENE: teoremac — flusso RG con c decrescente
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (scene === 'teoremac') {
+    const flowY   = cy;
+    const uvX     = cx - R * 1.0;
+    const irX     = cx + R * 1.0;
+    const boxH2   = R * 0.7;
+
+    // UV box (large c)
+    t2Glow('#f59e0b', 16);
+    ctx.beginPath();
+    ctx.roundRect ? ctx.roundRect(uvX - R * 0.45, flowY - boxH2 * 0.5, R * 0.9, boxH2, 8)
+                  : ctx.rect(uvX - R * 0.45, flowY - boxH2 * 0.5, R * 0.9, boxH2);
+    ctx.strokeStyle = '#f59e0b';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    lbl(uvX, flowY - boxH2 * 0.22, 'CFT_UV', '#f59e0b', 13);
+    lbl(uvX, flowY + boxH2 * 0.08, 'c_UV = grande', '#fde68a', 10, 'center', "'Courier New',monospace");
+    lbl(uvX, flowY + boxH2 * 0.32, '(molti GdL)', '#94a3b8', 9);
+
+    // IR box (small c)
+    t2Glow('#22d3ee', 14);
+    ctx.beginPath();
+    ctx.roundRect ? ctx.roundRect(irX - R * 0.38, flowY - boxH2 * 0.36, R * 0.75, boxH2 * 0.72, 8)
+                  : ctx.rect(irX - R * 0.38, flowY - boxH2 * 0.36, R * 0.75, boxH2 * 0.72);
+    ctx.strokeStyle = '#22d3ee';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    lbl(irX, flowY - boxH2 * 0.12, 'CFT_IR', '#22d3ee', 12);
+    lbl(irX, flowY + boxH2 * 0.1,  'c_IR = piccola', '#67e8f9', 9, 'center', "'Courier New',monospace");
+
+    // RG flow arrow
+    const arrX1 = uvX + R * 0.48;
+    const arrX2 = irX - R * 0.40;
+    const nFlow = 4;
+    for (let fi = 0; fi < nFlow; fi++) {
+      const tFrac = rm ? (fi + 0.5) / nFlow : ((T * 0.5 + fi / nFlow) % 1);
+      const fx    = t2Lerp(arrX1, arrX2, tFrac);
+      const fy    = flowY + (fi - 1.5) * 8;
+      const alpha = rm ? 0.5 : Math.sin(tFrac * Math.PI) * 0.8;
+      t2Glow('#a78bfa', 12 * alpha);
+      ctx.beginPath();
+      ctx.arc(fx, fy, 4, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(167,139,250,' + alpha + ')';
+      ctx.fill();
+      t2NoGlow();
+    }
+    // Static arrow
+    ctx.beginPath();
+    ctx.moveTo(arrX1, flowY);
+    ctx.lineTo(arrX2, flowY);
+    ctx.strokeStyle = '#a78bfa';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    const ahS = 7;
+    ctx.beginPath();
+    ctx.moveTo(arrX2, flowY);
+    ctx.lineTo(arrX2 - ahS, flowY - ahS * 0.5);
+    ctx.lineTo(arrX2 - ahS, flowY + ahS * 0.5);
+    ctx.closePath();
+    ctx.fillStyle = '#a78bfa';
+    ctx.fill();
+    lbl((arrX1 + arrX2) * 0.5, flowY - 18, 'flusso RG', '#a78bfa', 10);
+    lbl((arrX1 + arrX2) * 0.5, flowY + 18, 'μ ↓', '#a78bfa', 10, 'center', "'Courier New',monospace");
+
+    // Decreasing c label
+    const cPulse = rm ? 1 : (0.7 + 0.3 * Math.sin(T * 1.8));
+    t2Glow('#f59e0b', 14 * cPulse);
+    lbl(cx, flowY + boxH2 + 20, 'c_UV ≥ c_IR  (teorema c)', '#fbbf24', 12, 'center', "'Courier New',monospace");
+    t2NoGlow();
+
+    // Massive region label
+    lbl(cx, flowY + boxH2 + 38, 'teorie massive intermedie', '#64748b', 9);
+
+    lbl(cx, cy - R * 1.25, 'Teorema c — i gradi di libertà decrescono', '#60a5fa', 13);
+    lbl(cx, cy + R * 1.3,  'Zamolodchikov (1986) in 2D — Komargodski-Schwimmer (2011) in 4D', '#4a7a9b', 9, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── Fallback ──────────────────────────────────────────────────────────────
+  ctx.beginPath();
+  ctx.arc(cx, cy, R, 0, Math.PI * 2);
+  ctx.strokeStyle = 'rgba(34,211,238,0.3)';
+  ctx.lineWidth   = 1.5;
+  ctx.stroke();
+};
+
+t2Init();
+</script>
+</body>
+</html>

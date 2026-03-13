@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Problema: Quantizzare la Gravità | Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="ui">
+  <span id="ui-title">DivulgAzione · QG</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">6 fasi</span>
+</div>
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — CRISI</div>
+    <div class="phase-title">La crisi della gravità quantistica</div>
+    <div class="phase-body">
+      <p>La fisica teorica del XX secolo ha prodotto due teorie straordinariamente accurate ma profondamente incompatibili. La <span class="hl">relatività generale</span> descrive la gravità come curvatura dello spaziotempo — continua, geometrica, deterministica. La <span class="am">meccanica quantistica</span> (e la QFT) tratta i campi come operatori quantistici su uno sfondo fisso — discreta, probabilistica, non-locale.</p>
+      <p>A scale ordinarie queste teorie non si sovrappongono mai: la gravità è irrilevante per le particelle subatomiche, e la QFT ignora la curvatura dello spaziotempo. Ma a energie estreme — la scala di Planck — entrambe diventano importanti simultaneamente, e si <span class="am">contraddicono</span>.</p>
+      <code class="formula">l_P = √(ℏG/c³) ≈ 1.6 × 10⁻³⁵ m
+E_P = √(ℏc⁵/G) ≈ 1.22 × 10¹⁹ GeV</code>
+      <p>A questa scala le due teorie si contraddicono irrimediabilmente. Non è un semplice disaccordo tecnico: è una crisi concettuale profonda sulla natura stessa dello spazio, del tempo e della materia.</p>
+      <div class="note">Animazione: due onde sinusoidali che si avvicinano da sinistra (QFT, ciano) e destra (GR, ambra) e si scontrano al centro, generando interferenza caotica — metafora visiva della crisi.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — RINORMALIZZAZIONE</div>
+    <div class="phase-title">La gravità non è rinormalizzabile</div>
+    <div class="phase-body">
+      <p>Nelle teorie di gauge di successo come QED e QCD, le divergenze ultraviolette (UV) che appaiono nei <span class="hl">diagrammi di Feynman a loop</span> possono essere assorbite ridefinendo un numero finito di parametri della teoria: masse e costanti di accoppiamento. Questo processo si chiama <span class="am">rinormalizzazione perturbativa</span>.</p>
+      <p>Per la gravità questo meccanismo non funziona. La costante di Newton G_N ha dimensioni di [energia]⁻², il che rende la teoria perturbativamente <span class="am">non-rinormalizzabile</span>. A ogni ordine in teoria perturbativa appaiono nuove divergenze che richiedono nuovi controtermine — un numero infinito di parametri liberi, rendendo la teoria priva di potere predittivo oltre la scala di Planck.</p>
+      <code class="formula">G_N ~ [energia]⁻²
+→ divergenze UV ineliminabili a ogni loop
+→ teoria non predittiva oltre E_P</code>
+      <p>Questo non significa che la GR sia sbagliata a basse energie — è un'eccellente teoria effettiva. Ma non può essere la teoria fondamentale: a scale di Planck deve emergere una descrizione più profonda.</p>
+      <div class="note">Animazione: diagrammi di Feynman schematici con loop che pulsano e crescono, simboleggiando le divergenze UV che esplodono ad ogni ordine perturbativo.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — QFT</div>
+    <div class="phase-title">Perché la QFT convenzionale non basta</div>
+    <div class="phase-body">
+      <p>Nella QFT convenzionale si quantizza un campo su uno sfondo fisso e non dinamico — tipicamente lo spaziotempo di Minkowski η_μν. I campi φ(x) fluttuano, ma la geometria dello spaziotempo rimane rigida e classica.</p>
+      <p>Per la gravità, però, il campo gravitazionale <span class="hl">è lo spaziotempo stesso</span>. La metrica g_μν non è un campo che vive su uno sfondo: è il tessuto geometrico su cui vivono tutti gli altri campi. Quando si prova a quantizzare g_μν = η_μν + h_μν, le fluttuazioni quantistiche h_μν deformano lo sfondo su cui si costruisce la teoria — una circolarità fondamentale.</p>
+      <code class="formula">QFT standard: φ su sfondo fisso η_μν
+Gravità: g_μν = η_μν + h_μν (h fluttua!)
+→ Lo sfondo è dinamico!</code>
+      <p>Non c'è uno sfondo <span class="am">background-independent</span> su cui costruire la teoria. La geometria diventa un operatore quantistico, e le nozioni di causalità, tempo e distanza diventano incerte. Questa <span class="gr">background independence</span> è la differenza concettuale fondamentale che rende la quantizzazione della gravità così difficile.</p>
+      <div class="note">Animazione: griglia regolare dello spaziotempo che si deforma e ondeggia dinamicamente, con i nodi della griglia spostati da funzioni sinusoidali sovrapposte.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — APPROCCI</div>
+    <div class="phase-title">Le strade verso la gravità quantistica</div>
+    <div class="phase-body">
+      <p>Di fronte a questa crisi, la comunità teorica ha esplorato diversi approcci radicalmente diversi. Nessuno è ancora definitivamente confermato sperimentalmente.</p>
+      <p>La <span class="hl">Loop Quantum Gravity (LQG)</span> quantizza direttamente la geometria dello spaziotempo senza sfondo fisso, ottenendo uno spazio discreto tessuto da reti di spin — granularità fondamentale della geometria. La <span class="am">Teoria delle Stringhe</span> sostituisce i punti con oggetti 1-dimensionali (stringhe), e include naturalmente il gravitone (spin 2) nel suo spettro di eccitazioni. L'<span class="gr">Asymptotic Safety (AS)</span> cerca un punto fisso UV non-perturbativo del gruppo di rinormalizzazione che rende la gravità predittiva a tutte le scale. Le <span class="vi">Causal Dynamical Triangulations (CDT)</span> costruiscono la geometria sommando su triangolazioni causali dello spaziotempo.</p>
+      <code class="formula">LQG: quantizza geometria → spazio discreto
+Stringhe: gravitone nello spettro chiuso
+AS: punto fisso UV non-perturbativo
+CDT: geometria per triangolazione</code>
+      <p>Ogni approccio ha punti di forza e debolezze. La Teoria delle Stringhe è la più sviluppata matematicamente, e include AdS/CFT come suo prodotto più fecondo.</p>
+      <div class="note">Animazione: nodo centrale "GQ" (gravità quantistica) con quattro rami animati che si irradiano verso i quattro approcci principali, con etichette colorate.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — DUALITÀ</div>
+    <div class="phase-title">La dualità come strumento</div>
+    <div class="phase-body">
+      <p>Invece di quantizzare direttamente la gravità, esiste un approccio alternativo e sorprendentemente potente: descriverla come <span class="hl">emergente</span> da una teoria di campo sul bordo senza gravità.</p>
+      <p>La corrispondenza di Maldacena (1997) — nota come <span class="am">dualità AdS/CFT</span> — afferma che una teoria di stringa in uno spaziotempo anti-de Sitter (AdS₅×S⁵) è esattamente equivalente a una teoria di campo conforme (CFT) sul bordo 4-dimensionale. La gravità nel bulk — inclusa la sua quantizzazione — emerge dalle correlazioni quantistiche della <span class="gr">𝒩=4 Super Yang-Mills</span> sul bordo.</p>
+      <code class="formula">Stringa IIB su AdS₅×S⁵ ≡ 𝒩=4 SYM su ℝ³·¹
+(Maldacena, 1997)</code>
+      <p>Questa dualità è <span class="vi">olografica</span>: una teoria in D+1 dimensioni è equivalente a una teoria su un bordo D-dimensionale. Il bulk tridimensionale è codificato nella teoria bidimensionale sul bordo. È un esempio concreto di come la dualità possa essere più potente dell'approccio diretto alla quantizzazione della gravità.</p>
+      <div class="note">Animazione: due cerchi concentrici — grande (bulk AdS, viola) e piccolo (bordo CFT, ciano) — con frecce bidirezionali animate che simboleggiano la dualità.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — ROADMAP</div>
+    <div class="phase-title">Roadmap della serie</div>
+    <div class="phase-body">
+      <p>Questa serie divulgativa esplora AdS/CFT dalla base matematica alla frontiera della ricerca attuale. Ogni capitolo costruisce sulle fondamenta del precedente.</p>
+      <p>Cap. 1-3: <span class="hl">Il Problema, SUSY, Stringhe</span> — gli ingredienti fondamentali: la crisi della gravità quantistica, la supersimmetria come strumento matematico, e la teoria delle stringhe come cornice. Cap. 4-5: <span class="am">SUGRA e geometria AdS</span> — la supergravità come limite a basse energie delle stringhe, e la geometria anti-de Sitter. Cap. 6: <span class="gr">CFT</span> — le teorie di campo conformi, il lato bordo della dualità. Cap. 7-8: <span class="vi">Bekenstein-Hawking e la congettura di Maldacena</span> — la termodinamica dei buchi neri e l'origine della corrispondenza. Cap. 9-10: il <span class="hl">Dizionario e la Bulk Reconstruction</span> — come tradurre tra le due descrizioni. Cap. 11-13: <span class="am">Entanglement, ER=EPR, Paradosso dell'Informazione</span> — le applicazioni più profonde. Cap. 14: <span class="gr">Il Principio Olografico</span> — le implicazioni filosofiche e fisiche.</p>
+      <code class="formula">Cap 01: Problema → Cap 02-03: SUSY, Stringhe
+Cap 04-05: SUGRA, AdS → Cap 06: CFT
+Cap 07-08: BH, Maldacena → Cap 09-10: Dizionario
+Cap 11-13: Entanglement, ER=EPR, Info
+Cap 14: Olografia</code>
+      <div class="note">Animazione: timeline orizzontale con 14 nodi che si illuminano in sequenza, con un cursore luminoso che scorre da sinistra a destra indicando la progressione della serie.</div>
+    </div>
+  </div>
+
+</div>
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · La Crisi</button>
+  <button class="btn" onclick="goPhase(2)">02 · Rinorm.</button>
+  <button class="btn" onclick="goPhase(3)">03 · QFT</button>
+  <button class="btn" onclick="goPhase(4)">04 · Approcci</button>
+  <button class="btn" onclick="goPhase(5)">05 · Dualità</button>
+  <button class="btn" onclick="goPhase(6)">06 · Roadmap</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: 'La Crisi della Gravità Quantistica', desc: 'FASE 01 — GR vs QFT: l_P = √(ℏG/c³) ≈ 1.6×10⁻³⁵ m', scene: 'crisi'   },
+  { name: 'La Gravità Non È Rinormalizzabile',  desc: 'FASE 02 — G_N ~ [energia]⁻² → divergenze UV ineliminabili', scene: 'rinorm'  },
+  { name: 'Perché la QFT Non Basta',            desc: 'FASE 03 — g_μν = η_μν + h_μν: lo sfondo è dinamico!',       scene: 'qft'     },
+  { name: 'Le Strade verso la GQ',              desc: 'FASE 04 — LQG, Stringhe, AS, CDT: quattro approcci',         scene: 'strade'  },
+  { name: 'La Dualità Come Strumento',          desc: 'FASE 05 — AdS/CFT: Stringa IIB ≡ 𝒩=4 SYM (Maldacena 1997)', scene: 'dualita' },
+  { name: 'Roadmap della Serie',                desc: 'FASE 06 — 14 capitoli da SUSY al Principio Olografico',      scene: 'roadmap' },
+];
+
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const cx    = t2AnimCX();
+  const cy    = t2AnimCY();
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phIdx].scene;
+
+  // ── SCENE: CRISI — due onde sinusoidali che si scontrano ─────────────────
+  if (scene === 'crisi') {
+    const ampMax  = Math.min(H * 0.18, 80);
+    const nPoints = 120;
+    const colQFT  = '#0ea5e9';  // ciano — QFT
+    const colGR   = '#fbbf24';  // ambra — GR
+
+    // Zona di collisione al centro
+    const collX = cx;
+    const chaos  = rm ? 0 : (0.4 + 0.6 * Math.abs(Math.sin(T * 2.3)));
+
+    // Onda QFT (da sinistra)
+    ctx.beginPath();
+    for (let i = 0; i <= nPoints; i++) {
+      const x   = (i / nPoints) * (collX - W * 0.05);
+      const prog = x / (collX - W * 0.05);
+      const amp  = ampMax * (1 - prog * 0.2);
+      const ph0  = rm ? 0 : T * 2.8;
+      const y    = cy + amp * Math.sin((x / W) * Math.PI * 8 + ph0);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    t2Glow(colQFT, 10);
+    ctx.strokeStyle = colQFT;
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+
+    // Onda GR (da destra)
+    ctx.beginPath();
+    for (let i = 0; i <= nPoints; i++) {
+      const x    = W - (i / nPoints) * (W - collX - W * 0.05);
+      const prog = (W - x) / (W - collX - W * 0.05);
+      const amp  = ampMax * (1 - prog * 0.2);
+      const ph1  = rm ? 0 : T * 2.2;
+      const y    = cy + amp * Math.sin((x / W) * Math.PI * 5 - ph1);
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    t2Glow(colGR, 10);
+    ctx.strokeStyle = colGR;
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+
+    // Zona di collisione — caos
+    if (!rm) {
+      for (let k = 0; k < 18; k++) {
+        const spread = 60 * chaos;
+        const ex = collX + (Math.sin(T * 3.1 + k * 2.4) * spread);
+        const ey = cy    + (Math.cos(T * 2.7 + k * 1.9) * spread * 0.7);
+        const col = k % 2 === 0 ? colQFT : colGR;
+        ctx.beginPath();
+        ctx.arc(ex, ey, 2 + Math.abs(Math.sin(T + k)) * 3, 0, Math.PI * 2);
+        ctx.fillStyle = col.replace(')', ', 0.7)').replace('#', 'rgba(').replace('rgba(0ea5e9, 0.7)', 'rgba(14,165,233,0.7)').replace('rgba(fbbf24, 0.7)', 'rgba(251,191,36,0.7)');
+        // use direct color
+        ctx.fillStyle = k % 2 === 0 ? 'rgba(14,165,233,0.7)' : 'rgba(251,191,36,0.7)';
+        ctx.fill();
+      }
+    }
+
+    // Etichette
+    t2Txt(W * 0.12, cy - ampMax - 20, 'QFT', colQFT, 13, 'center');
+    t2Txt(W * 0.12, cy - ampMax - 5,  'discreta, prob.', colQFT, 9, 'center');
+    t2Txt(W * 0.88, cy - ampMax - 20, 'GR', colGR, 13, 'center');
+    t2Txt(W * 0.88, cy - ampMax - 5,  'continua, geom.', colGR, 9, 'center');
+    t2Glow('#f43f5e', 14);
+    t2Txt(collX, cy + ampMax + 28, '← CRISI A E_P →', '#f43f5e', 11, 'center');
+    t2NoGlow();
+    t2Txt(cx, cy + ampMax + 46, 'l_P ≈ 1.6×10⁻³⁵ m', '#64748b', 9, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: RINORM — diagrammi di Feynman con loop divergenti ─────────────
+  if (scene === 'rinorm') {
+    const diagrams = [
+      { x: cx - W * 0.22, y: cy, r: 36, col: '#0ea5e9', label: '1-loop' },
+      { x: cx,            y: cy, r: 42, col: '#a78bfa', label: '2-loop' },
+      { x: cx + W * 0.22, y: cy, r: 50, col: '#f43f5e', label: 'n-loop' },
+    ];
+
+    for (const [di, d] of diagrams.entries()) {
+      const pulse = rm ? 1 : (0.85 + 0.15 * Math.sin(T * 1.8 + di * 1.1));
+      const rr    = d.r * pulse;
+
+      // Loop esterno
+      t2Glow(d.col, 10 * pulse);
+      ctx.beginPath();
+      ctx.arc(d.x, d.y, rr, 0, Math.PI * 2);
+      ctx.strokeStyle = d.col;
+      ctx.lineWidth   = 2;
+      ctx.stroke();
+      t2NoGlow();
+
+      // Linee propagatore (ingresso/uscita)
+      ctx.beginPath();
+      ctx.moveTo(d.x - rr - 22, d.y);
+      ctx.lineTo(d.x - rr, d.y);
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(d.x + rr, d.y);
+      ctx.lineTo(d.x + rr + 22, d.y);
+      ctx.strokeStyle = '#94a3b8';
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+
+      // Freccia su loop
+      if (!rm) {
+        const arrAng = T * 1.6 + di * 2.1;
+        const ax = d.x + rr * Math.cos(arrAng);
+        const ay = d.y + rr * Math.sin(arrAng);
+        ctx.beginPath();
+        ctx.arc(ax, ay, 3.5, 0, Math.PI * 2);
+        ctx.fillStyle = d.col;
+        ctx.fill();
+      }
+
+      // Label divergenza
+      const divAlpha = rm ? 0.6 : t2Clamp(0.4 + 0.6 * Math.sin(T * 2.2 + di * 0.8), 0, 1);
+      const divRgba  = [
+        'rgba(14,165,233,', 'rgba(167,139,250,', 'rgba(244,63,94,'
+      ][di] + divAlpha + ')';
+      t2Txt(d.x, d.y + rr + 18, d.label, d.col, 10, 'center');
+      t2Txt(d.x, d.y + rr + 32, '~ Λ^∞', divRgba, 9, 'center', "'Courier New',monospace");
+    }
+
+    // Freccia con ∞
+    t2Glow('#f43f5e', 12);
+    t2Txt(cx, cy - 80, '∞ controtermine a ogni ordine', '#f43f5e', 11, 'center');
+    t2NoGlow();
+    t2Txt(cx, cy - 62, 'G_N ~ [E]⁻² → non-rinormalizzabile', '#64748b', 9, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: QFT — griglia spaziotemporale dinamica ────────────────────────
+  if (scene === 'qft') {
+    const cols  = 14;
+    const rows  = 10;
+    const gw    = W * 0.72;
+    const gh    = H * 0.58;
+    const gx0   = cx - gw * 0.5;
+    const gy0   = cy - gh * 0.5;
+    const dx    = gw / (cols - 1);
+    const dy    = gh / (rows - 1);
+
+    // Funzione di deformazione della griglia
+    function warp(xi, yi) {
+      const nx = xi / (cols - 1);
+      const ny = yi / (rows - 1);
+      const ph0 = rm ? 0 : T;
+      const wx = 18 * Math.sin(nx * Math.PI * 2.5 + ph0 * 1.4) * Math.sin(ny * Math.PI + ph0 * 0.7);
+      const wy = 14 * Math.cos(ny * Math.PI * 2   + ph0 * 1.1) * Math.cos(nx * Math.PI * 1.3 + ph0 * 0.9);
+      return { x: gx0 + xi * dx + wx, y: gy0 + yi * dy + wy };
+    }
+
+    // Righe orizzontali
+    for (let yi = 0; yi < rows; yi++) {
+      const frac  = yi / (rows - 1);
+      const alpha = 0.12 + 0.22 * Math.sin(frac * Math.PI);
+      ctx.beginPath();
+      for (let xi = 0; xi < cols; xi++) {
+        const p = warp(xi, yi);
+        if (xi === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+      }
+      ctx.strokeStyle = 'rgba(14,165,233,' + alpha + ')';
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+    }
+
+    // Colonne verticali
+    for (let xi = 0; xi < cols; xi++) {
+      const frac  = xi / (cols - 1);
+      const alpha = 0.12 + 0.22 * Math.sin(frac * Math.PI);
+      ctx.beginPath();
+      for (let yi = 0; yi < rows; yi++) {
+        const p = warp(xi, yi);
+        if (yi === 0) ctx.moveTo(p.x, p.y); else ctx.lineTo(p.x, p.y);
+      }
+      ctx.strokeStyle = 'rgba(99,102,241,' + alpha + ')';
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+    }
+
+    // Nodi (vertici della griglia)
+    for (let xi = 0; xi < cols; xi += 2) {
+      for (let yi = 0; yi < rows; yi += 2) {
+        const p = warp(xi, yi);
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(20,184,166,0.5)';
+        ctx.fill();
+      }
+    }
+
+    t2Glow('#fbbf24', 10);
+    t2Txt(cx, cy - gh * 0.5 - 22, 'Griglia spaziotemporale dinamica', '#fbbf24', 12, 'center');
+    t2NoGlow();
+    t2Txt(cx, cy + gh * 0.5 + 20, 'g_μν = η_μν + h_μν   (sfondo fluttuante!)', '#64748b', 9, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: STRADE — albero con 4 approcci ────────────────────────────────
+  if (scene === 'strade') {
+    const rootX = cx;
+    const rootY = cy - H * 0.22;
+    const leafY = cy + H * 0.15;
+
+    const branches = [
+      { x: cx - W * 0.33, label: 'LQG',      sub: 'spazio discreto',    col: '#0ea5e9' },
+      { x: cx - W * 0.11, label: 'Stringhe',  sub: 'gravitone nello spettro', col: '#fbbf24' },
+      { x: cx + W * 0.11, label: 'AS',        sub: 'punto fisso UV',     col: '#4ade80' },
+      { x: cx + W * 0.33, label: 'CDT',       sub: 'triangolazione',     col: '#c084fc' },
+    ];
+
+    // Nodo centrale
+    t2Glow('#f0f9ff', 18);
+    ctx.beginPath();
+    ctx.arc(rootX, rootY, 22, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(15,23,42,0.9)';
+    ctx.fill();
+    ctx.strokeStyle = '#e2e8f0';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(rootX, rootY + 4, 'GQ', '#f0f9ff', 12, 'center');
+
+    for (const [bi, b] of branches.entries()) {
+      const pulse = rm ? 1 : (0.7 + 0.3 * Math.sin(T * 1.3 + bi * 0.8));
+
+      // Tronco
+      ctx.beginPath();
+      ctx.moveTo(rootX, rootY + 22);
+      ctx.bezierCurveTo(rootX, rootY + 60, b.x, leafY - 50, b.x, leafY - 28);
+      ctx.strokeStyle = b.col;
+      ctx.globalAlpha = 0.5 * pulse;
+      ctx.lineWidth   = 2;
+      ctx.stroke();
+      ctx.globalAlpha = 1;
+
+      // Nodo foglia
+      t2Glow(b.col, 14 * pulse);
+      ctx.beginPath();
+      ctx.arc(b.x, leafY - 28, 16, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(15,23,42,0.85)';
+      ctx.fill();
+      ctx.strokeStyle = b.col;
+      ctx.lineWidth   = 2;
+      ctx.stroke();
+      t2NoGlow();
+
+      t2Txt(b.x, leafY - 23, b.label, b.col, 9, 'center');
+      t2Txt(b.x, leafY + 2,  b.sub,   b.col, 8, 'center');
+    }
+
+    t2Txt(cx, rootY - 38, 'Approcci alla Gravità Quantistica', '#94a3b8', 11, 'center');
+    return;
+  }
+
+  // ── SCENE: DUALITA — due cerchi concentrici con frecce ───────────────────
+  if (scene === 'dualita') {
+    const bigR  = Math.min(W * 0.28, H * 0.32, 150);
+    const smlR  = bigR * 0.52;
+    const pulse = rm ? 1 : (0.85 + 0.15 * Math.sin(T * 1.5));
+
+    // Cerchio esterno — bulk AdS
+    t2Glow('#a78bfa', 20 * pulse);
+    ctx.beginPath();
+    ctx.arc(cx, cy, bigR, 0, Math.PI * 2);
+    ctx.strokeStyle = '#a78bfa';
+    ctx.lineWidth   = 2.5;
+    ctx.stroke();
+    t2NoGlow();
+
+    // Riempimento leggero bulk
+    ctx.beginPath();
+    ctx.arc(cx, cy, bigR, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(167,139,250,0.05)';
+    ctx.fill();
+
+    // Cerchio interno — bordo CFT
+    t2Glow('#22d3ee', 16 * pulse);
+    ctx.beginPath();
+    ctx.arc(cx, cy, smlR, 0, Math.PI * 2);
+    ctx.strokeStyle = '#22d3ee';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+
+    // Frecce bidirezionali animate
+    const nArrows = 6;
+    for (let ai = 0; ai < nArrows; ai++) {
+      const ang    = (Math.PI * 2 / nArrows) * ai + (rm ? 0 : T * 0.4);
+      const tArr   = rm ? 0.5 : ((T * 0.7 + ai * 0.17) % 1);
+      const ax     = cx + t2Lerp(smlR, bigR, tArr) * Math.cos(ang);
+      const ay     = cy + t2Lerp(smlR, bigR, tArr) * Math.sin(ang);
+      const colArr = ai % 2 === 0 ? '#22d3ee' : '#a78bfa';
+      t2Glow(colArr, 10);
+      ctx.beginPath();
+      ctx.arc(ax, ay, 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = colArr;
+      ctx.fill();
+      t2NoGlow();
+    }
+
+    // Etichette
+    t2Txt(cx, cy - bigR - 16, 'Bulk AdS₅×S⁵  (stringa IIB)', '#a78bfa', 11, 'center');
+    t2Txt(cx, cy,              'BULK', '#a78bfa', 9, 'center');
+    t2Txt(cx, cy - smlR + 14, 'BORDO CFT', '#22d3ee', 9, 'center');
+    t2Txt(cx, cy + bigR + 18, '𝒩=4 SYM su ℝ³·¹', '#22d3ee', 11, 'center');
+
+    t2Glow('#fbbf24', 8);
+    t2Txt(cx, cy + bigR + 34, 'Maldacena, 1997', '#fbbf24', 9, 'center');
+    t2NoGlow();
+    return;
+  }
+
+  // ── SCENE: ROADMAP — timeline con 14 nodi ────────────────────────────────
+  if (scene === 'roadmap') {
+    const nCaps  = 14;
+    const tlW    = W * 0.80;
+    const tlX0   = cx - tlW * 0.5;
+    const tlY    = cy;
+    const spacing = tlW / (nCaps - 1);
+
+    const capColors = [
+      '#f43f5e', '#0ea5e9', '#0ea5e9',  // cap 1-3
+      '#fbbf24', '#fbbf24',             // cap 4-5
+      '#4ade80',                         // cap 6
+      '#c084fc', '#c084fc',             // cap 7-8
+      '#0ea5e9', '#0ea5e9',             // cap 9-10
+      '#fbbf24', '#fbbf24', '#fbbf24',  // cap 11-13
+      '#4ade80',                         // cap 14
+    ];
+
+    // Linea orizzontale timeline
+    ctx.beginPath();
+    ctx.moveTo(tlX0, tlY);
+    ctx.lineTo(tlX0 + tlW, tlY);
+    ctx.strokeStyle = 'rgba(100,116,139,0.4)';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+
+    // Cursore animato (solo se non rm)
+    if (!rm) {
+      const cursorPos = (Math.sin(T * 0.6) * 0.5 + 0.5) * tlW;
+      t2Glow('#f0f9ff', 18);
+      ctx.beginPath();
+      ctx.arc(tlX0 + cursorPos, tlY, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#f0f9ff';
+      ctx.fill();
+      t2NoGlow();
+    }
+
+    // Nodi capitoli
+    for (let i = 0; i < nCaps; i++) {
+      const nx  = tlX0 + i * spacing;
+      const col = capColors[i];
+      const ph0 = rm ? 1 : (0.5 + 0.5 * Math.sin(T * 1.4 + i * 0.45));
+
+      t2Glow(col, 12 * ph0);
+      ctx.beginPath();
+      ctx.arc(nx, tlY, 7, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(15,23,42,0.9)';
+      ctx.fill();
+      ctx.strokeStyle = col;
+      ctx.lineWidth   = 2;
+      ctx.stroke();
+      t2NoGlow();
+
+      // Numero capitolo alternato sopra/sotto
+      const yOff = i % 2 === 0 ? -20 : 20;
+      t2Txt(nx, tlY + yOff, String(i + 1).padStart(2, '0'), col, 8, 'center', "'Courier New',monospace");
+    }
+
+    // Legenda a colori
+    const legends = [
+      { col: '#f43f5e', label: 'Problema'    },
+      { col: '#0ea5e9', label: 'SUSY/Str/Diz'},
+      { col: '#fbbf24', label: 'SUGRA/BH'    },
+      { col: '#4ade80', label: 'CFT/Olog.'   },
+      { col: '#c084fc', label: 'Maldacena'   },
+    ];
+    const legY = tlY + 55;
+    const legSpacing = W / (legends.length + 1);
+    for (const [li, leg] of legends.entries()) {
+      const lx = tlX0 + li * legSpacing + legSpacing * 0.5;
+      ctx.beginPath();
+      ctx.arc(lx - 30, legY, 5, 0, Math.PI * 2);
+      ctx.fillStyle = leg.col;
+      ctx.fill();
+      t2Txt(lx - 16, legY + 4, leg.label, leg.col, 8, 'left');
+    }
+
+    t2Txt(cx, tlY - 50, 'Roadmap — 14 Capitoli di AdS/CFT', '#94a3b8', 12, 'center');
+    return;
+  }
+
+  // ── Fallback ──────────────────────────────────────────────────────────────
+  t2Txt(cx, cy, 'Scena non definita', '#64748b', 12, 'center');
+};
+
+t2Init();
+</script>
+</body>
+</html>
