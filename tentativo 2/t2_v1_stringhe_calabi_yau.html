@@ -3,6 +3,379 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teoria delle Stringhe — Calabi-Yau | Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<!-- Top bar -->
+<div id="ui">
+  <span id="ui-title">DivulgAzione · Stringhe</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">6 fasi</span>
+</div>
+
+<!-- Left panel -->
+<div id="panel">
+
+  <div class="phase-content" id="ph-1">
+    <div class="phase-tag">FASE 01 — CONTESTO</div>
+    <div class="phase-title">La stringa: unità fondamentale della materia</div>
+    <div class="phase-body">
+      <p>Nella <span class="hl">teoria delle stringhe</span>, i costituenti fondamentali della realtà non sono particelle puntiformi ma <span class="am">oggetti estesi unidimensionali</span>: le stringhe. Possono essere <span class="gr">aperte</span> (con due estremità libere) o <span class="gr">chiuse</span> (formate da un anello). Le loro diverse modalità di vibrazione corrispondono a particelle diverse: ogni "nota" musicale della stringa è una particella fisica.</p>
+      <p>La <span class="hl">tensione della stringa</span> T_s è la grandezza fondamentale della teoria, legata alla lunghezza caratteristica α' (parametro di Regge):</p>
+      <code class="formula">T_s = 1 / (2π α')
+ω₀ = 1 / (2π√α')   ← frequenza fondamentale</code>
+      <p>Lo spettro di massa della stringa bosonica è determinato dal numero di eccitazione N e dalla costante normale-ordinamento a. In <span class="am">supercorda</span> (stringa supersimmetrica), le correzioni quantistiche eliminano i tachioni presenti nella teoria bosonica pura:</p>
+      <code class="formula">m² = (N − a) / α'</code>
+      <p>Il modo a massa nulla (N = a) include il <span class="gr">gravitone</span> per la stringa chiusa e il <span class="hl">fotone</span> (bosone di gauge) per la stringa aperta. Questo è il punto di partenza rivoluzionario: la gravità esce dalla stessa teoria che descrive le altre forze.</p>
+      <div class="note">Animazione: stringa vibrante (curva sinusoidale oscillante) con diversi modi di vibrazione — N=1 (fondamentale), N=2, N=3.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — MODI</div>
+    <div class="phase-title">Modi di vibrazione: particelle come note</div>
+    <div class="phase-body">
+      <p>Ogni <span class="hl">modo di vibrazione</span> della stringa identifica una particella diversa. La stringa non vede le particelle come oggetti separati: ogni particella è semplicemente una <span class="am">configurazione oscillatoria</span> della stessa entità fondamentale. Questo è il principio unificatore più profondo della teoria.</p>
+      <p>La stringa <span class="hl">chiusa</span> ha modi sinistrorsi e destrorsi che si combinano. Al livello fondamentale:</p>
+      <code class="formula">Spin 0   →   scalare (dilaton, assione)
+Spin 1   →   fotone, bosone di gauge
+Spin 2   →   gravitone (massa nulla!)</code>
+      <p>La stringa <span class="am">aperta</span> nel livello fondamentale produce i bosoni di gauge — i mediatori delle forze elettromagnetica e nucleare debole. La stringa chiusa produce la gravità. La connessione tra le due è la <span class="gr">dualità aperta-chiusa</span>: alla fine si tratta della stessa teoria.</p>
+      <p>I modi di massa più elevata (N >> 1) corrispondono a particelle con massa dell'ordine della <span class="hl">scala di Planck</span> (∼ 10¹⁹ GeV), enormemente oltre la portata degli acceleratori attuali. Per questo la stringa appare puntiforme a basse energie.</p>
+      <div class="note">Animazione: la stringa vibra con N=1,2,3 nodi — ogni configurazione è etichettata con la particella corrispondente (gravitone, fotone, scalare).</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — CALABI-YAU</div>
+    <div class="phase-title">Le dimensioni extra: varietà di Calabi-Yau</div>
+    <div class="phase-body">
+      <p>La consistenza quantistica della <span class="hl">supercorda</span> richiede uno spazio-tempo di <span class="am">10 dimensioni</span> (o 11 per la M-teoria). Poiché ne osserviamo solo 4 (3 spaziali + 1 temporale), le 6 dimensioni extra devono essere <span class="gr">compattificate</span> — arrotolate su scale tanto piccole da essere invisibili ai nostri esperimenti.</p>
+      <p>La scelta preferita è la <span class="hl">varietà di Calabi-Yau</span>: una varietà complessa tridimensionale compatta con olonomia SU(3) e curvatura di Ricci nulla. La condizione di Ricci-flatness è equivalente a richiedere la preservazione della <span class="am">supersimmetria</span> nella teoria 4D risultante:</p>
+      <code class="formula">∇² φ = 0 su CY   (condizione Ricci flat)
+Ric(g) = 0   ⟺   c₁(CY) = 0</code>
+      <p>La <span class="gr">forma della varietà Calabi-Yau</span> non è unica: esistono molte possibili geometrie, parametrizzate dai "moduli" — campi scalari che ne controllano forma e dimensioni. La scelta della geometria determina la fisica a basse energie: masse delle particelle, costanti di accoppiamento, numero di generazioni di fermioni.</p>
+      <div class="note">Animazione: toro (T²) come approssimazione semplificata di CY — due cerchi concentrici che ruotano lentamente per visualizzare la compattificazione.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — TOPOLOGIA</div>
+    <div class="phase-title">Topologia della Calabi-Yau e fisica a bassa energia</div>
+    <div class="phase-body">
+      <p>La <span class="hl">topologia</span> della varietà Calabi-Yau è codificata nei suoi <span class="am">numeri di Hodge</span>: h^{1,1} (cicli kähleriani, correlati ai moduli di Kähler) e h^{2,1} (deformazioni complesse, correlati ai moduli complessi). Queste quantità intere determinano direttamente la fisica:</p>
+      <code class="formula">χ = 2(h^{1,1} − h^{2,1})   ← caratteristica di Euler
+#generazioni di fermioni = |χ| / 2</code>
+      <p>Notevole: il numero di <span class="hl">generazioni di fermioni</span> del Modello Standard (3: elettrone/muone/tau con i loro neutrini e quark) corrisponde a |χ|/2 = 3 per alcune CY. La struttura in tre famiglie di materia emerge dalla topologia della geometria nascosta!</p>
+      <p>Il "<span class="am">paesaggio</span>" (landscape) della teoria delle stringhe conta circa 10^500 varietà Calabi-Yau diverse. Ogni scelta dà una fisica 4D diversa — un universo diverso. Selezionare il nostro universo da questo immenso insieme è il <span class="gr">problema del vuoto</span>, uno dei grandi problemi aperti della fisica teorica.</p>
+      <div class="note">Animazione: multiple topologie toriche mostrate (toro piatto, toro più gonfiato) con etichette dei numeri di Hodge h^{1,1}, h^{2,1}.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — PARTICELLE</div>
+    <div class="phase-title">Dalla stringa alla materia barionica</div>
+    <div class="phase-body">
+      <p>La stringa compattificata su una varietà Calabi-Yau produce, alla scala di basse energie, una <span class="hl">teoria di campo effettiva 4D</span>. Lo spettro include i costituenti del Modello Standard: <span class="am">quark</span>, <span class="am">leptoni</span>, bosoni di gauge (fotone, W±, Z⁰, gluoni), e scalari di tipo Higgs.</p>
+      <p>La <span class="hl">forza forte</span> (QCD) confina i quark in <span class="gr">adroni</span>: protoni e neutroni. La scala di confinamento Λ_QCD emerge dalla scala della stringa M_s e dalla costante di accoppiamento g tramite una soppressione esponenziale (dynamical symmetry breaking):</p>
+      <code class="formula">Λ_QCD ~ e^{−8π² / g²} M_s</code>
+      <p>La gerarchia di scale che separano il mondo della stringa dalla fisica quotidiana è enorme: dalla <span class="am">scala di Planck</span> (∼10¹⁹ GeV) alla <span class="hl">scala elettrodebole</span> (∼100 GeV) fino alla scala dei <span class="gr">nuclei atomici</span> (∼1 GeV) agli atomi (∼1 eV). In ogni passaggio di scala emergono nuovi fenomeni fisici.</p>
+      <p>L'energia di legame nucleare, la struttura atomica, la chimica e infine la biologia emergono da questa cascata di scale fisiche che originano tutte dalla stessa stringa fondamentale.</p>
+      <div class="note">Animazione: stringa centrale che irradia "particelle" colorate (punti) — quark (rosso/verde/blu), leptoni (ciano), fotoni (giallo).</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — SINTESI</div>
+    <div class="phase-title">Sintesi: una teoria di tutto?</div>
+    <div class="phase-body">
+      <p>La <span class="hl">teoria delle stringhe</span> è il tentativo più ambizioso nella storia della fisica: unificare tutte le forze fondamentali — elettromagnetismo, forze nucleari forte e debole, e <span class="am">gravità</span> — in un unico framework coerente. Quello che il Modello Standard lascia separato, le stringhe lo unificano naturalmente.</p>
+      <p>L'azione di bassa energia della supercorda (Azione di Nambu-Goto + termini di campo di fondo) nella stringa etetica:</p>
+      <code class="formula">S = −(1/2κ²) ∫ d¹⁰x √{−g} e^{−2Φ} (R + 4(∇Φ)²)</code>
+      <p>dove <span class="am">Φ</span> è il dilaton (che controlla la costante di accoppiamento delle stringhe gₛ = e^Φ) e <span class="gr">R</span> è lo scalare di Ricci. Le previsioni della teoria: <span class="hl">supersimmetria</span>, dimensioni extra, gravità modificata a piccole distanze, assioni come materia oscura.</p>
+      <p>Le <span class="am">sfide aperte</span>: nessuna evidenza sperimentale diretta, il problema del landscape (10^500 vacui), la selezione del vuoto fisico, la rottura della supersimmetria. Nonostante questo, la teoria ha prodotto matematica straordinaria e ha rivoluzionato la nostra comprensione della gravità quantistica attraverso l'AdS/CFT.</p>
+      <div class="note">Animazione finale: stringa al centro, toro CY, particelle irradiate e formula dell'azione — il quadro completo unificato.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom navigation -->
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01</button>
+  <button class="btn" onclick="goPhase(2)">02</button>
+  <button class="btn" onclick="goPhase(3)">03</button>
+  <button class="btn" onclick="goPhase(4)">04</button>
+  <button class="btn" onclick="goPhase(5)">05</button>
+  <button class="btn" onclick="goPhase(6)">06</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()">⏸</button>
+</div>
+
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: 'Stringa',     desc: 'FASE 01 — La Stringa Fondamentale',           scene: 'string1' },
+  { name: 'Modi',        desc: 'FASE 02 — Modi di Vibrazione',                scene: 'string2' },
+  { name: 'Calabi-Yau',  desc: 'FASE 03 — Varietà di Calabi-Yau',            scene: 'cy1' },
+  { name: 'Topologia',   desc: 'FASE 04 — Topologia e Fisica',                scene: 'cy2' },
+  { name: 'Particelle',  desc: 'FASE 05 — Dalla Stringa alle Particelle',     scene: 'cascade' },
+  { name: 'Sintesi',     desc: 'FASE 06 — Sintesi: una Teoria di Tutto?',     scene: 'synthesis' },
+];
+
+window.t2Draw = function(T, phaseIdx, ctx, W, H) {
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phaseIdx].scene;
+  const cx = t2AnimCX();
+  const cy = t2AnimCY();
+
+  // ── Helper: draw a vibrating string ──────────────────────────────────────
+  function drawString(x0, x1, y0, modes, col, glow, amplitude, tOffset) {
+    const len   = x1 - x0;
+    const steps = 120;
+    t2Glow(col, glow);
+    ctx.beginPath();
+    for (let i = 0; i <= steps; i++) {
+      const t   = i / steps;
+      const px  = x0 + t * len;
+      let   py  = y0;
+      for (const n of modes) {
+        const phase = rm ? 0 : T * 2.2 + tOffset;
+        py += amplitude * Math.sin(n * Math.PI * t) * Math.cos(phase + n * 0.5);
+      }
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    t2NoGlow();
+  }
+
+  // ── Helper: draw a torus (two circles, outer and inner) ──────────────────
+  function drawTorus(tx, ty, R, r, col, alpha, tOffset) {
+    // Outer circle
+    t2Glow(col, 10);
+    ctx.beginPath();
+    ctx.arc(tx, ty, R, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(${col},${alpha})`;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+
+    // Inner circle (oscillating size for dynamism)
+    const rInner = rm ? r : r * (0.85 + 0.15 * Math.sin(T * 1.1 + tOffset));
+    ctx.beginPath();
+    ctx.arc(tx, ty, rInner, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(${col},${alpha * 0.6})`;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Cross-section lines (longitude/latitude hints)
+    for (let i = 0; i < 5; i++) {
+      const ang = (Math.PI * 2 * i) / 5 + (rm ? 0 : T * 0.18);
+      const ex  = tx + R * Math.cos(ang);
+      const ey  = ty + R * Math.sin(ang);
+      ctx.beginPath();
+      ctx.arc(ex, ey, rInner * 0.38, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(${col},${alpha * 0.3})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+    t2NoGlow();
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // SCENE: string1 — basic vibrating string (phase 0)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (scene === 'string1') {
+    const sx0 = cx - W * 0.16;
+    const sx1 = cx + W * 0.16;
+
+    // String endpoints
+    ctx.beginPath();
+    ctx.arc(sx0, cy, 5, 0, Math.PI * 2);
+    ctx.arc(sx1, cy, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#fbbf24';
+    ctx.fill();
+
+    drawString(sx0, sx1, cy, [1], '#22d3ee', 14, 38, 0);
+
+    t2Glow('#22d3ee', 8);
+    t2Txt(cx, cy - 72, 'Stringa chiusa — modo N=1 (gravitone)', '#22d3ee', 11, 'center');
+    t2NoGlow();
+    t2Txt(cx, cy + 68, 'm² = (N − a) / α\'', '#7dd3fc', 10, 'center', "'Courier New',monospace");
+    t2Txt(cx, cy + 84, 'T_s = 1/(2πα\')', '#4a7a9b', 9.5, 'center', "'Courier New',monospace");
+
+    // Fundamental mode label
+    t2Txt(cx, cy + 55, 'N = 1  →  massa nulla (a = 1)', '#4ade80', 9.5, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // SCENE: string2 — multiple vibrational modes (phase 1)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (scene === 'string2') {
+    const rows = [
+      { y: cy - 68, modes: [1], col: '#22d3ee', amp: 30, label: 'N=1  →  Gravitone (spin 2)', tOff: 0 },
+      { y: cy,      modes: [2], col: '#fbbf24', amp: 22, label: 'N=2  →  Fotone / gauge (spin 1)', tOff: 1.0 },
+      { y: cy + 68, modes: [3], col: '#4ade80', amp: 16, label: 'N=3  →  Scalare (spin 0)', tOff: 2.0 },
+    ];
+    const sx0 = cx - W * 0.14;
+    const sx1 = cx + W * 0.14;
+
+    for (const row of rows) {
+      drawString(sx0, sx1, row.y, row.modes, row.col, 12, row.amp, row.tOff);
+      t2Txt(cx, row.y - 18, row.label, row.col, 10, 'center', "'Courier New',monospace");
+    }
+
+    t2Txt(cx, cy + 120, 'Spin 0 → scalare   Spin 1 → fotone   Spin 2 → gravitone', '#7dd3fc', 9.5, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // SCENE: cy1 — Calabi-Yau torus (phase 2)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (scene === 'cy1') {
+    const tx = cx, ty = cy;
+    const R  = Math.min(W, H) * 0.16;
+    const r  = R * 0.42;
+
+    drawTorus(tx, ty, R, r, '20,184,166', 0.75, 0);
+
+    // Rotation animation: slowly spin a highlight dot on the torus
+    if (!rm) {
+      const ang = T * 0.5;
+      const hx  = tx + R * Math.cos(ang);
+      const hy  = ty + R * Math.sin(ang);
+      t2Glow('#4ade80', 14);
+      ctx.beginPath();
+      ctx.arc(hx, hy, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#4ade80';
+      ctx.fill();
+      t2NoGlow();
+    }
+
+    t2Glow('#14b8a6', 10);
+    t2Txt(tx, ty - R - 28, 'Calabi-Yau (T² come esempio)', '#14b8a6', 12, 'center');
+    t2NoGlow();
+    t2Txt(tx, ty + R + 22, '10D = 4D visibile + 6D compatte (CY)', '#7dd3fc', 10, 'center', "'Courier New',monospace");
+    t2Txt(tx, ty + R + 38, '∇²φ = 0  (Ricci flat)', '#4a7a9b', 9.5, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // SCENE: cy2 — multiple topologies / Hodge numbers (phase 3)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (scene === 'cy2') {
+    const torii = [
+      { x: cx - W * 0.19, y: cy - H * 0.04, R: H * 0.11, r: H * 0.044, col: '20,184,166', h11: 1, h21: 1, tOff: 0 },
+      { x: cx,            y: cy - H * 0.04, R: H * 0.11, r: H * 0.060, col: '56,189,248', h11: 3, h21: 1, tOff: 0.7 },
+      { x: cx + W * 0.19, y: cy - H * 0.04, R: H * 0.11, r: H * 0.036, col: '167,243,208',h11: 1, h21: 3, tOff: 1.4 },
+    ];
+
+    for (const to of torii) {
+      drawTorus(to.x, to.y, to.R, to.r, to.col, 0.65, to.tOff);
+      t2Txt(to.x, to.y + to.R + 16, `h^{1,1}=${to.h11}  h^{2,1}=${to.h21}`, `rgba(${to.col},0.9)`, 9, 'center', "'Courier New',monospace");
+      const chi = 2 * (to.h11 - to.h21);
+      t2Txt(to.x, to.y + to.R + 30, `χ = ${chi}  →  ${Math.abs(chi)/2 | 0} gen.`, `rgba(${to.col},0.7)`, 8.5, 'center', "'Courier New',monospace");
+    }
+
+    t2Txt(cx, cy + H * 0.25, 'χ = 2(h^{1,1} − h^{2,1})', '#fbbf24', 10, 'center', "'Courier New',monospace");
+    t2Txt(cx, cy + H * 0.33, 'Landscape: ~10^500 varietà CY possibili', '#4a7a9b', 9.5, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // SCENE: cascade — string → particles (phase 4)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (scene === 'cascade') {
+    // Central string
+    const sx0 = cx - W * 0.12;
+    const sx1 = cx + W * 0.12;
+    drawString(sx0, sx1, cy - H * 0.06, [1, 2], '#22d3ee', 12, 24, 0);
+
+    // Particles radiating outward
+    const particles = [
+      { col: '#ef4444', label: 'q̄ quark', angle: -0.6, dist: 0.22 },
+      { col: '#22c55e', label: 'q quark',  angle: -0.3, dist: 0.22 },
+      { col: '#3b82f6', label: 'q quark',  angle:  0.0, dist: 0.22 },
+      { col: '#22d3ee', label: 'leptone',  angle:  0.3, dist: 0.22 },
+      { col: '#fbbf24', label: 'fotone',   angle:  0.6, dist: 0.22 },
+      { col: '#a78bfa', label: 'Higgs',    angle: -0.9, dist: 0.22 },
+    ];
+
+    for (const p of particles) {
+      const baseX = cx, baseY = cy - H * 0.06;
+      const prog  = rm ? 1 : t2Clamp(((T * 0.55 + p.angle * 0.4) % 1.8) / 1.0, 0, 1);
+      const px = baseX + Math.sin(p.angle) * W * p.dist * prog;
+      const py = baseY + Math.cos(p.angle + Math.PI * 0.5) * H * p.dist * 0.5 * prog + H * 0.14 * prog;
+
+      t2Glow(p.col, 12);
+      ctx.beginPath();
+      ctx.arc(px, py, 5, 0, Math.PI * 2);
+      ctx.fillStyle = p.col;
+      ctx.fill();
+      if (prog > 0.6) t2Txt(px + 10, py, p.label, p.col, 9, 'left', "'Courier New',monospace");
+      t2NoGlow();
+    }
+
+    t2Txt(cx, cy + H * 0.22, 'Λ_QCD ~ e^{−8π²/g²} M_s', '#7dd3fc', 10, 'center', "'Courier New',monospace");
+    t2Txt(cx, cy + H * 0.30, 'Stringa → Quark → Adroni → Atomi', '#4a7a9b', 9.5, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // SCENE: synthesis — string + torus + particles (phase 5)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (scene === 'synthesis') {
+    // String at top
+    const sx0 = cx - W * 0.18;
+    const sx1 = cx + W * 0.18;
+    drawString(sx0, sx1, cy - H * 0.2, [1, 2], '#22d3ee', 12, 28, 0);
+
+    // Torus in middle-right
+    const tx = cx + W * 0.12, ty = cy - H * 0.02;
+    const R  = Math.min(W, H) * 0.11;
+    const r  = R * 0.40;
+    drawTorus(tx, ty, R, r, '20,184,166', 0.55, 0);
+    t2Txt(tx, ty + R + 14, 'CY₃', '#14b8a6', 10, 'center', "'Courier New',monospace");
+
+    // Particles on the left
+    const pCols = ['#ef4444', '#22c55e', '#fbbf24', '#22d3ee', '#a78bfa'];
+    for (let i = 0; i < pCols.length; i++) {
+      const angle = -0.5 + i * 0.3;
+      const dist  = rm ? 1 : t2Clamp(((T * 0.5 + i * 0.3) % 2.0), 0, 1);
+      const px = (cx - W * 0.14) + Math.cos(angle) * W * 0.09 * dist;
+      const py = cy + H * 0.04 + Math.sin(angle) * H * 0.12 * dist;
+      t2Glow(pCols[i], 10);
+      ctx.beginPath();
+      ctx.arc(px, py, 4, 0, Math.PI * 2);
+      ctx.fillStyle = pCols[i];
+      ctx.fill();
+      t2NoGlow();
+    }
+
+    const pulse = rm ? 1 : 0.8 + 0.2 * Math.sin(T * 1.4);
+    t2Glow('#fbbf24', 15 * pulse);
+    t2Txt(cx, cy + H * 0.22, 'S = −(1/2κ²) ∫ d¹⁰x √{−g} e^{−2Φ} (R + 4(∇Φ)²)', '#fef3c7', 9, 'center', "'Courier New',monospace");
+    t2NoGlow();
+    t2Txt(cx, cy + H * 0.31, 'Una teoria, tutte le forze', '#4ade80', 11, 'center', 'bold Georgia,serif');
+    return;
+  }
+
+  // Fallback
+  const sx0 = cx - W * 0.15; const sx1 = cx + W * 0.15;
+  drawString(sx0, sx1, cy, [1], '#22d3ee', 12, 32, 0);
+};
+
+t2Init();
+</script>
+</body>
+</html>
 <title>Stringhe → Particelle → Materia — v2</title>
 <link rel="stylesheet" href="./ui.css">
 <style>#main-canvas { position: fixed; top: 0; right: 0; height: 100%; z-index: 0; }

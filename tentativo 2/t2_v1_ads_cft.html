@@ -3,6 +3,510 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdS/CFT — Corrispondenza Olografica | Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<!-- Top bar -->
+<div id="ui">
+  <span id="ui-title">DivulgAzione · AdS/CFT</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">7 fasi</span>
+</div>
+
+<!-- Left panel -->
+<div id="panel">
+
+  <div class="phase-content" id="ph-1">
+    <div class="phase-tag">FASE 01 — CONTESTO</div>
+    <div class="phase-title">Stack di N D3-Brane: l'origine della dualità</div>
+    <div class="phase-body">
+      <p>La corrispondenza AdS/CFT nasce dalla teoria delle stringhe di <span class="hl">Tipo IIB</span> in 10 dimensioni spaziotemporali. Il punto di partenza è un oggetto esteso chiamato <span class="am">D3-brana</span>: una membrana tridimensionale su cui le estremità delle stringhe aperte possono terminare.</p>
+      <p>Consideriamo uno <span class="hl">stack di N D3-brane</span> identiche sovrapposte. Le stringhe aperte che si estendono tra di esse generano, nel limite a bassa energia, una teoria di gauge con gruppo di simmetria <span class="am">SU(N)</span>. La costante di accoppiamento di Yang-Mills è legata al numero di brane e alla costante di accoppiamento delle stringhe <em>g</em>ₛ:</p>
+      <code class="formula">g²_YM = 4π gₛ
+λ = g²_YM · N  ← accoppiamento 't Hooft</code>
+      <p>Nel limite di grande N con <span class="gr">λ = g²_YM N fissato</span> (limite planare di 't Hooft), la teoria di gauge si semplifica: dominano i diagrammi a topologia planare. Questo è il regime dove la dualità AdS/CFT diventa più precisa e controllabile.</p>
+      <p>La visualizzazione mostra le <span class="am">brane sovrapposte</span> (strati orizzontali) con stringhe aperte che le connettono, generando i bosoni di gauge della teoria SU(N).</p>
+      <div class="note">Visualizzazione: strati di brana paralleli con stringhe oscillanti tra di essi. Ogni stringa corrisponde a un bosone di gauge nell'aggiunta di SU(N).</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — GRAVITÀ</div>
+    <div class="phase-title">Le brane curvano lo spaziotempo</div>
+    <div class="phase-body">
+      <p>Le D3-brane non sono solo oggetti della teoria di gauge: in quanto sorgenti di massa ed energia, deformano la metrica dello spaziotempo a <span class="hl">10 dimensioni</span>. La metrica completa delle N D3-brane è:</p>
+      <code class="formula">ds² = H(r)^{-1/2} η_μν dx^μ dx^ν + H(r)^{1/2} (dr² + r² dΩ₅²)
+H(r) = 1 + L⁴/r⁴,   L⁴ = 4π gₛ N α'²</code>
+      <p>dove <span class="am">α'</span> è la tensione della stringa e <span class="gr">L</span> è il raggio caratteristico della geometria. La funzione armonica H(r) descrive il <span class="hl">pozzo gravitazionale</span> creato dalle brane.</p>
+      <p>Nel <span class="am">limite di near-horizon</span> (r ≪ L), la geometria si fattorizza in due regioni completamente decoppiate: la geometria vicino alle brane e la geometria piatta lontana da esse. Questo decouppling è la chiave della dualità.</p>
+      <p>La curvatura della griglia spaziotemporale attorno allo stack di brane è rappresentata nella visualizzazione: le linee si infittiscono avvicinandosi al centro, indicando una <span class="gr">curvatura crescente</span>.</p>
+      <div class="note">Griglia di curvatura animata: le linee si deformano attorno al centro dove risiedono le brane, visualizzando il pozzo gravitazionale della soluzione di brana.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — GEOMETRIA</div>
+    <div class="phase-title">Geometria Anti-de Sitter AdS₅×S⁵</div>
+    <div class="phase-body">
+      <p>Nel limite di near-horizon la metrica si semplifica drasticamente: la geometria diventa il prodotto diretto <span class="hl">AdS₅ × S⁵</span>, dove entrambi i fattori hanno lo stesso raggio L.</p>
+      <code class="formula">ds² = (r/L)² η_μν dx^μ dx^ν + L²(dr²/r² + dΩ₅²)
+L⁴ = 4π gₛ N α'²</code>
+      <p>Lo spazio <span class="am">Anti-de Sitter AdS₅</span> è uno spazio-tempo iperbolico con curvatura scalare negativa costante Λ < 0. La sua frontiera conforme a <em>r → ∞</em> è uno spazio di Minkowski piatto 4D — esattamente dove vive la teoria di gauge.</p>
+      <p>Proprietà fondamentali di AdS: le <span class="gr">geodeliche</span> (cammini dei fotoni) raggiungono il bordo in tempo coordinato finito, il che significa che il bordo è fisicamente accessibile. La metrica ha un'isometria <span class="hl">SO(2,4)</span> — il gruppo conforme in 4D.</p>
+      <p>La sfera S⁵ dà origine alle simmetrie interne della teoria di gauge (la simmetria R di 𝒩=4 SYM è SO(6) ≃ SU(4)).</p>
+      <div class="note">Griglia iperbolica animata: le linee si infittiscono verso il bordo del disco di Poincaré, visualizzando la geometria di AdS con curvatura costante negativa.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — DUALITÀ</div>
+    <div class="phase-title">Bulk e Bordo: le due facce</div>
+    <div class="phase-body">
+      <p>La corrispondenza AdS/CFT distingue due regioni: il <span class="hl">Bulk</span> e il <span class="am">Bordo</span>. Il Bulk è l'interno di AdS₅ — uno spazio-tempo 5D in cui propagano i <span class="gr">gravitoni</span> e gli altri campi della teoria di stringa.</p>
+      <p>Il Bordo è la frontiera conforme di AdS₅ a r → ∞: uno spazio-tempo 4D piatto su cui vive la <span class="hl">CFT</span>. I campi nel bulk hanno un valore al bordo ben definito:</p>
+      <code class="formula">φ(x, z→0) ~ z^{d-Δ} φ₀(x) + z^Δ ⟨O(x)⟩ + …</code>
+      <p>dove <span class="am">Δ</span> è la dimensione conforme dell'operatore O corrispondente, e <span class="gr">φ₀(x)</span> funge da sorgente esterna per O nella teoria di campo. Questo è il meccanismo di <span class="hl">prescrizione di Witten</span>: fissare il valore al bordo di un campo bulk equivale ad aggiungere alla CFT il termine ∫ φ₀ O.</p>
+      <p>La coordinata radiale r di AdS ha un'interpretazione fisica nella CFT: essa corrisponde alla <span class="am">scala di energia</span> (RG scale). Andare in profondità nel bulk corrisponde a sondare la fisica CFT a basse energie (IR).</p>
+      <div class="note">Visualizzazione split: bordo verticale a sinistra (CFT, operatori come punti luminosi) e bulk semicircolare a destra (gravitoni come onde radiali).</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — MALDACENA</div>
+    <div class="phase-title">Dualità: gravità nel bulk ↔ CFT sul bordo</div>
+    <div class="phase-body">
+      <p>Nel 1997, <span class="hl">Juan Maldacena</span> propose la congettura più influente della fisica teorica moderna: la teoria di stringa di <span class="am">Tipo IIB su AdS₅×S⁵</span> è <em>esattamente equivalente</em> alla teoria di campo conforme <span class="gr">𝒩=4 Super Yang-Mills</span> su ℝ¹·³.</p>
+      <code class="formula">Z_stringa[AdS, φ₀] = Z_CFT[φ₀]
+⟨e^{∫ φ₀ O}⟩_CFT = e^{-S_on-shell[φ|_{∂}=φ₀]}</code>
+      <p>La dualità è una <span class="hl">dualità forte-debole</span>: quando la gravità è fortemente curva (λ grande, cioè stringhe corte rispetto a L), la CFT è debolmente accoppiata, e viceversa. Questo la rende uno strumento potente per calcolare in regimi non perturbativi.</p>
+      <p>I parametri si corrispondono: <span class="am">gₛ ↔ g²_YM</span> e <span class="gr">L⁴/α'² ↔ λ = g²_YM N</span>. Il limite di supergravità classica (α' → 0, gₛ → 0) corrisponde alla CFT con λ → ∞, N → ∞.</p>
+      <div class="note">Frecce bidirezionali animate che collegano oggetti nel bulk (geometria, buco nero) ai loro corrispondenti nel bordo (stato termico, operatori).</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — DIZIONARIO</div>
+    <div class="phase-title">Il dizionario AdS/CFT</div>
+    <div class="phase-body">
+      <p>La dualità fornisce un preciso <span class="hl">dizionario</span> che traduce oggetti bulk in operatori CFT al bordo. Alcune voci fondamentali:</p>
+      <p><span class="am">Massa scalare bulk ↔ dimensione operatore CFT:</span></p>
+      <code class="formula">m² L² = Δ(Δ − d)   (d = 4 per AdS₅)
+Δ = d/2 + √(d²/4 + m²L²)</code>
+      <p><span class="am">Buco nero di AdS ↔ stato termico della CFT:</span> la temperatura di Hawking del buco nero nel bulk è uguale alla temperatura della CFT al bordo. L'entropia di Bekenstein-Hawking del buco nero corrisponde all'entropia termica della CFT.</p>
+      <p><span class="gr">Campo di gauge nel bulk ↔ corrente conservata della CFT:</span> il campo gravitazionale (gravitone) corrisponde al tensore energia-impulso T^μν della CFT.</p>
+      <p>Il dizionario permette di calcolare funzioni di correlazione della <span class="hl">CFT fortemente accoppiata</span> usando la semplice supergravità classica nel bulk.</p>
+      <div class="note">Tabella animata nel canvas: coppie bulk↔bordo illuminate in sequenza, con formule visualizzate.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — OLOGRAFIA</div>
+    <div class="phase-title">Il principio olografico completo</div>
+    <div class="phase-body">
+      <p>AdS/CFT è la realizzazione concreta del <span class="hl">principio olografico</span> di 't Hooft e Susskind: tutta la fisica di un volume D-dimensionale è codificata in una teoria su una frontiera (D-1)-dimensionale.</p>
+      <p>L'analogo per i buchi neri: l'<span class="am">entropia di Bekenstein-Hawking</span> è proporzionale all'area dell'orizzonte, non al volume. Questo suggerisce che i gradi di libertà quantistici del buco nero vivono sulla sua superficie:</p>
+      <code class="formula">S_BH = A/(4G_N) = S_CFT
+I_gravity[bulk] = I_CFT[bordo]</code>
+      <p>La <span class="gr">gravità emerge</span> dalla teoria quantistica sul bordo: non è fondamentale ma derivata. L'intero spazio-tempo del bulk — compresa la sua geometria e topologia — è codificato nell'<span class="hl">entanglement</span> della CFT al bordo.</p>
+      <p>Recenti sviluppi (Ryu-Takayanagi, 2006): l'<span class="am">entropia di entanglement</span> di una regione del bordo è uguale all'area della superficie minimale corrispondente nel bulk divisa per 4G_N.</p>
+      <div class="note">Vista unificata: bulk intero con frecce radiali verso il bordo, evidenziando che tutta la geometria emerge dall'entanglement della CFT al bordo.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom navigation -->
+<div id="bottom">
+  <button class="btn" onclick="goPhase(1)">01 · Brane</button>
+  <button class="btn" onclick="goPhase(2)">02 · Curvatura</button>
+  <button class="btn" onclick="goPhase(3)">03 · AdS₅</button>
+  <button class="btn" onclick="goPhase(4)">04 · Bulk/Bordo</button>
+  <button class="btn" onclick="goPhase(5)">05 · Maldacena</button>
+  <button class="btn" onclick="goPhase(6)">06 · Dizionario</button>
+  <button class="btn" onclick="goPhase(7)">07 · Olografia</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: 'Stack di N D3-Brane',        desc: 'FASE 01 — Stack di N D3-Brane: stringhe aperte e gauge SU(N)',       scene: 'brane'    },
+  { name: 'Deformazione della metrica',  desc: 'FASE 02 — Le brane curvano lo spaziotempo: near-horizon limit',       scene: 'curv'     },
+  { name: 'Geometria AdS₅×S⁵',          desc: 'FASE 03 — Geometria Anti-de Sitter iperbolica con Λ<0',               scene: 'ads'      },
+  { name: 'Bulk e Bordo',                desc: 'FASE 04 — Bulk AdS₅ vs bordo conforme 4D: prescrizione di Witten',    scene: 'split'    },
+  { name: 'Dualità di Maldacena',        desc: 'FASE 05 — Z_stringa[AdS] = Z_CFT[bordo]: dualità forte-debole',       scene: 'dual'     },
+  { name: 'Il Dizionario',               desc: 'FASE 06 — Dizionario AdS/CFT: massa↔dimensione, BH↔calore',           scene: 'dict'     },
+  { name: 'Principio Olografico',        desc: 'FASE 07 — S_BH = A/4G_N: tutta la fisica bulk emerge dal bordo',      scene: 'holo'     },
+];
+
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const cx    = t2AnimCX();
+  const cy    = t2AnimCY();
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phIdx].scene;
+
+  // ── Shared geometry ────────────────────────────────────────────────────────
+  const R     = Math.min(W * (W > 820 ? 0.22 : 0.38), 190);
+  const bx    = cx - R;   // boundary x position
+  const nGeo  = 10;       // radial geodesic count
+
+  // ── Helper: draw AdS bulk semicircle + radial geodesics ───────────────────
+  function drawBulk(alpha, pulse) {
+    const a = alpha === undefined ? 0.18 : alpha;
+    const p = pulse ? (0.55 + 0.45 * Math.sin(T * 1.2)) : 1.0;
+
+    // Semicircle arc (bulk boundary outline)
+    ctx.beginPath();
+    ctx.arc(bx, cy, R, -Math.PI * 0.5, Math.PI * 0.5);
+    ctx.strokeStyle = 'rgba(14,165,233,' + (a * 1.8 * p) + ')';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+
+    // Radial geodesics from boundary into bulk
+    for (let i = 0; i <= nGeo; i++) {
+      const angle = -Math.PI * 0.5 + (Math.PI * i / nGeo);
+      const bpx   = bx + R * Math.cos(angle);
+      const bpy   = cy + R * Math.sin(angle);
+      ctx.beginPath();
+      ctx.moveTo(bx, bpy);
+      ctx.lineTo(bpx, bpy);
+      ctx.strokeStyle = 'rgba(20,184,166,' + (a * p) + ')';
+      ctx.lineWidth   = 0.8;
+      ctx.stroke();
+      // Concentric arc rings
+      if (i % 2 === 0) {
+        const rr = R * (i / nGeo);
+        ctx.beginPath();
+        ctx.arc(bx, cy, rr, -Math.PI * 0.5, Math.PI * 0.5);
+        ctx.strokeStyle = 'rgba(20,184,166,' + (a * 0.5 * p) + ')';
+        ctx.lineWidth   = 0.6;
+        ctx.stroke();
+      }
+    }
+  }
+
+  // ── Helper: draw boundary vertical line + CFT operators ───────────────────
+  function drawBoundary(nDots, glowDots) {
+    // Boundary line
+    t2Glow('#0ea5e9', 12);
+    ctx.beginPath();
+    ctx.moveTo(bx, cy - R * 1.05);
+    ctx.lineTo(bx, cy + R * 1.05);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+
+    // CFT operator dots
+    const nd = nDots || 7;
+    for (let i = 0; i < nd; i++) {
+      const t   = (i + 0.5) / nd;
+      const oy  = cy - R + t * R * 2;
+      const osc = rm ? 0 : 5 * Math.sin(T * 1.8 + i * 1.3);
+      const ox  = bx + osc;
+      ctx.beginPath();
+      ctx.arc(ox, oy, 4, 0, Math.PI * 2);
+      if (glowDots) t2Glow('#22d3ee', 14);
+      ctx.fillStyle = '#22d3ee';
+      ctx.fill();
+      t2NoGlow();
+    }
+
+    // Boundary label
+    t2Txt(bx, cy - R * 1.15, 'BORDO CFT', '#0ea5e9', 10, 'center', "'Courier New',monospace");
+  }
+
+  // ── SCENE: BRANE (phases 0-1) ─────────────────────────────────────────────
+  if (scene === 'brane' || scene === 'curv') {
+    drawBulk(0.12, false);
+
+    // Stacked brane layers
+    const nBrane = 5;
+    for (let b = 0; b < nBrane; b++) {
+      const by2 = cy - R * 0.5 + b * (R / (nBrane - 1));
+      const oscillate = rm ? 0 : 2 * Math.sin(T * 1.5 + b * 0.9);
+      const alpha = b === 2 ? 1.0 : 0.45;
+      t2Glow('#fbbf24', b === 2 ? 18 : 6);
+      ctx.beginPath();
+      ctx.moveTo(bx + 8, by2 + oscillate);
+      ctx.lineTo(bx + R * 0.88, by2 + oscillate);
+      ctx.strokeStyle = 'rgba(251,191,36,' + alpha + ')';
+      ctx.lineWidth   = b === 2 ? 2.5 : 1;
+      ctx.stroke();
+      t2NoGlow();
+      if (b === 2) t2Txt(bx + R * 0.5, by2 + oscillate - 12, 'D3-brana centrale', '#fbbf24', 9, 'center', "'Courier New',monospace");
+    }
+
+    // Open string between brane 1 and brane 3
+    if (!rm) {
+      const y1b = cy - R * 0.5 + (R / (nBrane - 1));
+      const y3b = cy - R * 0.5 + 3 * (R / (nBrane - 1));
+      const sx  = bx + R * 0.55;
+      const amp = 8 * Math.sin(T * 2.2);
+      ctx.beginPath();
+      ctx.moveTo(sx, y1b);
+      ctx.bezierCurveTo(sx + amp, (y1b * 2 + y3b) / 3, sx - amp, (y1b + y3b * 2) / 3, sx, y3b);
+      ctx.strokeStyle = 'rgba(167,243,208,0.7)';
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+      t2Txt(sx + 18, (y1b + y3b) * 0.5, 'stringa aperta\n→ bosone SU(N)', '#a7f3d0', 9, 'left', "'Courier New',monospace");
+    }
+
+    if (scene === 'curv') {
+      // Curvature grid deformation
+      const gridN = 8;
+      for (let gi = 0; gi <= gridN; gi++) {
+        ctx.beginPath();
+        for (let gj = 0; gj <= gridN * 20; gj++) {
+          const gx = bx + (gi / gridN) * R;
+          const gy0 = cy - R;
+          const gy  = gy0 + (gj / (gridN * 20)) * R * 2;
+          const distC = Math.hypot(gx - cx, gy - cy);
+          const defl  = (R * 0.18) * Math.exp(-distC * distC / (R * R * 0.3));
+          const pgx   = gx - defl * (gx - bx) / R;
+          gj === 0 ? ctx.moveTo(pgx, gy) : ctx.lineTo(pgx, gy);
+        }
+        ctx.strokeStyle = 'rgba(99,102,241,0.22)';
+        ctx.lineWidth   = 0.7;
+        ctx.stroke();
+      }
+    }
+
+    drawBoundary(7, false);
+    t2Txt(cx, cy + R * 1.2, 'Stack di N=' + (5) + ' D3-brane — teoria di gauge SU(N)', '#4a7a9b', 11, 'center');
+    return;
+  }
+
+  // ── SCENE: ADS hyperbolic grid (phase 2) ─────────────────────────────────
+  if (scene === 'ads') {
+    // Poincaré disk hyperbolic grid
+    const nCircles = 8;
+    for (let ci = 1; ci <= nCircles; ci++) {
+      const rr = R * (ci / nCircles);
+      const pulse = rm ? 1 : (0.6 + 0.4 * Math.sin(T * 0.9 + ci * 0.5));
+      ctx.beginPath();
+      ctx.arc(bx, cy, rr, -Math.PI * 0.5, Math.PI * 0.5);
+      ctx.strokeStyle = 'rgba(99,102,241,' + (0.15 + 0.08 * (ci / nCircles)) * pulse + ')';
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+    }
+    // Radial geodesics
+    for (let i = 0; i <= nGeo; i++) {
+      const angle = -Math.PI * 0.5 + (Math.PI * i / nGeo);
+      const ex = bx + R * Math.cos(angle);
+      const ey = cy + R * Math.sin(angle);
+      ctx.beginPath();
+      ctx.moveTo(bx, cy);
+      ctx.lineTo(ex, ey);
+      ctx.strokeStyle = 'rgba(139,92,246,0.25)';
+      ctx.lineWidth   = 0.8;
+      ctx.stroke();
+    }
+    // Animated geodesic (massive particle falling toward boundary)
+    if (!rm) {
+      const geoT = (T * 0.4) % 1;
+      const geoAngle = -Math.PI * 0.3;
+      const geoR = R * geoT;
+      const gpx = bx + geoR * Math.cos(geoAngle);
+      const gpy = cy  + geoR * Math.sin(geoAngle);
+      t2Glow('#a78bfa', 18);
+      ctx.beginPath();
+      ctx.arc(gpx, gpy, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#a78bfa';
+      ctx.fill();
+      t2NoGlow();
+      t2Txt(gpx + 14, gpy, 'gravitone', '#a78bfa', 9, 'left', "'Courier New',monospace");
+    }
+    drawBoundary(7, true);
+    t2Txt(bx + R * 0.5, cy - R * 1.15, 'Disco di Poincaré — AdS₅', '#818cf8', 11, 'center');
+    t2Txt(bx + R * 0.5, cy + R * 1.2, 'L⁴ = 4πgₛNα\'²  · Λ < 0', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: SPLIT bulk/boundary (phase 3) ─────────────────────────────────
+  if (scene === 'split') {
+    drawBulk(0.18, true);
+    drawBoundary(9, true);
+
+    // Geodesic from interior bulk point to boundary (Witten diagram)
+    if (!rm) {
+      const bpAngle = -Math.PI * 0.2;
+      const bpR     = R * 0.55;
+      const bpx     = bx + bpR * Math.cos(bpAngle);
+      const bpy     = cy + bpR * Math.sin(bpAngle);
+      const progT   = (Math.sin(T * 0.7) + 1) * 0.5;
+      const interpX = t2Lerp(bpx, bx, progT);
+      const interpY = t2Lerp(bpy, bpy, progT);
+
+      ctx.setLineDash([4, 5]);
+      ctx.beginPath();
+      ctx.moveTo(bpx, bpy);
+      ctx.lineTo(interpX, interpY);
+      ctx.strokeStyle = 'rgba(251,191,36,0.7)';
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      t2Glow('#fbbf24', 14);
+      ctx.beginPath();
+      ctx.arc(bpx, bpy, 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#fbbf24';
+      ctx.fill();
+      t2NoGlow();
+      t2Txt(bpx + 12, bpy, 'φ(x,z)', '#fbbf24', 10, 'left', "'Courier New',monospace");
+      t2Txt(bpx + 12, bpy + 14, 'campo bulk', '#fbbf24', 9, 'left', "'Courier New',monospace");
+
+      // Arrow to boundary
+      ctx.beginPath();
+      ctx.moveTo(bpx - 8, bpy);
+      ctx.lineTo(bx + 6, bpy);
+      ctx.strokeStyle = 'rgba(251,191,36,0.45)';
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+    }
+
+    // z coordinate label
+    t2Txt(bx + R * 0.5, cy + R * 1.2, 'z → 0 : bordo    z → ∞ : centro bulk', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    t2Txt(bx + R * 0.5, cy - R * 1.15, 'BULK AdS₅ (5D, gravità)', '#60a5fa', 11, 'center');
+    return;
+  }
+
+  // ── SCENE: DUAL (Maldacena arrows, phase 4) ───────────────────────────────
+  if (scene === 'dual') {
+    drawBulk(0.22, true);
+    drawBoundary(8, true);
+
+    // Black hole in bulk
+    const bhx = bx + R * 0.48;
+    const bhy = cy + R * 0.1;
+    t2Glow('#f97316', 22);
+    ctx.beginPath();
+    ctx.arc(bhx, bhy, 10, 0, Math.PI * 2);
+    ctx.fillStyle = '#1c1917';
+    ctx.fill();
+    ctx.strokeStyle = '#f97316';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(bhx + 16, bhy, 'BH', '#f97316', 10, 'left', "'Courier New',monospace");
+
+    // Arrows from bulk BH to boundary thermal state
+    if (!rm) {
+      const arrowT = (T * 0.6) % 1;
+      const ax = t2Lerp(bhx, bx - 4, arrowT);
+      const ay = t2Lerp(bhy, bhy, arrowT);
+      t2Glow('#4ade80', 10);
+      ctx.beginPath();
+      ctx.arc(ax, ay, 3, 0, Math.PI * 2);
+      ctx.fillStyle = '#4ade80';
+      ctx.fill();
+      t2NoGlow();
+    }
+
+    // Double arrow label
+    t2Txt(bx + R * 0.5, cy - R * 1.15, 'Stringa Tipo IIB ↔ 𝒩=4 SYM', '#38bdf8', 12, 'center');
+    t2Txt(bx + R * 0.5, cy + R * 1.2, 'λ grande (bulk classico) ↔ λ grande (CFT forte)', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+
+    // Duality label
+    t2Glow('#0ea5e9', 8);
+    t2Txt(bhx, bhy + 26, 'Z_string = Z_CFT', '#7dd3fc', 10, 'center', "'Courier New',monospace");
+    t2NoGlow();
+    return;
+  }
+
+  // ── SCENE: DICT (dictionary, phase 5) ─────────────────────────────────────
+  if (scene === 'dict') {
+    drawBulk(0.14, false);
+    drawBoundary(6, true);
+
+    // Dictionary table
+    const entries = [
+      { bulk: 'scalare massa m²L²', cft: 'operatore dim. Δ' },
+      { bulk: 'gravitone (spin 2)',  cft: 'T^{μν} (stress)' },
+      { bulk: 'campo di gauge',     cft: 'corrente J^μ' },
+      { bulk: 'buco nero',          cft: 'stato termico T' },
+    ];
+    const tx0 = bx + R * 0.08;
+    const ty0 = cy - R * 0.62;
+    const dH  = R * 0.32;
+    const highlightIdx = Math.floor(((rm ? 0 : T) * 0.4) % entries.length);
+
+    for (let ei = 0; ei < entries.length; ei++) {
+      const ey = ty0 + ei * dH;
+      const isHL = ei === highlightIdx;
+      const col = isHL ? '#fbbf24' : 'rgba(148,163,184,0.5)';
+      if (isHL) t2Glow('#fbbf24', 10);
+      t2Txt(tx0 + R * 0.12, ey, entries[ei].bulk, col, 9, 'center', "'Courier New',monospace");
+      t2Txt(tx0 + R * 0.12, ey + 12, '↔  ' + entries[ei].cft, isHL ? '#4ade80' : 'rgba(74,222,128,0.4)', 9, 'center', "'Courier New',monospace");
+      t2NoGlow();
+    }
+
+    t2Txt(bx + R * 0.5, cy - R * 1.15, 'Dizionario AdS/CFT', '#fbbf24', 12, 'center');
+    t2Txt(bx + R * 0.5, cy + R * 1.2, 'm²L² = Δ(Δ−4)', '#7dd3fc', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── SCENE: HOLO (holographic principle, phase 6) ─────────────────────────
+  if (scene === 'holo') {
+    drawBulk(0.22, true);
+    drawBoundary(12, true);
+
+    // Radial arrows from bulk to boundary (all fields flowing out)
+    const nArrows = 8;
+    for (let ai = 0; ai < nArrows; ai++) {
+      const angle = -Math.PI * 0.48 + (Math.PI * 0.96 * ai / (nArrows - 1));
+      const startR = rm ? R * 0.5 : R * (0.3 + 0.2 * Math.sin(T * 1.1 + ai));
+      const sx  = bx + startR * Math.cos(angle);
+      const sy  = cy + startR * Math.sin(angle);
+      const ex  = bx + R * 0.98 * Math.cos(angle);
+      const ey  = cy + R * 0.98 * Math.sin(angle);
+
+      ctx.beginPath();
+      ctx.moveTo(sx, sy);
+      ctx.lineTo(ex, ey);
+      const col = ai % 2 === 0 ? 'rgba(34,211,238,0.5)' : 'rgba(167,243,208,0.4)';
+      ctx.strokeStyle = col;
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+
+      // Arrowhead
+      const dx = ex - sx, dy = ey - sy;
+      const len = Math.hypot(dx, dy);
+      const ux = dx / len, uy = dy / len;
+      ctx.beginPath();
+      ctx.moveTo(ex, ey);
+      ctx.lineTo(ex - ux * 7 + uy * 3, ey - uy * 7 - ux * 3);
+      ctx.lineTo(ex - ux * 7 - uy * 3, ey - uy * 7 + ux * 3);
+      ctx.fillStyle = col;
+      ctx.fill();
+    }
+
+    // Pulsing central entropy formula
+    const pulse = rm ? 1 : (0.75 + 0.25 * Math.sin(T * 1.5));
+    t2Glow('#a78bfa', 18 * pulse);
+    t2Txt(bx + R * 0.45, cy, 'S_BH = A/4G_N', '#c4b5fd', 13, 'center', "'Courier New',monospace");
+    t2NoGlow();
+
+    t2Txt(bx + R * 0.45, cy - R * 1.15, 'Principio Olografico', '#a78bfa', 13, 'center');
+    t2Txt(bx + R * 0.45, cy + R * 1.2, 'gravità emerge dall\'entanglement CFT', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── Fallback ──────────────────────────────────────────────────────────────
+  drawBulk(0.18, true);
+  drawBoundary(7, true);
+};
+
+t2Init();
+</script>
+</body>
+</html>
 <title>AdS/CFT — Corrispondenza Olografica — v2</title>
 <link rel="stylesheet" href="./ui.css">
 </head>

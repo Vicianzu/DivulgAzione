@@ -56,12 +56,25 @@
       text-transform: uppercase;
     }
 
+    /* ── Section title ── */
+    .section-title {
+      font-size: 0.72rem;
+      color: #0ea5e9;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      font-family: 'Courier New', monospace;
+      margin-bottom: 20px;
+      margin-top: 48px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(14, 165, 233, 0.18);
+    }
+
     /* ── Card grid ── */
     .grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
-      margin-bottom: 60px;
+      margin-bottom: 40px;
     }
 
     @media (max-width: 900px) {
@@ -196,8 +209,7 @@
 
   <main>
 
-    <h2 class="section-title" style="background: linear-gradient(135deg,#a78bfa,#38bdf8); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Pagine originali</h2>
-
+    <p class="section-title">Progetto Divulgazione — Stringhe &amp; Olografia</p>
     <div class="grid">
 
     <!-- Card 1 — Stringhe v1 -->
@@ -276,45 +288,50 @@
       <div class="card-header">
         <div class="card-titles">
           <h2>Relatività Speciale</h2>
-          <div class="sub">Einstein 1905 — I due postulati</div>
+          <div class="sub">Einstein 1905</div>
         </div>
-        <span class="badge">8 fasi</span>
+        <span class="badge">6 fasi</span>
       </div>
-      <p>Dalla crisi della fisica classica ai postulati di Einstein: dilatazione del tempo, contrazione delle lunghezze, simultaneità relativa, E=mc², trasformazioni di Lorentz.</p>
+      <p>Dai postulati di Einstein alla dilatazione del tempo, contrazione delle lunghezze, spazio-tempo di Minkowski e E = mc².</p>
       <div class="card-link">v1_relativita_speciale.html</div>
     </a>
 
-    <!-- Card 7 — Relatività Generale -->
+    </div>
+
+    <p class="section-title">Teorie Fondamentali</p>
+    <div class="grid">
+
+    <!-- Card — GR -->
     <a class="card" href="GR/v1_intro_general_relativity.html"
-       style="--accent: #e879f9;">
+       style="--accent: #a78bfa;">
       <div class="card-header">
         <div class="card-titles">
           <h2>Relatività Generale</h2>
-          <div class="sub">Einstein 1915 — Spazio-tempo curvo</div>
+          <div class="sub">Einstein 1915</div>
         </div>
         <span class="badge">8 fasi</span>
       </div>
-      <p>Dal principio di equivalenza alle equazioni di campo G_μν = 8πG/c⁴ T_μν. Deflessione della luce, onde gravitazionali, buchi neri, costante cosmologica.</p>
+      <p>Dal principio di equivalenza alle equazioni di campo di Einstein, onde gravitazionali, buchi neri e costante cosmologica.</p>
       <div class="card-link">GR/v1_intro_general_relativity.html</div>
     </a>
 
-    <!-- Card 8 — Loop Quantum Gravity -->
+    <!-- Card — LQG -->
     <a class="card" href="LQG/v1_intro_lqg.html"
-       style="--accent: #c084fc;">
+       style="--accent: #34d399;">
       <div class="card-header">
         <div class="card-titles">
           <h2>Loop Quantum Gravity</h2>
-          <div class="sub">Gravità quantistica a loop</div>
+          <div class="sub">LQG — Rovelli, Smolin</div>
         </div>
         <span class="badge">8 fasi</span>
       </div>
-      <p>Variabili di Ashtekar, loop di Wilson, spin network, spazio discreto, spin foam, background independence. Una delle principali teorie di gravità quantistica.</p>
+      <p>Dalle variabili di Ashtekar ai loop di Wilson, spin networks, spazio discreto e spin foam. Lo spazio-tempo quantizzato alla scala di Planck.</p>
       <div class="card-link">LQG/v1_intro_lqg.html</div>
     </a>
 
-    <!-- Card 9 — Meccanica Quantistica -->
+    <!-- Card — QM -->
     <a class="card" href="QM/v1_intro_quantum_mechanics.html"
-       style="--accent: #34d399;">
+       style="--accent: #60a5fa;">
       <div class="card-header">
         <div class="card-titles">
           <h2>Meccanica Quantistica</h2>
@@ -322,38 +339,184 @@
         </div>
         <span class="badge">10 fasi</span>
       </div>
-      <p>Funzione d'onda, principio di indeterminazione, doppia fenditura, spin, Modello Standard, QCD, entanglement, QED, bosone di Higgs. La teoria più precisa mai costruita.</p>
+      <p>Funzione d'onda, indeterminazione di Heisenberg, dualità onda-corpuscolo, spin, QCD, entanglement, QED e bosone di Higgs.</p>
       <div class="card-link">QM/v1_intro_quantum_mechanics.html</div>
     </a>
 
-    <!-- Card 10 — Asymptotic Safety -->
+    <!-- Card — Asymptotic Safety -->
     <a class="card" href="Asymptotic_safety/v1_intro_asymptotic_safety.html"
-       style="--accent: #f59e0b;">
+       style="--accent: #f472b6;">
       <div class="card-header">
         <div class="card-titles">
           <h2>Asymptotic Safety</h2>
-          <div class="sub">Sicurezza asintotica della gravità</div>
+          <div class="sub">Sicurezza Asintotica — Weinberg</div>
         </div>
         <span class="badge">7 fasi</span>
       </div>
-      <p>Weinberg 1976: le costanti di accoppiamento gravitazionale convergono a un punto fisso UV non-Gaussiano. Il flusso RG, il punto fisso, l'equazione di Wetterich.</p>
+      <p>La proposta di Weinberg (1976) per rendere la gravità quantistica UV-completa tramite un punto fisso non-Gaussiano nel flusso RG.</p>
       <div class="card-link">Asymptotic_safety/v1_intro_asymptotic_safety.html</div>
     </a>
 
-    <!-- Card 11 — viXra: Hydrogen spectrum (QM vs old quantum theory) -->
+    <!-- Card — viXra hydrogen -->
     <a class="card" href="vixra%20divulgazione/v1_hydrogen_old_quantum_vs_qm.html"
        style="--accent: #22c55e;">
       <div class="card-header">
         <div class="card-titles">
-          <h2>Old quantum theory or Quantum Mechanics: a look at the spectrum of the hydrogen atom</h2>
-          <div class="sub">viXra · Spettro dell'idrogeno · confronto concettuale</div>
+          <h2>Idrogeno: Old QT vs QM</h2>
+          <div class="sub">viXra · Confronto concettuale</div>
         </div>
         <span class="badge">9 fasi</span>
       </div>
-      <p>Una lettura divulgativa (stile DivulgAzione) del preprint di Jorma Jormakka: livelli energetici dell'idrogeno, orbitale vs funzione d'onda, e critica alla "momentum substitution".</p>
-      <div class="card-link">v1_hydrogen_old_quantum_vs_qm.html</div>
+      <p>Livelli energetici dell'idrogeno: la vecchia teoria quantistica (Bohr, de Broglie) vs la meccanica quantistica di Schrödinger a confronto.</p>
+      <div class="card-link">vixra divulgazione/v1_hydrogen_old_quantum_vs_qm.html</div>
     </a>
 
+    </div>
+
+    <p class="section-title">Tentativo 2 — Nuova Grafica (stile viXra)</p>
+    <div class="grid">
+
+    <!-- T2 Card 1 — AdS/CFT -->
+    <a class="card" href="tentativo%202/t2_v1_ads_cft.html"
+       style="--accent: #38bdf8;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>AdS/CFT — T2</h2>
+          <div class="sub">Corrispondenza Olografica</div>
+        </div>
+        <span class="badge">7 fasi</span>
+      </div>
+      <p>Nuova versione con layout viXra: barra top, pannello testo a sinistra, canvas animato con bulk/boundary. D3-brane → AdS₅ → dualità di Maldacena.</p>
+      <div class="card-link">tentativo 2/t2_v1_ads_cft.html</div>
+    </a>
+
+    <!-- T2 Card 2 — AdS/CFT v2 -->
+    <a class="card" href="tentativo%202/t2_v1_ads_cft_v2.html"
+       style="--accent: #7dd3fc;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>AdS/CFT v2 — T2</h2>
+          <div class="sub">Bulk Reconstruction focus</div>
+        </div>
+        <span class="badge">6 fasi</span>
+      </div>
+      <p>Ricostruzione del campo bulk, smearing kernel, cuneo di entanglement e superficie di Ryu-Takayanagi. Stile viXra con animazione interattiva.</p>
+      <div class="card-link">tentativo 2/t2_v1_ads_cft_v2.html</div>
+    </a>
+
+    <!-- T2 Card 3 — Bulk Reconstruction -->
+    <a class="card" href="tentativo%202/t2_v1_bulk_reconstruction.html"
+       style="--accent: #4ade80;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Bulk Reconstruction — T2</h2>
+          <div class="sub">Olografia Quantistica</div>
+        </div>
+        <span class="badge">6 fasi</span>
+      </div>
+      <p>Operatori CFT sul bordo, gravitoni nel bulk, smearing, entanglement wedge e RT surface. Canvas animato con geodesiche e coni di smearing.</p>
+      <div class="card-link">tentativo 2/t2_v1_bulk_reconstruction.html</div>
+    </a>
+
+    <!-- T2 Card 4 — Stringhe CY -->
+    <a class="card" href="tentativo%202/t2_v1_stringhe_calabi_yau.html"
+       style="--accent: #a78bfa;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Stringhe Calabi-Yau — T2</h2>
+          <div class="sub">Teoria delle Stringhe</div>
+        </div>
+        <span class="badge">6 fasi</span>
+      </div>
+      <p>Stringa fondamentale, modi di vibrazione, compattificazione su Calabi-Yau, topologia e fisica a bassa energia. Animazione con stringa oscillante e toro.</p>
+      <div class="card-link">tentativo 2/t2_v1_stringhe_calabi_yau.html</div>
+    </a>
+
+    <!-- T2 Card 5 — Stringhe CY v2 -->
+    <a class="card" href="tentativo%202/t2_v1_stringhe_calabi_yau_v2.html"
+       style="--accent: #818cf8;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Stringhe CY v2 — T2</h2>
+          <div class="sub">D-brane e Dualità</div>
+        </div>
+        <span class="badge">6 fasi</span>
+      </div>
+      <p>D-brane, M-teoria, dualità T e S, moduli della Calabi-Yau, supersimmetria e previsioni sperimentali. Canvas con brana e stringhe aperte animate.</p>
+      <div class="card-link">tentativo 2/t2_v1_stringhe_calabi_yau_v2.html</div>
+    </a>
+
+    <!-- T2 Card 6 — Relatività Speciale -->
+    <a class="card" href="tentativo%202/t2_v1_relativita_speciale.html"
+       style="--accent: #fb923c;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Relatività Speciale — T2</h2>
+          <div class="sub">Einstein 1905</div>
+        </div>
+        <span class="badge">6 fasi</span>
+      </div>
+      <p>Postulati, dilatazione del tempo, contrazione delle lunghezze, spazio-tempo di Minkowski e E=mc². Canvas con diagramma di Minkowski animato.</p>
+      <div class="card-link">tentativo 2/t2_v1_relativita_speciale.html</div>
+    </a>
+
+    <!-- T2 Card 7 — Asymptotic Safety -->
+    <a class="card" href="tentativo%202/t2_v1_intro_asymptotic_safety.html"
+       style="--accent: #f472b6;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Asymptotic Safety — T2</h2>
+          <div class="sub">Sicurezza Asintotica</div>
+        </div>
+        <span class="badge">7 fasi</span>
+      </div>
+      <p>RG flow nel piano (G, Λ), punto fisso UV non-Gaussiano, libertà asintotica vs sicurezza asintotica, equazione di Wetterich. Canvas con traiettorie RG animate.</p>
+      <div class="card-link">tentativo 2/t2_v1_intro_asymptotic_safety.html</div>
+    </a>
+
+    <!-- T2 Card 8 — GR -->
+    <a class="card" href="tentativo%202/t2_v1_intro_general_relativity.html"
+       style="--accent: #a78bfa;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Relatività Generale — T2</h2>
+          <div class="sub">Einstein 1915</div>
+        </div>
+        <span class="badge">8 fasi</span>
+      </div>
+      <p>Principio di equivalenza, spazio-tempo curvo, equazioni di campo, onde gravitazionali, buchi neri e costante cosmologica. Griglia spaziale deformata animata.</p>
+      <div class="card-link">tentativo 2/t2_v1_intro_general_relativity.html</div>
+    </a>
+
+    <!-- T2 Card 9 — LQG -->
+    <a class="card" href="tentativo%202/t2_v1_intro_lqg.html"
+       style="--accent: #34d399;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>LQG — T2</h2>
+          <div class="sub">Loop Quantum Gravity</div>
+        </div>
+        <span class="badge">8 fasi</span>
+      </div>
+      <p>Ashtekar, loop di Wilson, spin networks, area e volume quantizzati, spin foam e background independence. Canvas con spin network pulsante animata.</p>
+      <div class="card-link">tentativo 2/t2_v1_intro_lqg.html</div>
+    </a>
+
+    <!-- T2 Card 10 — QM -->
+    <a class="card" href="tentativo%202/t2_v1_intro_quantum_mechanics.html"
+       style="--accent: #60a5fa;">
+      <div class="card-header">
+        <div class="card-titles">
+          <h2>Meccanica Quantistica — T2</h2>
+          <div class="sub">10 fasi</div>
+        </div>
+        <span class="badge">10 fasi</span>
+      </div>
+      <p>Funzione d'onda, indeterminazione, dualità onda-corpuscolo, spin, QCD, entanglement, QED, bosone di Higgs. Canvas con pacchetto d'onda e modello standard.</p>
+      <div class="card-link">tentativo 2/t2_v1_intro_quantum_mechanics.html</div>
+    </a>
+
+    </div>
     </div><!-- /grid originali -->
 
     <!-- ── Tentativo 2 section ── -->

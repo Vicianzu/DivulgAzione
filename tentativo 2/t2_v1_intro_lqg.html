@@ -3,6 +3,392 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loop Quantum Gravity — LQG | Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<!-- Top bar -->
+<div id="ui">
+  <span id="ui-title">DivulgAzione · LQG</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">8 fasi</span>
+</div>
+
+<!-- Left panel -->
+<div id="panel">
+
+  <div class="phase-content" id="ph-1">
+    <div class="phase-tag">FASE 01 — SFIDA</div>
+    <div class="phase-title">La grande sfida: quantizzare la gravità</div>
+    <div class="phase-body">
+      <p>La <span class="hl">meccanica quantistica</span> (QM) governa il mondo subatomico con straordinaria precisione; la <span class="am">Relatività Generale</span> (GR) governa lo spazio-tempo e le grandi scale cosmiche. Entrambe le teorie sono correttissime nei loro domini — ma sono <span class="gr">fondamentalmente incompatibili</span> tra loro.</p>
+      <p>La quantizzazione perturbativa della gravità fallisce: ad ogni ordine perturbativo compaiono nuove <span class="hl">divergenze UV</span> che non possono essere riassorbite da un numero finito di controtemine. La gravità non è <span class="am">rinormalizzabile</span> perturbativamente. Serve un approccio radicalmente diverso.</p>
+      <p>La <span class="vi">Loop Quantum Gravity</span> (LQG), sviluppata principalmente da Rovelli, Smolin e Thiemann a partire dagli anni '80, è uno degli approcci non perturbativi più seri. Non cerca di modificare la QM o la GR, ma di applicare rigorosamente i principi della quantizzazione alla GR stessa.</p>
+      <code class="formula">G_μν = 8πG T_μν   vs   iℏ ∂ψ/∂t = Ĥψ
+l_P = √(ℏG/c³) ≈ 1.6×10⁻³⁵ m     (scala di Planck)</code>
+      <div class="note">▸ Confronto di scale: nucleo atomico ~10⁻¹⁵ m, lunghezza di Planck ~10⁻³⁵ m — 20 ordini di grandezza più piccola. La griglia classica si frammenta in granuli quantistici.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — ASHTEKAR</div>
+    <div class="phase-title">Ashtekar: le variabili di connessione</div>
+    <div class="phase-body">
+      <p>Nel <span class="am">1986</span>, <span class="hl">Abhay Ashtekar</span> compì una riformulazione rivoluzionaria della GR: invece della metrica g_μν come variabile fondamentale, usò le <span class="gr">variabili di connessione</span> A^i_a — analogamente a come Maxwell riformulò l'elettromagnetismo con il potenziale vettore.</p>
+      <p>Con queste nuove variabili, la GR assume la forma di una <span class="hl">teoria di gauge</span>, simile alla Yang-Mills che descrive le forze nucleari. Le equazioni di vincolo di GR si semplificano enormemente. Il <span class="am">parametro di Barbero-Immirzi</span> γ è un parametro libero reale introdotto da Barbero (1995) e Immirzi (1997) che appare nelle previsioni fisiche di LQG.</p>
+      <p>Le variabili coniugate alla connessione sono le <span class="vi">triade (o co-triade)</span> E^a_i: la "radice quadrata" della metrica. Insieme, (A, E) formano un sistema hamiltoniano canonico analizzabile con i metodi della quantizzazione canonica.</p>
+      <code class="formula">A^i_a = Γ^i_a + γ K^i_a     (connessione di Ashtekar-Barbero)
+{A^i_a(x), E^b_j(y)} = γ δ^i_j δ^b_a δ³(x−y)</code>
+      <div class="note">▸ Linee di campo della connessione di gauge che si avvolgono attorno a un loop — analogia con le linee del campo elettromagnetico.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — LOOP</div>
+    <div class="phase-title">Rovelli, Smolin e i loop di Wilson</div>
+    <div class="phase-body">
+      <p>Nel periodo <span class="am">1988–1990</span>, <span class="hl">Carlo Rovelli</span> e <span class="hl">Lee Smolin</span> scoprirono che le soluzioni naturali dell'equazione di Wheeler-DeWitt (l'equazione di Schrödinger per la geometria) sono i <span class="gr">loop di Wilson</span>: integrali di linea della connessione lungo curve chiuse γ.</p>
+      <p>I loop di Wilson W[γ] sono le "<span class="am">linee di forza</span>" quantizzate della gravità — curve chiuse che trasportano informazione geometrica. Ogni loop rappresenta un'eccitazione elementare del campo gravitazionale, analoga a un fotone per il campo elettromagnetico.</p>
+      <p>La <span class="vi">rappresentazione di loop</span> trasforma l'equazione di Wheeler-DeWitt in una forma trattabile. Lo spazio degli stati è costruito da funzionali della connessione valutati su reti di loop — una descrizione radicalmente discreta dello spazio fisico.</p>
+      <code class="formula">W[γ] = Tr(𝒫 exp ∮_γ A · dl)
+Ĥ |W[γ]⟩ = 0     ← equazione di Wheeler-DeWitt</code>
+      <div class="note">▸ Un loop animato su una superficie: il percorso chiuso γ con la connessione A che si avvolge attorno al loop, rappresentando un'unità elementare di geometria quantizzata.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — SPIN NETWORKS</div>
+    <div class="phase-title">Spin networks: lo spazio è una rete</div>
+    <div class="phase-body">
+      <p>Lo spazio alla scala di Planck non è un continuum ma una <span class="hl">rete quantistica</span>. Le <span class="am">spin networks</span> (reti di spin), introdotte da Penrose nel 1971 e adottate da Rovelli e Smolin nel 1995, sono grafi colorati: i <span class="gr">nodi</span> rappresentano volumi elementari di spazio, i <span class="hl">link (spigoli)</span> rappresentano superfici di separazione tra volumi adiacenti.</p>
+      <p>Ogni link è etichettato con un numero di spin <span class="am">j = 0, ½, 1, 3/2, ...</span> (numeri interi o semi-interi). Ogni link determina l'area della superficie che attraversa: A = 8πγ l²_P √(j(j+1)). Le spin networks sono <span class="vi">autostati</span> degli operatori di area e di volume — il risultato della misura è discreto.</p>
+      <p>Gli stati di spin network formano una base ortonormale per lo spazio di Hilbert cinematico della LQG. La dinamica è generata dai vincoli hamiltoniani che collegano spin networks tramite spin foam (fase 6).</p>
+      <code class="formula">A_e = 8πγ l²_P √(j_e(j_e+1))     (area per link e)
+V_n = l³_P f(j₁,j₂,...,jₙ)     (volume per nodo n)</code>
+      <div class="note">▸ Grafo animato con nodi colorati e link pulsanti; ogni link etichettato con j = ½, 1, 3/2, ... Le aree pulsano secondo A = 8πγl²_P√(j(j+1)).</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — DISCRETO</div>
+    <div class="phase-title">Area e volume quantizzati</div>
+    <div class="phase-body">
+      <p>Lo spazio ha una struttura minima <span class="hl">granulare</span> alla scala di Planck. Questi minimi non sono imposti a mano: <span class="am">emergono</span> dalla quantizzazione, esattamente come i livelli discreti di energia dell'atomo di idrogeno emergono dalla quantizzazione di Bohr.</p>
+      <p><span class="gr">Area minima</span>: A_min = 8πγ l²_P √(3/4) ≈ 4πγ√3 l²_P ≈ 10⁻⁷⁰ m² (per j = ½). <span class="gr">Volume minimo</span>: V_min ~ l³_P ≈ 10⁻¹⁰⁵ m³. Queste scale sono enormemente al di sotto di qualsiasi risoluzione sperimentale attuale, ma hanno conseguenze fisiche misurabili.</p>
+      <p>La discretezza <span class="vi">risolve le singolarità</span>: la singolarità classica r = 0 dei buchi neri e la singolarità t = 0 del Big Bang vengono sostituite da regioni di massima curvatura finita — la <span class="hl">densità di Planck</span> ρ_P = c⁵/(ℏG²) ≈ 5×10⁹⁶ kg/m³ è l'estremo fisico raggiungibile.</p>
+      <code class="formula">A_n = 8πγ l²_P √(n(n+2)/4)     n ∈ ℕ
+ρ_max = ρ_Planck = c⁵/(ℏG²) ≈ 5×10⁹⁶ kg/m³</code>
+      <div class="note">▸ Visualizzazione della discretezza: la stessa rete di spin con i valori d'area dei link evidenziati come cerchi quantizzati, la scala di Planck lampeggiante in ambra.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — SPIN FOAM</div>
+    <div class="phase-title">Spin foams: lo spaziotempo come schiuma</div>
+    <div class="phase-body">
+      <p>Una <span class="hl">spin network</span> descrive lo spazio in un istante. Come evolve nel tempo? La risposta è la <span class="am">spin foam</span>: una struttura 4D di vertici, link, facce e celle che descrive l'evoluzione della geometria quantistica, analoga all'integrale sui cammini di Feynman.</p>
+      <p>Come l'integrale di percorso di Feynman somma su tutte le traiettorie classiche, la LQG <span class="gr">somma su tutte le geometrie</span> dello spaziotempo compatibili con le configurazioni iniziale e finale. Il modello EPRL (Engle-Pereira-Rovelli-Livine, 2007) fornisce le ampiezze verticali della spin foam con una definizione rigorosa.</p>
+      <p>Ogni vertice della spin foam rappresenta un <span class="vi">evento elementare</span> in cui la geometria dello spazio cambia: link si dividono o si uniscono, nodi cambiano valenza. La somma su spin foam è una somma su tutta la storia dello spazio-tempo quantizzato.</p>
+      <code class="formula">W(s_f, s_i) = Σ_{spin foams σ} A(σ)
+Z = Σ_{σ} Π_v A_v · Π_e A_e · Π_f A_f</code>
+      <div class="note">▸ Due spin networks collegate da una struttura 4D intermedia: la spin foam, mostrata come una sezione 2D con vertici colorati e facce semitrasparenti.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — BACKGROUND</div>
+    <div class="phase-title">Background independence: lo spazio emerge</div>
+    <div class="phase-body">
+      <p>La caratteristica fondamentale della LQG è la <span class="hl">background independence</span>: non si presuppone nessuno spazio-tempo fisso su cui la teoria vive. Lo spazio-tempo stesso è una variabile dinamica, non un palcoscenico fisso. Questo è in contrasto con la <span class="am">teoria delle stringhe</span>, che vive su uno sfondo fisso (spaziotempo di Minkowski o di Calabi-Yau).</p>
+      <p>L'<span class="gr">invarianza per diffeomorfismi</span> — la libertà di cambiare le coordinate spaziotemporali arbitrariamente — è implementata esattamente in LQG. I vincoli hamiltoniani di GR (vincoli di diffeomorfismo e vincolo scalare) diventano operatori quantistici su cui si costruisce lo spazio di Hilbert fisico.</p>
+      <p>Lo spazio <span class="vi">emerge</span> dalla rete quantistica, non è presupposto. Due nodi della rete sono adiacenti non perché si trovino vicini nello spazio, ma perché sono connessi da un link. La geometria è <span class="hl">relazionale</span>, non assoluta.</p>
+      <code class="formula">{H[N], H[M]} = H[N∂M − M∂N]     (algebra dei vincoli)
+[Â_a(x), Ê^b_j(y)] = iγl²_P δ_a^b δ^j_i δ³(x−y)</code>
+      <div class="note">▸ La rete non ha una posizione assoluta nello spazio — è la rete stessa che definisce lo spazio. Le connessioni tra nodi sono mostrate senza un background fisso.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-8">
+    <div class="phase-tag">FASE 08 — PREDIZIONI</div>
+    <div class="phase-title">Predizioni testabili e sfide aperte</div>
+    <div class="phase-body">
+      <p>La LQG fa <span class="hl">predizioni fisiche</span> che in linea di principio sono testabili: la <span class="am">Loop Quantum Cosmology</span> (LQC) sostituisce il Big Bang con un <span class="gr">Big Bounce</span> — l'universo si comprime fino alla densità di Planck e poi rimbalza, evitando la singolarità. La cosmologia di Planck lascerebbe tracce nel CMB.</p>
+      <p>La <span class="hl">violazione di Lorentz</span> a scala di Planck potrebbe causare una dispersione dei raggi gamma: fotoni ad alta energia viaggiano a velocità leggermente diverse. L'esperimento <span class="am">Fermi-LAT</span> ha posto limiti stringenti su questo effetto, che vincolano i parametri della LQG. Il futuro <span class="vi">CTA</span> migliorerà ulteriormente questi limiti.</p>
+      <p>La sfida principale è il <span class="am">limite semiclassico</span>: dimostrare che la GR ordinaria emerge dalla LQG a basse energie. Questo è tecnicamente difficile. Un'altra sfida: il calcolo esplicito dei valori fisici osservabili dalle spin foam è computazionalmente intensivo.</p>
+      <code class="formula">E² = p²c² + m²c⁴ + η l_P E³/ℏc     (dispersione deformata)
+S_BH = A/(4l²_P) = A·c³/(4Gℏ)     (entropia di Bekenstein-Hawking)</code>
+      <div class="note">▸ La rete che si comprime verso il Big Bounce (densità di Planck) e poi si espande: cosmologia quantistica a loop — LQC mostra il rimbalzo invece della singolarità.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom navigation -->
+<div id="bottom">
+  <button class="btn" onclick="goPhase(1)">01 · Sfida</button>
+  <button class="btn" onclick="goPhase(2)">02 · Ashtekar</button>
+  <button class="btn" onclick="goPhase(3)">03 · Loop</button>
+  <button class="btn" onclick="goPhase(4)">04 · Spin Networks</button>
+  <button class="btn" onclick="goPhase(5)">05 · Discreto</button>
+  <button class="btn" onclick="goPhase(6)">06 · Spin Foam</button>
+  <button class="btn" onclick="goPhase(7)">07 · Background</button>
+  <button class="btn" onclick="goPhase(8)">08 · Predizioni</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: 'La Sfida',        desc: 'FASE 01 — Quantizzare la gravità: QM vs GR · l_P ≈ 1.6×10⁻³⁵ m',               scene: 'sfida'    },
+  { name: 'Ashtekar',        desc: 'FASE 02 — Variabili di connessione: A^i_a = Γ^i_a + γK^i_a (1986)',              scene: 'ashtekar' },
+  { name: 'Loop di Wilson',  desc: 'FASE 03 — W[γ] = Tr(𝒫 exp ∮ A·dl) · Rovelli & Smolin 1988–1990',               scene: 'loop'     },
+  { name: 'Spin Networks',   desc: 'FASE 04 — A = 8πγl²_P√(j(j+1)) · spazio come rete quantistica discreta',        scene: 'spinnet'  },
+  { name: 'Spazio Discreto', desc: 'FASE 05 — Area minima ≈ 10⁻⁷⁰ m² · Volume minimo ~ l³_P ≈ 10⁻¹⁰⁵ m³',          scene: 'discreto' },
+  { name: 'Spin Foams',      desc: 'FASE 06 — Z = Σ Π_v A_v Π_e A_e Π_f A_f · spaziotempo come schiuma 4D',        scene: 'foam'     },
+  { name: 'Background Ind.', desc: 'FASE 07 — Background independence: spaziotempo emergente dalla rete',             scene: 'bg'       },
+  { name: 'Predizioni',      desc: 'FASE 08 — Big Bounce LQC · Fermi-LAT · S_BH = A/(4l²_P)',                        scene: 'pred'     },
+];
+
+// ── Spin network geometry (shared, regenerated each page load) ───────────────
+const _lqgNodes = [];
+const _lqgEdges = [];
+(function buildNetwork() {
+  const nodeCount = 18;
+  const positions = [
+    [0.50,0.50],[0.35,0.35],[0.65,0.35],[0.35,0.65],[0.65,0.65],
+    [0.22,0.50],[0.78,0.50],[0.50,0.22],[0.50,0.78],
+    [0.26,0.28],[0.74,0.28],[0.26,0.72],[0.74,0.72],
+    [0.42,0.42],[0.58,0.42],[0.42,0.58],[0.58,0.58],[0.50,0.50],
+  ];
+  const spins = [1, 0.5, 1, 0.5, 1.5, 0.5, 1, 0.5, 1, 0.5, 1, 0.5, 1.5, 0.5, 1, 0.5, 1, 0.5];
+  const nodeColors = ['#38bdf8','#4ade80','#a78bfa','#fbbf24','#f87171','#34d399'];
+  for (let i = 0; i < nodeCount; i++) {
+    _lqgNodes.push({ fx: positions[i][0], fy: positions[i][1], spin: spins[i], col: nodeColors[i % nodeColors.length] });
+  }
+  const edgePairs = [[0,1],[0,2],[0,3],[0,4],[1,5],[2,6],[3,5],[4,6],[1,7],[2,7],[3,8],[4,8],[1,9],[2,10],[3,11],[4,12],[0,13],[0,14],[0,15],[0,16],[9,13],[10,14],[11,15],[12,16]];
+  const edgeSpins = [1,0.5,1,1.5,0.5,0.5,1,1,0.5,1,0.5,1,1,0.5,1,1.5,0.5,1,0.5,1,0.5,1,0.5,1];
+  edgePairs.forEach(([a,b],i) => _lqgEdges.push({ a, b, spin: edgeSpins[i % edgeSpins.length] }));
+})();
+
+function drawSpinNetwork(T, cx, cy, scale, pulseMult, showLabels, alpha) {
+  const rm = t2ReducedMotion();
+  scale = scale || 1;
+  pulseMult = pulseMult || 1;
+  alpha = alpha === undefined ? 1 : alpha;
+  const R = Math.min(t2GetW(), t2GetH()) * 0.32 * scale;
+  const ctx = t2GetCtx();
+
+  // edges
+  _lqgEdges.forEach((e, ei) => {
+    const na = _lqgNodes[e.a], nb = _lqgNodes[e.b];
+    const ax = cx + (na.fx - 0.5) * R * 2;
+    const ay = cy + (na.fy - 0.5) * R * 2;
+    const bx = cx + (nb.fx - 0.5) * R * 2;
+    const by = cy + (nb.fy - 0.5) * R * 2;
+    const pulse = rm ? 1 : (0.6 + 0.4 * Math.sin(T * 1.1 + ei * 0.7)) * pulseMult;
+    const w = (e.spin + 0.5) * 2 * pulse;
+    ctx.beginPath(); ctx.moveTo(ax, ay); ctx.lineTo(bx, by);
+    ctx.strokeStyle = `rgba(56,189,248,${0.35 * alpha * pulse})`;
+    ctx.lineWidth = w;
+    ctx.stroke();
+    if (showLabels && !rm) {
+      const mx = (ax + bx) / 2, my = (ay + by) / 2;
+      t2Txt(mx, my - 8, 'j=' + e.spin, 'rgba(251,191,36,0.65)', 9, 'center', 'Courier New,monospace');
+    }
+  });
+
+  // nodes
+  _lqgNodes.forEach((n, ni) => {
+    const nx = cx + (n.fx - 0.5) * R * 2;
+    const ny = cy + (n.fy - 0.5) * R * 2;
+    const pulse = rm ? 1 : (0.75 + 0.25 * Math.sin(T * 1.6 + ni * 1.1)) * pulseMult;
+    const r = (6 + n.spin * 4) * pulse;
+    t2Glow(n.col, 14 * pulse * alpha);
+    ctx.beginPath(); ctx.arc(nx, ny, r, 0, Math.PI * 2);
+    ctx.fillStyle = n.col; ctx.globalAlpha = alpha; ctx.fill(); ctx.globalAlpha = 1;
+    t2NoGlow();
+  });
+}
+
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const cx = t2AnimCX();
+  const cy = t2AnimCY();
+  const rm = t2ReducedMotion();
+  const scene = window.T2_PHASES[phIdx].scene;
+
+  if (scene === 'sfida') {
+    // Grid that fractures into discrete cells
+    const cols = 14, rows = 12;
+    const gW = Math.min(W * 0.4, 340), gH = Math.min(H * 0.55, 300);
+    const ox = cx - gW / 2, oy = cy - gH / 2;
+    const fracture = rm ? 0.5 : t2Clamp(0.3 + 0.4 * Math.sin(T * 0.35), 0.1, 0.9);
+    for (let i = 0; i <= cols; i++) {
+      for (let j = 0; j <= rows; j++) {
+        const jitter = fracture * (Math.sin(i * 3.7 + j * 2.3) * 12);
+        const px = ox + (i / cols) * gW + jitter;
+        const py = oy + (j / rows) * gH + jitter * 0.7;
+        if (i < cols && j < rows) {
+          ctx.strokeStyle = `rgba(56,189,248,${0.15 + 0.1 * fracture})`;
+          ctx.lineWidth = 0.8;
+          const nx = ox + ((i + 1) / cols) * gW + Math.sin((i + 1) * 3.7 + j * 2.3) * 12 * fracture;
+          const ny = oy + (j / rows) * gH + Math.sin(i * 3.7 + j * 2.3) * 12 * fracture * 0.7;
+          ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(nx, ny); ctx.stroke();
+          const nx2 = ox + (i / cols) * gW + Math.sin(i * 3.7 + (j + 1) * 2.3) * 12 * fracture;
+          const ny2 = oy + ((j + 1) / rows) * gH + Math.sin(i * 3.7 + (j + 1) * 2.3) * 12 * fracture * 0.7;
+          ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(nx2, ny2); ctx.stroke();
+        }
+      }
+    }
+    t2Txt(cx, cy - H * 0.22, 'QM  ⟺  GR', 'rgba(167,139,250,0.6)', 22, 'center', 'Courier New,monospace');
+    t2Txt(cx, cy + H * 0.25, 'l_P ≈ 1.6 × 10⁻³⁵ m', 'rgba(251,191,36,0.5)', 13, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'ashtekar') {
+    // Field lines of gauge connection curving around a loop
+    const loopR = 70;
+    for (let i = 0; i < 16; i++) {
+      const angle = (i / 16) * Math.PI * 2;
+      const lx = cx + loopR * Math.cos(angle);
+      const ly = cy + loopR * Math.sin(angle);
+      const anim = rm ? 0 : T * 0.7;
+      const fLen = 30 + 10 * Math.sin(T * 1.2 + i);
+      const outAngle = angle + 0.4 + (rm ? 0 : 0.15 * Math.sin(T + i));
+      ctx.beginPath(); ctx.moveTo(lx, ly);
+      ctx.lineTo(lx + fLen * Math.cos(outAngle), ly + fLen * Math.sin(outAngle));
+      ctx.strokeStyle = `rgba(74,222,128,${0.4 + 0.2 * Math.sin(anim + i)})`;
+      ctx.lineWidth = 1.2; ctx.stroke();
+    }
+    // The loop itself
+    t2Glow('#fbbf24', 16);
+    ctx.beginPath(); ctx.arc(cx, cy, loopR, 0, Math.PI * 2);
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 2.5; ctx.stroke();
+    t2NoGlow();
+    // Gauge particle running along loop
+    if (!rm) {
+      const pAngle = T * 1.4;
+      const px = cx + loopR * Math.cos(pAngle);
+      const py = cy + loopR * Math.sin(pAngle);
+      t2Glow('#a78bfa', 16);
+      ctx.beginPath(); ctx.arc(px, py, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#a78bfa'; ctx.fill();
+      t2NoGlow();
+    }
+    t2Txt(cx, cy, 'A', 'rgba(251,191,36,0.7)', 18, 'center', 'Courier New,monospace');
+    t2Txt(cx, cy + H * 0.24, 'Connessione di Ashtekar-Barbero', 'rgba(148,163,184,0.5)', 12, 'center');
+  }
+
+  else if (scene === 'loop') {
+    // A single Wilson loop on a manifold surface
+    const loopR = 80;
+    // Surface hint
+    ctx.beginPath();
+    ctx.ellipse(cx, cy, 130, 55, 0.15, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(14,165,233,0.12)'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.fillStyle = 'rgba(14,165,233,0.04)'; ctx.fill();
+    // Loop
+    const loopTwist = rm ? 0 : Math.sin(T * 0.5) * 0.2;
+    t2Glow('#4ade80', 18);
+    ctx.beginPath();
+    for (let i = 0; i <= 60; i++) {
+      const a = (i / 60) * Math.PI * 2;
+      const rx = loopR * (1 + 0.12 * Math.sin(a * 3 + T * 0.8));
+      const ry = loopR * 0.55 * (1 + 0.08 * Math.sin(a * 2 + T));
+      const px = cx + rx * Math.cos(a + loopTwist);
+      const py = cy + ry * Math.sin(a + loopTwist);
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.strokeStyle = '#4ade80'; ctx.lineWidth = 2.5; ctx.stroke();
+    t2NoGlow();
+    // Arrowhead
+    const aArrow = (rm ? 0 : T * 0.5 % (Math.PI * 2));
+    const arx = cx + loopR * Math.cos(aArrow);
+    const ary = cy + loopR * 0.55 * Math.sin(aArrow);
+    t2Glow('#fbbf24', 14);
+    ctx.beginPath(); ctx.arc(arx, ary, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#fbbf24'; ctx.fill();
+    t2NoGlow();
+    t2Txt(cx, cy - loopR - 22, 'W[γ] = Tr(𝒫 exp ∮ A·dl)', 'rgba(74,222,128,0.7)', 14, 'center', 'Courier New,monospace');
+    t2Txt(cx, cy + H * 0.23, 'Loop di Wilson — eccitazione elementare della geometria', 'rgba(148,163,184,0.5)', 11, 'center');
+  }
+
+  else if (scene === 'spinnet') {
+    drawSpinNetwork(T, cx, cy, 1, 1, true, 1);
+    t2Txt(cx, cy - Math.min(W, H) * 0.38, 'A = 8πγl²_P √(j(j+1))', 'rgba(56,189,248,0.55)', 14, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'discreto') {
+    drawSpinNetwork(T, cx, cy, 1, 1.2, false, 1);
+    // Highlight discrete area quanta as rings around edges
+    const R = Math.min(W, H) * 0.32;
+    _lqgEdges.slice(0, 8).forEach((e, ei) => {
+      const na = _lqgNodes[e.a], nb = _lqgNodes[e.b];
+      const mx = cx + ((na.fx + nb.fx) / 2 - 0.5) * R * 2;
+      const my = cy + ((na.fy + nb.fy) / 2 - 0.5) * R * 2;
+      const ar = (e.spin + 0.5) * 9;
+      const pulse = rm ? 1 : (0.7 + 0.3 * Math.sin(T * 2 + ei));
+      t2Glow('#fbbf24', 10 * pulse);
+      ctx.beginPath(); ctx.arc(mx, my, ar * pulse, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(251,191,36,${0.45 * pulse})`; ctx.lineWidth = 1.5; ctx.stroke();
+      t2NoGlow();
+    });
+    t2Txt(cx, cy + Math.min(W, H) * 0.4, 'A_min ≈ 10⁻⁷⁰ m²  ·  V_min ≈ l³_P ≈ 10⁻¹⁰⁵ m³', 'rgba(148,163,184,0.5)', 11, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'foam') {
+    // Two spin networks (top and bottom) connected by foam structure
+    const yOffset = Math.min(H, 500) * 0.18;
+    drawSpinNetwork(T, cx, cy - yOffset, 0.65, 0.8, false, 0.85);
+    drawSpinNetwork(T + 1.5, cx, cy + yOffset, 0.65, 0.8, false, 0.85);
+    // Connecting foam lines
+    const R = Math.min(W, H) * 0.22;
+    for (let i = 0; i < 10; i++) {
+      const angle = (i / 10) * Math.PI * 2;
+      const ax = cx + R * 0.5 * Math.cos(angle);
+      const bx = cx + R * 0.5 * Math.cos(angle + 0.4);
+      const pulse = rm ? 1 : (0.5 + 0.5 * Math.sin(T * 0.9 + i * 0.8));
+      ctx.beginPath();
+      ctx.moveTo(ax, cy - yOffset + R * 0.3 * Math.sin(angle));
+      ctx.lineTo(bx, cy + yOffset + R * 0.3 * Math.sin(angle + 0.4));
+      ctx.strokeStyle = `rgba(167,139,250,${0.25 * pulse})`; ctx.lineWidth = 1.2; ctx.stroke();
+    }
+    t2Txt(cx, cy, 'spin foam', 'rgba(167,139,250,0.55)', 13, 'center', 'Courier New,monospace');
+    t2Txt(cx, cy + H * 0.28, 'Z = Σ Π_v A_v · Π_e A_e · Π_f A_f', 'rgba(56,189,248,0.5)', 13, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'bg') {
+    // Network without any background — floating in void
+    drawSpinNetwork(T, cx, cy, 1, 1, false, 1);
+    // Show that there's no fixed grid behind it
+    t2Txt(cx, cy - Math.min(W, H) * 0.4, 'Nessun spaziotempo di sfondo', 'rgba(167,139,250,0.55)', 14, 'center');
+    t2Txt(cx, cy + Math.min(W, H) * 0.38, '{H[N], H[M]} = H[N∂M − M∂N]', 'rgba(74,222,128,0.45)', 13, 'center', 'Courier New,monospace');
+  }
+
+  else if (scene === 'pred') {
+    // Bounce cosmology: network contracts then expands
+    const bouncePhase = rm ? 0.5 : (Math.sin(T * 0.45) * 0.5 + 0.5);
+    const sc = 0.4 + bouncePhase * 0.7;
+    const col = bouncePhase > 0.5 ? '#38bdf8' : '#f87171';
+    drawSpinNetwork(T, cx, cy, sc, 1, false, 1);
+    // Phase label
+    const label = bouncePhase < 0.45 ? 'Big Bounce (max densità di Planck)' :
+                  bouncePhase < 0.55 ? '— RIMBALZO —' : 'Espansione';
+    t2Glow(col, 10);
+    t2Txt(cx, cy - Math.min(W, H) * 0.42, label, col, 14, 'center');
+    t2NoGlow();
+    t2Txt(cx, cy + Math.min(W, H) * 0.38, 'S_BH = A/(4l²_P)  ·  Fermi-LAT  ·  CTA', 'rgba(148,163,184,0.5)', 12, 'center', 'Courier New,monospace');
+  }
+};
+
+t2Init();
+</script>
+</body>
+</html>
 <title>Loop Quantum Gravity — Gravità Quantistica a Loop — v2</title>
 <link rel="stylesheet" href="./ui.css">
 </head>

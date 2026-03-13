@@ -3,6 +3,478 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bulk Reconstruction — Olografia Quantistica | Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<!-- Top bar -->
+<div id="ui">
+  <span id="ui-title">DivulgAzione · Bulk Reconstruction</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">6 fasi</span>
+</div>
+
+<!-- Left panel -->
+<div id="panel">
+
+  <div class="phase-content" id="ph-1">
+    <div class="phase-tag">FASE 01 — SCENARIO</div>
+    <div class="phase-title">Il palcoscenico: bordo CFT e bulk AdS</div>
+    <div class="phase-body">
+      <p>La <span class="hl">corrispondenza AdS/CFT</span> divide il mondo fisico in due regioni complementari. A sinistra: il <span class="am">bordo CFT₄</span> — uno spazio-tempo 4D su cui vive una teoria di campo conforme, con particelle che collidono, materia barionica, quark e adroni. A destra: il <span class="gr">bulk AdS₅</span> — uno spazio-tempo 5D iperbolico con campi scalari e gravitoni che si propagano liberamente.</p>
+      <p>Le due descrizioni rappresentano la <span class="hl">stessa fisica</span> osservata da due prospettive radicalmente diverse. La CFT è definita su uno spazio-tempo 4D; il bulk AdS ha una dimensione extra — la <span class="am">direzione radiale z</span> — che si interpreta come scala di energia nella teoria di campo.</p>
+      <code class="formula">ds²_AdS = L²/z² (η_μν dx^μ dx^ν + dz²)</code>
+      <p>Al crescere di z si penetra nel bulk: si sonda la fisica a bassa energia (infrarosso). Al diminuire di z verso il bordo si sonda l'ultravioletto. La geometria AdS è la realizzazione geometrica del <span class="gr">gruppo di rinormalizzazione</span>.</p>
+      <div class="note">Animazione: linea verticale sinistra = bordo; regione curva destra = bulk. Punti luminosi sul bordo rappresentano operatori CFT; archi iperbolici nel bulk rappresentano geodetiche.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — OPERATORI</div>
+    <div class="phase-title">Operatori CFT: la fisica del bordo</div>
+    <div class="phase-body">
+      <p>Sul bordo 4D vivono <span class="hl">operatori compositi O(x)</span> creati dalle collisioni ad alta energia. Questi operatori non sono campi elementari: sono osservabili invarianti di gauge costruite a partire dai quark e dai gluoni della teoria di Yang-Mills. La loro fisica è codificata nelle funzioni di correlazione.</p>
+      <p>La <span class="am">funzione a due punti</span> determina la dimensione conforme Δ dell'operatore — il "peso" con cui scala sotto le trasformazioni conformi dello spazio-tempo:</p>
+      <code class="formula">⟨O(x) O(y)⟩ ~ |x − y|^{−2Δ}</code>
+      <p>Gli operatori non sono indipendenti: soddisfano l'<span class="hl">espansione di prodotto di operatori</span> (OPE), che esprime il prodotto di due operatori vicini come somma di singoli operatori. I <span class="gr">coefficienti OPE</span> C^k_{OO} codificano tutta la struttura dinamica della CFT:</p>
+      <code class="formula">O(x) O(y) ~ Σ_k C^k_{OO} |x−y|^{Δ_k − 2Δ} O_k((x+y)/2)</code>
+      <p>Attraverso il <span class="am">dizionario AdS/CFT</span>, ogni operatore O al bordo con dimensione Δ corrisponde a un campo bulk di massa m²L² = Δ(Δ−d).</p>
+      <div class="note">Animazione: nodi luminosi sul bordo oscillano come operatori. Le connessioni tra nodi vicini indicano i termini OPE.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — GRAVITONI</div>
+    <div class="phase-title">Gravitoni e campi scalari nel bulk</div>
+    <div class="phase-body">
+      <p>Nel bulk AdS₅ si propagano <span class="hl">gravitoni</span> (spin 2) e <span class="am">campi scalari</span> φ(x,z). Il gravitone trasporta informazione geometrica — le sue perturbazioni descrivono le onde gravitazionali nel bulk iperbolico. Ogni gravitone percorre una <span class="gr">geodetica iperbolica</span>, curva e non rettilinea come nella geometria euclidea.</p>
+      <p>Il campo scalare φ(x,z) nel bulk soddisfa l'equazione di <span class="hl">Klein-Gordon in AdS</span>, che incorpora la curvatura dello spazio-tempo:</p>
+      <code class="formula">(□_AdS − m²) φ = 0   ⟹   m²L² = Δ(Δ − d)</code>
+      <p>La soluzione vicino al bordo (z → 0) ha il comportamento:</p>
+      <code class="formula">φ(x, z→0) ~ z^{d−Δ} φ₀(x)  +  z^Δ ⟨O(x)⟩</code>
+      <p>Il termine dominante <span class="am">φ₀(x)</span> è la sorgente esterna: fissare φ₀ al bordo significa perturbare la CFT con l'operatore O. Il termine subleading <span class="gr">⟨O(x)⟩</span> è il valore di aspettazione dell'operatore — la risposta della teoria di campo. Questo è il cuore del dizionario olografico.</p>
+      <div class="note">Animazione: archi geodetici animati si propagano dal bulk verso il bordo. Ogni arco rappresenta la traiettoria di un gravitone o di un quanto del campo scalare.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — SMEARING</div>
+    <div class="phase-title">Smearing: ricostruire il bulk dal bordo</div>
+    <div class="phase-body">
+      <p>Il problema centrale della <span class="hl">bulk reconstruction</span>: dato un insieme di osservabili CFT al bordo, come si ricostruisce un campo nel bulk? La risposta è fornita dalla <span class="am">formula di smearing</span> (convoluzione olografica):</p>
+      <code class="formula">φ(x, z) = ∫ K(x,z|x') O(x') d⁴x'</code>
+      <p>Il kernel <span class="hl">K(x,z|x')</span> è il <span class="am">propagatore bulk-to-boundary</span> — la funzione di Green di AdS. Esso descrive come ogni punto del bordo x' contribuisce al valore del campo nel punto bulk (x, z). La formula esplicita è:</p>
+      <code class="formula">φ(x,z) = ∫_∂M K(x,z|x') O(x') d⁴x'
+K(x,z|x') ~ (z / (z² + |x−x'|²))^Δ</code>
+      <p>Il kernel ha supporto <span class="gr">non locale</span>: ogni punto del bulk dipende da un'intera regione del bordo. Più si va in profondità nel bulk (z grande), più il kernel si allarga e la ricostruzione richiede un'area sempre più ampia di bordo. Questo ha profonde implicazioni per l'<span class="hl">entanglement quantistico</span>.</p>
+      <p>La bulk reconstruction è il <span class="am">dizionario olografico in azione</span>: la geometria del bulk emerge dall'organizzazione degli operatori CFT al bordo.</p>
+      <div class="note">Animazione: un "cono" dal punto bulk si proietta sul bordo — le linee di smearing convergono da molti punti del bordo a un singolo punto bulk.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — ENTANGLEMENT</div>
+    <div class="phase-title">Cuneo di entanglement e superficie di Ryu-Takayanagi</div>
+    <div class="phase-body">
+      <p>Una regione del bordo <span class="hl">A</span> non può ricostruire tutto il bulk: può accedere solo a una sottoregione chiamata <span class="am">cuneo di entanglement W(A)</span>. Il bordo del cuneo è determinato dalla <span class="gr">superficie di Ryu-Takayanagi γ_A</span> — la superficie di area minima nel bulk con lo stesso bordo di A.</p>
+      <p>La formula di Ryu-Takayanagi (2006) collega l'<span class="hl">entropia di entanglement</span> al bordo con la geometria del bulk:</p>
+      <code class="formula">S(A) = Area(γ_A) / (4 G_N)</code>
+      <p>Questa è la <span class="am">formula RT quantistica</span>: l'entropia di entanglement di A è proporzionale all'area della superficie minimale nel bulk omologa ad A. Un'identità stupefacente: la quantità più astratta della teoria quantistica — l'entropia di entanglement — equivale a una grandezza puramente geometrica nel bulk.</p>
+      <p>Conseguenza fondamentale: gli operatori nel cuneo W(A) possono essere ricostruiti <span class="gr">solo</span> dalla regione A al bordo — non dalla regione complementare Ā. La struttura di entanglement della CFT determina quale parte del bulk è accessibile da quale regione del bordo.</p>
+      <div class="note">Animazione: regione di entanglement sul bordo evidenziata in ciano; cuneo verde nel bulk che pulsa; superficie RT come arco luminoso.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — SINTESI</div>
+    <div class="phase-title">Sintesi: la gravità emerge dall'entanglement</div>
+    <div class="phase-body">
+      <p>La bulk reconstruction rivela la verità più profonda dell'olografia: il <span class="hl">principio olografico</span> non è un trucco matematico, ma una realtà fisica fondamentale. La geometria spaziotemporale del bulk è codificata nella struttura di entanglement della CFT al bordo.</p>
+      <p>La congettura <span class="am">ER = EPR</span> (Maldacena–Susskind, 2013) porta questo a un livello ancora più profondo: le coppie di particelle quantisticamente entangled (<span class="hl">EPR</span>) sono connesse da ponti di Einstein-Rosen (<span class="gr">ER</span>), cioè wormhole geometrici nel bulk.</p>
+      <code class="formula">ER = EPR   ⟹   entanglement ↔ connettività geometrica</code>
+      <p>Il programma di <span class="am">spacetime from entanglement</span>: la geometria del bulk — distanze, curvature, topologia — emerge interamente dall'entanglement degli stati quantistici al bordo. Il gruppo di rinormalizzazione della CFT genera la direzione radiale di AdS. La <span class="gr">connettività dello spazio-tempo</span> è connettività quantistica.</p>
+      <p>Siamo di fronte a una nuova visione della gravità: non una forza fondamentale, ma un fenomeno emergente dalla struttura informazionale dello spazio degli stati quantistici.</p>
+      <div class="note">Animazione finale: visione completa con bordo (operatori, entanglement), bulk (geodetiche, cuneo) e frecce bidirezionali che collegano le due descrizioni.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom navigation -->
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01</button>
+  <button class="btn" onclick="goPhase(2)">02</button>
+  <button class="btn" onclick="goPhase(3)">03</button>
+  <button class="btn" onclick="goPhase(4)">04</button>
+  <button class="btn" onclick="goPhase(5)">05</button>
+  <button class="btn" onclick="goPhase(6)">06</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()">⏸</button>
+</div>
+
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: 'Scenario',      desc: 'FASE 01 — Bordo CFT e Bulk AdS',          scene: 'boundary' },
+  { name: 'Operatori',     desc: 'FASE 02 — Operatori CFT sul Bordo',        scene: 'operators' },
+  { name: 'Gravitoni',     desc: 'FASE 03 — Gravitoni nel Bulk',             scene: 'geodesics' },
+  { name: 'Smearing',      desc: 'FASE 04 — Smearing e Bulk Reconstruction', scene: 'smearing' },
+  { name: 'Entanglement',  desc: 'FASE 05 — Cuneo di Entanglement e RT',     scene: 'wedge' },
+  { name: 'Sintesi',       desc: 'FASE 06 — Sintesi: gravità e entanglement',scene: 'synthesis' },
+];
+
+window.t2Draw = function(T, phaseIdx, ctx, W, H) {
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phaseIdx].scene;
+
+  // Layout constants
+  const cx = t2AnimCX();
+  const cy = t2AnimCY();
+  const aW  = W > 820 ? W * 0.42 : W * 0.86;  // available width for animation area
+  const aH  = W > 820 ? H * 0.76 : H * 0.40;
+
+  // Boundary line x position and bulk region geometry
+  const bndX = cx - aW * 0.42;   // boundary vertical line x
+  const bTop = cy - aH * 0.48;
+  const bBot = cy + aH * 0.48;
+  const bulkR = aW * 0.42;        // radius for the semicircular bulk region
+
+  // ── Helper: draw boundary line with label ─────────────────────────────────
+  function drawBoundaryLine(dotCount, pulse) {
+    // Boundary vertical line
+    ctx.beginPath();
+    ctx.moveTo(bndX, bTop);
+    ctx.lineTo(bndX, bBot);
+    ctx.strokeStyle = 'rgba(34,211,238,0.55)';
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    t2Txt(bndX, bTop - 14, 'CFT₄ — Bordo', '#22d3ee', 11, 'center', "'Courier New',monospace");
+
+    // Glowing dots along the boundary
+    for (let i = 0; i < dotCount; i++) {
+      const fy = bTop + (bBot - bTop) * (i + 0.5) / dotCount;
+      const phase = rm ? 0.8 : 0.5 + 0.5 * Math.sin(T * 1.8 + i * 1.1);
+      const r = pulse ? (3 + 1.5 * phase) : 3;
+      t2Glow('#22d3ee', 10 * phase);
+      ctx.beginPath();
+      ctx.arc(bndX, fy, r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(34,211,238,${0.5 + 0.5 * phase})`;
+      ctx.fill();
+      t2NoGlow();
+    }
+  }
+
+  // ── Helper: draw bulk semicircle (right) ─────────────────────────────────
+  function drawBulkRegion(opacity) {
+    ctx.beginPath();
+    ctx.arc(bndX, cy, bulkR, -Math.PI * 0.48, Math.PI * 0.48);
+    ctx.strokeStyle = `rgba(20,184,166,${opacity})`;
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    t2Txt(bndX + bulkR * 0.58, bTop - 14, 'AdS₅ — Bulk', '#14b8a6', 11, 'center', "'Courier New',monospace");
+  }
+
+  // ── Helper: draw hyperbolic geodesic arcs ────────────────────────────────
+  function drawGeodesic(fromY, toX, col, alpha, animated, tOffset) {
+    const progress = animated && !rm ? t2Clamp((T * 0.5 + tOffset) % 1.4, 0, 1) : 1;
+    const ex = bndX + toX * progress;
+    const ey = t2Lerp(fromY, fromY + (cy - fromY) * 0.18, progress);
+    const cpx = bndX + toX * 0.5;
+    const cpy = fromY + (cy - fromY) * 0.5;
+
+    ctx.beginPath();
+    ctx.moveTo(bndX, fromY);
+    ctx.quadraticCurveTo(cpx, cpy, ex, ey);
+    ctx.strokeStyle = `rgba(${col},${alpha})`;
+    ctx.lineWidth = 1.2;
+    ctx.stroke();
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // SCENE: boundary (phase 0 — bordo e bulk)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (scene === 'boundary') {
+    drawBulkRegion(0.35);
+    drawBoundaryLine(7, true);
+
+    // Draw a few static geodesic hints
+    const geoAngles = [-0.38, -0.22, 0, 0.22, 0.38];
+    for (let i = 0; i < geoAngles.length; i++) {
+      const ang = geoAngles[i];
+      const r   = bulkR * (0.45 + i * 0.06);
+      ctx.beginPath();
+      ctx.arc(bndX, cy, r, -Math.PI * 0.08 + ang - 0.25, -Math.PI * 0.08 + ang + 0.25);
+      ctx.strokeStyle = 'rgba(20,184,166,0.22)';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    // AdS metric formula
+    t2Glow('#0ea5e9', 8);
+    t2Txt(bndX + bulkR * 0.58, cy + aH * 0.35, 'ds²_AdS = L²/z² (η_μν dx^μ dx^ν + dz²)', '#7dd3fc', 9.5, 'center', "'Courier New',monospace");
+    t2NoGlow();
+    t2Txt(bndX + bulkR * 0.58, cy + aH * 0.46, 'z → 0: bordo   z → ∞: orizzonte', '#4a7a9b', 9, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // SCENE: operators (phase 1 — operatori CFT)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (scene === 'operators') {
+    drawBulkRegion(0.2);
+    drawBoundaryLine(8, true);
+
+    // OPE connection lines between nearby operators
+    const nOps = 8;
+    for (let i = 0; i < nOps - 1; i++) {
+      const y1 = bTop + (bBot - bTop) * (i + 0.5) / nOps;
+      const y2 = bTop + (bBot - bTop) * (i + 1.5) / nOps;
+      const alpha = rm ? 0.15 : 0.1 + 0.1 * Math.sin(T * 1.2 + i);
+      ctx.beginPath();
+      ctx.moveTo(bndX, y1);
+      ctx.quadraticCurveTo(bndX - 18, (y1 + y2) * 0.5, bndX, y2);
+      ctx.strokeStyle = `rgba(251,191,36,${alpha})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    // Labels
+    t2Txt(bndX - 26, cy - aH * 0.1, 'O(x)', '#22d3ee', 12, 'center', 'italic Georgia,serif');
+    t2Txt(bndX - 26, cy + aH * 0.15, 'Δ', '#fbbf24', 11, 'center', 'italic Georgia,serif');
+
+    t2Glow('#0ea5e9', 7);
+    t2Txt(bndX + bulkR * 0.58, cy, '⟨O(x) O(y)⟩ ~ |x−y|^{−2Δ}', '#7dd3fc', 10, 'center', "'Courier New',monospace");
+    t2NoGlow();
+    t2Txt(bndX + bulkR * 0.58, cy + 18, 'OPE: O·O ~ Σ C^k |x−y|^{Δk−2Δ} O_k', '#4a7a9b', 8.5, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // SCENE: geodesics (phase 2 — gravitoni e geodetiche)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (scene === 'geodesics') {
+    drawBulkRegion(0.4);
+    drawBoundaryLine(5, false);
+
+    // Multiple animated geodesic arcs from boundary into bulk
+    const gRows = [
+      { fromY: bTop + (bBot - bTop) * 0.15, depth: bulkR * 0.65, col: '20,184,166', tOff: 0 },
+      { fromY: bTop + (bBot - bTop) * 0.32, depth: bulkR * 0.80, col: '56,189,248', tOff: 0.4 },
+      { fromY: bTop + (bBot - bTop) * 0.50, depth: bulkR * 0.90, col: '20,184,166', tOff: 0.8 },
+      { fromY: bTop + (bBot - bTop) * 0.68, depth: bulkR * 0.80, col: '56,189,248', tOff: 1.2 },
+      { fromY: bTop + (bBot - bTop) * 0.85, depth: bulkR * 0.65, col: '20,184,166', tOff: 1.6 },
+    ];
+
+    for (const g of gRows) {
+      const progress = rm ? 1 : t2Clamp(((T * 0.5 + g.tOff) % 2.0) / 1.0, 0, 1);
+      const ex  = bndX + g.depth * progress;
+      const cpx = bndX + g.depth * 0.5;
+      const cpy = g.fromY + (cy - g.fromY) * 0.35;
+      const ey  = t2Lerp(g.fromY, cpy, progress * 0.6);
+
+      t2Glow(`rgb(${g.col})`, 6);
+      ctx.beginPath();
+      ctx.moveTo(bndX, g.fromY);
+      ctx.quadraticCurveTo(cpx, cpy, ex, ey);
+      ctx.strokeStyle = `rgba(${g.col},0.7)`;
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      // Particle dot at tip
+      if (!rm) {
+        ctx.beginPath();
+        ctx.arc(ex, ey, 3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgb(${g.col})`;
+        ctx.fill();
+      }
+      t2NoGlow();
+    }
+
+    t2Glow('#0ea5e9', 7);
+    t2Txt(bndX + bulkR * 0.58, cy + aH * 0.36, '(□_AdS − m²) φ = 0', '#7dd3fc', 10, 'center', "'Courier New',monospace");
+    t2NoGlow();
+    t2Txt(bndX + bulkR * 0.58, cy + aH * 0.48, 'm²L² = Δ(Δ − d)', '#4a7a9b', 9, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // SCENE: smearing (phase 3 — smearing cone)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (scene === 'smearing') {
+    drawBulkRegion(0.35);
+    drawBoundaryLine(9, false);
+
+    // Bulk target point
+    const bpx = bndX + bulkR * 0.52;
+    const bpy = cy;
+
+    // Smearing lines from boundary to bulk point
+    const nLines = 9;
+    for (let i = 0; i < nLines; i++) {
+      const fy   = bTop + (bBot - bTop) * (i + 0.5) / nLines;
+      const frac = rm ? 1 : t2Clamp(((T * 0.45 + i * 0.13) % 1.8) / 1.0, 0, 1);
+      const lx   = t2Lerp(bndX, bpx, frac);
+      const ly   = t2Lerp(fy, bpy, frac);
+      const dist  = Math.abs(fy - cy) / (bBot - bTop) * 2;
+      const alpha = 0.55 - dist * 0.2;
+
+      t2Glow('#fbbf24', 4);
+      ctx.beginPath();
+      ctx.moveTo(bndX, fy);
+      ctx.lineTo(lx, ly);
+      ctx.strokeStyle = `rgba(251,191,36,${alpha})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      // Moving dot
+      if (!rm) {
+        ctx.beginPath();
+        ctx.arc(lx, ly, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(251,191,36,${alpha + 0.2})`;
+        ctx.fill();
+      }
+      t2NoGlow();
+    }
+
+    // Bulk target point (glowing)
+    const pulseR = rm ? 6 : 4 + 2 * Math.sin(T * 2.0);
+    t2Glow('#f97316', 18);
+    ctx.beginPath();
+    ctx.arc(bpx, bpy, pulseR, 0, Math.PI * 2);
+    ctx.fillStyle = '#fb923c';
+    ctx.fill();
+    t2NoGlow();
+    t2Txt(bpx + 16, bpy, 'φ(x,z)', '#fb923c', 10, 'left', "'Courier New',monospace");
+
+    t2Glow('#0ea5e9', 7);
+    t2Txt(bndX + bulkR * 0.58, cy + aH * 0.38, 'φ(x,z) = ∫ K(x,z|x\') O(x\') d⁴x\'', '#7dd3fc', 9.5, 'center', "'Courier New',monospace");
+    t2NoGlow();
+    t2Txt(bndX + bulkR * 0.58, cy + aH * 0.50, 'K ~ (z / (z² + |x−x\'|²))^Δ', '#4a7a9b', 9, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // SCENE: wedge (phase 4 — entanglement wedge + RT surface)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (scene === 'wedge') {
+    drawBulkRegion(0.3);
+
+    // Highlight boundary region A (upper half)
+    const aTop = bTop;
+    const aMid = cy - aH * 0.04;
+    t2Glow('#22d3ee', 12);
+    ctx.beginPath();
+    ctx.moveTo(bndX, aTop);
+    ctx.lineTo(bndX, aMid);
+    ctx.strokeStyle = '#22d3ee';
+    ctx.lineWidth = 3;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(bndX - 10, (aTop + aMid) * 0.5, 'A', '#22d3ee', 13, 'right', 'bold Georgia,serif');
+
+    // Region Ā (lower half)
+    ctx.beginPath();
+    ctx.moveTo(bndX, aMid);
+    ctx.lineTo(bndX, bBot);
+    ctx.strokeStyle = 'rgba(148,163,184,0.4)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    t2Txt(bndX - 10, (aMid + bBot) * 0.5, 'Ā', 'rgba(148,163,184,0.6)', 13, 'right', 'italic Georgia,serif');
+
+    // Entanglement wedge fill (green-teal region)
+    const wedgeAlpha = rm ? 0.08 : 0.06 + 0.04 * Math.sin(T * 1.4);
+    ctx.beginPath();
+    ctx.moveTo(bndX, aTop);
+    ctx.quadraticCurveTo(bndX + bulkR * 0.72, aTop + (aMid - aTop) * 0.5, bndX + bulkR * 0.62, aMid);
+    ctx.quadraticCurveTo(bndX + bulkR * 0.72, aMid - (aMid - aTop) * 0.35, bndX, aMid);
+    ctx.closePath();
+    ctx.fillStyle = `rgba(20,184,166,${wedgeAlpha})`;
+    ctx.fill();
+
+    // RT surface arc
+    const rtPulse = rm ? 1 : 0.7 + 0.3 * Math.sin(T * 1.8);
+    t2Glow('#4ade80', 16 * rtPulse);
+    ctx.beginPath();
+    ctx.arc(bndX, aMid, bulkR * 0.62, -Math.PI * 0.38, 0.04);
+    ctx.strokeStyle = `rgba(74,222,128,${0.7 + 0.3 * rtPulse})`;
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(bndX + bulkR * 0.68, aMid - aH * 0.12, 'γ_A  (RT surface)', '#4ade80', 10, 'center', "'Courier New',monospace");
+
+    // Label
+    t2Txt(bndX + bulkR * 0.5, aTop - 14, 'W(A) — cuneo di entanglement', '#22d3ee', 10, 'center', "'Courier New',monospace");
+
+    t2Glow('#0ea5e9', 7);
+    t2Txt(bndX + bulkR * 0.55, bBot + 22, 'S(A) = Area(γ_A) / 4G_N', '#7dd3fc', 10, 'center', "'Courier New',monospace");
+    t2NoGlow();
+    return;
+  }
+
+  // ─────────────────────────────────────────────────────────────────────────
+  // SCENE: synthesis (phase 5 — full picture)
+  // ─────────────────────────────────────────────────────────────────────────
+  if (scene === 'synthesis') {
+    drawBulkRegion(0.45);
+    drawBoundaryLine(8, true);
+
+    // Geodesics in bulk
+    const geoData = [
+      { fy: bTop + (bBot - bTop) * 0.18, d: bulkR * 0.70, col: '20,184,166' },
+      { fy: bTop + (bBot - bTop) * 0.38, d: bulkR * 0.85, col: '56,189,248' },
+      { fy: bTop + (bBot - bTop) * 0.62, d: bulkR * 0.85, col: '56,189,248' },
+      { fy: bTop + (bBot - bTop) * 0.82, d: bulkR * 0.70, col: '20,184,166' },
+    ];
+    for (const g of geoData) {
+      ctx.beginPath();
+      ctx.moveTo(bndX, g.fy);
+      ctx.quadraticCurveTo(bndX + g.d * 0.5, g.fy + (cy - g.fy) * 0.4, bndX + g.d, cy);
+      ctx.strokeStyle = `rgba(${g.col},0.4)`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+
+    // Animated bidirectional arrows from bulk to boundary
+    const nArrows = 5;
+    for (let i = 0; i < nArrows; i++) {
+      const fy = bTop + (bBot - bTop) * (i + 0.5) / nArrows;
+      const arrowT = rm ? 0.5 : (T * 0.6 + i * 0.25) % 1;
+      const ax = t2Lerp(bndX + bulkR * 0.5, bndX, arrowT);
+      const ay = t2Lerp(cy, fy, arrowT);
+
+      t2Glow('#4ade80', 10);
+      ctx.beginPath();
+      ctx.arc(ax, ay, 3, 0, Math.PI * 2);
+      ctx.fillStyle = '#4ade80';
+      ctx.fill();
+      t2NoGlow();
+    }
+
+    // ER=EPR central label
+    const synthPulse = rm ? 1 : 0.8 + 0.2 * Math.sin(T * 1.3);
+    t2Glow('#a78bfa', 18 * synthPulse);
+    t2Txt(bndX + bulkR * 0.52, cy, 'ER = EPR', '#c4b5fd', 15, 'center', 'bold Georgia,serif');
+    t2NoGlow();
+
+    t2Txt(bndX + bulkR * 0.52, cy + aH * 0.33, 'entanglement ↔ connettività geometrica', '#7dd3fc', 9.5, 'center', "'Courier New',monospace");
+    t2Txt(bndX + bulkR * 0.52, cy + aH * 0.45, 'S(A) = Area(γ_A) / 4G_N', '#4a7a9b', 9, 'center', "'Courier New',monospace");
+    t2Txt(bndX + bulkR * 0.52, bTop - 14, 'La gravità emerge dall\'entanglement', '#a78bfa', 11, 'center');
+    return;
+  }
+
+  // Fallback
+  drawBulkRegion(0.35);
+  drawBoundaryLine(6, true);
+};
+
+t2Init();
+</script>
+</body>
+</html>
 <title>Bulk Reconstruction — AdS/CFT — v2</title>
 <link rel="stylesheet" href="./ui.css">
 </head>

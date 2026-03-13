@@ -1,0 +1,255 @@
+/* ── t2_style.css — shared styles for Tentativo 2 pages ── */
+/* Based on vixra divulgazione/v1_hydrogen_old_quantum_vs_qm.html */
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: #000d1a;
+  color: #e2e8f0;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: 18px;
+  line-height: 1.75;
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* ── Canvas background ── */
+#canvas {
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  z-index: 0;
+}
+
+/* ── Top UI bar ── */
+#ui {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+  background: rgba(0, 8, 20, 0.96);
+  border-bottom: 1px solid rgba(14, 165, 233, 0.2);
+  z-index: 200;
+  gap: 10px;
+}
+
+#ui-title {
+  font-size: 11px;
+  color: #0ea5e9;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+#ui-phase {
+  font-size: 12px;
+  color: #94a3b8;
+  text-align: center;
+  flex: 1;
+  line-height: 1.4;
+  padding: 0 8px;
+}
+
+#ui-badge {
+  background: #0d9488;
+  color: #f0fdfa;
+  font-size: 10px;
+  font-family: 'Courier New', monospace;
+  font-weight: bold;
+  padding: 3px 10px;
+  border-radius: 20px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: 1px;
+}
+
+/* ── Left text panel ── */
+#panel {
+  position: fixed;
+  top: 52px;
+  left: 0;
+  width: min(610px, 46vw);
+  height: calc(100vh - 52px - 52px);
+  overflow-y: auto;
+  z-index: 100;
+  padding: 32px 36px 28px;
+  background: rgba(0, 8, 20, 0.91);
+  border-right: 1px solid rgba(14, 165, 233, 0.13);
+  scrollbar-width: thin;
+  scrollbar-color: rgba(14, 165, 233, 0.3) transparent;
+}
+
+#panel::-webkit-scrollbar { width: 4px; }
+#panel::-webkit-scrollbar-track { background: transparent; }
+#panel::-webkit-scrollbar-thumb { background: rgba(14, 165, 233, 0.3); border-radius: 2px; }
+
+/* ── Phase content ── */
+.phase-content { display: none; }
+.phase-content.active { display: block; animation: fadeInPhase 0.35s ease; }
+
+@keyframes fadeInPhase {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.phase-tag {
+  font-size: 10px;
+  font-family: 'Courier New', monospace;
+  color: #0d9488;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.phase-title {
+  font-size: 1.45rem;
+  font-weight: normal;
+  color: #e0f2fe;
+  line-height: 1.3;
+  margin-bottom: 20px;
+  letter-spacing: 0.01em;
+}
+
+.phase-body {
+  font-size: 1rem;
+  color: #cbd5e1;
+  line-height: 1.8;
+  max-width: 62ch;
+}
+
+.phase-body p { margin-bottom: 1em; }
+.phase-body p:last-child { margin-bottom: 0; }
+
+.phase-body ul {
+  margin: 0.7em 0 0.9em 1.4em;
+  line-height: 2;
+}
+
+.phase-body li { margin-bottom: 0.25em; }
+
+.formula {
+  font-family: 'Courier New', monospace;
+  font-size: 0.88rem;
+  color: #7dd3fc;
+  background: rgba(14, 165, 233, 0.07);
+  padding: 11px 16px;
+  border-left: 2px solid #0ea5e9;
+  border-radius: 0 6px 6px 0;
+  margin: 14px 0;
+  display: block;
+  line-height: 1.65;
+  white-space: pre-line;
+  overflow-x: auto;
+}
+
+.hl  { color: #38bdf8; }
+.am  { color: #fbbf24; }
+.gr  { color: #4ade80; }
+.vi  { color: #a78bfa; }
+
+.note {
+  font-size: 0.82rem;
+  color: #4a6080;
+  font-style: italic;
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(14, 165, 233, 0.1);
+  line-height: 1.6;
+}
+
+/* ── Bottom navigation ── */
+#bottom {
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  height: 52px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0 10px;
+  background: rgba(0, 8, 20, 0.96);
+  border-top: 1px solid rgba(14, 165, 233, 0.2);
+  z-index: 200;
+  flex-wrap: wrap;
+}
+
+.btn {
+  padding: 5px 13px;
+  border: 1px solid rgba(14, 165, 233, 0.28);
+  background: rgba(14, 165, 233, 0.06);
+  color: #7dd3fc;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 1px;
+  transition: background 0.22s, border-color 0.22s, color 0.22s, box-shadow 0.22s;
+  outline: none;
+}
+
+.btn:hover {
+  background: rgba(14, 165, 233, 0.18);
+  border-color: #0ea5e9;
+  color: #e0f2fe;
+}
+
+.btn.active {
+  background: rgba(14, 165, 233, 0.22);
+  border-color: #38bdf8;
+  color: #e0f2fe;
+  box-shadow: 0 0 10px -3px #0ea5e9;
+}
+
+.btn:focus-visible {
+  outline: 2px solid #38bdf8;
+  outline-offset: 2px;
+}
+
+#btn-pause {
+  border-color: rgba(245, 158, 11, 0.3);
+  color: #fbbf24;
+  background: rgba(245, 158, 11, 0.06);
+  margin-left: 8px;
+}
+
+#btn-pause:hover {
+  background: rgba(245, 158, 11, 0.18);
+  border-color: #f59e0b;
+  color: #fef3c7;
+}
+
+/* ── Mobile layout ── */
+@media (max-width: 820px) {
+  body { overflow-y: auto; }
+
+  #canvas { position: fixed; }
+
+  #panel {
+    position: relative;
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid rgba(14, 165, 233, 0.15);
+    height: auto;
+    max-height: 58vh;
+    background: rgba(0, 8, 20, 0.94);
+    padding: 20px 18px 16px;
+  }
+
+  #ui-title { display: none; }
+  #ui-phase { text-align: left; }
+
+  .phase-body { max-width: 100%; }
+
+  #bottom { gap: 4px; }
+  .btn { padding: 4px 10px; font-size: 11px; }
+}
+
+/* ── Reduced motion ── */
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: none; }
+  .phase-content.active { animation: none; }
+}
