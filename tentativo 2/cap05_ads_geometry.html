@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geometria Anti-de Sitter | Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="ui">
+  <span id="ui-title">DivulgAzione · AdS</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">7 fasi</span>
+</div>
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — CURVATURA</div>
+    <div class="phase-title">Spazi a curvatura costante</div>
+    <div class="phase-body">
+      <p>Lo spaziotempo può avere tre tipi di curvatura costante. <span class="hl">De Sitter</span> (dS): curvatura positiva, Λ&gt;0. È il modello dell'universo in espansione accelerata — simile al nostro cosmo. <span class="am">Minkowski</span>: curvatura zero, Λ=0. È lo spaziotempo piatto della relatività speciale. <span class="gr">Anti-de Sitter</span> (AdS): curvatura negativa, Λ&lt;0. È lo spazio della fisica teorica fondamentale — non esiste in natura ma è al cuore di AdS/CFT. La costante cosmologica per AdS in d+1 dimensioni è negativa:</p>
+      <code class="formula">Λ &gt; 0 → de Sitter (cosmo reale)
+Λ = 0 → Minkowski (SR piatta)
+Λ &lt; 0 → Anti-de Sitter (AdS/CFT)
+Λ = -d(d-1)/(2L²) per AdS_{d+1}</code>
+      <div class="note">Animazione: tre geometrie a confronto — sfera (dS), piano piatto (Mink), sella iperbolica (AdS).</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — DEFINIZIONE</div>
+    <div class="phase-title">AdS come iperboloide</div>
+    <div class="phase-body">
+      <p><span class="hl">AdS<sub>d+1</sub></span> può essere definito come l'iperboloide immerso nello spazio piatto ℝ<sup>2,d</sup>: X²<sub>-1</sub> + X²<sub>0</sub> - X²<sub>1</sub> - … - X²<sub>d</sub> = L². Questo iperboloide ha il gruppo di isometria <span class="am">SO(2,d)</span> (le rotazioni in ℝ<sup>2,d</sup> che preservano la forma quadratica). Per AdS₅ (d=4), il gruppo di isometria è <span class="gr">SO(2,4)</span> — che è <em>esattamente</em> il gruppo conforme del bordo 4-dimensionale. Questa coincidenza non è casuale: è il cuore matematico della dualità AdS/CFT.</p>
+      <code class="formula">AdS_{d+1}: X²₋₁ + X²₀ - Σᵢ X²ᵢ = L² (in ℝ^{2,d})
+Isometria: SO(2,d)
+AdS₅: SO(2,4) ≅ gruppo conforme 4D ← chiave!</code>
+      <div class="note">Animazione: iperboloide 3D che ruota — evidenziare la struttura iperbolica.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — POINCARÉ</div>
+    <div class="phase-title">Il disco di Poincaré: metrica e bordo</div>
+    <div class="phase-body">
+      <p>Le <span class="hl">coordinate di Poincaré</span> sono le più usate in AdS/CFT. La metrica è:</p>
+      <code class="formula">ds² = (L²/z²)(dz² + η_{μν}dx^μdx^ν)</code>
+      <p>La coordinata <span class="am">z</span> è la coordinata radiale: z→0 è il <span class="hl">bordo</span> (dove vive la CFT), z→∞ è il <span class="am">centro</span> o profondità IR. Il fattore L²/z² fa sì che la geometria sia iperbolica: le distanze aumentano enormemente vicino al bordo. Un campo bulk φ(x,z) ha un'espansione vicino al bordo:</p>
+      <code class="formula">ds² = (L²/z²)(dz² + η_{μν}dx^μdx^ν)
+z → 0: bordo (UV della CFT)
+z → ∞: centro AdS (IR della CFT)
+φ(z) ~ φ₀ z^{d-Δ} + ⟨O⟩ z^Δ</code>
+      <div class="note">Animazione: griglia iperbolica (disco di Poincaré) con il bordo evidenziato in ciano e la direzione z indicata.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — GEODETICHE</div>
+    <div class="phase-title">Geodetiche iperboliche in AdS</div>
+    <div class="phase-body">
+      <p>Le <span class="hl">geodetiche</span> (le "linee rette") nello spazio iperbolico di Poincaré sono <span class="am">semicerchi ortogonali al bordo</span>. Questa geometria non-euclidea ha conseguenze fisiche notevoli: un fotone emesso dal bulk verso il bordo ci arriva in <span class="hl">tempo finito</span>! Il bordo è "raggiungibile" in tempo finito dalla luce. Questo significa che AdS richiede <span class="gr">condizioni al contorno</span> sul bordo per essere spaziotemporalmente completo — le condizioni al contorno sono esattamente la CFT. Le geodetiche che collegano due punti del bordo passano attraverso il bulk, e la loro lunghezza corrisponde alla funzione di correlazione CFT.</p>
+      <code class="formula">ds²_{Poincaré} = (L²/z²)(dz² + dx²)
+Geodetiche: semicerchi con centro sul bordo z=0
+Tempo di volo: t = π L/2 (finito!)
+⟨O(x₁)O(x₂)⟩ ~ e^{-m·L_{geodetica}}</code>
+      <div class="note">Animazione: geodetiche semicircolari nel disco di Poincaré, con un fotone animato che si muove lungo di esse.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — BORDO</div>
+    <div class="phase-title">Il bordo conforme di AdS</div>
+    <div class="phase-body">
+      <p>Il bordo di AdS è una struttura <span class="hl">d-dimensionale</span> su cui vive la CFT. Tecnicamente è il "<span class="am">bordo conforme</span>" (conformal boundary): i raggi di luce ci arrivano in tempo finito, il che significa che lo spaziotempo AdS non è globalmente iperbolico senza condizioni al contorno. L'operazione di "<span class="hl">olografia</span>" consiste nel prendere il limite z→0 di tutti gli oggetti del bulk (campi, geodetiche, superfici minimali). La struttura al bordo è conforme — invariante sotto riscalamento — il che è esattamente la simmetria di una CFT. Il bordo non è uno spazio fisico separato: è il <span class="gr">limite asintotico</span> del bulk AdS.</p>
+      <code class="formula">Bordo conforme: z → 0 in coordinate di Poincaré
+Metrica indotta: ds²_{bordo} = η_{μν}dx^μdx^ν (a meno di fattore conforme)
+Operazione di olografia: lim_{z→0} z^{Δ-d} φ(x,z) = φ₀(x) = sorgente CFT</code>
+      <div class="note">Animazione: la struttura del bordo conforme — un piano/ipersuperficie che riceve le "proiezioni" olografiche dal bulk.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — BH</div>
+    <div class="phase-title">Buco nero in AdS e temperatura</div>
+    <div class="phase-body">
+      <p>La metrica <span class="hl">AdS-Schwarzschild</span> è una soluzione esatta con un buco nero nel bulk. Il buco nero ha un <span class="am">orizzonte degli eventi</span> a r=r<sub>+</sub>. La <span class="hl">temperatura di Hawking</span> del buco nero è:</p>
+      <code class="formula">ds²_{AdS-Schw} = -(r²/L² + 1 - r²₊/r²)dt² + ...
+T_Hawking = r₊/(πL²)
+T_CFT = T_Hawking   [corrispondenza]
+Hawking-Page: T_c = 1/(πL) (transiz. di fase)</code>
+      <p>In AdS/CFT, questa temperatura è esattamente uguale alla <span class="gr">temperatura termica</span> della CFT sul bordo: il buco nero corrisponde a uno stato termico della CFT. La <span class="vi">transizione di Hawking-Page</span> (piccolo BH ↔ grande BH) corrisponde a una transizione di fase termodinamica nella CFT.</p>
+      <div class="note">Animazione: buco nero nel centro del disco AdS con le linee del campo gravitazionale, e orizzonte animato.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — CORRISP</div>
+    <div class="phase-title">La simmetria come chiave della dualità</div>
+    <div class="phase-body">
+      <p>Il <span class="hl">cuore matematico</span> di AdS/CFT è la corrispondenza esatta tra le simmetrie dei due lati. Il gruppo di isometria di <span class="am">AdS₅</span> è SO(2,4). Il gruppo conforme in <span class="hl">4D</span> (Minkowski) è anch'esso SO(2,4). Questa coincidenza non è accidentale: le isometrie del bulk <em>devono</em> corrispondere alle simmetrie globali della CFT, perché le isometrie che raggiungono il bordo diventano simmetrie della CFT. Analogamente, le isometrie di <span class="gr">S⁵</span> formano SO(6) ≅ SU(4), che è la <span class="vi">simmetria R</span> di 𝒩=4 SYM. La geometria <em>codifica</em> la simmetria della teoria duale.</p>
+      <code class="formula">SO(2,4) = isometria AdS₅ = gruppo conforme 4D ✓
+SO(6) = isometria S⁵ = simmetria R di 𝒩=4 SYM ✓
+SO(6) ≅ SU(4) (doppia copertura)
+Simmetria totale: SO(2,4) × SO(6) ↔ 𝒩=4 SYM</code>
+      <div class="note">Animazione: diagramma di corrispondenza — AdS₅ e CFT₄ connessi da frecce con le simmetrie etichettate.</div>
+    </div>
+  </div>
+
+</div>
+
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · Curvatura</button>
+  <button class="btn" onclick="goPhase(2)">02 · Definiz.</button>
+  <button class="btn" onclick="goPhase(3)">03 · Poincaré</button>
+  <button class="btn" onclick="goPhase(4)">04 · Geodetiche</button>
+  <button class="btn" onclick="goPhase(5)">05 · Bordo</button>
+  <button class="btn" onclick="goPhase(6)">06 · BH</button>
+  <button class="btn" onclick="goPhase(7)">07 · Simmetrie</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: 'Spazi a curvatura costante',    desc: 'FASE 01 — dS (Λ>0), Minkowski (Λ=0), AdS (Λ<0): tre geometrie a confronto',           scene: 'curvatura'  },
+  { name: 'AdS come iperboloide',          desc: 'FASE 02 — AdS_{d+1} in ℝ^{2,d}: isometria SO(2,4) ≅ gruppo conforme 4D',              scene: 'definizione'},
+  { name: 'Il disco di Poincaré',          desc: 'FASE 03 — ds²=(L²/z²)(dz²+η dx²): z→0 bordo UV, z→∞ centro IR',                      scene: 'poincare'   },
+  { name: 'Geodetiche iperboliche in AdS', desc: 'FASE 04 — Semicerchi ortogonali al bordo: ⟨O(x₁)O(x₂)⟩ ~ exp(-m·L_geo)',             scene: 'geodetiche' },
+  { name: 'Il bordo conforme di AdS',      desc: 'FASE 05 — lim_{z→0} z^{Δ-d} φ(x,z) = φ₀(x): operazione olografica',                  scene: 'bordo'      },
+  { name: 'Buco nero in AdS',              desc: 'FASE 06 — T_Hawking = r₊/(πL²) = T_CFT: buco nero ↔ stato termico CFT',               scene: 'bh'         },
+  { name: 'Simmetria come chiave',         desc: 'FASE 07 — SO(2,4)×SO(6) = isometria AdS₅×S⁵ = simmetria 𝒩=4 SYM',                    scene: 'corrisp'    },
+];
+
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const cx    = t2AnimCX();
+  const cy    = t2AnimCY();
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phIdx].scene;
+
+  // ── Shared radius ─────────────────────────────────────────────────────────
+  const R = Math.min(W * (W > 820 ? 0.20 : 0.36), 175);
+
+  // ── Helper: label shorthand ───────────────────────────────────────────────
+  function lbl(x, y, s, col, sz, align, font) {
+    t2Txt(x, y, s, col, sz, align || 'center', font || 'Georgia,serif');
+  }
+
+  // ── Helper: draw a small sphere outline (dS) ──────────────────────────────
+  function drawSphere(ox, oy, r, col) {
+    ctx.beginPath();
+    ctx.arc(ox, oy, r, 0, Math.PI * 2);
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 1.5;
+    ctx.stroke();
+    // Equatorial ellipse
+    ctx.beginPath();
+    ctx.ellipse(ox, oy, r, r * 0.28, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 0.8;
+    ctx.stroke();
+    // Meridian
+    ctx.beginPath();
+    ctx.ellipse(ox, oy, r * 0.28, r, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 0.8;
+    ctx.stroke();
+  }
+
+  // ── Helper: draw flat grid (Minkowski) ───────────────────────────────────
+  function drawFlatGrid(ox, oy, size, col) {
+    const n = 5;
+    const step = size / n;
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 0.8;
+    for (let i = 0; i <= n; i++) {
+      const xx = ox - size * 0.5 + i * step;
+      ctx.beginPath(); ctx.moveTo(xx, oy - size * 0.5); ctx.lineTo(xx, oy + size * 0.5); ctx.stroke();
+      const yy = oy - size * 0.5 + i * step;
+      ctx.beginPath(); ctx.moveTo(ox - size * 0.5, yy); ctx.lineTo(ox + size * 0.5, yy); ctx.stroke();
+    }
+  }
+
+  // ── Helper: draw saddle surface (AdS) ─────────────────────────────────────
+  function drawSaddle(ox, oy, r, col) {
+    const n = 6;
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 0.9;
+    // Draw U-shaped curves (hyperbolic in one direction)
+    for (let i = 0; i <= n; i++) {
+      const t2 = -1 + 2 * i / n;
+      ctx.beginPath();
+      for (let j = 0; j <= 30; j++) {
+        const s = -1 + 2 * j / 30;
+        const px = ox + s * r;
+        const py = oy + (s * s - t2 * t2) * r * 0.5;
+        j === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+    }
+    // Cross-curves
+    for (let i = 0; i <= n; i++) {
+      const s0 = -1 + 2 * i / n;
+      ctx.beginPath();
+      for (let j = 0; j <= 30; j++) {
+        const t3 = -1 + 2 * j / 30;
+        const px = ox + s0 * r;
+        const py = oy + (s0 * s0 - t3 * t3) * r * 0.5;
+        j === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+      }
+      ctx.stroke();
+    }
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SCENE: curvatura — tre geometrie a confronto
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (scene === 'curvatura') {
+    const sp  = R * 1.15;
+    const r0  = R * 0.55;
+    const y0  = cy;
+
+    // dS sphere (left)
+    const dsx = cx - sp;
+    const pulse = rm ? 1 : (0.85 + 0.15 * Math.sin(T * 1.2));
+    t2Glow('#f59e0b', 16 * pulse);
+    drawSphere(dsx, y0, r0, '#f59e0b');
+    t2NoGlow();
+    lbl(dsx, y0 - r0 - 18, 'de Sitter', '#f59e0b', 12);
+    lbl(dsx, y0 - r0 - 5,  'Λ > 0',     '#f59e0b', 10);
+    lbl(dsx, y0 + r0 + 14, 'curvatura +', '#f59e0b', 10);
+
+    // Minkowski flat grid (center)
+    const mkx = cx;
+    ctx.globalAlpha = rm ? 0.6 : (0.45 + 0.15 * Math.sin(T * 0.8 + 1));
+    drawFlatGrid(mkx, y0, r0 * 1.8, '#94a3b8');
+    ctx.globalAlpha = 1;
+    lbl(mkx, y0 - r0 - 18, 'Minkowski', '#94a3b8', 12);
+    lbl(mkx, y0 - r0 - 5,  'Λ = 0',    '#94a3b8', 10);
+    lbl(mkx, y0 + r0 + 14, 'curvatura 0', '#94a3b8', 10);
+
+    // AdS saddle (right)
+    const adsx = cx + sp;
+    t2Glow('#22d3ee', 16 * pulse);
+    drawSaddle(adsx, y0, r0 * 0.9, '#22d3ee');
+    t2NoGlow();
+    lbl(adsx, y0 - r0 - 18, 'Anti-de Sitter', '#22d3ee', 12);
+    lbl(adsx, y0 - r0 - 5,  'Λ < 0',          '#22d3ee', 10);
+    lbl(adsx, y0 + r0 + 14, 'curvatura −',     '#22d3ee', 10);
+
+    lbl(cx, cy - R * 1.3, 'Tre geometrie a curvatura costante', '#60a5fa', 13);
+    lbl(cx, cy + R * 1.3, 'Λ = −d(d−1)/(2L²)  per AdS_{d+1}', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SCENE: definizione — iperboloide che ruota
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (scene === 'definizione') {
+    const angle  = rm ? 0.5 : T * 0.4;
+    const cosA   = Math.cos(angle);
+    const sinA   = Math.sin(angle);
+    const rx     = R * 0.82;
+    const ry     = R * 0.42;
+    const waist  = R * 0.28;
+
+    // Draw hyperboloid outline (two-sheet or one-sheet)
+    // One-sheet hyperboloid: x²+y² - z² = L² → waist at z=0
+    // Project 3D (x,y,z) → 2D (cx + x*cosA - y*sinA, cy + z)
+    const nLines = 14;
+    for (let i = 0; i < nLines; i++) {
+      const phi = (i / nLines) * Math.PI * 2;
+      const phi2 = ((i + 1) / nLines) * Math.PI * 2;
+      // Vertical strips
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(139,92,246,0.5)';
+      ctx.lineWidth   = 0.9;
+      for (let j = 0; j <= 40; j++) {
+        const zp = -1.2 + 2.4 * j / 40;
+        const rp = Math.sqrt(1 + zp * zp); // hyperboloid equation
+        const xp = rp * Math.cos(phi);
+        const yp = rp * Math.sin(phi);
+        // Project
+        const sx = cx + (xp * cosA - yp * sinA) * rx;
+        const sy = cy + zp * ry * 1.3;
+        j === 0 ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy);
+      }
+      ctx.stroke();
+    }
+    // Horizontal rings
+    const nRings = 10;
+    for (let k = 0; k <= nRings; k++) {
+      const zp    = -1.2 + 2.4 * k / nRings;
+      const rp    = Math.sqrt(1 + zp * zp);
+      const aHigh = rm ? 0.35 : (0.2 + 0.25 * Math.abs(Math.sin(T * 0.7 + k * 0.4)));
+      ctx.beginPath();
+      for (let j = 0; j <= 60; j++) {
+        const phi = (j / 60) * Math.PI * 2;
+        const xp  = rp * Math.cos(phi);
+        const yp  = rp * Math.sin(phi);
+        const sx  = cx + (xp * cosA - yp * sinA) * rx;
+        const sy  = cy + zp * ry * 1.3;
+        j === 0 ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy);
+      }
+      ctx.strokeStyle = 'rgba(20,184,166,' + aHigh + ')';
+      ctx.lineWidth   = k === nRings / 2 ? 2 : 0.7;
+      ctx.stroke();
+    }
+
+    // Waist ring highlight
+    t2Glow('#22d3ee', 18);
+    ctx.beginPath();
+    for (let j = 0; j <= 60; j++) {
+      const phi = (j / 60) * Math.PI * 2;
+      const sx  = cx + (Math.cos(phi) * cosA - Math.sin(phi) * sinA) * rx;
+      const sy  = cy;
+      j === 0 ? ctx.moveTo(sx, sy) : ctx.lineTo(sx, sy);
+    }
+    ctx.strokeStyle = '#22d3ee';
+    ctx.lineWidth   = 2.2;
+    ctx.stroke();
+    t2NoGlow();
+
+    lbl(cx, cy - R * 1.25, 'AdS come iperboloide in ℝ²·ᵈ', '#818cf8', 13);
+    lbl(cx, cy + R * 1.25, 'X²₋₁ + X²₀ − Σᵢ X²ᵢ = L²', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    lbl(cx + rx * 1.05, cy, 'SO(2,d)', '#a78bfa', 10, 'left');
+    return;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SCENE: poincare — griglia iperbolica
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (scene === 'poincare') {
+    // Upper half-plane model: boundary at cy+R, z axis goes upward
+    const bY  = cy + R;           // boundary (z=0)
+    const topY = cy - R;          // top (z→∞)
+    const lx  = cx - R;          // left edge
+    const rx2 = cx + R;          // right edge
+
+    // Boundary line
+    t2Glow('#0ea5e9', 14);
+    ctx.beginPath();
+    ctx.moveTo(lx, bY);
+    ctx.lineTo(rx2, bY);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2.5;
+    ctx.stroke();
+    t2NoGlow();
+    lbl(cx, bY + 18, 'BORDO (z = 0, UV della CFT)', '#0ea5e9', 10);
+
+    // Hyperbolic grid: semicircles from boundary going upward
+    const nArcs  = 8;
+    const arcW   = (rx2 - lx) / nArcs;
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(lx - 2, topY - 2, rx2 - lx + 4, bY - topY + 4);
+    ctx.clip();
+    for (let i = 1; i < nArcs; i++) {
+      const centerX = lx + i * arcW;
+      for (let j = 1; j <= 5; j++) {
+        const arcR = j * arcW * 0.6;
+        const aVal = rm ? 0.2 : (0.12 + 0.1 * Math.sin(T * 0.6 + i * 0.5 + j * 0.3));
+        ctx.beginPath();
+        ctx.arc(centerX, bY, arcR, Math.PI, 0, false);
+        ctx.strokeStyle = 'rgba(99,102,241,' + aVal + ')';
+        ctx.lineWidth   = 0.8;
+        ctx.stroke();
+      }
+    }
+    // Vertical "geodesics" (lines through z axis — limiting case)
+    for (let i = 0; i <= nArcs; i++) {
+      const xx = lx + i * arcW;
+      ctx.beginPath();
+      ctx.moveTo(xx, bY);
+      ctx.lineTo(xx, topY);
+      ctx.strokeStyle = 'rgba(20,184,166,0.18)';
+      ctx.lineWidth   = 0.6;
+      ctx.stroke();
+    }
+    ctx.restore();
+
+    // z-axis arrow
+    ctx.beginPath();
+    ctx.moveTo(cx, bY);
+    ctx.lineTo(cx, topY + 10);
+    ctx.strokeStyle = 'rgba(251,191,36,0.7)';
+    ctx.lineWidth   = 1.5;
+    ctx.setLineDash([4, 4]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    ctx.beginPath();
+    ctx.moveTo(cx, topY + 10);
+    ctx.lineTo(cx - 5, topY + 22);
+    ctx.lineTo(cx + 5, topY + 22);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(251,191,36,0.7)';
+    ctx.fill();
+    lbl(cx + 14, topY + 20, 'z → ∞ (IR)', '#fbbf24', 9, 'left');
+    lbl(cx + 14, bY - 10,   'z = 0 (UV)',  '#22d3ee', 9, 'left');
+
+    // Animated "RG flow" particle moving from boundary inward
+    if (!rm) {
+      const tFrac = (T * 0.35) % 1;
+      const py    = bY - tFrac * (bY - topY) * 0.85;
+      const alpha = Math.sin(tFrac * Math.PI);
+      t2Glow('#f97316', 14 * alpha);
+      ctx.beginPath();
+      ctx.arc(cx - R * 0.3, py, 5, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(249,115,22,' + alpha + ')';
+      ctx.fill();
+      t2NoGlow();
+    }
+
+    lbl(cx, cy - R * 1.35, 'Disco di Poincaré — metrica iperbolica', '#60a5fa', 13);
+    lbl(cx, topY - 18, 'ds² = (L²/z²)(dz² + η_μν dx^μ dx^ν)', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SCENE: geodetiche — semicerchi nel semipiano di Poincaré
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (scene === 'geodetiche') {
+    const bY  = cy + R * 0.85;
+    const lx2 = cx - R;
+    const rx3 = cx + R;
+
+    // Boundary
+    t2Glow('#0ea5e9', 12);
+    ctx.beginPath();
+    ctx.moveTo(lx2, bY);
+    ctx.lineTo(rx3, bY);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2.5;
+    ctx.stroke();
+    t2NoGlow();
+    lbl(cx, bY + 16, 'Bordo z = 0', '#0ea5e9', 10);
+
+    // Geodesics as semicircles orthogonal to boundary
+    const geodesics = [
+      { x1: cx - R * 0.75, x2: cx + R * 0.75, col: 'rgba(139,92,246,0.7)' },
+      { x1: cx - R * 0.45, x2: cx + R * 0.20, col: 'rgba(20,184,166,0.7)' },
+      { x1: cx - R * 0.10, x2: cx + R * 0.55, col: 'rgba(251,191,36,0.65)' },
+      { x1: cx - R * 0.60, x2: cx - R * 0.05, col: 'rgba(244,114,182,0.55)' },
+    ];
+
+    for (let gi = 0; gi < geodesics.length; gi++) {
+      const g    = geodesics[gi];
+      const gcx2 = (g.x1 + g.x2) * 0.5;
+      const gcr2 = Math.abs(g.x2 - g.x1) * 0.5;
+      ctx.beginPath();
+      ctx.arc(gcx2, bY, gcr2, Math.PI, 0, false);
+      ctx.strokeStyle = g.col;
+      ctx.lineWidth   = 1.8;
+      ctx.stroke();
+
+      // Animated photon on first geodesic
+      if (!rm && gi === 0) {
+        const tFrac = (T * 0.4) % 1;
+        const ang   = Math.PI - tFrac * Math.PI;
+        const px    = gcx2 + gcr2 * Math.cos(ang);
+        const py    = bY + gcr2 * Math.sin(ang);
+        t2Glow('#f97316', 18);
+        ctx.beginPath();
+        ctx.arc(px, py, 6, 0, Math.PI * 2);
+        ctx.fillStyle = '#f97316';
+        ctx.fill();
+        t2NoGlow();
+        lbl(px + 12, py, 'fotone', '#f97316', 9, 'left');
+      }
+    }
+
+    // Endpoint dots on boundary
+    const endpts = [
+      cx - R * 0.75, cx + R * 0.75,
+      cx - R * 0.45, cx + R * 0.20,
+      cx - R * 0.10, cx + R * 0.55,
+      cx - R * 0.60, cx - R * 0.05,
+    ];
+    for (const xp of endpts) {
+      ctx.beginPath();
+      ctx.arc(xp, bY, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#22d3ee';
+      ctx.fill();
+    }
+
+    lbl(cx, cy - R * 1.2, 'Geodetiche in AdS — semicerchi ortogonali', '#818cf8', 13);
+    lbl(cx, bY - R * 0.95, 'tempo di volo = πL/2 (finito!)', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SCENE: bordo — proiezioni olografiche bulk → bordo
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (scene === 'bordo') {
+    const bulkR = R;
+    const bx4   = cx - R * 0.15;  // center of AdS half-disk
+    const boundX = bx4 - bulkR;   // boundary line x
+
+    // AdS half-disk (bulk)
+    ctx.beginPath();
+    ctx.arc(bx4, cy, bulkR, -Math.PI * 0.5, Math.PI * 0.5);
+    ctx.strokeStyle = 'rgba(99,102,241,0.4)';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    // Concentric rings
+    for (let ri = 1; ri < 6; ri++) {
+      const rr = bulkR * ri / 6;
+      ctx.beginPath();
+      ctx.arc(bx4, cy, rr, -Math.PI * 0.5, Math.PI * 0.5);
+      ctx.strokeStyle = 'rgba(99,102,241,0.15)';
+      ctx.lineWidth   = 0.6;
+      ctx.stroke();
+    }
+
+    // Boundary line
+    t2Glow('#0ea5e9', 14);
+    ctx.beginPath();
+    ctx.moveTo(boundX, cy - bulkR * 1.1);
+    ctx.lineTo(boundX, cy + bulkR * 1.1);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 3;
+    ctx.stroke();
+    t2NoGlow();
+    lbl(boundX, cy - bulkR - 16, 'BORDO CONFORME', '#0ea5e9', 10);
+    lbl(boundX, cy - bulkR - 4,  'z = 0, d-dim', '#0ea5e9', 9);
+
+    // Projection arrows from bulk points to boundary
+    const bulkPts = [
+      { bpx: bx4 + bulkR * 0.35, bpy: cy - bulkR * 0.4, col: '#f97316' },
+      { bpx: bx4 + bulkR * 0.55, bpy: cy + bulkR * 0.2, col: '#a78bfa' },
+      { bpx: bx4 + bulkR * 0.22, bpy: cy + bulkR * 0.55, col: '#4ade80' },
+      { bpx: bx4 + bulkR * 0.45, bpy: cy - bulkR * 0.65, col: '#f472b6' },
+    ];
+
+    for (let pi = 0; pi < bulkPts.length; pi++) {
+      const bp    = bulkPts[pi];
+      const tFrac = rm ? 0.5 : ((T * 0.5 + pi * 0.25) % 1);
+      const ax    = t2Lerp(bp.bpx, boundX + 4, tFrac);
+      const ay    = t2Lerp(bp.bpy, cy + (bp.bpy - cy) * 0.85, tFrac);
+
+      // Static arrow line
+      ctx.beginPath();
+      ctx.moveTo(bp.bpx, bp.bpy);
+      ctx.lineTo(boundX + 4, cy + (bp.bpy - cy) * 0.85);
+      ctx.strokeStyle = bp.col.replace(')', ',0.3)').replace('rgb', 'rgba').replace('#', 'rgba(').replace('rgba(', 'rgba(');
+      ctx.strokeStyle = bp.col + '55' ; // add alpha via hex
+      ctx.lineWidth   = 1;
+      ctx.setLineDash([3, 3]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Bulk point
+      t2Glow(bp.col, 12);
+      ctx.beginPath();
+      ctx.arc(bp.bpx, bp.bpy, 5, 0, Math.PI * 2);
+      ctx.fillStyle = bp.col;
+      ctx.fill();
+      t2NoGlow();
+
+      // Animated projection particle
+      if (!rm) {
+        t2Glow(bp.col, 14);
+        ctx.beginPath();
+        ctx.arc(ax, ay, 4, 0, Math.PI * 2);
+        ctx.fillStyle = bp.col;
+        ctx.fill();
+        t2NoGlow();
+      }
+
+      // Boundary arrival dot
+      const bdY = cy + (bp.bpy - cy) * 0.85;
+      ctx.beginPath();
+      ctx.arc(boundX + 2, bdY, 4, 0, Math.PI * 2);
+      ctx.fillStyle = bp.col;
+      ctx.fill();
+    }
+
+    lbl(bx4 + bulkR * 0.4, cy, 'BULK AdS', '#818cf8', 11);
+    lbl(cx + R * 0.55, cy - R * 1.25, 'Bordo conforme — proiezione olografica', '#60a5fa', 13);
+    lbl(cx + R * 0.55, cy + R * 1.3, 'lim_{z→0} z^{Δ−d} φ(x,z) = φ₀(x)', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SCENE: bh — buco nero in AdS
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (scene === 'bh') {
+    const diskR = R;
+    const bx5   = cx;
+
+    // Outer AdS boundary (full circle for this scene)
+    ctx.beginPath();
+    ctx.arc(bx5, cy, diskR, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(14,165,233,0.5)';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+
+    // Concentric gravity field lines
+    for (let ri = 1; ri < 7; ri++) {
+      const rr  = diskR * ri / 7;
+      const aVl = rm ? 0.15 : (0.08 + 0.08 * Math.sin(T * 0.7 - ri * 0.5));
+      ctx.beginPath();
+      ctx.arc(bx5, cy, rr, 0, Math.PI * 2);
+      ctx.strokeStyle = 'rgba(139,92,246,' + aVl + ')';
+      ctx.lineWidth   = 0.6;
+      ctx.stroke();
+    }
+
+    // Event horizon (animated pulsing ring)
+    const bhR = diskR * 0.28;
+    const hPulse = rm ? 1 : (1 + 0.06 * Math.sin(T * 2.5));
+    t2Glow('#f97316', 22 * hPulse);
+    ctx.beginPath();
+    ctx.arc(bx5, cy, bhR * hPulse, 0, Math.PI * 2);
+    ctx.strokeStyle = '#f97316';
+    ctx.lineWidth   = 2.5;
+    ctx.stroke();
+    t2NoGlow();
+
+    // Black hole interior
+    ctx.beginPath();
+    ctx.arc(bx5, cy, bhR * hPulse - 2, 0, Math.PI * 2);
+    ctx.fillStyle = '#000000';
+    ctx.fill();
+    lbl(bx5, cy, 'BH', '#f97316', 10);
+
+    // Hawking radiation arrows (outward)
+    const nHR = 8;
+    for (let hi = 0; hi < nHR; hi++) {
+      const ang   = (hi / nHR) * Math.PI * 2;
+      const tFrac = rm ? 0.5 : ((T * 0.6 + hi * 0.125) % 1);
+      const startR = bhR * 1.15;
+      const endR   = diskR * 0.75;
+      const rNow   = t2Lerp(startR, endR, tFrac);
+      const alpha  = rm ? 0.4 : (0.3 + 0.4 * Math.sin(tFrac * Math.PI));
+      ctx.beginPath();
+      ctx.arc(bx5 + rNow * Math.cos(ang), cy + rNow * Math.sin(ang), 3, 0, Math.PI * 2);
+      t2Glow('#fde68a', 10 * alpha);
+      ctx.fillStyle = 'rgba(253,230,138,' + alpha + ')';
+      ctx.fill();
+      t2NoGlow();
+    }
+
+    lbl(bx5, cy - diskR - 18, 'Buco nero in AdS-Schwarzschild', '#f97316', 13);
+    lbl(bx5, cy + diskR + 16, 'T_Hawking = r₊/(πL²) = T_CFT', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    lbl(bx5 + diskR * 0.62, cy - diskR * 0.2, 'radiaz. Hawking →', '#fde68a', 9, 'left');
+    lbl(bx5 - diskR * 1.0, cy, 'orizzonte', '#f97316', 9, 'right');
+    return;
+  }
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // SCENE: corrisp — diagramma di corrispondenza AdS₅ ↔ CFT₄
+  // ═══════════════════════════════════════════════════════════════════════════
+  if (scene === 'corrisp') {
+    const boxW  = R * 1.1;
+    const boxH  = R * 0.95;
+    const gap   = R * 0.6;
+    const lbx   = cx - gap * 0.5 - boxW;  // left box x
+    const rbx   = cx + gap * 0.5;          // right box x
+    const boxy  = cy - boxH * 0.5;
+
+    // Left box: AdS₅
+    const aGlow = rm ? 1 : (0.6 + 0.4 * Math.sin(T * 1.2));
+    t2Glow('#818cf8', 20 * aGlow);
+    ctx.beginPath();
+    ctx.roundRect ? ctx.roundRect(lbx, boxy, boxW, boxH, 10) : ctx.rect(lbx, boxy, boxW, boxH);
+    ctx.strokeStyle = '#818cf8';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    lbl(lbx + boxW * 0.5, boxy + boxH * 0.22, 'AdS₅ × S⁵',   '#c4b5fd', 14);
+    lbl(lbx + boxW * 0.5, boxy + boxH * 0.44, 'Isometria:',   '#94a3b8', 10);
+    lbl(lbx + boxW * 0.5, boxy + boxH * 0.60, 'SO(2,4)',       '#22d3ee', 12, 'center', "'Courier New',monospace");
+    lbl(lbx + boxW * 0.5, boxy + boxH * 0.76, '× SO(6)',       '#4ade80', 12, 'center', "'Courier New',monospace");
+    lbl(lbx + boxW * 0.5, boxy + boxH * 0.92, 'gravità + stringhe', '#64748b', 9);
+
+    // Right box: CFT₄
+    t2Glow('#22d3ee', 20 * aGlow);
+    ctx.beginPath();
+    ctx.roundRect ? ctx.roundRect(rbx, boxy, boxW, boxH, 10) : ctx.rect(rbx, boxy, boxW, boxH);
+    ctx.strokeStyle = '#22d3ee';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    lbl(rbx + boxW * 0.5, boxy + boxH * 0.22, '𝒩=4 SYM (CFT₄)', '#67e8f9', 14);
+    lbl(rbx + boxW * 0.5, boxy + boxH * 0.44, 'Simmetria:',       '#94a3b8', 10);
+    lbl(rbx + boxW * 0.5, boxy + boxH * 0.60, 'SO(2,4)',           '#22d3ee', 12, 'center', "'Courier New',monospace");
+    lbl(rbx + boxW * 0.5, boxy + boxH * 0.76, '× SU(4)_R',        '#4ade80', 12, 'center', "'Courier New',monospace");
+    lbl(rbx + boxW * 0.5, boxy + boxH * 0.92, 'gauge senza gravità', '#64748b', 9);
+
+    // Animated ↔ arrow
+    const arrowY = cy;
+    const ax1    = lbx + boxW + 6;
+    const ax2    = rbx - 6;
+    const tFrac  = rm ? 0.5 : (0.5 + 0.5 * Math.sin(T * 1.8));
+    const midX   = t2Lerp(ax1, ax2, tFrac);
+
+    ctx.beginPath();
+    ctx.moveTo(ax1, arrowY);
+    ctx.lineTo(ax2, arrowY);
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth   = 2.5;
+    ctx.stroke();
+    // Arrowheads
+    const ah = 7;
+    ctx.beginPath();
+    ctx.moveTo(ax2, arrowY);
+    ctx.lineTo(ax2 - ah, arrowY - ah * 0.6);
+    ctx.lineTo(ax2 - ah, arrowY + ah * 0.6);
+    ctx.closePath();
+    ctx.fillStyle = '#fbbf24';
+    ctx.fill();
+    ctx.beginPath();
+    ctx.moveTo(ax1, arrowY);
+    ctx.lineTo(ax1 + ah, arrowY - ah * 0.6);
+    ctx.lineTo(ax1 + ah, arrowY + ah * 0.6);
+    ctx.closePath();
+    ctx.fillStyle = '#fbbf24';
+    ctx.fill();
+
+    // Animated dot along arrow
+    if (!rm) {
+      t2Glow('#fbbf24', 16);
+      ctx.beginPath();
+      ctx.arc(midX, arrowY, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#fbbf24';
+      ctx.fill();
+      t2NoGlow();
+    }
+    lbl((ax1 + ax2) * 0.5, arrowY - 14, 'dualità', '#fbbf24', 10);
+
+    lbl(cx, cy - R * 1.25, 'Simmetria come chiave della dualità', '#60a5fa', 13);
+    lbl(cx, cy + R * 1.2,  'SO(2,4) × SO(6) ↔ PSU(2,2|4)', '#4a7a9b', 10, 'center', "'Courier New',monospace");
+    return;
+  }
+
+  // ── Fallback ──────────────────────────────────────────────────────────────
+  ctx.beginPath();
+  ctx.arc(cx, cy, R, -Math.PI * 0.5, Math.PI * 0.5);
+  ctx.strokeStyle = 'rgba(14,165,233,0.4)';
+  ctx.lineWidth   = 1.5;
+  ctx.stroke();
+};
+
+t2Init();
+</script>
+</body>
+</html>
