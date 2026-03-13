@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Paradosso dell'Informazione | AdS/CFT — Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="ui">
+  <span id="ui-title">DivulgAzione · AdS/CFT</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">8 fasi</span>
+</div>
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — IL PROBLEMA</div>
+    <div class="phase-title">Hawking (1974): i buchi neri evaporano perdendo informazione?</div>
+    <div class="phase-body">
+      <p>Nel 1974, Stephen Hawking dimostrò che i buchi neri non sono completamente neri: emettono <span class="hl">radiazione termica</span> (radiazione di Hawking) a causa degli effetti quantistici vicino all'orizzonte. La temperatura di questa radiazione dipende solo dalla massa del buco nero.</p>
+      <code class="formula">T_H = ℏc³ / (8πGMk_B)
+E_Hawking ~ k_B T_H / l_P  (energia tipica fotone)
+τ_evap ~ G²M³ / (ℏc⁴)   (tempo di evaporazione)
+→ buco nero di massa solare: τ ~ 10^{68} anni</code>
+      <p>Il problema: la radiazione di Hawking è <span class="am">esattamente termica</span> — uno spettro di corpo nero puro. La radiazione termica è pura casualità, non contiene informazione strutturata. Se il buco nero evaporate completamente (come prevede la teoria), e lo stato finale è radiazione puramente termica, allora l'<span class="hl">informazione degli oggetti caduti nel buco nero è persa</span> — non è codificata da nessuna parte nella radiazione finale.</p>
+      <p>Questo è il <span class="gr">paradosso dell'informazione</span>: la meccanica quantistica afferma che l'informazione non può mai essere distrutta (unitarietà), ma la termodinamica dei buchi neri di Hawking sembra implicare il contrario.</p>
+      <div class="note">Animazione: buco nero che si restringe emettendo particelle di Hawking, con il testo che mostra l'informazione "scomparire" dentro.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — UNITARIETÀ</div>
+    <div class="phase-title">L'unitarietà quantistica: l'informazione non si perde</div>
+    <div class="phase-body">
+      <p>La meccanica quantistica è fondata sul principio di <span class="hl">unitarietà</span>: l'evoluzione temporale di qualsiasi sistema quantistico è governata da un operatore unitario U(t). L'unitarietà implica che l'informazione è sempre conservata — si può sempre invertire la evoluzione temporale e ricostruire lo stato iniziale.</p>
+      <code class="formula">|ψ(t)⟩ = U(t) |ψ(0)⟩    U†U = 1 (unitario)
+Entropia di von Neumann: S = −Tr(ρ log ρ)
+Stato puro: S = 0  sempre  (no perdita di info)
+Matrice densità: ρ(t) = U ρ(0) U† → S = cost.</code>
+      <p>Se uno stato puro |ψ⟩ evolve unitariamente, rimane puro per sempre. Un buco nero, formatosi dal collasso di materia in uno stato puro, dovrebbe — se la QM è corretta — evaporare <span class="am">in uno stato puro</span>. L'entropia di entanglement tra la radiazione emessa e il buco nero rimanente dovrebbe prima crescere e poi diminuire fino a zero — seguendo la <span class="gr">"curva di Page"</span>.</p>
+      <p>La proposta di Hawking del 1976 — che l'informazione è persa e la QM richiede un'evoluzione non-unitaria per i buchi neri — è vista oggi dai più come <span class="vi">inaccettabile</span>: violerebbe un principio fondamentale della fisica.</p>
+      <div class="note">Animazione: stato puro che evolve unitariamente vs matrice densità mista — lo scontro tra QM e la termodinamica di Hawking.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — PROPOSTA HAWKING</div>
+    <div class="phase-title">La proposta originale di Hawking (1976): non-unitarietà</div>
+    <div class="phase-body">
+      <p>Hawking nel 1976 sostenne coraggiosamente una posizione radicale: i buchi neri <span class="hl">non evolvono unitariamente</span>. L'evaporazione di un buco nero è un processo fondamentalmente diverso da qualsiasi altro processo in fisica — la gravità quantistica richiede un'estensione non-unitaria della meccanica quantistica.</p>
+      <code class="formula">Proposta Hawking (1976):
+|ψ_puro⟩_iniziale → ρ_misto_finale (non-unitaria!)
+Matrice densità: ρ ≠ U|ψ⟩⟨ψ|U†
+→ informazione distrutta nell'evaporazione
+→ "God plays dice AND loses information" (Susskind)</code>
+      <p>Questa proposta <span class="am">eliminerebbe il paradosso</span> per definizione: se la QM non è unitaria per i buchi neri, non c'è paradosso. Ma a quale prezzo? Si perderebbe uno dei pilastri della fisica teorica. Susskind e 't Hooft si opposero vigorosamente, dando inizio al grande dibattito che avrebbe guidato la ricerca per i successivi 40 anni.</p>
+      <p>In particolare, se la QM non è unitaria, allora l'<span class="hl">energia non è conservata</span> (dal teorema di Noether) — conseguenze catastrofiche per l'intera fisica.</p>
+      <div class="note">Animazione: matrice densità che parte pura (diagonal singola) e diventa mista (densità distribuita) durante l'evaporazione — visualizzazione della non-unitarietà.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — PAGE TIME</div>
+    <div class="phase-title">Il Page time: la curva dell'entropia di entanglement</div>
+    <div class="phase-body">
+      <p>Don Page (1993) analizzò le implicazioni dell'unitarietà per l'evaporazione del buco nero. Se l'informazione è conservata, la <span class="hl">radiazione di Hawking non può essere puramente termica</span> per tutto il tempo — deve diventare entangled con il buco nero rimanente in modo non-banale, e la sua entropia di entanglement deve seguire una curva specifica.</p>
+      <code class="formula">Curva di Page (1993):
+S_rad(t): cresce fino al "Page time" t_P ~ τ_evap/2
+S_rad(t_P) ~ S_BH iniziale (massimo)
+S_rad(t → τ_evap) → 0  (stato puro finale)
+t_P = Page time = metà del tempo di evaporazione</code>
+      <p>Prima del Page time: la radiazione è circa termica e il buco nero è grande — <span class="am">S_rad cresce</span>. Dopo il Page time: il buco nero è piccolo, la radiazione inizia a essere "purificata" dall'informazione del buco nero — <span class="hl">S_rad diminuisce</span> fino a zero.</p>
+      <p>Questa curva "a campana" è la firma dell'unitarietà. Se invece S_rad continua a crescere monotonicamente fino alla fine dell'evaporazione, allora l'informazione è persa. La sfida è: come si ottiene la curva di Page dalla fisica del buco nero?</p>
+      <div class="note">Animazione: curva di Page — l'entropia di entanglement della radiazione cresce fino al Page time poi decresce a zero, con la posizione del cursore che avanza nel tempo.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — ADS/CFT E UNITARIETÀ</div>
+    <div class="phase-title">AdS/CFT risolve il paradosso: la CFT è unitaria</div>
+    <div class="phase-body">
+      <p>La dualità AdS/CFT offre una risposta definitiva al paradosso (almeno in spaziotempo AdS): la CFT sul bordo è una teoria quantistica <span class="hl">completamente unitaria</span> per definizione. Quindi il processo di evaporazione del buco nero corrispondente nella CFT deve essere unitario.</p>
+      <code class="formula">CFT è unitaria → buco nero AdS evolve unitariamente
+Paradosso dell'informazione → non c'è paradosso in AdS/CFT!
+L'informazione NON si perde → deve emergere nella radiazione
+Hawking si convinse nel 2004 (GR17 conference)</code>
+      <p>Questa è la risposta di principio: l'informazione <span class="am">non si perde</span>. Ma la risposta di principio lascia aperta la domanda meccanicistica: <span class="hl">come</span> emerge l'informazione nella radiazione? Qual è il meccanismo microscopico che porta dallo spettro termico apparente di Hawking allo stato puro finale?</p>
+      <p>Hawking si convinse nel 2004 e lo annunciò alla conferenza GR17 a Dublino — concedendo la scommessa con John Preskill. Ma il meccanismo dettagliato rimase oscuro per altri 15 anni, fino alle "isole".</p>
+      <div class="note">Animazione: due lati della dualità — buco nero AdS (a sinistra) e CFT unitaria (a destra) — con le frecce che mostrano che l'evoluzione unitaria della CFT implica la stessa per il buco nero.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — FIREWALL AMPS</div>
+    <div class="phase-title">Il paradosso del firewall (AMPS 2012)</div>
+    <div class="phase-body">
+      <p>Almheiri, Marolf, Polchinski e Sully (AMPS, 2012) trovarono un nuovo paradosso: se l'informazione esce davvero nella radiazione (unitarietà), allora si deve violare il principio di <span class="hl">monogamia dell'entanglement</span> all'orizzonte del buco nero.</p>
+      <code class="formula">AMPS: assumiamo simultaneamente:
+1. Unitarietà: informazione nella radiazione
+2. No-drama: nessun firewall all'orizzonte (GR)
+3. Validità QFT fino a distanze sub-Planckiane
+→ Contraddizione: le tre assunzioni sono incompatibili!
+Soluzione proposta: "firewall" ad alta energia all'orizzonte</code>
+      <p>Il ragionamento AMPS: la radiazione tardiva B deve essere <span class="am">massimalmente entangled</span> con la radiazione precoce A (unitarietà). Ma la QFT nel vuoto richiede che B sia anche entangled con il modo C all'interno del buco nero (no-drama). Monogamia: impossibile essere massimalmente entangled con due sistemi diversi — contraddizione.</p>
+      <p>La soluzione proposta da AMPS è un <span class="gr">"firewall"</span>: uno strato di alta energia all'orizzonte che "brucia" qualsiasi osservatore che lo attraversa. Questo salva l'unitarietà ma viola il principio di equivalenza di Einstein. Il dibattito è ancora aperto.</p>
+      <div class="note">Animazione: buco nero con orizzonte, i tre "agenti" A (radiazione precoce), B (tarda), C (interno) con le frecce di entanglement che si contraddicono — il nodo AMPS.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — L'ISOLA</div>
+    <div class="phase-title">La formula dell'isola (Penington, Almheiri et al. 2019)</div>
+    <div class="phase-body">
+      <p>Nel 2019, Penington e Almheiri-Mahajan-Maldacena-Zhao scoprirono un meccanismo concreto che reproduce la <span class="hl">curva di Page</span> usando la formula RT generalizzata (QES) con un nuovo contributo: le <span class="am">"isole"</span> — regioni del bulk incluse nel calcolo dell'entropia della radiazione.</p>
+      <code class="formula">S_rad = min over {no island, island}[
+  Area(∂Island)/4G_N + S_bulk(rad ∪ Island) ]
+Prima del Page time: domina "no island" → S cresce
+Dopo il Page time: domina "island" → S decresce
+→ curva di Page corretta!</code>
+      <p>Un'"isola" è una regione del bulk che, pur trovandosi <span class="hl">all'interno del buco nero</span>, viene inclusa nella computazione dell'entropia della radiazione esterna. Geograficamente è separata dalla radiazione, ma è inclusa attraverso la formula RT generalizzata.</p>
+      <p>Quando l'isola appare (dopo il Page time), l'entropia della radiazione inizia a diminuire — esattamente come previsto dalla curva di Page. Le isole sono collegate alla struttura dei <span class="gr">"replica wormholes"</span>: saddle points non-perturbativi dell'integrale di percorso gravitazionale.</p>
+      <div class="note">Animazione: isola che appare nel bulk (regione arancione all'interno del BH) e modifica la curva di Page — visualizzazione della transizione tra le due saddle.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-8">
+    <div class="phase-tag">FASE 08 — STATO DELL'ARTE</div>
+    <div class="phase-title">Stato dell'arte: progresso e domande aperte</div>
+    <div class="phase-body">
+      <p>Il paradosso dell'informazione è uno dei problemi più profondi della fisica teorica. I progressi degli ultimi anni (isole, replica wormholes, ER=EPR) hanno chiarito molto, ma il quadro completo è ancora <span class="hl">incompleto</span>.</p>
+      <code class="formula">S(t) = min_QES[ Area(∂I)/4G_N + S_bulk(rad ∪ I) ]
+Progressi:
+• Isole → curva di Page corretta (2019)
+• Replica wormholes → calcolo esplicito (2020)
+• ER=EPR → geometria dell'informazione
+Domande aperte:
+• Meccanismo microscopico esatto?
+• Cosa è un firewall realmente?
+• Come si generalizza a Minkowski?</code>
+      <p>Il <span class="am">consenso attuale</span>: l'informazione non si perde, i buchi neri evolvono unitariamente, e la curva di Page è corretta. Il meccanismo è incarnato dalle isole e dai replica wormholes — saddle points dell'integrale di percorso che dominano dopo il Page time.</p>
+      <p>Domande aperte: il firewall esiste davvero? Cosa vive un osservatore che cade nel buco nero? Come si generalizza questo formalismo al nostro universo reale (de Sitter, non AdS)? La soluzione del paradosso ha aperto una finestra sulla <span class="gr">natura quantistica della gravità</span> che stiamo ancora esplorando.</p>
+      <div class="note">Animazione: curva di Page completa — S_rad che cresce, raggiunge il massimo al Page time e poi decresce a zero — con le diverse soluzioni proposte come punti sulla curva.</div>
+    </div>
+  </div>
+
+</div>
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · Il Problema</button>
+  <button class="btn" onclick="goPhase(2)">02 · Unitarietà</button>
+  <button class="btn" onclick="goPhase(3)">03 · Hawking 1976</button>
+  <button class="btn" onclick="goPhase(4)">04 · Page Time</button>
+  <button class="btn" onclick="goPhase(5)">05 · AdS/CFT</button>
+  <button class="btn" onclick="goPhase(6)">06 · Firewall</button>
+  <button class="btn" onclick="goPhase(7)">07 · Isola</button>
+  <button class="btn" onclick="goPhase(8)">08 · Stato Arte</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+window.T2_PHASES = [
+  { name: 'Il Paradosso dell\'Informazione', desc: 'FASE 01 — T_H=ℏc³/8πGMk_B: evaporazione e perdita di info?',      scene: 'problema'    },
+  { name: 'Unitarietà Quantistica',          desc: 'FASE 02 — |ψ(t)⟩=U(t)|ψ(0)⟩: la QM conserva l\'informazione',     scene: 'unitarieta'  },
+  { name: 'Proposta Hawking (1976)',          desc: 'FASE 03 — evoluzione non-unitaria: informazione distrutta?',        scene: 'hawking76'   },
+  { name: 'Il Page Time',                    desc: 'FASE 04 — curva di Page: S_rad cresce poi decresce al Page time',   scene: 'pagetime'    },
+  { name: 'AdS/CFT e Unitarietà',            desc: 'FASE 05 — CFT unitaria → BH AdS unitario: Hawking 2004',           scene: 'adscft'      },
+  { name: 'Paradosso Firewall AMPS',         desc: 'FASE 06 — AMPS (2012): unitarietà + no-drama → contraddizione',    scene: 'firewall'    },
+  { name: 'Le Isole di Page',                desc: 'FASE 07 — S_rad=min[Area(∂I)/4G+S_bulk]: curva di Page (2019)',    scene: 'isola'       },
+  { name: 'Stato dell\'Arte',                desc: 'FASE 08 — isole, replica wormholes, ER=EPR: quadro parziale',      scene: 'statodarte'  },
+];
+
+window.t2Draw = function(T, phaseIdx, ctx, W, H) {
+  const cx    = t2AnimCX();
+  const cy    = t2AnimCY();
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phaseIdx].scene;
+
+  // ── PROBLEMA — buco nero che emette Hawking ───────────────────────────────
+  if (scene === 'problema') {
+    const t   = rm ? 0.4 : ((T * 0.12) % 1);
+    const bhR = 55 * (1 - t * 0.6);
+
+    // Black hole
+    t2Glow('#f43f5e', 16);
+    ctx.beginPath();
+    ctx.arc(cx, cy, bhR, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0,0,0,0.9)';
+    ctx.fill();
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, cy, 'BH', '#f43f5e', 10, 'center');
+
+    // Hawking radiation particles
+    const nPart = 10;
+    for (let i = 0; i < nPart; i++) {
+      const ang    = (i / nPart) * Math.PI * 2 + (rm ? 0 : T * 0.5);
+      const dist   = bhR + 20 + ((T * 0.8 + i * 0.7) % 1) * 50;
+      const pRad   = 2 + 0.5 * Math.sin(T + i);
+      const alpha  = 1 - (dist - bhR - 20) / 50;
+      ctx.beginPath();
+      ctx.arc(cx + dist * Math.cos(ang), cy + dist * Math.sin(ang), pRad, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(251,191,36,${Math.max(0, alpha)})`;
+      ctx.fill();
+    }
+
+    t2Txt(cx, cy + bhR + 30, `M(t) = M₀(1 − t/τ)^{1/3}`, '#94a3b8', 9, 'center');
+    t2Txt(cx, cy + bhR + 46, 'radiazione termica → informazione persa?', '#f43f5e', 9, 'center');
+    return;
+  }
+
+  // ── UNITARIETÀ — stato puro vs misto ──────────────────────────────────────
+  if (scene === 'unitarieta') {
+    // Left: pure state
+    const lX = cx - W * 0.14;
+    t2Glow('#4ade80', 8);
+    ctx.beginPath();
+    ctx.arc(lX, cy, 28, 0, Math.PI * 2);
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(lX, cy - 4, '|ψ⟩', '#4ade80', 12, 'center');
+    t2Txt(lX, cy + 12, 'puro', '#4ade80', 9, 'center');
+    t2Txt(lX, cy + 36, 'S = 0', '#4ade80', 9, 'center');
+
+    // Arrow
+    const pulse = rm ? 1 : 0.7 + 0.3 * Math.sin(T * 1.5);
+    t2Glow('#0ea5e9', 6 * pulse);
+    ctx.beginPath();
+    ctx.moveTo(lX + 34, cy);
+    ctx.lineTo(cx + W * 0.06, cy);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(cx + W * 0.06, cy);
+    ctx.lineTo(cx + W * 0.06 - 8, cy - 5);
+    ctx.moveTo(cx + W * 0.06, cy);
+    ctx.lineTo(cx + W * 0.06 - 8, cy + 5);
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt((lX + 34 + cx + W * 0.06) * 0.5, cy - 14, 'U(t)', '#0ea5e9', 9, 'center');
+
+    // Right: should stay pure
+    const rX = cx + W * 0.14;
+    t2Glow('#4ade80', 8 * pulse);
+    ctx.beginPath();
+    ctx.arc(rX, cy, 28, 0, Math.PI * 2);
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(rX, cy - 4, '|ψ\'⟩', '#4ade80', 12, 'center');
+    t2Txt(rX, cy + 12, 'puro?', '#fbbf24', 9, 'center');
+    t2Txt(rX, cy + 36, 'S = 0 ✓', '#4ade80', 9, 'center');
+
+    t2Txt(cx, cy + 60, 'Unitarietà: U†U = 1 → S = costante', '#94a3b8', 9, 'center');
+    return;
+  }
+
+  // ── HAWKING 76 — evoluzione non-unitaria ──────────────────────────────────
+  if (scene === 'hawking76') {
+    // Density matrix visualization
+    const mSize = 60;
+    const mX    = cx - mSize * 0.5;
+    const mY    = cy - mSize * 0.5;
+
+    // Pure state: diagonal
+    t2Txt(cx - mSize - 30, cy, 'puro', '#4ade80', 9, 'right');
+    const n = 4;
+    for (let i = 0; i < n; i++) {
+      for (let j = 0; j < n; j++) {
+        const cellX   = mX + i * (mSize / n);
+        const cellY   = mY + j * (mSize / n);
+        const isDiag  = i === j;
+        const t0      = rm ? 0.5 : (T * 0.2) % 1;
+        const offDiag = (1 - t0) * (isDiag ? 0 : 1);
+        const diag    = isDiag ? 1 : 0;
+        const alpha   = isDiag ? 0.9 : offDiag * 0.7;
+        ctx.fillStyle = isDiag
+          ? `rgba(74,222,128,${0.9 - t0 * 0.5})`
+          : `rgba(14,165,233,${offDiag * 0.5})`;
+        ctx.fillRect(cellX + 1, cellY + 1, mSize / n - 2, mSize / n - 2);
+      }
+    }
+
+    // Matrix border
+    ctx.strokeStyle = '#334155';
+    ctx.lineWidth   = 1;
+    ctx.strokeRect(mX, mY, mSize, mSize);
+
+    const t0 = rm ? 0.5 : (T * 0.2) % 1;
+    t2Txt(cx, mY - 14, t0 < 0.5 ? 'puro (S=0)' : 'misto (S>0)', t0 < 0.5 ? '#4ade80' : '#f43f5e', 10, 'center');
+    t2Txt(cx, mY + mSize + 20, 'Hawking: ρ_puro → ρ_misto (non-unitaria!)', '#f43f5e', 9, 'center');
+    return;
+  }
+
+  // ── PAGE TIME — curva di Page ─────────────────────────────────────────────
+  if (scene === 'pagetime') {
+    const axW    = W * 0.30;
+    const axH    = H * 0.22;
+    const ox     = cx - axW * 0.5;
+    const oy     = cy + axH * 0.5;
+    const pageT  = 0.5;
+
+    // Axes
+    ctx.strokeStyle = '#334155';
+    ctx.lineWidth   = 1;
+    ctx.beginPath();
+    ctx.moveTo(ox, oy);
+    ctx.lineTo(ox + axW, oy);
+    ctx.moveTo(ox, oy);
+    ctx.lineTo(ox, oy - axH);
+    ctx.stroke();
+    t2Txt(ox + axW + 12, oy, 't', '#94a3b8', 9, 'left');
+    t2Txt(ox - 4, oy - axH - 10, 'S_rad', '#94a3b8', 9, 'right');
+
+    // Page curve
+    ctx.beginPath();
+    for (let i = 0; i <= 80; i++) {
+      const tNorm = i / 80;
+      const S     = tNorm < pageT
+        ? tNorm / pageT
+        : 1 - (tNorm - pageT) / (1 - pageT);
+      const px    = ox + tNorm * axW;
+      const py    = oy - S * axH;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    t2Glow('#0ea5e9', 8);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+
+    // Page time marker
+    const pageX = ox + pageT * axW;
+    ctx.beginPath();
+    ctx.moveTo(pageX, oy);
+    ctx.lineTo(pageX, oy - axH);
+    ctx.strokeStyle = 'rgba(251,191,36,0.5)';
+    ctx.lineWidth   = 1;
+    ctx.setLineDash([3, 3]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    t2Txt(pageX, oy + 14, 't_Page', '#fbbf24', 8, 'center');
+
+    // Cursor
+    if (!rm) {
+      const tC = ((T * 0.2) % 1);
+      const SC = tC < pageT ? tC / pageT : 1 - (tC - pageT) / (1 - pageT);
+      const pxC = ox + tC * axW;
+      const pyC = oy - SC * axH;
+      t2Glow('#fbbf24', 10);
+      ctx.beginPath();
+      ctx.arc(pxC, pyC, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#fbbf24';
+      ctx.fill();
+      t2NoGlow();
+    }
+    t2Txt(cx, oy + 28, 'curva di Page: unitarietà → S_rad → 0', '#94a3b8', 8, 'center');
+    return;
+  }
+
+  // ── ADSCFT — due lati della dualità ───────────────────────────────────────
+  if (scene === 'adscft') {
+    // BH side
+    const lX = cx - W * 0.16;
+    t2Glow('#f43f5e', 12);
+    ctx.beginPath();
+    ctx.arc(lX, cy, 30, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0,0,0,0.8)';
+    ctx.fill();
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(lX, cy, 'BH AdS', '#f43f5e', 8, 'center');
+
+    // Equality arrow
+    t2Glow('#4ade80', 8);
+    t2Txt(cx, cy, '≡', '#4ade80', 18, 'center');
+    t2NoGlow();
+
+    // CFT side
+    const rX = cx + W * 0.16;
+    t2Glow('#0ea5e9', 10);
+    ctx.beginPath();
+    ctx.arc(rX, cy, 30, 0, Math.PI * 2);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(rX, cy - 4, 'CFT', '#0ea5e9', 9, 'center');
+    t2Txt(rX, cy + 12, 'unitaria', '#4ade80', 8, 'center');
+
+    t2Txt(cx, cy + 55, 'CFT unitaria → BH evolve unitariamente', '#94a3b8', 9, 'center');
+    t2Txt(cx, cy + 70, 'Hawking si convinse nel 2004', '#fbbf24', 8, 'center');
+    return;
+  }
+
+  // ── FIREWALL — nodo AMPS ──────────────────────────────────────────────────
+  if (scene === 'firewall') {
+    // BH with horizon
+    t2Glow('#f43f5e', 10);
+    ctx.beginPath();
+    ctx.arc(cx, cy, 45, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0,0,0,0.85)';
+    ctx.fill();
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+
+    // Firewall at horizon
+    const pulse = rm ? 1 : 0.6 + 0.4 * Math.sin(T * 3);
+    t2Glow('#fbbf24', 20 * pulse);
+    ctx.beginPath();
+    ctx.arc(cx, cy, 45, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(251,191,36,${pulse})`;
+    ctx.lineWidth   = 4;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, cy, 'BH', '#f43f5e', 9, 'center');
+    t2Txt(cx + 50, cy - 14, 'firewall?', '#fbbf24', 8, 'left');
+
+    // Three entangled systems
+    const systems = [
+      { x: cx, y: cy - 90, label: 'A (radiaz. precoce)', col: '#0ea5e9' },
+      { x: cx + 90, y: cy + 50, label: 'B (tarda)', col: '#4ade80' },
+      { x: cx - 90, y: cy + 50, label: 'C (interno)', col: '#a78bfa' },
+    ];
+    for (const s of systems) {
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, 14, 0, Math.PI * 2);
+      ctx.strokeStyle = s.col;
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+      t2Txt(s.x, s.y + 22, s.label, s.col, 7, 'center');
+    }
+    // Entanglement lines (contradicting)
+    for (let i = 0; i < systems.length; i++) {
+      const s1 = systems[i];
+      const s2 = systems[(i + 1) % systems.length];
+      ctx.beginPath();
+      ctx.moveTo(s1.x, s1.y);
+      ctx.lineTo(s2.x, s2.y);
+      ctx.strokeStyle = `rgba(244,63,94,0.4)`;
+      ctx.lineWidth   = 1;
+      ctx.setLineDash([3, 3]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    t2Txt(cx, cy + 90, 'monogamia violata: A-B e B-C entangled?', '#f43f5e', 8, 'center');
+    return;
+  }
+
+  // ── ISOLA — regione isola nel bulk ────────────────────────────────────────
+  if (scene === 'isola') {
+    // BH
+    t2Glow('#f43f5e', 10);
+    ctx.beginPath();
+    ctx.arc(cx, cy, 42, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(0,0,0,0.85)';
+    ctx.fill();
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+
+    // Island inside BH
+    const islandT = rm ? 0.7 : Math.min(1, ((T * 0.15) % 1.5));
+    if (islandT > 0.3) {
+      t2Glow('#fbbf24', 12 * islandT);
+      ctx.beginPath();
+      ctx.ellipse(cx, cy, 18 * islandT, 12 * islandT, 0, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(251,191,36,${0.25 * islandT})`;
+      ctx.fill();
+      ctx.strokeStyle = '#fbbf24';
+      ctx.lineWidth   = 1.5;
+      ctx.stroke();
+      t2NoGlow();
+      t2Txt(cx, cy, 'Isola', '#fbbf24', 7, 'center');
+    }
+
+    // Radiation region
+    const radR = 80;
+    ctx.beginPath();
+    ctx.arc(cx, cy, radR, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(14,165,233,0.3)';
+    ctx.lineWidth   = 1;
+    ctx.stroke();
+    t2Txt(cx + radR + 8, cy, 'radiaz.', '#0ea5e9', 8, 'left');
+
+    // Page curve mini
+    const axW2 = 60;
+    const axH2 = 30;
+    const ox2  = cx - axW2 * 0.5;
+    const oy2  = cy + radR + 30;
+    ctx.beginPath();
+    for (let i = 0; i <= 40; i++) {
+      const tN  = i / 40;
+      const S   = tN < 0.5 ? tN / 0.5 : 1 - (tN - 0.5) / 0.5;
+      const px  = ox2 + tN * axW2;
+      const py  = oy2 - S * axH2;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    t2Txt(cx, oy2 + 14, 'isola → curva di Page corretta', '#94a3b8', 8, 'center');
+    return;
+  }
+
+  // ── STATO DELL'ARTE — curva di Page completa ──────────────────────────────
+  if (scene === 'statodarte') {
+    const axW  = W * 0.30;
+    const axH  = H * 0.22;
+    const ox   = cx - axW * 0.5;
+    const oy   = cy + axH * 0.5;
+
+    // Axes
+    ctx.strokeStyle = '#334155';
+    ctx.lineWidth   = 1;
+    ctx.beginPath();
+    ctx.moveTo(ox, oy);
+    ctx.lineTo(ox + axW, oy);
+    ctx.moveTo(ox, oy);
+    ctx.lineTo(ox, oy - axH);
+    ctx.stroke();
+
+    // Hawking (monotone) - wrong
+    ctx.beginPath();
+    for (let i = 0; i <= 80; i++) {
+      const tN = i / 80;
+      const S  = tN;
+      ctx.lineTo(ox + tN * axW, oy - S * axH);
+    }
+    ctx.strokeStyle = 'rgba(244,63,94,0.4)';
+    ctx.lineWidth   = 1.5;
+    ctx.setLineDash([4, 3]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    t2Txt(ox + axW, oy - axH - 4, 'Hawking (sbagliato)', '#f43f5e', 7, 'right');
+
+    // Page curve - correct
+    ctx.beginPath();
+    for (let i = 0; i <= 80; i++) {
+      const tN = i / 80;
+      const S  = tN < 0.5 ? tN / 0.5 : 1 - (tN - 0.5) / 0.5;
+      if (i === 0) ctx.moveTo(ox + tN * axW, oy - S * axH);
+      else ctx.lineTo(ox + tN * axW, oy - S * axH);
+    }
+    t2Glow('#4ade80', 8);
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth   = 2.5;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(ox + axW * 0.25, oy - axH * 0.6, 'Page (unitario)', '#4ade80', 7, 'center');
+
+    // Labels
+    t2Txt(ox + axW + 10, oy, 't', '#94a3b8', 9, 'left');
+    t2Txt(ox + axW * 0.5, oy + 14, 't_Page', '#fbbf24', 8, 'center');
+    ctx.beginPath();
+    ctx.moveTo(ox + axW * 0.5, oy);
+    ctx.lineTo(ox + axW * 0.5, oy - axH * 0.85);
+    ctx.strokeStyle = 'rgba(251,191,36,0.3)';
+    ctx.lineWidth   = 1;
+    ctx.setLineDash([2, 3]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    t2Txt(cx, oy + 30, 'isole + wormholes di replica → Page corretta', '#94a3b8', 8, 'center');
+    return;
+  }
+};
+
+t2Init();
+</script>
+</body>
+</html>

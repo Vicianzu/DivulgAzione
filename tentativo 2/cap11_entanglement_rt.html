@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Entanglement e Formula di Ryu-Takayanagi | AdS/CFT — Tentativo 2</title>
+<link rel="stylesheet" href="t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="ui">
+  <span id="ui-title">DivulgAzione · AdS/CFT</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">8 fasi</span>
+</div>
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — ENTANGLEMENT</div>
+    <div class="phase-title">L'entropia di entanglement: misurare le correlazioni quantistiche</div>
+    <div class="phase-body">
+      <p>Nella meccanica quantistica, due sistemi possono essere <span class="hl">entangled</span> — correlati in modo non-classico. L'<span class="am">entropia di entanglement</span> misura quantitativamente queste correlazioni. Data una bipartizione del sistema in regioni A e Ā, si definisce la matrice densità ridotta ρ_A = Tr_Ā |ψ⟩⟨ψ| e poi l'entropia di von Neumann.</p>
+      <code class="formula">S_A = −Tr(ρ_A log ρ_A)   (entropia di von Neumann)
+ρ_A = Tr_{Ā} |ψ⟩⟨ψ|     (matrice densità ridotta)
+|ψ⟩ puro: S_A = 0 (no entanglement)
+|ψ⟩ = (|↑↓⟩-|↓↑⟩)/√2: S_A = log 2 (max entangl.)</code>
+      <p>L'entropia di entanglement <span class="hl">non è un'entropia termica</span>: misura le correlazioni quantistiche intrinseche del vuoto/stato fondamentale. In una CFT 2D al vuoto, S_A ~ (c/3) log(|A|/ε) dove c è la carica centrale e ε è un cutoff UV — cresce logaritmicamente con la dimensione di A.</p>
+      <div class="note">Animazione: regione A (ciano) e complementare Ā (ambra) sul bordo, con la matrice densità ridotta schematizzata come correlazioni locali.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — RYU-TAKAYANAGI</div>
+    <div class="phase-title">La formula di Ryu-Takayanagi (2006): geometria dell'entanglement</div>
+    <div class="phase-body">
+      <p>Nel 2006, <span class="hl">Ryu e Takayanagi</span> hanno scoperto una formula sorprendente: l'entropia di entanglement di una regione A nella CFT è calcolata dall'<span class="am">area della superficie minimale</span> nel bulk di AdS che termina sui bordi di A.</p>
+      <code class="formula">S_A = Area(γ_A) / (4 G_N)
+γ_A = superficie minimale in AdS con ∂γ_A = ∂A
+G_N = costante di Newton in (d+1) dimensioni
+→ formula analoga a Bekenstein-Hawking!</code>
+      <p>La formula è l'<span class="hl">analogo olografico di Bekenstein-Hawking</span>: l'entropia non è data dal volume ma dall'area. La superficie γ_A è chiamata "superficie RT" e si trova minimizzando l'area tra tutte le superfici nel bulk con lo stesso bordo ∂A.</p>
+      <p>Questo risultato è stato poi esteso (Hubeny-Rangamani-Takayanagi, HRT, 2007) al caso covariante (dipendente dal tempo), e ulteriormente generalizzato con correzioni quantistiche (formula QES). La formula RT è una delle scoperte più importanti della fisica teorica degli ultimi decenni.</p>
+      <div class="note">Animazione: regione A sul bordo e superficie minima γ_A nel bulk che si "appende" ai bordi di A, con l'area evidenziata.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — SUPERFICIE RT</div>
+    <div class="phase-title">Trovare la superficie RT: minimizzazione geometrica</div>
+    <div class="phase-body">
+      <p>La superficie RT γ_A si trova con un problema variazionale: tra tutte le superfici nel bulk che <span class="hl">terminano su ∂A</span> al bordo e sono <span class="am">omologhe ad A</span> (possono essere deformate continuamente in A rimanendo nel bulk), si prende quella di <span class="gr">area minima</span>.</p>
+      <code class="formula">γ_A = arg min_{Σ: ∂Σ=∂A, Σ~A} Area(Σ)
+Condizione: Σ omologa ad A nel bulk
+→ variazione: δArea = 0 (equazione della geodetica)
+In AdS₃: γ_A è una geodetica (curva di lunghezza min.)</code>
+      <p>In AdS₃ (2+1 dimensioni totali), le superfici RT sono curve — più precisamente <span class="hl">geodetiche</span> nello spazio iperbolico H². La loro geometria è ben nota: una corda nell'upper half-plane con metrica ds²=(dz²+dx²)/z².</p>
+      <p>La condizione di omogologia è importante: esclude soluzioni "topologicamente triviali". Ad esempio, per un intervallo A su una CFT a temperatura finita (con buco nero in AdS), ci sono due candidate γ_A — si prende quella di area minima, e questa scelta determina la <span class="vi">transizione di fase olografica</span> dell'entanglement.</p>
+      <div class="note">Animazione: variazione continua di una superficie nel bulk finché non raggiunge la configurazione di area minima — convergenza alla superficie RT.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — VERIFICA</div>
+    <div class="phase-title">Verifica numerica in AdS₃/CFT₂</div>
+    <div class="phase-body">
+      <p>Il test più diretto della formula RT si effettua in AdS₃/CFT₂, dove la CFT è bidimensionale (1+1D) e si possono calcolare entrambi i lati esattamente. Per un intervallo A = [u, v] in una CFT₂ al vuoto con carica centrale c:</p>
+      <code class="formula">CFT: S_A = (c/3) log(|u-v|/ε)
+AdS: Area(γ_A)/4G_N = (c/3) log(|u-v|/ε)
+con c = 3L/(2G_N)  ← relazione tra c e G_N
+Accordo ESATTO → conferma della formula RT</code>
+      <p>Il calcolo AdS: la geodetica che connette i punti (ε,u) e (ε,v) nell'upper half-plane ha lunghezza L log(|u-v|/ε). Moltiplicando per 1/(4G_N) si ottiene esattamente il risultato della CFT con la relazione c = 3L/(2G_N).</p>
+      <p>Questo accordo non è perturbativo: è <span class="hl">esatto</span>, valido a qualunque ordine. È uno dei test più precisi e convincenti della dualità AdS/CFT, ed è stato verificato per molte famiglie di CFT e geometrie AdS diverse.</p>
+      <div class="note">Animazione: geodetica in AdS₃ (upper half-plane) con la lunghezza che coincide con la formula CFT — i due lati si illuminano simultaneamente confermando l'accordo.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — GEOMETRIA E ENTANGLEMENT</div>
+    <div class="phase-title">La geometria è l'entanglement: implicazioni profonde</div>
+    <div class="phase-body">
+      <p>La formula RT ha un'implicazione profondissima: la <span class="hl">geometria del bulk è codificata nell'entanglement del bordo</span>. Non è solo una formula per calcolare l'entropia — è una finestra sulla struttura fondamentale dello spazio-tempo.</p>
+      <code class="formula">ΔS_A = ΔArea(γ_A) / 4G_N
+→ modificare l'entanglement = cambiare la geometria
+Entanglement ridotto → bulk disconnesso
+|ψ⟩ = |0⟩_L ⊗ |0⟩_R → geometria disconnessa (no wormhole)
+|ψ⟩ = |TFD⟩ (entangled) → geometria connessa (wormhole)</code>
+      <p>Van Raamsdonk (2010) ha reso questa intuizione precisa: immaginate due copie identiche di CFT (CFT_L e CFT_R) in stato di vuoto — stato prodotto, nessun entanglement — la geometria AdS corrispondente è <span class="am">disconnessa</span> (due spaziotempo separati). Se invece le due CFT sono nell'<span class="hl">stato entangled TFD</span>, la geometria è connessa attraverso un wormhole (buco nero eterno di AdS).</p>
+      <p>Ridurre l'entanglement significa "rompere" fisicamente la connettività del bulk. Lo spazio-tempo <span class="gr">si tesse con l'entanglement</span>.</p>
+      <div class="note">Animazione: transizione tra bordo disconnesso (no entanglement, bulk disconnesso) e bordo entangled (bulk connesso da wormhole) — lo spazio emerge dall'entanglement.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — QES</div>
+    <div class="phase-title">Generalizzazione quantistica: la formula QES (FLM/EW)</div>
+    <div class="phase-body">
+      <p>La formula RT classica va corretta quando si includono le <span class="hl">fluttuazioni quantistiche dei campi nel bulk</span>. La generalizzazione è la formula della <span class="am">superficie a estremum quantistico</span> (QES — Quantum Extremal Surface).</p>
+      <code class="formula">S_A = min_{γ} { Area(γ) / 4G_N + S_bulk(γ) }
+S_bulk(γ) = entropia di entanglement dei campi bulk
+            separati dall'orizzonte γ
+QES: min e poi extremum (Faulkner-Lewkowycz-Maldacena
+     + Engelhardt-Wall 2014)</code>
+      <p>La formula QES somma due contributi: l'area classica della superficie (come in RT) e l'entropia di entanglement dei campi quantistici del bulk divisi dalla superficie stessa. Si cerca prima il minimo e poi l'extremum di questa somma.</p>
+      <p>Questa formula è fondamentale per risolvere il <span class="gr">paradosso dell'informazione</span>: le "isole" che compaiono nel calcolo dell'entropia della radiazione di Hawking sono proprio le superfici QES che minimizzano questa somma, e danno la corretta curva di Page per l'evaporazione del buco nero (come vedremo nel Cap. 13).</p>
+      <div class="note">Animazione: superficie RT classica che si "gonfia" includendo il contributo di S_bulk — la superficie QES include l'area e l'entropia dei campi nel bulk.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — MUTUAL INFO</div>
+    <div class="phase-title">Mutual information olografica: correlazioni totali</div>
+    <div class="phase-body">
+      <p>La <span class="hl">mutual information</span> I(A:B) misura le correlazioni totali (quantistiche + classiche) tra le regioni A e B — è sempre non-negativa e zero solo se A e B sono completamente decorrelati.</p>
+      <code class="formula">I(A:B) = S_A + S_B − S_{A∪B} ≥ 0
+In AdS/CFT (RT):
+I(A:B) = [Area(γ_A) + Area(γ_B) − Area(γ_{A∪B})] / 4G_N
+→ geometrica, finita (UV divergences cancel)</code>
+      <p>Un vantaggio della mutual information RT: le <span class="am">divergenze UV si cancellano</span>. Le singole entropie di entanglement RT divergono (area della superficie vicino al bordo), ma la mutual information è finita — una quantità fisicamente ben definita.</p>
+      <p>Nella mutual information olografica si può verificare un fatto sorprendente: esiste una <span class="gr">transizione di fase</span> al variare della separazione tra A e B. Quando A e B sono vicine, γ_{A∪B} = γ_A ∪ γ_B e I(A:B) > 0; quando sono lontane, γ_{A∪B} ha una topologia diversa e I(A:B) = 0. Questo è un segnale geometrico di decorrelazione.</p>
+      <div class="note">Animazione: regioni A e B sul bordo con le rispettive superfici RT, e la transizione di fase della mutual information al variare della separazione.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-8">
+    <div class="phase-tag">FASE 08 — MONOGAMIA</div>
+    <div class="phase-title">Monogamia dell'entanglement e strong subadditivity</div>
+    <div class="phase-body">
+      <p>L'entanglement quantistico è <span class="hl">monogamo</span>: se A è massimalmente entangled con B, non può esserlo con C. Matematicamente, questo è codificato nella <span class="am">strong subadditivity</span> (SSA) dell'entropia di von Neumann — una disuguaglianza fondamentale della meccanica quantistica.</p>
+      <code class="formula">Strong subadditivity:
+S_{A∪B} + S_{B∪C} ≥ S_B + S_{A∪B∪C}
+Equivalentemente: S_A + S_C ≤ S_{A∪B} + S_{B∪C}
+Monogamy of entanglement:
+I(A:B) + I(A:C) ≤ I(A:BC)  [per stati puri]</code>
+      <p>In AdS/CFT, la SSA segue dalla <span class="hl">geometria minimale</span> delle superfici RT: è possibile dimostrare la SSA come un semplice teorema geometrico sulla minimalizzazione dell'area in AdS. Questo è uno dei test più eleganti della formula RT: la SSA, che in QM richiede una dimostrazione algebrica non-triviale, diventa un semplice lemma geometrico.</p>
+      <p>La monogamia dell'entanglement pone <span class="gr">vincoli sulla geometria del bulk</span>: non tutte le geometrie sono compatibili con un'origine CFT. La geometria del bulk deve essere tale che le superfici RT soddisfino la SSA — e questo restringe le geometrie "ammissibili" olograficamente.</p>
+      <div class="note">Animazione: tre regioni A, B, C sul bordo con le loro superfici RT — dimostrazione geometrica della SSA come disuguaglianza sulle aree delle superfici minimali.</div>
+    </div>
+  </div>
+
+</div>
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · Entanglement</button>
+  <button class="btn" onclick="goPhase(2)">02 · RT Formula</button>
+  <button class="btn" onclick="goPhase(3)">03 · Superficie RT</button>
+  <button class="btn" onclick="goPhase(4)">04 · Verifica</button>
+  <button class="btn" onclick="goPhase(5)">05 · Geom/Entangl.</button>
+  <button class="btn" onclick="goPhase(6)">06 · QES</button>
+  <button class="btn" onclick="goPhase(7)">07 · Mutual Info</button>
+  <button class="btn" onclick="goPhase(8)">08 · Monogamia</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+window.T2_PHASES = [
+  { name: 'Entropia di Entanglement',    desc: 'FASE 01 — S_A = -Tr(ρ_A log ρ_A): correlazioni quantistiche sul bordo', scene: 'entanglement' },
+  { name: 'Formula Ryu-Takayanagi',      desc: 'FASE 02 — S_A = Area(γ_A)/4G_N: geometria calcola entanglement (2006)', scene: 'rt'           },
+  { name: 'Superficie RT',               desc: 'FASE 03 — γ_A = min_{Σ:∂Σ=∂A,Σ~A} Area(Σ): minimizzazione',            scene: 'superficie'   },
+  { name: 'Verifica in AdS₃/CFT₂',      desc: 'FASE 04 — c = 3L/2G_N: accordo esatto con S_A=(c/3)log(|A|/ε)',        scene: 'verifica'     },
+  { name: 'Geometria = Entanglement',    desc: 'FASE 05 — entanglement ridotto → bulk disconnesso (Van Raamsdonk)',      scene: 'geomEntangl'  },
+  { name: 'Formula QES (FLM/EW)',        desc: 'FASE 06 — S_A = min[Area(γ)/4G_N + S_bulk(γ)]: correzioni quantistiche', scene: 'qes'          },
+  { name: 'Mutual Information',          desc: 'FASE 07 — I(A:B) = S_A+S_B-S_{A∪B}: correlazioni totali, finita',       scene: 'mutualInfo'   },
+  { name: 'Monogamia e SSA',             desc: 'FASE 08 — strong subadditivity geometrica: S_{AB}+S_{BC}≥S_B+S_{ABC}',  scene: 'monogamia'    },
+];
+
+window.t2Draw = function(T, phaseIdx, ctx, W, H) {
+  const cx    = t2AnimCX();
+  const cy    = t2AnimCY();
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phaseIdx].scene;
+
+  // ── ENTANGLEMENT — regioni A e Ā ──────────────────────────────────────────
+  if (scene === 'entanglement') {
+    const bordoY = cy - 20;
+    const R      = 80;
+    // A region (top arc)
+    t2Glow('#0ea5e9', 8);
+    ctx.beginPath();
+    ctx.arc(cx, bordoY, R, Math.PI, 0);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 3;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, bordoY - R - 14, 'A', '#0ea5e9', 13, 'center');
+
+    // Ā region (bottom arc)
+    t2Glow('#fbbf24', 8);
+    ctx.beginPath();
+    ctx.arc(cx, bordoY, R, 0, Math.PI);
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth   = 3;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, bordoY + R + 14, 'Ā', '#fbbf24', 13, 'center');
+
+    // Entanglement lines (arcs inside)
+    const nLines = 6;
+    for (let i = 0; i < nLines; i++) {
+      const ang     = Math.PI * ((i + 0.5) / nLines);
+      const x1      = cx + R * Math.cos(ang);
+      const y1      = bordoY + R * Math.sin(ang);
+      const x2      = cx + R * Math.cos(Math.PI + ang);
+      const y2      = bordoY + R * Math.sin(Math.PI + ang);
+      const pulse   = rm ? 0.4 : 0.2 + 0.3 * Math.sin(T * 1.3 + i * 0.7);
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.quadraticCurveTo(cx, bordoY, x2, y2);
+      ctx.strokeStyle = `rgba(74,222,128,${pulse})`;
+      ctx.lineWidth   = 1;
+      ctx.stroke();
+    }
+    t2Txt(cx, bordoY + R + 36, 'S_A = −Tr(ρ_A log ρ_A)', '#94a3b8', 9, 'center');
+    return;
+  }
+
+  // ── RT — superficie minimale ───────────────────────────────────────────────
+  if (scene === 'rt') {
+    const bordoY = cy - 65;
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(cx - 110, bordoY);
+    ctx.lineTo(cx + 110, bordoY);
+    ctx.stroke();
+
+    // Region A
+    t2Glow('#0ea5e9', 8);
+    ctx.beginPath();
+    ctx.moveTo(cx - 65, bordoY);
+    ctx.lineTo(cx + 55, bordoY);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 4;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx - 5, bordoY - 14, 'A', '#0ea5e9', 11, 'center');
+
+    // RT minimal surface (arc in bulk)
+    const pulse = rm ? 0 : 0.15 * Math.sin(T * 0.8);
+    t2Glow('#f43f5e', 10);
+    ctx.beginPath();
+    ctx.arc(cx - 5, bordoY, 60 + pulse * 5, 0, Math.PI);
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx - 5 + 65, bordoY + 28, 'γ_A', '#f43f5e', 11, 'left');
+
+    // Area label
+    t2Glow('#4ade80', 6);
+    ctx.beginPath();
+    ctx.arc(cx - 5, bordoY, 60, 0, Math.PI);
+    ctx.fillStyle = 'rgba(74,222,128,0.04)';
+    ctx.fill();
+    t2NoGlow();
+    t2Txt(cx, bordoY + 40, 'S_A = Area(γ_A) / 4G_N', '#94a3b8', 10, 'center');
+    return;
+  }
+
+  // ── SUPERFICIE RT — variazione ─────────────────────────────────────────────
+  if (scene === 'superficie') {
+    const bordoY = cy - 60;
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 2;
+    ctx.beginPath();
+    ctx.moveTo(cx - 100, bordoY);
+    ctx.lineTo(cx + 100, bordoY);
+    ctx.stroke();
+
+    // Region A endpoints
+    const aLeft  = cx - 70;
+    const aRight = cx + 50;
+    ctx.beginPath();
+    ctx.arc(aLeft, bordoY, 4, 0, Math.PI * 2);
+    ctx.arc(aRight, bordoY, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#0ea5e9';
+    ctx.fill();
+
+    // Multiple candidate surfaces (different radii)
+    const candidates = rm ? [65] : [45, 55, 65, 75, 85];
+    const minRadius  = 65;
+    for (const r of candidates) {
+      const isMin  = r === minRadius;
+      const alpha  = isMin ? 1 : 0.25;
+      ctx.beginPath();
+      const midX = (aLeft + aRight) * 0.5;
+      ctx.arc(midX, bordoY, r, 0, Math.PI);
+      ctx.strokeStyle = isMin ? '#f43f5e' : `rgba(167,139,250,${alpha})`;
+      ctx.lineWidth   = isMin ? 2.5 : 1;
+      ctx.stroke();
+    }
+    if (!rm) {
+      // Animated current candidate
+      const rC = 45 + ((T * 0.4) % 1) * 40;
+      const midX = (aLeft + aRight) * 0.5;
+      ctx.beginPath();
+      ctx.arc(midX, bordoY, rC, 0, Math.PI);
+      ctx.strokeStyle = 'rgba(251,191,36,0.5)';
+      ctx.lineWidth   = 1.5;
+      ctx.setLineDash([3, 3]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+    t2Txt(cx, bordoY + 96, 'γ_A (rosso) = area minima tra tutte le candidate', '#94a3b8', 9, 'center');
+    return;
+  }
+
+  // ── VERIFICA — geodetica in AdS₃ ──────────────────────────────────────────
+  if (scene === 'verifica') {
+    // Upper half-plane (schematic AdS₃)
+    const planeY = cy + 50;
+    const planeX0 = cx - 100;
+    const planeX1 = cx + 100;
+    ctx.strokeStyle = '#334155';
+    ctx.lineWidth   = 1;
+    ctx.beginPath();
+    ctx.moveTo(planeX0, planeY);
+    ctx.lineTo(planeX1, planeY);
+    ctx.stroke();
+    t2Txt(cx, planeY + 14, 'bordo (z=0)', '#0ea5e9', 9, 'center');
+
+    // Endpoints u, v
+    const ux = cx - 60;
+    const vx = cx + 60;
+    ctx.beginPath();
+    ctx.arc(ux, planeY, 4, 0, Math.PI * 2);
+    ctx.arc(vx, planeY, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#0ea5e9';
+    ctx.fill();
+    t2Txt(ux, planeY + 18, 'u', '#0ea5e9', 9, 'center');
+    t2Txt(vx, planeY + 18, 'v', '#0ea5e9', 9, 'center');
+
+    // Geodesic (semicircle)
+    const midX = (ux + vx) * 0.5;
+    const geR  = (vx - ux) * 0.5;
+    t2Glow('#f43f5e', 10);
+    ctx.beginPath();
+    ctx.arc(midX, planeY, geR, Math.PI, 0);
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+
+    // Length label
+    t2Txt(midX, planeY - geR - 14, `L = L log(|u-v|/ε)`, '#f43f5e', 9, 'center');
+    t2Txt(cx, planeY - geR - 30, `S_A = (c/3) log(|u-v|/ε)`, '#4ade80', 10, 'center');
+    t2Txt(cx, cy - 50, 'c = 3L/(2G_N) → accordo esatto!', '#fbbf24', 10, 'center');
+    return;
+  }
+
+  // ── GEOM/ENTANGL — connettività geometrica ─────────────────────────────────
+  if (scene === 'geomEntangl') {
+    const leftCX  = cx - W * 0.17;
+    const rightCX = cx + W * 0.17;
+    const entangl = rm ? 0.8 : 0.5 + 0.5 * Math.sin(T * 0.5);
+
+    // Left CFT (L)
+    ctx.beginPath();
+    ctx.arc(leftCX, cy, 30, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(14,165,233,${0.4 + 0.3 * entangl})`;
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    t2Txt(leftCX, cy, 'CFT_L', '#0ea5e9', 9, 'center');
+
+    // Right CFT (R)
+    ctx.beginPath();
+    ctx.arc(rightCX, cy, 30, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(14,165,233,${0.4 + 0.3 * entangl})`;
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+    t2Txt(rightCX, cy, 'CFT_R', '#0ea5e9', 9, 'center');
+
+    // Entanglement link between them
+    if (entangl > 0.3) {
+      t2Glow('#4ade80', 10 * entangl);
+      ctx.beginPath();
+      ctx.moveTo(leftCX + 30, cy);
+      ctx.bezierCurveTo(leftCX + 30, cy - 40 * entangl, rightCX - 30, cy - 40 * entangl, rightCX - 30, cy);
+      ctx.strokeStyle = `rgba(74,222,128,${entangl * 0.8})`;
+      ctx.lineWidth   = 1.5 + entangl * 2;
+      ctx.stroke();
+      t2NoGlow();
+      t2Txt(cx, cy - 40 * entangl - 12, 'wormhole (entangled)', '#4ade80', 8, 'center');
+    } else {
+      t2Txt(cx, cy - 20, '(decorrelati)', '#64748b', 8, 'center');
+    }
+
+    t2Txt(cx, cy + 50, `entanglement: ${(entangl * 100).toFixed(0)}%`, '#94a3b8', 9, 'center');
+    t2Txt(cx, cy + 66, 'entanglement ↔ connettività del bulk', '#94a3b8', 8, 'center');
+    return;
+  }
+
+  // ── QES — area + S_bulk ────────────────────────────────────────────────────
+  if (scene === 'qes') {
+    const bordoY = cy - 60;
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(cx - 110, bordoY);
+    ctx.lineTo(cx + 110, bordoY);
+    ctx.stroke();
+
+    // RT surface
+    t2Glow('#f43f5e', 8);
+    ctx.beginPath();
+    ctx.arc(cx, bordoY, 55, 0, Math.PI);
+    ctx.strokeStyle = '#f43f5e';
+    ctx.lineWidth   = 2;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx + 58, bordoY + 25, 'γ_A', '#f43f5e', 10, 'left');
+
+    // Quantum contribution (dots in bulk)
+    const nParts = 6;
+    for (let i = 0; i < nParts; i++) {
+      const ang  = Math.PI * (i + 0.5) / nParts;
+      const r    = 28;
+      const qx   = cx + r * Math.cos(ang);
+      const qy   = bordoY + r * Math.sin(ang);
+      const pulse = rm ? 0.7 : 0.5 + 0.4 * Math.sin(T * 1.5 + i * 0.8);
+      ctx.beginPath();
+      ctx.arc(qx, qy, 3, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(251,191,36,${pulse})`;
+      ctx.fill();
+    }
+
+    t2Txt(cx, bordoY + 78, 'S_A = Area(γ)/4G_N + S_bulk(γ)', '#94a3b8', 9, 'center');
+    t2Txt(cx, bordoY + 94, '(correzioni quantistiche: punti gialli)', '#fbbf24', 8, 'center');
+    return;
+  }
+
+  // ── MUTUAL INFO — due regioni ──────────────────────────────────────────────
+  if (scene === 'mutualInfo') {
+    const bordoY = cy - 60;
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(cx - 110, bordoY);
+    ctx.lineTo(cx + 110, bordoY);
+    ctx.stroke();
+
+    // Region A (left)
+    t2Glow('#4ade80', 6);
+    ctx.beginPath();
+    ctx.moveTo(cx - 100, bordoY);
+    ctx.lineTo(cx - 40, bordoY);
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth   = 4;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx - 70, bordoY - 14, 'A', '#4ade80', 11, 'center');
+
+    // Region B (right)
+    t2Glow('#fbbf24', 6);
+    ctx.beginPath();
+    ctx.moveTo(cx + 30, bordoY);
+    ctx.lineTo(cx + 100, bordoY);
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth   = 4;
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx + 65, bordoY - 14, 'B', '#fbbf24', 11, 'center');
+
+    // RT surfaces for A, B, A∪B
+    ctx.beginPath();
+    ctx.arc(cx - 70, bordoY, 30, 0, Math.PI);
+    ctx.strokeStyle = '#4ade80';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+
+    ctx.beginPath();
+    ctx.arc(cx + 65, bordoY, 35, 0, Math.PI);
+    ctx.strokeStyle = '#fbbf24';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+
+    t2Glow('#a78bfa', 6);
+    ctx.beginPath();
+    ctx.arc(cx - 5, bordoY, 105, 0.08, Math.PI - 0.08);
+    ctx.strokeStyle = '#a78bfa';
+    ctx.lineWidth   = 1.5;
+    ctx.setLineDash([3, 3]);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    t2NoGlow();
+    t2Txt(cx, bordoY + 110, 'γ_{A∪B}', '#a78bfa', 9, 'center');
+    t2Txt(cx, cy + 60, 'I(A:B) = S_A + S_B − S_{A∪B} ≥ 0', '#94a3b8', 9, 'center');
+    return;
+  }
+
+  // ── MONOGAMIA — tre regioni SSA ────────────────────────────────────────────
+  if (scene === 'monogamia') {
+    // Circle boundary
+    const R = 75;
+    ctx.beginPath();
+    ctx.arc(cx, cy - 10, R, 0, Math.PI * 2);
+    ctx.strokeStyle = '#0ea5e9';
+    ctx.lineWidth   = 1.5;
+    ctx.stroke();
+
+    // Three arcs: A, B, C
+    const defs = [
+      { ang0: -Math.PI / 2, ang1: Math.PI / 6,   col: '#4ade80', label: 'A' },
+      { ang0: Math.PI / 6,  ang1: Math.PI * 5/6, col: '#fbbf24', label: 'B' },
+      { ang0: Math.PI * 5/6, ang1: -Math.PI / 2 + Math.PI * 2, col: '#f43f5e', label: 'C' },
+    ];
+    for (const d of defs) {
+      t2Glow(d.col, 6);
+      ctx.beginPath();
+      ctx.arc(cx, cy - 10, R, d.ang0, d.ang1);
+      ctx.strokeStyle = d.col;
+      ctx.lineWidth   = 5;
+      ctx.stroke();
+      t2NoGlow();
+      const midAng = (d.ang0 + d.ang1) * 0.5;
+      t2Txt(cx + (R + 20) * Math.cos(midAng), cy - 10 + (R + 20) * Math.sin(midAng), d.label, d.col, 11, 'center');
+    }
+
+    // RT surfaces (arcs inside)
+    const innerR = 38;
+    const defsInner = [
+      { ang0: -Math.PI/2, ang1: Math.PI/6, col: '#4ade80' },
+      { ang0: Math.PI/6, ang1: Math.PI*5/6, col: '#fbbf24' },
+      { ang0: Math.PI*5/6, ang1: -Math.PI/2 + Math.PI*2, col: '#f43f5e' },
+    ];
+    for (const d of defsInner) {
+      ctx.beginPath();
+      ctx.moveTo(cx, cy - 10);
+      ctx.arc(cx, cy - 10, innerR, d.ang0, d.ang1);
+      ctx.closePath();
+      ctx.fillStyle = `${d.col}18`;
+      ctx.fill();
+    }
+
+    t2Txt(cx, cy + 80, 'SSA: S_{AB}+S_{BC} ≥ S_B+S_{ABC}', '#94a3b8', 9, 'center');
+    return;
+  }
+};
+
+t2Init();
+</script>
+</body>
+</html>
