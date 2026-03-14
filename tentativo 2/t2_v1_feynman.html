@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagrammi di Feynman | Tentativo 2</title>
+  <link rel="stylesheet" href="t2_style.css">
+  <style>
+#panel {
+  background: rgba(0, 5, 15, 0.97);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note {
+  color: #64748b;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  padding: 12px 14px;
+  border-top: 1px solid rgba(14, 165, 233, 0.15);
+  margin-top: 16px;
+}
+  </style>
+</head>
+<body>
+
+<canvas id="canvas"></canvas>
+
+<!-- Top bar -->
+<div id="ui">
+  <span id="ui-title">DivulgAzione · Feynman</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">10 fasi</span>
+</div>
+
+<!-- Left panel -->
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — PROPAGATORI</div>
+    <div class="phase-title">Propagatori: particelle virtuali</div>
+    <div class="phase-body">
+      <p>Il <span class="hl">propagatore</span> è la "linea" che rappresenta ogni particella virtuale all'interno di un diagramma di Feynman. Non è una particella reale: la sua massa può essere fuori dalla <span class="am">shell di massa</span> (off-shell), ovvero k² ≠ m².</p>
+      <p><span class="gr">Propagatore del fotone:</span></p>
+      <code class="formula">D_μν(k) = −i g_μν / k²</code>
+      <p><span class="gr">Propagatore del fermione (elettrone):</span></p>
+      <code class="formula">S_F(p) = i(p̸ + m) / (p² − m² + iε)</code>
+      <p><span class="gr">Propagatore dello scalare (bosone di Higgs):</span></p>
+      <code class="formula">Δ(k) = i / (k² − m² + iε)</code>
+      <p>Il termine <span class="vi">iε</span> è la <span class="hl">prescrizione di Feynman</span>: sposta i poli dell'integrale fuori dall'asse reale, garantendo la causalità. Il propagatore completo è la funzione di Green del vuoto:</p>
+      <code class="formula">⟨0|T{φ(x)φ(y)}|0⟩ = ∫ d⁴k/(2π)⁴ · i/(k²−m²+iε) · e^{−ik(x−y)}</code>
+      <div class="note">▸ Le tre linee mostrano i tre tipi di propagatore: la linea continua con freccia è il fermione, la linea ondulata è il fotone, la linea tratteggiata è lo scalare/bosone massiccio. Il punto luminoso che scorre lungo ciascuna linea rappresenta la particella virtuale che "si propaga". L'etichetta rossa ricorda che k² ≠ m² (off-shell).</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — VERTICE QED</div>
+    <div class="phase-title">Il vertice fondamentale QED: elettrone-fotone</div>
+    <div class="phase-body">
+      <p>Il <span class="hl">vertice QED</span> è il mattone fondamentale dell'elettrodinamica quantistica: un elettrone (o positrone) emette o assorbe un fotone. È l'unico tipo di vertice in QED.</p>
+      <p>Il fattore di vertice è:</p>
+      <code class="formula">vertice = −ieγ^μ</code>
+      <p>dove <span class="am">e</span> è la carica dell'elettrone e <span class="am">γ^μ</span> sono le matrici di Dirac (4×4). Ogni vertice inserisce un fattore della <span class="gr">costante di struttura fine</span>:</p>
+      <code class="formula">α = e²/(4π) ≈ 1/137</code>
+      <p>La QED è una teoria perturbativa: ogni ordine dell'espansione aggiunge un vertice e un fattore α. Poiché α ≪ 1, la serie converge rapidamente. In ogni vertice vale la <span class="vi">conservazione del quadrimomento</span>: la somma dei quadrimomenti in ingresso eguaglia quella in uscita.</p>
+      <div class="note">▸ Il classico vertice a tre gambe: due linee fermioniche (elettroni, frecce blu) e una linea fotonica ondulata (gialla). Il punto luminoso al centro è il vertice stesso. La formula −ieγ^μ lampeggia vicino al vertice. Le frecce animate scorrono lungo i propagatori.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — SCATTERING COMPTON</div>
+    <div class="phase-title">Scattering Compton: e⁻γ → e⁻γ</div>
+    <div class="phase-body">
+      <p>Lo <span class="hl">scattering Compton</span> è il processo in cui un fotone collide con un elettrone e viene diffuso con energia e direzione diverse. Al prim'ordine in QED esistono <span class="am">due diagrammi</span> (canale s e canale u) che devono essere sommati.</p>
+      <p>L'ampiezza totale è:</p>
+      <code class="formula">M = (−ie)² ū(p') [γ^ν (p̸+k̸+m)/(s−m²) γ^μ + γ^μ (p̸−k̸'+m)/(u−m²) γ^ν] u(p) · ε*_ν ε_μ</code>
+      <p>Le variabili di <span class="gr">Mandelstam</span> descrivono la cinematica del processo a 2→2:</p>
+      <code class="formula">s = (p+k)²     t = (p−p')²     u = (p−k')²
+s + t + u = 2m²</code>
+      <p>Da questo calcolo emerge la <span class="vi">formula di Klein-Nishina</span>, che descrive la sezione d'urto differenziale dello scattering Compton e fu la prima predizione quantistica verificata sperimentalmente.</p>
+      <div class="note">▸ Due diagrammi affiancati: nel canale s l'elettrone virtuale propaga in avanti (s-channel), nel canale u i vertici sono invertiti (u-channel). I punti luminosi percorrono i propagatori interni. Le linee ondulate sono i fotoni in entrata e uscita.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — MØLLER &amp; BHABHA</div>
+    <div class="phase-title">e⁻e⁻ → e⁻e⁻ (Møller) e e⁻e⁺ → e⁻e⁺ (Bhabha)</div>
+    <div class="phase-body">
+      <p>Lo <span class="hl">scattering di Møller</span> (e⁻e⁻ → e⁻e⁻) coinvolge due elettroni identici che si scambiano un fotone virtuale. Per il <span class="am">principio di Pauli</span> i fermioni identici sono antisimmetrici, quindi esistono due diagrammi con segno relativo −1:</p>
+      <code class="formula">M_Møller = M_t − M_u     (antisimmetria fermionica)</code>
+      <p>Lo <span class="hl">scattering di Bhabha</span> (e⁻e⁺ → e⁻e⁺) coinvolge elettrone e positrone. Qui si sommano:</p>
+      <ul>
+        <li><span class="gr">Canale t</span>: scambio di un fotone virtuale (come Møller)</li>
+        <li><span class="gr">Canale s</span>: annichilazione e⁻e⁺ → γ* → e⁻e⁺</li>
+      </ul>
+      <code class="formula">M_Bhabha = M_t + M_s     (no antisimmetria: e⁻ ≠ e⁺)</code>
+      <p>Il segno è <span class="vi">+</span> (non −) perché e⁻ e e⁺ sono particelle distinguibili. Il canale s del Bhabha è il processo di annichilazione/creazione che avviene negli <span class="am">acceleratori e⁺e⁻</span> come LEP.</p>
+      <div class="note">▸ A sinistra il diagramma di Møller (scambio fotone γ* tra due elettroni paralleli). A destra il diagramma di Bhabha canale s (e⁻e⁺ si annichilano in γ* e riemergono come e⁻e⁺). La freccia invertita del positrone indica il flusso di antiparticella.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — LOOP QED</div>
+    <div class="phase-title">Correzioni quantistiche: vacuum polarization e self-energy</div>
+    <div class="phase-body">
+      <p>I <span class="hl">diagrammi a loop</span> rappresentano le correzioni quantistiche al prim'ordine in α. Tre tipi principali:</p>
+      <p><span class="gr">1. Vacuum polarization (polarizzazione del vuoto):</span> il fotone virtuale "fluttua" in una coppia e⁻e⁺ e si ricongiunge. Rinormalizza la carica dell'elettrone — la costante di struttura fine dipende dall'energia:</p>
+      <code class="formula">α(M_Z) ≈ 1/128     (a 91 GeV)     α(0) ≈ 1/137</code>
+      <p><span class="gr">2. Electron self-energy:</span> l'elettrone emette e riassorbe un fotone virtuale. Contribuisce alla massa con una divergenza logaritmica → rinormalizzazione di m e del campo.</p>
+      <p><span class="gr">3. Vertex correction:</span> un fotone virtuale collega le due linee fermioniche al vertice. Contribuisce al <span class="vi">momento magnetico anomalo</span>:</p>
+      <code class="formula">a_e = (g−2)/2 = α/(2π) + O(α²) ≈ 0.00116</code>
+      <p>L'accordo tra teoria e misura è di <span class="am">12 cifre decimali</span> — la predizione più precisa della fisica.</p>
+      <div class="note">▸ Tre sotto-diagrammi: (1) linea fotonica con loop ellittico di fermioni al centro; (2) linea fermionica con arco di fotone sopra; (3) vertice QED con fotone virtuale che forma un loop. Ogni loop è percorso da un punto luminoso rosso in senso orario.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — VERTICI QCD</div>
+    <div class="phase-title">QCD: vertici a tre e quattro gluoni</div>
+    <div class="phase-body">
+      <p>La <span class="hl">Cromodinamica Quantistica</span> (QCD) è la teoria delle forze forti tra quark. A differenza di QED (un solo tipo di vertice), QCD ha <span class="am">tre tipi di vertice</span>:</p>
+      <p><span class="gr">1. Vertice quark-gluone:</span></p>
+      <code class="formula">g_s T^a_ij γ^μ</code>
+      <p><span class="gr">2. Vertice a tre gluoni</span> (non esiste in QED!):</p>
+      <code class="formula">g_s f^{abc} [g^{μν}(k−p)^ρ + ciclici]</code>
+      <p><span class="gr">3. Vertice a quattro gluoni</span> (non esiste in QED!):</p>
+      <code class="formula">g_s² f^{abe}f^{cde} [g^{μρ}g^{νσ} − g^{μσ}g^{νρ}] + ciclici</code>
+      <p>I vertici a 3 e 4 gluoni esistono perché i gluoni <span class="vi">portano carica di colore</span> (a differenza dei fotoni). Questo causa il <span class="hl">confinamento</span> (α_s ≈ 1 a basse energie) e la <span class="am">libertà asintotica</span> (α_s → 0 ad alte energie — Nobel 2004).</p>
+      <div class="note">▸ Tre vertici animati: (1) quark (linea solida colorata) + gluone (linea spiralata arancione); (2) stella a tre punte con tre gluoni; (3) croce con quattro gluoni. I colori dei quark — rosso, verde, blu — illustrano la carica di colore.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-7">
+    <div class="phase-tag">FASE 07 — FORZA DEBOLE</div>
+    <div class="phase-title">Decadimento beta: il bosone W come mediatore</div>
+    <div class="phase-body">
+      <p>Il <span class="hl">decadimento beta</span> a livello di quark: un quark d si trasforma in quark u emettendo un bosone W⁻ che poi decade in elettrone e antineutrino:</p>
+      <code class="formula">d → u + W⁻ → u + e⁻ + ν̄_e</code>
+      <p>Il bosone W (massa 80 GeV) è il mediatore della <span class="am">forza debole</span>. Il fattore di vertice è:</p>
+      <code class="formula">g/√2 · γ^μ · (1−γ⁵)/2</code>
+      <p>Il proiettore <span class="gr">(1−γ⁵)/2</span> seleziona solo gli stati <span class="hl">left-handed</span> — la forza debole <span class="vi">viola la parità P</span> (Lee e Yang 1956, Wu 1957)! La corrente è di tipo V−A:</p>
+      <code class="formula">J^μ_W = ū γ^μ (1−γ⁵)/2 d</code>
+      <p>La massa del W emerge dal meccanismo di Higgs: m_W = gv/2 ≈ 80 GeV, dove v = 246 GeV. Le transizioni tra quark di generazioni diverse avvengono tramite la <span class="am">matrice CKM</span>.</p>
+      <div class="note">▸ Diagramma del decadimento beta: quark d (linea rossa) emette un W⁻ (linea viola ondulata) e diventa quark u. Il W⁻ decade in e⁻ e ν̄_e. Il bosone W palpita con un bagliore viola. Ogni linea è percorsa da un punto luminoso animato.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-8">
+    <div class="phase-tag">FASE 08 — BOSONE DI HIGGS</div>
+    <div class="phase-title">Il bosone di Higgs e i suoi accoppiamenti</div>
+    <div class="phase-body">
+      <p>Il <span class="hl">bosone di Higgs</span> (H, 125 GeV) si accoppia a <span class="am">tutte le particelle massive</span> con intensità proporzionale alla loro massa. I principali accoppiamenti:</p>
+      <p><span class="gr">1. Accoppiamento di Yukawa H-f-f̄:</span></p>
+      <code class="formula">y_f = m_f √2 / v     (v = 246 GeV)
+y_top ≈ 1  ·  y_bottom ≈ 0.02  ·  y_tau ≈ 0.01</code>
+      <p><span class="gr">2. Accoppiamento H-W-W e H-Z-Z:</span></p>
+      <code class="formula">g_{HWW} = g²v/2 · g^{μν}     g_{HZZ} = g²v/(2cos²θ_W)</code>
+      <p><span class="gr">3. Auto-accoppiamento H-H-H:</span> determina la forma del potenziale a cappello messicano:</p>
+      <code class="formula">V(φ) = −μ²|φ|² + λ|φ|⁴     λ_{HHH} = λv</code>
+      <p>La <span class="vi">produzione principale al LHC</span> avviene tramite <span class="hl">gluon fusion</span> (ggH): un loop triangolare di quark top media l'accoppiamento gg→H.</p>
+      <div class="note">▸ Centro: bosone di Higgs dorato pulsante. Raggi animati verso le particelle che si accoppiano (t, W, Z, b, τ) con spessore proporzionale all'accoppiamento. Un piccolo triangolo di quark top con gluoni entranti illustra la produzione al LHC.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-9">
+    <div class="phase-tag">FASE 09 — RINORMALIZZAZIONE</div>
+    <div class="phase-title">Divergenze UV e rinormalizzazione</div>
+    <div class="phase-body">
+      <p>I diagrammi a loop contengono <span class="hl">integrali divergenti</span> (ultravioletti): quando l'impulso interno k → ∞, l'integrale diverge. Esempio: self-energy del fotone a un loop:</p>
+      <code class="formula">Π(q²) ~ ∫ d⁴k / k⁴ → divergente (log)</code>
+      <p>Due passi per gestire le divergenze:</p>
+      <p><span class="gr">1. Regolarizzazione:</span> introduce un cutoff Λ o usa la <span class="am">regolarizzazione dimensionale</span> (d = 4−ε). In d dimensioni:</p>
+      <code class="formula">∫ d^dk/(k²)^n = iπ^{d/2}/Γ(n) · Γ(n−d/2)/(q²)^{n−d/2}</code>
+      <p><span class="gr">2. Rinormalizzazione:</span> riassorbe le divergenze in una ridefinizione dei parametri:</p>
+      <code class="formula">m_bare = m_ren + δm
+e_bare = Z_e · e_ren     Z_e = 1 + O(α)</code>
+      <p>La QED è <span class="hl">rinormalizzabile</span>: bastano un numero finito di controtermine. Il <span class="vi">gruppo di rinormalizzazione</span> (RG) descrive come i parametri cambiano con la scala energetica μ — la "corsa" delle costanti di accoppiamento.</p>
+      <div class="note">▸ Un loop divergente pulsante (rosso intenso) + freccia Λ→∞. Il controtermina appare e "cancella" la divergenza con un flash. Il grafico RG mostra α(μ) crescente in QED e α_s(μ) decrescente in QCD (libertà asintotica).</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-10">
+    <div class="phase-tag">FASE 10 — SINTESI</div>
+    <div class="phase-title">Le regole di Feynman: dalla geometria all'ampiezza</div>
+    <div class="phase-body">
+      <p>Le <span class="hl">regole di Feynman</span> sono un algoritmo per calcolare qualsiasi ampiezza di transizione in QFT:</p>
+      <ol>
+        <li>Disegna tutti i diagrammi all'<span class="am">ordine perturbativo</span> desiderato</li>
+        <li>Per ogni <span class="gr">propagatore interno</span>: inserisci il fattore cinematico corrispondente (S_F, D_μν, Δ…)</li>
+        <li>Per ogni <span class="gr">vertice</span>: inserisci il fattore di vertice della teoria (−ieγ^μ, g_s T^a γ^μ…)</li>
+        <li>Per ogni <span class="gr">linea esterna</span>: inserisci u(p), ū(p), ε^μ(k) ecc.</li>
+        <li><span class="hl">Integra</span> su tutti i quadrimomenti interni: ∫ d⁴k/(2π)⁴</li>
+        <li>Moltiplica per il <span class="vi">fattore simmetrico</span> del diagramma</li>
+        <li>Fattore (−1)^F per ogni <span class="am">loop fermionico chiuso</span></li>
+      </ol>
+      <p>L'ampiezza di transizione (matrice S):</p>
+      <code class="formula">⟨f|S|i⟩ = δ_{fi} + i(2π)⁴ δ⁴(Σp) M</code>
+      <p>La sezione d'urto differenziale:</p>
+      <code class="formula">dσ = |M|² / (4·p₁·p₂·|v₁−v₂|) · dΦ_n</code>
+      <div class="note">▸ Collage animato: propagatore fermionico (alto sinistra), propagatore fotonico (alto destra), vertice QED centrale con massimo glow, loop (basso sinistra), vertice QCD a tre gluoni (basso destra). Testo centrale pulsante: M = Σ_i iM_i.</div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Bottom navigation -->
+<div id="bottom">
+  <button class="btn" onclick="goPhase(1)">01 · Prop.</button>
+  <button class="btn" onclick="goPhase(2)">02 · QED</button>
+  <button class="btn" onclick="goPhase(3)">03 · Compton</button>
+  <button class="btn" onclick="goPhase(4)">04 · Møller</button>
+  <button class="btn" onclick="goPhase(5)">05 · Loop</button>
+  <button class="btn" onclick="goPhase(6)">06 · QCD</button>
+  <button class="btn" onclick="goPhase(7)">07 · Beta</button>
+  <button class="btn" onclick="goPhase(8)">08 · Higgs</button>
+  <button class="btn" onclick="goPhase(9)">09 · Rinorm.</button>
+  <button class="btn" onclick="goPhase(10)">10 · Sintesi</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+
+<script src="t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: 'Propagatori',      desc: 'FASE 01 — D_μν(k)=−ig_μν/k² · S_F(p)=i(p̸+m)/(p²−m²+iε) · particelle virtuali off-shell', scene: 'propagators'    },
+  { name: 'Vertice QED',      desc: 'FASE 02 — −ieγ^μ · α=e²/4π≈1/137 · conservazione del quadrimomento al vertice',             scene: 'qed_vertex'     },
+  { name: 'Compton',          desc: 'FASE 03 — e⁻γ→e⁻γ: canale s + canale u · Klein-Nishina · variabili di Mandelstam',          scene: 'compton'        },
+  { name: 'Møller & Bhabha',  desc: 'FASE 04 — Møller e⁻e⁻: M_t−M_u · Bhabha e⁻e⁺: M_t+M_s · antisimmetria fermionica',        scene: 'moller_bhabha'  },
+  { name: 'Loop QED',         desc: 'FASE 05 — vacuum polarization Π(q²) · self-energy Σ(p̸) · a_e=α/2π≈0.00116 · 12 cifre',     scene: 'qed_loops'      },
+  { name: 'Vertici QCD',      desc: 'FASE 06 — g_s T^a γ^μ · vertice 3-gluoni f^{abc} · vertice 4-gluoni · confinamento',         scene: 'qcd_vertices'   },
+  { name: 'Forza Debole',     desc: 'FASE 07 — d→u+W⁻→u+e⁻+ν̄_e · g/√2·(1−γ⁵)/2 · violazione di parità · matrice CKM',         scene: 'weak_decay'     },
+  { name: 'Higgs',            desc: 'FASE 08 — y_f=m_f√2/v · accoppiamento HWW · ggH loop top · V(φ)=−μ²|φ|²+λ|φ|⁴',           scene: 'higgs'          },
+  { name: 'Rinormalizzazione',desc: 'FASE 09 — divergenze UV · regolarizzazione dim. d=4−ε · m_bare=m_ren+δm · flusso RG',       scene: 'renormalization'},
+  { name: 'Sintesi',          desc: 'FASE 10 — regole di Feynman: propagatori+vertici+loop · M=Σ_i iM_i · dσ∝|M|²',             scene: 'synthesis'      },
+];
+
+window.t2Draw = function(T, phaseIdx, ctx, W, H) {
+  const cx = t2AnimCX();
+  const cy = t2AnimCY();
+  const rm = t2ReducedMotion();
+  const scene = window.T2_PHASES[phaseIdx].scene;
+
+  // ── Drawing helpers ────────────────────────────────────────────────────────
+
+  function drawWavy(x0, y0, x1, y1, col, amplitude) {
+    amplitude = amplitude || 9;
+    const dx = x1 - x0, dy = y1 - y0;
+    const len = Math.sqrt(dx * dx + dy * dy);
+    const steps = 80;
+    ctx.save();
+    ctx.translate(x0, y0);
+    ctx.rotate(Math.atan2(dy, dx));
+    ctx.beginPath();
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const px = t * len;
+      const py = amplitude * Math.sin(t * Math.PI * 8 + (rm ? 0 : T * 3));
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 2;
+    t2Glow(col, 8);
+    ctx.stroke();
+    t2NoGlow();
+    ctx.restore();
+  }
+
+  function drawGluon(x0, y0, x1, y1, col) {
+    col = col || '#f97316';
+    const dx = x1 - x0, dy = y1 - y0;
+    const len = Math.sqrt(dx * dx + dy * dy);
+    const steps = 120;
+    ctx.save();
+    ctx.translate(x0, y0);
+    ctx.rotate(Math.atan2(dy, dx));
+    ctx.beginPath();
+    for (let i = 0; i <= steps; i++) {
+      const t = i / steps;
+      const px = t * len;
+      const py = 10 * Math.sin(t * Math.PI * 10 + (rm ? 0 : T * 2)) * Math.sin(t * Math.PI);
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 2;
+    t2Glow(col, 10);
+    ctx.stroke();
+    t2NoGlow();
+    ctx.restore();
+  }
+
+  function drawFermion(x0, y0, x1, y1, col) {
+    col = col || '#60a5fa';
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x1, y1);
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 2;
+    t2Glow(col, 6);
+    ctx.stroke();
+    t2NoGlow();
+    // arrowhead at midpoint
+    const midX = (x0 + x1) / 2, midY = (y0 + y1) / 2;
+    const angle = Math.atan2(y1 - y0, x1 - x0);
+    ctx.save();
+    ctx.translate(midX, midY);
+    ctx.rotate(angle);
+    ctx.beginPath();
+    ctx.moveTo(0, 0);
+    ctx.lineTo(-10, -5);
+    ctx.lineTo(-10, 5);
+    ctx.closePath();
+    ctx.fillStyle = col;
+    ctx.fill();
+    ctx.restore();
+    // travelling dot
+    if (!rm) {
+      const prog = (T * 0.4) % 1;
+      const px = x0 + prog * (x1 - x0);
+      const py = y0 + prog * (y1 - y0);
+      t2Glow(col, 14);
+      ctx.beginPath();
+      ctx.arc(px, py, 4, 0, Math.PI * 2);
+      ctx.fillStyle = col;
+      ctx.fill();
+      t2NoGlow();
+    }
+  }
+
+  function drawDashed(x0, y0, x1, y1, col) {
+    col = col || '#4ade80';
+    ctx.save();
+    ctx.setLineDash([8, 6]);
+    ctx.beginPath();
+    ctx.moveTo(x0, y0);
+    ctx.lineTo(x1, y1);
+    ctx.strokeStyle = col;
+    ctx.lineWidth = 2;
+    t2Glow(col, 6);
+    ctx.stroke();
+    t2NoGlow();
+    ctx.setLineDash([]);
+    ctx.restore();
+    if (!rm) {
+      const prog = (T * 0.35) % 1;
+      const px = x0 + prog * (x1 - x0);
+      const py = y0 + prog * (y1 - y0);
+      t2Glow(col, 12);
+      ctx.beginPath();
+      ctx.arc(px, py, 4, 0, Math.PI * 2);
+      ctx.fillStyle = col;
+      ctx.fill();
+      t2NoGlow();
+    }
+  }
+
+  function drawVertex(x, y, col) {
+    col = col || '#ffffff';
+    t2Glow(col, 18);
+    ctx.beginPath();
+    ctx.arc(x, y, 5, 0, Math.PI * 2);
+    ctx.fillStyle = col;
+    ctx.fill();
+    t2NoGlow();
+  }
+
+  function wavyDot(x0, y0, x1, y1, amplitude) {
+    // animated dot along wavy path
+    if (rm) return;
+    amplitude = amplitude || 9;
+    const prog = (T * 0.38) % 1;
+    const dx = x1 - x0, dy = y1 - y0;
+    const len = Math.sqrt(dx * dx + dy * dy);
+    const angle = Math.atan2(dy, dx);
+    const px_local = prog * len;
+    const py_local = amplitude * Math.sin(prog * Math.PI * 8 + T * 3);
+    const px = x0 + px_local * Math.cos(angle) - py_local * Math.sin(angle);
+    const py = y0 + px_local * Math.sin(angle) + py_local * Math.cos(angle);
+    t2Glow('#fde68a', 14);
+    ctx.beginPath();
+    ctx.arc(px, py, 4, 0, Math.PI * 2);
+    ctx.fillStyle = '#fde68a';
+    ctx.fill();
+    t2NoGlow();
+  }
+
+  // ── SCENE: propagators ─────────────────────────────────────────────────────
+  if (scene === 'propagators') {
+    const lx0 = cx - 120, lx1 = cx + 120;
+    const y1 = cy - 70, y2 = cy, y3 = cy + 70;
+
+    // Fermion
+    drawFermion(lx0, y1, lx1, y1, '#60a5fa');
+    t2Txt(lx1 + 12, y1, 'S_F(p) = i(p̸+m)/(p²−m²+iε)', '#60a5fa', 10, 'left', 'Courier New,monospace');
+    t2Txt(lx0 - 8, y1, 'e⁻', '#60a5fa', 11, 'right');
+
+    // Photon (wavy)
+    drawWavy(lx0, y2, lx1, y2, '#fde68a', 9);
+    wavyDot(lx0, y2, lx1, y2, 9);
+    t2Txt(lx1 + 12, y2, 'D_μν(k) = −ig_μν/k²', '#fde68a', 10, 'left', 'Courier New,monospace');
+    t2Txt(lx0 - 8, y2, 'γ', '#fde68a', 11, 'right');
+
+    // Scalar (dashed)
+    drawDashed(lx0, y3, lx1, y3, '#4ade80');
+    t2Txt(lx1 + 12, y3, 'Δ(k) = i/(k²−m²+iε)', '#4ade80', 10, 'left', 'Courier New,monospace');
+    t2Txt(lx0 - 8, y3, 'H', '#4ade80', 11, 'right');
+
+    // off-shell label
+    t2Txt(cx, cy + 120, 'k² ≠ m²   (off-shell)', '#ef4444', 12, 'center', 'Courier New,monospace');
+  }
+
+  // ── SCENE: qed_vertex ─────────────────────────────────────────────────────
+  else if (scene === 'qed_vertex') {
+    const vx = cx, vy = cy;
+    const osc = rm ? 0 : Math.sin(T * 0.6) * 5 * Math.PI / 180;
+
+    // Incoming electron (bottom-left)
+    const inAngle = Math.PI + Math.PI / 4 + osc;
+    const inLen = 110;
+    const ex0 = vx + inLen * Math.cos(inAngle), ey0 = vy + inLen * Math.sin(inAngle);
+    drawFermion(ex0, ey0, vx, vy, '#60a5fa');
+    t2Txt(ex0 - 10, ey0 + 14, 'e⁻', '#60a5fa', 12, 'center');
+
+    // Outgoing electron (top-left)
+    const outAngle = -Math.PI * 3 / 4 + osc;
+    const ex1 = vx + inLen * Math.cos(outAngle), ey1 = vy + inLen * Math.sin(outAngle);
+    drawFermion(vx, vy, ex1, ey1, '#60a5fa');
+    t2Txt(ex1 - 10, ey1 - 14, 'e⁻', '#60a5fa', 12, 'center');
+
+    // Photon (right)
+    const phLen = 110;
+    const ph1x = vx + phLen, ph1y = vy;
+    drawWavy(vx, vy, ph1x, ph1y, '#fde68a', 9);
+    wavyDot(vx, vy, ph1x, ph1y, 9);
+    t2Txt(ph1x + 12, ph1y, 'γ', '#fde68a', 13, 'left');
+
+    // Vertex dot
+    drawVertex(vx, vy, '#ffffff');
+
+    // Blinking formula
+    const alpha = rm ? 0.85 : 0.6 + 0.4 * Math.sin(T * 2);
+    t2Txt(vx, vy + 28, '−ieγ^μ', `rgba(251,191,36,${alpha.toFixed(2)})`, 14, 'center', 'Courier New,monospace');
+    t2Txt(cx, cy + H * 0.27, 'α = e²/(4π) ≈ 1/137   ·   conservazione del quadrimomento', 'rgba(148,163,184,0.5)', 11, 'center', 'Courier New,monospace');
+  }
+
+  // ── SCENE: compton ─────────────────────────────────────────────────────────
+  else if (scene === 'compton') {
+    const gapX = W > 700 ? 160 : 130;
+    const cx1 = cx - gapX / 2, cx2 = cx + gapX / 2;
+    const ofs = 80;
+
+    // Helper: draw one Compton diagram
+    function comptonDiag(ox, label) {
+      const v1x = ox, v1y = cy - 40, v2x = ox, v2y = cy + 40;
+      // Incoming electron (lower-left → v2)
+      drawFermion(ox - ofs, v2y + ofs * 0.6, v2x, v2y, '#60a5fa');
+      // Outgoing electron (v1 → upper-left)
+      drawFermion(v1x, v1y, ox - ofs, v1y - ofs * 0.6, '#60a5fa');
+      // Internal propagator (v2 → v1)
+      drawFermion(v2x, v2y, v1x, v1y, '#60a5fa');
+      // Incoming photon (lower-right → v2)
+      drawWavy(ox + ofs, v2y + ofs * 0.6, v2x, v2y, '#fde68a', 8);
+      wavyDot(ox + ofs, v2y + ofs * 0.6, v2x, v2y, 8);
+      // Outgoing photon (v1 → upper-right)
+      drawWavy(v1x, v1y, ox + ofs, v1y - ofs * 0.6, '#fde68a', 8);
+      wavyDot(v1x, v1y, ox + ofs, v1y - ofs * 0.6, 8);
+      drawVertex(v1x, v1y, '#ffffff');
+      drawVertex(v2x, v2y, '#ffffff');
+      t2Txt(ox, cy + 80, label, '#94a3b8', 11, 'center', 'Courier New,monospace');
+    }
+
+    comptonDiag(cx1, 's-channel');
+    comptonDiag(cx2, 'u-channel');
+
+    t2Txt(cx, cy + H * 0.27, 's=(p+k)\u00b2  t=(p\u2212p\u2032)\u00b2  u=(p\u2212k\u2032)\u00b2  \u00b7  s+t+u = 2m\u00b2', 'rgba(148,163,184,0.45)', 10, 'center', 'Courier New,monospace');
+    t2Txt(cx, cy + H * 0.27 + 16, 'M = (\u2212ie)\u00b2 \u016b(p\u2032)[\u03b3^\u03bd(p\u0338+k\u0338+m)\u03b3^\u03bc/(s\u2212m\u00b2) + ...]u(p)\u00b7\u03b5*_\u03bd \u03b5_\u03bc', 'rgba(148,163,184,0.35)', 9, 'center', 'Courier New,monospace');
+  }
+
+  // ── SCENE: moller_bhabha ──────────────────────────────────────────────────
+  else if (scene === 'moller_bhabha') {
+    const halfW = W > 700 ? 150 : 120;
+
+    // Møller (left half): two electrons exchanging a photon
+    const mx = cx - halfW / 2;
+    const mTop = cy - 65, mBot = cy + 65;
+    // electrons coming from left
+    drawFermion(mx - 80, mTop - 20, mx, mTop, '#60a5fa');
+    drawFermion(mx, mBot, mx - 80, mBot + 20, '#60a5fa');
+    // electrons going right
+    drawFermion(mx, mTop, mx + 80, mTop - 20, '#60a5fa');
+    drawFermion(mx + 80, mBot + 20, mx, mBot, '#60a5fa');
+    // virtual photon (vertical)
+    drawWavy(mx, mTop, mx, mBot, '#fde68a', 7);
+    wavyDot(mx, mTop, mx, mBot, 7);
+    drawVertex(mx, mTop, '#ffffff');
+    drawVertex(mx, mBot, '#ffffff');
+    t2Txt(mx - 88, mTop - 20, 'e⁻', '#60a5fa', 11, 'right');
+    t2Txt(mx - 88, mBot + 20, 'e⁻', '#60a5fa', 11, 'right');
+    t2Txt(mx + 88, mTop - 20, 'e⁻', '#60a5fa', 11, 'left');
+    t2Txt(mx + 88, mBot + 20, 'e⁻', '#60a5fa', 11, 'left');
+    t2Txt(mx + 12, cy, 'γ*', '#fde68a', 10, 'left');
+    t2Txt(mx, cy + 88, 'Møller  M_t−M_u', '#94a3b8', 10, 'center', 'Courier New,monospace');
+
+    // Bhabha s-channel (right half): e⁻e⁺ → γ* → e⁻e⁺
+    const bx = cx + halfW / 2;
+    // e⁻ comes from top-left, e⁺ from bottom-left
+    drawFermion(bx - 80, cy - 55, bx, cy, '#60a5fa');
+    // positron: reversed arrow
+    drawFermion(bx, cy, bx - 80, cy + 55, '#f472b6');
+    // outgoing e⁻ top-right
+    drawFermion(bx, cy, bx + 80, cy - 55, '#60a5fa');
+    // outgoing e⁺ bottom-right
+    drawFermion(bx + 80, cy + 55, bx, cy, '#f472b6');
+    // virtual photon (propagator at vertex — show as small wavy blob)
+    const vph_len = 40;
+    drawWavy(bx, cy, bx + vph_len, cy, '#fde68a', 7);
+    wavyDot(bx, cy, bx + vph_len, cy, 7);
+    drawVertex(bx, cy, '#ffffff');
+    t2Txt(bx - 88, cy - 55, 'e⁻', '#60a5fa', 11, 'right');
+    t2Txt(bx - 88, cy + 55, 'e⁺', '#f472b6', 11, 'right');
+    t2Txt(bx + 88, cy - 55, 'e⁻', '#60a5fa', 11, 'left');
+    t2Txt(bx + 88, cy + 55, 'e⁺', '#f472b6', 11, 'left');
+    t2Txt(bx, cy + 88, 'Bhabha  M_t+M_s', '#94a3b8', 10, 'center', 'Courier New,monospace');
+  }
+
+  // ── SCENE: qed_loops ──────────────────────────────────────────────────────
+  else if (scene === 'qed_loops') {
+    const gap = H > 500 ? 100 : 80;
+    const y1 = cy - gap, y2 = cy, y3 = cy + gap;
+    const lx0 = cx - 130, lx1 = cx + 130;
+    const lr = 36; // loop radius
+
+    // 1. Vacuum polarization: photon with fermion loop
+    drawWavy(lx0, y1, cx - lr - 8, y1, '#fde68a', 8);
+    drawWavy(cx + lr + 8, y1, lx1, y1, '#fde68a', 8);
+    // fermion loop
+    t2Glow('#60a5fa', 10);
+    ctx.beginPath();
+    ctx.ellipse(cx, y1, lr, lr * 0.65, 0, 0, Math.PI * 2);
+    ctx.strokeStyle = '#60a5fa';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    t2NoGlow();
+    // loop dot
+    if (!rm) {
+      const la = T * 1.8;
+      const ldx = cx + lr * Math.cos(la), ldy = y1 + lr * 0.65 * Math.sin(la);
+      t2Glow('#ef4444', 12);
+      ctx.beginPath(); ctx.arc(ldx, ldy, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#ef4444'; ctx.fill();
+      t2NoGlow();
+    }
+    t2Txt(lx1 + 10, y1, 'Π(q²)', '#60a5fa', 11, 'left', 'Courier New,monospace');
+    t2Txt(lx0 - 10, y1, 'γ', '#fde68a', 11, 'right');
+
+    // 2. Electron self-energy: fermion with photon arc above
+    drawFermion(lx0, y2, lx1, y2, '#60a5fa');
+    if (!rm) {
+      const arcPhase = T * 2;
+      ctx.beginPath();
+      ctx.arc(cx, y2, lr * 1.1, -Math.PI, 0, false);
+      ctx.strokeStyle = '#fde68a';
+      ctx.lineWidth = 2;
+      t2Glow('#fde68a', 8);
+      ctx.stroke();
+      t2NoGlow();
+      // arc dot
+      const arcA = -Math.PI + (((T * 0.5) % 1) * Math.PI);
+      const adx = cx + lr * 1.1 * Math.cos(arcA), ady = y2 + lr * 1.1 * Math.sin(arcA);
+      t2Glow('#fde68a', 12);
+      ctx.beginPath(); ctx.arc(adx, ady, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#fde68a'; ctx.fill();
+      t2NoGlow();
+    } else {
+      ctx.beginPath();
+      ctx.arc(cx, y2, lr * 1.1, -Math.PI, 0, false);
+      ctx.strokeStyle = '#fde68a';
+      ctx.lineWidth = 2;
+      t2Glow('#fde68a', 8);
+      ctx.stroke();
+      t2NoGlow();
+    }
+    t2Txt(lx1 + 10, y2, 'Σ(p̸)', '#60a5fa', 11, 'left', 'Courier New,monospace');
+
+    // 3. Vertex correction: QED vertex with loop photon
+    const vx = cx, vy = y3;
+    const vof = 50;
+    drawFermion(vx - vof, vy + vof, vx, vy, '#60a5fa');
+    drawFermion(vx, vy, vx - vof, vy - vof, '#60a5fa');
+    drawWavy(vx, vy, vx + vof, vy, '#fde68a', 8);
+    wavyDot(vx, vy, vx + vof, vy, 8);
+    // small correction loop
+    if (!rm) {
+      const vla = T * 1.6;
+      ctx.beginPath();
+      ctx.arc(vx - vof * 0.5, vy, 18, 0, Math.PI * 2);
+      ctx.strokeStyle = '#fde68a';
+      ctx.lineWidth = 1.5;
+      t2Glow('#fde68a', 6);
+      ctx.stroke();
+      t2NoGlow();
+      const vldx = vx - vof * 0.5 + 18 * Math.cos(vla), vldy = vy + 18 * Math.sin(vla);
+      t2Glow('#ef4444', 10);
+      ctx.beginPath(); ctx.arc(vldx, vldy, 3, 0, Math.PI * 2);
+      ctx.fillStyle = '#ef4444'; ctx.fill();
+      t2NoGlow();
+    }
+    drawVertex(vx, vy, '#ffffff');
+    t2Txt(lx1 + 10, y3, 'Λ^μ', '#60a5fa', 11, 'left', 'Courier New,monospace');
+
+    // a_e formula
+    t2Txt(cx, cy + H * 0.27, 'a_e = α/2π ≈ 0.001 159 652 — accordo a 12 cifre!', '#fbbf24', 12, 'center', 'Courier New,monospace');
+  }
+
+  // ── SCENE: qcd_vertices ────────────────────────────────────────────────────
+  else if (scene === 'qcd_vertices') {
+    const gap = W > 700 ? 170 : 140;
+    const x1 = cx - gap, x2 = cx, x3 = cx + gap;
+    const vy = cy;
+    const glen = 70;
+
+    // 1. quark-gluon vertex
+    drawFermion(x1 - glen * 0.7, vy - glen * 0.5, x1, vy, '#ef4444');
+    drawFermion(x1, vy, x1 - glen * 0.7, vy + glen * 0.5, '#22c55e');
+    drawGluon(x1, vy, x1 + glen, vy, '#f97316');
+    drawVertex(x1, vy, '#ffffff');
+    t2Txt(x1, vy + 55, 'g_s T^a γ^μ', '#f97316', 10, 'center', 'Courier New,monospace');
+    t2Txt(x1 - glen * 0.85, vy - glen * 0.6, 'q', '#ef4444', 11, 'center');
+    t2Txt(x1 + glen + 8, vy, 'g', '#f97316', 11, 'left');
+
+    // 2. 3-gluon vertex
+    const ang3 = [Math.PI / 2, Math.PI / 2 + (2 * Math.PI) / 3, Math.PI / 2 + (4 * Math.PI) / 3];
+    ang3.forEach(function(a) {
+      const gx = x2 + glen * Math.cos(a);
+      const gy = vy + glen * Math.sin(a);
+      drawGluon(x2, vy, gx, gy, '#f97316');
+    });
+    drawVertex(x2, vy, '#ffffff');
+    t2Txt(x2, vy + 60, 'g_s f^{abc}', '#f97316', 10, 'center', 'Courier New,monospace');
+    t2Txt(x2, vy - 90, '3-gluoni', '#94a3b8', 10, 'center');
+
+    // 3. 4-gluon vertex
+    const ang4 = [Math.PI / 4, Math.PI * 3 / 4, -Math.PI * 3 / 4, -Math.PI / 4];
+    ang4.forEach(function(a) {
+      const gx = x3 + glen * 0.75 * Math.cos(a);
+      const gy = vy + glen * 0.75 * Math.sin(a);
+      drawGluon(x3, vy, gx, gy, '#f97316');
+    });
+    drawVertex(x3, vy, '#ffffff');
+    t2Txt(x3, vy + 65, 'g_s²', '#f97316', 10, 'center', 'Courier New,monospace');
+    t2Txt(x3, vy - 75, '4-gluoni', '#94a3b8', 10, 'center');
+
+    t2Txt(cx, cy + H * 0.27, 'α_s ≈ 1 (basse E — confinamento)  ·  α_s → 0 (alte E — libertà asintotica)', 'rgba(148,163,184,0.5)', 11, 'center', 'Courier New,monospace');
+  }
+
+  // ── SCENE: weak_decay ─────────────────────────────────────────────────────
+  else if (scene === 'weak_decay') {
+    // d quark comes in from left
+    const v1x = cx - 60, v1y = cy;
+    drawFermion(cx - 180, cy + 40, v1x, v1y, '#b45309');
+    t2Txt(cx - 190, cy + 40, 'd', '#b45309', 13, 'right');
+
+    // u quark goes out top-left
+    drawFermion(v1x, v1y, cx - 180, cy - 50, '#f59e0b');
+    t2Txt(cx - 190, cy - 50, 'u', '#f59e0b', 13, 'right');
+
+    // W boson (wavy, violet)
+    const v2x = cx + 60, v2y = cy;
+    const wGlow = rm ? 0.85 : 0.6 + 0.4 * Math.sin(T * 2.5);
+    drawWavy(v1x, v1y, v2x, v2y, '#818cf8', 10);
+    wavyDot(v1x, v1y, v2x, v2y, 10);
+    // W pulsing glow
+    t2Glow(`rgba(129,140,248,${wGlow.toFixed(2)})`, 20);
+    ctx.beginPath();
+    ctx.arc((v1x + v2x) / 2, (v1y + v2y) / 2, 8, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(129,140,248,${(wGlow * 0.3).toFixed(2)})`;
+    ctx.fill();
+    t2NoGlow();
+    t2Txt((v1x + v2x) / 2, v1y - 22, 'W⁻', '#818cf8', 13, 'center');
+
+    // e⁻ from v2
+    drawFermion(v2x, v2y, cx + 180, cy - 50, '#60a5fa');
+    t2Txt(cx + 190, cy - 50, 'e⁻', '#60a5fa', 13, 'left');
+    // ν̄_e from v2
+    drawFermion(cx + 180, cy + 50, v2x, v2y, '#a78bfa');
+    t2Txt(cx + 190, cy + 50, 'ν̄_e', '#a78bfa', 13, 'left');
+
+    drawVertex(v1x, v1y, '#ffffff');
+    drawVertex(v2x, v2y, '#ffffff');
+
+    t2Txt(cx, cy + H * 0.26, 'd → u + W⁻ → u + e⁻ + ν̄_e', '#94a3b8', 11, 'center', 'Courier New,monospace');
+    t2Txt(cx, cy + H * 0.26 + 16, 'g/√2 · (1−γ⁵)/2  ·  solo left-handed  ·  violazione P', 'rgba(148,163,184,0.45)', 10, 'center', 'Courier New,monospace');
+  }
+
+  // ── SCENE: higgs ──────────────────────────────────────────────────────────
+  else if (scene === 'higgs') {
+    // Pulsing Higgs boson at center
+    const hPulse = rm ? 1 : 0.7 + 0.3 * Math.sin(T * 2.2);
+    const hR = 22 * hPulse;
+    t2Glow('#fbbf24', 28 * hPulse);
+    ctx.beginPath();
+    ctx.arc(cx, cy, hR, 0, Math.PI * 2);
+    ctx.fillStyle = '#fbbf24';
+    ctx.fill();
+    t2NoGlow();
+    t2Txt(cx, cy + 1, 'H', '#000', 13, 'center', 'bold sans-serif');
+
+    // Coupling rays: label, color, coupling strength (line width)
+    const rays = [
+      { label: 't', col: '#f59e0b', strength: 3.5, angle: -Math.PI / 2 },
+      { label: 'W', col: '#a78bfa', strength: 2.5, angle: -Math.PI / 6 },
+      { label: 'Z', col: '#c084fc', strength: 2.2, angle: Math.PI / 6 },
+      { label: 'b', col: '#3b82f6', strength: 1.4, angle: Math.PI * 5 / 6 },
+      { label: 'τ', col: '#f472b6', strength: 1.0, angle: Math.PI * 7 / 6 },
+      { label: 'HH', col: '#fbbf24', strength: 1.2, angle: -Math.PI * 5 / 6 },
+    ];
+    const rayLen = Math.min(W * 0.22, 130);
+
+    rays.forEach(function(r) {
+      const rx = cx + rayLen * Math.cos(r.angle);
+      const ry = cy + rayLen * Math.sin(r.angle);
+      const amp = rm ? 1 : 0.7 + 0.3 * Math.sin(T * 1.5 + r.angle);
+      const actualLen = rayLen * amp;
+      const ex = cx + actualLen * Math.cos(r.angle);
+      const ey = cy + actualLen * Math.sin(r.angle);
+
+      ctx.beginPath();
+      ctx.moveTo(cx + hR * Math.cos(r.angle), cy + hR * Math.sin(r.angle));
+      ctx.lineTo(ex, ey);
+      ctx.strokeStyle = r.col;
+      ctx.lineWidth = r.strength;
+      t2Glow(r.col, 6);
+      ctx.stroke();
+      t2NoGlow();
+
+      // endpoint dot
+      t2Glow(r.col, 12);
+      ctx.beginPath();
+      ctx.arc(ex, ey, 5, 0, Math.PI * 2);
+      ctx.fillStyle = r.col;
+      ctx.fill();
+      t2NoGlow();
+
+      // label
+      const lx = cx + (rayLen + 20) * Math.cos(r.angle);
+      const ly = cy + (rayLen + 20) * Math.sin(r.angle);
+      t2Txt(lx, ly, r.label, r.col, 13, 'center', 'bold Courier New,monospace');
+    });
+
+    // gluon fusion triangle (small, top-right area)
+    const tx = cx + rayLen * 0.55, ty = cy - rayLen * 0.7;
+    const tr = 24;
+    const ta = [Math.PI / 2, Math.PI / 2 + (2 * Math.PI) / 3, Math.PI / 2 + (4 * Math.PI) / 3];
+    t2Glow('#f59e0b', 8);
+    ctx.beginPath();
+    ctx.moveTo(tx + tr * Math.cos(ta[0]), ty + tr * Math.sin(ta[0]));
+    ctx.lineTo(tx + tr * Math.cos(ta[1]), ty + tr * Math.sin(ta[1]));
+    ctx.lineTo(tx + tr * Math.cos(ta[2]), ty + tr * Math.sin(ta[2]));
+    ctx.closePath();
+    ctx.strokeStyle = '#f59e0b';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    t2NoGlow();
+    drawGluon(tx + tr * Math.cos(ta[0]), ty + tr * Math.sin(ta[0]), tx + tr * Math.cos(ta[0]) + 28, ty + tr * Math.sin(ta[0]) - 18, '#f97316');
+    drawGluon(tx + tr * Math.cos(ta[2]), ty + tr * Math.sin(ta[2]), tx + tr * Math.cos(ta[2]) + 28, ty + tr * Math.sin(ta[2]) + 18, '#f97316');
+    t2Txt(tx + 44, ty, 'ggH', '#f59e0b', 10, 'left', 'Courier New,monospace');
+
+    t2Txt(cx, cy + H * 0.27, 'y_f = m_f√2/v  ·  v = 246 GeV  ·  m_H = 125 GeV', '#fbbf24', 11, 'center', 'Courier New,monospace');
+  }
+
+  // ── SCENE: renormalization ─────────────────────────────────────────────────
+  else if (scene === 'renormalization') {
+    // Big diverging loop
+    const loopR = Math.min(W * 0.12, 65);
+    const loopX = cx - 80, loopY = cy - 20;
+
+    // Propagator in / out
+    drawWavy(loopX - 100, loopY, loopX - loopR, loopY, '#fde68a', 8);
+    drawWavy(loopX + loopR, loopY, loopX + 100, loopY, '#fde68a', 8);
+
+    // Loop intensity pulsing red
+    const intensity = rm ? 0.7 : 0.4 + 0.6 * ((Math.sin(T * 1.5) + 1) / 2);
+    t2Glow(`rgba(239,68,68,${intensity.toFixed(2)})`, 30 * intensity);
+    ctx.beginPath();
+    ctx.arc(loopX, loopY, loopR, 0, Math.PI * 2);
+    ctx.strokeStyle = `rgba(239,68,68,${intensity.toFixed(2)})`;
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+    t2NoGlow();
+
+    // Loop dot (clockwise)
+    if (!rm) {
+      const la = -(T * 2.5);
+      const ldx = loopX + loopR * Math.cos(la), ldy = loopY + loopR * Math.sin(la);
+      t2Glow('#ef4444', 16);
+      ctx.beginPath(); ctx.arc(ldx, ldy, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#ef4444'; ctx.fill();
+      t2NoGlow();
+    }
+
+    // Arrow Λ→∞
+    t2Txt(loopX, loopY - loopR - 18, 'Λ → ∞', '#ef4444', 11, 'center', 'Courier New,monospace');
+
+    // +  counterterm  →  finite
+    const ctX = cx + 40;
+    t2Txt(ctX - 28, loopY, '+', '#94a3b8', 20, 'center');
+    // counterterm symbol (x)
+    t2Glow('#ffffff', 10);
+    t2Txt(ctX + 20, loopY, '×', '#ffffff', 22, 'center', 'Courier New,monospace');
+    t2NoGlow();
+    // flash: counterterm cancels divergence
+    if (!rm) {
+      const flash = Math.max(0, Math.sin(T * 1.2 - 1));
+      if (flash > 0.3) {
+        ctx.beginPath();
+        ctx.arc(ctX + 20, loopY, 20, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(255,255,255,${(flash * 0.2).toFixed(2)})`;
+        ctx.fill();
+      }
+    }
+    t2Txt(ctX + 60, loopY, '= finito', '#4ade80', 12, 'left', 'Courier New,monospace');
+
+    // RG flow graph (small, bottom)
+    const gx0 = cx - 100, gx1 = cx + 100;
+    const gy0 = cy + 70, gy1 = cy + 110;
+    // axes
+    ctx.strokeStyle = 'rgba(148,163,184,0.3)'; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(gx0, gy1); ctx.lineTo(gx1, gy1); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(gx0, gy1); ctx.lineTo(gx0, gy0 - 8); ctx.stroke();
+    t2Txt(gx1 + 6, gy1, 'μ', 'rgba(148,163,184,0.4)', 10, 'left');
+    t2Txt(gx0 - 6, gy0 - 6, 'α', 'rgba(148,163,184,0.4)', 10, 'right');
+
+    // QED: α grows with μ
+    ctx.beginPath();
+    for (let i = 0; i <= 40; i++) {
+      const t = i / 40;
+      const px = gx0 + t * (gx1 - gx0);
+      const py = gy1 - (gy1 - gy0) * (0.2 + 0.8 * t * t);
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.strokeStyle = '#fde68a'; ctx.lineWidth = 2;
+    t2Glow('#fde68a', 4);
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(gx1 + 4, gy0 + 8, 'α (QED↑)', '#fde68a', 9, 'left');
+
+    // QCD: α_s drops with μ
+    ctx.beginPath();
+    for (let i = 0; i <= 40; i++) {
+      const t = i / 40;
+      const px = gx0 + t * (gx1 - gx0);
+      const py = gy1 - (gy1 - gy0) * (0.9 - 0.75 * t * t);
+      i === 0 ? ctx.moveTo(px, py) : ctx.lineTo(px, py);
+    }
+    ctx.strokeStyle = '#f97316'; ctx.lineWidth = 2;
+    t2Glow('#f97316', 4);
+    ctx.stroke();
+    t2NoGlow();
+    t2Txt(gx1 + 4, gy0 + 22, 'α_s (QCD↓)', '#f97316', 9, 'left');
+
+    t2Txt(cx, cy - loopR - 40, 'divergenza UV — regolarizzazione — rinormalizzazione', 'rgba(148,163,184,0.4)', 10, 'center', 'Courier New,monospace');
+  }
+
+  // ── SCENE: synthesis ──────────────────────────────────────────────────────
+  else if (scene === 'synthesis') {
+    const pad = Math.min(W * 0.2, 130);
+
+    // Top-left: fermion propagator
+    drawFermion(cx - pad * 1.2, cy - pad * 0.75, cx - pad * 0.35, cy - pad * 0.75, '#60a5fa');
+    t2Txt(cx - pad * 0.75, cy - pad * 0.75 - 16, 'propagatore e⁻', '#94a3b8', 9, 'center');
+
+    // Top-right: photon propagator
+    drawWavy(cx + pad * 0.35, cy - pad * 0.75, cx + pad * 1.2, cy - pad * 0.75, '#fde68a', 8);
+    wavyDot(cx + pad * 0.35, cy - pad * 0.75, cx + pad * 1.2, cy - pad * 0.75, 8);
+    t2Txt(cx + pad * 0.75, cy - pad * 0.75 - 16, 'propagatore γ', '#94a3b8', 9, 'center');
+
+    // Center: big QED vertex
+    const vx = cx, vy = cy;
+    const osc = rm ? 0 : Math.sin(T * 0.5) * 0.1;
+    const vLen = 55;
+    drawFermion(vx - vLen, vy + vLen, vx, vy, '#60a5fa');
+    drawFermion(vx, vy, vx - vLen, vy - vLen, '#60a5fa');
+    drawWavy(vx, vy, vx + vLen * 1.3, vy, '#fde68a', 8);
+    wavyDot(vx, vy, vx + vLen * 1.3, vy, 8);
+    const gBright = rm ? 1 : 0.7 + 0.3 * Math.sin(T * 1.8);
+    t2Glow(`rgba(255,255,255,${gBright.toFixed(2)})`, 28 * gBright);
+    ctx.beginPath(); ctx.arc(vx, vy, 7, 0, Math.PI * 2);
+    ctx.fillStyle = '#ffffff'; ctx.fill();
+    t2NoGlow();
+
+    // Bottom-left: small loop
+    const lx = cx - pad * 0.85, ly = cy + pad * 0.7;
+    t2Glow('#ef4444', 8);
+    ctx.beginPath();
+    ctx.arc(lx, ly, 22, 0, Math.PI * 2);
+    ctx.strokeStyle = '#ef4444'; ctx.lineWidth = 2; ctx.stroke();
+    t2NoGlow();
+    if (!rm) {
+      const la = -(T * 2);
+      const ldx = lx + 22 * Math.cos(la), ldy = ly + 22 * Math.sin(la);
+      t2Glow('#ef4444', 10);
+      ctx.beginPath(); ctx.arc(ldx, ldy, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#ef4444'; ctx.fill();
+      t2NoGlow();
+    }
+    t2Txt(lx, ly + 32, 'loop', '#94a3b8', 9, 'center');
+
+    // Bottom-right: 3-gluon vertex
+    const gvx = cx + pad * 0.9, gvy = cy + pad * 0.7;
+    const gvLen = 32;
+    const ga3 = [Math.PI / 2, Math.PI / 2 + (2 * Math.PI) / 3, Math.PI / 2 + (4 * Math.PI) / 3];
+    ga3.forEach(function(a) {
+      drawGluon(gvx, gvy, gvx + gvLen * Math.cos(a), gvy + gvLen * Math.sin(a), '#f97316');
+    });
+    drawVertex(gvx, gvy, '#ffffff');
+    t2Txt(gvx, gvy + 42, 'QCD', '#94a3b8', 9, 'center');
+
+    // Center pulsing formula
+    const mPulse = rm ? 0.9 : 0.65 + 0.35 * Math.sin(T * 1.2);
+    t2Glow('#fbbf24', 14 * mPulse);
+    t2Txt(cx, cy + pad * 0.3, 'M = Σ_diagrams iM_i', `rgba(251,191,36,${mPulse.toFixed(2)})`, 15, 'center', 'bold Courier New,monospace');
+    t2NoGlow();
+    t2Txt(cx, cy + H * 0.26, 'dσ ∝ |M|²', 'rgba(148,163,184,0.55)', 12, 'center', 'Courier New,monospace');
+  }
+};
+
+t2Init();
+</script>
+</body>
+</html>
