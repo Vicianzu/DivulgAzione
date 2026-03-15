@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Penrose · 08 — Buco Nero in Rotazione (Kerr)</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000010;color:#e2e8f0;font-family:'Segoe UI',sans-serif;overflow:hidden;height:100vh;display:flex;flex-direction:column}
+#topbar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;border-bottom:1px solid rgba(74,222,128,0.2);flex-shrink:0}
+.nav-btn{color:#94a3b8;text-decoration:none;font-size:13px;padding:4px 10px;border:1px solid rgba(74,222,128,0.2);border-radius:4px;transition:color .2s}
+.nav-btn:hover{color:#4ade80}
+#title{font-size:14px;color:#4ade80;letter-spacing:.05em}
+#main{display:flex;flex:1;overflow:hidden}
+#canvas-wrap{flex:1;position:relative}
+canvas{display:block;width:100%;height:100%}
+#sidebar{width:220px;display:flex;flex-direction:column;border-left:1px solid rgba(74,222,128,0.2);flex-shrink:0}
+#ui{padding:12px;border-bottom:1px solid rgba(74,222,128,0.25)}
+#ui-phase{font-size:11px;color:#4ade80;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+#ui-badge{font-size:22px;margin-bottom:6px}
+#ui-desc{font-size:10px;color:#94a3b8;line-height:1.55}
+#btns{display:flex;flex-wrap:wrap;gap:5px;padding:10px;border-bottom:1px solid rgba(74,222,128,0.2)}
+.btn{flex:1;min-width:56px;padding:5px 4px;background:transparent;border:1px solid rgba(74,222,128,0.3);border-radius:4px;color:#4ade80;font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn:hover{background:rgba(74,222,128,0.08)}
+.btn.active{background:rgba(74,222,128,0.15);color:#86efac;border-color:rgba(74,222,128,0.6)}
+#panel{padding:12px;font-size:11px;overflow-y:auto;border:1px solid rgba(74,222,128,0.2);margin:8px;border-radius:6px;background:rgba(0,0,16,0.4)}
+#panel h3{color:#4ade80;font-size:11px;letter-spacing:.1em;margin-bottom:10px}
+.pr{display:flex;justify-content:space-between;margin-bottom:5px;color:#64748b}
+.pv{color:#e2e8f0}
+.sep{border:none;border-top:1px solid rgba(74,222,128,0.15);margin:8px 0}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <a class="nav-btn" href="p07_charged.html">← 07</a>
+  <span id="title">Penrose · 08 — Buco Nero in Rotazione (Kerr)</span>
+  <a class="nav-btn" href="p09_hawking.html">09 Hawking →</a>
+</div>
+<div id="main">
+  <div id="canvas-wrap"><canvas id="c"></canvas></div>
+  <div id="sidebar">
+    <div id="ui">
+      <div id="ui-phase">Fase 0</div>
+      <div id="ui-badge">①</div>
+      <div id="ui-desc"></div>
+    </div>
+    <div id="btns">
+      <button class="btn active" onclick="go(0)">① Metrica</button>
+      <button class="btn" onclick="go(1)">② Frame-Drag</button>
+      <button class="btn" onclick="go(2)">③ Ergosfera</button>
+      <button class="btn" onclick="go(3)">④ Penrose</button>
+      <button class="btn" onclick="go(4)">⑤ ISCO</button>
+      <button class="btn" onclick="go(5)">⑥ Diagramma</button>
+      <button class="btn" onclick="go(6)">⑦ M87*</button>
+    </div>
+    <div id="panel">
+      <h3>KERR</h3>
+      <div class="pr"><span>a = J/Mc:</span><span class="pv">spin 0 ≤ a ≤ M</span></div>
+      <div class="pr"><span>r±:</span><span class="pv">M ± √(M²−a²)</span></div>
+      <div class="pr"><span>Ergosfera:</span><span class="pv">r_e = M+√(M²−a²cos²θ)</span></div>
+      <hr class="sep">
+      <div class="pr"><span>ISCO (a=0):</span><span class="pv">6M</span></div>
+      <div class="pr"><span>ISCO (a=M):</span><span class="pv">M (pro)</span></div>
+      <div class="pr"><span>η Penrose:</span><span class="pv">≤ 29%</span></div>
+      <hr class="sep">
+      <div style="font-size:10px;color:#475569;line-height:1.6;">Roy Kerr, 1963<br>M87*: a ≈ 0.9M<br>Sgr A*: a ≈ 0.5M<br>Ring singularity: r=0,θ=π/2</div>
+    </div>
+  </div>
+</div>
+<script>
+const cv=document.getElementById('c'),cx=cv.getContext('2d');
+
+const DESC=[
+  "La soluzione di Kerr (1963) descrive il campo gravitazionale di un buco nero in rotazione. Il parametro di spin è a = J/Mc (momento angolare per unità di massa). In coordinate di Boyer-Lindquist: ds² dipende da Σ = r²+a²cos²θ e Δ = r²−2Mr+a². I due orizzonti: r± = M ± √(M²−a²).",
+  "La rotazione del buco nero trascina con sé lo spazio-tempo circostante (effetto Lense-Thirring). Vicino al BH, nessun osservatore può rimanere stazionario — viene trascinato nella direzione di rotazione. L'effetto dipende da ω = −g_tφ/g_φφ = 2Mar/(Σ²+a²sin²θ)·c.",
+  "L'ergosfera si estende da r+ (orizzonte degli eventi) a r_e = M+√(M²−a²cos²θ) (superficie limite statica). All'interno dell'ergosfera, lo spazio-tempo è così trascinato che nessun osservatore può restare fermo rispetto alle stelle fisse — ma può ancora scappare verso l'esterno.",
+  "Il Processo di Penrose permette di estrarre energia rotazionale dal buco nero. Una particella entra nell'ergosfera e si divide: un frammento cade nell'orizzonte con energia negativa, l'altro sfugge con energia maggiore della particella originale. Energia massima estraibile: ~29% Mc².",
+  "L'ISCO (Innermost Stable Circular Orbit) è l'orbita circolare più interna stabile. Per Schwarzschild: r_ISCO = 3rs = 6M. Per Kerr prograde estremo: r_ISCO = rs/2 = M. Lo spin sposta l'ISCO verso il buco nero, aumentando l'efficienza del disco di accrescimento.",
+  "Il diagramma di Penrose di Kerr è simile a Reissner-Nordström ma con una singolarità ad anello (ring singularity). L'anello è evitabile passando attraverso il centro dell'anello. Si possono raggiungere altre regioni dell'universo attraverso la singolarità. Esiste anche un universo negativo (r<0).",
+  "Il buco nero M87* (massa ≈ 6.5×10⁹M☉, spin a ≈ 0.9M): un disco di accrescimento inclinato, frame-dragging visibile attorno all'orizzonte, asimmetria Doppler nel disco, getti relativistici lungo l'asse di rotazione."
+];
+const BADGES=['①','②','③','④','⑤','⑥','⑦'];
+
+let W,H,ph=0,T=0;
+const stars=[];
+for(let i=0;i<180;i++) stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.2+0.3,p:Math.random()*Math.PI*2,sp:Math.random()*0.5+0.2});
+
+function resize(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;}
+window.addEventListener('resize',resize);
+resize();
+
+function gw(col,blur){cx.shadowColor=col;cx.shadowBlur=blur;}
+function ng(){cx.shadowBlur=0;cx.shadowColor='transparent';}
+function lbl(x,y,txt,col,sz,al,bold){
+  cx.fillStyle=col;cx.font=(bold?'bold ':'')+sz+'px Segoe UI';
+  cx.textAlign=al||'center';cx.fillText(txt,x,y);
+}
+function bg(){cx.fillStyle='#000010';cx.fillRect(0,0,W,H);}
+function drawStars(){
+  for(const s of stars){
+    const bri=0.5+0.5*Math.sin(T*s.sp+s.p);
+    cx.beginPath();cx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2);
+    cx.fillStyle=`rgba(200,220,255,${0.25+0.45*bri})`;cx.fill();
+  }
+}
+
+function go(n){
+  ph=n;T=0;
+  document.getElementById('ui-phase').textContent='Fase '+n;
+  document.getElementById('ui-badge').textContent=BADGES[n];
+  document.getElementById('ui-desc').textContent=DESC[n];
+  document.querySelectorAll('.btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+}
+go(0);
+
+// ── Helpers ──────────────────────────────────────────────────────────────────
+function arrow(x1,y1,x2,y2,col,w,hs){
+  cx.save();cx.strokeStyle=col;cx.fillStyle=col;cx.lineWidth=w||1.5;
+  cx.beginPath();cx.moveTo(x1,y1);cx.lineTo(x2,y2);cx.stroke();
+  const a=Math.atan2(y2-y1,x2-x1),h=hs||8;
+  cx.beginPath();cx.moveTo(x2,y2);
+  cx.lineTo(x2-h*Math.cos(a-0.4),y2-h*Math.sin(a-0.4));
+  cx.lineTo(x2-h*Math.cos(a+0.4),y2-h*Math.sin(a+0.4));
+  cx.closePath();cx.fill();cx.restore();
+}
+
+function card(x,y,w,h,alpha){
+  cx.save();
+  cx.fillStyle=`rgba(0,10,30,${alpha||0.7})`;
+  cx.strokeStyle='rgba(74,222,128,0.18)';cx.lineWidth=1;
+  cx.beginPath();cx.roundRect(x,y,w,h,8);
+  cx.fill();cx.stroke();cx.restore();
+}
+
+function drawBH(x,y,r,glow){
+  const g=cx.createRadialGradient(x,y,r*0.5,x,y,r*2.2);
+  g.addColorStop(0,'rgba(0,0,16,0.95)');g.addColorStop(1,'rgba(0,0,16,0)');
+  cx.fillStyle=g;cx.beginPath();cx.arc(x,y,r*2.2,0,Math.PI*2);cx.fill();
+  cx.beginPath();cx.arc(x,y,r,0,Math.PI*2);
+  cx.fillStyle='#000010';cx.fill();
+  if(glow){gw('#4ade80',20);cx.strokeStyle='rgba(74,222,128,0.7)';cx.lineWidth=1.5;cx.stroke();ng();}
+}
+
+// ── PHASE 0 — Metrica di Kerr ────────────────────────────────────────────────
+function ph0(){
+  const cx_=W/2, cy_=H*0.48;
+  const sc=Math.min(W,H)/620;
+
+  card(W*0.04,H*0.04,W*0.92,H*0.92,0.55);
+
+  // Title
+  lbl(cx_,H*0.11,'Metrica di Kerr (1963)','#4ade80',15*sc,'center',true);
+  lbl(cx_,H*0.11+22,'ds² = −(Δ/Σ)(dt − a sin²θ dφ)² + (Σ/Δ)dr² + Σ dθ² + (sin²θ/Σ)(a dt −(r²+a²)dφ)²','#64748b',9*sc,'center',false);
+
+  // Four formula boxes
+  const boxes=[
+    {lbl:'Parametro di spin',f:'a = J / Mc',col:'#86efac',xo:-0.30,yo:0.21},
+    {lbl:'Funzione Σ',f:'Σ = r² + a²cos²θ',col:'#e2e8f0',xo:0.05,yo:0.21},
+    {lbl:'Funzione Δ',f:'Δ = r² − 2Mr + a²',col:'#e2e8f0',xo:-0.30,yo:0.32},
+    {lbl:'Orizzonti',f:'r± = M ± √(M²−a²)',col:'#86efac',xo:0.05,yo:0.32},
+  ];
+  boxes.forEach(b=>{
+    const bx=cx_+W*b.xo, by=H*b.yo;
+    card(bx-W*0.165,by-16,W*0.31,52,0.7);
+    lbl(bx,by,b.lbl,'#64748b',9*sc,'center',false);
+    lbl(bx,by+22,b.f,b.col,12*sc,'center',true);
+  });
+
+  // BH oblate sketch (right side)
+  const bx=cx_+W*0.22, by=H*0.64;
+  const Rb=Math.min(W,H)*0.095;
+  const anim=0.70+0.045*Math.sin(T*0.7);
+
+  // Ergosphere glow region
+  const eg=cx.createRadialGradient(bx,by,Rb,bx,by,Rb*2.1);
+  eg.addColorStop(0,'rgba(74,222,128,0.07)');
+  eg.addColorStop(1,'rgba(74,222,128,0)');
+  cx.beginPath();cx.arc(bx,by,Rb*2.1,0,Math.PI*2);cx.fillStyle=eg;cx.fill();
+
+  // Ergosphere outline (oblate dashed)
+  gw('#4ade80',12);
+  cx.save();cx.translate(bx,by);cx.scale(1,0.55);
+  cx.beginPath();cx.arc(0,0,Rb*1.55,0,Math.PI*2);
+  cx.strokeStyle='rgba(74,222,128,0.55)';cx.lineWidth=1.5;cx.setLineDash([5,3]);cx.stroke();
+  cx.setLineDash([]);cx.restore();ng();
+
+  // BH body (oblate)
+  cx.save();cx.translate(bx,by);cx.scale(1,anim);
+  cx.beginPath();cx.arc(0,0,Rb,0,Math.PI*2);
+  cx.fillStyle='#000010';cx.fill();
+  gw('#4ade80',22);
+  cx.strokeStyle='#4ade80';cx.lineWidth=2;cx.stroke();
+  ng();cx.restore();
+
+  // Rotation arrows
+  for(let i=0;i<2;i++){
+    const sa=i*Math.PI+T*0.35+0.4;
+    cx.save();cx.translate(bx,by);cx.scale(1,0.55);
+    gw('#86efac',10);
+    cx.beginPath();cx.arc(0,0,Rb*1.95,sa,sa+1.3);
+    cx.strokeStyle='rgba(134,239,172,0.7)';cx.lineWidth=2;cx.stroke();
+    const ae=sa+1.3;
+    cx.translate(Rb*1.95*Math.cos(ae),Rb*1.95*Math.sin(ae));
+    cx.rotate(ae+Math.PI/2);
+    cx.beginPath();cx.moveTo(0,0);cx.lineTo(-5,-8);cx.lineTo(5,-8);cx.closePath();
+    cx.fillStyle='rgba(134,239,172,0.7)';cx.fill();
+    ng();cx.restore();
+  }
+
+  // Labels on sketch
+  lbl(bx+Rb*1.7,by-Rb*0.38,'ergosfera','#86efac',9*sc,'left',false);
+  arrow(bx+Rb*1.68,by-Rb*0.32,bx+Rb*1.2,by-Rb*0.12,'rgba(134,239,172,0.6)',1,6);
+  lbl(bx,by+Rb*anim+16,'Orizzonte r+','#4ade80',9*sc,'center',false);
+
+  // Roy Kerr credit
+  card(cx_-W*0.28,H*0.44,W*0.56,36,0.75);
+  lbl(cx_,H*0.44+13,'Roy Kerr, 1963 — Nuova Zelanda','#4ade80',10*sc,'center',true);
+  lbl(cx_,H*0.44+28,'Prima soluzione esatta per un buco nero in rotazione','#64748b',9*sc,'center',false);
+
+  // Spin constraint box
+  card(cx_-W*0.42,H*0.52,W*0.28,80,0.65);
+  lbl(cx_-W*0.28,H*0.52+16,'Vincolo','#64748b',9*sc,'center',false);
+  lbl(cx_-W*0.28,H*0.52+36,'0 ≤ a ≤ M','#86efac',14*sc,'center',true);
+  lbl(cx_-W*0.28,H*0.52+54,'a = 0 → Schwarzschild','#94a3b8',9*sc,'center',false);
+  lbl(cx_-W*0.28,H*0.52+68,'a = M → Kerr estremo','#94a3b8',9*sc,'center',false);
+}
+
+// ── PHASE 1 — Frame-Dragging ─────────────────────────────────────────────────
+function ph1(){
+  const cx_=W/2, cy_=H/2;
+  const sc=Math.min(W,H)/620;
+  const maxR=Math.min(W,H)*0.40;
+  const bhR=maxR*0.11;
+
+  // Twist at radius r (frame-dragging: falls off as r^-2)
+  function twist(r){return 0.014*(bhR/r)*(bhR/r)*T;}
+
+  const nCircles=9, nRadials=24;
+
+  // Concentric circles (color-coded by proximity)
+  for(let i=1;i<=nCircles;i++){
+    const r=bhR+(maxR-bhR)*i/nCircles;
+    const intens=1-(i-1)/nCircles;
+    const alpha=0.12+0.22*intens;
+    gw('#4ade80',intens*8);
+    cx.beginPath();cx.arc(cx_,cy_,r,0,Math.PI*2);
+    cx.strokeStyle=`rgba(74,222,128,${alpha})`;cx.lineWidth=0.8+intens*0.7;cx.stroke();
+    ng();
+  }
+
+  // Twisted radial lines
+  for(let j=0;j<nRadials;j++){
+    const phi0=j/nRadials*Math.PI*2;
+    cx.beginPath();
+    const nSeg=30;
+    for(let s=0;s<=nSeg;s++){
+      const r=bhR+(maxR-bhR)*s/nSeg;
+      const phi=phi0+twist(r);
+      const x=cx_+r*Math.cos(phi), y=cy_+r*Math.sin(phi);
+      s===0?cx.moveTo(x,y):cx.lineTo(x,y);
+    }
+    cx.strokeStyle='rgba(74,222,128,0.14)';cx.lineWidth=0.7;cx.stroke();
+  }
+
+  // Tangential dragging arrows at grid intersections
+  for(let i=2;i<=nCircles;i+=2){
+    const r=bhR+(maxR-bhR)*i/nCircles;
+    const intens=1-(i-1)/nCircles;
+    const nArrows=Math.floor(8+i*1.5);
+    for(let j=0;j<nArrows;j++){
+      const phi0=j/nArrows*Math.PI*2;
+      const phi=phi0+twist(r);
+      const ax=cx_+r*Math.cos(phi), ay=cy_+r*Math.sin(phi);
+      const tangDir=phi+Math.PI/2;
+      const al=10*intens+4;
+      const ax2=ax+al*Math.cos(tangDir), ay2=ay+al*Math.sin(tangDir);
+      const alpha=0.3+0.5*intens;
+      gw('#86efac',intens*6);
+      cx.save();cx.strokeStyle=`rgba(134,239,172,${alpha})`;cx.fillStyle=`rgba(134,239,172,${alpha})`;cx.lineWidth=0.9;
+      cx.beginPath();cx.moveTo(ax,ay);cx.lineTo(ax2,ay2);cx.stroke();
+      const ha=Math.atan2(ay2-ay,ax2-ax);
+      const hs=4*intens+2;
+      cx.beginPath();cx.moveTo(ax2,ay2);
+      cx.lineTo(ax2-hs*Math.cos(ha-0.5),ay2-hs*Math.sin(ha-0.5));
+      cx.lineTo(ax2-hs*Math.cos(ha+0.5),ay2-hs*Math.sin(ha+0.5));
+      cx.closePath();cx.fill();
+      cx.restore();ng();
+    }
+  }
+
+  // BH shadow
+  drawBH(cx_,cy_,bhR,true);
+
+  // Dragged observer (white dot with label)
+  const obsR=bhR*1.85;
+  const obsAng=twist(obsR)+Math.PI*0.3;
+  const ox=cx_+obsR*Math.cos(obsAng), oy=cy_+obsR*Math.sin(obsAng);
+  gw('#fff',14);
+  cx.beginPath();cx.arc(ox,oy,5,0,Math.PI*2);cx.fillStyle='#fff';cx.fill();ng();
+  // Trail
+  cx.save();cx.strokeStyle='rgba(255,255,255,0.3)';cx.lineWidth=1.5;cx.setLineDash([2,3]);
+  cx.beginPath();
+  const trailLen=1.2;
+  for(let s=0;s<=20;s++){
+    const tt=T-trailLen*s/20;
+    if(tt<0)break;
+    const ta=0.014*(bhR/obsR)*(bhR/obsR)*tt+Math.PI*0.3;
+    cx.lineTo(cx_+obsR*Math.cos(ta),cy_+obsR*Math.sin(ta));
+    s===0&&cx.moveTo(cx_+obsR*Math.cos(ta),cy_+obsR*Math.sin(ta));
+  }
+  cx.stroke();cx.setLineDash([]);cx.restore();
+  lbl(ox+10,oy-10,'Osservatore','#fff',9*sc,'left',false);
+  lbl(ox+10,oy+3,'(trascinato!)','#86efac',8*sc,'left',false);
+
+  // Labels
+  lbl(cx_,H*0.07,'Effetto Lense-Thirring','#4ade80',13*sc,'center',true);
+  lbl(cx_,H*0.07+20,'La rotazione del BH torce lo spazio-tempo — le linee radiali si avvolgono','#94a3b8',9.5*sc,'center',false);
+
+  card(W*0.03,H*0.82,W*0.94,H*0.12,0.65);
+  lbl(cx_,H*0.82+16,'ω_frame = 2Mar / (r⁴ + a²r² + 2Ma²r)','#86efac',11*sc,'center',true);
+  lbl(cx_-W*0.22,H*0.82+34,'Anelli interni','#4ade80',9*sc,'center',false);
+  lbl(cx_-W*0.22,H*0.82+46,'ruotano più veloci','#64748b',9*sc,'center',false);
+  lbl(cx_,H*0.82+38,'Anche la luce viene trascinata nella direzione di rotazione','#94a3b8',9*sc,'center',false);
+}
+
+// ── PHASE 2 — Ergosfera ──────────────────────────────────────────────────────
+function ph2(){
+  const cx_=W/2, cy_=H*0.50;
+  const sc=Math.min(W,H)/620;
+  const Rb=Math.min(W,H)*0.12;
+
+  // Title
+  lbl(cx_,H*0.07,'L\'Ergosfera','#4ade80',14*sc,'center',true);
+  lbl(cx_,H*0.07+22,'r_e = M + √(M²−a²cos²θ)','#86efac',11*sc,'center',true);
+
+  // Ergosphere glow fill
+  cx.save();cx.translate(cx_,cy_);
+  // fill region between BH and ergosphere with green tint
+  cx.save();cx.scale(1,0.52);
+  const gErgo=cx.createRadialGradient(0,0,Rb*0.95,0,0,Rb*1.65);
+  gErgo.addColorStop(0,'rgba(74,222,128,0.18)');
+  gErgo.addColorStop(0.6,'rgba(74,222,128,0.10)');
+  gErgo.addColorStop(1,'rgba(74,222,128,0)');
+  cx.beginPath();cx.arc(0,0,Rb*1.65,0,Math.PI*2);cx.fillStyle=gErgo;cx.fill();
+  cx.restore();cx.restore();
+
+  // Swirling particles inside ergosphere
+  const nParts=40;
+  for(let i=0;i<nParts;i++){
+    const seed=i*137.5;
+    const rFrac=0.15+((seed*37)%100)/100*0.85; // fractional r within ergo region
+    const partR=Rb*(0.95+rFrac*0.65);
+    const omegaFrac=1-rFrac; // inner = faster
+    const baseAng=seed/nParts*Math.PI*2;
+    const ang=baseAng+T*(0.6+omegaFrac*1.2);
+    const scY=0.52;
+    const px=cx_+partR*Math.cos(ang);
+    const py=cy_+partR*Math.sin(ang)*scY;
+    const alpha=0.5+0.4*omegaFrac;
+    const r2=Math.floor(74+omegaFrac*100);
+    cx.beginPath();cx.arc(px,py,2.5-rFrac*1,0,Math.PI*2);
+    cx.fillStyle=`rgba(${r2},222,128,${alpha})`;cx.fill();
+  }
+
+  // Ergosphere boundary
+  gw('#4ade80',14);
+  cx.save();cx.translate(cx_,cy_);cx.scale(1,0.52);
+  cx.beginPath();cx.arc(0,0,Rb*1.60,0,Math.PI*2);
+  cx.strokeStyle='rgba(74,222,128,0.65)';cx.lineWidth=2;cx.setLineDash([6,3]);cx.stroke();
+  cx.setLineDash([]);cx.restore();ng();
+
+  // Forced rotation arrows inside ergosphere
+  for(let i=0;i<6;i++){
+    const ang=i/6*Math.PI*2+T*0.4;
+    const aR=Rb*1.25;
+    const scY=0.52;
+    const px=cx_+aR*Math.cos(ang);
+    const py=cy_+aR*Math.sin(ang)*scY;
+    const tang=ang+Math.PI/2;
+    const dx=14*Math.cos(tang), dy=14*Math.sin(tang)*scY;
+    gw('#86efac',6);
+    arrow(px,py,px+dx,py+dy,'rgba(134,239,172,0.6)',1.2,5);ng();
+  }
+
+  // BH event horizon (oblate)
+  cx.save();cx.translate(cx_,cy_);cx.scale(1,0.72);
+  cx.beginPath();cx.arc(0,0,Rb,0,Math.PI*2);
+  cx.fillStyle='#000010';cx.fill();
+  gw('#4ade80',18);
+  cx.strokeStyle='rgba(74,222,128,0.85)';cx.lineWidth=2;cx.stroke();
+  ng();cx.restore();
+
+  // Note: ergosphere touches BH at poles
+  cx.save();cx.translate(cx_,cy_);cx.scale(1,0.52);
+  cx.beginPath();cx.arc(0,0,Rb*1.60,Math.PI*0.85,Math.PI*1.15);
+  cx.strokeStyle='rgba(255,180,50,0.4)';cx.lineWidth=2;cx.stroke();
+  cx.beginPath();cx.arc(0,0,Rb*1.60,-Math.PI*0.15,Math.PI*0.15);
+  cx.strokeStyle='rgba(255,180,50,0.4)';cx.lineWidth=2;cx.stroke();
+  cx.restore();
+
+  // Labels
+  const lblR=Rb*1.7;
+  lbl(cx_+lblR*1.02,cy_-10,'Ergosfera r_e','#86efac',10*sc,'left',false);
+  arrow(cx_+lblR*1.0,cy_-4,cx_+lblR*0.82,cy_,'rgba(134,239,172,0.6)',1,6);
+
+  lbl(cx_-lblR*1.2,cy_+5,'Orizzonte r+','#4ade80',10*sc,'right',false);
+  arrow(cx_-lblR*1.18,cy_+6,cx_-Rb*0.92,cy_+6,'rgba(74,222,128,0.6)',1,6);
+
+  lbl(cx_,cy_+Rb*0.8+6,'(Polo nord)','rgba(255,180,50,0.6)',8*sc,'center',false);
+  lbl(cx_,cy_-Rb*0.8*0.52-12,'(Polo)','rgba(255,180,50,0.6)',8*sc,'center',false);
+
+  card(W*0.03,H*0.84,W*0.94,H*0.11,0.65);
+  lbl(cx_,H*0.84+15,'Dentro l\'ergosfera: impossibile essere stazionari rispetto alle stelle fisse','#94a3b8',9.5*sc,'center',false);
+  lbl(cx_,H*0.84+32,'Ma si può ancora fuggire verso l\'esterno (a differenza dell\'orizzonte degli eventi)','#64748b',9*sc,'center',false);
+  lbl(cx_-W*0.22,H*0.84+15+18,'Equatore','#86efac',9*sc,'center',false);
+  lbl(cx_-W*0.22,H*0.84+15+30,'bulge massimo','#64748b',8*sc,'center',false);
+}
+
+// ── PHASE 3 — Processo di Penrose ────────────────────────────────────────────
+function ph3(){
+  const cx_=W/2, cy_=H*0.48;
+  const sc=Math.min(W,H)/620;
+  const Rb=Math.min(W,H)*0.10;
+  const ergoRx=Rb*2.2, ergoRy=Rb*2.2*0.62;
+
+  // Cycle: 6 sec, 4 steps
+  const step=(T/1.5)%4;
+
+  // Title
+  lbl(cx_,H*0.07,'Processo di Penrose','#4ade80',14*sc,'center',true);
+  lbl(cx_,H*0.07+20,'Estrazione di energia rotazionale dal buco nero','#94a3b8',9.5*sc,'center',false);
+
+  // Ergosphere (dashed oval)
+  gw('#4ade80',10);
+  cx.save();cx.translate(cx_,cy_);cx.scale(1,0.62);
+  const ge=cx.createRadialGradient(0,0,Rb*0.9,0,0,ergoRx);
+  ge.addColorStop(0,'rgba(74,222,128,0.05)');
+  ge.addColorStop(1,'rgba(74,222,128,0)');
+  cx.beginPath();cx.arc(0,0,ergoRx,0,Math.PI*2);cx.fillStyle=ge;cx.fill();
+  cx.beginPath();cx.arc(0,0,ergoRx,0,Math.PI*2);
+  cx.strokeStyle='rgba(74,222,128,0.4)';cx.lineWidth=1.5;cx.setLineDash([6,4]);cx.stroke();
+  cx.setLineDash([]);cx.restore();ng();
+
+  // BH
+  drawBH(cx_,cy_,Rb,true);
+
+  // Split point (inside ergosphere, left-top region)
+  const spx=cx_-ergoRx*0.45, spy=cy_-ergoRy*0.30;
+
+  // STEP 0: Particle A approaching from outside
+  if(step<2){
+    const frac=Math.min(step,1);
+    const startX=cx_-W*0.38, startY=cy_-H*0.10;
+    const ax=startX+(spx-startX)*Math.min(frac,0.95);
+    const ay=startY+(spy-startY)*Math.min(frac,0.95);
+    gw('#4ade80',12);
+    // trail
+    cx.beginPath();
+    for(let i=0;i<20;i++){
+      const tf=i/20*Math.min(frac,0.95);
+      const tx=startX+(spx-startX)*tf, ty=startY+(spy-startY)*tf;
+      i===0?cx.moveTo(tx,ty):cx.lineTo(tx,ty);
+    }
+    cx.strokeStyle='rgba(74,222,128,0.35)';cx.lineWidth=1.5;cx.stroke();ng();
+    gw('#86efac',14);
+    cx.beginPath();cx.arc(ax,ay,7,0,Math.PI*2);cx.fillStyle='#86efac';cx.fill();ng();
+    lbl(ax-18,ay-15,'A','#86efac',12*sc,'center',true);
+    lbl(ax-18,ay-28,'Particella in','#64748b',8.5*sc,'center',false);
+    if(frac>0.1) arrow(startX,startY,ax,ay,'rgba(74,222,128,0.5)',1.5,7);
+  }
+
+  // STEP 1-2: Split inside ergosphere
+  if(step>=1&&step<4){
+    const splitFrac=Math.min(step-1,1);
+    // Show split point
+    gw('#fff',16);
+    cx.beginPath();cx.arc(spx,spy,5,0,Math.PI*2);cx.fillStyle='#fff';cx.fill();ng();
+    // Explosion flash
+    if(step<2.3){
+      const ef=Math.min((step-1)*2,1);
+      gw('#fff',20*ef);
+      cx.beginPath();cx.arc(spx,spy,10*ef,0,Math.PI*2);cx.strokeStyle=`rgba(255,255,255,${0.6*(1-ef)})`;cx.lineWidth=2;cx.stroke();ng();
+    }
+
+    // Particle B → BH (red, falls inward)
+    if(step>1){
+      const bf=Math.min(step-1,1);
+      const bx_=spx+(cx_-Rb*0.8-spx)*bf;
+      const by_=spy+(cy_-spx*0.1-spy)*bf*0.5;
+      gw('#f87171',12);
+      cx.beginPath();cx.arc(bx_,by_,6,0,Math.PI*2);cx.fillStyle='#f87171';cx.fill();ng();
+      lbl(bx_+16,by_,'B','#f87171',11*sc,'left',true);
+      if(bf>0.05) arrow(spx,spy,bx_,by_,'rgba(248,113,113,0.5)',1.5,7);
+    }
+
+    // Particle C → escapes (green, goes outward fast)
+    if(step>1){
+      const cf=Math.min(step-1,1);
+      const endX=cx_+W*0.38, endY=cy_-H*0.18;
+      const cx2=spx+(endX-spx)*cf*0.95;
+      const cy2=spy+(endY-spy)*cf*0.95;
+      gw('#4ade80',14);
+      cx.beginPath();cx.arc(cx2,cy2,7,0,Math.PI*2);cx.fillStyle='#4ade80';cx.fill();ng();
+      lbl(cx2+16,cy2,'C','#4ade80',12*sc,'left',true);
+      lbl(cx2+16,cy2+14,'E > E_A !','#86efac',9*sc,'left',true);
+      if(cf>0.05) arrow(spx,spy,cx2,cy2,'rgba(74,222,128,0.6)',1.5,7);
+    }
+  }
+
+  // Labels on ergosphere
+  lbl(cx_,cy_-ergoRy*0.58,'Ergosfera','#4ade80',9*sc,'center',false);
+  lbl(cx_+ergoRx*0.68,cy_-ergoRy*0.02,'Orizzonte r+','#64748b',8.5*sc,'left',false);
+
+  // Energy conservation panel
+  const eAlpha=step>2?Math.min(step-2,1):0;
+  if(eAlpha>0.05){
+    cx.globalAlpha=eAlpha;
+    card(W*0.04,H*0.78,W*0.55,H*0.16,0.75);
+    lbl(W*0.04+W*0.275,H*0.78+16,'Conservazione dell\'energia','#4ade80',10*sc,'center',true);
+    lbl(W*0.04+W*0.275,H*0.78+32,'E_A = E_B + E_C','#e2e8f0',12*sc,'center',true);
+    lbl(W*0.04+W*0.275,H*0.78+50,'E_B < 0 (nel BH)   E_C > E_A','#86efac',10*sc,'center',false);
+    lbl(W*0.04+W*0.275,H*0.78+68,'Energia massima estraibile: ≈ 29% Mc²','#f87171',9.5*sc,'center',false);
+    cx.globalAlpha=1;
+  }
+
+  // Right comparison card
+  card(W*0.64,H*0.72,W*0.32,H*0.22,0.72);
+  lbl(W*0.64+W*0.16,H*0.72+16,'Efficienza di estrazione','#4ade80',9.5*sc,'center',true);
+  lbl(W*0.64+W*0.16,H*0.72+32,'Fusione nucleare','#94a3b8',9*sc,'center',false);
+  lbl(W*0.64+W*0.16,H*0.72+46,'0.7% Mc²','#e2e8f0',11*sc,'center',true);
+  lbl(W*0.64+W*0.16,H*0.72+62,'Processo di Penrose','#4ade80',9*sc,'center',false);
+  lbl(W*0.64+W*0.16,H*0.72+76,'≤ 29% Mc²','#86efac',12*sc,'center',true);
+
+  // Step indicator
+  const stepNames=['1: Particella A entra','2: A nell\'ergosfera','3: Divisione in B e C','4: C sfugge con E > E_A'];
+  lbl(cx_,H*0.93,'Fase '+Math.min(Math.floor(step)+1,4)+': '+stepNames[Math.min(Math.floor(step),3)],'#64748b',9*sc,'center',false);
+}
+
+// ── PHASE 4 — Orbite ISCO ────────────────────────────────────────────────────
+function ph4(){
+  const cx_=W/2, cy_=H*0.50;
+  const sc=Math.min(W,H)/620;
+  const M=Math.min(W,H)*0.04; // M unit in pixels
+
+  lbl(cx_,H*0.07,'Orbite Circolari — ISCO','#4ade80',14*sc,'center',true);
+  lbl(cx_,H*0.07+20,'Innermost Stable Circular Orbit','#94a3b8',10*sc,'center',false);
+
+  const bhR=M*1.5; // event horizon ~1.5M (Schwarzschild would be 2M)
+
+  // Ergosphere (dashed)
+  gw('#4ade80',8);
+  cx.save();cx.translate(cx_,cy_);cx.scale(1,0.62);
+  cx.beginPath();cx.arc(0,0,bhR*1.5,0,Math.PI*2);
+  cx.strokeStyle='rgba(74,222,128,0.3)';cx.lineWidth=1.2;cx.setLineDash([4,3]);cx.stroke();
+  cx.setLineDash([]);cx.restore();ng();
+
+  // Orbit rings (multiple radii)
+  const orbits=[
+    {r:M*1.0,label:'ISCO Kerr pro. r=M',col:'#86efac',stable:true,nP:3},
+    {r:M*2.5,label:'',col:'rgba(74,222,128,0.5)',stable:true,nP:4},
+    {r:M*4.0,label:'',col:'rgba(74,222,128,0.4)',stable:true,nP:5},
+    {r:M*6.0,label:'ISCO Schwarzschild r=6M',col:'#fbbf24',stable:true,nP:6},
+    {r:M*8.5,label:'',col:'rgba(74,222,128,0.25)',stable:true,nP:7},
+  ];
+
+  // Unstable region (inside Kerr ISCO)
+  const unstabG=cx.createRadialGradient(cx_,cy_,bhR,cx_,cy_,M*1.0);
+  unstabG.addColorStop(0,'rgba(248,113,113,0.08)');
+  unstabG.addColorStop(1,'rgba(248,113,113,0.02)');
+  cx.beginPath();cx.arc(cx_,cy_,M*1.0,0,Math.PI*2);cx.fillStyle=unstabG;cx.fill();
+
+  orbits.forEach(orb=>{
+    gw(orb.col,orb.stable?6:10);
+    cx.beginPath();cx.arc(cx_,cy_,orb.r,0,Math.PI*2);
+    cx.strokeStyle=orb.stable?orb.col:'rgba(248,113,113,0.4)';
+    cx.lineWidth=orb.stable?1.2:1.5;
+    if(!orb.stable)cx.setLineDash([3,3]);
+    cx.stroke();cx.setLineDash([]);
+    ng();
+    if(orb.label){
+      const lx=cx_+orb.r*0.707+6, ly=cy_-orb.r*0.707-8;
+      lbl(lx,ly,orb.label,orb.col,8.5*sc,'left',true);
+    }
+    // Animated particles
+    for(let i=0;i<orb.nP;i++){
+      const ang=i/orb.nP*Math.PI*2+T*(0.6/orb.r*M);
+      const px=cx_+orb.r*Math.cos(ang), py=cy_+orb.r*Math.sin(ang);
+      gw(orb.col,8);
+      cx.beginPath();cx.arc(px,py,3.5,0,Math.PI*2);
+      cx.fillStyle=orb.col;cx.fill();ng();
+    }
+  });
+
+  // Spiraling unstable particles (inside ISCO)
+  for(let i=0;i<3;i++){
+    const baseT=T+i*2.1;
+    const spiralFrac=(baseT*0.08)%1;
+    const sr=bhR*1.05+(M*1.0-bhR*1.05)*(1-spiralFrac);
+    const sang=i*2.1+baseT*1.5;
+    if(sr>bhR){
+      const px=cx_+sr*Math.cos(sang), py=cy_+sr*Math.sin(sang);
+      gw('#f87171',10);
+      cx.beginPath();cx.arc(px,py,3,0,Math.PI*2);cx.fillStyle='#f87171';cx.fill();ng();
+    }
+  }
+
+  // BH
+  drawBH(cx_,cy_,bhR,true);
+
+  // Comparison chart (right panel)
+  card(W*0.65,H*0.20,W*0.31,H*0.55,0.72);
+  lbl(W*0.65+W*0.155,H*0.20+16,'Confronto ISCO','#4ade80',10*sc,'center',true);
+  const rows=[
+    {label:'Schwarzschild a=0',val:'r=6M',col:'#fbbf24'},
+    {label:'Kerr a=M (pro)',val:'r=M',col:'#86efac'},
+    {label:'Kerr a=M (retro)',val:'r=9M',col:'#94a3b8'},
+    {label:'','val':''},
+    {label:'Efficienza disco','val':''},
+    {label:'Schwarzschild','val:'η ≈ 5.7%',col:'#94a3b8'},
+    {label:'Kerr estremo','val':'η ≈ 42%',col:'#86efac'},
+  ];
+  rows.forEach((r,idx)=>{
+    const ry=H*0.20+36+idx*22;
+    if(r.label){
+      lbl(W*0.65+10,ry,r.label,r.col||'#64748b',8.5*sc,'left',false);
+      if(r.val) lbl(W*0.65+W*0.31-10,ry,r.val,r.col||'#e2e8f0',9*sc,'right',true);
+    }
+  });
+
+  // Labels
+  lbl(cx_-M*0.5,cy_+M*1.1+4,'Instabile','rgba(248,113,113,0.7)',8.5*sc,'center',false);
+  lbl(cx_-M*0.5,cy_+M*1.1+16,'(spirale verso BH)','rgba(248,113,113,0.5)',7.5*sc,'center',false);
+  lbl(cx_,H*0.92,'Particelle stabili (verde) — Particelle instabili spiralanti (rosso)','#64748b',9*sc,'center',false);
+}
+
+// ── PHASE 5 — Diagramma di Penrose di Kerr ───────────────────────────────────
+function ph5(){
+  const cx_=W/2, cy_=H*0.50;
+  const sc=Math.min(W,H)/620;
+
+  lbl(cx_,H*0.06,'Diagramma di Penrose — Buco Nero di Kerr','#4ade80',13*sc,'center',true);
+
+  const dw=Math.min(W*0.22,120), dh=Math.min(H*0.27,130);
+  const x0=cx_-dw*1.5, y0=cy_-dh*1.5;
+
+  // Colors for regions
+  const colI='rgba(74,222,128,0.08)';
+  const colII='rgba(255,200,50,0.08)';
+  const colIII='rgba(100,100,255,0.10)'; // r<0 region
+  const colRing='rgba(248,113,113,0.06)'; // near ring singularity
+
+  // Draw diamond shape helper
+  function diamond(gx,gy,w,h,fill,stroke,dash){
+    cx.save();
+    cx.beginPath();
+    cx.moveTo(gx+w/2,gy);cx.lineTo(gx+w,gy+h/2);
+    cx.lineTo(gx+w/2,gy+h);cx.lineTo(gx,gy+h/2);
+    cx.closePath();
+    cx.fillStyle=fill;cx.fill();
+    cx.strokeStyle=stroke;cx.lineWidth=1.2;
+    if(dash)cx.setLineDash(dash);
+    cx.stroke();cx.setLineDash([]);
+    cx.restore();
+  }
+
+  // 3 rows of the tower (top, middle, bottom)
+  // Each row: regions I (left), II (center), ring (near-center), r<0 (far right)
+  for(let row=0;row<3;row++){
+    const gy=y0+row*dh;
+
+    // Region I (exterior)
+    diamond(x0,gy,dw,dh,colI,'rgba(74,222,128,0.3)',[]);
+    lbl(x0+dw*0.5,gy+dh*0.5,'I',row===1?'#4ade80':'rgba(74,222,128,0.5)',10*sc,'center',true);
+
+    // Region II+ (between r+ and r-)
+    diamond(x0+dw,gy,dw,dh,colII,'rgba(255,200,50,0.35)',[]);
+    lbl(x0+dw*1.5,gy+dh*0.5,row===0?'II+':row===2?'II−':'II','rgba(255,200,50,0.8)',9*sc,'center',true);
+
+    // Region III (ring singularity / r<0)
+    diamond(x0+dw*2,gy,dw,dh,colRing,'rgba(248,113,113,0.35)',[3,2]);
+    // Ring singularity marker at corner
+    const ringX=x0+dw*2.5, ringY=gy+dh*0.5;
+    gw('#f87171',10);
+    cx.beginPath();cx.arc(ringX,ringY,5,0,Math.PI*2);
+    cx.strokeStyle='#f87171';cx.lineWidth=2;cx.stroke();ng();
+    lbl(ringX,ringY-12,'Ring','rgba(248,113,113,0.7)',7*sc,'center',false);
+
+    // r<0 region (antigravitational universe)
+    diamond(x0+dw*3,gy,dw,dh,colIII,'rgba(100,100,255,0.4)',[4,2]);
+    lbl(x0+dw*3.5,gy+dh*0.5,row===1?'r < 0':'r < 0','rgba(150,150,255,0.6)',8*sc,'center',false);
+    lbl(x0+dw*3.5,gy+dh*0.5+14,'antigrav','rgba(100,100,255,0.5)',7*sc,'center',false);
+  }
+
+  // Labels on boundaries
+  const ry=y0-16;
+  lbl(x0+dw*0.5,ry,'Regione I','rgba(74,222,128,0.7)',8*sc,'center',false);
+  lbl(x0+dw*1.5,ry,'II (tra r±)','rgba(255,200,50,0.7)',8*sc,'center',false);
+  lbl(x0+dw*2.5,ry,'Ring','rgba(248,113,113,0.7)',8*sc,'center',false);
+  lbl(x0+dw*3.5,ry,'r<0','rgba(100,100,255,0.7)',8*sc,'center',false);
+
+  // Animated worldline threading through regions
+  const wT=(T*0.04)%1; // slow animation, 0→1
+  const wPoints=[
+    [x0+dw*0.5,y0+dh*2.5],[x0+dw*0.5,y0+dh*1.8],
+    [x0+dw,y0+dh*1.5],[x0+dw*1.5,y0+dh*1.2],
+    [x0+dw*2,y0+dh*1.5],[x0+dw*2.5,y0+dh*1.5], // through ring
+    [x0+dw*3,y0+dh*1.5],[x0+dw*3.5,y0+dh*1.2],
+    [x0+dw*4,y0+dh*1.0],
+  ];
+  const totalPts=wPoints.length-1;
+  const wProg=wT*totalPts;
+  gw('#fff',8);
+  cx.beginPath();
+  for(let i=0;i<=Math.min(Math.floor(wProg)+1,totalPts);i++){
+    const p=wPoints[i];
+    const np=wPoints[Math.min(i+1,totalPts)];
+    if(i===0){cx.moveTo(p[0],p[1]);}
+    else{
+      if(i<Math.floor(wProg))cx.lineTo(p[0],p[1]);
+      else{
+        const f=wProg-Math.floor(wProg);
+        cx.lineTo(p[0]+(np[0]-p[0])*f, p[1]+(np[1]-p[1])*f);
+      }
+    }
+  }
+  cx.strokeStyle='rgba(255,255,200,0.6)';cx.lineWidth=1.8;cx.stroke();ng();
+
+  // Moving particle on worldline
+  const wpIdx=Math.min(Math.floor(wProg),totalPts-1);
+  const wpFrac=wProg-wpIdx;
+  const wp0=wPoints[wpIdx], wp1=wPoints[wpIdx+1]||wPoints[wpIdx];
+  const wpx=wp0[0]+(wp1[0]-wp0[0])*wpFrac;
+  const wpy=wp0[1]+(wp1[1]-wp0[1])*wpFrac;
+  gw('#fff',14);
+  cx.beginPath();cx.arc(wpx,wpy,5,0,Math.PI*2);cx.fillStyle='#fff';cx.fill();ng();
+
+  // Note box
+  card(W*0.04,H*0.84,W*0.58,H*0.12,0.7);
+  lbl(W*0.04+W*0.29,H*0.84+14,'La singolarità ad anello è evitabile','#86efac',10*sc,'center',true);
+  lbl(W*0.04+W*0.29,H*0.84+30,'Passando attraverso il centro dell\'anello (θ ≠ π/2) si entra in r<0','#94a3b8',9*sc,'center',false);
+  lbl(W*0.04+W*0.29,H*0.84+46,'Il diagramma si estende all\'infinito — universi multipli','#64748b',8.5*sc,'center',false);
+
+  // r<0 note
+  card(W*0.66,H*0.84,W*0.30,H*0.12,0.7);
+  lbl(W*0.66+W*0.15,H*0.84+14,'r < 0','rgba(100,100,255,0.8)',11*sc,'center',true);
+  lbl(W*0.66+W*0.15,H*0.84+30,'Universo antigravitazionale','rgba(100,100,255,0.6)',9*sc,'center',false);
+  lbl(W*0.66+W*0.15,H*0.84+46,'Repulsione gravitazionale!','#64748b',8.5*sc,'center',false);
+}
+
+// ── PHASE 6 — M87* EPIC ──────────────────────────────────────────────────────
+function ph6(){
+  const cx_=W/2, cy_=H*0.49;
+  const sc=Math.min(W,H)/620;
+  const shadowR=Math.min(W,H)*0.095;
+  const photonR=shadowR*1.45;
+
+  // ── Gravitational lensing arcs (behind disk) ──
+  for(let arc=0;arc<3;arc++){
+    const arcR=(1.9+arc*0.55)*shadowR;
+    const arcAlpha=0.25-arc*0.06;
+    const startA=Math.PI*0.55+arc*0.05, endA=Math.PI*0.95-arc*0.04;
+    const startA2=Math.PI*1.55+arc*0.05, endA2=Math.PI*1.95-arc*0.04;
+    gw('#fff',8-arc*2);
+    cx.save();cx.translate(cx_,cy_);cx.scale(1,0.35);
+    cx.beginPath();cx.arc(0,0,arcR,startA,endA);
+    cx.strokeStyle=`rgba(255,240,200,${arcAlpha})`;cx.lineWidth=2-arc*0.4;cx.stroke();
+    cx.beginPath();cx.arc(0,0,arcR,startA2,endA2);
+    cx.stroke();
+    cx.restore();ng();
+  }
+
+  // ── Accretion disk ──
+  const diskInner=shadowR*1.45, diskOuter=shadowR*4.2;
+  const nRings=26;
+  const diskRotAngle=T*0.06; // slow rotation
+
+  cx.save();cx.translate(cx_,cy_);
+  for(let i=nRings-1;i>=0;i--){
+    const t=i/(nRings-1);
+    const diskR=diskInner+(diskOuter-diskInner)*t;
+    const lineW=diskOuter*0.055*(1-t*0.55)+1.5;
+    const rot=diskRotAngle*(1-t*0.5); // inner rotates faster
+
+    // Color: inner=white/yellow, outer=dark red
+    const tc=1-t;
+    const rC=Math.floor(255);
+    const gC=Math.floor(150+105*tc);
+    const bC=Math.floor(20*tc);
+
+    // Doppler: left half (approaching) = brighter, right half (receding) = dimmer
+    const baseAlpha=0.55+0.35*tc;
+
+    // Left half (approaching side) — brighter, bluer-white
+    cx.save();
+    cx.beginPath();
+    cx.ellipse(0,0,diskR,diskR*0.25,rot,Math.PI/2,Math.PI*3/2,false);
+    const brightR=Math.min(rC+30,255), brightG=Math.min(gC+40,255), brightB=Math.min(bC+80,255);
+    cx.strokeStyle=`rgba(${brightR},${brightG},${brightB},${Math.min(baseAlpha*1.5,0.95)})`;
+    cx.lineWidth=lineW;
+    cx.stroke();cx.restore();
+
+    // Right half (receding side) — dimmer, redder
+    cx.save();
+    cx.beginPath();
+    cx.ellipse(0,0,diskR,diskR*0.25,rot,-Math.PI/2,Math.PI/2,false);
+    const dimR=Math.floor(rC*0.8), dimG=Math.floor(gC*0.55), dimB=Math.floor(bC*0.3);
+    cx.strokeStyle=`rgba(${dimR},${dimG},${dimB},${baseAlpha*0.55})`;
+    cx.lineWidth=lineW;
+    cx.stroke();cx.restore();
+  }
+  cx.restore();
+
+  // ── Frame-dragging swirl streaks ──
+  const nStreaks=14;
+  for(let i=0;i<nStreaks;i++){
+    const sBaseAng=i/nStreaks*Math.PI*2+T*1.5;
+    const sR=shadowR*(1.12+0.22*(i%3)*0.5);
+    const sLen=0.45+0.15*((i*17)%10)/10;
+    const sAlpha=0.35+0.4*((i*31)%10)/10;
+    gw('#86efac',8);
+    cx.save();cx.translate(cx_,cy_);cx.scale(1,0.6);
+    cx.beginPath();cx.arc(0,0,sR,sBaseAng,sBaseAng+sLen);
+    cx.strokeStyle=`rgba(134,239,172,${sAlpha})`;cx.lineWidth=2;cx.stroke();
+    cx.restore();ng();
+  }
+
+  // ── Photon sphere ──
+  gw('#86efac',16);
+  cx.save();cx.translate(cx_,cy_);cx.scale(1,1);
+  cx.beginPath();cx.arc(0,0,photonR,0,Math.PI*2);
+  cx.strokeStyle='rgba(134,239,172,0.55)';cx.lineWidth=1.8;cx.stroke();
+  cx.restore();ng();
+
+  // ── BH shadow (perfectly black) ──
+  cx.beginPath();cx.arc(cx_,cy_,shadowR,0,Math.PI*2);
+  cx.fillStyle='#000010';cx.fill();
+  // very subtle shadow glow
+  gw('#4ade80',6);
+  cx.beginPath();cx.arc(cx_,cy_,shadowR,0,Math.PI*2);
+  cx.strokeStyle='rgba(74,222,128,0.15)';cx.lineWidth=1;cx.stroke();ng();
+
+  // ── Relativistic jets ──
+  const jetLen=Math.min(H*0.34,220);
+  const jetW=shadowR*0.22;
+
+  // Top jet
+  cx.save();cx.translate(cx_,cy_-shadowR);
+  {
+    const jg=cx.createLinearGradient(0,0,0,-jetLen);
+    jg.addColorStop(0,'rgba(255,255,255,0.92)');
+    jg.addColorStop(0.25,'rgba(180,210,255,0.7)');
+    jg.addColorStop(0.6,'rgba(96,165,250,0.4)');
+    jg.addColorStop(1,'rgba(96,165,250,0)');
+    cx.beginPath();
+    cx.moveTo(-jetW,0);cx.lineTo(jetW,0);
+    cx.lineTo(jetW*0.12,-jetLen);cx.lineTo(-jetW*0.12,-jetLen);
+    cx.closePath();cx.fillStyle=jg;cx.fill();
+    // Glow
+    gw('#60a5fa',20);
+    cx.beginPath();
+    cx.moveTo(-jetW*0.5,0);cx.lineTo(jetW*0.5,0);
+    cx.lineTo(jetW*0.06,-jetLen*0.7);cx.lineTo(-jetW*0.06,-jetLen*0.7);
+    cx.closePath();cx.fillStyle='rgba(96,165,250,0.12)';cx.fill();ng();
+  }
+  // Jet plasma blobs
+  for(let i=0;i<6;i++){
+    const frac=((T*0.32+i*0.167)%1);
+    const by_=-(frac*jetLen);
+    const bx_=(Math.sin(i*2.5)*2);
+    const br=3.5*(1-frac*0.5);
+    const ba=0.9*(1-frac*0.5);
+    gw('#fff',10*ba);
+    cx.beginPath();cx.arc(bx_,by_,br,0,Math.PI*2);
+    cx.fillStyle=`rgba(200,225,255,${ba})`;cx.fill();ng();
+  }
+  cx.restore();
+
+  // Bottom jet
+  cx.save();cx.translate(cx_,cy_+shadowR);
+  {
+    const jg=cx.createLinearGradient(0,0,0,jetLen);
+    jg.addColorStop(0,'rgba(255,255,255,0.92)');
+    jg.addColorStop(0.25,'rgba(180,210,255,0.7)');
+    jg.addColorStop(0.6,'rgba(96,165,250,0.4)');
+    jg.addColorStop(1,'rgba(96,165,250,0)');
+    cx.beginPath();
+    cx.moveTo(-jetW,0);cx.lineTo(jetW,0);
+    cx.lineTo(jetW*0.12,jetLen);cx.lineTo(-jetW*0.12,jetLen);
+    cx.closePath();cx.fillStyle=jg;cx.fill();
+    gw('#60a5fa',18);
+    cx.beginPath();
+    cx.moveTo(-jetW*0.5,0);cx.lineTo(jetW*0.5,0);
+    cx.lineTo(jetW*0.06,jetLen*0.7);cx.lineTo(-jetW*0.06,jetLen*0.7);
+    cx.closePath();cx.fillStyle='rgba(96,165,250,0.1)';cx.fill();ng();
+  }
+  for(let i=0;i<5;i++){
+    const frac=((T*0.28+i*0.2)%1);
+    const by_=frac*jetLen;
+    const br=3*(1-frac*0.4);
+    const ba=0.85*(1-frac*0.45);
+    gw('#fff',9*ba);
+    cx.beginPath();cx.arc(0,by_,br,0,Math.PI*2);
+    cx.fillStyle=`rgba(200,225,255,${ba})`;cx.fill();ng();
+  }
+  cx.restore();
+
+  // ── Labels ──
+  // Spin
+  lbl(cx_+shadowR*1.3,cy_-shadowR*0.5,'a ≈ 0.9M','#86efac',9.5*sc,'left',true);
+  arrow(cx_+shadowR*1.28,cy_-shadowR*0.45,cx_+shadowR*0.55,cy_,'rgba(134,239,172,0.6)',1,6);
+
+  // Jets
+  const jTopY=cy_-shadowR-jetLen*0.55;
+  lbl(cx_+shadowR*1.8,jTopY,'Getti Relativistici','rgba(180,210,255,0.9)',9.5*sc,'left',true);
+  arrow(cx_+shadowR*1.78,jTopY+2,cx_+jetW*0.8,cy_-shadowR-jetLen*0.40,'rgba(96,165,250,0.6)',1,6);
+  arrow(cx_+shadowR*1.78,jTopY+2,cx_+jetW*0.8,cy_+shadowR+jetLen*0.40,'rgba(96,165,250,0.5)',1,6);
+
+  // Disk label
+  lbl(cx_-diskOuter*0.6,cy_+diskOuter*0.28,'Disco di','#fbbf24',9.5*sc,'right',false);
+  lbl(cx_-diskOuter*0.6,cy_+diskOuter*0.28+14,'Accrescimento','#fbbf24',9.5*sc,'right',false);
+  arrow(cx_-diskOuter*0.58,cy_+diskOuter*0.28+6,cx_-diskOuter*0.35,cy_+diskOuter*0.24*0.25,'rgba(251,191,36,0.55)',1,6);
+
+  // Doppler labels
+  lbl(cx_-diskOuter*0.82,cy_-diskOuter*0.08,'← Effetto Doppler','rgba(180,220,255,0.75)',9*sc,'right',false);
+  lbl(cx_+diskOuter*0.82,cy_-diskOuter*0.08,'Effetto Doppler →','rgba(220,130,80,0.75)',9*sc,'left',false);
+
+  // Bottom label
+  lbl(cx_,H*0.94,'M87* — 6.5×10⁹M☉ — EHT 2019','#64748b',9.5*sc,'center',false);
+  lbl(cx_,H*0.94+14,'Primo buco nero fotografato — spin a ≈ 0.9M confermato dai getti','#475569',8.5*sc,'center',false);
+}
+
+// ── Main loop ─────────────────────────────────────────────────────────────────
+function frame(){
+  bg();
+  drawStars();
+  cx.save();
+  [ph0,ph1,ph2,ph3,ph4,ph5,ph6][ph]();
+  cx.restore();
+  T+=0.016;
+  requestAnimationFrame(frame);
+}
+frame();
+</script>
+</body>
+</html>
