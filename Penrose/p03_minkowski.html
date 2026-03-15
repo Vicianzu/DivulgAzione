@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Minkowski — Penrose · DivulgAzione</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#000010; color:#e2e8f0; font-family:'Georgia',serif; overflow:hidden; }
+#canvas { display:block; }
+#ui { position:fixed; top:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center; padding:10px 20px; background:rgba(0,0,16,0.93); border-bottom:1px solid rgba(56,189,248,0.25); z-index:100; gap:12px; }
+#ui-title { font-size:12px; color:#38bdf8; letter-spacing:3px; text-transform:uppercase; white-space:nowrap; }
+#ui-phase { font-size:11px; color:#94a3b8; text-align:center; line-height:1.5; max-width:560px; }
+#ui-badge { font-size:13px; color:#7dd3fc; font-weight:bold; text-align:right; white-space:nowrap; }
+#bottom { position:fixed; bottom:0; left:0; right:0; padding:8px 16px; background:rgba(0,0,16,0.93); border-top:1px solid rgba(56,189,248,0.2); display:flex; justify-content:center; gap:5px; z-index:100; flex-wrap:wrap; }
+.btn { padding:5px 11px; border:1px solid rgba(56,189,248,0.3); background:rgba(12,20,40,0.9); color:#38bdf8; border-radius:20px; cursor:pointer; font-size:10px; transition:all 0.3s; font-family:Georgia,serif; }
+.btn:hover, .btn.active { background:rgba(56,189,248,0.15); border-color:#38bdf8; color:#7dd3fc; }
+.nav-btn { padding:5px 13px; border:1px solid rgba(148,163,184,0.25); background:rgba(12,20,40,0.9); color:#64748b; border-radius:20px; cursor:pointer; font-size:10px; transition:all 0.3s; text-decoration:none; display:inline-flex; align-items:center; }
+.nav-btn:hover { color:#94a3b8; border-color:#94a3b8; }
+#panel { position:fixed; right:14px; top:60px; width:225px; background:rgba(8,14,30,0.95); border:1px solid rgba(56,189,248,0.2); border-radius:10px; padding:13px; font-size:11px; color:#64748b; line-height:1.8; z-index:100; }
+#panel h3 { color:#38bdf8; font-size:11px; margin-bottom:8px; border-bottom:1px solid rgba(56,189,248,0.2); padding-bottom:5px; letter-spacing:1px; }
+.pr { display:flex; justify-content:space-between; margin-bottom:3px; }
+.pv { color:#e2e8f0; font-weight:bold; }
+.sep { border-color:rgba(56,189,248,0.15); margin:7px 0; }
+</style>
+</head>
+<body>
+<div id="ui">
+  <div id="ui-title">Penrose · 03 — Spazio-Tempo di Minkowski</div>
+  <div id="ui-phase">Lo spazio-tempo piatto è un diamante compatto nel diagramma conforme di Penrose</div>
+  <div id="ui-badge">① / 6</div>
+</div>
+<canvas id="canvas"></canvas>
+<div id="panel">
+  <h3>MINKOWSKI</h3>
+  <div class="pr"><span>Metrica:</span><span class="pv">η_μν = diag(−,+,+,+)</span></div>
+  <div class="pr"><span>Curvatura:</span><span class="pv">R_μν = 0</span></div>
+  <hr class="sep">
+  <div class="pr"><span>i⁰:</span><span class="pv">r→∞, t finito</span></div>
+  <div class="pr"><span>i⁺:</span><span class="pv">t→+∞, r finito</span></div>
+  <div class="pr"><span>i⁻:</span><span class="pv">t→−∞, r finito</span></div>
+  <div class="pr"><span>ℐ⁺:</span><span class="pv">u→+∞</span></div>
+  <div class="pr"><span>ℐ⁻:</span><span class="pv">v→−∞</span></div>
+  <hr class="sep">
+  <div style="font-size:10px;color:#475569;line-height:1.6;">u = t−r (ritardato)<br>v = t+r (avanzato)<br>ds² = −du dv + r² dΩ²</div>
+</div>
+<div id="bottom">
+  <a class="nav-btn" href="p02_conformal_geometry.html">← 02</a>
+  <button class="btn active" onclick="go(0)">① Minkowski Piatto</button>
+  <button class="btn" onclick="go(1)">② Compattificazione</button>
+  <button class="btn" onclick="go(2)">③ Diagramma Penrose</button>
+  <button class="btn" onclick="go(3)">④ Geodetiche</button>
+  <button class="btn" onclick="go(4)">⑤ Causalità</button>
+  <button class="btn" onclick="go(5)">⑥ Interattivo</button>
+  <a class="nav-btn" href="p04_schwarzschild.html">04 Schwarzschild →</a>
+</div>
+
+<script>
+const cv=document.getElementById('canvas'), cx=cv.getContext('2d');
+let W,H; function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;} resize(); window.addEventListener('resize',resize);
+let ph=0,T=0;
+const PHASES=[
+  {name:"① Minkowski — Spazio-Tempo Piatto",desc:"Lo spazio-tempo di Minkowski è la soluzione più semplice delle equazioni di Einstein: curvatura zero, nessuna materia. Metrica: ds² = −c²dt² + dx² + dy² + dz². Il setting della Relatività Speciale."},
+  {name:"② Compattificazione Conforme",desc:"La trasformazione T = arctan(t+r) + arctan(t−r), R = arctan(t+r) − arctan(t−r) comprime l'infinito in un dominio finito. La metrica diventa ds̃² = Ω⁻² ds² dove Ω = cos T + cos R."},
+  {name:"③ Il Diagramma di Penrose di Minkowski",desc:"L'intero spazio-tempo di Minkowski cade in un triangolo (per simmetria sferica: r≥0) o in un quadrato pieno (sezione t-x). Ogni punto rappresenta una 2-sfera S². I bordi sono all'infinito."},
+  {name:"④ Geodetiche nel Diagramma",desc:"Geodetiche timelike: linee quasi-verticali che vanno da i⁻ a i⁺. Geodetiche nulle (fotoni): linee a ±45°, da ℐ⁻ a ℐ⁺. Geodetiche spacelike: linee quasi-orizzontali tra i punti i⁰."},
+  {name:"⑤ Struttura Causale",desc:"Il diagramma rivela chi può inviare segnali a chi: solo eventi connessi da curve timelike o nulle possono comunicare. In Minkowski piatto, ogni evento può in principio raggiungere ogni altro evento futuro."},
+  {name:"⑥ Diagramma Interattivo",desc:"Esplora il diagramma di Minkowski: osserva le geodetiche di un osservatore e dei fotoni emessi in diverse direzioni. Il futuro di qualsiasi evento è il triangolo superiore del suo cono di luce."}
+];
+function go(n){ph=n;document.querySelectorAll('.btn').forEach((b,i)=>b.classList.toggle('active',i===n));document.getElementById('ui-phase').textContent=PHASES[n].desc;document.getElementById('ui-badge').textContent=`${['①','②','③','④','⑤','⑥'][n]} / 6`;}
+function gw(col,blur){cx.shadowColor=col;cx.shadowBlur=blur;} function ng(){cx.shadowBlur=0;}
+function lbl(x,y,txt,col,sz,al='center',bold=false){cx.fillStyle=col;cx.font=`${bold?'bold ':''}${sz}px Georgia,serif`;cx.textAlign=al;cx.fillText(txt,x,y);}
+const STARS=Array.from({length:180},()=>({x:Math.random()*4000,y:Math.random()*2000,r:Math.random()*1.1+0.2,o:Math.random()}));
+function stars(){STARS.forEach(s=>{cx.beginPath();cx.arc(s.x,s.y,s.r,0,Math.PI*2);cx.fillStyle=`rgba(255,255,255,${s.o*(0.4+0.3*Math.sin(T*0.2+s.x*0.01))})`;cx.fill();});}
+function bg(){const g=cx.createRadialGradient(W/2,H/2,80,W/2,H/2,Math.max(W,H)*0.9);g.addColorStop(0,'#020920');g.addColorStop(1,'#000010');cx.fillStyle=g;cx.fillRect(0,0,W,H);}
+
+function drawPenroseDiamond(cx2,cy2,dS,col,label){
+  cx.beginPath();
+  cx.moveTo(cx2,cy2-dS); cx.lineTo(cx2+dS,cy2); cx.lineTo(cx2,cy2+dS); cx.lineTo(cx2-dS,cy2);
+  cx.closePath();
+  cx.fillStyle='rgba(15,23,42,0.7)'; cx.fill();
+  cx.strokeStyle=col; gw(col,10); cx.lineWidth=2; cx.stroke(); ng();
+  // Grid inside
+  const N=8;
+  for(let i=1;i<N;i++){
+    const t=i/N;
+    const y=cy2-dS+2*dS*t;
+    const xH=dS*(1-Math.abs(2*t-1));
+    cx.beginPath(); cx.moveTo(cx2-xH,y); cx.lineTo(cx2+xH,y);
+    cx.strokeStyle='rgba(100,116,139,0.12)'; cx.lineWidth=1; cx.stroke();
+  }
+  // Null geodesics grid
+  for(let i=-N+1;i<N;i++){
+    const y0=cy2+i*(dS/N*1.0);
+    cx.beginPath(); cx.moveTo(cx2-dS,cy2); cx.lineTo(cx2,cy2-dS); // doesn't matter, let me use proper lines
+  }
+}
+
+/* Draw standard Minkowski Penrose triangle (r>=0 half) */
+function drawMinkTriangle(cx2,cy2,dS,alpha=1){
+  cx.save(); cx.globalAlpha=alpha;
+  cx.beginPath();
+  cx.moveTo(cx2-dS,cy2); cx.lineTo(cx2+dS,cy2); cx.lineTo(cx2,cy2-dS*2); cx.closePath();
+  cx.fillStyle='rgba(15,23,42,0.8)'; cx.fill();
+  cx.strokeStyle='#38bdf8'; gw('#38bdf8',8); cx.lineWidth=2; cx.stroke(); ng();
+  cx.restore();
+}
+
+/* Draw full Minkowski Penrose square */
+function drawMinkSquare(cx2,cy2,dS){
+  cx.beginPath();
+  cx.moveTo(cx2,cy2-dS); cx.lineTo(cx2+dS,cy2); cx.lineTo(cx2,cy2+dS); cx.lineTo(cx2-dS,cy2);
+  cx.closePath();
+  cx.fillStyle='rgba(10,20,50,0.8)'; cx.fill();
+  cx.strokeStyle='#38bdf8'; gw('#38bdf8',10); cx.lineWidth=2.5; cx.stroke(); ng();
+  // Interior null grid
+  const N=10;
+  for(let i=-N;i<=N;i++){
+    const off=i*(dS/N);
+    // Upper-right going
+    cx.beginPath();
+    const x1=cx2+off,y1=cy2-dS; const x2=cx2+dS,y2=cy2+off;
+    const x3=cx2+off,y3=cy2+dS; const x4=cx2-dS,y4=cy2+off;
+    // Clip to diamond: line from (cx2+off, cy2-dS) at 45°
+    cx.moveTo(Math.max(cx2-dS,cx2+off-dS),cy2-(dS-Math.abs(off)));
+    cx.lineTo(Math.min(cx2+dS,cx2+off+dS),cy2+(dS-Math.abs(off)));
+    cx.strokeStyle='rgba(56,189,248,0.07)'; cx.lineWidth=1; cx.stroke();
+    cx.beginPath();
+    cx.moveTo(Math.max(cx2-dS,cx2-off-dS),cy2-(dS-Math.abs(off)));
+    cx.lineTo(Math.min(cx2+dS,cx2-off+dS),cy2+(dS-Math.abs(off)));
+    cx.stroke();
+  }
+}
+
+/* ── PHASE 0: Flat spacetime ─────────── */
+function ph0(){
+  lbl(W/2,H*0.09,'Spazio-Tempo di Minkowski','#38bdf8',22,'center',true);
+  lbl(W/2,H*0.09+30,'ds² = −c²dt² + dx² + dy² + dz²     (spazio-tempo piatto, R_μν = 0)','#7dd3fc',13,'center');
+
+  const cx2=W/2, cy2=H*0.52;
+  const S=Math.min(W,H)*0.06;
+
+  // 3D spacetime diagram
+  for(let i=-5;i<=5;i++){
+    cx.beginPath(); cx.moveTo(cx2+i*S,cy2-H*0.35); cx.lineTo(cx2+i*S,cy2+H*0.35);
+    cx.strokeStyle='rgba(56,189,248,0.12)'; cx.lineWidth=1; cx.stroke();
+    cx.beginPath(); cx.moveTo(cx2-W*0.4,cy2+i*S*1.1); cx.lineTo(cx2+W*0.4,cy2+i*S*1.1);
+    cx.stroke();
+  }
+
+  // t-axis
+  cx.beginPath(); cx.moveTo(cx2,cy2+H*0.38); cx.lineTo(cx2,cy2-H*0.38);
+  cx.strokeStyle='#38bdf8'; cx.lineWidth=2; cx.stroke();
+  lbl(cx2+14,cy2-H*0.36,'t','#38bdf8',14,'left');
+  // x-axis
+  cx.beginPath(); cx.moveTo(cx2-W*0.42,cy2); cx.lineTo(cx2+W*0.42,cy2);
+  cx.strokeStyle='#38bdf8'; cx.lineWidth=2; cx.stroke();
+  lbl(cx2+W*0.41,cy2+16,'x','#38bdf8',14,'left');
+
+  // Light cone
+  const cR=Math.min(W,H)*0.28;
+  cx.beginPath(); cx.moveTo(cx2,cy2); cx.lineTo(cx2+cR,cy2-cR); cx.strokeStyle='#fde68a'; cx.lineWidth=2; cx.stroke();
+  cx.beginPath(); cx.moveTo(cx2,cy2); cx.lineTo(cx2-cR,cy2-cR); cx.strokeStyle='#fde68a'; cx.lineWidth=2; cx.stroke();
+  cx.beginPath(); cx.moveTo(cx2,cy2); cx.lineTo(cx2+cR,cy2+cR); cx.strokeStyle='rgba(253,230,138,0.4)'; cx.lineWidth=2; cx.stroke();
+  cx.beginPath(); cx.moveTo(cx2,cy2); cx.lineTo(cx2-cR,cy2+cR); cx.strokeStyle='rgba(253,230,138,0.4)'; cx.lineWidth=2; cx.stroke();
+
+  // Animated photon
+  const prog=(T*0.5)%1;
+  cx.beginPath(); cx.arc(cx2+prog*cR,cy2-prog*cR,5,0,Math.PI*2);
+  cx.fillStyle='#fbbf24'; gw('#fbbf24',12); cx.fill(); ng();
+  lbl(cx2,cy2+6,'●','#f59e0b',12,'center');
+  lbl(cx2,cy2+22,'p','#f59e0b',10,'center');
+
+  const tags=[{x:cx2+cR*0.5,y:cy2-cR*0.8,t:'Futuro\ncausale',c:'#60a5fa'},{x:cx2+cR*0.7,y:cy2+cR*0.5,t:'Passato\ncausale',c:'#f87171'},{x:cx2+cR*0.85,y:cy2+6,t:'Spacelike',c:'#4ade80'}];
+  tags.forEach(tag=>{lbl(tag.x,tag.y,tag.t,tag.c,10,'center');});
+}
+
+/* ── PHASE 1: Compactification ─────── */
+function ph2b(){
+  lbl(W/2,H*0.09,'Compattificazione Conforme','#38bdf8',22,'center',true);
+  lbl(W/2,H*0.09+30,'arctan comprime ±∞ in (−π/2, +π/2) — preservando la struttura causale','#7dd3fc',12,'center');
+
+  // Show arctan function
+  const fx=W*0.22, fy=H*0.5;
+  const plotW=W*0.3, plotH=H*0.3;
+  cx.beginPath(); cx.moveTo(fx-plotW/2,fy); cx.lineTo(fx+plotW/2,fy);
+  cx.strokeStyle='rgba(100,116,139,0.5)'; cx.lineWidth=1; cx.stroke();
+  cx.beginPath(); cx.moveTo(fx,fy-plotH*0.6); cx.lineTo(fx,fy+plotH*0.6);
+  cx.strokeStyle='rgba(100,116,139,0.5)'; cx.lineWidth=1; cx.stroke();
+  // arctan curve
+  cx.beginPath();
+  for(let x=-6;x<=6;x+=0.05){
+    const px=fx+x*(plotW/12);
+    const py=fy-Math.atan(x)*(plotH*0.55/(Math.PI/2));
+    if(x===-6) cx.moveTo(px,py); else cx.lineTo(px,py);
+  }
+  cx.strokeStyle='#38bdf8'; cx.lineWidth=2; cx.stroke();
+  // Asymptotes
+  cx.beginPath(); cx.moveTo(fx-plotW/2,fy-plotH*0.55);cx.lineTo(fx+plotW/2,fy-plotH*0.55);
+  cx.strokeStyle='rgba(253,230,138,0.3)'; cx.lineWidth=1; cx.setLineDash([4,4]); cx.stroke();
+  cx.beginPath(); cx.moveTo(fx-plotW/2,fy+plotH*0.55);cx.lineTo(fx+plotW/2,fy+plotH*0.55);
+  cx.stroke(); cx.setLineDash([]);
+  lbl(fx+plotW/2+10,fy-plotH*0.52,'+π/2','#fde68a',10,'left');
+  lbl(fx+plotW/2+10,fy+plotH*0.52,'−π/2','#fde68a',10,'left');
+  lbl(fx,fy+plotH*0.72,'arctan(t)','#38bdf8',11,'center');
+  lbl(fx-plotW/2-5,fy+4,'−∞','#64748b',9,'right');
+  lbl(fx+plotW/2+5,fy+4,'+∞','#64748b',9,'left');
+
+  // Arrow
+  lbl(W/2,H*0.5,'⟶','#fb923c',22,'center');
+  lbl(W/2,H*0.5+22,'Ω factor','#fdba74',11,'center');
+
+  // Result: compact diamond
+  const rx=W*0.75, ry=H*0.5, dS=H*0.28;
+  drawMinkSquare(rx,ry,dS);
+  lbl(rx,ry-dS-16,'i⁺','#60a5fa',14,'center',true);
+  lbl(rx,ry+dS+16,'i⁻','#f87171',14,'center',true);
+  lbl(rx+dS+16,ry,'i⁰','#4ade80',14,'center',true);
+  lbl(rx-dS-16,ry,'i⁰','#4ade80',14,'center',true);
+  lbl(rx+dS*0.5+10,ry-dS*0.5-10,'ℐ⁺','#fbbf24',12,'center');
+  lbl(rx-dS*0.5-10,ry-dS*0.5-10,'ℐ⁺','#fbbf24',12,'center');
+  lbl(rx+dS*0.5+10,ry+dS*0.5+10,'ℐ⁻','#fb923c',12,'center');
+  lbl(rx-dS*0.5-10,ry+dS*0.5+10,'ℐ⁻','#fb923c',12,'center');
+}
+
+/* ── PHASE 2: Penrose diagram ─────── */
+function ph3b(){
+  lbl(W/2,H*0.09,'Diagramma di Penrose di Minkowski','#38bdf8',22,'center',true);
+
+  const cx2=W/2, cy2=H*0.52, dS=H*0.3;
+  drawMinkSquare(cx2,cy2,dS);
+
+  // Boundary labels
+  const dots=[
+    {x:cx2,y:cy2-dS,l:'i⁺',c:'#60a5fa',d:'Futuro timelike\n(t→+∞, r finito)'},
+    {x:cx2,y:cy2+dS,l:'i⁻',c:'#f87171',d:'Passato timelike\n(t→−∞, r finito)'},
+    {x:cx2+dS,y:cy2,l:'i⁰',c:'#4ade80',d:'Infinito spaziale\n(r→+∞, t finito)'},
+    {x:cx2-dS,y:cy2,l:'i⁰',c:'#4ade80',d:''},
+  ];
+  dots.forEach(d=>{
+    cx.beginPath(); cx.arc(d.x,d.y,7,0,Math.PI*2);
+    cx.fillStyle=d.c; gw(d.c,15); cx.fill(); ng();
+    lbl(d.x+(d.x>cx2?16:d.x<cx2?-16:0),d.y+(d.y>cy2?18:d.y<cy2?-18:0),d.l,d.c,15,'center',true);
+  });
+
+  // Edge labels
+  lbl(cx2+dS*0.52,cy2-dS*0.52,'ℐ⁺','#fbbf24',13,'center');
+  lbl(cx2-dS*0.52,cy2-dS*0.52,'ℐ⁺','#fbbf24',13,'center');
+  lbl(cx2+dS*0.52,cy2+dS*0.52,'ℐ⁻','#fb923c',13,'center');
+  lbl(cx2-dS*0.52,cy2+dS*0.52,'ℐ⁻','#fb923c',13,'center');
+  lbl(cx2,cy2,'Region I\nMinkowski','#38bdf8',11,'center');
+
+  // r=0 axis (left edge if we show r≥0 only)
+  lbl(cx2-dS-24,cy2,'r = 0','#94a3b8',10,'right');
+  lbl(W/2,H*0.88,'Ogni punto del diagramma rappresenta una 2-sfera S² — l\'asse sinistro è r=0 (origine)','#64748b',11,'center');
+}
+
+/* ── PHASE 3: Geodesics ─────────── */
+function ph4b(){
+  lbl(W/2,H*0.09,'Geodetiche in Minkowski','#38bdf8',22,'center',true);
+
+  const cx2=W/2, cy2=H*0.52, dS=H*0.28;
+  drawMinkSquare(cx2,cy2,dS);
+
+  // Timelike geodesics (vertical lines)
+  for(let i=-3;i<=3;i++){
+    const xOff=i*dS*0.2;
+    if(Math.abs(xOff)>=dS*0.99)continue;
+    const yTop=cy2-dS+Math.abs(xOff);
+    const yBot=cy2+dS-Math.abs(xOff);
+    cx.beginPath(); cx.moveTo(cx2+xOff,yTop); cx.lineTo(cx2+xOff,yBot);
+    cx.strokeStyle='rgba(96,165,250,0.6)'; cx.lineWidth=1.5; cx.stroke();
+  }
+  lbl(cx2+dS*0.7,cy2,'Timelike','#60a5fa',10,'center');
+
+  // Null geodesics (45°)
+  for(let i=-3;i<=3;i++){
+    const yOff=i*dS*0.22;
+    const yStart=cy2+yOff; const xHalf=dS-Math.abs(yOff);
+    if(xHalf<=0)continue;
+    cx.beginPath(); cx.moveTo(cx2-xHalf,yStart); cx.lineTo(cx2+xHalf,cy2+yOff-2*xHalf+dS-dS);
+    // Right-going from left boundary to right boundary at 45°
+    const a=cy2+yOff, b=cx2-xHalf;
+    cx.moveTo(b,a); cx.lineTo(b+xHalf*2,a-xHalf*2);
+    cx.strokeStyle='rgba(253,230,138,0.5)'; cx.lineWidth=1.2; cx.stroke();
+    cx.beginPath(); cx.moveTo(cx2+xHalf,yStart); cx.lineTo(cx2-xHalf,cy2+yOff-0);
+    cx.moveTo(cx2+xHalf,yStart); cx.lineTo(cx2+xHalf-xHalf*2,cy2+yOff-xHalf*2);
+    cx.stroke();
+  }
+  lbl(cx2,cy2-dS*0.75,'Nulle (fotoni)','#fde68a',10,'center');
+
+  // Spacelike (horizontal)
+  for(let i=-2;i<=2;i++){
+    const yOff=i*dS*0.2; const xH=dS-Math.abs(yOff);
+    cx.beginPath(); cx.moveTo(cx2-xH,cy2+yOff); cx.lineTo(cx2+xH,cy2+yOff);
+    cx.strokeStyle='rgba(74,222,128,0.4)'; cx.lineWidth=1; cx.stroke();
+  }
+  lbl(cx2-dS*0.7,cy2,'Spacelike','#4ade80',10,'center');
+
+  // Animated photon
+  const prog=(T*0.35)%1;
+  cx.beginPath(); cx.arc(cx2-dS+prog*dS*2,cy2-dS+prog*dS*2,5,0,Math.PI*2);
+  cx.fillStyle='#fde68a'; gw('#fde68a',12); cx.fill(); ng();
+}
+
+/* ── PHASE 4: Causality ─────────── */
+function ph5b(){
+  lbl(W/2,H*0.09,'Struttura Causale di Minkowski','#38bdf8',22,'center',true);
+
+  const cx2=W/2, cy2=H*0.52, dS=H*0.27;
+  drawMinkSquare(cx2,cy2,dS);
+
+  // Event A
+  const ax=cx2-dS*0.3, ay=cy2+dS*0.2;
+  cx.beginPath(); cx.arc(ax,ay,7,0,Math.PI*2); cx.fillStyle='#f59e0b'; gw('#f59e0b',15); cx.fill(); ng();
+  lbl(ax-14,ay,'A','#f59e0b',12,'right',true);
+
+  // Future of A (cone)
+  const animated=Math.min(1,(T*0.3)%1.5);
+  const coneH=dS*1.5*animated;
+  cx.save();
+  cx.beginPath(); cx.moveTo(ax,ay); cx.lineTo(ax-coneH,ay-coneH); cx.lineTo(ax+coneH,ay-coneH); cx.closePath();
+  cx.clip();
+  const gf=cx.createLinearGradient(ax,ay,ax,ay-coneH);
+  gf.addColorStop(0,'rgba(96,165,250,0.5)'); gf.addColorStop(1,'rgba(96,165,250,0)');
+  cx.fillStyle=gf; cx.fill(); cx.restore();
+  lbl(ax,ay-coneH*0.5,'J⁺(A)','#60a5fa',10,'center');
+  lbl(ax,ay-coneH*0.5+14,'Futuro causale di A','#475569',9,'center');
+
+  // Past of A
+  const coneHP=dS*0.6;
+  cx.save(); cx.beginPath(); cx.moveTo(ax,ay); cx.lineTo(ax-coneHP,ay+coneHP); cx.lineTo(ax+coneHP,ay+coneHP); cx.closePath(); cx.clip();
+  const gp=cx.createLinearGradient(ax,ay,ax,ay+coneHP);
+  gp.addColorStop(0,'rgba(248,113,113,0.4)'); gp.addColorStop(1,'rgba(248,113,113,0)');
+  cx.fillStyle=gp; cx.fill(); cx.restore();
+  lbl(ax,ay+coneHP*0.5,'J⁻(A)','#f87171',10,'center');
+
+  lbl(W/2,H*0.88,'In Minkowski piatto ogni evento futuro è raggiungibile — non ci sono orizzonti','#64748b',11,'center');
+}
+
+/* ── PHASE 5: Interactive ─────────── */
+let mouseX=W/2, mouseY=H/2;
+document.addEventListener('mousemove',e=>{mouseX=e.clientX;mouseY=e.clientY;});
+function ph6b(){
+  lbl(W/2,H*0.09,'Diagramma Interattivo — Muovi il cursore','#38bdf8',20,'center',true);
+
+  const cx2=W/2, cy2=H*0.52, dS=H*0.28;
+  drawMinkSquare(cx2,cy2,dS);
+
+  // Labels
+  lbl(cx2,cy2-dS-14,'i⁺','#60a5fa',13,'center',true);
+  lbl(cx2,cy2+dS+14,'i⁻','#f87171',13,'center',true);
+  lbl(cx2+dS+14,cy2,'i⁰','#4ade80',13,'center',true);
+  lbl(cx2-dS-14,cy2,'i⁰','#4ade80',13,'center',true);
+  lbl(cx2+dS*0.55,cy2-dS*0.55,'ℐ⁺','#fbbf24',12,'center');
+  lbl(cx2-dS*0.55,cy2-dS*0.55,'ℐ⁺','#fbbf24',12,'center');
+  lbl(cx2+dS*0.55,cy2+dS*0.55,'ℐ⁻','#fb923c',12,'center');
+  lbl(cx2-dS*0.55,cy2+dS*0.55,'ℐ⁻','#fb923c',12,'center');
+
+  // Event at mouse position — clamp to diamond
+  const mx=mouseX-cx2, my=mouseY-cy2;
+  const inside=Math.abs(mx)/dS+Math.abs(my)/dS<0.98;
+  const ex=inside?mouseX:cx2, ey=inside?mouseY:cy2;
+
+  // Light cone at mouse
+  const rL=Math.min(dS*2, Math.sqrt((ex-cx2)**2+(ey-cy2)**2)+dS*0.5);
+  // Future cone
+  cx.beginPath(); cx.moveTo(ex,ey); cx.lineTo(ex-rL,ey-rL); cx.lineTo(ex+rL,ey-rL); cx.closePath();
+  cx.fillStyle='rgba(96,165,250,0.2)'; cx.fill();
+  cx.beginPath(); cx.moveTo(ex,ey); cx.lineTo(ex-rL,ey-rL); cx.strokeStyle='#60a5fa'; cx.lineWidth=1.5; cx.stroke();
+  cx.beginPath(); cx.moveTo(ex,ey); cx.lineTo(ex+rL,ey-rL); cx.strokeStyle='#60a5fa'; cx.lineWidth=1.5; cx.stroke();
+  // Past cone
+  cx.beginPath(); cx.moveTo(ex,ey); cx.lineTo(ex-rL,ey+rL); cx.strokeStyle='rgba(248,113,113,0.5)'; cx.lineWidth=1.5; cx.stroke();
+  cx.beginPath(); cx.moveTo(ex,ey); cx.lineTo(ex+rL,ey+rL); cx.strokeStyle='rgba(248,113,113,0.5)'; cx.lineWidth=1.5; cx.stroke();
+
+  if(inside){
+    cx.beginPath(); cx.arc(ex,ey,6,0,Math.PI*2); cx.fillStyle='#fbbf24'; gw('#fbbf24',14); cx.fill(); ng();
+    lbl(ex+14,ey,'p','#fbbf24',11,'left');
+  }
+  lbl(W/2,H*0.88,'Muovi il cursore dentro il diamante per posizionare l\'evento p e vedere il suo cono di luce','#64748b',11,'center');
+}
+
+function loop(){
+  bg(); stars(); T+=0.016;
+  if(ph===0) ph0(); else if(ph===1) ph2b(); else if(ph===2) ph3b();
+  else if(ph===3) ph4b(); else if(ph===4) ph5b(); else ph6b();
+  requestAnimationFrame(loop);
+}
+go(0); loop();
+</script>
+</body>
+</html>

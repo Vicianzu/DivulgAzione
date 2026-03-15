@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Penrose — Diagrammi &amp; Cosmologia Ciclica · DivulgAzione</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      background: #000010;
+      color: #e2e8f0;
+      font-family: Georgia, 'Times New Roman', serif;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    #starfield { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+    #content { position: relative; z-index: 1; max-width: 1100px; margin: 0 auto; padding: 60px 24px 40px; }
+    header { text-align: center; margin-bottom: 56px; }
+    header h1 {
+      font-size: clamp(2.6rem, 7vw, 4.8rem);
+      font-weight: normal;
+      letter-spacing: 0.06em;
+      background: linear-gradient(135deg, #f59e0b 0%, #f97316 40%, #a78bfa 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+      margin-bottom: 10px;
+    }
+    header p.subtitle { font-size: 1.1rem; color: #94a3b8; letter-spacing: 0.12em; text-transform: uppercase; }
+    header p.desc { font-size: 0.95rem; color: #64748b; margin-top: 14px; max-width: 700px; margin-left: auto; margin-right: auto; line-height: 1.7; }
+    .section-label {
+      font-size: 0.70rem; color: #f59e0b; letter-spacing: 3px; text-transform: uppercase;
+      font-family: 'Courier New', monospace; margin-bottom: 18px; margin-top: 48px;
+      padding-bottom: 10px; border-bottom: 1px solid rgba(245,158,11,0.18);
+    }
+    .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; margin-bottom: 36px; }
+    @media (max-width: 860px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+    @media (max-width: 540px) { .grid { grid-template-columns: 1fr; } }
+    .card {
+      background: rgba(15, 23, 42, 0.80); border: 1px solid rgba(255,255,255,0.07);
+      border-radius: 14px; padding: 26px 22px 22px; display: flex; flex-direction: column;
+      gap: 11px; text-decoration: none; color: inherit; backdrop-filter: blur(8px);
+      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+    }
+    .card:hover {
+      transform: scale(1.035) translateY(-4px);
+      border-color: var(--accent); box-shadow: 0 0 28px -4px var(--accent);
+    }
+    .card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+    .card-titles { flex: 1; }
+    .card h2 { font-size: 1rem; font-weight: normal; color: var(--accent); letter-spacing: 0.02em; line-height: 1.35; }
+    .card .sub { font-size: 0.76rem; color: #64748b; margin-top: 4px; letter-spacing: 0.04em; }
+    .badge {
+      background: var(--accent); color: #000010; font-size: 0.66rem;
+      font-family: 'Courier New', monospace; font-weight: bold;
+      padding: 3px 9px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; margin-top: 2px;
+    }
+    .card p { font-size: 0.84rem; color: #94a3b8; line-height: 1.6; flex: 1; }
+    .card-link { font-size: 0.76rem; color: var(--accent); opacity: 0.65; font-family: 'Courier New', monospace; margin-top: 4px; }
+    .card-num { font-size: 0.72rem; font-family: 'Courier New', monospace; color: var(--accent); opacity: 0.5; }
+    footer { text-align: center; font-size: 0.82rem; color: #475569; padding-top: 20px; border-top: 1px solid rgba(255,255,255,0.05); line-height: 1.8; margin-top: 40px; }
+    footer a { color: #64748b; text-decoration: none; }
+    footer a:hover { color: #94a3b8; }
+    .back-link { display: inline-flex; align-items: center; gap: 6px; color: #f59e0b; text-decoration: none; font-size: 0.82rem; font-family: 'Courier New', monospace; margin-bottom: 28px; opacity: 0.75; transition: opacity 0.2s; }
+    .back-link:hover { opacity: 1; }
+  </style>
+</head>
+<body>
+
+<canvas id="starfield"></canvas>
+
+<div id="content">
+  <a class="back-link" href="../index.html">← DivulgAzione Home</a>
+
+  <header>
+    <h1>Roger Penrose</h1>
+    <p class="subtitle">Diagrammi Interattivi &amp; Cosmologia Ciclica</p>
+    <p class="desc">Esplora la struttura causale dello spazio-tempo attraverso i celebri diagrammi conformi di Penrose:
+    buchi neri, singolarità, wormhole, de Sitter, Anti-de Sitter e la Cosmologia Ciclica Conforme (CCC).</p>
+  </header>
+
+  <main>
+
+    <p class="section-label">📐 Diagrammi di Penrose — Struttura Causale</p>
+    <div class="grid">
+
+      <a class="card" href="p01_roger_penrose.html" style="--accent:#f59e0b;">
+        <div class="card-header">
+          <div class="card-titles">
+            <div class="card-num">01</div>
+            <h2>Roger Penrose</h2>
+            <div class="sub">Vita, Opere &amp; Premi</div>
+          </div>
+          <span class="badge">6 fasi</span>
+        </div>
+        <p>Dal teorema delle singolarità (1965) al Premio Nobel 2020. La geometria conforme, la twistor theory e la cosmologia ciclica.</p>
+        <div class="card-link">p01_roger_penrose.html</div>
+      </a>
+
+      <a class="card" href="p02_conformal_geometry.html" style="--accent:#fb923c;">
+        <div class="card-header">
+          <div class="card-titles">
+            <div class="card-num">02</div>
+            <h2>Geometria Conforme</h2>
+            <div class="sub">Mappe conformi &amp; compattificazione</div>
+          </div>
+          <span class="badge">6 fasi</span>
+        </div>
+        <p>Come si comprime l'infinito in un diagramma finito. Trasformazioni conformi, coni di luce, geodetiche nulle e la struttura causale dello spazio-tempo.</p>
+        <div class="card-link">p02_conformal_geometry.html</div>
+      </a>
+
+      <a class="card" href="p03_minkowski.html" style="--accent:#38bdf8;">
+        <div class="card-header">
+          <div class="card-titles">
+            <div class="card-num">03</div>
+            <h2>Spazio-Tempo di Minkowski</h2>
+            <div class="sub">Il caso piatto</div>
+          </div>
+          <span class="badge">6 fasi</span>
+        </div>
+        <p>Il diagramma di Penrose dello spazio-tempo piatto: i⁰, i⁺, i⁻, ℐ⁺, ℐ⁻. Geodetiche timelike, spacelike e nulle nell'infinito conforme.</p>
+        <div class="card-link">p03_minkowski.html</div>
+      </a>
+
+      <a class="card" href="p04_schwarzschild.html" style="--accent:#a78bfa;">
+        <div class="card-header">
+          <div class="card-titles">
+            <div class="card-num">04</div>
+            <h2>Buco Nero di Schwarzschild</h2>
+            <div class="sub">Orizzonte degli eventi &amp; singolarità</div>
+          </div>
+          <span class="badge">7 fasi</span>
+        </div>
+        <p>L'orizzonte degli eventi, la singolarità spacelike, le regioni I e II. Visualizzazione 3D-style con disco di accrescimento luminoso che curva lo spazio-tempo.</p>
+        <div class="card-link">p04_schwarzschild.html</div>
+      </a>
+
+      <a class="card" href="p05_kruskal.html" style="--accent:#818cf8;">
+        <div class="card-header">
+          <div class="card-titles">
+            <div class="card-num">05</div>
+            <h2>Buco Nero Eterno (Kruskal)</h2>
+            <div class="sub">4 regioni &amp; wormhole</div>
+          </div>
+          <span class="badge">7 fasi</span>
+        </div>
+        <p>Il diagramma completo di Kruskal-Szekeres con 4 regioni: universo esterno, buco nero, universo parallelo e buco bianco. Il ponte Einstein-Rosen.</p>
+        <div class="card-link">p05_kruskal.html</div>
+      </a>
+
+      <a class="card" href="p06_collapse.html" style="--accent:#f472b6;">
+        <div class="card-header">
+          <div class="card-titles">
+            <div class="card-num">06</div>
+            <h2>Collasso Gravitazionale</h2>
+            <div class="sub">Formazione realistica di un BN</div>
+          </div>
+          <span class="badge">6 fasi</span>
+        </div>
+        <p>Come si forma un buco nero dal collasso di una stella: il diagramma di Penrose con la superficie stellare, l'orizzonte apparente e la singolarità.</p>
+        <div class="card-link">p06_collapse.html</div>
+      </a>
+
+    </div>
+
+    <p class="section-label">⚡ Buchi Neri Avanzati</p>
+    <div class="grid">
+
+      <a class="card" href="p07_charged.html" style="--accent:#34d399;">
+        <div class="card-header">
+          <div class="card-titles">
+            <div class="card-num">07</div>
+            <h2>Buco Nero Carico</h2>
+            <div class="sub">Reissner-Nordström</div>
+          </div>
+          <span class="badge">6 fasi</span>
+        </div>
+        <p>Due orizzonti (esterno r₊ e interno r₋), singolarità timelike, regioni infinite e la possibilità di viaggiare verso universi multipli.</p>
+        <div class="card-link">p07_charged.html</div>
+      </a>
+
+      <a class="card" href="p08_kerr.html" style="--accent:#4ade80;">
+        <div class="card-header">
+          <div class="card-titles">
+            <div class="card-num">08</div>
+            <h2>Buco Nero in Rotazione</h2>
+            <div class="sub">Metrica di Kerr &amp; Ergosfera</div>
+          </div>
+          <span class="badge">7 fasi</span>
+        </div>
+        <p>La geometria di Kerr: ergosfera, orizzonte di Killing, singolarità ad anello. Animazione 3D dello spazio-tempo trascinato dalla rotazione (frame-dragging).</p>
+        <div class="card-link">p08_kerr.html</div>
+      </a>
+
+      <a class="card" href="p09_hawking.html" style="--accent:#60a5fa;">
+        <div class="card-header">
+          <div class="card-titles">
+            <div class="card-num">09</div>
+            <h2>Radiazione di Hawking</h2>
+            <div class="sub">Evaporazione quantistica</div>
+          </div>
+          <span class="badge">6 fasi</span>
+        </div>
+        <p>La creazione di coppie virtuale all'orizzonte, la temperatura di Hawking T = ℏc³/(8πGMk), il paradosso dell'informazione e l'evaporazione del BN.</p>
+        <div class="card-link">p09_hawking.html</div>
+      </a>
+
+      <a class="card" href="p10_penrose_process.html" style="--accent:#22c55e;">
+        <div class="card-header">
+          <div class="card-titles">
+            <div class="card-num">10</div>
+            <h2>Processo di Penrose</h2>
+            <div class="sub">Estrazione di energia dall'ergosfera</div>
+          </div>
+          <span class="badge">5 fasi</span>
+        </div>
+        <p>Come estrarre energia rotazionale da un buco nero di Kerr: una particella entra nell'ergosfera, si divide, e un frammento esce con energia maggiore di quella originale.</p>
+        <div class="card-link">p10_penrose_process.html</div>
+      </a>
+
+      <a class="card" href="p11_de_sitter.html" style="--accent:#f59e0b;">
+        <div class="card-header">
+          <div class="card-titles">
+            <div class="card-num">11</div>
+            <h2>Spazio-Tempo de Sitter</h2>
+            <div class="sub">Λ &gt; 0 — Costante cosmologica positiva</div>
+          </div>
+          <span class="badge">5 fasi</span>
+        </div>
+        <p>Il diagramma di Penrose di de Sitter con orizzonti cosmologici, inflazione e il futuro lontano dell'universo. La struttura causale dell'espansione accelerata.</p>
+        <div class="card-link">p11_de_sitter.html</div>
+      </a>
+
+      <a class="card" href="p12_ads.html" style="--accent:#e879f9;">
+        <div class="card-header">
+          <div class="card-titles">
+            <div class="card-num">12</div>
+            <h2>Spazio-Tempo Anti-de Sitter</h2>
+            <div class="sub">Λ &lt; 0 — La geometria dell'olografia</div>
+          </div>
+          <span class="badge">5 fasi</span>
+        </div>
+        <p>Il diagramma di AdS con confine timelike, geodetiche che rimbalzano, struttura di Poincaré e il legame con la corrispondenza AdS/CFT di Maldacena.</p>
+        <div class="card-link">p12_ads.html</div>
+      </a>
+
+    </div>
+
+    <p class="section-label">🔄 Cosmologia Ciclica Conforme (CCC)</p>
+    <div class="grid">
+
+      <a class="card" href="p13_ccc_intro.html" style="--accent:#fb923c;">
+        <div class="card-header">
+          <div class="card-titles">
+            <div class="card-num">13</div>
+            <h2>CCC — Introduzione</h2>
+            <div class="sub">Il ciclo infinito dell'universo</div>
+          </div>
+          <span class="badge">6 fasi</span>
+        </div>
+        <p>La proposta di Penrose (2010): il futuro conformemente liscio di un universo dominato da Λ si raccorda geometricamente con il Big Bang di un nuovo eone.</p>
+        <div class="card-link">p13_ccc_intro.html</div>
+      </a>
+
+      <a class="card" href="p14_ccc_aeons.html" style="--accent:#f97316;">
+        <div class="card-header">
+          <div class="card-titles">
+            <div class="card-num">14</div>
+            <h2>CCC — Eoni e Crossover</h2>
+            <div class="sub">Dal Big Crunch al nuovo Big Bang</div>
+          </div>
+          <span class="badge">6 fasi</span>
+        </div>
+        <p>Come si concatenano gli eoni: la morte termica del vecchio universo corrisponde al Big Bang del nuovo. Il ruolo della massa nulla e dell'invarianza conforme.</p>
+        <div class="card-link">p14_ccc_aeons.html</div>
+      </a>
+
+      <a class="card" href="p15_ccc_evidence.html" style="--accent:#a78bfa;">
+        <div class="card-header">
+          <div class="card-titles">
+            <div class="card-num">15</div>
+            <h2>CCC — Evidenze Osservative</h2>
+            <div class="sub">Hawking points nella CMB</div>
+          </div>
+          <span class="badge">5 fasi</span>
+        </div>
+        <p>I "Hawking points": le anomalie circolari nella CMB che potrebbero essere segnali di buchi neri supermassivi evaporati nell'eone precedente. Dati Planck e WMAP.</p>
+        <div class="card-link">p15_ccc_evidence.html</div>
+      </a>
+
+    </div>
+
+  </main>
+
+  <footer>
+    <p>© 2026 Vicianzu — Divulgazione Scientifica · Sezione Penrose</p>
+    <p><a href="../index.html">← Torna alla home di DivulgAzione</a></p>
+  </footer>
+</div>
+
+<script>
+(function () {
+  const canvas = document.getElementById('starfield');
+  const ctx = canvas.getContext('2d');
+  let W, H, stars;
+  function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+  function initStars(n) {
+    stars = [];
+    for (let i = 0; i < n; i++) {
+      stars.push({ x: Math.random()*W, y: Math.random()*H, r: Math.random()*1.4+0.3,
+        alpha: Math.random(), delta: (Math.random()*0.006+0.002)*(Math.random()<0.5?1:-1) });
+    }
+  }
+  function draw() {
+    ctx.clearRect(0,0,W,H);
+    for (const s of stars) {
+      s.alpha += s.delta;
+      if (s.alpha>1||s.alpha<0) s.delta=-s.delta;
+      ctx.beginPath(); ctx.arc(s.x,s.y,s.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(255,255,255,${Math.max(0,Math.min(1,s.alpha))})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  resize();
+  initStars(Math.floor(Math.min(240,Math.max(120,window.innerWidth*window.innerHeight/8000))));
+  draw();
+  window.addEventListener('resize',()=>{ resize(); initStars(160); });
+}());
+</script>
+
+</body>
+</html>
