@@ -285,7 +285,8 @@ function ph1(){
   }
 
   // Density label
-  const rhoText=`ρ ∝ 1/r³  →  ρ = ${(1/(Math.max(collapse,0.05)*Math.max(collapse,0.05)*Math.max(collapse,0.05))).toFixed(1)}ρ₀`;
+  const clampedCollapse=Math.max(collapse,0.05);
+  const rhoText=`ρ ∝ 1/r³  →  ρ = ${(1/Math.pow(clampedCollapse,3)).toFixed(1)}ρ₀`;
   lbl(cx_,cy_+R0*1.7,rhoText,'#f9a8d4',12,'center',false);
 
   if(collapse<0.45){
@@ -601,6 +602,7 @@ function ph5(){
     const a0=i/segs*Math.PI*2-Math.PI/2;
     const a1=(i+1)/segs*Math.PI*2-Math.PI/2;
     // Bottom (angle=PI/2 from top, i.e. downward) is brightest
+    // Doppler brightening: sin(a + π/2) peaks at bottom of ring (approaching side)
     const doppler=0.5+0.5*Math.sin(a0+Math.PI/2);
     const gR=cx.createRadialGradient(cx_,cy_,ringInner*pulse,cx_,cy_,ringOuter*1.15*pulse);
     const alpha=0.6+0.35*doppler;
