@@ -1,748 +1,830 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>DivulgAzione — Fisica Teorica Interattiva</title>
+  <meta name="description" content="Simulazioni interattive di fisica teorica in italiano: AdS/CFT, relatività generale, meccanica quantistica, loop quantum gravity, asymptotic safety, diagrammi di Penrose.">
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --bg: #08090d;
+      --surface: #0f1117;
+      --border: rgba(255,255,255,0.07);
+      --text-primary: #e8e6e0;
+      --text-secondary: #8a8680;
+      --text-muted: #4a4845;
+      --font-serif: Georgia, 'Times New Roman', serif;
+      --font-mono: 'Courier New', Courier, monospace;
+      --max-w: 1160px;
+      --sidebar-w: 240px;
+    }
+
+    html { scroll-behavior: smooth; }
+
     body {
-      background: #000010;
-      color: #e2e8f0;
-      font-family: Georgia, 'Times New Roman', serif;
-      min-height: 100vh;
-      overflow-x: hidden;
+      background: var(--bg);
+      color: var(--text-primary);
+      font-family: var(--font-serif);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* ── Star canvas background ── */
-    #starfield {
-      position: fixed;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      z-index: 0;
-    }
-
-    /* ── Main content wrapper ── */
-    #content {
-      position: relative;
-      z-index: 1;
-      max-width: 1100px;
-      margin: 0 auto;
-      padding: 60px 24px 40px;
-    }
-
-    /* ── Header ── */
+    /* ── HEADER ── */
     header {
-      text-align: center;
-      margin-bottom: 64px;
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 96px 32px 72px;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
     }
 
-    header h1 {
-      font-size: clamp(2.8rem, 7vw, 5rem);
+    .site-label {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    h1 {
+      font-size: clamp(3.5rem, 8vw, 6rem);
       font-weight: normal;
-      letter-spacing: 0.06em;
-      background: linear-gradient(135deg, #a78bfa 0%, #38bdf8 50%, #4ade80 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+      line-height: 1.05;
+      margin-bottom: 20px;
+    }
+
+    .header-subtitle {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 28px;
+    }
+
+    .header-equation {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      letter-spacing: 0.08em;
+      opacity: 0.7;
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .layout {
+      max-width: var(--max-w);
+      margin: 0 auto;
+      padding: 0 32px;
+      display: flex;
+      gap: 0;
+      align-items: flex-start;
+    }
+
+    /* ── SIDEBAR TOC ── */
+    .toc {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      padding-right: 48px;
+      padding-top: 56px;
+      position: sticky;
+      top: 40px;
+      align-self: flex-start;
+    }
+
+    .toc-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+    }
+
+    .toc a {
+      font-family: var(--font-serif);
+      font-size: 0.82rem;
+      color: #64748b;
+      text-decoration: none;
+      display: block;
+      padding: 5px 0 5px 12px;
+      border-left: 2px solid transparent;
+      transition: all 0.2s;
+      line-height: 1.4;
+      margin-bottom: 2px;
+    }
+
+    .toc a:hover,
+    .toc a.active {
+      color: var(--text-primary);
+    }
+
+    .toc a[data-color="cyan"]:hover,
+    .toc a[data-color="cyan"].active { border-left-color: #22d3ee; }
+    .toc a[data-color="amber"]:hover,
+    .toc a[data-color="amber"].active { border-left-color: #f59e0b; }
+    .toc a[data-color="violet"]:hover,
+    .toc a[data-color="violet"].active { border-left-color: #a78bfa; }
+    .toc a[data-color="gray"]:hover,
+    .toc a[data-color="gray"].active  { border-left-color: #64748b; }
+
+    /* ── MAIN CONTENT ── */
+    main {
+      flex: 1;
+      min-width: 0;
+      padding-top: 56px;
+      padding-bottom: 80px;
+    }
+
+    /* ── SECTION ── */
+    section {
+      margin-bottom: 72px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
       margin-bottom: 12px;
     }
 
-    header p.subtitle {
-      font-size: 1.15rem;
-      color: #94a3b8;
-      letter-spacing: 0.12em;
+    .section-tag {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
     }
 
-    /* ── Section title ── */
     .section-title {
-      font-size: 0.72rem;
-      color: #0ea5e9;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      font-family: 'Courier New', monospace;
-      margin-bottom: 20px;
-      margin-top: 48px;
-      padding-bottom: 10px;
-      border-bottom: 1px solid rgba(14, 165, 233, 0.18);
+      font-size: 1.5rem;
+      font-weight: normal;
+      color: var(--text-primary);
     }
 
-    /* ── Card grid ── */
-    .grid {
+    .section-divider {
+      border: none;
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+      margin-bottom: 24px;
+    }
+
+    .section-desc {
+      font-size: 0.92rem;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 36px;
+      max-width: 640px;
+      font-style: italic;
+    }
+
+    /* ── ENTRIES ── */
+    a.entry {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin-bottom: 40px;
-    }
-
-    @media (max-width: 900px) {
-      .grid { grid-template-columns: repeat(2, 1fr); }
-    }
-
-    @media (max-width: 560px) {
-      .grid { grid-template-columns: 1fr; }
-    }
-
-    /* ── Card ── */
-    .card {
-      background: rgba(15, 23, 42, 0.75);
-      border: 1px solid rgba(255, 255, 255, 0.07);
-      border-radius: 14px;
-      padding: 28px 24px 24px;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
+      grid-template-columns: 56px 1fr auto;
+      gap: 0 20px;
+      padding: 20px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
       text-decoration: none;
       color: inherit;
-      backdrop-filter: blur(8px);
-      transition: transform 0.22s ease, box-shadow 0.22s ease, border-color 0.22s ease;
+      align-items: start;
+      transition: background 0.15s;
+      border-radius: 2px;
     }
 
-    .card:hover {
-      transform: scale(1.035) translateY(-4px);
-      border-color: var(--accent);
-      box-shadow: 0 0 28px -4px var(--accent);
+    a.entry:hover {
+      background: rgba(255,255,255,0.02);
     }
 
-    .card-header {
-      display: flex;
-      align-items: flex-start;
-      justify-content: space-between;
-      gap: 10px;
+    .entry-num {
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      padding-top: 3px;
     }
 
-    .card-titles { flex: 1; }
+    .entry-body { min-width: 0; }
 
-    .card h2 {
+    .entry-title {
       font-size: 1.05rem;
-      font-weight: normal;
-      color: var(--accent);
-      letter-spacing: 0.02em;
-      line-height: 1.35;
+      color: var(--text-primary);
+      line-height: 1.4;
+      margin-bottom: 5px;
+      transition: color 0.15s;
     }
 
-    .card .sub {
-      font-size: 0.78rem;
-      color: #64748b;
-      margin-top: 4px;
-      letter-spacing: 0.04em;
-    }
-
-    .badge {
-      background: var(--accent);
-      color: #000010;
-      font-size: 0.68rem;
-      font-family: 'Courier New', monospace;
-      font-weight: bold;
-      padding: 3px 9px;
-      border-radius: 20px;
-      white-space: nowrap;
-      flex-shrink: 0;
-      margin-top: 2px;
-    }
-
-    .card p {
-      font-size: 0.86rem;
-      color: #94a3b8;
-      line-height: 1.6;
-      flex: 1;
-    }
-
-    .card-link {
-      font-size: 0.78rem;
-      color: var(--accent);
-      opacity: 0.7;
-      font-family: 'Courier New', monospace;
-      margin-top: 4px;
-    }
-
-    /* ── Section title ── */
-    .section-title {
-      font-size: clamp(1.4rem, 3vw, 1.9rem);
-      font-weight: normal;
-      letter-spacing: 0.08em;
-      text-align: center;
-      margin: 0 0 32px;
-      padding-bottom: 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
-    }
-
-    .section-subtitle {
-      font-size: 0.85rem;
-      color: #64748b;
-      text-align: center;
-      margin-top: -20px;
-      margin-bottom: 32px;
-      letter-spacing: 0.06em;
-    }
-
-    /* ── Footer ── */
-    footer {
-      text-align: center;
+    .entry-desc {
       font-size: 0.82rem;
-      color: #475569;
-      padding-top: 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.05);
-      line-height: 1.8;
-    }
-
-    footer a {
       color: #64748b;
-      text-decoration: none;
-      transition: color 0.18s;
+      line-height: 1.6;
     }
 
-    footer a:hover { color: #94a3b8; }
+    .entry-meta {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--text-muted);
+      white-space: nowrap;
+      padding-top: 4px;
+    }
+
+    /* Hover accent per sezione */
+    section[data-color="cyan"] a.entry:hover .entry-title  { color: #22d3ee; }
+    section[data-color="amber"] a.entry:hover .entry-title { color: #f59e0b; }
+    section[data-color="violet"] a.entry:hover .entry-title{ color: #a78bfa; }
+    section[data-color="gray"] a.entry:hover .entry-title  { color: #94a3b8; }
+
+    /* ── ARCHIVIO (compact) ── */
+    .archive-grid {
+      display: flex;
+      flex-direction: column;
+    }
+
+    a.entry-compact {
+      display: grid;
+      grid-template-columns: 56px 1fr auto;
+      gap: 0 20px;
+      padding: 13px 8px;
+      border-bottom: 1px solid rgba(255,255,255,0.04);
+      text-decoration: none;
+      color: inherit;
+      align-items: center;
+      transition: background 0.15s;
+      border-radius: 2px;
+    }
+
+    a.entry-compact:hover {
+      background: rgba(255,255,255,0.015);
+    }
+
+    .entry-compact .entry-num {
+      font-size: 0.66rem;
+    }
+
+    .entry-compact .entry-title {
+      font-size: 0.88rem;
+      color: #8a8680;
+      margin-bottom: 0;
+      transition: color 0.15s;
+    }
+
+    a.entry-compact:hover .entry-title { color: #94a3b8; }
+
+    .entry-compact .entry-meta {
+      font-size: 0.65rem;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(255,255,255,0.06);
+      padding: 32px;
+      text-align: center;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-muted);
+      letter-spacing: 0.1em;
+    }
+
+    footer p + p {
+      margin-top: 8px;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 900px) {
+      header { padding: 56px 20px 40px; }
+      h1 { font-size: clamp(2.5rem, 12vw, 4rem); }
+
+      .layout {
+        flex-direction: column;
+        padding: 0 20px;
+      }
+
+      .toc { display: none; }
+
+      main { padding-top: 40px; }
+
+      a.entry {
+        grid-template-columns: 48px 1fr;
+      }
+      .entry-meta { display: none; }
+
+      a.entry-compact {
+        grid-template-columns: 48px 1fr;
+      }
+    }
   </style>
 </head>
 <body>
 
-<canvas id="starfield"></canvas>
+<header>
+  <p class="site-label">Divulgazione scientifica</p>
+  <h1>DivulgAzione</h1>
+  <p class="header-subtitle">Fisica Teorica Interattiva</p>
+  <p class="header-equation">G&#x03BC;&#x03BD; + &#x039B;g&#x03BC;&#x03BD; = 8&#x03C0;G T&#x03BC;&#x03BD;</p>
+</header>
 
-<div id="content">
-  <header>
-    <h1>DivulgAzione</h1>
-    <p class="subtitle">Fisica Teorica Interattiva</p>
-  </header>
+<div class="layout">
 
+  <!-- ── TOC SIDEBAR ── -->
+  <nav class="toc" aria-label="Indice dei contenuti">
+    <p class="toc-label">Indice</p>
+    <a href="#ads-cft" data-color="cyan">AdS/CFT — Serie</a>
+    <a href="#penrose" data-color="amber">Penrose — Diagrammi</a>
+    <a href="#fondamentali" data-color="violet">Teorie Fondamentali</a>
+    <a href="#archivio" data-color="gray">Archivio</a>
+  </nav>
+
+  <!-- ── MAIN CONTENT ── -->
   <main>
 
-    <p class="section-title">Progetto Divulgazione — Stringhe &amp; Olografia</p>
-    <div class="grid">
-
-    <!-- Card 1 — Stringhe v1 -->
-    <a class="card" href="Progetto%20divulgazione/v1_stringhe_calabi_yau.html"
-       style="--accent: #a78bfa;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Teoria delle Stringhe</h2>
-          <div class="sub">Stringhe → Particelle → Materia</div>
-        </div>
-        <span class="badge">6 fasi</span>
+    <!-- ════════════════════════════════════════
+         SEZIONE 1 — AdS/CFT
+    ════════════════════════════════════════ -->
+    <section id="ads-cft" data-color="cyan">
+      <div class="section-header">
+        <span class="section-tag" style="color:#22d3ee;">Serie educativa</span>
+        <h2 class="section-title">Gravitazione Quantistica — AdS/CFT</h2>
       </div>
-      <p>Dalla stringa quantistica nella varietà di Calabi-Yau fino agli atomi e alla materia barionica. Modi di vibrazione, campi quantistici, confinamento QCD.</p>
-      <div class="card-link">v1_stringhe_calabi_yau.html</div>
-    </a>
+      <hr class="section-divider">
+      <p class="section-desc">Una serie educativa in italiano sulla corrispondenza AdS/CFT — dalla supersimmetria alla congettura di Maldacena, dal principio olografico al paradosso dell'informazione.</p>
 
-    <!-- Card 2 — Stringhe v2 -->
-    <a class="card" href="Progetto%20divulgazione/v1_stringhe_calabi_yau_v2.html"
-       style="--accent: #818cf8;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Teoria delle Stringhe v2</h2>
-          <div class="sub">Versione aggiornata</div>
+      <a class="entry" href="tentativo%202/cap01_problema.html">
+        <span class="entry-num">CAP 01</span>
+        <div class="entry-body">
+          <div class="entry-title">Il Problema: Quantizzare la Gravità</div>
+          <div class="entry-desc">La tensione fondamentale tra relatività generale e meccanica quantistica.</div>
         </div>
-        <span class="badge">6 fasi</span>
-      </div>
-      <p>Versione migliorata della simulazione interattiva sulla teoria delle stringhe e le varietà di Calabi-Yau.</p>
-      <div class="card-link">v1_stringhe_calabi_yau_v2.html</div>
-    </a>
-
-    <!-- Card 3 — AdS/CFT v1 -->
-    <a class="card" href="Progetto%20divulgazione/v1_ads_cft.html"
-       style="--accent: #38bdf8;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Corrispondenza AdS/CFT</h2>
-          <div class="sub">La Dualità Olografica</div>
-        </div>
-        <span class="badge">7 fasi</span>
-      </div>
-      <p>Dal pile-up di D3-brane alla geometria Anti-de Sitter. Il dizionario di Maldacena (1997): gravità nel bulk ↔ teoria di gauge sul bordo.</p>
-      <div class="card-link">v1_ads_cft.html</div>
-    </a>
-
-    <!-- Card 4 — AdS/CFT v2 -->
-    <a class="card" href="Progetto%20divulgazione/v1_ads_cft_v2.html"
-       style="--accent: #7dd3fc;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>AdS/CFT v2</h2>
-          <div class="sub">Versione aggiornata</div>
-        </div>
-        <span class="badge">6 fasi</span>
-      </div>
-      <p>Versione migliorata della corrispondenza olografica AdS/CFT con visualizzazioni più dettagliate.</p>
-      <div class="card-link">v1_ads_cft_v2.html</div>
-    </a>
-
-    <!-- Card 5 — Bulk Reconstruction -->
-    <a class="card" href="Progetto%20divulgazione/v1_bulk_reconstruction.html"
-       style="--accent: #4ade80;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Bulk Reconstruction</h2>
-          <div class="sub">Olografia quantistica</div>
-        </div>
-        <span class="badge">6 fasi</span>
-      </div>
-      <p>Come le informazioni sul bordo CFT codificano completamente la fisica 5D del bulk AdS. Il principio olografico in azione.</p>
-      <div class="card-link">v1_bulk_reconstruction.html</div>
-    </a>
-
-    <!-- Card 6 — Relatività Speciale -->
-    <a class="card" href="Progetto%20divulgazione/v1_relativita_speciale.html"
-       style="--accent: #fb923c;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Relatività Speciale</h2>
-          <div class="sub">Einstein 1905</div>
-        </div>
-        <span class="badge">6 fasi</span>
-      </div>
-      <p>Dai postulati di Einstein alla dilatazione del tempo, contrazione delle lunghezze, spazio-tempo di Minkowski e E = mc².</p>
-      <div class="card-link">v1_relativita_speciale.html</div>
-    </a>
-
-    </div>
-
-    <p class="section-title">Teorie Fondamentali</p>
-    <div class="grid">
-
-    <!-- Card — GR -->
-    <a class="card" href="GR/v1_intro_general_relativity.html"
-       style="--accent: #a78bfa;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Relatività Generale</h2>
-          <div class="sub">Einstein 1915</div>
-        </div>
-        <span class="badge">8 fasi</span>
-      </div>
-      <p>Dal principio di equivalenza alle equazioni di campo di Einstein, onde gravitazionali, buchi neri e costante cosmologica.</p>
-      <div class="card-link">GR/v1_intro_general_relativity.html</div>
-    </a>
-
-    <!-- Card — LQG -->
-    <a class="card" href="LQG/v1_intro_lqg.html"
-       style="--accent: #34d399;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Loop Quantum Gravity</h2>
-          <div class="sub">LQG — Rovelli, Smolin</div>
-        </div>
-        <span class="badge">8 fasi</span>
-      </div>
-      <p>Dalle variabili di Ashtekar ai loop di Wilson, spin networks, spazio discreto e spin foam. Lo spazio-tempo quantizzato alla scala di Planck.</p>
-      <div class="card-link">LQG/v1_intro_lqg.html</div>
-    </a>
-
-    <!-- Card — QM -->
-    <a class="card" href="QM/v1_intro_quantum_mechanics.html"
-       style="--accent: #60a5fa;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Meccanica Quantistica</h2>
-          <div class="sub">Dalla crisi classica al Modello Standard</div>
-        </div>
-        <span class="badge">10 fasi</span>
-      </div>
-      <p>Funzione d'onda, indeterminazione di Heisenberg, dualità onda-corpuscolo, spin, QCD, entanglement, QED e bosone di Higgs.</p>
-      <div class="card-link">QM/v1_intro_quantum_mechanics.html</div>
-    </a>
-
-    <!-- Card — Asymptotic Safety -->
-    <a class="card" href="Asymptotic_safety/v1_intro_asymptotic_safety.html"
-       style="--accent: #f472b6;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Asymptotic Safety</h2>
-          <div class="sub">Sicurezza Asintotica — Weinberg</div>
-        </div>
-        <span class="badge">7 fasi</span>
-      </div>
-      <p>La proposta di Weinberg (1976) per rendere la gravità quantistica UV-completa tramite un punto fisso non-Gaussiano nel flusso RG.</p>
-      <div class="card-link">Asymptotic_safety/v1_intro_asymptotic_safety.html</div>
-    </a>
-
-    <!-- Card — viXra hydrogen -->
-    <a class="card" href="vixra%20divulgazione/v1_hydrogen_old_quantum_vs_qm.html"
-       style="--accent: #22c55e;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Idrogeno: Old QT vs QM</h2>
-          <div class="sub">viXra · Confronto concettuale</div>
-        </div>
-        <span class="badge">9 fasi</span>
-      </div>
-      <p>Livelli energetici dell'idrogeno: la vecchia teoria quantistica (Bohr, de Broglie) vs la meccanica quantistica di Schrödinger a confronto.</p>
-      <div class="card-link">vixra divulgazione/v1_hydrogen_old_quantum_vs_qm.html</div>
-    </a>
-
-    </div>
-
-    <p class="section-title">Tentativo 2 — Nuova Grafica (stile viXra)</p>
-    <div class="grid">
-
-    <!-- T2 Card 1 — AdS/CFT -->
-    <a class="card" href="tentativo%202/t2_v1_ads_cft.html"
-       style="--accent: #38bdf8;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>AdS/CFT — T2</h2>
-          <div class="sub">Corrispondenza Olografica</div>
-        </div>
-        <span class="badge">7 fasi</span>
-      </div>
-      <p>Nuova versione con layout viXra: barra top, pannello testo a sinistra, canvas animato con bulk/boundary. D3-brane → AdS₅ → dualità di Maldacena.</p>
-      <div class="card-link">tentativo 2/t2_v1_ads_cft.html</div>
-    </a>
-
-    <!-- T2 Card 2 — AdS/CFT v2 -->
-    <a class="card" href="tentativo%202/t2_v1_ads_cft_v2.html"
-       style="--accent: #7dd3fc;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>AdS/CFT v2 — T2</h2>
-          <div class="sub">Bulk Reconstruction focus</div>
-        </div>
-        <span class="badge">6 fasi</span>
-      </div>
-      <p>Ricostruzione del campo bulk, smearing kernel, cuneo di entanglement e superficie di Ryu-Takayanagi. Stile viXra con animazione interattiva.</p>
-      <div class="card-link">tentativo 2/t2_v1_ads_cft_v2.html</div>
-    </a>
-
-    <!-- T2 Card 3 — Bulk Reconstruction -->
-    <a class="card" href="tentativo%202/t2_v1_bulk_reconstruction.html"
-       style="--accent: #4ade80;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Bulk Reconstruction — T2</h2>
-          <div class="sub">Olografia Quantistica</div>
-        </div>
-        <span class="badge">6 fasi</span>
-      </div>
-      <p>Operatori CFT sul bordo, gravitoni nel bulk, smearing, entanglement wedge e RT surface. Canvas animato con geodesiche e coni di smearing.</p>
-      <div class="card-link">tentativo 2/t2_v1_bulk_reconstruction.html</div>
-    </a>
-
-    <!-- T2 Card 4 — Stringhe CY -->
-    <a class="card" href="tentativo%202/t2_v1_stringhe_calabi_yau.html"
-       style="--accent: #a78bfa;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Stringhe Calabi-Yau — T2</h2>
-          <div class="sub">Teoria delle Stringhe</div>
-        </div>
-        <span class="badge">6 fasi</span>
-      </div>
-      <p>Stringa fondamentale, modi di vibrazione, compattificazione su Calabi-Yau, topologia e fisica a bassa energia. Animazione con stringa oscillante e toro.</p>
-      <div class="card-link">tentativo 2/t2_v1_stringhe_calabi_yau.html</div>
-    </a>
-
-    <!-- T2 Card 5 — Stringhe CY v2 -->
-    <a class="card" href="tentativo%202/t2_v1_stringhe_calabi_yau_v2.html"
-       style="--accent: #818cf8;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Stringhe CY v2 — T2</h2>
-          <div class="sub">D-brane e Dualità</div>
-        </div>
-        <span class="badge">6 fasi</span>
-      </div>
-      <p>D-brane, M-teoria, dualità T e S, moduli della Calabi-Yau, supersimmetria e previsioni sperimentali. Canvas con brana e stringhe aperte animate.</p>
-      <div class="card-link">tentativo 2/t2_v1_stringhe_calabi_yau_v2.html</div>
-    </a>
-
-    <!-- T2 Card 6 — Relatività Speciale -->
-    <a class="card" href="tentativo%202/t2_v1_relativita_speciale.html"
-       style="--accent: #fb923c;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Relatività Speciale — T2</h2>
-          <div class="sub">Einstein 1905</div>
-        </div>
-        <span class="badge">6 fasi</span>
-      </div>
-      <p>Postulati, dilatazione del tempo, contrazione delle lunghezze, spazio-tempo di Minkowski e E=mc². Canvas con diagramma di Minkowski animato.</p>
-      <div class="card-link">tentativo 2/t2_v1_relativita_speciale.html</div>
-    </a>
-
-    <!-- T2 Card 7 — Asymptotic Safety -->
-    <a class="card" href="tentativo%202/t2_v1_intro_asymptotic_safety.html"
-       style="--accent: #f472b6;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Asymptotic Safety — T2</h2>
-          <div class="sub">Sicurezza Asintotica</div>
-        </div>
-        <span class="badge">7 fasi</span>
-      </div>
-      <p>RG flow nel piano (G, Λ), punto fisso UV non-Gaussiano, libertà asintotica vs sicurezza asintotica, equazione di Wetterich. Canvas con traiettorie RG animate.</p>
-      <div class="card-link">tentativo 2/t2_v1_intro_asymptotic_safety.html</div>
-    </a>
-
-    <!-- T2 Card 8 — GR -->
-    <a class="card" href="tentativo%202/t2_v1_intro_general_relativity.html"
-       style="--accent: #a78bfa;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Relatività Generale — T2</h2>
-          <div class="sub">Einstein 1915</div>
-        </div>
-        <span class="badge">8 fasi</span>
-      </div>
-      <p>Principio di equivalenza, spazio-tempo curvo, equazioni di campo, onde gravitazionali, buchi neri e costante cosmologica. Griglia spaziale deformata animata.</p>
-      <div class="card-link">tentativo 2/t2_v1_intro_general_relativity.html</div>
-    </a>
-
-    <!-- T2 Card 9 — LQG -->
-    <a class="card" href="tentativo%202/t2_v1_intro_lqg.html"
-       style="--accent: #34d399;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>LQG — T2</h2>
-          <div class="sub">Loop Quantum Gravity</div>
-        </div>
-        <span class="badge">8 fasi</span>
-      </div>
-      <p>Ashtekar, loop di Wilson, spin networks, area e volume quantizzati, spin foam e background independence. Canvas con spin network pulsante animata.</p>
-      <div class="card-link">tentativo 2/t2_v1_intro_lqg.html</div>
-    </a>
-
-    <!-- T2 Card 10 — QM -->
-    <a class="card" href="tentativo%202/t2_v1_intro_quantum_mechanics.html"
-       style="--accent: #60a5fa;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Meccanica Quantistica — T2</h2>
-          <div class="sub">10 fasi</div>
-        </div>
-        <span class="badge">10 fasi</span>
-      </div>
-      <p>Funzione d'onda, indeterminazione, dualità onda-corpuscolo, spin, QCD, entanglement, QED, bosone di Higgs. Canvas con pacchetto d'onda e modello standard.</p>
-      <div class="card-link">tentativo 2/t2_v1_intro_quantum_mechanics.html</div>
-    </a>
-
-    </div>
-    </div><!-- /grid originali -->
-
-    <!-- ── Tentativo 2 section ── -->
-    <h2 class="section-title" style="margin-top:64px; background: linear-gradient(135deg,#38bdf8,#4ade80); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">Tentativo 2 — Layout migliorato</h2>
-    <p class="section-subtitle">Pannello testo leggibile · font responsivo · canvas a destra</p>
-
-    <div class="grid">
-
-    <!-- T2 Card 1 — AdS/CFT v1 -->
-    <a class="card" href="tentativo%202/t2_v1_ads_cft.html"
-       style="--accent: #38bdf8;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>AdS/CFT — Tentativo 2</h2>
-          <div class="sub">Dualità olografica · layout migliorato</div>
-        </div>
-        <span class="badge">7 fasi</span>
-      </div>
-      <p>Versione con pannello testo leggibile (18px, line-height 1.8) e canvas animato a destra. Stessa fisica, interfaccia rinnovata.</p>
-      <div class="card-link">t2_v1_ads_cft.html</div>
-    </a>
-
-    <!-- T2 Card 2 — AdS/CFT v2 -->
-    <a class="card" href="tentativo%202/t2_v1_ads_cft_v2.html"
-       style="--accent: #7dd3fc;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>AdS/CFT v2 — Tentativo 2</h2>
-          <div class="sub">Versione aggiornata · layout migliorato</div>
-        </div>
-        <span class="badge">6 fasi</span>
-      </div>
-      <p>Versione migliorata della corrispondenza olografica AdS/CFT con layout a due pannelli.</p>
-      <div class="card-link">t2_v1_ads_cft_v2.html</div>
-    </a>
-
-    <!-- T2 Card 3 — Bulk Reconstruction -->
-    <a class="card" href="tentativo%202/t2_v1_bulk_reconstruction.html"
-       style="--accent: #4ade80;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Bulk Reconstruction — Tentativo 2</h2>
-          <div class="sub">Olografia quantistica · layout migliorato</div>
-        </div>
-        <span class="badge">6 fasi</span>
-      </div>
-      <p>Ricostruzione del bulk AdS dal bordo CFT. Layout a pannello testo + canvas, con testi leggibili e spaziatura migliorata.</p>
-      <div class="card-link">t2_v1_bulk_reconstruction.html</div>
-    </a>
-
-    <!-- T2 Card 4 — Stringhe -->
-    <a class="card" href="tentativo%202/t2_v1_stringhe_calabi_yau.html"
-       style="--accent: #a78bfa;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Stringhe Calabi-Yau — Tentativo 2</h2>
-          <div class="sub">Stringhe → Particelle · layout migliorato</div>
-        </div>
-        <span class="badge">6 fasi</span>
-      </div>
-      <p>Dalla stringa quantistica alla materia barionica. Layout rinnovato con pannello descrittivo laterale.</p>
-      <div class="card-link">t2_v1_stringhe_calabi_yau.html</div>
-    </a>
-
-    <!-- T2 Card 5 — Stringhe v2 -->
-    <a class="card" href="tentativo%202/t2_v1_stringhe_calabi_yau_v2.html"
-       style="--accent: #818cf8;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Stringhe v2 — Tentativo 2</h2>
-          <div class="sub">D-Brana · Gravitone · layout migliorato</div>
-        </div>
-        <span class="badge">6 fasi</span>
-      </div>
-      <p>Stringhe aperte e chiuse, D-Brana, gravitone, campi quantistici. Versione con layout a due pannelli.</p>
-      <div class="card-link">t2_v1_stringhe_calabi_yau_v2.html</div>
-    </a>
-
-    <!-- T2 Card 6 — Relatività Speciale -->
-    <a class="card" href="tentativo%202/t2_v1_relativita_speciale.html"
-       style="--accent: #fb923c;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Relatività Speciale — Tentativo 2</h2>
-          <div class="sub">Einstein 1905 · layout migliorato</div>
-        </div>
-        <span class="badge">8 fasi</span>
-      </div>
-      <p>Dilatazione del tempo, contrazione delle lunghezze, E=mc². Layout con testo leggibile e canvas animato a destra.</p>
-      <div class="card-link">t2_v1_relativita_speciale.html</div>
-    </a>
-
-    <!-- T2 Card 7 — Asymptotic Safety -->
-    <a class="card" href="tentativo%202/t2_v1_intro_asymptotic_safety.html"
-       style="--accent: #f59e0b;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Asymptotic Safety — Tentativo 2</h2>
-          <div class="sub">Sicurezza asintotica · layout migliorato</div>
-        </div>
-        <span class="badge">7 fasi</span>
-      </div>
-      <p>Punto fisso UV, flusso RG, equazione di Wetterich. Interfaccia rinnovata con pannello testo leggibile.</p>
-      <div class="card-link">t2_v1_intro_asymptotic_safety.html</div>
-    </a>
-
-    <!-- T2 Card 8 — Relatività Generale -->
-    <a class="card" href="tentativo%202/t2_v1_intro_general_relativity.html"
-       style="--accent: #e879f9;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Relatività Generale — Tentativo 2</h2>
-          <div class="sub">Einstein 1915 · layout migliorato</div>
-        </div>
-        <span class="badge">8 fasi</span>
-      </div>
-      <p>Equazioni di campo, onde gravitazionali, buchi neri, costante cosmologica. Layout con testi e canvas rinnovati.</p>
-      <div class="card-link">t2_v1_intro_general_relativity.html</div>
-    </a>
-
-    <!-- T2 Card 9 — LQG -->
-    <a class="card" href="tentativo%202/t2_v1_intro_lqg.html"
-       style="--accent: #c084fc;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Loop Quantum Gravity — Tentativo 2</h2>
-          <div class="sub">LQG · layout migliorato</div>
-        </div>
-        <span class="badge">8 fasi</span>
-      </div>
-      <p>Variabili di Ashtekar, spin network, spazio discreto, spin foam. Layout a pannello testo + canvas con tipografia leggibile.</p>
-      <div class="card-link">t2_v1_intro_lqg.html</div>
-    </a>
-
-    <!-- T2 Card 10 — Meccanica Quantistica -->
-    <a class="card" href="tentativo%202/t2_v1_intro_quantum_mechanics.html"
-       style="--accent: #34d399;">
-      <div class="card-header">
-        <div class="card-titles">
-          <h2>Meccanica Quantistica — Tentativo 2</h2>
-          <div class="sub">QM · layout migliorato</div>
-        </div>
-        <span class="badge">10 fasi</span>
-      </div>
-      <p>Funzione d'onda, entanglement, Modello Standard, bosone di Higgs. Layout completamente rinnovato con pannello testo leggibile.</p>
-      <div class="card-link">t2_v1_intro_quantum_mechanics.html</div>
-    </a>
-
-    </div><!-- /grid tentativo 2 -->
-
-    <!-- ── Penrose section ── -->
-    <h2 class="section-title" style="margin-top:64px; background: linear-gradient(135deg,#f59e0b,#a78bfa); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text;">PENROSE — DIAGRAMMI E COSMOLOGIA CICLICA</h2>
-
-    <div class="grid">
-
-      <a class="card" href="Penrose/index.html" style="--accent:#f59e0b; border-color:rgba(245,158,11,0.25);">
-        <div class="card-header">
-          <div class="card-titles">
-            <h2>Penrose — Diagrammi &amp; CCC</h2>
-            <div class="sub">NUOVA SEZIONE</div>
-          </div>
-          <span class="badge" style="background:#f59e0b;">15 pagine</span>
-        </div>
-        <p>15 pagine interattive sui diagrammi di Penrose-Carter, buchi neri, radiazione di Hawking, e la Cosmologia Ciclica Conforme. Da Schwarzschild a Kerr, da AdS/CFT alla CCC.</p>
-        <div class="card-link" style="color:#f59e0b;">Esplora → Penrose/index.html</div>
+        <span class="entry-meta">6 fasi →</span>
       </a>
 
-    </div><!-- /grid penrose -->
+      <a class="entry" href="tentativo%202/cap02_susy.html">
+        <span class="entry-num">CAP 02</span>
+        <div class="entry-body">
+          <div class="entry-title">Supersimmetria (SUSY)</div>
+          <div class="entry-desc">La simmetria tra bosoni e fermioni e le sue implicazioni per la fisica delle alte energie.</div>
+        </div>
+        <span class="entry-meta">8 fasi →</span>
+      </a>
+
+      <a class="entry" href="tentativo%202/cap03_stringhe.html">
+        <span class="entry-num">CAP 03</span>
+        <div class="entry-body">
+          <div class="entry-title">Teoria delle Stringhe</div>
+          <div class="entry-desc">Oggetti estesi unidimensionali come fondamenta di tutta la fisica.</div>
+        </div>
+        <span class="entry-meta">7 fasi →</span>
+      </a>
+
+      <a class="entry" href="tentativo%202/cap04_sugra.html">
+        <span class="entry-num">CAP 04</span>
+        <div class="entry-body">
+          <div class="entry-title">Supergravità (SUGRA)</div>
+          <div class="entry-desc">La supersimmetria locale come teoria di campo della gravità.</div>
+        </div>
+        <span class="entry-meta">7 fasi →</span>
+      </a>
+
+      <a class="entry" href="tentativo%202/cap05_ads_geometry.html">
+        <span class="entry-num">CAP 05</span>
+        <div class="entry-body">
+          <div class="entry-title">Geometria Anti-de Sitter</div>
+          <div class="entry-desc">Lo spazio-tempo a curvatura negativa costante e la sua struttura al confine.</div>
+        </div>
+        <span class="entry-meta">7 fasi →</span>
+      </a>
+
+      <a class="entry" href="tentativo%202/cap06_cft.html">
+        <span class="entry-num">CAP 06</span>
+        <div class="entry-body">
+          <div class="entry-title">Teoria di Campo Conforme (CFT)</div>
+          <div class="entry-desc">Invarianza di scala, operatori primari e funzioni di correlazione.</div>
+        </div>
+        <span class="entry-meta">8 fasi →</span>
+      </a>
+
+      <a class="entry" href="tentativo%202/cap07_bekenstein_hawking.html">
+        <span class="entry-num">CAP 07</span>
+        <div class="entry-body">
+          <div class="entry-title">Entropia di Bekenstein-Hawking</div>
+          <div class="entry-desc">L'entropia dei buchi neri proporzionale all'area dell'orizzonte degli eventi.</div>
+        </div>
+        <span class="entry-meta">8 fasi →</span>
+      </a>
+
+      <a class="entry" href="tentativo%202/cap08_brane_maldacena.html">
+        <span class="entry-num">CAP 08</span>
+        <div class="entry-body">
+          <div class="entry-title">D-Brane e la Congettura di Maldacena</div>
+          <div class="entry-desc">Le D-brane come oggetti estesi nella teoria delle stringhe e la dualità fondamentale.</div>
+        </div>
+        <span class="entry-meta">8 fasi →</span>
+      </a>
+
+      <a class="entry" href="tentativo%202/cap09_dizionario.html">
+        <span class="entry-num">CAP 09</span>
+        <div class="entry-body">
+          <div class="entry-title">Il Dizionario AdS/CFT</div>
+          <div class="entry-desc">La corrispondenza esplicita tra quantità del bulk e operatori al confine.</div>
+        </div>
+        <span class="entry-meta">— →</span>
+      </a>
+
+      <a class="entry" href="tentativo%202/cap10_bulk_reconstruction.html">
+        <span class="entry-num">CAP 10</span>
+        <div class="entry-body">
+          <div class="entry-title">Ricostruzione del Bulk</div>
+          <div class="entry-desc">Come ricostruire la geometria del volume a partire dai dati al confine.</div>
+        </div>
+        <span class="entry-meta">— →</span>
+      </a>
+
+      <a class="entry" href="tentativo%202/cap11_entanglement_rt.html">
+        <span class="entry-num">CAP 11</span>
+        <div class="entry-body">
+          <div class="entry-title">Entanglement e Formula di Ryu-Takayanagi</div>
+          <div class="entry-desc">L'entropia di entanglement come area di superfici geodetiche minime nel bulk.</div>
+        </div>
+        <span class="entry-meta">— →</span>
+      </a>
+
+      <a class="entry" href="tentativo%202/cap12_er_epr.html">
+        <span class="entry-num">CAP 12</span>
+        <div class="entry-body">
+          <div class="entry-title">ER = EPR e Wormhole Quantistici</div>
+          <div class="entry-desc">L'equivalenza tra wormhole di Einstein-Rosen e coppie EPR entangled.</div>
+        </div>
+        <span class="entry-meta">— →</span>
+      </a>
+
+      <a class="entry" href="tentativo%202/cap13_paradosso_informazione.html">
+        <span class="entry-num">CAP 13</span>
+        <div class="entry-body">
+          <div class="entry-title">Il Paradosso dell'Informazione</div>
+          <div class="entry-desc">La perdita di informazione nella radiazione di Hawking e le possibili risoluzioni.</div>
+        </div>
+        <span class="entry-meta">8 fasi →</span>
+      </a>
+
+      <a class="entry" href="tentativo%202/cap14_principio_olografico.html">
+        <span class="entry-num">CAP 14</span>
+        <div class="entry-body">
+          <div class="entry-title">Il Principio Olografico e il Futuro</div>
+          <div class="entry-desc">La realtà come proiezione di un confine bidimensionale: implicazioni e prospettive.</div>
+        </div>
+        <span class="entry-meta">7 fasi →</span>
+      </a>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SEZIONE 2 — PENROSE
+    ════════════════════════════════════════ -->
+    <section id="penrose" data-color="amber">
+      <div class="section-header">
+        <span class="section-tag" style="color:#f59e0b;">Diagrammi &amp; Cosmologia</span>
+        <h2 class="section-title">Penrose — Diagrammi &amp; CCC</h2>
+      </div>
+      <hr class="section-divider">
+      <p class="section-desc">I diagrammi di Penrose-Carter applicati a tutti gli spazi-tempo notevoli — da Minkowski a Kerr, da AdS a de Sitter — e la Cosmologia Ciclica Conforme di Roger Penrose.</p>
+
+      <a class="entry" href="Penrose/p01_roger_penrose.html">
+        <span class="entry-num">P 01</span>
+        <div class="entry-body">
+          <div class="entry-title">Roger Penrose</div>
+          <div class="entry-desc">Biografia, Nobel 2020, tiling di Penrose e coscienza quantistica (Orch-OR).</div>
+        </div>
+        <span class="entry-meta">— →</span>
+      </a>
+
+      <a class="entry" href="Penrose/p02_conformal_geometry.html">
+        <span class="entry-num">P 02</span>
+        <div class="entry-body">
+          <div class="entry-title">Geometria Conforme</div>
+          <div class="entry-desc">Mappe conformi, coni luce e struttura causale degli spazi-tempo.</div>
+        </div>
+        <span class="entry-meta">— →</span>
+      </a>
+
+      <a class="entry" href="Penrose/p03_minkowski.html">
+        <span class="entry-num">P 03</span>
+        <div class="entry-body">
+          <div class="entry-title">Diagramma di Minkowski</div>
+          <div class="entry-desc">La compattificazione conforme dello spazio-tempo piatto.</div>
+        </div>
+        <span class="entry-meta">— →</span>
+      </a>
+
+      <a class="entry" href="Penrose/p04_schwarzschild.html">
+        <span class="entry-num">P 04</span>
+        <div class="entry-body">
+          <div class="entry-title">Buco Nero di Schwarzschild</div>
+          <div class="entry-desc">La metrica di Schwarzschild e il diagramma di Penrose del buco nero statico.</div>
+        </div>
+        <span class="entry-meta">— →</span>
+      </a>
+
+      <a class="entry" href="Penrose/p05_kruskal.html">
+        <span class="entry-num">P 05</span>
+        <div class="entry-body">
+          <div class="entry-title">Coordinate di Kruskal</div>
+          <div class="entry-desc">L'estensione massimale di Kruskal-Szekeres e il ponte di Einstein-Rosen.</div>
+        </div>
+        <span class="entry-meta">— →</span>
+      </a>
+
+      <a class="entry" href="Penrose/p06_collapse.html">
+        <span class="entry-num">P 06</span>
+        <div class="entry-body">
+          <div class="entry-title">Collasso Gravitazionale</div>
+          <div class="entry-desc">La formazione dinamica di un buco nero dal collasso di materia stellare.</div>
+        </div>
+        <span class="entry-meta">— →</span>
+      </a>
+
+      <a class="entry" href="Penrose/p07_charged.html">
+        <span class="entry-num">P 07</span>
+        <div class="entry-body">
+          <div class="entry-title">Buco Nero Carico (Reissner-Nordström)</div>
+          <div class="entry-desc">L'orizzonte di Cauchy e le singolarità dei buchi neri carichi.</div>
+        </div>
+        <span class="entry-meta">— →</span>
+      </a>
+
+      <a class="entry" href="Penrose/p08_kerr.html">
+        <span class="entry-num">P 08</span>
+        <div class="entry-body">
+          <div class="entry-title">Buco Nero di Kerr</div>
+          <div class="entry-desc">Rotazione, ergosfera e frame-dragging nei buchi neri rotanti.</div>
+        </div>
+        <span class="entry-meta">— →</span>
+      </a>
+
+      <a class="entry" href="Penrose/p09_hawking.html">
+        <span class="entry-num">P 09</span>
+        <div class="entry-body">
+          <div class="entry-title">Radiazione di Hawking</div>
+          <div class="entry-desc">L'evaporazione quantistica dei buchi neri e la curva di Page.</div>
+        </div>
+        <span class="entry-meta">— →</span>
+      </a>
+
+      <a class="entry" href="Penrose/p10_penrose_process.html">
+        <span class="entry-num">P 10</span>
+        <div class="entry-body">
+          <div class="entry-title">Il Processo di Penrose</div>
+          <div class="entry-desc">Estrazione di energia rotazionale dall'ergosfera dei buchi neri di Kerr.</div>
+        </div>
+        <span class="entry-meta">6 fasi →</span>
+      </a>
+
+      <a class="entry" href="Penrose/p11_de_sitter.html">
+        <span class="entry-num">P 11</span>
+        <div class="entry-body">
+          <div class="entry-title">Spazio de Sitter</div>
+          <div class="entry-desc">Lo spazio-tempo con costante cosmologica positiva e inflazione cosmica.</div>
+        </div>
+        <span class="entry-meta">6 fasi →</span>
+      </a>
+
+      <a class="entry" href="Penrose/p12_anti_de_sitter.html">
+        <span class="entry-num">P 12</span>
+        <div class="entry-body">
+          <div class="entry-title">Anti-de Sitter &amp; AdS/CFT</div>
+          <div class="entry-desc">Lo spazio AdS come arena naturale per la corrispondenza olografica di Maldacena.</div>
+        </div>
+        <span class="entry-meta">6 fasi →</span>
+      </a>
+
+      <a class="entry" href="Penrose/p13_ccc_intro.html">
+        <span class="entry-num">P 13</span>
+        <div class="entry-body">
+          <div class="entry-title">CCC — Introduzione</div>
+          <div class="entry-desc">Il problema dell'entropia dell'universo e il rescaling conforme tra eoni cosmici.</div>
+        </div>
+        <span class="entry-meta">6 fasi →</span>
+      </a>
+
+      <a class="entry" href="Penrose/p14_ccc_eoni.html">
+        <span class="entry-num">P 14</span>
+        <div class="entry-body">
+          <div class="entry-title">Eoni e Crossover</div>
+          <div class="entry-desc">La geometria del crossover tra eoni successivi e l'evaporazione dei buchi neri.</div>
+        </div>
+        <span class="entry-meta">6 fasi →</span>
+      </a>
+
+      <a class="entry" href="Penrose/p15_ccc_evidenze.html">
+        <span class="entry-num">P 15</span>
+        <div class="entry-body">
+          <div class="entry-title">Evidenze e Critiche CCC</div>
+          <div class="entry-desc">I dati Gurzadyan-Penrose, il satellite Planck e le prospettive osservative future.</div>
+        </div>
+        <span class="entry-meta">6 fasi →</span>
+      </a>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SEZIONE 3 — TEORIE FONDAMENTALI
+    ════════════════════════════════════════ -->
+    <section id="fondamentali" data-color="violet">
+      <div class="section-header">
+        <span class="section-tag" style="color:#a78bfa;">Moduli indipendenti</span>
+        <h2 class="section-title">Teorie Fondamentali</h2>
+      </div>
+      <hr class="section-divider">
+      <p class="section-desc">Moduli autonomi sulle teorie della fisica fondamentale: dalla relatività generale alla meccanica quantistica, dalla loop quantum gravity all'asymptotic safety.</p>
+
+      <a class="entry" href="GR/v1_intro_general_relativity.html">
+        <span class="entry-num">GR</span>
+        <div class="entry-body">
+          <div class="entry-title">Relatività Generale</div>
+          <div class="entry-desc">La geometria dello spazio-tempo curvo come teoria della gravitazione di Einstein.</div>
+        </div>
+        <span class="entry-meta">8 fasi →</span>
+      </a>
+
+      <a class="entry" href="LQG/v1_intro_lqg.html">
+        <span class="entry-num">LQG</span>
+        <div class="entry-body">
+          <div class="entry-title">Loop Quantum Gravity</div>
+          <div class="entry-desc">La quantizzazione dello spazio-tempo tramite reti di spin e foam quantistici.</div>
+        </div>
+        <span class="entry-meta">8 fasi →</span>
+      </a>
+
+      <a class="entry" href="QM/v1_intro_quantum_mechanics.html">
+        <span class="entry-num">QM</span>
+        <div class="entry-body">
+          <div class="entry-title">Meccanica Quantistica</div>
+          <div class="entry-desc">Principi fondamentali, formalismo di Dirac e interpretazioni della meccanica quantistica.</div>
+        </div>
+        <span class="entry-meta">10 fasi →</span>
+      </a>
+
+      <a class="entry" href="Asymptotic_safety/v1_intro_asymptotic_safety.html">
+        <span class="entry-num">AS</span>
+        <div class="entry-body">
+          <div class="entry-title">Asymptotic Safety</div>
+          <div class="entry-desc">La gravitazione quantistica come teoria di campo con punto fisso UV non perturbativo.</div>
+        </div>
+        <span class="entry-meta">— →</span>
+      </a>
+
+      <a class="entry" href="tentativo%202/t2_v1_intro_general_relativity.html">
+        <span class="entry-num">T2-GR</span>
+        <div class="entry-body">
+          <div class="entry-title">Relatività Generale <em style="font-size:0.8em;color:#64748b;">(Tentativo 2)</em></div>
+          <div class="entry-desc">Versione aggiornata con simulazioni canvas di seconda generazione.</div>
+        </div>
+        <span class="entry-meta">8 fasi →</span>
+      </a>
+
+      <a class="entry" href="tentativo%202/t2_v1_intro_asymptotic_safety.html">
+        <span class="entry-num">T2-AS</span>
+        <div class="entry-body">
+          <div class="entry-title">Asymptotic Safety <em style="font-size:0.8em;color:#64748b;">(Tentativo 2)</em></div>
+          <div class="entry-desc">Versione aggiornata con flusso del gruppo di rinormalizzazione interattivo.</div>
+        </div>
+        <span class="entry-meta">7 fasi →</span>
+      </a>
+
+      <a class="entry" href="tentativo%202/t2_v1_intro_quantum_mechanics.html">
+        <span class="entry-num">T2-QM</span>
+        <div class="entry-body">
+          <div class="entry-title">Meccanica Quantistica <em style="font-size:0.8em;color:#64748b;">(Tentativo 2)</em></div>
+          <div class="entry-desc">Versione aggiornata con simulazioni dell'equazione di Schrödinger in tempo reale.</div>
+        </div>
+        <span class="entry-meta">10 fasi →</span>
+      </a>
+
+      <a class="entry" href="tentativo%202/t2_v1_intro_lqg.html">
+        <span class="entry-num">T2-LQG</span>
+        <div class="entry-body">
+          <div class="entry-title">Loop Quantum Gravity <em style="font-size:0.8em;color:#64748b;">(Tentativo 2)</em></div>
+          <div class="entry-desc">Versione aggiornata con visualizzazioni interattive delle reti di spin.</div>
+        </div>
+        <span class="entry-meta">8 fasi →</span>
+      </a>
+
+      <a class="entry" href="tentativo%202/t2_v1_feynman.html">
+        <span class="entry-num">T2-FD</span>
+        <div class="entry-body">
+          <div class="entry-title">Diagrammi di Feynman</div>
+          <div class="entry-desc">Propagatori, vertici QED/QCD, loops, rinormalizzazione e regole di Feynman.</div>
+        </div>
+        <span class="entry-meta">10 fasi →</span>
+      </a>
+    </section>
+
+    <!-- ════════════════════════════════════════
+         SEZIONE 4 — ARCHIVIO
+    ════════════════════════════════════════ -->
+    <section id="archivio" data-color="gray">
+      <div class="section-header">
+        <span class="section-tag" style="color:#64748b;">Prototipi e versioni precedenti</span>
+        <h2 class="section-title">Archivio</h2>
+      </div>
+      <hr class="section-divider">
+      <p class="section-desc">Versioni precedenti e prototipi dei moduli — conservati per documentare l'evoluzione del progetto.</p>
+
+      <div class="archive-grid">
+        <a class="entry-compact" href="Progetto%20divulgazione/v1_stringhe_calabi_yau.html">
+          <span class="entry-num">v1</span>
+          <div class="entry-body"><div class="entry-title">Stringhe &amp; Calabi-Yau (v1)</div></div>
+          <span class="entry-meta">archivio →</span>
+        </a>
+
+        <a class="entry-compact" href="Progetto%20divulgazione/v1_stringhe_calabi_yau_v2.html">
+          <span class="entry-num">v1b</span>
+          <div class="entry-body"><div class="entry-title">Stringhe &amp; Calabi-Yau (v2)</div></div>
+          <span class="entry-meta">archivio →</span>
+        </a>
+
+        <a class="entry-compact" href="Progetto%20divulgazione/v1_ads_cft.html">
+          <span class="entry-num">v1c</span>
+          <div class="entry-body"><div class="entry-title">AdS/CFT (v1)</div></div>
+          <span class="entry-meta">archivio →</span>
+        </a>
+
+        <a class="entry-compact" href="Progetto%20divulgazione/v1_ads_cft_v2.html">
+          <span class="entry-num">v1d</span>
+          <div class="entry-body"><div class="entry-title">AdS/CFT v2</div></div>
+          <span class="entry-meta">archivio →</span>
+        </a>
+
+        <a class="entry-compact" href="Progetto%20divulgazione/v1_bulk_reconstruction.html">
+          <span class="entry-num">v1e</span>
+          <div class="entry-body"><div class="entry-title">Bulk Reconstruction</div></div>
+          <span class="entry-meta">archivio →</span>
+        </a>
+
+        <a class="entry-compact" href="Progetto%20divulgazione/v1_relativita_speciale.html">
+          <span class="entry-num">v1f</span>
+          <div class="entry-body"><div class="entry-title">Relatività Speciale</div></div>
+          <span class="entry-meta">archivio →</span>
+        </a>
+
+        <a class="entry-compact" href="tentativo%202/t2_v1_stringhe_calabi_yau.html">
+          <span class="entry-num">t2-str</span>
+          <div class="entry-body"><div class="entry-title">Stringhe Calabi-Yau (Tentativo 2)</div></div>
+          <span class="entry-meta">archivio →</span>
+        </a>
+
+        <a class="entry-compact" href="tentativo%202/t2_v1_ads_cft_v2.html">
+          <span class="entry-num">t2-ads</span>
+          <div class="entry-body"><div class="entry-title">AdS/CFT v2 (Tentativo 2)</div></div>
+          <span class="entry-meta">archivio →</span>
+        </a>
+
+        <a class="entry-compact" href="tentativo%202/t2_v1_bulk_reconstruction.html">
+          <span class="entry-num">t2-bulk</span>
+          <div class="entry-body"><div class="entry-title">Bulk Reconstruction (Tentativo 2)</div></div>
+          <span class="entry-meta">archivio →</span>
+        </a>
+
+        <a class="entry-compact" href="tentativo%202/t2_v1_relativita_speciale.html">
+          <span class="entry-num">t2-rs</span>
+          <div class="entry-body"><div class="entry-title">Relatività Speciale (Tentativo 2)</div></div>
+          <span class="entry-meta">archivio →</span>
+        </a>
+
+        <a class="entry-compact" href="AdsCft/ads_cft_phase02_d3brane.html">
+          <span class="entry-num">ads-d3</span>
+          <div class="entry-body"><div class="entry-title">Stack di D3-Brane (Prototipo AdsCft)</div></div>
+          <span class="entry-meta">archivio →</span>
+        </a>
+      </div>
+    </section>
 
   </main>
-
-  <footer>
-    <p>© 2026 Vicianzu — Divulgazione Scientifica</p>
-    <p><a href="https://github.com/Vicianzu/DivulgAzione" target="_blank" rel="noopener">github.com/Vicianzu/DivulgAzione</a></p>
-  </footer>
 </div>
 
+<footer>
+  <p>Tutti i moduli sono simulazioni interattive in-browser, costruite con HTML5 Canvas. Nessuna installazione richiesta.</p>
+  <p style="margin-top:8px;">DivulgAzione &mdash; Fisica Teorica Interattiva &mdash; 2024</p>
+</footer>
+
 <script>
-(function () {
-  'use strict';
+  // TOC active link highlight on scroll
+  (function() {
+    var sections = document.querySelectorAll('section[id]');
+    var tocLinks = document.querySelectorAll('.toc a');
+    if (!sections.length || !tocLinks.length) return;
 
-  const canvas = document.getElementById('starfield');
-  const ctx = canvas.getContext('2d');
-
-  let W, H, stars;
-
-  function resize() {
-    W = canvas.width  = window.innerWidth;
-    H = canvas.height = window.innerHeight;
-  }
-
-  function initStars(n) {
-    stars = [];
-    for (let i = 0; i < n; i++) {
-      stars.push({
-        x:     Math.random() * W,
-        y:     Math.random() * H,
-        r:     Math.random() * 1.4 + 0.3,
-        alpha: Math.random(),
-        delta: (Math.random() * 0.008 + 0.002) * (Math.random() < 0.5 ? 1 : -1),
+    function setActive() {
+      var scrollY = window.scrollY + 120;
+      var current = '';
+      sections.forEach(function(s) {
+        if (s.offsetTop <= scrollY) current = s.id;
+      });
+      tocLinks.forEach(function(a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + current);
       });
     }
-  }
 
-  function draw() {
-    ctx.clearRect(0, 0, W, H);
-    for (const s of stars) {
-      s.alpha += s.delta;
-      if (s.alpha > 1 || s.alpha < 0) s.delta = -s.delta;
-      ctx.beginPath();
-      ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(255,255,255,${Math.max(0, Math.min(1, s.alpha))})`;
-      ctx.fill();
-    }
-    requestAnimationFrame(draw);
-  }
-
-  resize();
-  initStars(Math.floor(Math.min(260, Math.max(120, window.innerWidth * window.innerHeight / 8000))));
-  draw();
-
-  window.addEventListener('resize', function () {
-    resize();
-    initStars(Math.floor(Math.min(260, Math.max(120, window.innerWidth * window.innerHeight / 8000))));
-  });
-}());
+    window.addEventListener('scroll', setActive, { passive: true });
+    setActive();
+  })();
 </script>
 
 </body>
