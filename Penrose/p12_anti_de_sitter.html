@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Anti-de Sitter e AdS/CFT | Penrose — DivulgAzione</title>
+<link rel="stylesheet" href="../tentativo 2/t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="ui">
+  <span id="ui-title">DivulgAzione · Penrose</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">6 fasi</span>
+</div>
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — LA METRICA ANTI-DE SITTER</div>
+    <div class="phase-title">AdS: lo spazio-tempo con curvatura negativa</div>
+    <div class="phase-body">
+      <p>Lo spazio Anti-de Sitter (AdS) è la soluzione delle equazioni di Einstein con <span class="hl">costante cosmologica negativa</span> Λ &lt; 0. È uno spazio-tempo di curvatura costante negativa (iperbolico) in d+1 dimensioni. La versione più importante per la fisica teorica è <span class="am">AdS₅</span> — cinque dimensioni — usata in AdS/CFT.</p>
+      <code class="formula">Metrica di AdS_{d+1} (patch di Poincaré):
+  ds² = (L²/z²)(−dt² + dx_i² + dz²)
+dove:
+  L  = raggio AdS  (scala della curvatura)
+  z  = coordinata radiale (z → 0: bordo, z → ∞: centro)
+  Curvatura: R = −d(d+1)/L²  (negativa, costante)
+Bordo conforme (z = 0): spazio-tempo di Minkowski</code>
+      <p>La geometria AdS ha una proprietà straordinaria: il suo <span class="hl">bordo</span> è <span class="am">causalmente accessibile in tempo finito</span> (i raggi luminosi raggiungono z = 0 in tempo finito). Questo è opposto allo spazio piatto, dove l'infinito spaziale è irraggiungibile in tempo finito. Il bordo di AdS è come una "<span class="gr">scatola" causale</span> che confina la luce — le geodetiche nulle rimbalzano al bordo e tornano indietro. Questo ha implicazioni enormi per l'olografia.</p>
+      <div class="note">Animazione: disco iperbolico (modello di Poincaré) con griglia AdS — le linee si addensano avvicinandosi al bordo. Raggi che si avvicinano al bordo e rimbalzano.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — IL DIAGRAMMA DI PENROSE DI ADS</div>
+    <div class="phase-title">Il diagramma conforme di Anti-de Sitter</div>
+    <div class="phase-body">
+      <p>Il diagramma di Penrose di AdS è una <span class="hl">striscia verticale infinita</span>, non un quadrato come de Sitter. La differenza fondamentale: il bordo di AdS è di tipo <span class="am">timelike</span> (temporale), non spacelike. Questo significa che il bordo è fisicamente connesso all'interno — è come avere un bordo riflettente attorno all'universo.</p>
+      <code class="formula">Diagramma di Penrose di AdS:
+  ρ ∈ [0, π/2)  (coordinata radiale compatta)
+  t ∈ (−∞, +∞)  (coordinata temporale)
+  → rettangolo verticale infinito
+Bordo: ρ = π/2  (timelike — bordo temporale!)
+Centro: ρ = 0   (interior)
+Raggi luminosi: bouncing boundary conditions
+  → luce raggiunge il bordo in Δt = π/2 L/c finito</code>
+      <p>La natura timelike del bordo è ciò che rende AdS così speciale per l'olografia: il bordo è come uno <span class="hl">schermo causalmente connesso</span> al bulk. Un osservatore al bordo può interagire con l'interno di AdS in tempo finito — scambiare segnali, osservare il bulk, e in questo senso la fisica del bulk è "<span class="am">codificata</span>" nel bordo. Le condizioni al contorno al bordo determinano la fisica all'interno. Questo è il cuore fisico di AdS/CFT.</p>
+      <div class="note">Animazione: striscia verticale che rappresenta il diagramma di Penrose di AdS. Raggi luminosi che vanno dal centro al bordo, rimbalzano, e tornano — mostrando la natura "chiusa" di AdS.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — LA CONGETTURA DI MALDACENA</div>
+    <div class="phase-title">AdS/CFT: la corrispondenza di Maldacena (1997)</div>
+    <div class="phase-body">
+      <p>Nel novembre 1997, Juan Maldacena propose la <span class="hl">congettura più citata della fisica teorica degli ultimi 30 anni</span>: la corrispondenza AdS/CFT. L'affermazione: la <span class="am">teoria delle stringhe di tipo IIB</span> su AdS₅ × S⁵ è <span class="gr">esattamente equivalente</span> alla teoria di Yang-Mills supersimmetrica 𝒩=4 su R⁴ — senza gravità, in 4 dimensioni.</p>
+      <code class="formula">Corrispondenza di Maldacena:
+  IIB strings su AdS₅ × S⁵  ≡  𝒩=4 SYM su R⁴
+Parametri collegati:
+  L⁴ = 4πg_s N α'²  (raggio AdS)
+  λ = g²_YM N = L⁴/α'²  (accoppiamento't Hooft)
+  g_s = g²_YM/4π     (costante di stringa)
+Limite classico della gravità: λ ≫ 1 (N → ∞)
+↔ limite di forte accoppiamento della CFT</code>
+      <p>La genialità di AdS/CFT: i due limiti <span class="hl">si scambiano</span>. Quando la gravità è classica (facile da calcolare), la CFT è fortemente accoppiata (difficile). Quando la CFT è perturbativa (facile), la gravità è quantistica (difficile). Quindi AdS/CFT è uno strumento per calcolare proprietà di <span class="am">materia fortemente accoppiata</span> (plasma di quark-gluoni, superconduttori ad alta temperatura) usando la gravità classica. Un dono teorico straordinario.</p>
+      <div class="note">Animazione: le due rappresentazioni — il bulk AdS con stringhe che vibrano e il bordo 4D con gluoni — connesse da frecce bidirezionali. Il parametro L collega i due mondi.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — IL DIZIONARIO OLOGRAFICO</div>
+    <div class="phase-title">Il dizionario AdS/CFT: bulk ↔ bordo</div>
+    <div class="phase-body">
+      <p>AdS/CFT non è solo una dualità astratta: esiste un preciso <span class="hl">dizionario</span> che traduce oggetti del bulk in oggetti del bordo. Ogni campo scalare φ nel bulk corrisponde a un operatore O della CFT con dimensione di scala Δ determinata dalla massa del campo.</p>
+      <code class="formula">Dizionario olografico (selezione):
+  campo bulk   ↔   operatore CFT
+  m²L²        ↔   Δ(Δ−4) = m²L²  [scalare AdS₅]
+  gravitone   ↔   tensore energia-impulso T_μν
+  campo di gauge ↔ corrente globale J_μ
+  BH-Schwarzschild-AdS ↔ plasma termico CFT
+  Entropia BH  ↔  entropia entanglement CFT
+Formula GKPW (Gubser-Klebanov-Polyakov, Witten):
+  Z_string[φ₀] = ⟨exp(∫ φ₀ O)⟩_CFT</code>
+      <p>Il dizionario si estende anche alla termodinamica: un buco nero di Schwarzschild-AdS corrisponde a un <span class="hl">plasma termico</span> nella CFT a temperatura T_BH. La <span class="am">transizione di Hawking-Page</span> (dalla geometria AdS vuota al buco nero AdS) corrisponde alla transizione di deconfinamento nella CFT — analoga alla transizione di fase di QCD dal plasma di quark-gluoni ai mesoni. Questo ha permesso di calcolare la viscosità del plasma RHIC (Brookhaven) usando la gravità di AdS.</p>
+      <div class="note">Animazione: tabella/dizionario visivo con frecce che collegano oggetti del bulk (sfera AdS 3D) a oggetti del bordo (cerchio 2D con operatori). Evidenziazione di ogni voce del dizionario.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — BUCHI NERI IN ADS</div>
+    <div class="phase-title">La transizione di Hawking-Page</div>
+    <div class="phase-body">
+      <p>In AdS, i buchi neri hanno una termodinamica diversa dall'usuale. Il buco nero di Schwarzschild-AdS₅ ha un comportamento della temperatura in funzione del raggio notevolmente diverso: esiste una <span class="hl">temperatura minima</span>, al di sotto della quale non esiste buco nero stabile. Questa è la transizione di <span class="am">Hawking-Page (1983)</span>.</p>
+      <code class="formula">Temperatura del BN Schwarzschild-AdS₅:
+  T_BH = (r₊² + L²) / (π L² r₊) × (1/2)
+         → 2r₊/(πL²)  per r₊ ≫ L  (grande BH)
+         → 1/(πr₊)    per r₊ ≪ L  (piccolo BH)
+Temperatura minima (di Hawking-Page):
+  T_HP = 3/(2πL)   (per grandi BH in AdS₅)
+Transizione di fase:
+  T &lt; T_HP: geometria AdS vuota (fase confinata)
+  T > T_HP: buco nero stabile (fase deconfinata)</code>
+      <p>Nella CFT duale (𝒩=4 SYM), questa transizione corrisponde alla <span class="hl">transizione di deconfinamento</span>: sotto T_HP la teoria è nella fase confinata (mesoni), sopra T_HP è in quella deconfinata (plasma di quark-gluoni). Questo ha permesso di studiare il <span class="am">plasma QGP</span> prodotto al RHIC e al LHC usando AdS/CFT: il rapporto viscosità-entropia calcolato tramite il buco nero AdS, η/s = ℏ/(4πk_B), è il valore minimo universale.</p>
+      <div class="note">Animazione: grafico T vs r₊ con la curva caratteristica di AdS-Schwarzschild — mostra il minimo e le due fasi. Il buco nero cresce fino alla transizione di Hawking-Page.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — OLTRE ADS/CFT</div>
+    <div class="phase-title">Limiti e frontiere della corrispondenza</div>
+    <div class="phase-body">
+      <p>AdS/CFT è lo strumento più potente della fisica teorica contemporanea, ma ha limiti fondamentali. Il problema principale: <span class="hl">il nostro universo è de Sitter</span> (Λ &gt; 0), non AdS (Λ &lt; 0). Non sappiamo come estendere l'olografia al caso cosmologicamente rilevante.</p>
+      <code class="formula">Perché AdS funziona — caratteristiche uniche:
+  1. Il bordo è timelike → causalmente connesso
+  2. Il gruppo di simmetria: SO(2,4) ≡ conforme 4D
+  3. Le geodetiche nulle rimbalzano → "scatola" ottica
+  4. T < 0 (energia negativa) → stabilità del vuoto
+Tentativi di estensione:
+  dS/CFT (Strominger): bordo spacelike → CFT euclidea
+  Flat holography (BMS): ampiezze di scattering
+  Celestial CFT: sfere celesti come bordo olografico
+  ER=EPR (Maldacena-Susskind): wormhole = entanglement</code>
+      <p>Il "problema del firewall" (Almheiri-Marolf-Polchinski-Sully 2012) ha mostrato tensioni tra la meccanica quantistica e il postulato di complementarietà dei buchi neri. La risposta (Maldacena-Susskind 2013): <span class="hl">ER = EPR</span> — i wormhole di Einstein-Rosen e i pari EPR (entanglement quantistico) sono la <span class="am">stessa cosa</span>. Questo suggerisce che lo spazio-tempo <span class="gr">emerge dall'entanglement</span>: la geometria è informazione quantistica.</p>
+      <div class="note">Animazione: mappa delle dualità olografiche — AdS/CFT, dS/CFT, flat holography, ER=EPR — connesse in un diagramma relazionale. Le lacune nella mappa mostrano i problemi aperti.</div>
+    </div>
+  </div>
+
+</div><!-- /panel -->
+
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · Metrica AdS</button>
+  <button class="btn" onclick="goPhase(2)">02 · Diagramma AdS</button>
+  <button class="btn" onclick="goPhase(3)">03 · Maldacena</button>
+  <button class="btn" onclick="goPhase(4)">04 · Dizionario</button>
+  <button class="btn" onclick="goPhase(5)">05 · BH in AdS</button>
+  <button class="btn" onclick="goPhase(6)">06 · Oltre AdS/CFT</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+
+<script src="../tentativo 2/t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: "La metrica Anti-de Sitter", desc: "AdS₅ ha Λ < 0 e curvatura costante negativa. Metrica di Poincaré: ds² = (L²/z²)(−dt²+dx²+dz²). Il bordo conforme (z=0) è lo spazio-tempo di Minkowski.", scene: 'metrica' },
+  { name: "Il diagramma di Penrose di AdS", desc: "AdS ha un bordo temporale (timelike): il diagramma è una striscia verticale. I raggi luminosi raggiungono il bordo in tempo finito e rimbalzano.", scene: 'diagramma' },
+  { name: "La congettura di Maldacena", desc: "AdS/CFT (1997): IIB string theory su AdS₅×S⁵ è duale a 𝒩=4 SYM su R⁴. Parametro: L⁴ = 4πg_sNα'².", scene: 'maldacena' },
+  { name: "Il dizionario olografico", desc: "Ogni campo nel bulk ↔ operatore sul bordo: Δ(Δ−4) = m²L². Funzioni di correlazione CFT ↔ ampiezze nel bulk. BH AdS ↔ plasma termico CFT.", scene: 'dizionario' },
+  { name: "Buchi neri in AdS", desc: "Il BH Schwarzschild-AdS₅ ha una temperatura minima (fase di Hawking-Page) T_HP = 3/(2πL). Al di sopra: deconfinamento nella CFT, analogo a QCD.", scene: 'bh_ads' },
+  { name: "Oltre AdS/CFT", desc: "Limiti: il nostro universo è de Sitter. Estensioni: dS/CFT, flat holography, ER=EPR (wormhole = entanglement). La geometria emerge dall'entanglement quantistico.", scene: 'oltre' },
+];
+
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const cx    = t2AnimCX();
+  const cy    = t2AnimCY();
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phIdx].scene;
+
+  // ── METRICA — disco iperbolico ────────────────────────────────────────────
+  if (scene === 'metrica') {
+    const R = Math.min(W, H) * 0.22;
+    // Hyperbolic disk (Poincaré)
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(14,165,233,0.06)'; ctx.fill();
+    ctx.strokeStyle = '#0ea5e9'; ctx.lineWidth = 2; ctx.stroke();
+
+    // Hyperbolic grid lines (circles approaching boundary)
+    const nCircles = 5;
+    for (let i = 1; i <= nCircles; i++) {
+      const r = R * (i / nCircles) * 0.9;
+      ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(14,165,233,${0.08 + i * 0.04})`; ctx.lineWidth = 0.8; ctx.stroke();
+    }
+    // Radial lines
+    for (let i = 0; i < 8; i++) {
+      const ang = (i / 8) * Math.PI * 2;
+      ctx.beginPath();
+      ctx.moveTo(cx, cy);
+      ctx.lineTo(cx + R * 0.95 * Math.cos(ang), cy + R * 0.95 * Math.sin(ang));
+      ctx.strokeStyle = 'rgba(14,165,233,0.15)'; ctx.lineWidth = 0.8; ctx.stroke();
+    }
+
+    // Bouncing light ray
+    if (!rm) {
+      const ang = T * 0.4;
+      const lx  = cx + R * 0.8 * Math.cos(ang);
+      const ly  = cy + R * 0.8 * Math.sin(ang);
+      t2Glow('#fbbf24', 10);
+      ctx.beginPath(); ctx.arc(lx, ly, 3, 0, Math.PI * 2);
+      ctx.fillStyle = '#fbbf24'; ctx.fill();
+      t2NoGlow();
+    }
+
+    t2Txt(cx, cy - R - 16, 'disco iperbolico AdS', '#0ea5e9', 9, 'center');
+    t2Txt(cx, cy + R + 16, 'bordo conforme z=0', '#22d3ee', 9, 'center');
+    t2Txt(cx, cy, 'z → ∞', '#64748b', 8, 'center');
+    return;
+  }
+
+  // ── DIAGRAMMA — striscia AdS ────────────────────────────────────────────
+  if (scene === 'diagramma') {
+    const SW = Math.min(W, H) * 0.14;
+    const SH = Math.min(H * 0.38, 170);
+    const x0 = cx - SW, x1 = cx + SW;
+    const y0 = cy - SH, y1 = cy + SH;
+
+    // Strip
+    ctx.fillStyle = 'rgba(14,165,233,0.07)';
+    ctx.fillRect(x0, y0, SW * 2, SH * 2);
+
+    // Timelike borders (sides)
+    t2Glow('#0ea5e9', 8);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x0, y1);
+    ctx.strokeStyle = '#0ea5e9'; ctx.lineWidth = 3; ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x1, y0); ctx.lineTo(x1, y1);
+    ctx.stroke();
+    t2NoGlow();
+
+    // Spacelike top/bottom (dashed = infinity)
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y0);
+    ctx.strokeStyle = '#64748b'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(x0, y1); ctx.lineTo(x1, y1);
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Bouncing light ray
+    const nBounces = 3;
+    for (let b = 0; b < nBounces; b++) {
+      const frac = rm ? 0.5 : ((T * 0.4 + b / nBounces) % 1);
+      const lyy  = y0 + frac * SH * 2;
+      const lxx  = b % 2 === 0
+        ? t2Lerp(cx, x0 + 4, (frac * 2) % 1)
+        : t2Lerp(x0 + 4, x1 - 4, (frac * 2) % 1);
+      ctx.beginPath(); ctx.arc(lxx, lyy, 3, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(251,191,36,${0.7 - b * 0.15})`; ctx.fill();
+    }
+
+    t2Txt(x0 - 6, cy, 'bordo\n(timelike)', '#0ea5e9', 7.5, 'right');
+    t2Txt(x1 + 6, cy, 'bordo\n(timelike)', '#0ea5e9', 7.5, 'left');
+    t2Txt(cx, y0 - 14, '(t → −∞)', '#64748b', 7.5, 'center');
+    t2Txt(cx, y1 + 14, '(t → +∞)', '#64748b', 7.5, 'center');
+    return;
+  }
+
+  // ── MALDACENA — bulk e bordo ──────────────────────────────────────────────
+  if (scene === 'maldacena') {
+    const R = Math.min(W, H) * 0.20;
+    // Bulk sphere (AdS)
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.fillStyle = 'rgba(14,165,233,0.05)'; ctx.fill();
+    ctx.strokeStyle = '#0ea5e9'; ctx.lineWidth = 1.5; ctx.stroke();
+    t2Txt(cx, cy, 'Strings', '#0ea5e9', 9, 'center');
+    t2Txt(cx, cy + 14, 'in AdS₅×S⁵', '#0ea5e9', 8, 'center');
+
+    // Border ring (CFT)
+    const ringR = R * 1.35;
+    ctx.beginPath(); ctx.arc(cx, cy, ringR, 0, Math.PI * 2);
+    ctx.strokeStyle = '#a78bfa'; ctx.lineWidth = 3; ctx.stroke();
+    t2Txt(cx, cy - ringR - 14, '𝒩=4 SYM (CFT₄)', '#a78bfa', 9, 'center');
+
+    // Connecting arrows (bulk ↔ border)
+    const nArr = 6;
+    for (let i = 0; i < nArr; i++) {
+      const ang = (i / nArr) * Math.PI * 2 + (rm ? 0 : T * 0.3);
+      const r1x = cx + R * Math.cos(ang);
+      const r1y = cy + R * Math.sin(ang);
+      const r2x = cx + ringR * Math.cos(ang);
+      const r2y = cy + ringR * Math.sin(ang);
+      ctx.beginPath(); ctx.moveTo(r1x, r1y); ctx.lineTo(r2x, r2y);
+      ctx.strokeStyle = 'rgba(251,191,36,0.4)'; ctx.lineWidth = 1; ctx.stroke();
+    }
+
+    t2Txt(cx, cy + ringR + 22, 'L⁴ = 4πg_s N α\'²', '#fbbf24', 9, 'center');
+    return;
+  }
+
+  // ── DIZIONARIO ────────────────────────────────────────────────────────────
+  if (scene === 'dizionario') {
+    const items = [
+      { bulk: 'campo scalare φ',    border: 'operatore O', col: '#22d3ee' },
+      { bulk: 'gravitone g_μν',     border: 'T_μν',        col: '#4ade80' },
+      { bulk: 'campo di gauge A_μ', border: 'corrente J_μ', col: '#a78bfa' },
+      { bulk: 'BH-AdS',             border: 'plasma QGP',  col: '#f59e0b' },
+      { bulk: 'entropia di BH',     border: 'S_entangl.',  col: '#f43f5e' },
+    ];
+    const rowH = 28;
+    const yStart = cy - (items.length / 2) * rowH;
+
+    for (let i = 0; i < items.length; i++) {
+      const item = items[i];
+      const y    = yStart + i * rowH;
+      // Bulk label
+      t2Txt(cx - 80, y, item.bulk, '#94a3b8', 8, 'right');
+      // Arrow
+      ctx.beginPath();
+      ctx.moveTo(cx - 72, y); ctx.lineTo(cx + 72, y);
+      ctx.strokeStyle = item.col + '88'; ctx.lineWidth = 1; ctx.stroke();
+      // Arrowhead
+      ctx.beginPath();
+      ctx.moveTo(cx + 72, y); ctx.lineTo(cx + 64, y - 4); ctx.lineTo(cx + 64, y + 4);
+      ctx.closePath(); ctx.fillStyle = item.col + '88'; ctx.fill();
+      // Border label
+      t2Txt(cx + 80, y, item.border, item.col, 8, 'left');
+    }
+
+    t2Txt(cx, cy - (items.length / 2) * rowH - 22, 'Dizionario olografico AdS/CFT', '#fbbf24', 9, 'center');
+    t2Txt(cx, cy + (items.length / 2) * rowH + 22, 'Δ(Δ−4) = m²L²   (relazione campo-operatore)', '#22d3ee', 8, 'center');
+    return;
+  }
+
+  // ── BH ADS — curva T-raggio ───────────────────────────────────────────────
+  if (scene === 'bh_ads') {
+    const plotW = Math.min(W * 0.32, 130);
+    const plotH = Math.min(H * 0.28, 100);
+    const px = cx - plotW / 2;
+    const py = cy - plotH / 2;
+
+    // Axes
+    ctx.beginPath(); ctx.moveTo(px, py + plotH); ctx.lineTo(px + plotW, py + plotH);
+    ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px, py + plotH);
+    ctx.stroke();
+    t2Txt(px + plotW / 2, py + plotH + 14, 'r₊ (raggio BH)', '#94a3b8', 8, 'center');
+    t2Txt(px - 14, py + plotH / 2, 'T', '#94a3b8', 8, 'center');
+
+    // T-r curve (has a minimum)
+    ctx.beginPath();
+    for (let i = 1; i <= 80; i++) {
+      const r = 0.1 + (i / 80) * 2.5;  // in units of L
+      const T_val = (r * r + 1) / (Math.PI * r);  // simplified T(r₊)
+      const px2 = px + (r / 2.6) * plotW;
+      const py2 = py + plotH - t2Clamp((T_val / 3) * plotH, 0, plotH);
+      i === 1 ? ctx.moveTo(px2, py2) : ctx.lineTo(px2, py2);
+    }
+    ctx.strokeStyle = '#0ea5e9'; ctx.lineWidth = 2; ctx.stroke();
+
+    // T_HP line
+    const T_HP_y = py + plotH - plotH * (2 / 3);
+    ctx.beginPath(); ctx.moveTo(px, T_HP_y); ctx.lineTo(px + plotW, T_HP_y);
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 1; ctx.setLineDash([4, 4]); ctx.stroke(); ctx.setLineDash([]);
+    t2Txt(px + plotW + 4, T_HP_y, 'T_HP', '#fbbf24', 7, 'left');
+
+    // Phase labels
+    t2Txt(cx - plotW * 0.28, py - 16, 'fase confinata', '#94a3b8', 7, 'center');
+    t2Txt(cx + plotW * 0.3, py - 16, 'fase deconfinata', '#4ade80', 7, 'center');
+    t2Txt(cx, py + plotH + 28, 'T_HP = 3/(2πL)', '#fbbf24', 8, 'center');
+    return;
+  }
+
+  // ── OLTRE — mappa dualità ─────────────────────────────────────────────────
+  if (scene === 'oltre') {
+    const nodeR = 18;
+    const nodes = [
+      { x: cx,          y: cy,          label: 'Olografia', col: '#fbbf24' },
+      { x: cx - 90,     y: cy - 50,     label: 'AdS/CFT',   col: '#0ea5e9' },
+      { x: cx + 90,     y: cy - 50,     label: 'dS/CFT',    col: '#a78bfa' },
+      { x: cx - 90,     y: cy + 55,     label: 'Flat holo', col: '#4ade80' },
+      { x: cx + 90,     y: cy + 55,     label: 'ER=EPR',    col: '#f43f5e' },
+    ];
+
+    // Edges
+    const edges = [[0,1],[0,2],[0,3],[0,4],[1,3]];
+    for (const [a, b] of edges) {
+      const na = nodes[a], nb = nodes[b];
+      const pulse = rm ? 0.3 : 0.15 + 0.2 * Math.sin(T * 1.2 + a + b);
+      ctx.beginPath(); ctx.moveTo(na.x, na.y); ctx.lineTo(nb.x, nb.y);
+      ctx.strokeStyle = `rgba(148,163,184,${pulse})`; ctx.lineWidth = 1; ctx.stroke();
+    }
+
+    // Nodes
+    for (const nd of nodes) {
+      const pulse = rm ? 1 : 0.8 + 0.2 * Math.sin(T + nd.x * 0.02);
+      t2Glow(nd.col, 10 * pulse);
+      ctx.beginPath(); ctx.arc(nd.x, nd.y, nodeR, 0, Math.PI * 2);
+      ctx.fillStyle = nd.col + '18'; ctx.fill();
+      ctx.strokeStyle = nd.col; ctx.lineWidth = 1.5; ctx.stroke();
+      t2NoGlow();
+      t2Txt(nd.x, nd.y, nd.label, nd.col, 7.5, 'center');
+    }
+
+    t2Txt(cx, cy + 100, 'la geometria emerge dall\'entanglement', '#64748b', 8, 'center');
+    return;
+  }
+};
+
+t2Init();
+</script>
+</body>
+</html>

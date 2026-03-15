@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCC — Introduzione | Penrose — DivulgAzione</title>
+<link rel="stylesheet" href="../tentativo 2/t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="ui">
+  <span id="ui-title">DivulgAzione · CCC</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">6 fasi</span>
+</div>
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — IL PROBLEMA DELLO STATO INIZIALE</div>
+    <div class="phase-title">Il vero mistero cosmologico: la bassa entropia del Big Bang</div>
+    <div class="phase-body">
+      <p>Il Big Bang richiede <span class="hl">condizioni iniziali straordinariamente speciali</span>: un universo a bassissima entropia. La seconda legge della termodinamica dice che l'entropia cresce sempre — quindi la freccia del tempo punta verso stati di entropia maggiore. Ma perché l'universo ha iniziato con una <span class="am">entropia così bassa</span>?</p>
+      <code class="formula">Penrose: il vero problema cosmologico
+Entropia attuale dell'universo osservabile:
+  S_ora ≈ 10^{101} k_B  (dominata dai BH)
+Entropia massima possibile (BH cosmologico):
+  S_max ≈ 10^{123} k_B
+Entropia al Big Bang:
+  S_BB ≈ 10^{88} k_B  (radiazione primordiale)
+→ il Big Bang era in uno stato di
+  probabilità ~ 10^{−10^{123}}  !!!
+Ipotesi di Weyl: C_μνρσ → 0  al Big Bang</code>
+      <p>Penrose formula il problema attraverso il <span class="hl">tensore di Weyl</span>: al Big Bang la curvatura gravitazionale (misurata dal tensore di Weyl C_μνρσ) era praticamente <span class="am">zero</span>, mentre nelle singolarità dei buchi neri è infinita. L'<span class="gr">ipotesi di Weyl</span> di Penrose afferma che questa asimmetria — Big Bang liscio, singolarità BH caotiche — è ciò che definisce la freccia del tempo nell'universo. L'inflazione può spiegare la piattezza e l'omogeneità, ma <span class="vi">non spiega perché il Weyl era zero</span> all'inizio.</p>
+      <div class="note">Animazione: universo che emerge da un punto con geometria liscia (Weyl = 0), espandendosi in un universo con struttura via via più complessa. Confronto con singolarità caotica di un BH.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — L'IDEA FONDAMENTALE DELLA CCC</div>
+    <div class="phase-title">La Cosmologia Ciclica Conforme: il futuro è il passato</div>
+    <div class="phase-body">
+      <p>Nel 2005-2010, Roger Penrose propone la <span class="hl">Cosmologia Ciclica Conforme (CCC)</span>: il lontano futuro di un universo dominato da Λ è <span class="am">conformalmente equivalente</span> al Big Bang di un nuovo universo. Non è un big crunch e poi un big bang — è una connessione geometrica liscia attraverso una <span class="gr">trasformazione conforme</span>.</p>
+      <code class="formula">L'idea centrale della CCC:
+  ℐ⁺_precedente ≡ Bang_successivo
+(identificazione conforme, non fisica diretta)
+Rescaling della metrica:
+  ĝ_μν = Ω² g_μν   (trasformazione conforme)
+Ω → 0 verso ℐ⁺ dell'eone precedente
+Ω → ∞ verso il Bang dell'eone successivo
+→ due divergenze si "cancellano" conformalmente</code>
+      <p>Il punto chiave: il futuro lontano di un universo de Sitter e l'istante del Big Bang condividono una struttura matematica: <span class="hl">entrambi sono singolarità conformali</span>, ma di tipo opposto. Nell'universo futuro tutto si dilata verso l'infinito; nel Big Bang tutto si comprime da un punto. Con la giusta trasformazione conforme Ω, si può <span class="am">raccordare matematicamente</span> le due geometrie. L'universo è quindi un ciclo eterno di "<span class="gr">eoni</span>" cosmici.</p>
+      <div class="note">Animazione: due coni temporali connessi al punto di crossover — il bordo futuro ℐ⁺ del primo eone (in basso) si identifica con il Big Bang del secondo eone (in alto). La metrica si riscala conformalmente.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — IL RESCALING CONFORME</div>
+    <div class="phase-title">Perché il rescaling conforme funziona</div>
+    <div class="phase-body">
+      <p>Il rescaling conforme CCC si basa su un fatto fisico profondo: nel lontano futuro dell'universo, le <span class="hl">particelle massive scompaiono</span>. I buchi neri evaporano (radiazione di Hawking), i protoni decadono (previsto dalle GUT). Rimangono solo <span class="am">fotoni e gravitoni</span> — particelle senza massa. E le particelle senza massa non "sentono" la scala della metrica.</p>
+      <code class="formula">Invarianza conforme delle particelle di massa nulla:
+  particella senza massa: nessun orologio interno
+  → la fisica è invariante per g_μν → Ω² g_μν
+Decadimento dei costituenti dell'eone:
+  BH: τ_evap ~ M³/(ℏG²)  ~ 10^{100} anni
+  protone: τ_p > 10^{34} anni  (da GUT)
+  → alla fine: solo fotoni + gravitoni
+Rescaling: t → ∞ dell'eone A
+         ≡ t = 0 dell'eone B  (conformalmente)</code>
+      <p>Poiché la fisica dei fotoni e gravitoni è <span class="hl">conformalmente invariante</span>, è matematicamente lecito applicare un rescaling conforme che "<span class="am">comprima</span>" l'infinito futuro in un singolo istante — il Big Bang del nuovo eone. Penrose chiama questa superficie di transizione il <span class="gr">crossover conforme</span>. Attraverso di essa, il tensore di Weyl rimane zero su entrambi i lati (dall'eone precedente verso il crossover e dal crossover verso il nuovo eone).</p>
+      <div class="note">Animazione: trasformazione conforme dell'universo — le particelle massive (punti colorati) scompaiono una ad una, lasciando solo fotoni (punti dorati). Poi il rescaling comprime l'infinito in un nuovo punto.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — LA SUPERFICIE DI CROSSOVER</div>
+    <div class="phase-title">Il crossover: l'identità tra ℐ⁺ e il Big Bang</div>
+    <div class="phase-body">
+      <p>La <span class="hl">superficie di crossover</span> è il cuore matematico della CCC. È la superficie 3D che separa due eoni consecutivi: da un lato è il confine futuro (ℐ⁺) dell'eone precedente; dall'altro è il momento del Big Bang dell'eone successivo. Questa superficie è una <span class="am">singolarità apparente ma non fisica</span>.</p>
+      <code class="formula">Proprietà della superficie di crossover:
+  • Il tensore di Weyl C_μνρσ = 0 su entrambi i lati
+  • La geometria è conforme, non identica
+    (le metriche g e ĝ = Ω²g differiscono)
+  • Il fattore Ω diverge da un lato e si azzera
+    dall'altro: Ω_A → 0 e Ω_B → ∞
+  • Attraverso di essa: le equazioni sono regolari
+    in coordinate conformi
+  • È analoga a un'ipersuperficie di Cauchy</code>
+      <p>Il tensore di Weyl nullo su entrambi i lati del crossover garantisce che la <span class="hl">geometria conforme sia liscia</span>. Non ci sono singolarità fisiche: solo un cambio di scala che, per le particelle senza massa, è irrilevante. Penrose usa il termine "<span class="am">conformally smooth join</span>" (connessione conformalmente liscia). Questo è radicalmente diverso da un rimbalzo cosmologico o da una singolarità — è una <span class="gr">transizione geometrica elegante</span> senza energia infinita o curvatura infinita nell'invariante conforme.</p>
+      <div class="note">Animazione: due coni (eoni) connessi al crossover. La regione vicino al crossover mostra la superficie di ℐ⁺ che si fonde con il Bang. Il tensore di Weyl (illustrato come "rugorosità" della geometria) è zero su entrambi i lati.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — L'ENTROPIA NELLA CCC</div>
+    <div class="phase-title">Come la CCC affronta il problema dell'entropia</div>
+    <div class="phase-body">
+      <p>Il problema dell'entropia nella CCC: se l'entropia dell'eone precedente era altissima (dominata dai buchi neri), come può l'eone successivo iniziare con bassa entropia? <span class="hl">L'entropia non si azzera</span> — ma il modo in cui si conta cambia.</p>
+      <code class="formula">Entropia nella CCC:
+  Eone A (alla fine): S_A ≈ 10^{123} k_B
+  (dominata dall'entropia gravitazionale dei BH)
+  → i BH evaporano: S_BH → S_radiazione
+  Eone B (all'inizio): S_B iniziale = ?
+Il cambio cruciale:
+  nell'eone A ci sono N_A gradi di libertà (GdL)
+  nell'eone B ci sono N_B ≠ N_A GdL
+  (le particelle massive scompaiono!)
+  → l'entropia "massima possibile" cambia
+  → la S misurata rispetto al massimo è bassa</code>
+      <p>Il trucco concettuale di Penrose: la <span class="hl">seconda legge non richiede che l'entropia sia zero</span> all'inizio — richiede che sia <span class="am">bassa rispetto al massimo raggiungibile</span>. Se tra un eone e l'altro il numero di gradi di libertà si riduce (perché le particelle massive scompaiono), il massimo entropia disponibile nel nuovo eone è minore, e la <span class="gr">frazione relativa di entropia può essere bassa</span>. La seconda legge non viene violata: cambia il denominatore, non il numeratore.</p>
+      <div class="note">Animazione: grafico dell'entropia tra due eoni — cresce durante l'eone A (fino a un massimo altissimo), poi il cambio di gradi di libertà al crossover "resetta" la scala, e l'eone B inizia basso rispetto al suo massimo.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — CONFRONTO CON L'INFLAZIONE</div>
+    <div class="phase-title">CCC vs. inflazione: due soluzioni a confronto</div>
+    <div class="phase-body">
+      <p>Sia la CCC che l'inflazione risolvono alcuni problemi della cosmologia standard — ma con meccanismi radicalmente diversi. Penrose è un critico dell'inflazione: non come idea empirica, ma come soluzione al problema dello <span class="hl">stato iniziale a bassa entropia</span>.</p>
+      <code class="formula">Problema della piattezza (Ω ≈ 1):
+  Inflazione: espansione esponenziale → piatta
+  CCC: ogni eone eredita geometria quasi-piatta
+Problema dell'orizzonte (CMB omogenea):
+  Inflazione: tutte le regioni connesse prima
+  CCC: l'eone precedente era causalmente connesso
+Onde gravitazionali primordiali (B-mode):
+  Inflazione prevede: r = T/S &gt; 0 (misurabile)
+  CCC prevede: r ≈ 0  (nessun B-mode primordiale)
+  → questa è la differenza testabile chiave!</code>
+      <p>La critica di Penrose all'inflazione: il campo inflatonico richiede esso stesso <span class="hl">condizioni iniziali speciali</span> per partire nell'inflazione — sposta il problema senza risolverlo. L'inflazione non risolve il problema del Weyl. La <span class="am">CCC risolve entrambi</span>: il Weyl nullo è garantito dal raccordo conforme, e la geometria quasi-piatta è ereditata dall'eone precedente. La predizione falsificabile chiave: <span class="gr">assenza di B-modes primordiali</span>. Gli esperimenti CMB-S4 e LiteBIRD testeranno questa predizione.</p>
+      <div class="note">Animazione: due linee temporali cosmologiche in parallelo — inflazione (con campo inflatonico e B-modes) vs. CCC (con eoni connessi, nessun B-mode). Evidenzia le differenze testabili.</div>
+    </div>
+  </div>
+
+</div><!-- /panel -->
+
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · Problema entropia</button>
+  <button class="btn" onclick="goPhase(2)">02 · Idea CCC</button>
+  <button class="btn" onclick="goPhase(3)">03 · Rescaling conforme</button>
+  <button class="btn" onclick="goPhase(4)">04 · Crossover</button>
+  <button class="btn" onclick="goPhase(5)">05 · Entropia CCC</button>
+  <button class="btn" onclick="goPhase(6)">06 · CCC vs. inflazione</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+
+<script src="../tentativo 2/t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: "Il problema dello stato iniziale", desc: "Il Big Bang richiede condizioni iniziali a bassissima entropia. Penrose: questo è il vero mistero cosmologico. Ipotesi di Weyl: C_μνρσ → 0 al Big Bang.", scene: 'entropia_iniziale' },
+  { name: "L'idea fondamentale della CCC", desc: "Il lontano futuro di un eone (de Sitter con solo particelle senza massa) è conformalmente equivalente al Big Bang dell'eone successivo. Formula: ĝ_μν = Ω² g_μν.", scene: 'ccc_idea' },
+  { name: "Il rescaling conforme", desc: "Nell'eone futuro tutte le particelle massive scompaiono. Senza massa, la fisica è conformalmente invariante. Si può riscalare t → ∞ → t = 0 in modo smoothed.", scene: 'rescaling' },
+  { name: "La superficie di crossover", desc: "La superficie ℐ⁺ dell'eone precedente è identificata con il Bang dell'eone successivo. Il tensore di Weyl rimane zero attraverso di essa.", scene: 'crossover' },
+  { name: "L'entropia nella CCC", desc: "L'entropia non si azzera: il numero di gradi di libertà cambia tra eoni (le particelle massive scompaiono). La seconda legge non viene violata: cambia il massimo raggiungibile.", scene: 'entropia_ccc' },
+  { name: "Confronto con l'inflazione", desc: "CCC vs inflazione: entrambi spiegano piattezza e omogeneità. Differenza chiave: CCC non prevede onde gravitazionali B-modes primordiali (r ≈ 0 vs. r > 0).", scene: 'confronto' },
+];
+
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const cx    = t2AnimCX();
+  const cy    = t2AnimCY();
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phIdx].scene;
+
+  // ── ENTROPIA INIZIALE — universo liscio emergente ─────────────────────────
+  if (scene === 'entropia_iniziale') {
+    const R = rm ? 80 : 40 + Math.min(T * 30, 120);
+    // Smooth universe bubble
+    const g = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
+    g.addColorStop(0, 'rgba(99,102,241,0.25)');
+    g.addColorStop(1, 'rgba(99,102,241,0.0)');
+    ctx.fillStyle = g;
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
+    t2Glow('#818cf8', 14);
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.strokeStyle = '#818cf8'; ctx.lineWidth = 2; ctx.stroke();
+    t2NoGlow();
+
+    // Label Weyl = 0
+    t2Txt(cx, cy, 'C_μνρσ = 0', '#22d3ee', 10, 'center');
+    t2Txt(cx, cy + 18, '(Weyl nullo)', '#22d3ee', 8, 'center');
+
+    // Growing structure
+    if (R > 80) {
+      for (let i = 0; i < 12; i++) {
+        const ang = (i / 12) * Math.PI * 2;
+        const r   = R * (0.6 + 0.35 * Math.abs(Math.sin(i)));
+        const fx  = cx + r * Math.cos(ang);
+        const fy  = cy + r * Math.sin(ang);
+        ctx.beginPath(); ctx.arc(fx, fy, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(251,191,36,${0.3 + 0.4 * Math.abs(Math.sin(T + i))})`; ctx.fill();
+      }
+    }
+
+    t2Txt(cx, cy + R + 22, 'P(Big Bang) ~ 10^{−10^{123}} (un miracolo!)', '#f43f5e', 9, 'center');
+    return;
+  }
+
+  // ── CCC IDEA — due eoni connessi ──────────────────────────────────────────
+  if (scene === 'ccc_idea') {
+    const S = Math.min(W, H) * 0.17;
+
+    // Eone A (lower cone)
+    ctx.beginPath();
+    ctx.moveTo(cx, cy + 10);
+    ctx.lineTo(cx - S * 1.2, cy + S + 10);
+    ctx.lineTo(cx + S * 1.2, cy + S + 10);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(99,102,241,0.12)'; ctx.fill();
+    ctx.strokeStyle = '#818cf8'; ctx.lineWidth = 1.5; ctx.stroke();
+    t2Txt(cx, cy + S * 0.55 + 10, 'eone A (precedente)', '#818cf8', 8, 'center');
+
+    // Crossover line
+    ctx.beginPath();
+    ctx.moveTo(cx - S * 1.3, cy + 10);
+    ctx.lineTo(cx + S * 1.3, cy + 10);
+    t2Glow('#fbbf24', 10);
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 3; ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, cy + 10 - 14, 'crossover conforme  (ĝ_μν = Ω² g_μν)', '#fbbf24', 8, 'center');
+
+    // Eone B (upper cone)
+    ctx.beginPath();
+    ctx.moveTo(cx, cy + 10);
+    ctx.lineTo(cx - S * 1.2, cy - S + 10);
+    ctx.lineTo(cx + S * 1.2, cy - S + 10);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(34,211,238,0.10)'; ctx.fill();
+    ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 1.5; ctx.stroke();
+    t2Txt(cx, cy - S * 0.55 + 10, 'eone B (successivo)', '#22d3ee', 8, 'center');
+
+    t2Txt(cx, cy - S + 10 - 18, 'ℐ⁺', '#22d3ee', 9, 'center');
+    t2Txt(cx, cy + S + 10 + 14, 'ℐ⁻ dell\'eone precedente', '#818cf8', 8, 'center');
+    return;
+  }
+
+  // ── RESCALING — particelle che scompaiono ─────────────────────────────────
+  if (scene === 'rescaling') {
+    const nParticles = 18;
+    const t0 = rm ? 0.5 : (T * 0.15) % 1;
+    const disappearedFrac = t0;
+
+    for (let i = 0; i < nParticles; i++) {
+      const ang  = (i / nParticles) * Math.PI * 2;
+      const r    = 55 + (i % 3) * 22;
+      const px   = cx + r * Math.cos(ang);
+      const py   = cy + r * Math.sin(ang);
+      const hasMass = i % 3 !== 0;  // photons: every 3rd
+
+      if (hasMass) {
+        // Massive particles fade out over time
+        const alpha = Math.max(0, 1 - disappearedFrac * 2.5);
+        if (alpha > 0.01) {
+          ctx.beginPath(); ctx.arc(px, py, 4, 0, Math.PI * 2);
+          ctx.fillStyle = `rgba(248,113,113,${alpha})`; ctx.fill();
+        }
+      } else {
+        // Photons always visible, pulse
+        const pulse = rm ? 0.8 : 0.5 + 0.4 * Math.sin(T * 3 + i);
+        t2Glow('#fbbf24', 6 * pulse);
+        ctx.beginPath(); ctx.arc(px, py, 3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(251,191,36,${pulse})`; ctx.fill();
+        t2NoGlow();
+      }
+    }
+
+    t2Txt(cx, cy - 14, 'solo fotoni', '#fbbf24', 9, 'center');
+    t2Txt(cx, cy + 2, 'sopravvivono', '#fbbf24', 9, 'center');
+    t2Txt(cx, cy + 88, 'particelle massive sparite → rescaling conforme lecito', '#94a3b8', 8, 'center');
+    return;
+  }
+
+  // ── CROSSOVER — superficie ────────────────────────────────────────────────
+  if (scene === 'crossover') {
+    const S = Math.min(W, H) * 0.17;
+    const weavy = rm ? 0 : Math.sin(T * 1.5) * 4;
+
+    // Weyl = 0 label on both sides
+    t2Txt(cx - S * 0.7, cy + S * 0.5, 'C = 0', '#818cf8', 8, 'center');
+    t2Txt(cx + S * 0.4, cy - S * 0.5, 'C = 0', '#22d3ee', 8, 'center');
+
+    // Eone A cone
+    ctx.beginPath();
+    ctx.moveTo(cx + weavy, cy);
+    ctx.lineTo(cx - S, cy + S);
+    ctx.lineTo(cx + S, cy + S);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(99,102,241,0.10)'; ctx.fill();
+    ctx.strokeStyle = '#818cf8'; ctx.lineWidth = 1.2; ctx.stroke();
+
+    // Eone B cone
+    ctx.beginPath();
+    ctx.moveTo(cx + weavy, cy);
+    ctx.lineTo(cx - S, cy - S);
+    ctx.lineTo(cx + S, cy - S);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(34,211,238,0.09)'; ctx.fill();
+    ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 1.2; ctx.stroke();
+
+    // Crossover point glow
+    t2Glow('#fbbf24', 18);
+    ctx.beginPath(); ctx.arc(cx + weavy, cy, 7, 0, Math.PI * 2);
+    ctx.fillStyle = '#fbbf24'; ctx.fill();
+    t2NoGlow();
+
+    t2Txt(cx + weavy + 16, cy, 'crossover', '#fbbf24', 8, 'left');
+    t2Txt(cx, cy + S + 16, 'ℐ⁺ eone A', '#818cf8', 8, 'center');
+    t2Txt(cx, cy - S - 14, 'Bang eone B', '#22d3ee', 8, 'center');
+    return;
+  }
+
+  // ── ENTROPIA CCC — grafico ────────────────────────────────────────────────
+  if (scene === 'entropia_ccc') {
+    const plotW = Math.min(W * 0.38, 150);
+    const plotH = Math.min(H * 0.30, 110);
+    const px = cx - plotW / 2;
+    const py = cy - plotH / 2;
+
+    // Axes
+    ctx.beginPath(); ctx.moveTo(px, py + plotH); ctx.lineTo(px + plotW, py + plotH);
+    ctx.strokeStyle = '#94a3b8'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(px, py + plotH);
+    ctx.stroke();
+    t2Txt(px + plotW / 2, py + plotH + 14, 'tempo →', '#94a3b8', 7.5, 'center');
+    t2Txt(px - 12, py + plotH / 2, 'S', '#94a3b8', 8, 'center');
+
+    // S curve for eone A (rising to max)
+    const xCross = px + plotW * 0.58;
+    ctx.beginPath();
+    for (let i = 0; i <= 50; i++) {
+      const x  = px + (i / 50) * plotW * 0.6;
+      const y  = py + plotH - plotH * (0.08 + 0.8 * (i / 50) * (i / 50));
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = '#818cf8'; ctx.lineWidth = 2; ctx.stroke();
+
+    // S max line (eone A)
+    ctx.beginPath(); ctx.moveTo(px, py + plotH * 0.08);
+    ctx.lineTo(xCross, py + plotH * 0.08);
+    ctx.strokeStyle = 'rgba(129,140,248,0.3)'; ctx.lineWidth = 1;
+    ctx.setLineDash([3, 3]); ctx.stroke(); ctx.setLineDash([]);
+
+    // Crossover marker
+    ctx.beginPath(); ctx.moveTo(xCross, py); ctx.lineTo(xCross, py + plotH);
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 1.5; ctx.stroke();
+    t2Txt(xCross, py - 10, 'crossover', '#fbbf24', 7, 'center');
+
+    // S curve for eone B (starts low, rises)
+    ctx.beginPath();
+    for (let i = 0; i <= 40; i++) {
+      const x  = xCross + (i / 40) * (plotW * 0.42);
+      const y  = py + plotH - plotH * (0.04 + 0.5 * (i / 40) * (i / 40));
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 2; ctx.stroke();
+
+    // S max line (eone B — lower because fewer GdL)
+    ctx.beginPath();
+    ctx.moveTo(xCross, py + plotH * 0.30);
+    ctx.lineTo(px + plotW, py + plotH * 0.30);
+    ctx.strokeStyle = 'rgba(34,211,238,0.3)'; ctx.lineWidth = 1;
+    ctx.setLineDash([3, 3]); ctx.stroke(); ctx.setLineDash([]);
+
+    t2Txt(cx, py + plotH + 26, 'S_max cambia (meno gradi di libertà nell\'eone B)', '#fbbf24', 7.5, 'center');
+    return;
+  }
+
+  // ── CONFRONTO — inflazione vs. CCC ────────────────────────────────────────
+  if (scene === 'confronto') {
+    // Two columns
+    const colX1 = cx - 80;
+    const colX2 = cx + 80;
+    const rows = [
+      { label: 'Piattezza',   ccc: '✓', inf: '✓', yoff: 0 },
+      { label: 'Orizzonte',   ccc: '✓', inf: '✓', yoff: 28 },
+      { label: 'B-modes',     ccc: '≈0', inf: 'r>0', yoff: 56 },
+      { label: 'Weyl = 0',    ccc: '✓', inf: '✗', yoff: 84 },
+      { label: 'Campo φ',     ccc: 'no', inf: 'sì', yoff: 112 },
+    ];
+
+    const yTop = cy - 90;
+    t2Txt(colX1, yTop - 14, 'CCC', '#22d3ee', 9, 'center');
+    t2Txt(colX2, yTop - 14, 'Inflazione', '#f59e0b', 9, 'center');
+    t2Txt(cx - 140, yTop - 14, '', '#94a3b8', 8, 'center');
+
+    // Divider
+    ctx.beginPath(); ctx.moveTo(cx - 145, yTop - 2); ctx.lineTo(cx + 130, yTop - 2);
+    ctx.strokeStyle = 'rgba(148,163,184,0.3)'; ctx.lineWidth = 1; ctx.stroke();
+
+    for (const row of rows) {
+      const y = yTop + row.yoff;
+      t2Txt(cx - 140, y + 10, row.label, '#94a3b8', 8, 'left');
+      const cccCol = row.ccc === '✓' ? '#4ade80' : row.ccc === '✗' ? '#f43f5e' : '#fbbf24';
+      const infCol = row.inf === '✓' ? '#4ade80' : row.inf === '✗' ? '#f43f5e' : '#fbbf24';
+      t2Txt(colX1, y + 10, row.ccc, cccCol, 9, 'center');
+      t2Txt(colX2, y + 10, row.inf, infCol, 9, 'center');
+    }
+
+    t2Txt(cx, yTop + 140, 'B-modes: la predizione testabile chiave', '#f43f5e', 8, 'center');
+    return;
+  }
+};
+
+t2Init();
+</script>
+</body>
+</html>
