@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Processo di Penrose | Penrose — DivulgAzione</title>
+<link rel="stylesheet" href="../tentativo 2/t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="ui">
+  <span id="ui-title">DivulgAzione · Penrose</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">6 fasi</span>
+</div>
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — L'ERGOSFERA</div>
+    <div class="phase-title">L'ergosfera del buco nero di Kerr</div>
+    <div class="phase-body">
+      <p>Nel buco nero di Kerr, in rotazione, esiste una regione speciale chiamata <span class="hl">ergosfera</span>: lo spazio compreso tra l'orizzonte degli eventi e il <span class="am">limite statico</span> (o superficie di stazionarietà). All'interno dell'ergosfera accade qualcosa di straordinario: il quadrivettore di Killing temporale <span class="gr">diventa spaziale</span>.</p>
+      <code class="formula">ξ^μ ξ_μ = g_tt > 0  (nell'ergosfera)
+g_tt = 1 - r_s r / ρ²  (metrica di Kerr)
+→ nessun osservatore può restare fermo
+→ il frame-dragging trascina TUTTO lo spazio
+Limite statico: r_s = M + √(M² − a²cos²θ)</code>
+      <p>Dentro l'ergosfera, <span class="hl">nessun oggetto fisico può stare fermo</span> rispetto alle stelle distanti: lo spazio-tempo è letteralmente trascinato dalla rotazione del buco nero. Anche la luce è costretta a ruotare nella stessa direzione. Tuttavia, a differenza dell'interno dell'orizzonte, si può <span class="am">ancora fuggire</span> dall'ergosfera verso l'infinito.</p>
+      <div class="note">Animazione: disco di accrescimento con la regione dell'ergosfera colorata in ambra, circondata dall'orizzonte degli eventi. Le frecce mostrano il frame-dragging: tutto ruota.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — LA SUPER-RADIANZA</div>
+    <div class="phase-title">Super-radianza: amplificazione ondulatoria</div>
+    <div class="phase-body">
+      <p>Prima di discutere il processo di Penrose per le particelle, esiste un analogo ondulatorio: la <span class="hl">super-radianza</span>. Un'onda elettromagnetica o gravitazionale che entra nell'ergosfera può uscire con <span class="am">più energia di quella incidente</span>, trasferendo momento angolare negativo al buco nero.</p>
+      <code class="formula">Condizione di super-radianza:
+  ω &lt; m Ω_H
+dove:
+  ω  = frequenza dell'onda incidente
+  m  = numero quantico azimutale
+  Ω_H = velocità angolare dell'orizzonte
+       = a / (r₊² + a²)
+→ l'onda amplificata estrae rotazione dal BH</code>
+      <p>La condizione <code class="formula">ω &lt; mΩ_H</code> è l'equivalente ondulatorio dell'energia negativa nell'ergosfera. <span class="hl">Zel'dovich (1971)</span> predisse questo fenomeno per la luce riflessa da un cilindro rotante. Misner (1972) e Starobinsky lo applicarono ai buchi neri. La super-radianza è un precursore della <span class="gr">radiazione di Hawking</span>: quando si include la meccanica quantistica, l'amplificazione spontanea dell'onda del vuoto produce emissione termica.</p>
+      <div class="note">Animazione: un'onda entra nell'ergosfera (freccia verso l'interno) e riemerge con ampiezza maggiore (freccia verso l'esterno più grande). Il BH rallenta leggermente.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — IL PROCESSO ORIGINALE</div>
+    <div class="phase-title">Il processo di Penrose: estrarre energia da un BH</div>
+    <div class="phase-body">
+      <p>Nel 1969, Roger Penrose propose un meccanismo per <span class="hl">estrarre energia direttamente da un buco nero in rotazione</span>. L'idea è elegante: una particella entra nell'ergosfera e si <span class="am">divide in due frammenti</span>. Uno dei frammenti, quello che cade nell'orizzonte, ha <span class="gr">energia negativa</span>; l'altro sfugge verso l'infinito.</p>
+      <code class="formula">Conservazione dell'energia (all'infinito):
+  E_out = E_in + |E_neg|
+  E_out > E_in  ✓  (energia estratta!)
+Energia negativa nell'ergosfera:
+  E = −p_μ ξ^μ &lt; 0  (possibile se ξ^μ è spaziale)
+Limite teorico estratto:
+  ΔM_max ≈ 20.7% della massa del BH</code>
+      <p>Il buco nero <span class="hl">non viola la conservazione dell'energia</span>: paga il conto riducendo la propria <span class="am">massa e momento angolare</span>. Ogni ciclo del processo "frena" la rotazione del buco nero. L'energia estratta proviene dalla rotazione, non dalla massa irriducibile. Il processo continua finché il BH smette di ruotare (stato di Schwarzschild).</p>
+      <div class="note">Animazione: una particella entra nell'ergosfera → si divide in due frammenti con frecce colorate → un frammento cade verso il BH (rosso), l'altro fugge con energia maggiore (verde brillante).</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — LA BOMBA DI PENROSE</div>
+    <div class="phase-title">La bomba di Penrose: instabilità della super-radianza</div>
+    <div class="phase-body">
+      <p>Nel 1972, Press e Teukolsky proposero un esperimento mentale: circondare il buco nero con uno <span class="hl">specchio sferico</span> (riflettente). Le onde super-radianti rimbalzano avanti e indietro, venendo amplificate a ogni riflessione. Il risultato è una <span class="am">instabilità esplosiva</span>: la "bomba di Penrose".</p>
+      <code class="formula">Ogni ciclo:
+  E_onda → E_onda × (1 + ε)   ε > 0
+Dopo N cicli:
+  E_onda ~ E₀ × (1 + ε)^N → ∞
+Instabilità: tempo scala τ ~ r_specchio / c
+La rotazione del BH decresce ad ogni ciclo:
+  ΔJ = −ΔE / Ω_H</code>
+      <p>In natura, la <span class="gr">massa del bosone di assione</span> può fungere da specchio efficace: se la lunghezza d'onda Compton dell'assione è dell'ordine del raggio del BH, si forma una <span class="hl">nuvola di assioni super-radiante</span> attorno al buco nero. Questo processo è detto <span class="am">instabilità di Kerr-assione</span> ed è cercato sperimentalmente tramite onde gravitazionali continue con LIGO/Virgo/KAGRA.</p>
+      <div class="note">Animazione: onde che si amplificano rimbalzando tra lo specchio e il BH, con ampiezza crescente a ogni ciclo. Il BH rallenta visibilmente.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — IL LIMITE DI KERR</div>
+    <div class="phase-title">Il limite di Christodoulou: la massa irriducibile</div>
+    <div class="phase-body">
+      <p>Quanto si può estrarre? Nel 1970, Christodoulou dimostrò che esiste una <span class="hl">massa irriducibile</span> che non può mai essere diminuita da nessun processo classico. Il processo di Penrose può estrarre al massimo circa il <span class="am">29% della massa totale</span> del BH di Kerr estremo.</p>
+      <code class="formula">Massa irriducibile di Christodoulou:
+  M_irr = M √(½ (1 + √(1 − a²)))
+  dove a = J/M  (parametro di spin, 0 ≤ a ≤ M)
+BH estremo (a = M):
+  M_irr = M/√2 ≈ 0.707 M
+Energia massima estraibile:
+  E_max = M − M_irr ≈ 0.293 M ~ 29%
+Area dell'orizzonte: A ∝ M²_irr  (mai decresce)</code>
+      <p>La massa irriducibile è legata all'<span class="hl">area dell'orizzonte degli eventi</span>: la seconda legge della termodinamica dei buchi neri (Hawking) dice che l'area non può mai decrescere in processi classici. Questo è l'analogo del secondo principio della termodinamica. <span class="gr">Il processo di Penrose fa avvicinare il BH allo stato di Schwarzschild</span>, più "ordinato" e quindi con meno energia libera.</p>
+      <div class="note">Animazione: BH che rallenta progressivamente (da Kerr estremo verso Schwarzschild) mentre si rimpicciolisce solo parzialmente — la massa irriducibile rimane.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — IMPLICAZIONI ASTROFISICHE</div>
+    <div class="phase-title">Jet relativistici: il processo di Blandford-Znajek</div>
+    <div class="phase-body">
+      <p>Il processo di Penrose ha un analogo magnetoidrodinamico (MHD) proposto da Blandford e Znajek nel 1977: il <span class="hl">meccanismo di Blandford-Znajek (BZ)</span>. Invece di particelle, l'energia è estratta tramite il campo magnetico del disco di accrescimento, che agisce come "conduttore" nell'ergosfera.</p>
+      <code class="formula">Potenza estratta (BZ):
+  P_BZ ≈ (B²_H r²_H Ω²_H) / (4π)
+  ~ κ a² Φ² M⁻²  (in unità geometriche)
+dove:
+  B_H = campo magnetico all'orizzonte
+  Φ   = flusso magnetico sull'orizzonte
+  κ   ≈ 0.044 per BH estremo
+Efficienza: η ~ 140%  (a = M, caso estremo)</code>
+      <p>Si ritiene che il meccanismo BZ alimenti i <span class="am">jet relativistici</span> osservati nei quasar e nelle galassie attive (AGN). Il jet di <span class="hl">M87*</span>, fotografato da Event Horizon Telescope nel 2019, si estende per 5000 anni luce a quasi la velocità della luce. La rotazione del buco nero (stimata: <span class="gr">a ≈ 0.9 M</span>) e il campo magnetico del disco sono le fonti di energia di questo fenomeno cosmico.</p>
+      <div class="note">Animazione: buco nero di Kerr con disco di accrescimento e due jet bipolari simmetrici che si estendono verso l'alto e verso il basso, animati con plasma luminoso che scorre.</div>
+    </div>
+  </div>
+
+</div><!-- /panel -->
+
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · Ergosfera</button>
+  <button class="btn" onclick="goPhase(2)">02 · Super-radianza</button>
+  <button class="btn" onclick="goPhase(3)">03 · Processo</button>
+  <button class="btn" onclick="goPhase(4)">04 · Bomba di Penrose</button>
+  <button class="btn" onclick="goPhase(5)">05 · Limite Kerr</button>
+  <button class="btn" onclick="goPhase(6)">06 · Astrofisica</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+
+<script src="../tentativo 2/t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: "L'ergosfera", desc: "La regione tra l'orizzonte degli eventi e il limite statico nel buco nero di Kerr. Il quadrivettore di Killing temporale diventa spaziale: ξ^μξ_μ = g_tt > 0. Nessun osservatore può restare fermo.", scene: 'ergosfera' },
+  { name: "La super-radianza", desc: "Un'onda che entra nell'ergosfera può uscirne con più energia di quella incidente se trasporta momento angolare negativo verso il buco nero. Condizione: ω < mΩ_H.", scene: 'superradianza' },
+  { name: "Il processo originale", desc: "Una particella si divide nell'ergosfera: un frammento cade con energia negativa nel BH, l'altro sfugge con energia totale maggiore dell'originale. Formula: E_out = E_in + |E_neg|.", scene: 'processo' },
+  { name: "La bomba di Penrose", desc: "Con uno specchio attorno al BH, l'estrazione di energia diventa esplosiva per super-radianza iterata. Legata all'instabilità assione-Kerr cercata con LIGO.", scene: 'bomba' },
+  { name: "Il limite di Kerr", desc: "Un BH di Kerr può cedere al massimo ~29% della sua massa. La massa irriducibile M_irr = M√(½(1+√(1−a²))) non può mai decrescere.", scene: 'limite' },
+  { name: "Implicazioni astrofisiche", desc: "I jet relativistici (M87*) sono alimentati dal meccanismo di Blandford-Znajek, analogo MHD del processo di Penrose: potenza P_BZ ∝ a²Φ².", scene: 'jet' },
+];
+
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const cx  = t2AnimCX();
+  const cy  = t2AnimCY();
+  const rm  = t2ReducedMotion();
+  const scene = window.T2_PHASES[phIdx].scene;
+
+  // ── ERGOSFERA ─────────────────────────────────────────────────────────────
+  if (scene === 'ergosfera') {
+    const R   = Math.min(W, H) * 0.10;
+    const Rerg = R * 1.75;
+    // Ergoregion glow
+    const ergG = ctx.createRadialGradient(cx, cy, R, cx, cy, Rerg);
+    ergG.addColorStop(0, 'rgba(251,191,36,0.0)');
+    ergG.addColorStop(0.5, 'rgba(251,191,36,0.18)');
+    ergG.addColorStop(1, 'rgba(251,191,36,0.0)');
+    ctx.fillStyle = ergG;
+    ctx.beginPath(); ctx.arc(cx, cy, Rerg, 0, Math.PI * 2); ctx.fill();
+
+    // Accretion disk
+    const diskA = rm ? 0 : T * 0.4;
+    for (let i = 0; i < 80; i++) {
+      const ang = (i / 80) * Math.PI * 2 + diskA;
+      const r   = Rerg * (1.05 + 0.6 * Math.abs(Math.sin(i * 0.7)));
+      const ex  = cx + r * Math.cos(ang);
+      const ey  = cy + r * Math.sin(ang) * 0.35;
+      const bright = 0.3 + 0.5 * Math.sin(i * 0.5 + T * 2);
+      ctx.beginPath();
+      ctx.arc(ex, ey, 2.5, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(251,191,36,${bright * 0.6})`;
+      ctx.fill();
+    }
+
+    // Ergoregion boundary (dashed)
+    ctx.setLineDash([5, 5]);
+    t2Glow('#fbbf24', 12);
+    ctx.beginPath(); ctx.arc(cx, cy, Rerg, 0, Math.PI * 2);
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.setLineDash([]);
+    t2NoGlow();
+
+    // Event horizon (solid)
+    t2Glow('#60a5fa', 18);
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.fillStyle = '#000'; ctx.fill();
+    ctx.strokeStyle = '#60a5fa'; ctx.lineWidth = 2; ctx.stroke();
+    t2NoGlow();
+
+    // Frame-drag arrows
+    const nArrows = 8;
+    for (let i = 0; i < nArrows; i++) {
+      const baseAng = (i / nArrows) * Math.PI * 2 + (rm ? 0 : T * 0.5);
+      const arR = (R + Rerg) * 0.5;
+      const ax  = cx + arR * Math.cos(baseAng);
+      const ay  = cy + arR * Math.sin(baseAng) * 0.5;
+      const tx  = cx + arR * Math.cos(baseAng + 0.4);
+      const ty  = cy + arR * Math.sin(baseAng + 0.4) * 0.5;
+      ctx.beginPath();
+      ctx.moveTo(ax, ay); ctx.lineTo(tx, ty);
+      ctx.strokeStyle = 'rgba(251,191,36,0.55)'; ctx.lineWidth = 1.2; ctx.stroke();
+    }
+
+    t2Txt(cx, cy + Rerg + 22, 'Limite statico (ergosfera)', '#fbbf24', 9, 'center');
+    t2Txt(cx, cy - R - 14, 'Orizzonte degli eventi', '#60a5fa', 9, 'center');
+    t2Txt(cx, cy + R * 0.3, 'BH', '#60a5fa', 9, 'center');
+    return;
+  }
+
+  // ── SUPER-RADIANZA ────────────────────────────────────────────────────────
+  if (scene === 'superradianza') {
+    const R = Math.min(W, H) * 0.10;
+    // BH
+    t2Glow('#60a5fa', 18);
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.fillStyle = '#000'; ctx.fill();
+    ctx.strokeStyle = '#60a5fa'; ctx.lineWidth = 2; ctx.stroke();
+    t2NoGlow();
+
+    // Incoming wave (from left)
+    const waveX   = rm ? cx - R - 60 : cx - R - 60 + Math.sin(T * 1.2) * 20;
+    const waveAmp = 22;
+    ctx.beginPath();
+    for (let i = 0; i <= 60; i++) {
+      const x = cx - R - 120 + (i / 60) * 120;
+      const y = cy + Math.sin((i / 60) * Math.PI * 4 - T * 3) * waveAmp;
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 2; ctx.stroke();
+    t2Txt(cx - R - 65, cy - 28, 'onda incidente', '#38bdf8', 8, 'center');
+
+    // Outgoing wave (to right) — bigger amplitude
+    ctx.beginPath();
+    for (let i = 0; i <= 60; i++) {
+      const x = cx + R + (i / 60) * 120;
+      const y = cy + Math.sin((i / 60) * Math.PI * 4 + T * 3) * (waveAmp * 1.6);
+      i === 0 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = '#4ade80'; ctx.lineWidth = 2; ctx.stroke();
+    t2Txt(cx + R + 65, cy - 38, 'onda amplificata', '#4ade80', 8, 'center');
+
+    // Arrow labels
+    ctx.beginPath();
+    ctx.moveTo(cx - R - 5, cy); ctx.lineTo(cx - R - 30, cy);
+    ctx.strokeStyle = '#38bdf8'; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(cx + R + 5, cy); ctx.lineTo(cx + R + 30, cy);
+    ctx.strokeStyle = '#4ade80'; ctx.lineWidth = 1.5; ctx.stroke();
+
+    t2Txt(cx, cy + R + 30, 'ω < mΩ_H  →  amplificazione', '#fbbf24', 9, 'center');
+    return;
+  }
+
+  // ── PROCESSO ──────────────────────────────────────────────────────────────
+  if (scene === 'processo') {
+    const R    = Math.min(W, H) * 0.10;
+    const Rerg = R * 1.75;
+    const t0   = rm ? 0.5 : t2Clamp(((T % 4) / 4), 0, 1);
+
+    // Ergoregion
+    const ergG = ctx.createRadialGradient(cx, cy, R, cx, cy, Rerg);
+    ergG.addColorStop(0, 'rgba(251,191,36,0.0)');
+    ergG.addColorStop(0.5, 'rgba(251,191,36,0.12)');
+    ergG.addColorStop(1, 'rgba(251,191,36,0.0)');
+    ctx.fillStyle = ergG;
+    ctx.beginPath(); ctx.arc(cx, cy, Rerg, 0, Math.PI * 2); ctx.fill();
+    ctx.setLineDash([4, 4]);
+    ctx.beginPath(); ctx.arc(cx, cy, Rerg, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(251,191,36,0.4)'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.setLineDash([]);
+
+    // BH
+    t2Glow('#60a5fa', 18);
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.fillStyle = '#000'; ctx.fill();
+    ctx.strokeStyle = '#60a5fa'; ctx.lineWidth = 2; ctx.stroke();
+    t2NoGlow();
+
+    // Incoming particle (from left → splits at ergosfera)
+    const splitX = cx - Rerg + 8;
+    if (t0 < 0.45) {
+      const px = t2Lerp(cx - R * 4, splitX, t0 / 0.45);
+      t2Glow('#f59e0b', 10);
+      ctx.beginPath(); ctx.arc(px, cy, 5, 0, Math.PI * 2);
+      ctx.fillStyle = '#f59e0b'; ctx.fill();
+      t2NoGlow();
+      // arrow
+      ctx.beginPath(); ctx.moveTo(cx - R * 4 + 10, cy); ctx.lineTo(px - 8, cy);
+      ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 1.5; ctx.stroke();
+      t2Txt(cx - R * 3, cy - 16, 'E_in', '#f59e0b', 9, 'center');
+    }
+
+    if (t0 >= 0.45) {
+      const frac = (t0 - 0.45) / 0.55;
+      // Fragment falling in (neg energy → toward BH)
+      const f1x = t2Lerp(splitX, cx, frac);
+      const f1y = t2Lerp(cy, cy + R * 0.6, frac);
+      t2Glow('#f43f5e', 8);
+      ctx.beginPath(); ctx.arc(f1x, f1y, 4, 0, Math.PI * 2);
+      ctx.fillStyle = '#f43f5e'; ctx.fill();
+      t2NoGlow();
+      t2Txt(f1x, f1y - 14, '−E', '#f43f5e', 8, 'center');
+
+      // Fragment escaping (to upper right)
+      const f2x = t2Lerp(splitX, cx + R * 4, frac);
+      const f2y = t2Lerp(cy, cy - R * 2, frac);
+      t2Glow('#4ade80', 12);
+      ctx.beginPath(); ctx.arc(f2x, f2y, 6, 0, Math.PI * 2);
+      ctx.fillStyle = '#4ade80'; ctx.fill();
+      t2NoGlow();
+      t2Txt(f2x, f2y - 18, 'E_out > E_in', '#4ade80', 9, 'center');
+    }
+
+    t2Txt(cx, cy + Rerg + 22, 'E_out = E_in + |E_neg|', '#fbbf24', 9, 'center');
+    return;
+  }
+
+  // ── BOMBA ─────────────────────────────────────────────────────────────────
+  if (scene === 'bomba') {
+    const R   = Math.min(W, H) * 0.08;
+    const Rmirror = R * 3.2;
+
+    // Mirror circle
+    ctx.beginPath(); ctx.arc(cx, cy, Rmirror, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(148,163,184,0.6)'; ctx.lineWidth = 3; ctx.stroke();
+    t2Txt(cx, cy - Rmirror - 14, 'specchio riflettente', '#94a3b8', 8, 'center');
+
+    // BH
+    t2Glow('#60a5fa', 14);
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.fillStyle = '#000'; ctx.fill();
+    ctx.strokeStyle = '#60a5fa'; ctx.lineWidth = 2; ctx.stroke();
+    t2NoGlow();
+
+    // Bouncing waves (multiple, increasing amplitude)
+    const nWaves = 4;
+    for (let w = 0; w < nWaves; w++) {
+      const phase  = (T * 1.5 + w * 1.1) % (Math.PI * 2);
+      const r      = R + (Rmirror - R) * ((phase / (Math.PI * 2)));
+      const ampMul = 1 + w * 0.5;
+      const pts    = 60;
+      ctx.beginPath();
+      for (let i = 0; i <= pts; i++) {
+        const ang = (i / pts) * Math.PI * 2;
+        const dr  = Math.sin(i * 6 - T * 4) * 6 * ampMul;
+        const rx  = cx + (r + dr) * Math.cos(ang);
+        const ry  = cy + (r + dr) * Math.sin(ang);
+        i === 0 ? ctx.moveTo(rx, ry) : ctx.lineTo(rx, ry);
+      }
+      ctx.closePath();
+      const alpha = 0.15 + w * 0.1;
+      ctx.strokeStyle = `rgba(167,139,250,${alpha})`; ctx.lineWidth = 1; ctx.stroke();
+    }
+
+    t2Txt(cx, cy + Rmirror + 24, 'amplificazione esponenziale: bomba di Penrose', '#a78bfa', 9, 'center');
+    return;
+  }
+
+  // ── LIMITE ────────────────────────────────────────────────────────────────
+  if (scene === 'limite') {
+    const Rmax = Math.min(W, H) * 0.14;
+    const t0   = rm ? 0.5 : t2Clamp(((T * 0.3) % 1), 0, 1);
+    const spin = 1 - t0;           // da Kerr estremo (1) a Schwarzschild (0)
+    const R    = Rmax * (0.71 + 0.29 * spin);  // massa irriducibile + spin
+
+    // Glow color shifts from amber (spinning) to blue (Schwarzschild)
+    const glowCol = spin > 0.5 ? '#f59e0b' : '#60a5fa';
+    t2Glow(glowCol, 20);
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.fillStyle = '#000'; ctx.fill();
+    ctx.strokeStyle = glowCol; ctx.lineWidth = 2; ctx.stroke();
+    t2NoGlow();
+
+    // Spin indicator
+    const spinPct = Math.round(spin * 100);
+    t2Txt(cx, cy - R - 24, `spin a/M = ${(spin).toFixed(2)}`, '#fbbf24', 10, 'center');
+
+    // Irriducible mass indicator
+    const Mirr = Math.round((0.71 + 0.29 * spin) * 100) / 100;
+    t2Txt(cx, cy + R + 26, `M_irr ≈ ${Mirr.toFixed(2)} M  (invariante)`, '#4ade80', 9, 'center');
+    t2Txt(cx, cy, `${spinPct}%`, '#f59e0b', 10, 'center');
+
+    // Energy bar
+    const barW = 100;
+    const barH = 10;
+    ctx.fillStyle = 'rgba(255,255,255,0.05)';
+    ctx.fillRect(cx - barW / 2, cy + R + 44, barW, barH);
+    ctx.fillStyle = '#f59e0b';
+    ctx.fillRect(cx - barW / 2, cy + R + 44, barW * spin * 0.293, barH);
+    t2Txt(cx, cy + R + 62, 'energia estraibile: max 29%', '#f59e0b', 8, 'center');
+    return;
+  }
+
+  // ── JET ───────────────────────────────────────────────────────────────────
+  if (scene === 'jet') {
+    const R    = Math.min(W, H) * 0.09;
+    const jetH = Math.min(H * 0.35, 160);
+
+    // Upper jet
+    const jetGu = ctx.createLinearGradient(cx, cy - R, cx, cy - R - jetH);
+    jetGu.addColorStop(0, 'rgba(96,165,250,0.8)');
+    jetGu.addColorStop(1, 'rgba(96,165,250,0.0)');
+    ctx.beginPath();
+    ctx.moveTo(cx - R * 0.35, cy - R);
+    ctx.lineTo(cx - R * 0.8, cy - R - jetH);
+    ctx.lineTo(cx + R * 0.8, cy - R - jetH);
+    ctx.lineTo(cx + R * 0.35, cy - R);
+    ctx.closePath();
+    ctx.fillStyle = jetGu; ctx.fill();
+
+    // Lower jet
+    const jetGd = ctx.createLinearGradient(cx, cy + R, cx, cy + R + jetH);
+    jetGd.addColorStop(0, 'rgba(96,165,250,0.8)');
+    jetGd.addColorStop(1, 'rgba(96,165,250,0.0)');
+    ctx.beginPath();
+    ctx.moveTo(cx - R * 0.35, cy + R);
+    ctx.lineTo(cx - R * 0.8, cy + R + jetH);
+    ctx.lineTo(cx + R * 0.8, cy + R + jetH);
+    ctx.lineTo(cx + R * 0.35, cy + R);
+    ctx.closePath();
+    ctx.fillStyle = jetGd; ctx.fill();
+
+    // Plasma particles in jets
+    for (let i = 0; i < 20; i++) {
+      const frac  = rm ? i / 20 : ((i / 20 + T * 0.6) % 1);
+      const jy_up = cy - R - frac * jetH;
+      const jy_dn = cy + R + frac * jetH;
+      const jx    = cx + (Math.random() * 2 - 1) * R * 0.5 * frac;
+      ctx.beginPath(); ctx.arc(cx + (i % 5 - 2) * 6, jy_up, 2, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(167,139,250,${0.8 - frac * 0.6})`; ctx.fill();
+      ctx.beginPath(); ctx.arc(cx + (i % 5 - 2) * 6, jy_dn, 2, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(167,139,250,${0.8 - frac * 0.6})`; ctx.fill();
+    }
+
+    // Accretion disk
+    for (let i = 0; i < 60; i++) {
+      const ang = (i / 60) * Math.PI * 2 + (rm ? 0 : T * 0.5);
+      const r   = R * (1.2 + 0.8 * Math.abs(Math.sin(i * 0.6)));
+      const ex  = cx + r * Math.cos(ang);
+      const ey  = cy + r * Math.sin(ang) * 0.25;
+      ctx.beginPath(); ctx.arc(ex, ey, 2, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(251,191,36,${0.3 + 0.4 * Math.sin(i * 0.4)})`; ctx.fill();
+    }
+
+    // BH
+    t2Glow('#f59e0b', 16);
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.fillStyle = '#000'; ctx.fill();
+    ctx.strokeStyle = '#f59e0b'; ctx.lineWidth = 2; ctx.stroke();
+    t2NoGlow();
+
+    t2Txt(cx, cy - R - jetH - 16, 'jet relativistico (M87*)', '#60a5fa', 9, 'center');
+    t2Txt(cx, cy + R + jetH + 16, 'meccanismo Blandford-Znajek', '#4ade80', 9, 'center');
+    return;
+  }
+};
+
+t2Init();
+</script>
+</body>
+</html>

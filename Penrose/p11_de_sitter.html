@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Spazio di de Sitter | Penrose — DivulgAzione</title>
+<link rel="stylesheet" href="../tentativo 2/t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="ui">
+  <span id="ui-title">DivulgAzione · Penrose</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">6 fasi</span>
+</div>
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — LA COSTANTE COSMOLOGICA</div>
+    <div class="phase-title">Λ: dall'errore di Einstein alla scoperta del secolo</div>
+    <div class="phase-body">
+      <p>Nel 1917 Einstein introduce la <span class="hl">costante cosmologica Λ</span> nelle equazioni del campo gravitazionale per ottenere un universo statico — il solo universo concepibile all'epoca. Dopo la scoperta dell'espansione cosmica da parte di Hubble (1929), Einstein la definì il suo "<span class="am">più grande errore</span>". Ma la storia non finisce qui.</p>
+      <code class="formula">Equazioni di Einstein con Λ:
+  G_μν + Λg_μν = 8πG T_μν
+Λ > 0 → repulsione cosmica (energia del vuoto)
+Λ = 0 → universo di Minkowski o Friedmann
+Λ &lt; 0 → universo Anti-de Sitter (attrativo)
+Valore osservato: Λ ≈ 1.1 × 10⁻⁵² m⁻²</code>
+      <p>Nel 1998, le osservazioni delle supernovae di tipo Ia da parte dei team di <span class="hl">Perlmutter</span> e <span class="am">Riess-Schmidt</span> rivelarono che l'espansione dell'universo sta <span class="gr">accelerando</span>. Questo richiede Λ &gt; 0 (o qualcosa di equivalente). La costante cosmologica è oggi la componente dominante dell'universo: l'<span class="vi">energia oscura</span>, circa il 68% del contenuto energetico totale. Premio Nobel 2011.</p>
+      <div class="note">Animazione: rappresentazione di un universo in espansione accelerata — galassie che si allontanano con velocità crescente. La costante cosmologica come forza repulsiva del vuoto.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — LA METRICA DI DE SITTER</div>
+    <div class="phase-title">La soluzione di de Sitter: il vuoto cosmologico</div>
+    <div class="phase-body">
+      <p>Nel 1917, Willem de Sitter trovò una soluzione delle equazioni di Einstein con Λ &gt; 0 e <span class="hl">senza materia</span> (T_μν = 0): lo spazio-tempo di de Sitter. È il modello del vuoto cosmologico puro dominato dalla costante cosmologica — e descrive sia l'<span class="am">inflazione cosmica primordiale</span> che il <span class="gr">futuro lontano</span> del nostro universo.</p>
+      <code class="formula">Metrica di Friedmann-Lemaître (de Sitter):
+  ds² = −dt² + e^{2Ht}(dx² + dy² + dz²)
+con parametro di Hubble:
+  H = √(Λ/3)  (costante per de Sitter puro)
+Fattore di scala: a(t) = e^{Ht}  (esponenziale!)
+Raggio di Hubble: d_H = c/H  (orizzonte fisico)
+Distanza comovente percorribile: d_max = c/H</code>
+      <p>L'espansione <span class="hl">esponenziale</span> ha conseguenze profonde: qualunque struttura a scale maggiori di d_H = c/H si allontana da noi a velocità superluminale (non viola la relatività: non è la materia a muoversi, ma lo spazio che si espande). Le galassie oltre l'orizzonte di Hubble diventeranno per noi <span class="am">per sempre irraggiungibili</span>. Il tempo proprio degli osservatori scorre, ma lo spazio si dilata esponenzialmente.</p>
+      <div class="note">Animazione: griglia cosmica che si espande esponenzialmente — i nodi si allontanano tra loro sempre più velocemente. La scala logaritmica mostra la crescita esponenziale.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — IL DIAGRAMMA DI PENROSE DI DE SITTER</div>
+    <div class="phase-title">Il diagramma conforme di de Sitter</div>
+    <div class="phase-body">
+      <p>Lo spazio di de Sitter può essere rappresentato come un <span class="hl">iperboloide 4D</span> immerso in uno spazio piatto 5D con firma (−, +, +, +, +). Il diagramma di Penrose-Carter di de Sitter è un <span class="am">quadrato</span>: i bordi orizzontali sono le sezioni spaziali passato e futuro (ℐ⁻ e ℐ⁺), i bordi verticali sono le singolarità dei coordinati polari.</p>
+      <code class="formula">Compattificazione conforme di de Sitter:
+  ds²_dS = Ω⁻²(−dT² + dΩ²_3)
+  T ∈ (−π/2, π/2)  [coordinata conforme]
+Struttura causale:
+  ℐ⁻ (bordo passato): T = −π/2  (spacelike)
+  ℐ⁺ (bordo futuro):  T = +π/2  (spacelike)
+  Orizzonte cosmologico: diagonale 45° dal polo
+  Ogni osservatore vede solo un quarto del dS</code>
+      <p>La caratteristica chiave del diagramma dS: il confine futuro ℐ⁺ è di tipo <span class="hl">spaziale</span> — ogni osservatore termina nell'infinito futuro su ℐ⁺. Ogni geodetiche timelike futuro-diretta raggiunge ℐ⁺. L'orizzonte cosmologico è la diagonale a 45° che divide ciò che un osservatore al polo può vedere da ciò che non può vedere: ogni punto nello spazio-tempo dS ha un <span class="am">orizzonte cosmologico</span> personale.</p>
+      <div class="note">Animazione: diagramma di Penrose di de Sitter — quadrato con ℐ⁻ (in basso), ℐ⁺ (in alto), orizzonte cosmologico diagonale, con regioni colorate: quella osservabile e quella oltre l'orizzonte.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — L'ORIZZONTE COSMOLOGICO</div>
+    <div class="phase-title">La temperatura di Hawking-de Sitter</div>
+    <div class="phase-body">
+      <p>Ogni osservatore in de Sitter ha un <span class="hl">orizzonte cosmologico</span> a distanza d_H = c/H. È l'analogo dell'orizzonte degli eventi del buco nero: informazione oltre tale soglia è causalmente disconnessa dall'osservatore. Gibbons e Hawking (1977) dimostrarono che questo orizzonte emette <span class="am">radiazione termica</span> — la <span class="gr">temperatura di de Sitter</span>.</p>
+      <code class="formula">Temperatura di Hawking-de Sitter (Gibbons-Hawking):
+  T_dS = ℏH / (2πk_B)
+con H = √(Λ/3):
+  T_dS = ℏ√(Λ/3) / (2πk_B)
+Per Λ osservato:
+  T_dS ≈ 2.3 × 10⁻³⁰ K  (ultra-freddo)
+Entropia dell'orizzonte:
+  S_dS = πc³/(GH²ℏ) = A_orizzonte / (4l²_P)</code>
+      <p>La temperatura di de Sitter è <span class="hl">incredibilmente piccola</span> per il nostro universo attuale (~10⁻³⁰ K) — irrilevante praticamente ma fondamentalmente reale. Per un universo inflazionario (H_inf ~ 10¹³ GeV), T_dS può arrivare a ~10⁹ GeV, con implicazioni per le <span class="am">fluttuazioni quantistiche primordiali</span> che formano le strutture cosmiche. Questo è il legame tra inflazione e CMB.</p>
+      <div class="note">Animazione: osservatore al centro del suo universo osservabile — cerchio dell'orizzonte cosmologico con radiazione termica che emerge dall'orizzonte (Hawking-de Sitter). Galassie che scompaiono oltre l'orizzonte.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — L'INFLAZIONE COSMICA</div>
+    <div class="phase-title">De Sitter e l'universo inflazionario primordiale</div>
+    <div class="phase-body">
+      <p>La <span class="hl">teoria inflazionaria</span> (Guth 1981, Linde, Starobinsky, Albrecht-Steinhardt) propone che il primissimo universo (~10⁻³⁶ s dopo il Big Bang) attraversò una fase di <span class="am">espansione esponenziale rapida</span>, descritta approssimativamente da uno spazio di de Sitter con H_inf enormissimo. Questa fase risolve i problemi della cosmologia standard.</p>
+      <code class="formula">Problemi risolti dall'inflazione:
+  Piattezza: Ω_tot ≈ 1 (qualunque Ω₀)
+  Orizzonte: CMB omogenea a scale disconnesse
+  Monopoli magnetici: diluiti
+  Fluttuazioni primordiali:
+    δρ/ρ ∝ H²/(2πφ̇)  (dalla T_dS)
+    → seme delle strutture cosmiche
+Durata inflazione: N_e = H_inf × Δt ≥ 60 e-fold</code>
+      <p>Il dettaglio più elegante: durante l'inflazione, le <span class="hl">fluttuazioni quantistiche del vuoto</span> (equivalenti alla radiazione di Hawking-dS) vengono "<span class="am">congelate</span>" dall'espansione quando escono dall'orizzonte. Rientrano nell'orizzonte dopo la fine dell'inflazione come <span class="gr">perturbazioni di densità classiche</span> — le stesse che formano galassie e strutture cosmiche. Il nostro universo è letteralmente nato dalle fluttuazioni quantistiche del vuoto.</p>
+      <div class="note">Animazione: universo che si gonfia esponenzialmente dalla scala di Planck (punto minuscolo) fino a dimensioni macroscopiche. Le fluttuazioni quantistiche si "congelano" e diventano strutture classiche.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — DE SITTER E OLOGRAFIA</div>
+    <div class="phase-title">La congettura dS/CFT di Strominger</div>
+    <div class="phase-body">
+      <p>Per AdS, la corrispondenza AdS/CFT è ben stabilita e testata. Per de Sitter — la geometria del nostro universo reale — Andrew Strominger propose nel 2001 una <span class="hl">congettura analoga</span>: la <span class="am">dualità dS/CFT</span>. Il bordo futuro ℐ⁺ di de Sitter ospiterebbe una <span class="gr">CFT euclidea</span> in d-1 dimensioni.</p>
+      <code class="formula">Congettura dS/CFT (Strominger 2001):
+  QG in dS_{d+1} ↔ CFT_d euclidea su ℐ⁺
+Funzione di partizione:
+  Z_CFT[φ₀] = Ψ_dS[φ₀]  (funzione d'onda del cosmo)
+Differenza chiave con AdS/CFT:
+  ℐ⁺ è spacelike (non timelike come il bordo AdS)
+  → la CFT duale è euclidea, non lorentziana
+  → interpretazione quantistica non chiara</code>
+      <p>dS/CFT rimane <span class="hl">molto più speculativa</span> di AdS/CFT. Il bordo di tipo spaziale rende l'interpretazione probabilistica della CFT duale problematica. Witten (2001) e Maldacena (2011) hanno contribuito con formulazioni alternative. Il problema fondamentale: il nostro universo è de Sitter, ma non sappiamo ancora costruire una <span class="am">teoria quantistica della gravità</span> per geometrie de Sitter con la stessa precisione di AdS. La CCC di Penrose offre un'alternativa radicalmente diversa.</p>
+      <div class="note">Animazione: diagramma di Penrose di de Sitter con il bordo futuro ℐ⁺ evidenziato in dorato — la CFT euclidea vive sul bordo. Frecce che indicano la dualità bulk-bordo.</div>
+    </div>
+  </div>
+
+</div><!-- /panel -->
+
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · Costante Λ</button>
+  <button class="btn" onclick="goPhase(2)">02 · Metrica dS</button>
+  <button class="btn" onclick="goPhase(3)">03 · Diagramma dS</button>
+  <button class="btn" onclick="goPhase(4)">04 · Orizzonte cosm.</button>
+  <button class="btn" onclick="goPhase(5)">05 · Inflazione</button>
+  <button class="btn" onclick="goPhase(6)">06 · dS/CFT</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+
+<script src="../tentativo 2/t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: "La costante cosmologica", desc: "Einstein introduce Λ nel 1917 per un universo statico, poi la 'elimina' dopo Hubble. Oggi Λ > 0 domina l'espansione. Formula: G_μν + Λg_μν = 8πG T_μν.", scene: 'lambda' },
+  { name: "La metrica di de Sitter", desc: "Soluzione con Λ > 0 e T_μν = 0 (vuoto cosmologico). In coordinate di Friedmann: ds² = −dt² + e^{2Ht}(dx²+dy²+dz²), con H = √(Λ/3).", scene: 'metrica' },
+  { name: "Il diagramma di Penrose di de Sitter", desc: "Lo spazio dS è un iperboloide nel flat 5D. Il diagramma di Penrose è un quadrato. I bordi orizzontali (ℐ⁻, ℐ⁺) sono gli orizzonti cosmologici spacelike.", scene: 'diagramma' },
+  { name: "L'orizzonte cosmologico", desc: "Ogni osservatore in de Sitter ha un orizzonte a distanza d_H = c/H. Radiazione di Hawking-de Sitter con temperatura T_dS = ℏH/(2πk_B).", scene: 'orizzonte' },
+  { name: "L'inflazione cosmica", desc: "De Sitter descrive il periodo inflazionario primordiale (~10⁻³⁶ s): espansione esponenziale che appiattisce la geometria e semina le fluttuazioni quantistiche primordiali.", scene: 'inflazione' },
+  { name: "de Sitter e olografia", desc: "La congettura dS/CFT (Strominger 2001): il bordo futuro ℐ⁺ ospita una CFT euclidea. Ancora incompleta rispetto ad AdS/CFT.", scene: 'dscft' },
+];
+
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const cx  = t2AnimCX();
+  const cy  = t2AnimCY();
+  const rm  = t2ReducedMotion();
+  const scene = window.T2_PHASES[phIdx].scene;
+
+  // ── LAMBDA — espansione accelerata ────────────────────────────────────────
+  if (scene === 'lambda') {
+    const nGal = 12;
+    const scale = rm ? 1.4 : (1 + 0.4 * Math.sin(T * 0.3));
+    for (let i = 0; i < nGal; i++) {
+      const ang = (i / nGal) * Math.PI * 2;
+      const r   = 60 * scale + (i % 3) * 18 * scale;
+      const gx  = cx + r * Math.cos(ang);
+      const gy  = cy + r * Math.sin(ang) * 0.6;
+      ctx.beginPath(); ctx.arc(gx, gy, 4 + (i % 3), 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(167,139,250,${0.5 + 0.3 * Math.sin(T + i)})`; ctx.fill();
+      // Speed arrow
+      const vx = (gx - cx) * 0.25;
+      const vy = (gy - cy) * 0.25;
+      ctx.beginPath(); ctx.moveTo(gx, gy); ctx.lineTo(gx + vx, gy + vy);
+      ctx.strokeStyle = 'rgba(251,191,36,0.4)'; ctx.lineWidth = 1; ctx.stroke();
+    }
+    // Central "us"
+    t2Glow('#22d3ee', 12);
+    ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#22d3ee'; ctx.fill();
+    t2NoGlow();
+    t2Txt(cx, cy + 85, 'Λ > 0: espansione accelerata', '#f59e0b', 9, 'center');
+    return;
+  }
+
+  // ── METRICA — griglia in espansione ──────────────────────────────────────
+  if (scene === 'metrica') {
+    const gridN = 5;
+    const baseSpacing = 35;
+    const scale = rm ? 1.2 : (1 + 0.25 * Math.sin(T * 0.4));
+    const sp    = baseSpacing * scale;
+
+    ctx.strokeStyle = 'rgba(99,102,241,0.4)';
+    ctx.lineWidth   = 0.8;
+    for (let i = -gridN; i <= gridN; i++) {
+      ctx.beginPath();
+      ctx.moveTo(cx + i * sp, cy - gridN * sp);
+      ctx.lineTo(cx + i * sp, cy + gridN * sp);
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.moveTo(cx - gridN * sp, cy + i * sp);
+      ctx.lineTo(cx + gridN * sp, cy + i * sp);
+      ctx.stroke();
+    }
+    // Nodes expanding
+    for (let i = -2; i <= 2; i++) {
+      for (let j = -2; j <= 2; j++) {
+        ctx.beginPath(); ctx.arc(cx + i * sp, cy + j * sp, 2.5, 0, Math.PI * 2);
+        ctx.fillStyle = '#818cf8'; ctx.fill();
+      }
+    }
+    t2Txt(cx, cy + gridN * sp + 20, `a(t) = e^{Ht},   H = √(Λ/3)`, '#fbbf24', 9, 'center');
+    return;
+  }
+
+  // ── DIAGRAMMA — quadrato dS ────────────────────────────────────────────
+  if (scene === 'diagramma') {
+    const S = Math.min(W, H) * 0.22;
+    const x0 = cx - S, x1 = cx + S, y0 = cy - S, y1 = cy + S;
+
+    // Regions
+    ctx.fillStyle = 'rgba(99,102,241,0.07)';
+    ctx.fillRect(x0, y0, S * 2, S * 2);
+
+    // Observable region (bottom-left triangle from observer at center-left)
+    ctx.beginPath();
+    ctx.moveTo(x0, y0 + S); ctx.lineTo(x0 + S, y0); ctx.lineTo(x0, y0);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(34,211,238,0.10)'; ctx.fill();
+
+    // Border
+    ctx.strokeStyle = '#818cf8'; ctx.lineWidth = 2;
+    ctx.strokeRect(x0, y0, S * 2, S * 2);
+
+    // Cosmological horizon (diagonal)
+    ctx.beginPath();
+    ctx.moveTo(x0, y0 + S); ctx.lineTo(x0 + S, y0);
+    ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 1.5;
+    ctx.setLineDash([6, 4]); ctx.stroke(); ctx.setLineDash([]);
+
+    // Labels
+    t2Txt(cx, y0 - 14, 'ℐ⁺ (bordo futuro spacelike)', '#4ade80', 8, 'center');
+    t2Txt(cx, y1 + 14, 'ℐ⁻ (bordo passato spacelike)', '#f59e0b', 8, 'center');
+    t2Txt(x0 - 10, cy, 'i⁰', '#94a3b8', 8, 'center');
+    t2Txt(x1 + 10, cy, 'i⁰', '#94a3b8', 8, 'center');
+    t2Txt(cx - S * 0.5, cy - S * 0.3, 'regione\nosservabile', '#22d3ee', 7.5, 'center');
+
+    // Observer dot
+    t2Glow('#f59e0b', 10);
+    ctx.beginPath(); ctx.arc(x0, cy, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#f59e0b'; ctx.fill();
+    t2NoGlow();
+    return;
+  }
+
+  // ── ORIZZONTE — osservatore con orizzonte cosm. ───────────────────────────
+  if (scene === 'orizzonte') {
+    const Rh = Math.min(W, H) * 0.20;
+    // Horizon glow
+    const hG = ctx.createRadialGradient(cx, cy, Rh * 0.9, cx, cy, Rh * 1.15);
+    hG.addColorStop(0, 'rgba(34,211,238,0.0)');
+    hG.addColorStop(0.5, 'rgba(34,211,238,0.20)');
+    hG.addColorStop(1, 'rgba(34,211,238,0.0)');
+    ctx.fillStyle = hG;
+    ctx.beginPath(); ctx.arc(cx, cy, Rh * 1.15, 0, Math.PI * 2); ctx.fill();
+
+    // Horizon circle
+    ctx.beginPath(); ctx.arc(cx, cy, Rh, 0, Math.PI * 2);
+    ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 1.5;
+    ctx.setLineDash([5, 5]); ctx.stroke(); ctx.setLineDash([]);
+
+    // Hawking radiation particles
+    const nP = 16;
+    for (let i = 0; i < nP; i++) {
+      const ang  = (i / nP) * Math.PI * 2;
+      const frac = rm ? 0.5 : ((i / nP + T * 0.4) % 1);
+      const r    = Rh * (1 - 0.3 * frac);
+      ctx.beginPath();
+      ctx.arc(cx + r * Math.cos(ang), cy + r * Math.sin(ang), 2, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(251,191,36,${0.7 - frac * 0.5})`; ctx.fill();
+    }
+
+    // Galaxies beyond horizon
+    for (let i = 0; i < 8; i++) {
+      const ang = (i / 8) * Math.PI * 2;
+      const r   = Rh * 1.4;
+      const gx  = cx + r * Math.cos(ang);
+      const gy  = cy + r * Math.sin(ang);
+      ctx.beginPath(); ctx.arc(gx, gy, 3, 0, Math.PI * 2);
+      ctx.fillStyle = 'rgba(148,163,184,0.4)'; ctx.fill();
+    }
+
+    // Observer
+    t2Glow('#f59e0b', 10);
+    ctx.beginPath(); ctx.arc(cx, cy, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#f59e0b'; ctx.fill();
+    t2NoGlow();
+
+    t2Txt(cx, cy - Rh - 18, 'd_H = c/H (orizzonte cosmologico)', '#22d3ee', 9, 'center');
+    t2Txt(cx, cy + Rh + 20, 'T_dS = ℏH/(2πk_B) ≈ 2.3 × 10⁻³⁰ K', '#fbbf24', 9, 'center');
+    return;
+  }
+
+  // ── INFLAZIONE — universo che si gonfia ────────────────────────────────
+  if (scene === 'inflazione') {
+    const maxR = Math.min(W, H) * 0.22;
+    const t0   = rm ? 0.6 : t2Clamp((T * 0.2) % 1, 0, 1);
+    const R    = maxR * t0 * t0;
+
+    // Universe bubble
+    const bubbleG = ctx.createRadialGradient(cx, cy, 0, cx, cy, R + 1);
+    bubbleG.addColorStop(0, 'rgba(99,102,241,0.15)');
+    bubbleG.addColorStop(1, 'rgba(99,102,241,0.0)');
+    ctx.fillStyle = bubbleG;
+    ctx.beginPath(); ctx.arc(cx, cy, Math.max(R, 1), 0, Math.PI * 2); ctx.fill();
+
+    t2Glow('#818cf8', 12);
+    ctx.beginPath(); ctx.arc(cx, cy, Math.max(R, 1), 0, Math.PI * 2);
+    ctx.strokeStyle = '#818cf8'; ctx.lineWidth = 1.5; ctx.stroke();
+    t2NoGlow();
+
+    // Quantum fluctuations (tiny dots that seed structure)
+    const nFluc = 20;
+    for (let i = 0; i < nFluc; i++) {
+      const ang  = (i / nFluc) * Math.PI * 2 + i * 0.3;
+      const fr   = 0.3 + 0.65 * Math.abs(Math.sin(i * 1.7));
+      const fx   = cx + R * fr * Math.cos(ang);
+      const fy   = cy + R * fr * Math.sin(ang);
+      const size = 1 + 2 * Math.abs(Math.sin(T * 2 + i));
+      ctx.beginPath(); ctx.arc(fx, fy, size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(251,191,36,${0.4 + 0.4 * Math.abs(Math.sin(T * 3 + i))})`; ctx.fill();
+    }
+
+    const efoldsLabel = Math.round(t0 * 60);
+    t2Txt(cx, cy + maxR + 26, `N_e ≈ ${efoldsLabel} e-folds  (scala log)`, '#fbbf24', 9, 'center');
+    t2Txt(cx, cy, t0 < 0.1 ? 'Big Bang' : '', '#f59e0b', 9, 'center');
+    return;
+  }
+
+  // ── DS/CFT — diagramma con bordo futuro ───────────────────────────────────
+  if (scene === 'dscft') {
+    const S  = Math.min(W, H) * 0.20;
+    const x0 = cx - S, x1 = cx + S, y0 = cy - S, y1 = cy + S;
+
+    // dS square
+    ctx.fillStyle = 'rgba(99,102,241,0.07)';
+    ctx.fillRect(x0, y0, S * 2, S * 2);
+    ctx.strokeStyle = '#818cf8'; ctx.lineWidth = 1.5;
+    ctx.strokeRect(x0, y0, S * 2, S * 2);
+
+    // ℐ⁺ highlighted (top border)
+    const gTop = ctx.createLinearGradient(x0, y0, x1, y0);
+    gTop.addColorStop(0, 'rgba(251,191,36,0.0)');
+    gTop.addColorStop(0.5, 'rgba(251,191,36,0.6)');
+    gTop.addColorStop(1, 'rgba(251,191,36,0.0)');
+    ctx.beginPath(); ctx.moveTo(x0, y0); ctx.lineTo(x1, y0);
+    ctx.strokeStyle = gTop; ctx.lineWidth = 4; ctx.stroke();
+
+    // CFT label on border
+    t2Txt(cx, y0 - 18, 'ℐ⁺ — CFT euclidea (duale)', '#fbbf24', 9, 'center');
+
+    // Bulk arrows (bulk → border)
+    for (let i = -1; i <= 1; i++) {
+      const bx = cx + i * S * 0.55;
+      const by = cy + S * 0.3;
+      ctx.beginPath();
+      ctx.moveTo(bx, by); ctx.lineTo(bx, y0 + 6);
+      ctx.strokeStyle = 'rgba(34,211,238,0.45)'; ctx.lineWidth = 1; ctx.stroke();
+      // Arrow tip
+      ctx.beginPath();
+      ctx.moveTo(bx, y0 + 6); ctx.lineTo(bx - 4, y0 + 14); ctx.lineTo(bx + 4, y0 + 14);
+      ctx.closePath(); ctx.fillStyle = 'rgba(34,211,238,0.45)'; ctx.fill();
+    }
+
+    t2Txt(cx, cy + 10, 'bulk (gravitazione\nde Sitter)', '#818cf8', 8, 'center');
+    t2Txt(cx, y1 + 18, 'dS_{d+1}  ↔  CFT_d  (congettura)', '#22d3ee', 9, 'center');
+    return;
+  }
+};
+
+t2Init();
+</script>
+</body>
+</html>

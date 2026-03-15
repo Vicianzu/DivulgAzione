@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Eoni e Crossover CCC | Penrose — DivulgAzione</title>
+<link rel="stylesheet" href="../tentativo 2/t2_style.css">
+<style>
+#panel { background: rgba(0, 5, 15, 0.97); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
+.phase-body { color: #dde6f0; }
+.phase-title { color: #f0f9ff; text-shadow: 0 1px 8px rgba(0,0,0,0.8); }
+.phase-tag { color: #2dd4bf; }
+.note { color: #64748b; background: rgba(0,0,0,0.3); border-radius: 4px; padding: 12px 14px; border-top: 1px solid rgba(14,165,233,0.15); margin-top: 16px; }
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+<div id="ui">
+  <span id="ui-title">DivulgAzione · CCC</span>
+  <span id="ui-phase"></span>
+  <span id="ui-badge">6 fasi</span>
+</div>
+<div id="panel">
+
+  <div class="phase-content active" id="ph-1">
+    <div class="phase-tag">FASE 01 — LA STRUTTURA MULTI-EONE</div>
+    <div class="phase-title">Infiniti eoni: la sequenza cosmologica della CCC</div>
+    <div class="phase-body">
+      <p>La CCC predice una <span class="hl">sequenza infinita di eoni</span>: non un ciclo chiuso (il vecchio universo ciclico), ma una progressione lineare infinita di universi cosmologici consecutivi. Ogni eone inizia con un Big Bang e termina con un'espansione de Sitter che si dilata all'infinito.</p>
+      <code class="formula">Struttura della CCC:
+  ... → eone (n-1) → eone n → eone (n+1) → ...
+Ogni eone:
+  • Inizia con Bang (C_μνρσ = 0, Ω basso, S bassa)
+  • Si evolve: formazione stelle, galassie, BH
+  • Termina con de Sitter dominato da Λ
+  • Transizione conforme → Bang dell'eone successivo
+Durata tipica di un eone: ≫ 10^{100} anni
+Numero di eoni: ∞ (in entrambe le direzioni?)</code>
+      <p>Ogni eone ha una propria storia cosmica: formazione di strutture, stelle, galassie, buchi neri supermassivi. I buchi neri evaporano tramite radiazione di Hawking su scale di tempo enormi. Alla fine, l'universo è quasi vuoto, dominato da <span class="hl">fotoni e gravitoni</span> che si espandono all'infinito nel vuoto de Sitter — geometricamente identico, conformalmente, al <span class="am">Big Bang dell'eone successivo</span>. La freccia del tempo esiste all'interno di ogni eone, ma la transizione tra eoni è <span class="gr">geometricamente liscia</span>.</p>
+      <div class="note">Animazione: sequenza lineare di eoni rappresentati come bolle/diamanti temporali collegati da superfici di crossover. Ogni eone ha la propria freccia temporale interna.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-2">
+    <div class="phase-tag">FASE 02 — IL DESTINO DELL'EONE</div>
+    <div class="phase-title">Come finisce un eone: evaporazione e vuoto</div>
+    <div class="phase-body">
+      <p>Il destino finale di ogni eone è determinato da due processi: l'<span class="hl">evaporazione dei buchi neri</span> (Hawking) e il <span class="am">decadimento dei barioni</span> (predetto dalle teorie GUT). Entrambi portano all'eliminazione di tutta la materia massiva, lasciando solo fotoni e gravitoni.</p>
+      <code class="formula">Scala temporale dell'evaporazione di Hawking:
+  τ_evap = 5120πG²M³/(ℏc⁴)
+Per un BH di massa solare (M_☉ ≈ 2×10³⁰ kg):
+  τ ≈ 2 × 10^{67} anni
+Per un BH supermassivo (M ≈ 10^{10} M_☉):
+  τ ≈ 2 × 10^{100} anni
+Decadimento del protone (GUT):
+  τ_p > 10^{34} anni  (limite sperimentale)
+  τ_p ~ 10^{35-40} anni  (predizione GUT tipica)
+→ alla fine: universo di soli fotoni + gravitoni</code>
+      <p>Dopo ~10^{100} anni, anche i <span class="hl">buchi neri supermassivi</span> al centro delle galassie evaporano completamente. I loro ultimi istanti sono <span class="am">lampi di raggi gamma</span> (l'evaporazione accelera con la massa: più piccolo il BH, più veloce l'evaporazione e più alta la temperatura). Dopo di essi, rimane solo un <span class="gr">mare di fotoni a lunghissima lunghezza d'onda</span>, in espansione eterna nel vuoto de Sitter. Questo è lo stato finale — e il punto di partenza della CCC per l'eone successivo.</p>
+      <div class="note">Animazione: linea temporale cosmica lunga — da stelle e galassie (brillanti) verso un universo sempre più vuoto e buio, con l'ultimo buco nero che evapora in un lampo, poi solo fotoni nel vuoto.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-3">
+    <div class="phase-tag">FASE 03 — I SEGNALI DAL CROSSOVER</div>
+    <div class="phase-title">Impronte del passato nella CMB: gli anelli di Penrose</div>
+    <div class="phase-body">
+      <p>La predizione più spettacolare della CCC: i buchi neri supermassivi dell'eone <span class="hl">precedente</span> lasciano impronte osservabili nella <span class="am">radiazione cosmica di fondo (CMB)</span> dell'eone corrente. Penrose e Gurzadyan (2010) annunciarono la scoperta di "<span class="gr">anelli di bassa varianza</span>" nel CMB — possibili segnali di questa trasmissione.</p>
+      <code class="formula">Meccanismo degli anelli CCC:
+  BH supermassivo dell'eone precedente
+  → emette onde gravitazionali durante la vita
+  → queste perturbano il crossover
+  → creano un pattern circolare nella CMB
+    del nuovo eone (bassa varianza in cerchio)
+Scala angolare attesa:
+  θ ≈ massa_BH / distanza_BH_al_crossover
+  → cerchi di ~1-5° nel CMB
+Strumento: mappa di temperatura CMB WMAP/Planck</code>
+      <p>L'idea fisica: nell'eone precedente, i buchi neri supermassivi perdono energia emettendo <span class="hl">onde gravitazionali e fotoni</span> durante la loro vita e nel momento dell'evaporazione. Questa energia si propaga conformalmente attraverso il crossover e appare come un <span class="am">pattern di bassa varianza</span> (zona di quiete statistica) nella CMB del nuovo eone, concentrato in una regione circolare. Penrose li chiama <span class="gr">"Hawking points"</span> in onore di Hawking.</p>
+      <div class="note">Animazione: mappa sferica della CMB con cerchi sovrapposti evidenziati — le zone di bassa varianza che potrebbero essere segnali CCC. Confronto con la distribuzione casuale attesa.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-4">
+    <div class="phase-tag">FASE 04 — LA GEOMETRIA DEL CROSSOVER</div>
+    <div class="phase-title">Il diagramma di Penrose della CCC</div>
+    <div class="phase-body">
+      <p>Nel diagramma conforme della CCC, la struttura è più complessa di un singolo eone. La superficie di crossover è una <span class="hl">ipersuperficie di Cauchy</span> che separa due regioni dello spazio-tempo conformalmente raccordate. Il fattore di scala Ω(x) varia da punto a punto, non è uniforme — dipende dalla storia dell'eone precedente.</p>
+      <code class="formula">Struttura geometrica del crossover CCC:
+  Eone A: metrica g_μν^{(A)}, Ω_A(x) → 0 su ℐ⁺_A
+  Crossover: ipersuperficie Σ (ℐ⁺_A ≡ Bang_B)
+  Eone B: metrica g_μν^{(B)} = Ω²(x) g_μν^{(A)}
+  Ω_B(x) → ∞ su Σ (lato eone B)
+Curvatura di Weyl:
+  C_μνρσ^{(A)} → 0  su ℐ⁺_A  (da eone A)
+  C_μνρσ^{(B)} → 0  su Bang_B (da eone B)
+→ raccordo conforme liscio in senso di Weyl</code>
+      <p>Il fattore Ω(x) non è costante: è <span class="hl">modulato dalla distribuzione di materia</span> nell'eone precedente. Dove c'era un buco nero supermassivo, Ω ha un valore specifico che lascia un'impronta geometrica nel Bang successivo — questo è il meccanismo degli anelli CMB. La <span class="am">metrica effettiva</span> al Bang del nuovo eone è deformata rispetto a un universo FRW ideale di una quantità proporzionale all'energia del BH dell'eone precedente.</p>
+      <div class="note">Animazione: diagramma di Penrose CCC completo — due diamanti (eoni) sovrapposti verticalmente, connessi al crossover. Le linee di luce attraversano il crossover. Il fattore Ω è visualizzato come colore variabile sulla superficie.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-5">
+    <div class="phase-tag">FASE 05 — LE SINGOLARITÀ NELLA CCC</div>
+    <div class="phase-title">Singolarità dei buchi neri e il crossover</div>
+    <div class="phase-body">
+      <p>La CCC non elimina le singolarità dei buchi neri — quelle rimangono all'interno degli orizzonti. Ma cambia lo status della <span class="hl">singolarità del Big Bang</span>: non è più una singolarità fisica, ma un crossover conformalmente liscio. L'<span class="am">ipotesi di censura cosmica</span> di Penrose — le singolarità sono sempre nascoste dagli orizzonti — è compatibile con la CCC.</p>
+      <code class="formula">Singolarità nella CCC:
+  1. Singolarità BH (tipo spaziale, Weyl → ∞):
+     → esistono, nascoste dagli orizzonti (Weyl censored)
+     → non interferiscono con il crossover
+     → l'eone evolve regolarmente fuori dai BH
+  2. "Singolarità" del Bang (CCC):
+     → è un crossover conforme, Weyl = 0
+     → geometricamente regolare in coordinate conformi
+     → non è una vera singolarità: è una transizione
+Censura cosmica: compatibile con CCC ✓</code>
+      <p>La distinzione tra i due tipi di singolarità è la base dell'<span class="hl">ipotesi di Weyl</span>: il Weyl → ∞ nelle singolarità dei BH (alta entropia, caotiche) e Weyl = 0 al Big Bang (bassa entropia, ordinate). La CCC preserva questa asimmetria: ogni eone ha singolarità BH con alto Weyl, ma il crossover con il nuovo eone mantiene Weyl = 0. La freccia del tempo è <span class="am">preservata</span> all'interno di ogni eone e la struttura ciclica non implica un ritorno allo stesso stato — è una <span class="gr">spirale cosmica</span>, non un ciclo chiuso.</p>
+      <div class="note">Animazione: diagramma di un eone con singolarità BH interne (mostrate come punti/segmenti bianchi dentro gli orizzonti) e il crossover esterno liscio (linea dorata). Il Weyl è visualizzato come luminosità/opacità.</div>
+    </div>
+  </div>
+
+  <div class="phase-content" id="ph-6">
+    <div class="phase-tag">FASE 06 — TESTABILITÀ DELLA CCC</div>
+    <div class="phase-title">Predizioni osservabili della CCC</div>
+    <div class="phase-body">
+      <p>La CCC è una teoria scientifica nel senso di Popper: fa <span class="hl">predizioni osservabili</span> che possono essere testate e in linea di principio falsificate. Le principali predizioni sono nella CMB, nelle onde gravitazionali e nei raggi cosmici ultra-energetici.</p>
+      <code class="formula">Predizioni osservabili della CCC:
+  1. Anelli CMB: zone di bassa varianza circolari
+     → testato con WMAP e Planck (risultato: ambiguo)
+  2. Assenza di B-modes primordiali:
+     r ≈ 0  (vs. inflazione: r &gt; 0)
+     → testato con BICEP/Keck (limite attuale: r &lt; 0.036)
+  3. Hawking points: punti caldi nel CMB
+     → segnalati da Penrose et al. (2018, 2020)
+     → statisticamente controversi
+  4. UHECR (raggi cosmici ultra-energetici):
+     E &gt; 10²⁰ eV: fotoni dell'eone precedente?
+     → cercati con Auger Observatory e Telescope Array
+  5. CMB-S4, LiteBIRD: nuovi esperimenti decisivi</code>
+      <p>Lo stato attuale (2025): i dati <span class="hl">Planck 2018</span> non confermano né escludono definitivamente gli anelli CCC — la statistica è ai limiti del rumore del CMB. I futuri esperimenti <span class="am">CMB-S4</span> (previsto 2030) e <span class="gr">LiteBIRD</span> (JAXA, 2032) misureranno la CMB con precisione senza precedenti, e potrebbero risolvere la questione dei B-modes e degli anelli. La CCC è una teoria viva, non ancora né confermata né refutata.</p>
+      <div class="note">Animazione: lista delle predizioni con indicatore di stato — anelli (ambiguo), B-modes (non trovati: compatibile con CCC!), UHECR (nessuna evidenza definitiva). Telescopi futuri con countdown.</div>
+    </div>
+  </div>
+
+</div><!-- /panel -->
+
+<div id="bottom">
+  <button class="btn active" onclick="goPhase(1)">01 · Multi-eone</button>
+  <button class="btn" onclick="goPhase(2)">02 · Destino eone</button>
+  <button class="btn" onclick="goPhase(3)">03 · Segnali CMB</button>
+  <button class="btn" onclick="goPhase(4)">04 · Geometria crossover</button>
+  <button class="btn" onclick="goPhase(5)">05 · Singolarità</button>
+  <button class="btn" onclick="goPhase(6)">06 · Testabilità</button>
+  <button class="btn" id="btn-pause" onclick="togglePause()" aria-label="Pausa animazione">⏸</button>
+</div>
+
+<script src="../tentativo 2/t2_ui.js"></script>
+<script>
+'use strict';
+
+window.T2_PHASES = [
+  { name: "La struttura multi-eone", desc: "La CCC predice una sequenza infinita di eoni. Ogni eone inizia con un Big Bang e termina con un'espansione de Sitter infinita. La superficie di crossover è il confine tra eoni.", scene: 'multi_eone' },
+  { name: "Il destino dell'eone", desc: "I buchi neri evaporano (τ ~ M³/ℏ) su scale ~10^{100} anni. Poi solo fotoni e gravitoni. L'universo diventa sempre più vuoto → geometricamente conforme al Big Bang.", scene: 'destino' },
+  { name: "I segnali dal crossover", desc: "Penrose predice che i buchi neri massicci dell'eone precedente lasciano impronte nel CMB: anelli di correlazione a bassa varianza (Gurzadyan-Penrose).", scene: 'segnali' },
+  { name: "La geometria del crossover", desc: "Alla superficie di crossover, la curvatura di Weyl è zero su entrambi i lati. Il fattore Ω(x) varia punto a punto, modulato dalla distribuzione di BH dell'eone precedente.", scene: 'geometria' },
+  { name: "Le singolarità nella CCC", desc: "Le singolarità BH restano (nascoste dagli orizzonti), ma la singolarità del Bang è sostituita dal crossover liscio. L'ipotesi di censura cosmica di Penrose è compatibile.", scene: 'singolarita' },
+  { name: "Testabilità", desc: "Predizioni CCC: anelli CMB, assenza di B-modes (r ≈ 0), UHECR dall'eone precedente. Stato: dati Planck non confermano né escludono. CMB-S4 e LiteBIRD decideranno.", scene: 'testabilita' },
+];
+
+window.t2Draw = function(T, phIdx, ctx, W, H) {
+  const cx    = t2AnimCX();
+  const cy    = t2AnimCY();
+  const rm    = t2ReducedMotion();
+  const scene = window.T2_PHASES[phIdx].scene;
+
+  // ── MULTI-EONE — sequenza di eoni ─────────────────────────────────────────
+  if (scene === 'multi_eone') {
+    const eoneH = Math.min(H * 0.18, 65);
+    const nEoni = 3;
+    const cols  = ['#818cf8', '#22d3ee', '#a78bfa'];
+    const startY = cy - nEoni * eoneH * 0.6;
+
+    for (let e = 0; e < nEoni; e++) {
+      const eyc = startY + e * eoneH * 1.05;
+      const col = cols[e % cols.length];
+      const W2  = eoneH * 1.3;
+
+      // Eone diamond shape
+      ctx.beginPath();
+      ctx.moveTo(cx, eyc - eoneH * 0.5);
+      ctx.lineTo(cx + W2, eyc);
+      ctx.lineTo(cx, eyc + eoneH * 0.5);
+      ctx.lineTo(cx - W2, eyc);
+      ctx.closePath();
+      ctx.fillStyle = col + '18'; ctx.fill();
+      ctx.strokeStyle = col; ctx.lineWidth = 1.5; ctx.stroke();
+      t2Txt(cx, eyc, `eone ${e === 0 ? 'A' : e === 1 ? 'B' : 'C'}`, col, 8, 'center');
+
+      // Crossover arrow between eoni
+      if (e < nEoni - 1) {
+        const y1 = eyc + eoneH * 0.5;
+        const y2 = startY + (e + 1) * eoneH * 1.05 - eoneH * 0.5;
+        ctx.beginPath(); ctx.moveTo(cx, y1 + 2); ctx.lineTo(cx, y2 - 2);
+        ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 2; ctx.stroke();
+        t2Txt(cx + 12, (y1 + y2) / 2, 'crossover', '#fbbf24', 7, 'left');
+      }
+    }
+
+    // Dots for continuation
+    const lastY = startY + nEoni * eoneH * 1.05 - eoneH * 0.5;
+    for (let d = 0; d < 3; d++) {
+      ctx.beginPath(); ctx.arc(cx, lastY + 10 + d * 10, 2, 0, Math.PI * 2);
+      ctx.fillStyle = '#64748b'; ctx.fill();
+    }
+    return;
+  }
+
+  // ── DESTINO — linea temporale ──────────────────────────────────────────────
+  if (scene === 'destino') {
+    const timelineY = cy + 20;
+    const x0 = cx - Math.min(W * 0.3, 120);
+    const x1 = cx + Math.min(W * 0.3, 120);
+
+    // Timeline bar
+    const tlG = ctx.createLinearGradient(x0, timelineY, x1, timelineY);
+    tlG.addColorStop(0, '#fbbf24');
+    tlG.addColorStop(0.5, '#818cf8');
+    tlG.addColorStop(1, '#22d3ee');
+    ctx.beginPath(); ctx.moveTo(x0, timelineY); ctx.lineTo(x1, timelineY);
+    ctx.strokeStyle = tlG; ctx.lineWidth = 2; ctx.stroke();
+
+    // Events
+    const events = [
+      { label: 'oggi', subLabel: '10^{10} a', xfrac: 0.0, col: '#fbbf24' },
+      { label: 'ultima stella', subLabel: '10^{14} a', xfrac: 0.28, col: '#f97316' },
+      { label: 'protone decade', subLabel: '10^{37} a', xfrac: 0.52, col: '#a78bfa' },
+      { label: 'BH evapora', subLabel: '10^{100} a', xfrac: 0.78, col: '#22d3ee' },
+      { label: 'crossover', subLabel: '→ ℐ⁺', xfrac: 1.0, col: '#fbbf24' },
+    ];
+
+    for (const ev of events) {
+      const ex = x0 + ev.xfrac * (x1 - x0);
+      ctx.beginPath(); ctx.arc(ex, timelineY, 4, 0, Math.PI * 2);
+      ctx.fillStyle = ev.col; ctx.fill();
+      t2Txt(ex, timelineY - 16, ev.label, ev.col, 7.5, 'center');
+      t2Txt(ex, timelineY + 16, ev.subLabel, '#64748b', 7, 'center');
+    }
+
+    // BH evaporating flash
+    const flashX = x0 + 0.78 * (x1 - x0);
+    const flashAlpha = rm ? 0.5 : 0.3 + 0.5 * Math.abs(Math.sin(T * 2));
+    t2Glow('#22d3ee', 15 * flashAlpha);
+    ctx.beginPath(); ctx.arc(flashX, timelineY, 7, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(34,211,238,${flashAlpha * 0.4})`; ctx.fill();
+    t2NoGlow();
+
+    t2Txt(cx, timelineY + 44, 'τ_evap ~ M³/ℏG²  (scala temporale)', '#22d3ee', 8, 'center');
+    return;
+  }
+
+  // ── SEGNALI — mappa CMB con cerchi ────────────────────────────────────────
+  if (scene === 'segnali') {
+    const R = Math.min(W, H) * 0.22;
+    // CMB sphere background
+    const cmbG = ctx.createRadialGradient(cx, cy, 0, cx, cy, R);
+    cmbG.addColorStop(0, 'rgba(14,165,233,0.12)');
+    cmbG.addColorStop(1, 'rgba(14,165,233,0.04)');
+    ctx.fillStyle = cmbG;
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2); ctx.fill();
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.strokeStyle = 'rgba(14,165,233,0.3)'; ctx.lineWidth = 1; ctx.stroke();
+
+    // CMB noise spots
+    for (let i = 0; i < 40; i++) {
+      const ang = (i / 40) * Math.PI * 2 + i * 0.3;
+      const r   = R * (0.2 + 0.75 * Math.abs(Math.sin(i * 1.7)));
+      const sx  = cx + r * Math.cos(ang);
+      const sy  = cy + r * Math.sin(ang);
+      const hot = i % 3 === 0;
+      ctx.beginPath(); ctx.arc(sx, sy, 4 + (hot ? 2 : 0), 0, Math.PI * 2);
+      ctx.fillStyle = hot ? 'rgba(248,113,113,0.35)' : 'rgba(96,165,250,0.25)'; ctx.fill();
+    }
+
+    // Penrose rings (low-variance circles)
+    const rings = [
+      { r: R * 0.42, x: cx - R * 0.1, y: cy + R * 0.08 },
+      { r: R * 0.28, x: cx + R * 0.3, y: cy - R * 0.2 },
+      { r: R * 0.18, x: cx - R * 0.35, y: cy - R * 0.15 },
+    ];
+    for (const ring of rings) {
+      const pulse = rm ? 1 : 0.6 + 0.4 * Math.sin(T * 1.5 + ring.r);
+      t2Glow('#fbbf24', 8 * pulse);
+      ctx.beginPath(); ctx.arc(ring.x, ring.y, ring.r, 0, Math.PI * 2);
+      ctx.strokeStyle = `rgba(251,191,36,${0.7 * pulse})`; ctx.lineWidth = 1.5; ctx.stroke();
+      t2NoGlow();
+    }
+
+    t2Txt(cx, cy + R + 20, 'anelli di Gurzadyan-Penrose nella CMB', '#fbbf24', 9, 'center');
+    return;
+  }
+
+  // ── GEOMETRIA — diagramma CCC completo ────────────────────────────────────
+  if (scene === 'geometria') {
+    const S = Math.min(W, H) * 0.17;
+
+    // Eone A (below)
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx - S * 1.1, cy + S);
+    ctx.lineTo(cx + S * 1.1, cy + S);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(99,102,241,0.10)'; ctx.fill();
+    ctx.strokeStyle = '#818cf8'; ctx.lineWidth = 1.2; ctx.stroke();
+
+    // Crossover surface
+    const pulse = rm ? 1 : 0.7 + 0.3 * Math.sin(T * 2);
+    t2Glow('#fbbf24', 12 * pulse);
+    ctx.beginPath(); ctx.moveTo(cx - S * 1.15, cy); ctx.lineTo(cx + S * 1.15, cy);
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 3; ctx.stroke();
+    t2NoGlow();
+
+    // Eone B (above)
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx - S * 1.1, cy - S);
+    ctx.lineTo(cx + S * 1.1, cy - S);
+    ctx.closePath();
+    ctx.fillStyle = 'rgba(34,211,238,0.08)'; ctx.fill();
+    ctx.strokeStyle = '#22d3ee'; ctx.lineWidth = 1.2; ctx.stroke();
+
+    // Ω factor visualization (color gradient on crossover line)
+    const grad = ctx.createLinearGradient(cx - S * 1.1, cy, cx + S * 1.1, cy);
+    grad.addColorStop(0, 'rgba(167,139,250,0.0)');
+    grad.addColorStop(0.3, 'rgba(251,191,36,0.5)');
+    grad.addColorStop(0.7, 'rgba(34,211,238,0.5)');
+    grad.addColorStop(1, 'rgba(167,139,250,0.0)');
+    ctx.beginPath(); ctx.moveTo(cx - S * 1.1, cy + 4); ctx.lineTo(cx + S * 1.1, cy + 4);
+    ctx.strokeStyle = grad; ctx.lineWidth = 4; ctx.stroke();
+
+    t2Txt(cx, cy - S - 14, 'ℐ⁺ (eone B nascente)', '#22d3ee', 8, 'center');
+    t2Txt(cx, cy + S + 14, 'ℐ⁻ (origine eone A)', '#818cf8', 8, 'center');
+    t2Txt(cx + S * 1.2, cy, 'Ω(x)', '#fbbf24', 8, 'left');
+    return;
+  }
+
+  // ── SINGOLARITÀ — BH dentro + crossover fuori ─────────────────────────────
+  if (scene === 'singolarita') {
+    const R    = Math.min(W, H) * 0.12;
+    const Rerg = R * 1.5;
+
+    // Ergoregion / accretion context
+    const ergG = ctx.createRadialGradient(cx, cy, R, cx, cy, Rerg * 1.3);
+    ergG.addColorStop(0, 'rgba(251,191,36,0.0)');
+    ergG.addColorStop(0.6, 'rgba(251,191,36,0.07)');
+    ergG.addColorStop(1, 'rgba(251,191,36,0.0)');
+    ctx.fillStyle = ergG;
+    ctx.beginPath(); ctx.arc(cx, cy, Rerg * 1.3, 0, Math.PI * 2); ctx.fill();
+
+    // BH (horizon)
+    t2Glow('#60a5fa', 14);
+    ctx.beginPath(); ctx.arc(cx, cy, R, 0, Math.PI * 2);
+    ctx.fillStyle = '#000'; ctx.fill();
+    ctx.strokeStyle = '#60a5fa'; ctx.lineWidth = 2; ctx.stroke();
+    t2NoGlow();
+
+    // Internal singularity (white dot inside)
+    t2Glow('#fff', 8);
+    ctx.beginPath(); ctx.arc(cx, cy, 3, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff'; ctx.fill();
+    t2NoGlow();
+    t2Txt(cx, cy, '', '#fff', 8, 'center');
+    t2Txt(cx + R * 0.4, cy, 'C→∞', '#fff', 7.5, 'left');
+
+    // External crossover (horizontal band above)
+    const yC = cy - Rerg - 20;
+    const pulse = rm ? 1 : 0.7 + 0.3 * Math.sin(T * 1.8);
+    t2Glow('#fbbf24', 10 * pulse);
+    ctx.beginPath();
+    ctx.moveTo(cx - Rerg * 1.4, yC); ctx.lineTo(cx + Rerg * 1.4, yC);
+    ctx.strokeStyle = '#fbbf24'; ctx.lineWidth = 2.5; ctx.stroke();
+    t2NoGlow();
+    t2Txt(cx, yC - 12, 'crossover  (C = 0)', '#fbbf24', 8, 'center');
+
+    // Labels
+    t2Txt(cx, cy + R + 18, 'singolarità BH  (C → ∞, nascosta)', '#60a5fa', 8, 'center');
+    t2Txt(cx, yC + 14, 'censura cosmica: BH dentro ↓ / crossover fuori ↑', '#94a3b8', 7.5, 'center');
+    return;
+  }
+
+  // ── TESTABILITÀ — lista predizioni ────────────────────────────────────────
+  if (scene === 'testabilita') {
+    const preds = [
+      { label: 'Anelli CMB (Gurzadyan-Penrose)', status: '?', col: '#fbbf24' },
+      { label: 'B-modes primordiali: r ≈ 0', status: '✓?', col: '#4ade80' },
+      { label: 'Hawking points CMB', status: '?', col: '#fbbf24' },
+      { label: 'UHECR come fotoni eone prev.', status: '?', col: '#fbbf24' },
+      { label: 'CMB-S4 / LiteBIRD (futuro)', status: '⏳', col: '#22d3ee' },
+    ];
+    const rowH = 28;
+    const yStart = cy - (preds.length / 2) * rowH;
+
+    t2Txt(cx, yStart - 20, 'Predizioni testabili della CCC', '#94a3b8', 9, 'center');
+
+    for (let i = 0; i < preds.length; i++) {
+      const p = preds[i];
+      const y = yStart + i * rowH;
+      // Status icon
+      const stCol = p.status === '✓' || p.status === '✓?' ? '#4ade80' : p.status === '✗' ? '#f43f5e' : p.status === '⏳' ? '#22d3ee' : '#fbbf24';
+      t2Txt(cx - 100, y + 10, p.status, stCol, 11, 'center');
+      t2Txt(cx - 60, y + 10, p.label, '#dde6f0', 8, 'left');
+      // Pulsing dot for undecided
+      if (p.status === '?') {
+        const alpha = rm ? 0.5 : 0.3 + 0.5 * Math.abs(Math.sin(T * 1.5 + i));
+        ctx.beginPath(); ctx.arc(cx + 108, y + 9, 3, 0, Math.PI * 2);
+        ctx.fillStyle = `rgba(251,191,36,${alpha})`; ctx.fill();
+      }
+    }
+    return;
+  }
+};
+
+t2Init();
+</script>
+</body>
+</html>
