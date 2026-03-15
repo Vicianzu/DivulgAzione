@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Penrose · 05 — Buco Nero Eterno (Kruskal-Szekeres)</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000010;color:#e2e8f0;font-family:'Segoe UI',sans-serif;height:100vh;display:flex;flex-direction:column;overflow:hidden}
+#ui{display:flex;align-items:center;gap:12px;padding:8px 16px;border-bottom:1px solid rgba(129,140,248,0.25);flex-shrink:0;flex-wrap:wrap}
+#ui .title{font-size:13px;color:#a5b4fc;font-weight:600;letter-spacing:.5px;margin-right:auto}
+.nav-btn{color:#818cf8;text-decoration:none;font-size:12px;padding:4px 10px;border:1px solid rgba(129,140,248,0.3);border-radius:4px;transition:.2s}
+.nav-btn:hover{background:rgba(129,140,248,0.15);color:#a5b4fc}
+.btn{background:transparent;border:1px solid rgba(129,140,248,0.3);color:#818cf8;padding:4px 10px;border-radius:4px;cursor:pointer;font-size:11px;transition:.2s}
+.btn:hover{background:rgba(129,140,248,0.1)}
+.btn.active{background:rgba(129,140,248,0.15);color:#a5b4fc;border-color:#818cf8}
+#main{display:flex;flex:1;overflow:hidden}
+canvas{display:block;background:#000010}
+#panel{width:200px;flex-shrink:0;border-left:1px solid rgba(129,140,248,0.2);padding:14px;overflow-y:auto;font-size:12px}
+#panel h3{color:#818cf8;font-size:11px;letter-spacing:1px;margin-bottom:10px;text-transform:uppercase}
+.pr{display:flex;justify-content:space-between;margin:5px 0;font-size:11px;color:#94a3b8}
+.pv{color:#a5b4fc;font-weight:600}
+.sep{border:none;border-top:1px solid rgba(129,140,248,0.15);margin:10px 0}
+#bottom{border-top:1px solid rgba(129,140,248,0.25);padding:8px 16px;flex-shrink:0}
+#desc{font-size:11px;color:#94a3b8;line-height:1.6;max-width:900px}
+#phase-label{font-size:10px;color:#818cf8;letter-spacing:1px;text-transform:uppercase;margin-bottom:4px}
+</style>
+</head>
+<body>
+<div id="ui">
+  <span class="title">Penrose · 05 — Buco Nero Eterno (Kruskal-Szekeres)</span>
+  <a class="nav-btn" href="p04_schwarzschild.html">← 04</a>
+  <button class="btn active" onclick="go(0)">0 Coordinate</button>
+  <button class="btn" onclick="go(1)">1 Quattro Regioni</button>
+  <button class="btn" onclick="go(2)">2 Regione I</button>
+  <button class="btn" onclick="go(3)">3 Regione II</button>
+  <button class="btn" onclick="go(4)">4 Regione III</button>
+  <button class="btn" onclick="go(5)">5 Regione IV</button>
+  <button class="btn" onclick="go(6)">6 Wormhole</button>
+  <a class="nav-btn" href="p06_collapse.html">06 Collasso →</a>
+</div>
+<div id="main">
+  <canvas id="c"></canvas>
+  <div id="panel">
+    <h3>KRUSKAL-SZEKERES</h3>
+    <div class="pr"><span>T²−X²:</span><span class="pv">(1−r/rs)e^(r/rs)</span></div>
+    <div class="pr"><span>Regioni:</span><span class="pv">4 quadranti</span></div>
+    <hr class="sep">
+    <div class="pr"><span>I:</span><span class="pv">Universo esterno</span></div>
+    <div class="pr"><span>II:</span><span class="pv">Buco nero</span></div>
+    <div class="pr"><span>III:</span><span class="pv">Buco bianco</span></div>
+    <div class="pr"><span>IV:</span><span class="pv">Universo parallelo</span></div>
+    <hr class="sep">
+    <div style="font-size:10px;color:#475569;line-height:1.6;">M. Kruskal, 1960<br>G. Szekeres, 1960<br>Wormhole: NON percorribile<br>Singolarità: r = 0</div>
+  </div>
+</div>
+<div id="bottom">
+  <div id="phase-label">FASE 0 — COORDINATE DI KRUSKAL-SZEKERES</div>
+  <div id="desc"></div>
+</div>
+
+<script>
+const PHASES = [
+  {name:"Coordinate di Kruskal-Szekeres",
+   desc:"Le coordinate di Kruskal-Szekeres estendono analiticamente la soluzione di Schwarzschild all'intero spazio-tempo. T = (r/rs−1)^½ e^(r/2rs) sinh(t/2rs), X = (r/rs−1)^½ e^(r/2rs) cosh(t/2rs). La relazione T²−X² = (1−r/rs)e^(r/rs) definisce le iperboli a r costante."},
+  {name:"Le Quattro Regioni",
+   desc:"Il diagramma di Kruskal mostra 4 regioni distinte: Regione I (universo esterno, destra), Regione II (interno del BN, sopra), Regione III (buco bianco, sotto), Regione IV (universo parallelo, sinistra). Le singolarità sono iperboli r=0."},
+  {name:"Regione I — Universo Esterno",
+   desc:"La Regione I corrisponde al nostro universo esterno al buco nero (r > rs). Gli osservatori in questa regione possono vivere per sempre senza attraversare l'orizzonte. Vedono la ℐ⁺ e la i⁺ come futuro asintotico."},
+  {name:"Regione II — Interno del Buco Nero",
+   desc:"La Regione II è l'interno del buco nero: una volta attraversato l'orizzonte (linea a 45°), non si può tornare nella Regione I. La singolarità r=0 è una barriera temporale inevitabile. Il futuro di qualsiasi osservatore nella Regione II termina alla singolarità."},
+  {name:"Regione III — Buco Bianco",
+   desc:"La Regione III è la 'antitesi' del buco nero — un buco bianco: materia può solo USCIRE, nessuna geodesica può entrare. Emerge dalla singolarità passata. Non osservato mai in natura — probabilmente instabile."},
+  {name:"Regione IV — Universo Parallelo",
+   desc:"La Regione IV è causalmente disconnessa dalla Regione I — nessun segnale può passare tra i due universi. Il ponte di Einstein-Rosen (wormhole) li connette geometricamente ma non causalmente. Un osservatore in IV non può mai raggiungere I e viceversa."},
+  {name:"Il Ponte Einstein-Rosen — Wormhole",
+   desc:"Il wormhole di Schwarzschild connette geometricamente la Regione I e IV attraverso la gola a r=rs. Ma è NON percorribile: la gola si chiude prima che qualsiasi oggetto possa attraversarla. Non è usabile per viaggi o comunicazione."}
+];
+
+const canvas = document.getElementById('c');
+const ctx = canvas.getContext('2d');
+let W, H, phase = 0, T = 0;
+
+function resize(){
+  const main = document.getElementById('main');
+  const panel = document.getElementById('panel');
+  W = canvas.width = main.clientWidth - panel.offsetWidth;
+  H = canvas.height = main.clientHeight;
+}
+
+// Stars
+const stars = [];
+function initStars(){
+  stars.length = 0;
+  for(let i=0;i<180;i++){
+    stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.2+0.2,a:Math.random(),p:Math.random()*Math.PI*2});
+  }
+}
+
+function ng(){return Math.random();}
+
+function gw(col,blur){
+  ctx.shadowColor=col;
+  ctx.shadowBlur=blur;
+}
+
+function lbl(x,y,txt,col,sz,al,bold){
+  ctx.save();
+  ctx.fillStyle=col||'#e2e8f0';
+  ctx.font=(bold?'bold ':'')+( sz||12)+'px "Segoe UI",sans-serif';
+  ctx.textAlign=al||'center';
+  ctx.shadowBlur=0;
+  ctx.fillText(txt,x,y);
+  ctx.restore();
+}
+
+function bg(){
+  const grad=ctx.createRadialGradient(W/2,H/2,0,W/2,H/2,Math.max(W,H)*0.7);
+  grad.addColorStop(0,'#020920');
+  grad.addColorStop(1,'#000010');
+  ctx.fillStyle=grad;
+  ctx.fillRect(0,0,W,H);
+}
+
+function drawStars(){
+  stars.forEach(s=>{
+    const a=s.a*(0.5+0.5*Math.sin(T*0.7+s.p));
+    ctx.beginPath();
+    ctx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2);
+    ctx.fillStyle=`rgba(200,210,255,${a})`;
+    ctx.fill();
+  });
+}
+
+// Kruskal diagram helper — returns canvas coords from Kruskal (X,T) in [-lim,lim]
+function kruskal(cx,cy,sz,KX,KT,lim){
+  lim=lim||1.5;
+  return {
+    x: cx + (KX/lim)*sz,
+    y: cy - (KT/lim)*sz
+  };
+}
+
+// Draw full Kruskal diagram base
+function kruskalBase(cx,cy,sz,opts){
+  opts=opts||{};
+  const lim=1.5;
+  const K=(KX,KT)=>kruskal(cx,cy,sz,KX,KT,lim);
+  const dimI  = opts.dimI   || 1;
+  const dimII = opts.dimII  || 1;
+  const dimIII= opts.dimIII || 1;
+  const dimIV = opts.dimIV  || 1;
+
+  ctx.save();
+  // Region fills
+  // Region I — right
+  ctx.beginPath();
+  ctx.moveTo(K(0,0).x,K(0,0).y);
+  ctx.lineTo(K(lim,lim).x,K(lim,lim).y);
+  ctx.lineTo(K(lim,-lim).x,K(lim,-lim).y);
+  ctx.closePath();
+  ctx.fillStyle=`rgba(99,102,241,${0.08*dimI})`;
+  ctx.fill();
+
+  // Region II — top
+  ctx.beginPath();
+  ctx.moveTo(K(0,0).x,K(0,0).y);
+  ctx.lineTo(K(-lim,lim).x,K(-lim,lim).y);
+  ctx.lineTo(K(lim,lim).x,K(lim,lim).y);
+  ctx.closePath();
+  ctx.fillStyle=`rgba(239,68,68,${0.1*dimII})`;
+  ctx.fill();
+
+  // Region III — bottom
+  ctx.beginPath();
+  ctx.moveTo(K(0,0).x,K(0,0).y);
+  ctx.lineTo(K(-lim,-lim).x,K(-lim,-lim).y);
+  ctx.lineTo(K(lim,-lim).x,K(lim,-lim).y);
+  ctx.closePath();
+  ctx.fillStyle=`rgba(234,179,8,${0.08*dimIII})`;
+  ctx.fill();
+
+  // Region IV — left
+  ctx.beginPath();
+  ctx.moveTo(K(0,0).x,K(0,0).y);
+  ctx.lineTo(K(-lim,lim).x,K(-lim,lim).y);
+  ctx.lineTo(K(-lim,-lim).x,K(-lim,-lim).y);
+  ctx.closePath();
+  ctx.fillStyle=`rgba(34,197,94,${0.08*dimIV})`;
+  ctx.fill();
+
+  // Hyperbolas r=const (constant r curves: T²-X²=const, where const=(1-r/rs)exp(r/rs))
+  // r/rs values: 0.3,0.6,0.8,1.2,1.6,2.0
+  const rVals=[
+    {r:0.3, c:(1-0.3)*Math.exp(0.3), sing:true},  // negative → singularity region (II,III)
+    {r:0.0, c:1.0, sing:true},   // r=0 singularity
+    {r:1.4, c:(1-1.4)*Math.exp(1.4)},
+    {r:1.8, c:(1-1.8)*Math.exp(1.8)},
+    {r:2.5, c:(1-2.5)*Math.exp(2.5)},
+  ];
+
+  // r>1 hyperbolas: T²-X²=C (C negative) → X²-T²=|C| → X=±sqrt(T²+|C|)
+  // r<1 hyperbolas: T²-X²=C (C positive) → T=±sqrt(X²+C)
+  const N=60;
+
+  rVals.forEach(rv=>{
+    const C=rv.c; // (1-r/rs)*exp(r/rs)
+    if(C<0){
+      // r < rs: T²-X²=C, C<0 → T=±sqrt(X²+|C|)
+      // These are the upper (future) and lower (past) singularities
+      const absC=Math.abs(C);
+      if(rv.r===0.0){
+        // Singularity: draw wavy/jagged red line
+        ctx.beginPath();
+        let first=true;
+        for(let i=0;i<=N;i++){
+          const KX=-lim+2*lim*i/N;
+          const T2=KX*KX+absC;
+          const KT=Math.sqrt(T2);
+          if(KT>lim)continue;
+          const p=K(KX,KT);
+          const wave=3*Math.sin(i*1.5+T*2);
+          if(first){ctx.moveTo(p.x,p.y+wave);first=false;}
+          else ctx.lineTo(p.x,p.y+wave);
+        }
+        ctx.strokeStyle=`rgba(239,68,68,${0.9*dimII})`;
+        ctx.lineWidth=2.5;
+        ctx.setLineDash([]);
+        gw('#ef4444',8);
+        ctx.stroke();
+        ctx.shadowBlur=0;
+        // Past singularity (bottom)
+        ctx.beginPath();
+        first=true;
+        for(let i=0;i<=N;i++){
+          const KX=-lim+2*lim*i/N;
+          const T2=KX*KX+absC;
+          const KT=-Math.sqrt(T2);
+          if(KT<-lim)continue;
+          const p=K(KX,KT);
+          const wave=3*Math.sin(i*1.5+T*2);
+          if(first){ctx.moveTo(p.x,p.y+wave);first=false;}
+          else ctx.lineTo(p.x,p.y+wave);
+        }
+        ctx.strokeStyle=`rgba(239,68,68,${0.9*dimIII})`;
+        ctx.lineWidth=2.5;
+        gw('#ef4444',8);
+        ctx.stroke();
+        ctx.shadowBlur=0;
+      } else {
+        // r=0.3 inner hyperbola
+        ctx.beginPath();
+        let first=true;
+        for(let i=0;i<=N;i++){
+          const KX=-lim+2*lim*i/N;
+          const T2=KX*KX+absC;
+          const KT=Math.sqrt(T2);
+          if(KT>lim)continue;
+          const p=K(KX,KT);
+          if(first){ctx.moveTo(p.x,p.y);first=false;}
+          else ctx.lineTo(p.x,p.y);
+        }
+        ctx.strokeStyle=`rgba(239,68,68,0.35)`;
+        ctx.lineWidth=1;
+        ctx.setLineDash([3,4]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+        ctx.beginPath();
+        first=true;
+        for(let i=0;i<=N;i++){
+          const KX=-lim+2*lim*i/N;
+          const T2=KX*KX+absC;
+          const KT=-Math.sqrt(T2);
+          if(KT<-lim)continue;
+          const p=K(KX,KT);
+          if(first){ctx.moveTo(p.x,p.y);first=false;}
+          else ctx.lineTo(p.x,p.y);
+        }
+        ctx.strokeStyle=`rgba(239,68,68,0.35)`;
+        ctx.lineWidth=1;
+        ctx.setLineDash([3,4]);
+        ctx.stroke();
+        ctx.setLineDash([]);
+      }
+    } else if(C>0){
+      // r > rs: X²-T²=C → X=±sqrt(T²+C)
+      ctx.beginPath();
+      let first=true;
+      for(let i=0;i<=N;i++){
+        const KT=-lim+2*lim*i/N;
+        const KX=Math.sqrt(KT*KT+C);
+        if(KX>lim)continue;
+        const p=K(KX,KT);
+        if(first){ctx.moveTo(p.x,p.y);first=false;}
+        else ctx.lineTo(p.x,p.y);
+      }
+      ctx.strokeStyle=`rgba(99,102,241,0.35)`;
+      ctx.lineWidth=1;
+      ctx.setLineDash([2,5]);
+      ctx.stroke();
+      // Left side
+      ctx.beginPath();
+      first=true;
+      for(let i=0;i<=N;i++){
+        const KT=-lim+2*lim*i/N;
+        const KX=-Math.sqrt(KT*KT+C);
+        if(KX<-lim)continue;
+        const p=K(KX,KT);
+        if(first){ctx.moveTo(p.x,p.y);first=false;}
+        else ctx.lineTo(p.x,p.y);
+      }
+      ctx.strokeStyle=`rgba(99,102,241,0.35)`;
+      ctx.lineWidth=1;
+      ctx.setLineDash([2,5]);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  });
+
+  // Lines of constant Schwarzschild t: T/X = tanh(t/2rs) → T = m*X, m = tanh(t/2rs)
+  const tVals=[-1.5,-1.0,-0.6,-0.3,0.3,0.6,1.0,1.5];
+  tVals.forEach(tv=>{
+    const m=Math.tanh(tv/2);
+    ctx.beginPath();
+    ctx.moveTo(K(-lim,-lim*m).x,K(-lim,-lim*m).y);
+    ctx.lineTo(K(lim,lim*m).x,K(lim,lim*m).y);
+    ctx.strokeStyle='rgba(148,163,184,0.12)';
+    ctx.lineWidth=1;
+    ctx.setLineDash([]);
+    ctx.stroke();
+  });
+
+  // Axes
+  ctx.strokeStyle='rgba(148,163,184,0.5)';
+  ctx.lineWidth=1;
+  ctx.setLineDash([]);
+  // X axis
+  ctx.beginPath();
+  ctx.moveTo(K(-lim,0).x,K(-lim,0).y);
+  ctx.lineTo(K(lim,0).x,K(lim,0).y);
+  ctx.stroke();
+  // T axis
+  ctx.beginPath();
+  ctx.moveTo(K(0,-lim).x,K(0,-lim).y);
+  ctx.lineTo(K(0,lim).x,K(0,lim).y);
+  ctx.stroke();
+
+  // Diagonal horizons
+  ctx.beginPath();
+  ctx.moveTo(K(-lim,-lim).x,K(-lim,-lim).y);
+  ctx.lineTo(K(lim,lim).x,K(lim,lim).y);
+  gw('#818cf8',12);
+  ctx.strokeStyle='rgba(129,140,248,0.85)';
+  ctx.lineWidth=2;
+  ctx.stroke();
+  ctx.shadowBlur=0;
+  ctx.beginPath();
+  ctx.moveTo(K(lim,-lim).x,K(lim,-lim).y);
+  ctx.lineTo(K(-lim,lim).x,K(-lim,lim).y);
+  gw('#818cf8',12);
+  ctx.strokeStyle='rgba(129,140,248,0.85)';
+  ctx.lineWidth=2;
+  ctx.stroke();
+  ctx.shadowBlur=0;
+
+  // Region labels
+  if(dimI>0.3)  lbl(K(0.75,0.05).x,  K(0.75,0.05).y,  'I',   `rgba(129,140,248,${dimI})`,  13,'center',true);
+  if(dimII>0.3) lbl(K(0,0.75).x,     K(0,0.75).y,      'II',  `rgba(239,68,68,${dimII})`,   13,'center',true);
+  if(dimIII>0.3)lbl(K(0,-0.72).x,    K(0,-0.72).y,     'III', `rgba(234,179,8,${dimIII})`,  13,'center',true);
+  if(dimIV>0.3) lbl(K(-0.75,0.05).x, K(-0.75,0.05).y,  'IV',  `rgba(34,197,94,${dimIV})`,   13,'center',true);
+
+  // Axis labels
+  lbl(K(lim+0.08,0).x, K(lim+0.08,0).y, 'X', '#94a3b8', 12,'center');
+  lbl(K(0,lim+0.08).x, K(0,lim+0.08).y, 'T', '#94a3b8', 12,'center');
+  // Singularity labels
+  if(dimII>0.3){
+    lbl(K(0,lim-0.05).x, K(0,lim-0.05).y+14, 'r = 0', `rgba(239,68,68,${dimII})`, 10,'center');
+  }
+  if(dimIII>0.3){
+    lbl(K(0,-lim+0.05).x, K(0,-lim+0.05).y-6, 'r = 0', `rgba(239,68,68,${dimIII})`, 10,'center');
+  }
+
+  ctx.restore();
+  return K;
+}
+
+// ── PHASE 0 ──────────────────────────────────────────────
+function ph0(){
+  const cx=W*0.46, cy=H*0.5, sz=Math.min(W*0.32,H*0.38);
+  const lim=1.5;
+  const K=(KX,KT)=>kruskal(cx,cy,sz,KX,KT,lim);
+
+  // Title
+  lbl(cx, cy-sz-28, 'Coordinate di Kruskal-Szekeres', '#a5b4fc', 15,'center',true);
+
+  // Draw only coordinate system and hyperbolas
+  // Background box
+  ctx.save();
+  ctx.strokeStyle='rgba(129,140,248,0.2)';
+  ctx.lineWidth=1;
+  const bx=cx-sz-30, by=cy-sz-20, bw=(sz+30)*2, bh=(sz+20)*2;
+  ctx.strokeRect(bx,by,bw,bh);
+  ctx.restore();
+
+  // T and X axes with arrows
+  ctx.save();
+  ctx.strokeStyle='rgba(148,163,184,0.7)';
+  ctx.lineWidth=1.5;
+  ctx.beginPath(); ctx.moveTo(K(-lim,0).x, K(-lim,0).y); ctx.lineTo(K(lim,0).x, K(lim,0).y); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(K(0,-lim).x, K(0,-lim).y); ctx.lineTo(K(0,lim).x, K(0,lim).y); ctx.stroke();
+  ctx.restore();
+  lbl(K(lim+0.12,0).x, K(lim+0.12,0).y+4, 'X', '#a5b4fc', 14,'center',true);
+  lbl(K(0,lim+0.12).x, K(0,lim+0.12).y+4, 'T', '#a5b4fc', 14,'center',true);
+
+  // Animate: pulsing phase for curves
+  const ph=Math.sin(T*1.5)*0.5+0.5;
+
+  // Hyperbolas T²-X²=C (several r values)
+  const rSet=[
+    {rr:2.0, col:'rgba(99,102,241,0.7)'},
+    {rr:1.6, col:'rgba(99,102,241,0.55)'},
+    {rr:1.2, col:'rgba(99,102,241,0.4)'},
+    {rr:0.5, col:'rgba(239,68,68,0.65)'},
+    {rr:0.0, col:'rgba(239,68,68,0.9)'},
+  ];
+
+  rSet.forEach(rv=>{
+    const C=(1-rv.rr)*Math.exp(rv.rr);
+    const N=80;
+    if(C>=0){
+      // Exterior: X=±sqrt(T²+C)
+      ctx.save();
+      ctx.strokeStyle=rv.col;
+      ctx.lineWidth=rv.rr===1.0?2.5:1.5;
+      gw(rv.col,rv.rr===1.0?10:4);
+      ctx.beginPath();
+      let first=true;
+      for(let i=0;i<=N;i++){
+        const KT=-lim+2*lim*i/N;
+        const KX=Math.sqrt(KT*KT+C);
+        if(KX>lim)continue;
+        const p=K(KX,KT);
+        if(first){ctx.moveTo(p.x,p.y);first=false;} else ctx.lineTo(p.x,p.y);
+      }
+      ctx.stroke();
+      ctx.beginPath(); first=true;
+      for(let i=0;i<=N;i++){
+        const KT=-lim+2*lim*i/N;
+        const KX=-Math.sqrt(KT*KT+C);
+        if(KX<-lim)continue;
+        const p=K(KX,KT);
+        if(first){ctx.moveTo(p.x,p.y);first=false;} else ctx.lineTo(p.x,p.y);
+      }
+      ctx.stroke();
+      ctx.restore();
+      // Label at bottom of right branch
+      const pL=K(Math.sqrt(0+C), 0);
+      if(pL.x<cx+sz) lbl(pL.x+6,pL.y, rv.rr===2.0?'r=2rs':'r=1.6rs', '#94a3b8', 9,'left');
+    } else {
+      // Interior: T=±sqrt(X²+|C|)
+      const absC=Math.abs(C);
+      ctx.save();
+      ctx.strokeStyle=rv.col;
+      ctx.lineWidth=rv.rr===0?2.5:1.5;
+      gw(rv.col,rv.rr===0?12:4);
+      ctx.beginPath();
+      let first=true;
+      for(let i=0;i<=N;i++){
+        const KX=-lim+2*lim*i/N;
+        const KT=Math.sqrt(KX*KX+absC)+(rv.rr===0? 2.5*Math.sin(i*1.8+T*3) : 0);
+        if(KT>lim)continue;
+        const p=K(KX,KT);
+        if(first){ctx.moveTo(p.x,p.y);first=false;} else ctx.lineTo(p.x,p.y);
+      }
+      ctx.stroke();
+      ctx.beginPath(); first=true;
+      for(let i=0;i<=N;i++){
+        const KX=-lim+2*lim*i/N;
+        const KT=-(Math.sqrt(KX*KX+absC)+(rv.rr===0? 2.5*Math.sin(i*1.8+T*3) : 0));
+        if(KT<-lim)continue;
+        const p=K(KX,KT);
+        if(first){ctx.moveTo(p.x,p.y);first=false;} else ctx.lineTo(p.x,p.y);
+      }
+      ctx.stroke();
+      ctx.restore();
+      if(rv.rr===0) lbl(K(0,lim-0.12).x+30, K(0,lim-0.12).y, 'Singolarità r=0', '#ef4444',9,'left');
+    }
+  });
+
+  // Lines of constant t
+  const tSet=[-1.2,-0.7,-0.3,0.3,0.7,1.2];
+  tSet.forEach(tv=>{
+    const m=Math.tanh(tv/2);
+    ctx.save();
+    ctx.strokeStyle='rgba(148,163,184,0.18)';
+    ctx.lineWidth=1;
+    ctx.setLineDash([3,6]);
+    ctx.beginPath();
+    ctx.moveTo(K(-lim,-lim*m).x,K(-lim,-lim*m).y);
+    ctx.lineTo(K(lim,lim*m).x,K(lim,lim*m).y);
+    ctx.stroke();
+    ctx.restore();
+  });
+
+  // Diagonal horizons
+  ctx.save();
+  gw('#818cf8',14);
+  ctx.strokeStyle='rgba(129,140,248,0.9)';
+  ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(K(-lim,-lim).x,K(-lim,-lim).y); ctx.lineTo(K(lim,lim).x,K(lim,lim).y); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(K(lim,-lim).x,K(lim,-lim).y); ctx.lineTo(K(-lim,lim).x,K(-lim,lim).y); ctx.stroke();
+  ctx.restore();
+  lbl(K(0.7,0.75).x,K(0.7,0.75).y,'r = rs','#818cf8',10,'center');
+
+  // Formulas
+  const fx=W*0.82, fy=H*0.25;
+  ctx.save();
+  ctx.fillStyle='rgba(2,9,32,0.85)';
+  ctx.strokeStyle='rgba(129,140,248,0.3)';
+  ctx.lineWidth=1;
+  const fbox={x:fx-10,y:fy-14,w:130,h:110};
+  ctx.beginPath(); ctx.roundRect(fbox.x,fbox.y,fbox.w,fbox.h,6); ctx.fill(); ctx.stroke();
+  ctx.restore();
+  lbl(fx+55, fy+5,  'T = (r/rs−1)^½',   '#a5b4fc',10,'center');
+  lbl(fx+55, fy+19, '  × e^(r/2rs) sinh(t/2rs)', '#94a3b8',9,'center');
+  lbl(fx+55, fy+38, 'X = (r/rs−1)^½',   '#a5b4fc',10,'center');
+  lbl(fx+55, fy+52, '  × e^(r/2rs) cosh(t/2rs)', '#94a3b8',9,'center');
+  lbl(fx+55, fy+72, 'T²−X² =',           '#a5b4fc',10,'center');
+  lbl(fx+55, fy+86, '(1−r/rs)e^(r/rs)',  '#818cf8',10,'center',true);
+
+  // Animated glowing dot tracing a worldline in region I
+  const angle=T*0.5;
+  const KX=0.6+0.2*Math.cos(angle);
+  const KT=(T*0.15)%1.0;
+  if(KT<1.0){
+    const pp=K(KX,KT*0.8);
+    ctx.save();
+    gw('#a5b4fc',16);
+    ctx.beginPath(); ctx.arc(pp.x,pp.y,4,0,Math.PI*2);
+    ctx.fillStyle='#a5b4fc'; ctx.fill();
+    ctx.restore();
+  }
+}
+
+// ── PHASE 1 ──────────────────────────────────────────────
+function ph1(){
+  const cx=W*0.46, cy=H*0.5, sz=Math.min(W*0.34,H*0.41);
+  const lim=1.5;
+  const K=(KX,KT)=>kruskal(cx,cy,sz,KX,KT,lim);
+
+  lbl(cx, cy-sz-30, 'Le Quattro Regioni di Kruskal', '#a5b4fc', 15,'center',true);
+
+  kruskalBase(cx,cy,sz,{dimI:1,dimII:1,dimIII:1,dimIV:1});
+
+  // Full region labels
+  lbl(K(0.72,0.05).x,  K(0.72,0.05).y,  'I — Universo',           '#818cf8',11,'center',true);
+  lbl(K(0,0.65).x,     K(0,0.65).y,     'II — Buco Nero',          '#ef4444',11,'center',true);
+  lbl(K(0,-0.60).x,    K(0,-0.60).y,    'III — Buco Bianco',       '#eab308',11,'center',true);
+  lbl(K(-0.72,0.05).x, K(-0.72,0.05).y, 'IV — Universo Parallelo', '#22c55e',10,'center',true);
+
+  // Animated particle in Region I going up and crossing to II
+  const pt=(T*0.12)%1.4;
+  let pKX, pKT;
+  if(pt<0.7){
+    pKX=0.7; pKT=pt-0.3;
+  } else {
+    pKX=0.7-(pt-0.7)*2.5; pKT=0.4+(pt-0.7)*1.2;
+  }
+  if(pKT < lim && pKX < lim && pKX > -lim){
+    const pp=K(pKX, pKT);
+    ctx.save();
+    const col=pt>0.7?'#ef4444':'#a5b4fc';
+    gw(col,18);
+    ctx.beginPath(); ctx.arc(pp.x,pp.y,5,0,Math.PI*2);
+    ctx.fillStyle=col; ctx.fill();
+    ctx.restore();
+  }
+
+  // Horizon labels
+  lbl(K(0.55,0.62).x, K(0.55,0.62).y-6, 'Orizzonte', '#818cf8',9,'center');
+  lbl(K(0.55,0.62).x, K(0.55,0.62).y+6, 'futuro', '#818cf8',9,'center');
+  lbl(K(0.55,-0.58).x, K(0.55,-0.58).y+6, 'Orizzonte', '#818cf8',9,'center');
+  lbl(K(0.55,-0.58).x, K(0.55,-0.58).y-6, 'passato', '#818cf8',9,'center');
+}
+
+// ── PHASE 2 ──────────────────────────────────────────────
+function ph2(){
+  const cx=W*0.46, cy=H*0.5, sz=Math.min(W*0.34,H*0.41);
+  const lim=1.5;
+  const K=(KX,KT)=>kruskal(cx,cy,sz,KX,KT,lim);
+
+  lbl(cx, cy-sz-30, 'Regione I — Universo Esterno (r > rs)', '#a5b4fc', 15,'center',true);
+
+  kruskalBase(cx,cy,sz,{dimI:1,dimII:0.25,dimIII:0.25,dimIV:0.25});
+
+  // Bright highlight Region I
+  ctx.save();
+  ctx.beginPath();
+  ctx.moveTo(K(0,0).x,K(0,0).y);
+  ctx.lineTo(K(lim,lim).x,K(lim,lim).y);
+  ctx.lineTo(K(lim,-lim).x,K(lim,-lim).y);
+  ctx.closePath();
+  ctx.fillStyle='rgba(99,102,241,0.12)';
+  ctx.fill();
+  const gl=ctx.createLinearGradient(K(0,0).x,K(0,0).y,K(lim,0).x,K(lim,0).y);
+  gl.addColorStop(0,'rgba(129,140,248,0)');
+  gl.addColorStop(1,'rgba(129,140,248,0.08)');
+  ctx.fillStyle=gl;
+  ctx.fill();
+  ctx.restore();
+
+  // Observer worldlines in Region I (hyperbolic trajectories)
+  [0.6, 0.9, 1.2].forEach(r=>{
+    const C=(1-r)*Math.exp(r);
+    if(C<0) return;
+    ctx.save();
+    ctx.strokeStyle='rgba(165,180,252,0.6)';
+    ctx.lineWidth=1.5;
+    ctx.beginPath();
+    let first=true;
+    for(let i=0;i<=60;i++){
+      const KT=-0.9+1.8*i/60;
+      const KX=Math.sqrt(KT*KT+C);
+      if(KX>lim)continue;
+      const p=K(KX,KT);
+      if(first){ctx.moveTo(p.x,p.y);first=false;} else ctx.lineTo(p.x,p.y);
+    }
+    ctx.stroke();
+    // Arrow at top
+    const p0=K(Math.sqrt(0.8*0.8+C),0.8);
+    const p1=K(Math.sqrt(0.9*0.9+C),0.9);
+    if(p0.x<cx+sz && p1.x<cx+sz){
+      drawArrowHead(p0.x,p0.y,p1.x,p1.y,'rgba(165,180,252,0.8)',6);
+    }
+    ctx.restore();
+  });
+
+  // ℐ⁺ label
+  lbl(K(lim-0.05,lim-0.05).x-20, K(lim-0.05,lim-0.05).y+10, 'ℐ⁺', '#a5b4fc',14,'center',true);
+  lbl(K(lim-0.05,-lim+0.05).x-20, K(lim-0.05,-lim+0.05).y-10, 'ℐ⁻', '#94a3b8',13,'center',true);
+  lbl(K(lim-0.02,0).x-10, K(lim-0.02,0).y, 'i⁰', '#94a3b8',12,'center');
+  lbl(K(lim*0.6,lim-0.04).x, K(lim*0.6,lim-0.04).y+14, 'i⁺', '#94a3b8',11,'center');
+  lbl(K(lim*0.6,-lim+0.04).x, K(lim*0.6,-lim+0.04).y-6, 'i⁻', '#94a3b8',11,'center');
+
+  // Animated observer
+  const pt=((T*0.18)%1.0);
+  const KT_obs=-0.7+pt*1.4;
+  const C_obs=(1-1.0)*Math.exp(1.0);
+  const KX_obs=Math.sqrt(KT_obs*KT_obs+0.5);
+  if(KX_obs<lim){
+    const pp=K(KX_obs,KT_obs);
+    ctx.save(); gw('#a5b4fc',20);
+    ctx.beginPath(); ctx.arc(pp.x,pp.y,5,0,Math.PI*2);
+    ctx.fillStyle='#a5b4fc'; ctx.fill(); ctx.restore();
+  }
+
+  lbl(cx+sz*0.6, cy+sz*0.7, 'Osservatori\nesterni liberi', '#818cf8',10,'center');
+}
+
+// ── PHASE 3 ──────────────────────────────────────────────
+function ph3(){
+  const cx=W*0.46, cy=H*0.5, sz=Math.min(W*0.34,H*0.41);
+  const lim=1.5;
+  const K=(KX,KT)=>kruskal(cx,cy,sz,KX,KT,lim);
+
+  lbl(cx, cy-sz-30, 'Regione II — Interno del Buco Nero (r < rs)', '#ef4444', 15,'center',true);
+
+  kruskalBase(cx,cy,sz,{dimI:0.3,dimII:1,dimIII:0.2,dimIV:0.2});
+
+  // Highlight Region II
+  ctx.save();
+  const gt=ctx.createLinearGradient(K(0,0).x,K(0,0).y,K(0,lim).x,K(0,lim).y);
+  gt.addColorStop(0,'rgba(239,68,68,0)');
+  gt.addColorStop(1,'rgba(239,68,68,0.18)');
+  ctx.beginPath();
+  ctx.moveTo(K(0,0).x,K(0,0).y);
+  ctx.lineTo(K(-lim,lim).x,K(-lim,lim).y);
+  ctx.lineTo(K(lim,lim).x,K(lim,lim).y);
+  ctx.closePath();
+  ctx.fillStyle=gt;
+  ctx.fill();
+  ctx.restore();
+
+  // Infalling worldline I → II
+  const steps=80;
+  ctx.save();
+  ctx.strokeStyle='rgba(251,191,36,0.85)';
+  ctx.lineWidth=2;
+  gw('#fbbf24',8);
+  ctx.beginPath();
+  ctx.moveTo(K(1.1,-0.7).x,K(1.1,-0.7).y);
+  ctx.lineTo(K(0.05,0.05).x,K(0.05,0.05).y);
+  ctx.lineTo(K(-0.3,0.7).x,K(-0.3,0.7).y);
+  ctx.stroke();
+  ctx.restore();
+  drawArrowHead(K(0.4,-0.2).x,K(0.4,-0.2).y,K(0.1,0.15).x,K(0.1,0.15).y,'rgba(251,191,36,0.9)',7);
+  drawArrowHead(K(0.0,0.4).x,K(0.0,0.4).y,K(-0.15,0.55).x,K(-0.15,0.55).y,'rgba(251,191,36,0.9)',7);
+
+  // Animated particle
+  const pt=((T*0.14)%1.4);
+  let pkx, pkt;
+  if(pt<0.4){
+    pkx=1.1-pt*2.6; pkt=-0.7+pt*1.9;
+  } else {
+    pkx=0.05-( (pt-0.4)/1.0)*0.45; pkt=0.05+((pt-0.4)/1.0)*0.9;
+  }
+  if(pkt<lim && pkt>-lim && pkx<lim && pkx>-lim){
+    const pp=K(pkx,pkt);
+    const col=pt>0.4?'#ef4444':'#fbbf24';
+    ctx.save(); gw(col,20);
+    ctx.beginPath(); ctx.arc(pp.x,pp.y,5,0,Math.PI*2);
+    ctx.fillStyle=col; ctx.fill(); ctx.restore();
+  }
+
+  // "Nessun ritorno" text
+  const msgx=K(-0.1,0.5).x, msgy=K(-0.1,0.5).y;
+  ctx.save();
+  ctx.fillStyle='rgba(2,9,32,0.7)';
+  ctx.beginPath(); ctx.roundRect(msgx-65,msgy-14,130,24,5); ctx.fill();
+  ctx.restore();
+  lbl(msgx, msgy+2, 'Nessun ritorno possibile', '#ef4444',10,'center',true);
+
+  // Arrow pointing to singularity from region II
+  ctx.save();
+  ctx.strokeStyle='rgba(239,68,68,0.7)';
+  ctx.lineWidth=1.5;
+  ctx.setLineDash([4,4]);
+  ctx.beginPath();
+  ctx.moveTo(K(0.2,0.55).x,K(0.2,0.55).y);
+  ctx.lineTo(K(0.05,0.88).x,K(0.05,0.88).y);
+  ctx.stroke();
+  ctx.restore();
+  drawArrowHead(K(0.1,0.75).x,K(0.1,0.75).y,K(0.05,0.88).x,K(0.05,0.88).y,'rgba(239,68,68,0.9)',6);
+  lbl(K(0.35,0.6).x,K(0.35,0.6).y,'→ Singolarità','#ef4444',10,'left');
+}
+
+// ── PHASE 4 ──────────────────────────────────────────────
+function ph4(){
+  const cx=W*0.46, cy=H*0.5, sz=Math.min(W*0.34,H*0.41);
+  const lim=1.5;
+  const K=(KX,KT)=>kruskal(cx,cy,sz,KX,KT,lim);
+
+  lbl(cx, cy-sz-30, 'Regione III — Buco Bianco (Singolarità Passata)', '#eab308', 15,'center',true);
+
+  kruskalBase(cx,cy,sz,{dimI:0.3,dimII:0.2,dimIII:1,dimIV:0.2});
+
+  // Highlight Region III
+  ctx.save();
+  const gt=ctx.createLinearGradient(K(0,0).x,K(0,0).y,K(0,-lim).x,K(0,-lim).y);
+  gt.addColorStop(0,'rgba(234,179,8,0)');
+  gt.addColorStop(1,'rgba(234,179,8,0.18)');
+  ctx.beginPath();
+  ctx.moveTo(K(0,0).x,K(0,0).y);
+  ctx.lineTo(K(-lim,-lim).x,K(-lim,-lim).y);
+  ctx.lineTo(K(lim,-lim).x,K(lim,-lim).y);
+  ctx.closePath();
+  ctx.fillStyle=gt;
+  ctx.fill();
+  ctx.restore();
+
+  // "Solo uscita" arrows — worldlines emerging from III to I and IV
+  [[0.05,-0.6, 0.8, 0.05],[0.05,-0.6,-0.8, 0.05]].forEach(([x0,y0,x1,y1])=>{
+    ctx.save(); ctx.strokeStyle='rgba(234,179,8,0.75)'; ctx.lineWidth=1.8; gw('#eab308',6);
+    ctx.beginPath(); ctx.moveTo(K(x0,y0).x,K(x0,y0).y); ctx.lineTo(K(x1,y1).x,K(x1,y1).y); ctx.stroke();
+    ctx.restore();
+    drawArrowHead(K((x0+x1)/2,(y0+y1)/2).x,K((x0+x1)/2,(y0+y1)/2).y,K(x1,y1).x,K(x1,y1).y,'rgba(234,179,8,0.9)',7);
+  });
+
+  // Animated particles flowing out of III
+  const pt=((T*0.18)%1.0);
+  [
+    {kx:0.05,a: 0.9, b: 0.05},
+    {kx:-0.1,a: 0.9, b:-0.75}
+  ].forEach(p=>{
+    const pkt=-p.a+pt*(p.a-p.b);
+    const pkx=p.kx+pt*(p.a-p.b)*0.8*(p.b<0?-1:1)*0.4;
+    if(pkt<lim&&pkt>-lim&&pkx<lim&&pkx>-lim){
+      const pp=K(pkx,pkt);
+      ctx.save(); gw('#eab308',18);
+      ctx.beginPath(); ctx.arc(pp.x,pp.y,5,0,Math.PI*2);
+      ctx.fillStyle='#eab308'; ctx.fill(); ctx.restore();
+    }
+  });
+
+  // Labels
+  lbl(K(0,-0.45).x,K(0,-0.45).y,'Solo uscita — Arrow of Time invertito','#eab308',10,'center',true);
+  lbl(K(0,-0.32).x,K(0,-0.32).y,'Nessuna geodesica può entrare','#94a3b8',9,'center');
+
+  // Reverse time arrow symbol
+  const arx=K(0.5,-0.5).x, ary=K(0.5,-0.5).y;
+  ctx.save();
+  ctx.strokeStyle='rgba(234,179,8,0.8)'; ctx.lineWidth=2;
+  ctx.beginPath(); ctx.moveTo(arx-15,ary-15); ctx.lineTo(arx-15,ary+15); ctx.stroke();
+  drawArrowHead(arx-15,ary+5,arx-15,ary+15,'rgba(234,179,8,0.8)',6);
+  lbl(arx-15,ary+28,'↓ t','#eab308',9,'center');
+  ctx.restore();
+}
+
+// ── PHASE 5 ──────────────────────────────────────────────
+function ph5(){
+  const cx=W*0.46, cy=H*0.5, sz=Math.min(W*0.34,H*0.41);
+  const lim=1.5;
+  const K=(KX,KT)=>kruskal(cx,cy,sz,KX,KT,lim);
+
+  lbl(cx, cy-sz-30, 'Regione IV — Universo Parallelo (Causalmente Disconnesso)', '#22c55e', 14,'center',true);
+
+  kruskalBase(cx,cy,sz,{dimI:0.3,dimII:0.2,dimIII:0.2,dimIV:1});
+
+  // Highlight Region IV
+  ctx.save();
+  const gt=ctx.createLinearGradient(K(0,0).x,K(0,0).y,K(-lim,0).x,K(-lim,0).y);
+  gt.addColorStop(0,'rgba(34,197,94,0)');
+  gt.addColorStop(1,'rgba(34,197,94,0.15)');
+  ctx.beginPath();
+  ctx.moveTo(K(0,0).x,K(0,0).y);
+  ctx.lineTo(K(-lim,lim).x,K(-lim,lim).y);
+  ctx.lineTo(K(-lim,-lim).x,K(-lim,-lim).y);
+  ctx.closePath();
+  ctx.fillStyle=gt;
+  ctx.fill();
+  ctx.restore();
+
+  // Observer in Region IV trying to send signal to I (futile — blocked by horizon)
+  const pt=((T*0.16)%1.0);
+  const srcKX=-0.7, srcKT=0.0;
+  // Signal travels at 45° toward I, but hits horizon at (0,0)
+  const sigKX=srcKX+pt*0.72, sigKT=srcKT+pt*0.72;
+  if(sigKX<lim&&sigKT<lim){
+    ctx.save();
+    ctx.strokeStyle='rgba(34,197,94,0.7)';
+    ctx.lineWidth=1.5;
+    ctx.setLineDash([4,5]);
+    ctx.beginPath();
+    ctx.moveTo(K(srcKX,srcKT).x,K(srcKX,srcKT).y);
+    ctx.lineTo(K(sigKX,sigKT).x,K(sigKT,sigKT).y);
+    ctx.stroke();
+    ctx.restore();
+    const pp=K(sigKX,sigKT);
+    ctx.save(); gw('#22c55e',14);
+    ctx.beginPath(); ctx.arc(pp.x,pp.y,4,0,Math.PI*2);
+    ctx.fillStyle='#22c55e'; ctx.fill(); ctx.restore();
+    // Signal gets blocked near horizon
+    if(sigKX>-0.15){
+      const bp=K(-0.02,0.02);
+      ctx.save(); gw('#ef4444',16);
+      ctx.beginPath(); ctx.arc(bp.x,bp.y,6,0,Math.PI*2);
+      ctx.strokeStyle='#ef4444'; ctx.lineWidth=2; ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(bp.x-5,bp.y-5); ctx.lineTo(bp.x+5,bp.y+5); ctx.stroke();
+      ctx.beginPath(); ctx.moveTo(bp.x+5,bp.y-5); ctx.lineTo(bp.x-5,bp.y+5); ctx.stroke();
+      ctx.restore();
+    }
+  }
+
+  // Observer in IV
+  const pob=K(-0.7,0.0);
+  ctx.save(); gw('#22c55e',16);
+  ctx.beginPath(); ctx.arc(pob.x,pob.y,5,0,Math.PI*2);
+  ctx.fillStyle='#22c55e'; ctx.fill(); ctx.restore();
+
+  // Causal wall label
+  const wp=K(0,0);
+  lbl(wp.x, wp.y-18,'Muro causale','#818cf8',9,'center',true);
+  lbl(wp.x, wp.y+20,'Segnali bloccati','#ef4444',9,'center');
+
+  // Text: causal disconnection
+  lbl(K(-0.72,-0.25).x,K(-0.72,-0.25).y,'Osservatore IV','#22c55e',9,'center');
+  lbl(K(-0.72,-0.38).x,K(-0.72,-0.38).y,'Invia segnale →','#94a3b8',8,'center');
+  lbl(K(-0.72,-0.50).x,K(-0.72,-0.50).y,'mai ricevuto in I','#ef4444',8,'center');
+
+  // Note on Einstein-Rosen
+  lbl(cx, cy+sz+22,'Il ponte di Einstein-Rosen connette I e IV geometricamente, ma NON causalmente','#475569',9,'center');
+}
+
+// ── PHASE 6 ──────────────────────────────────────────────
+function ph6(){
+  // Epic wormhole visualization
+  const cx=W*0.47, cy=H*0.5;
+  const throatY=cy;
+  const throatR=22;
+  const funnelH=H*0.35;
+  const maxR=W*0.18;
+
+  lbl(cx, 28, 'Il Ponte Einstein-Rosen — Wormhole di Schwarzschild', '#a5b4fc', 15,'center',true);
+
+  // Draw wormhole funnels (two trumpet/funnel shapes)
+  // Upper funnel — Region I side
+  const drawFunnel=(flip)=>{
+    const sign=flip?1:-1;
+    const nSlices=60;
+    ctx.save();
+    for(let i=0;i<nSlices;i++){
+      const u0=i/nSlices, u1=(i+1)/nSlices;
+      // Radius of funnel: starts wide at edge, narrows to throat
+      const rFn=(u)=>{
+        // Funnel shape: wide at far end, narrow at throat
+        // r(u) = throatR + (maxR-throatR)*u^1.4
+        return throatR + (maxR-throatR)*Math.pow(u,1.3);
+      };
+      const r0=rFn(u0), r1=rFn(u1);
+      const y0=throatY+sign*(u0*funnelH), y1=throatY+sign*(u1*funnelH);
+
+      // Grid lines: vertical (along funnel)
+      const nLines=16;
+      for(let k=0;k<nLines;k++){
+        const ang=k/nLines*Math.PI*2;
+        const ex0=cx+r0*Math.cos(ang), ey0=y0;
+        const ex1=cx+r1*Math.cos(ang), ey1=y1;
+        const depth=0.5+0.5*Math.cos(ang);
+        const pulseFrac=0.7+0.3*Math.sin(T*2+ang);
+        const col=`rgba(${Math.round(60+80*depth)},${Math.round(50+90*depth)},${Math.round(180+55*depth)},${0.18*pulseFrac})`;
+        ctx.beginPath(); ctx.strokeStyle=col; ctx.lineWidth=0.8;
+        ctx.moveTo(ex0,ey0); ctx.lineTo(ex1,ey1); ctx.stroke();
+      }
+    }
+    ctx.restore();
+
+    // Main funnel outline strokes (left and right edges)
+    ctx.save();
+    const grad=ctx.createLinearGradient(cx,throatY,cx,throatY+sign*funnelH);
+    grad.addColorStop(0,'rgba(99,102,241,0.9)');
+    grad.addColorStop(0.5,'rgba(129,140,248,0.6)');
+    grad.addColorStop(1,'rgba(79,70,229,0.3)');
+    ctx.strokeStyle=grad; ctx.lineWidth=2.5;
+    gw('#818cf8',12);
+
+    // Left edge
+    ctx.beginPath();
+    for(let i=0;i<=60;i++){
+      const u=i/60;
+      const r=throatR+(maxR-throatR)*Math.pow(u,1.3);
+      const y=throatY+sign*u*funnelH;
+      if(i===0) ctx.moveTo(cx-r,y); else ctx.lineTo(cx-r,y);
+    }
+    ctx.stroke();
+    // Right edge
+    ctx.beginPath();
+    for(let i=0;i<=60;i++){
+      const u=i/60;
+      const r=throatR+(maxR-throatR)*Math.pow(u,1.3);
+      const y=throatY+sign*u*funnelH;
+      if(i===0) ctx.moveTo(cx+r,y); else ctx.lineTo(cx+r,y);
+    }
+    ctx.stroke();
+    ctx.restore();
+
+    // Horizontal rings at intervals
+    const rings=[0,0.25,0.5,0.75,1.0];
+    rings.forEach(u=>{
+      const r=throatR+(maxR-throatR)*Math.pow(u,1.3);
+      const y=throatY+sign*u*funnelH;
+      ctx.save();
+      const alpha=0.15+0.1*Math.sin(T*1.5+u*4);
+      ctx.strokeStyle=`rgba(129,140,248,${alpha})`;
+      ctx.lineWidth=0.8;
+      ctx.beginPath();
+      ctx.ellipse(cx,y,r,r*0.18,0,0,Math.PI*2);
+      ctx.stroke();
+      ctx.restore();
+    });
+
+    // Region label at far end
+    const farY=throatY+sign*(funnelH+20);
+    lbl(cx,farY, flip?'Regione IV — Universo Parallelo':'Regione I — Universo Esterno',
+        flip?'rgba(34,197,94,0.85)':'rgba(129,140,248,0.85)', 11,'center',true);
+  };
+
+  drawFunnel(false); // top = Region I
+  drawFunnel(true);  // bottom = Region IV
+
+  // Throat ring — glowing
+  ctx.save();
+  const pulse=0.7+0.3*Math.sin(T*3);
+  gw(`rgba(129,140,248,${pulse})`,24);
+  ctx.strokeStyle=`rgba(165,180,252,${pulse})`;
+  ctx.lineWidth=4;
+  ctx.beginPath();
+  ctx.ellipse(cx,throatY,throatR,throatR*0.25,0,0,Math.PI*2);
+  ctx.stroke();
+  // Inner glow
+  ctx.beginPath();
+  ctx.ellipse(cx,throatY,throatR*0.6,throatR*0.12,0,0,Math.PI*2);
+  ctx.fillStyle=`rgba(129,140,248,${0.25*pulse})`;
+  ctx.fill();
+  ctx.restore();
+
+  lbl(cx, throatY+36,'Gola del Wormhole  r = rs','#818cf8',10,'center',true);
+
+  // Animated test particle trying to cross — dotted worldline hits pinch-off
+  const pt=((T*0.18)%1.0);
+  // Particle starts in Region I (top of upper funnel), moves toward throat, can't cross
+  const pY=throatY-funnelH*(1-pt);
+  const pR=throatR+(maxR-throatR)*Math.pow(1-pt,1.3);
+  // Particle oscillates side-to-side slightly
+  const pX=cx+pR*0.0 + 10*Math.sin(T*3);
+  // Dotted trail
+  ctx.save();
+  ctx.strokeStyle='rgba(251,191,36,0.5)';
+  ctx.lineWidth=1.5;
+  ctx.setLineDash([4,6]);
+  ctx.beginPath();
+  ctx.moveTo(cx+10, throatY-funnelH);
+  ctx.lineTo(pX, pY);
+  ctx.stroke();
+  ctx.restore();
+  // Particle dot
+  if(pt<0.92){
+    ctx.save(); gw('#fbbf24',18);
+    ctx.beginPath(); ctx.arc(pX, pY, 5,0,Math.PI*2);
+    ctx.fillStyle='#fbbf24'; ctx.fill(); ctx.restore();
+  } else {
+    // Gets blocked at throat
+    ctx.save(); gw('#ef4444',20);
+    ctx.beginPath(); ctx.arc(cx, throatY-8, 6,0,Math.PI*2);
+    ctx.strokeStyle='#ef4444'; ctx.lineWidth=2; ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(cx-5,throatY-13); ctx.lineTo(cx+5,throatY-3);
+    ctx.moveTo(cx+5,throatY-13); ctx.lineTo(cx-5,throatY-3);
+    ctx.stroke();
+    ctx.restore();
+  }
+
+  // "Non percorribile" label
+  ctx.save();
+  ctx.fillStyle='rgba(2,9,32,0.88)';
+  ctx.strokeStyle='rgba(239,68,68,0.5)';
+  ctx.lineWidth=1;
+  const nlx=cx+throatR+18, nly=throatY-28;
+  ctx.beginPath(); ctx.roundRect(nlx,nly,190,44,6); ctx.fill(); ctx.stroke();
+  ctx.restore();
+  lbl(nlx+95,nly+16,'Non percorribile','#ef4444',11,'center',true);
+  lbl(nlx+95,nly+32,'si chiude istantaneamente','#94a3b8',9,'center');
+
+  // Mini Kruskal diagram at bottom-right
+  const mkx=W*0.82, mky=H*0.72, msz=Math.min(W*0.1,H*0.14);
+  kruskalBase(mkx,mky,msz,{dimI:1,dimII:0.4,dimIII:0.4,dimIV:1});
+  lbl(mkx,mky-msz-12,'Schema Kruskal','#475569',8,'center');
+  // Mark the wormhole connection
+  ctx.save();
+  ctx.strokeStyle='rgba(165,180,252,0.6)'; ctx.lineWidth=1.5;
+  ctx.beginPath();
+  const wl0=kruskal(mkx,mky,msz,-0.1,0,1.5);
+  const wl1=kruskal(mkx,mky,msz, 0.1,0,1.5);
+  ctx.moveTo(wl0.x,wl0.y); ctx.lineTo(wl1.x,wl1.y);
+  gw('#818cf8',8); ctx.stroke();
+  ctx.restore();
+
+  // Formula box
+  const fbx=cx-85, fby=H*0.86;
+  ctx.save();
+  ctx.fillStyle='rgba(2,9,32,0.85)'; ctx.strokeStyle='rgba(129,140,248,0.25)'; ctx.lineWidth=1;
+  ctx.beginPath(); ctx.roundRect(fbx,fby,170,36,5); ctx.fill(); ctx.stroke();
+  ctx.restore();
+  lbl(fbx+85,fby+14,'T² − X² = (1−r/rs)e^(r/rs)','#818cf8',10,'center');
+  lbl(fbx+85,fby+28,'Wormhole di Schwarzschild','#475569',8,'center');
+}
+
+// Arrow helper
+function drawArrowHead(x1,y1,x2,y2,col,size){
+  const ang=Math.atan2(y2-y1,x2-x1);
+  ctx.save();
+  ctx.fillStyle=col;
+  ctx.shadowBlur=0;
+  ctx.beginPath();
+  ctx.moveTo(x2,y2);
+  ctx.lineTo(x2-size*Math.cos(ang-Math.PI/6),y2-size*Math.sin(ang-Math.PI/6));
+  ctx.lineTo(x2-size*Math.cos(ang+Math.PI/6),y2-size*Math.sin(ang+Math.PI/6));
+  ctx.closePath();
+  ctx.fill();
+  ctx.restore();
+}
+
+const phFns=[ph0,ph1,ph2,ph3,ph4,ph5,ph6];
+
+function go(n){
+  phase=n;
+  const btns=document.querySelectorAll('.btn');
+  btns.forEach((b,i)=>b.classList.toggle('active',i===n));
+  document.getElementById('phase-label').textContent=`FASE ${n} — ${PHASES[n].name.toUpperCase()}`;
+  document.getElementById('desc').textContent=PHASES[n].desc;
+}
+
+function frame(){
+  bg();
+  drawStars();
+  phFns[phase]();
+  T+=0.016;
+  requestAnimationFrame(frame);
+}
+
+window.addEventListener('resize',()=>{resize();});
+resize();
+initStars();
+go(0);
+frame();
+</script>
+</body>
+</html>

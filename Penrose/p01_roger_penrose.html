@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Roger Penrose — Penrose · DivulgAzione</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#000010; color:#e2e8f0; font-family:'Georgia',serif; overflow:hidden; }
+#canvas { display:block; }
+#ui {
+  position:fixed; top:0; left:0; right:0;
+  display:flex; justify-content:space-between; align-items:center;
+  padding:10px 20px; background:rgba(0,0,16,0.93);
+  border-bottom:1px solid rgba(245,158,11,0.25); z-index:100; gap:12px;
+}
+#ui-title { font-size:12px; color:#f59e0b; letter-spacing:3px; text-transform:uppercase; white-space:nowrap; }
+#ui-phase { font-size:11px; color:#94a3b8; text-align:center; line-height:1.5; max-width:560px; }
+#ui-badge { font-size:13px; color:#fbbf24; font-weight:bold; text-align:right; white-space:nowrap; }
+#bottom {
+  position:fixed; bottom:0; left:0; right:0;
+  padding:8px 16px; background:rgba(0,0,16,0.93);
+  border-top:1px solid rgba(245,158,11,0.2);
+  display:flex; justify-content:center; gap:5px; z-index:100; flex-wrap:wrap;
+}
+.btn {
+  padding:5px 11px; border:1px solid rgba(245,158,11,0.3);
+  background:rgba(12,20,40,0.9); color:#f59e0b;
+  border-radius:20px; cursor:pointer; font-size:10px; transition:all 0.3s; font-family:Georgia,serif;
+}
+.btn:hover, .btn.active { background:rgba(245,158,11,0.15); border-color:#f59e0b; color:#fde68a; }
+.nav-btn {
+  padding:5px 13px; border:1px solid rgba(148,163,184,0.25);
+  background:rgba(12,20,40,0.9); color:#64748b;
+  border-radius:20px; cursor:pointer; font-size:10px; transition:all 0.3s; text-decoration:none;
+  display:inline-flex; align-items:center; gap:4px;
+}
+.nav-btn:hover { color:#94a3b8; border-color:#94a3b8; }
+#panel {
+  position:fixed; right:14px; top:60px; width:220px;
+  background:rgba(8,14,30,0.95); border:1px solid rgba(245,158,11,0.2);
+  border-radius:10px; padding:13px; font-size:11px; color:#64748b; line-height:1.8; z-index:100;
+}
+#panel h3 { color:#f59e0b; font-size:11px; margin-bottom:8px; border-bottom:1px solid rgba(245,158,11,0.2); padding-bottom:5px; letter-spacing:1px; }
+.pr { display:flex; justify-content:space-between; margin-bottom:3px; }
+.pv { color:#e2e8f0; font-weight:bold; }
+.sep { border-color:rgba(245,158,11,0.15); margin:7px 0; }
+</style>
+</head>
+<body>
+<div id="ui">
+  <div id="ui-title">Penrose · 01 — Roger Penrose</div>
+  <div id="ui-phase">Premi Nobel per la Fisica 2020 — "scoperta che la formazione di buchi neri è una previsione robusta della teoria della Relatività Generale"</div>
+  <div id="ui-badge">① / 6</div>
+</div>
+<canvas id="canvas"></canvas>
+<div id="panel">
+  <h3>PENROSE IN NUMERI</h3>
+  <div class="pr"><span>Nato:</span><span class="pv">1931, Colchester</span></div>
+  <div class="pr"><span>Nobel:</span><span class="pv">2020</span></div>
+  <div class="pr"><span>Teorema BN:</span><span class="pv">1965</span></div>
+  <hr class="sep">
+  <div class="pr"><span>Singolarità:</span><span class="pv">Incompletezza geodetica</span></div>
+  <div class="pr"><span>Twistor:</span><span class="pv">ℂP³ → ℝ³·¹</span></div>
+  <div class="pr"><span>CCC:</span><span class="pv">Cycles of Time</span></div>
+  <hr class="sep">
+  <div style="font-size:10px;color:#475569;line-height:1.6;">
+    Hawking-Penrose 1970<br>Spin networks<br>Penrose tiles 1974<br>The Emperor's New Mind
+  </div>
+</div>
+<div id="bottom">
+  <a class="nav-btn" href="index.html">⬡ Indice</a>
+  <button class="btn active" onclick="go(0)">① Biografia</button>
+  <button class="btn" onclick="go(1)">② Teorema BN</button>
+  <button class="btn" onclick="go(2)">③ Twistor Theory</button>
+  <button class="btn" onclick="go(3)">④ Tassellature</button>
+  <button class="btn" onclick="go(4)">⑤ Coscienza</button>
+  <button class="btn" onclick="go(5)">⑥ Nobel 2020</button>
+  <a class="nav-btn" href="p02_conformal_geometry.html">02 Geometria →</a>
+</div>
+
+<script>
+const cv = document.getElementById('canvas');
+const cx = cv.getContext('2d');
+let W, H;
+function resize(){ W=cv.width=window.innerWidth; H=cv.height=window.innerHeight; }
+resize(); window.addEventListener('resize',resize);
+
+let ph=0, T=0, paused=false;
+
+const PHASES = [
+  { name:"① Biografia", desc:"Roger Penrose (1931–) matematico e fisico britannico. Studente di John Todd a Cambridge, PhD nel 1957. Figlio del genetista Lionel Penrose. Ha rivoluzionato la nostra comprensione dei buchi neri e della cosmologia." },
+  { name:"② Teorema BN", desc:"1965: Penrose dimostra che le singolarità sono inevitabili sotto determinate condizioni energetiche (weak energy condition). Se il collasso inizia, una singolarità è obbligatoria — indipendentemente dalla simmetria." },
+  { name:"③ Twistor Theory", desc:"Dal 1967: Penrose propone la twistor theory come alternativa alla fisica quantistica convenzionale. Lo spazio-tempo emerge dallo spazio twistoriale ℂP³. Recentemente legata alla teoria delle amplitudini degli scattering." },
+  { name:"④ Tassellature di Penrose", desc:"1974: Penrose scopre tassellature aperiodiche del piano con sola simmetria quasi-cristallina pentagonale (kite e dart). Anticipano la scoperta dei quasi-cristalli (Nobel Shechtman 2011)." },
+  { name:"⑤ Coscienza e Fisica", desc:"'The Emperor's New Mind' (1989) e 'Shadows of the Mind' (1994): la coscienza non è computabile. Penrose propone che la riduzione obiettiva orchestrata (Orch-OR) nei microtubuli neuronali sia la sede della coscienza." },
+  { name:"⑥ Nobel per la Fisica 2020", desc:"Premio Nobel 2020 condiviso con Reinhard Genzel e Andrea Ghez. Penrose premiato 'per la scoperta che la formazione di buchi neri è una previsione robusta della teoria della Relatività Generale' — 55 anni dopo il suo teorema del 1965." }
+];
+
+function go(n){
+  ph=n;
+  document.querySelectorAll('.btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+  document.getElementById('ui-phase').textContent=PHASES[n].desc;
+  document.getElementById('ui-badge').textContent=`${['①','②','③','④','⑤','⑥'][n]} / 6`;
+}
+
+function gw(col,blur){ cx.shadowColor=col; cx.shadowBlur=blur; }
+function ng(){ cx.shadowBlur=0; }
+function lbl(x,y,txt,col,sz,al='center',bold=false){
+  cx.fillStyle=col; cx.font=`${bold?'bold ':''}${sz}px Georgia,serif`;
+  cx.textAlign=al; cx.fillText(txt,x,y);
+}
+
+/* ── STARS ─────────────────────────────── */
+const STARS=Array.from({length:200},()=>({
+  x:Math.random()*4000,y:Math.random()*2000,
+  r:Math.random()*1.2+0.2, o:Math.random()
+}));
+function stars(){
+  STARS.forEach(s=>{
+    cx.beginPath(); cx.arc(s.x,s.y,s.r,0,Math.PI*2);
+    cx.fillStyle=`rgba(255,255,255,${s.o*(0.4+0.4*Math.sin(T*0.2+s.x*0.01))})`;
+    cx.fill();
+  });
+}
+
+/* ── PHASE 0: Biography timeline ─────── */
+const BIO=[
+  {y:1931,t:"Nasce a Colchester, Inghilterra",c:'#f59e0b'},
+  {y:1952,t:"Studia matematica a Cambridge",c:'#fbbf24'},
+  {y:1957,t:"PhD Algebra — J. Todd",c:'#fde68a'},
+  {y:1965,t:"Teorema delle singolarità",c:'#a78bfa'},
+  {y:1967,t:"Twistor Theory",c:'#818cf8'},
+  {y:1974,t:"Tassellature aperiodiche",c:'#60a5fa'},
+  {y:1989,t:"Emperor's New Mind",c:'#4ade80'},
+  {y:2010,t:"Cycles of Time (CCC)",c:'#fb923c'},
+  {y:2020,t:"Premio Nobel per la Fisica",c:'#f59e0b'},
+];
+function ph0(){
+  const cxM=W*0.5,cyM=H*0.5;
+  lbl(W/2,H*0.11,'Sir Roger Penrose','#f59e0b',28,'center',true);
+  lbl(W/2,H*0.11+34,'Matematico & Fisico Teorico · 1931–','#fde68a',14);
+
+  const xS=W*0.06,xE=W*0.72,tl=xE-xS,yL=H*0.52;
+  cx.beginPath(); cx.moveTo(xS,yL); cx.lineTo(xE+20,yL);
+  cx.strokeStyle='#334155'; cx.lineWidth=2; cx.stroke();
+
+  const n=Math.min(BIO.length,Math.floor(T/40)+1);
+  BIO.slice(0,n).forEach((ev,i)=>{
+    const fx=xS+(ev.y-1925)/(2025-1925)*tl;
+    const up=i%2===0; const lh=up?-85:85;
+    cx.beginPath(); cx.moveTo(fx,yL); cx.lineTo(fx,yL+lh*0.8);
+    cx.strokeStyle=ev.c+'88'; cx.lineWidth=1; cx.stroke();
+    cx.beginPath(); cx.arc(fx,yL,5,0,Math.PI*2);
+    cx.fillStyle=ev.c; gw(ev.c,12); cx.fill(); ng();
+    lbl(fx,yL+lh*0.85+(up?-18:28),ev.y.toString(),ev.c,11,'center',true);
+    lbl(fx,yL+lh+(up?-6:18),ev.t,'#cbd5e1',9.5);
+  });
+
+  // Portrait (right side)
+  drawPortrait(W*0.83,H*0.38);
+}
+
+function drawPortrait(px,py){
+  cx.beginPath(); cx.ellipse(px,py+60,45,55,0,0,Math.PI*2);
+  cx.fillStyle='#1e293b'; cx.fill();
+  cx.beginPath(); cx.ellipse(px,py,38,48,0,0,Math.PI*2);
+  cx.fillStyle='#c4a882'; cx.fill();
+  for(let a=-0.2;a<=Math.PI*1.1;a+=0.28){
+    const hx=px+Math.cos(a)*41+(Math.random()-0.5)*6;
+    const hy=py-25+Math.sin(a)*(-32)+(Math.random()-0.5)*5;
+    cx.beginPath(); cx.arc(hx,hy,5,0,Math.PI*2);
+    cx.fillStyle='#e5e7eb'; cx.fill();
+  }
+  cx.beginPath(); cx.ellipse(px-13,py-3,7,5.5,0,0,Math.PI*2);
+  cx.fillStyle='white'; cx.fill();
+  cx.beginPath(); cx.ellipse(px+13,py-3,7,5.5,0,0,Math.PI*2);
+  cx.fillStyle='white'; cx.fill();
+  cx.beginPath(); cx.arc(px-13,py-3,3.5,0,Math.PI*2);
+  cx.fillStyle='#1e293b'; cx.fill();
+  cx.beginPath(); cx.arc(px+13,py-3,3.5,0,Math.PI*2);
+  cx.fillStyle='#1e293b'; cx.fill();
+  cx.beginPath(); cx.moveTo(px-16,py+12); cx.quadraticCurveTo(px,py+19,px+16,py+12);
+  cx.strokeStyle='#9ca3af'; cx.lineWidth=2.5; cx.stroke();
+  lbl(px,py+130,'— Sir Roger Penrose —','#f59e0b',11);
+  lbl(px,py+148,'Nobel 2020','#fde68a',10);
+}
+
+/* ── PHASE 1: Singularity theorem ─────── */
+function ph1(){
+  lbl(W/2,H*0.10,'Teorema delle Singolarità (1965)','#a78bfa',22,'center',true);
+  lbl(W/2,H*0.10+30,'Se esiste una superficie intrappolata, una singolarità è inevitabile','#c4b5fd',13);
+
+  // Draw black hole with trapped surface
+  const cx2=W/2, cy2=H*0.5;
+  const R=Math.min(W,H)*0.18;
+
+  // Warped grid
+  for(let gx=-8;gx<=8;gx++){
+    for(let gy=-8;gy<=8;gy++){
+      const wx=cx2+gx*(W*0.06), wy=cy2+gy*(H*0.08);
+      const d=Math.sqrt((wx-cx2)**2+(wy-cy2)**2);
+      const warp=R*R*0.6/(d*d+R*R*0.5);
+      const sx=cx2+(wx-cx2)*(1-warp*0.8), sy=cy2+(wy-cy2)*(1-warp*0.8);
+      cx.beginPath(); cx.arc(sx,sy,1.2,0,Math.PI*2);
+      cx.fillStyle=`rgba(100,116,139,${Math.max(0.05,0.3-d/(W*0.4))})`;
+      cx.fill();
+    }
+  }
+
+  // Event horizon
+  const grad=cx.createRadialGradient(cx2,cy2,R*0.3,cx2,cy2,R*1.3);
+  grad.addColorStop(0,'rgba(0,0,0,1)');
+  grad.addColorStop(0.6,'rgba(10,5,30,0.95)');
+  grad.addColorStop(1,'rgba(0,0,0,0)');
+  cx.beginPath(); cx.arc(cx2,cy2,R*1.3,0,Math.PI*2);
+  cx.fillStyle=grad; cx.fill();
+
+  // Singularity label
+  lbl(cx2,cy2,'✕','#ef4444',24,'center',true);
+  lbl(cx2,cy2+20,'Singolarità','#f87171',10,'center');
+
+  // Horizon ring
+  cx.beginPath(); cx.arc(cx2,cy2,R,0,Math.PI*2);
+  cx.strokeStyle='#a78bfa'; gw('#a78bfa',18); cx.lineWidth=2; cx.stroke(); ng();
+  lbl(cx2+R+10,cy2-R*0.2,'Orizzonte degli eventi','#a78bfa',11,'left');
+  lbl(cx2+R+10,cy2-R*0.2+16,'r = 2GM/c²','#c4b5fd',10,'left');
+
+  // Trapped surface (smaller circle)
+  cx.beginPath(); cx.arc(cx2,cy2,R*0.55,0,Math.PI*2);
+  cx.strokeStyle='#f59e0b'; gw('#f59e0b',14); cx.lineWidth=1.5; cx.setLineDash([5,4]); cx.stroke();
+  cx.setLineDash([]); ng();
+  lbl(cx2,cy2+R*0.55+18,'Superficie Intrappolata','#f59e0b',10,'center');
+
+  // Light rays converging
+  for(let a=0;a<8;a++){
+    const angle=(a/8)*Math.PI*2+T*0.3;
+    const r0=R*1.8, r1=R*1.05;
+    const x0=cx2+Math.cos(angle)*r0, y0=cy2+Math.sin(angle)*r0;
+    const x1=cx2+Math.cos(angle)*r1, y1=cy2+Math.sin(angle)*r1;
+    cx.beginPath(); cx.moveTo(x0,y0); cx.lineTo(x1,y1);
+    cx.strokeStyle='rgba(248,191,36,0.5)'; cx.lineWidth=1; cx.stroke();
+    const prog=(T*0.4+a*0.4)%1;
+    const px2=cx2+Math.cos(angle)*(r0-(r0-r1)*prog);
+    const py2=cy2+Math.sin(angle)*(r0-(r0-r1)*prog);
+    cx.beginPath(); cx.arc(px2,py2,2.5,0,Math.PI*2);
+    cx.fillStyle='#fbbf24'; gw('#fbbf24',8); cx.fill(); ng();
+  }
+
+  lbl(W/2,H*0.88,'Teorema: condizioni energia debole + superficie intrappolata ⟹ geodetica nulla incompleta','#64748b',11);
+}
+
+/* ── PHASE 2: Twistor Theory ─────────── */
+function ph2(){
+  lbl(W/2,H*0.09,'Twistor Theory (1967)','#818cf8',22,'center',true);
+  lbl(W/2,H*0.09+30,'Lo spazio-tempo emerge dallo spazio twistoriale ℂP³','#a5b4fc',13);
+
+  const cx2=W/2, cy2=H*0.5;
+  const N=120;
+  for(let i=0;i<N;i++){
+    const t=i/N;
+    const angle=t*Math.PI*6+T*0.8;
+    const r=Math.min(W,H)*0.25*(0.3+0.7*t);
+    const x=cx2+Math.cos(angle)*r*Math.cos(T*0.3+t*2);
+    const y=cy2+Math.sin(angle)*r*0.6+Math.sin(T*0.5+t*3)*H*0.05;
+    const hue=(t*360+T*30)%360;
+    cx.beginPath(); cx.arc(x,y,2+t*3,0,Math.PI*2);
+    cx.fillStyle=`hsla(${hue},80%,60%,${0.6-t*0.3})`; cx.fill();
+  }
+
+  // Complex plane hint
+  lbl(cx2,H*0.13,'Z = (ω⁰,ω¹,π₀,π₁) ∈ ℂ⁴','#818cf8',14,'center');
+  lbl(cx2,H*0.13+22,'Punto dello spazio-tempo ↔ CP¹ nello spazio twistoriale','#94a3b8',11,'center');
+
+  // Applications
+  const apps=[
+    {x:W*0.18,y:H*0.82,t:'Amplitudini di scattering',c:'#4ade80'},
+    {x:W*0.5,y:H*0.82,t:'Geometria non-commutativa',c:'#60a5fa'},
+    {x:W*0.82,y:H*0.82,t:'Teoria delle stringhe',c:'#f59e0b'},
+  ];
+  apps.forEach(a=>{
+    cx.beginPath(); cx.arc(a.x,a.y-20,14,0,Math.PI*2);
+    cx.fillStyle=a.c+'33'; cx.fill();
+    cx.beginPath(); cx.arc(a.x,a.y-20,14,0,Math.PI*2);
+    cx.strokeStyle=a.c; gw(a.c,10); cx.lineWidth=1.5; cx.stroke(); ng();
+    lbl(a.x,a.y+4,a.t,a.c,10,'center');
+  });
+}
+
+/* ── PHASE 3: Penrose Tiles ─────────── */
+const TILES=[];
+function buildTiles(){
+  if(TILES.length>0)return;
+  const cx2=W/2, cy2=H*0.52;
+  const S=Math.min(W,H)*0.055;
+  const phi=(1+Math.sqrt(5))/2;
+  for(let row=-5;row<=5;row++){
+    for(let col=-6;col<=6;col++){
+      const x=cx2+col*S*phi+(row%2)*S*0.5*phi;
+      const y=cy2+row*S*0.95;
+      TILES.push({x,y,S,type:Math.random()<0.5?'kite':'dart',angle:Math.floor(Math.random()*10)*36});
+    }
+  }
+}
+function drawKite(x,y,s,angle,col){
+  cx.save(); cx.translate(x,y); cx.rotate(angle*Math.PI/180);
+  cx.beginPath();
+  cx.moveTo(0,-s); cx.lineTo(s*0.618,0); cx.lineTo(0,s*0.4); cx.lineTo(-s*0.618,0);
+  cx.closePath(); cx.fillStyle=col+'44'; cx.fill();
+  cx.strokeStyle=col; cx.lineWidth=1; cx.stroke(); cx.restore();
+}
+function drawDart(x,y,s,angle,col){
+  cx.save(); cx.translate(x,y); cx.rotate(angle*Math.PI/180);
+  cx.beginPath();
+  cx.moveTo(0,-s*0.618); cx.lineTo(s*0.4,s*0.3); cx.lineTo(0,0); cx.lineTo(-s*0.4,s*0.3);
+  cx.closePath(); cx.fillStyle=col+'55'; cx.fill();
+  cx.strokeStyle=col; cx.lineWidth=1; cx.stroke(); cx.restore();
+}
+function ph3(){
+  buildTiles();
+  lbl(W/2,H*0.08,'Tassellature di Penrose (1974)','#60a5fa',22,'center',true);
+  lbl(W/2,H*0.08+30,'Copertura aperiodica del piano con simmetria quasi-pentagonale','#93c5fd',13);
+
+  TILES.forEach((t,i)=>{
+    const hue=(i*37+T*20)%360;
+    const col=`hsl(${hue},70%,55%)`;
+    if(t.type==='kite') drawKite(t.x,t.y,t.S,t.angle+T*5,col);
+    else drawDart(t.x,t.y,t.S,t.angle-T*3,col);
+  });
+
+  lbl(W/2,H*0.88,'Solo 2 forme: "kite" e "dart" — nessuna periodicità, simmetria quasi-cristallina D₅','#64748b',11);
+}
+
+/* ── PHASE 4: Consciousness ─────────── */
+function ph4(){
+  lbl(W/2,H*0.09,'Coscienza & Fisica Quantistica','#4ade80',22,'center',true);
+  lbl(W/2,H*0.09+30,'The Emperor\'s New Mind (1989) · Shadows of the Mind (1994)','#86efac',13);
+
+  const cx2=W/2, cy2=H*0.5;
+  // Brain
+  for(let a=0;a<Math.PI*2;a+=0.15){
+    const r=Math.min(W,H)*0.17*(1+0.15*Math.sin(a*4+T));
+    const x=cx2+Math.cos(a)*r*1.3, y=cy2+Math.sin(a)*r*0.9;
+    cx.beginPath(); cx.arc(x,y,3+Math.sin(T*2+a)*1.5,0,Math.PI*2);
+    cx.fillStyle=`rgba(74,222,128,${0.3+0.3*Math.sin(T+a*2)})`; cx.fill();
+  }
+  // Microtubules
+  for(let i=0;i<12;i++){
+    const angle=(i/12)*Math.PI*2;
+    const r0=Math.min(W,H)*0.06, r1=Math.min(W,H)*0.15;
+    cx.beginPath();
+    cx.moveTo(cx2+Math.cos(angle)*r0,cy2+Math.sin(angle)*r0*0.8);
+    cx.lineTo(cx2+Math.cos(angle)*r1,cy2+Math.sin(angle)*r1*0.8);
+    cx.strokeStyle=`rgba(167,243,208,${0.3+0.3*Math.sin(T*3+i)})`; cx.lineWidth=1.5; cx.stroke();
+  }
+  lbl(cx2,cy2,'Orch-OR','#4ade80',12,'center',true);
+  lbl(cx2,cy2+18,'Microtubuli','#86efac',10,'center');
+
+  const items=[
+    {x:W*0.15,y:H*0.72,t:'Non-computabilità della coscienza',c:'#4ade80'},
+    {x:W*0.5,y:H*0.78,t:'Riduzione obiettiva orchestrata (Orch-OR)',c:'#86efac'},
+    {x:W*0.82,y:H*0.72,t:'Critica al test di Turing',c:'#a7f3d0'},
+  ];
+  items.forEach(a=>{
+    cx.fillStyle=a.c+'22'; cx.fillRect(a.x-80,a.y-18,160,28);
+    cx.strokeStyle=a.c+'55'; cx.lineWidth=1; cx.strokeRect(a.x-80,a.y-18,160,28);
+    lbl(a.x,a.y,a.t,a.c,9.5,'center');
+  });
+}
+
+/* ── PHASE 5: Nobel 2020 ─────────── */
+function ph5(){
+  lbl(W/2,H*0.09,'Premio Nobel per la Fisica 2020','#f59e0b',24,'center',true);
+  lbl(W/2,H*0.09+34,'"...scoperta che la formazione di buchi neri è una previsione robusta della Relatività Generale"','#fde68a',12);
+
+  // Medal animation
+  const mx=W*0.5, my=H*0.45;
+  const r=Math.min(W,H)*0.14;
+  const grad=cx.createRadialGradient(mx-r*0.2,my-r*0.2,r*0.1,mx,my,r);
+  grad.addColorStop(0,'#fde68a'); grad.addColorStop(0.4,'#f59e0b'); grad.addColorStop(1,'#92400e');
+  cx.beginPath(); cx.arc(mx,my,r,0,Math.PI*2);
+  gw('#f59e0b',40); cx.fillStyle=grad; cx.fill(); ng();
+  cx.beginPath(); cx.arc(mx,my,r,0,Math.PI*2);
+  cx.strokeStyle='#fde68a'; cx.lineWidth=3; cx.stroke();
+
+  lbl(mx,my-18,'NOBEL','#1e1008',20,'center',true);
+  lbl(mx,my+4,'2020','#1e1008',16,'center',true);
+  lbl(mx,my+24,'FISICA','#1e1008',13,'center',true);
+
+  // Stars
+  for(let i=0;i<8;i++){
+    const a=(i/8)*Math.PI*2+T*0.5;
+    const sr=r*1.5;
+    const sx=mx+Math.cos(a)*sr, sy=my+Math.sin(a)*sr;
+    cx.beginPath(); cx.arc(sx,sy,3,0,Math.PI*2);
+    cx.fillStyle=`rgba(253,230,138,${0.5+0.5*Math.sin(T*2+i)})`; gw('#fde68a',8); cx.fill(); ng();
+  }
+
+  // Laureati
+  const L=[
+    {x:W*0.22,y:H*0.75,n:'Roger Penrose',d:'Oxford','c':'#f59e0b',e:'Teorema singolarità'},
+    {x:W*0.5,y:H*0.75,n:'Reinhard Genzel',d:'Max-Planck','c':'#60a5fa',e:'Centro galattico'},
+    {x:W*0.78,y:H*0.75,n:'Andrea Ghez',d:'UCLA','c':'#4ade80',e:'Sgr A* (BN)'},
+  ];
+  L.forEach(l=>{
+    cx.fillStyle=l.c+'18'; cx.fillRect(l.x-75,l.y-28,150,60);
+    cx.strokeStyle=l.c+'44'; cx.lineWidth=1; cx.strokeRect(l.x-75,l.y-28,150,60);
+    lbl(l.x,l.y-10,l.n,l.c,11,'center',true);
+    lbl(l.x,l.y+6,l.d,'#94a3b8',10,'center');
+    lbl(l.x,l.y+20,l.e,'#64748b',9.5,'center');
+  });
+}
+
+/* ── MAIN LOOP ─────────────────────── */
+function bg(){
+  const g=cx.createRadialGradient(W/2,H/2,80,W/2,H/2,Math.max(W,H)*0.9);
+  g.addColorStop(0,'#020920'); g.addColorStop(1,'#000010');
+  cx.fillStyle=g; cx.fillRect(0,0,W,H);
+}
+
+function loop(){
+  bg(); stars(); T+=0.016;
+  if(ph===0) ph0();
+  else if(ph===1) ph1();
+  else if(ph===2) ph2();
+  else if(ph===3) ph3();
+  else if(ph===4) ph4();
+  else if(ph===5) ph5();
+  requestAnimationFrame(loop);
+}
+go(0); loop();
+</script>
+</body>
+</html>

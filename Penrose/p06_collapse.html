@@ -1,0 +1,687 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Penrose · 06 — Collasso Gravitazionale</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000010;color:#e2e8f0;font-family:'Segoe UI',sans-serif;overflow:hidden;height:100vh;display:flex;flex-direction:column}
+#topbar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;border-bottom:1px solid rgba(244,114,182,0.2);flex-shrink:0}
+.nav-btn{color:#94a3b8;text-decoration:none;font-size:13px;padding:4px 10px;border:1px solid rgba(244,114,182,0.2);border-radius:4px;transition:color .2s}
+.nav-btn:hover{color:#f472b6}
+#title{font-size:14px;color:#f472b6;letter-spacing:.05em}
+#main{display:flex;flex:1;overflow:hidden}
+#canvas-wrap{flex:1;position:relative}
+canvas{display:block;width:100%;height:100%}
+#sidebar{width:220px;display:flex;flex-direction:column;border-left:1px solid rgba(244,114,182,0.2);flex-shrink:0}
+#ui{padding:12px;border-bottom:1px solid rgba(244,114,182,0.25)}
+#ui-phase{font-size:11px;color:#f472b6;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+#ui-badge{font-size:22px;margin-bottom:6px}
+#ui-desc{font-size:10px;color:#94a3b8;line-height:1.55}
+#btns{display:flex;flex-wrap:wrap;gap:5px;padding:10px;border-bottom:1px solid rgba(244,114,182,0.2)}
+.btn{flex:1;min-width:56px;padding:5px 4px;background:transparent;border:1px solid rgba(244,114,182,0.3);border-radius:4px;color:#f472b6;font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn:hover{background:rgba(244,114,182,0.08)}
+.btn.active{background:rgba(244,114,182,0.15);color:#f9a8d4;border-color:rgba(244,114,182,0.6)}
+#panel{padding:12px;font-size:11px;overflow-y:auto;border:1px solid rgba(244,114,182,0.2);margin:8px;border-radius:6px;background:rgba(0,0,16,0.4)}
+#panel h3{color:#f472b6;font-size:11px;letter-spacing:.1em;margin-bottom:10px}
+.pr{display:flex;justify-content:space-between;margin-bottom:5px;color:#64748b}
+.pv{color:#e2e8f0}
+.sep{border:none;border-top:1px solid rgba(244,114,182,0.15);margin:8px 0}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <a class="nav-btn" href="p05_kruskal.html">← 05</a>
+  <span id="title">Penrose · 06 — Collasso Gravitazionale</span>
+  <a class="nav-btn" href="p07_charged.html">07 Carico →</a>
+</div>
+<div id="main">
+  <div id="canvas-wrap"><canvas id="c"></canvas></div>
+  <div id="sidebar">
+    <div id="ui">
+      <div id="ui-phase">Fase 0</div>
+      <div id="ui-badge">①</div>
+      <div id="ui-desc"></div>
+    </div>
+    <div id="btns">
+      <button class="btn active" onclick="go(0)">① Stella</button>
+      <button class="btn" onclick="go(1)">② Collasso</button>
+      <button class="btn" onclick="go(2)">③ Orizzonte</button>
+      <button class="btn" onclick="go(3)">④ Penrose</button>
+      <button class="btn" onclick="go(4)">⑤ Censura</button>
+      <button class="btn" onclick="go(5)">⑥ EHT</button>
+    </div>
+    <div id="panel">
+      <h3>COLLASSO GRAVITAZIONALE</h3>
+      <div class="pr"><span>Chandrasekhar:</span><span class="pv">M &gt; 3M☉</span></div>
+      <div class="pr"><span>rs M☉:</span><span class="pv">≈ 3 km</span></div>
+      <hr class="sep">
+      <div class="pr"><span>M87*:</span><span class="pv">6.5×10⁹ M☉</span></div>
+      <div class="pr"><span>Sgr A*:</span><span class="pv">4.1×10⁶ M☉</span></div>
+      <div class="pr"><span>EHT:</span><span class="pv">2019, 2022</span></div>
+      <hr class="sep">
+      <div style="font-size:10px;color:#475569;line-height:1.6;">S. Chandrasekhar, 1930<br>R. Oppenheimer, 1939<br>CCC: Penrose, 1969<br>EHT Collaboration, 2019</div>
+    </div>
+  </div>
+</div>
+<script>
+const cv=document.getElementById('c'),cx=cv.getContext('2d');
+const DESC=[
+  "Una stella massiccia (M > 3M☉, limite di Chandrasekhar) è in equilibrio tra la forza di gravità diretta verso l'interno e la pressione di radiazione/degenerazione diretta verso l'esterno. Quando il carburante nucleare si esaurisce, l'equilibrio si rompe.",
+  "Il nucleo della stella supera la massa limite e inizia a collassare. La densità centrale aumenta rapidamente. La superficie della stella inizia a contrarsi verso il nucleo. Il collasso avviene in pochi secondi per una stella massiccia.",
+  "Quando la superficie della stella raggiunge il raggio di Schwarzschild rs = 2GM/c², si forma l'orizzonte degli eventi apparente. L'orizzonte si forma prima all'interno della stella e si espande verso l'esterno fino a coincidere con la superficie.",
+  "Nel diagramma di Penrose del collasso realistico (Oppenheimer-Snyder 1939), la superficie stellare è una curva timelike che parte dal basso e finisce alla singolarità. L'orizzonte degli eventi è la linea a 45° che separa chi può sfuggire da chi no.",
+  "La Congettura della Censura Cosmica di Penrose (1969): le singolarità gravitazionali sono sempre nascoste da un orizzonte degli eventi — le singolarità nude non si formano da dati iniziali generici. Ancora non dimostrata in piena generalità.",
+  "L'immagine di M87* (EHT 2019) e di Sgr A* (EHT 2022) confermano l'esistenza dei buchi neri. M87*: massa ≈ 6.5×10⁹M☉, rs ≈ 19.4 miliardi di km. Sgr A*: massa ≈ 4.1×10⁶M☉. I buchi neri stellari hanno massa 5–100M☉."
+];
+const BADGES=['①','②','③','④','⑤','⑥'];
+const PHASES=['La Stella Prima del Collasso','Inizio del Collasso','Formazione dell\'Orizzonte Apparente','Il Diagramma di Penrose del Collasso','La Singolarità e la Censura Cosmica','Evidenze Osservative'];
+
+let W,H,ph=0,T=0;
+const stars=[];
+
+function resize(){
+  W=cv.width=cv.offsetWidth;
+  H=cv.height=cv.offsetHeight;
+}
+window.addEventListener('resize',resize);
+resize();
+
+// 180 stars
+for(let i=0;i<180;i++)stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.2+0.3,p:Math.random()*Math.PI*2,sp:Math.random()*0.5+0.2});
+
+function gw(col,blur){cx.shadowColor=col;cx.shadowBlur=blur;}
+function ng(){cx.shadowBlur=0;cx.shadowColor='transparent';}
+function lbl(x,y,txt,col,sz,al,bold){
+  cx.fillStyle=col;cx.font=(bold?'bold ':'')+sz+'px Segoe UI';
+  cx.textAlign=al||'center';cx.fillText(txt,x,y);
+}
+function bg(){
+  cx.fillStyle='#000010';cx.fillRect(0,0,W,H);
+}
+function drawStars(){
+  for(const s of stars){
+    const bri=0.5+0.5*Math.sin(T*s.sp+s.p);
+    cx.beginPath();
+    cx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2);
+    cx.fillStyle=`rgba(200,210,255,${0.3+0.5*bri})`;
+    cx.fill();
+  }
+}
+
+function go(n){
+  ph=n;
+  T=0;
+  document.getElementById('ui-phase').textContent='Fase '+n;
+  document.getElementById('ui-badge').textContent=BADGES[n];
+  document.getElementById('ui-desc').textContent=DESC[n];
+  document.querySelectorAll('.btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+}
+go(0);
+
+// ── Arrow helper
+function arrow(x1,y1,x2,y2,col,w,hs){
+  cx.save();
+  cx.strokeStyle=col;cx.fillStyle=col;cx.lineWidth=w||1.5;
+  cx.beginPath();cx.moveTo(x1,y1);cx.lineTo(x2,y2);cx.stroke();
+  const a=Math.atan2(y2-y1,x2-x1),hs2=hs||8;
+  cx.beginPath();
+  cx.moveTo(x2,y2);
+  cx.lineTo(x2-hs2*Math.cos(a-0.4),y2-hs2*Math.sin(a-0.4));
+  cx.lineTo(x2-hs2*Math.cos(a+0.4),y2-hs2*Math.sin(a+0.4));
+  cx.closePath();cx.fill();
+  cx.restore();
+}
+
+// ── PHASE 0 — Stella stabile
+function ph0(){
+  const cx_=W/2,cy_=H/2;
+  const R=Math.min(W,H)*0.22;
+  const pulse=1+0.03*Math.sin(T*2);
+
+  // Outer glow
+  gw('#ff8800',60);
+  const gOuter=cx.createRadialGradient(cx_,cy_,R*0.3,cx_,cy_,R*1.3*pulse);
+  gOuter.addColorStop(0,'rgba(255,200,50,0)');
+  gOuter.addColorStop(1,'rgba(255,100,0,0)');
+  cx.beginPath();cx.arc(cx_,cy_,R*1.3*pulse,0,Math.PI*2);
+  cx.fillStyle=gOuter;cx.fill();
+  ng();
+
+  // Corona halo
+  for(let i=0;i<3;i++){
+    const gH=cx.createRadialGradient(cx_,cy_,R*0.9,cx_,cy_,R*(1.2+i*0.18)*pulse);
+    gH.addColorStop(0,`rgba(255,160,30,${0.12-i*0.03})`);
+    gH.addColorStop(1,'rgba(255,80,0,0)');
+    cx.beginPath();cx.arc(cx_,cy_,R*(1.2+i*0.18)*pulse,0,Math.PI*2);
+    cx.fillStyle=gH;cx.fill();
+  }
+
+  // Star body with surface wobble
+  cx.beginPath();
+  const npts=120;
+  for(let i=0;i<=npts;i++){
+    const ang=i/npts*Math.PI*2;
+    const wobble=1+0.025*Math.sin(ang*6+T*3)+0.015*Math.sin(ang*10-T*2);
+    const r=R*pulse*wobble;
+    const x=cx_+r*Math.cos(ang),y=cy_+r*Math.sin(ang);
+    i===0?cx.moveTo(x,y):cx.lineTo(x,y);
+  }
+  cx.closePath();
+  const gBody=cx.createRadialGradient(cx_-R*0.2,cy_-R*0.2,R*0.05,cx_,cy_,R*1.1);
+  gBody.addColorStop(0,'#fff5c0');
+  gBody.addColorStop(0.25,'#ffdd55');
+  gBody.addColorStop(0.6,'#ff9900');
+  gBody.addColorStop(1,'#cc3300');
+  gw('#ffaa00',30);
+  cx.fillStyle=gBody;cx.fill();
+  ng();
+
+  // Surface flares (prominences)
+  for(let i=0;i<6;i++){
+    const ang=i/6*Math.PI*2+T*0.2;
+    const flareH=R*(0.12+0.08*Math.sin(T*1.5+i*1.1));
+    const fx=cx_+(R+flareH)*Math.cos(ang);
+    const fy=cy_+(R+flareH)*Math.sin(ang);
+    const bx=cx_+R*Math.cos(ang);
+    const by=cy_+R*Math.sin(ang);
+    const cpx=cx_+(R+flareH*1.5)*Math.cos(ang+0.2);
+    const cpy=cy_+(R+flareH*1.5)*Math.sin(ang+0.2);
+    gw('#ff6600',15);
+    cx.beginPath();cx.moveTo(bx,by);
+    cx.quadraticCurveTo(cpx,cpy,fx,fy);
+    cx.strokeStyle='rgba(255,150,30,0.7)';cx.lineWidth=3;cx.stroke();
+    ng();
+  }
+
+  // Outward pressure arrows (white)
+  for(let i=0;i<8;i++){
+    const ang=i/8*Math.PI*2+T*0.05;
+    const r1=R*1.05,r2=R*1.45;
+    arrow(cx_+r1*Math.cos(ang),cy_+r1*Math.sin(ang),cx_+r2*Math.cos(ang),cy_+r2*Math.sin(ang),'rgba(255,255,255,0.85)',1.5,9);
+  }
+  // Inward gravity arrows (red)
+  for(let i=0;i<6;i++){
+    const ang=i/6*Math.PI*2+0.26+T*0.04;
+    const r1=R*1.55,r2=R*1.15;
+    arrow(cx_+r1*Math.cos(ang),cy_+r1*Math.sin(ang),cx_+r2*Math.cos(ang),cy_+r2*Math.sin(ang),'rgba(255,60,60,0.8)',1.5,9);
+  }
+
+  // Labels
+  lbl(cx_,cy_-R*1.7,'Pressione (↑)','rgba(255,255,255,0.9)',12,'center',true);
+  lbl(cx_,cy_+R*1.8,'Gravità (↓)','rgba(255,80,80,0.9)',12,'center',true);
+  lbl(cx_,cy_,'✦','rgba(255,240,180,0.15)',R*1.4,'center',false);
+
+  // Badge
+  const bW=240,bH=30,bX=cx_-120,bY=H-70;
+  cx.fillStyle='rgba(255,200,50,0.1)';
+  cx.strokeStyle='rgba(255,200,50,0.4)';
+  cx.lineWidth=1;
+  cx.beginPath();cx.roundRect(bX,bY,bW,bH,6);cx.fill();cx.stroke();
+  lbl(cx_,bY+20,'Equilibrio Stabile','#ffdd55',13,'center',true);
+  lbl(cx_,H-28,'M > 3M☉ — Limite di Chandrasekhar','#94a3b8',12,'center',false);
+}
+
+// ── PHASE 1 — Collasso
+function ph1(){
+  const cx_=W/2,cy_=H/2;
+  const R0=Math.min(W,H)*0.22;
+  // Shrinking radius
+  const collapse=0.5+0.5*Math.sin(T*0.4);
+  const R=R0*(0.35+0.65*collapse);
+  // Color shifts hotter as smaller
+  const hot=1-collapse;
+  const r_=Math.round(255);
+  const g_=Math.round(180-140*hot);
+
+  // Particle streaks converging
+  for(let i=0;i<30;i++){
+    const ang=i/30*Math.PI*2+T*0.01;
+    const dist=R0*(0.7+0.8*Math.abs(Math.sin(T*0.4+i)));
+    const tailLen=R0*0.35;
+    const x1=cx_+dist*Math.cos(ang);
+    const y1=cy_+dist*Math.sin(ang);
+    const x2=cx_+(dist-tailLen)*Math.cos(ang);
+    const y2=cy_+(dist-tailLen)*Math.sin(ang);
+    const grad=cx.createLinearGradient(x1,y1,x2,y2);
+    grad.addColorStop(0,`rgba(${r_},${g_},30,0)`);
+    grad.addColorStop(1,`rgba(${r_},${g_},30,0.6)`);
+    cx.beginPath();cx.moveTo(x1,y1);cx.lineTo(x2,y2);
+    cx.strokeStyle=grad;cx.lineWidth=1.2;cx.stroke();
+  }
+
+  // Halo
+  const gH=cx.createRadialGradient(cx_,cy_,R*0.5,cx_,cy_,R*2.2);
+  gH.addColorStop(0,`rgba(255,${g_},30,0.18)`);
+  gH.addColorStop(1,'rgba(200,50,0,0)');
+  cx.beginPath();cx.arc(cx_,cy_,R*2.2,0,Math.PI*2);
+  cx.fillStyle=gH;cx.fill();
+
+  // Star body
+  cx.beginPath();
+  const npts=100;
+  for(let i=0;i<=npts;i++){
+    const ang=i/npts*Math.PI*2;
+    const wobble=1+0.04*Math.sin(ang*8+T*5);
+    const r=R*wobble;
+    const x=cx_+r*Math.cos(ang),y=cy_+r*Math.sin(ang);
+    i===0?cx.moveTo(x,y):cx.lineTo(x,y);
+  }
+  cx.closePath();
+  const gBody=cx.createRadialGradient(cx_,cy_,0,cx_,cy_,R);
+  gBody.addColorStop(0,`rgba(255,${Math.round(g_*1.3)},200,1)`);
+  gBody.addColorStop(0.4,`rgb(${r_},${g_},30)`);
+  gBody.addColorStop(1,`rgb(180,20,0)`);
+  gw(`rgba(255,${g_},30,1)`,40);
+  cx.fillStyle=gBody;cx.fill();
+  ng();
+
+  // Inward velocity arrows
+  for(let i=0;i<10;i++){
+    const ang=i/10*Math.PI*2;
+    const r1=R*1.08,r2=R*0.85;
+    arrow(cx_+r1*Math.cos(ang),cy_+r1*Math.sin(ang),cx_+r2*Math.cos(ang),cy_+r2*Math.sin(ang),'rgba(255,80,80,0.9)',1.5,8);
+  }
+
+  // Density label
+  const clampedCollapse=Math.max(collapse,0.05);
+  const rhoText=`ρ ∝ 1/r³  →  ρ = ${(1/Math.pow(clampedCollapse,3)).toFixed(1)}ρ₀`;
+  lbl(cx_,cy_+R0*1.7,rhoText,'#f9a8d4',12,'center',false);
+
+  if(collapse<0.45){
+    gw('#f472b6',20);
+    lbl(cx_,cy_-R*1.4,'Collasso!','#f9a8d4',22,'center',true);
+    ng();
+  }
+  lbl(cx_,H-28,'Superficie stellare che collassa verso il nucleo','#94a3b8',12,'center',false);
+}
+
+// ── PHASE 2 — Orizzonte apparente
+function ph2(){
+  const cx_=W/2,cy_=H/2;
+  const R0=Math.min(W,H)*0.21;
+  // Star shrinks
+  const t2=((T*0.35)%1);
+  const Rs=R0*(0.85-0.6*t2);
+  // Horizon radius: starts small inside star, expands to Rs
+  const Rh=R0*(0.1+0.7*t2);
+  const merged=Math.abs(Rs-Rh)<R0*0.08;
+
+  // Flash if merging
+  if(merged){
+    gw('#f472b6',80);
+    cx.beginPath();cx.arc(cx_,cy_,Rs*1.5,0,Math.PI*2);
+    cx.fillStyle='rgba(244,114,182,0.1)';cx.fill();
+    ng();
+  }
+
+  // Star halo
+  const gH=cx.createRadialGradient(cx_,cy_,Rs*0.5,cx_,cy_,Rs*1.8);
+  gH.addColorStop(0,'rgba(255,120,30,0.15)');
+  gH.addColorStop(1,'rgba(200,40,0,0)');
+  cx.beginPath();cx.arc(cx_,cy_,Rs*1.8,0,Math.PI*2);
+  cx.fillStyle=gH;cx.fill();
+
+  // Star body
+  cx.beginPath();cx.arc(cx_,cy_,Rs,0,Math.PI*2);
+  const gStar=cx.createRadialGradient(cx_,cy_,0,cx_,cy_,Rs);
+  gStar.addColorStop(0,'#ffcc80');
+  gStar.addColorStop(0.5,'#ff6600');
+  gStar.addColorStop(1,'#cc1100');
+  gw('#ff4400',30);cx.fillStyle=gStar;cx.fill();ng();
+
+  // Horizon ring (pink glowing)
+  if(Rh>R0*0.05){
+    for(let i=3;i>=0;i--){
+      cx.beginPath();cx.arc(cx_,cy_,Rh,0,Math.PI*2);
+      cx.strokeStyle=`rgba(244,114,182,${0.15+0.15*i})`;
+      cx.lineWidth=2+i*4;
+      gw('#f472b6',20+i*15);
+      cx.stroke();
+    }
+    ng();
+  }
+
+  // Labels
+  const lblY_s=cy_-Rs-16;
+  const lblY_h=cy_-Rh-16;
+  lbl(cx_+Rs+10,cy_,'Superficie Stellare','#ffa040',11,'left',true);
+  if(Rh>R0*0.12 && !merged)
+    lbl(cx_-Rh-12,cy_,'Orizzonte Apparente','#f472b6',11,'right',true);
+
+  // rs label on horizon
+  if(Rh>R0*0.15){
+    lbl(cx_,cy_+Rh+20,'rs = 2GM/c²','#f9a8d4',12,'center',false);
+  }
+
+  if(merged){
+    gw('#f472b6',15);
+    lbl(cx_,cy_+R0*1.6,'⚡ Orizzonti Unificati!','#f9a8d4',14,'center',true);
+    ng();
+  }
+  lbl(cx_,H-28,'Fase di unificazione della superficie e dell\'orizzonte','#94a3b8',11,'center',false);
+}
+
+// ── PHASE 3 — Penrose diagram OS collapse
+function ph3(){
+  const pad=70,dW=Math.min(W-pad*2,H-pad*2-60);
+  const ox=W/2-dW/2+pad*0.5,oy=(H-dW)/2+20;
+  const dH=dW;
+
+  // Background of diagram
+  cx.fillStyle='rgba(10,10,40,0.7)';
+  cx.strokeStyle='rgba(244,114,182,0.12)';
+  cx.lineWidth=1;
+  cx.beginPath();cx.rect(ox,oy,dW,dH);cx.fill();cx.stroke();
+
+  // Interior of star region (left of stellar surface) — hatched fill
+  // Stellar surface: a timelike curve from (ox, oy+dH) going up-left then curving to (ox+dW*0.28, oy+10)
+  // We approximate it as a cubic bezier
+  const sx0=ox+dW*0.15,sy0=oy+dH; // bottom (i0 region)
+  const sx1=ox+dW*0.16,sy1=oy+dH*0.6;
+  const sx2=ox+dW*0.22,sy2=oy+dH*0.25;
+  const sx3=ox+dW*0.28,sy3=oy+12;
+
+  // Star interior fill (left of stellar surface worldline)
+  cx.save();
+  cx.beginPath();
+  cx.moveTo(ox,oy+dH);cx.lineTo(sx0,sy0);
+  cx.bezierCurveTo(sx1,sy1,sx2,sy2,sx3,sy3);
+  cx.lineTo(ox,oy);
+  cx.closePath();
+  cx.fillStyle='rgba(255,120,30,0.07)';cx.fill();
+  // Hatching
+  cx.clip();
+  cx.strokeStyle='rgba(255,120,30,0.15)';cx.lineWidth=0.8;
+  for(let i=-dH;i<dW+dH;i+=14){
+    cx.beginPath();cx.moveTo(ox+i,oy);cx.lineTo(ox+i-dH,oy+dH);cx.stroke();
+  }
+  cx.restore();
+
+  // Exterior region
+  cx.fillStyle='rgba(30,30,80,0.15)';
+  cx.beginPath();
+  cx.moveTo(ox,oy+dH);cx.lineTo(ox+dW,oy+dH);
+  cx.lineTo(ox+dW,oy);
+  cx.lineTo(sx3,sy3);
+  cx.bezierCurveTo(sx2,sy2,sx1,sy1,sx0,sy0);
+  cx.closePath();cx.fill();
+
+  // Event horizon: 45° line from where stellar surface meets rs (approx sx3,sy3) going to upper right
+  const ehX2=ox+dW,ehY2=sy3+(ox+dW-sx3); // 45°
+  const ehClampY=Math.max(oy,ehY2);
+  const ehClampX=ehClampY===oy?sx3+(sy3-oy):ox+dW;
+  gw('#f472b6',12);
+  cx.beginPath();cx.moveTo(sx3,sy3);cx.lineTo(ehClampX,ehClampY);
+  cx.strokeStyle='#f472b6';cx.lineWidth=2.5;cx.stroke();
+  ng();
+
+  // Singularity — red zigzag at top
+  cx.save();
+  cx.beginPath();
+  const zigN=24,zigAmp=7;
+  for(let i=0;i<=zigN;i++){
+    const xz=sx3+i/zigN*(ox+dW-sx3);
+    const yz=oy+(i%2===0?0:zigAmp);
+    i===0?cx.moveTo(xz,yz):cx.lineTo(xz,yz);
+  }
+  cx.strokeStyle='#ff4444';cx.lineWidth=3;gw('#ff2222',10);cx.stroke();
+  ng();cx.restore();
+
+  // Stellar surface worldline
+  gw('#ff8844',8);
+  cx.beginPath();
+  cx.moveTo(sx0,sy0);
+  cx.bezierCurveTo(sx1,sy1,sx2,sy2,sx3,sy3);
+  cx.strokeStyle='rgba(255,160,60,0.9)';cx.lineWidth=2.5;cx.stroke();
+  ng();
+
+  // Bottom boundary (i0, ℐ-)
+  cx.beginPath();cx.moveTo(ox,oy+dH);cx.lineTo(ox+dW,oy+dH);
+  cx.strokeStyle='rgba(148,163,184,0.4)';cx.lineWidth=1.5;cx.stroke();
+
+  // Right boundary ℐ⁺ (top-right diagonal)
+  cx.beginPath();cx.moveTo(ox+dW,oy+dH);cx.lineTo(ox+dW,oy);
+  cx.strokeStyle='rgba(148,163,184,0.3)';cx.lineWidth=1;cx.stroke();
+
+  // Animated infalling observer worldline (dashed, white)
+  const obsT=((T*0.3)%1);
+  // Observer starts from right side and falls in, crossing horizon
+  const obsStart={x:ox+dW*0.85,y:oy+dH};
+  const obsEnd={x:ox+dW*0.55,y:oy+4};
+  const obsMid={x:ox+dW*0.65,y:oy+dH*0.5};
+  const ot=Math.min(obsT,1);
+  // Bezier point at parameter ot
+  function bezPt(t,p0,p1,p2){
+    return{x:(1-t)*(1-t)*p0.x+2*(1-t)*t*p1.x+t*t*p2.x,y:(1-t)*(1-t)*p0.y+2*(1-t)*t*p1.y+t*t*p2.y};
+  }
+  const obsPos=bezPt(ot,obsStart,obsMid,obsEnd);
+  cx.setLineDash([4,4]);
+  cx.beginPath();
+  const steps=50;
+  for(let i=0;i<=steps;i++){
+    const tt=i/steps*ot;
+    const pt=bezPt(tt,obsStart,obsMid,obsEnd);
+    i===0?cx.moveTo(pt.x,pt.y):cx.lineTo(pt.x,pt.y);
+  }
+  cx.strokeStyle='rgba(200,220,255,0.7)';cx.lineWidth=1.5;cx.stroke();
+  cx.setLineDash([]);
+  // Observer dot
+  cx.beginPath();cx.arc(obsPos.x,obsPos.y,5,0,Math.PI*2);
+  gw('#ffffff',10);cx.fillStyle='#ffffff';cx.fill();ng();
+
+  // Labels
+  lbl(ox+dW*0.1,oy+dH*0.5,'Superficie\nstellare','rgba(255,160,60,0.85)',9,'center',true);
+  lbl(ox+dW*0.5,oy+dH*0.18,'Orizzonte degli eventi','#f472b6',9,'center',true);
+  lbl(ox+dW*0.55,oy+22,'Singolarità','#ff6666',10,'center',true);
+  lbl(ox+dW*0.85,oy+dH*0.25,'Regione\nesterna','rgba(148,163,184,0.7)',9,'center',false);
+
+  // Boundary labels
+  lbl(ox+dW+4,oy+dH*0.3,'ℐ⁺','#94a3b8',13,'left',false);
+  lbl(ox+dW+4,oy+4,'i⁺','#94a3b8',12,'left',false);
+  lbl(ox+dW+4,oy+dH,'i⁰','#94a3b8',12,'left',false);
+  lbl(ox+dW*0.1,oy+dH+16,'Oppenheimer-Snyder, 1939','#64748b',10,'left',false);
+}
+
+// ── PHASE 4 — Censura cosmica
+function ph4(){
+  const marg=40,diagW=Math.min(W*0.36,200),diagH=diagW*1.1;
+  const gap=Math.min(W*0.06,50);
+  const totalW=diagW*2+gap;
+  const startX=(W-totalW)/2;
+  const startY=(H-diagH)/2-20;
+
+  function drawDiag(ox,oy,nude){
+    cx.save();
+    // Background
+    cx.fillStyle=nude?'rgba(80,0,0,0.12)':'rgba(0,20,60,0.12)';
+    cx.strokeStyle=nude?'rgba(255,60,60,0.3)':'rgba(244,114,182,0.3)';
+    cx.lineWidth=nude?2:1;
+    cx.beginPath();cx.rect(ox,oy,diagW,diagH);cx.fill();cx.stroke();
+
+    const sx0=ox+diagW*0.2,sy0=oy+diagH;
+    const sx3=ox+diagW*0.35,sy3=oy+8;
+
+    // Interior fill
+    cx.beginPath();
+    cx.moveTo(ox,oy+diagH);cx.lineTo(sx0,sy0);
+    cx.lineTo(sx3,sy3);cx.lineTo(ox,oy);cx.closePath();
+    cx.fillStyle='rgba(255,100,30,0.08)';cx.fill();
+
+    // Stellar surface
+    cx.beginPath();cx.moveTo(sx0,sy0);cx.lineTo(sx3,sy3);
+    cx.strokeStyle='rgba(255,160,60,0.8)';cx.lineWidth=2;cx.stroke();
+
+    // Singularity zigzag
+    cx.beginPath();
+    const zigN=12;
+    for(let i=0;i<=zigN;i++){
+      const xz=sx3+i/zigN*(ox+diagW-sx3);
+      const yz=oy+(i%2===0?0:6);
+      i===0?cx.moveTo(xz,yz):cx.lineTo(xz,yz);
+    }
+    cx.strokeStyle=nude?'#ff2222':'#ff4444';cx.lineWidth=2.5;gw('#ff2222',8);cx.stroke();ng();
+
+    if(!nude){
+      // Event horizon — hides singularity
+      const ehX2=ox+diagW,ehY2=sy3+(ox+diagW-sx3);
+      gw('#f472b6',10);
+      cx.beginPath();cx.moveTo(sx3,sy3);cx.lineTo(ox+diagW,Math.max(oy,ehY2));
+      cx.strokeStyle='#f472b6';cx.lineWidth=2;cx.stroke();ng();
+
+      // Singularity hidden region fill (above horizon, below singularity)
+      cx.fillStyle='rgba(0,0,0,0.5)';
+      cx.beginPath();cx.moveTo(sx3,sy3);cx.lineTo(ox+diagW,Math.max(oy,ehY2));
+      cx.lineTo(ox+diagW,oy);cx.lineTo(sx3,oy);cx.closePath();cx.fill();
+    } else {
+      // Arrow showing visible singularity from ℐ⁺ — photon escaping
+      arrow(sx3+diagW*0.15,oy+15,ox+diagW-10,oy+diagH*0.2,'rgba(255,100,100,0.85)',1.5,7);
+      lbl(ox+diagW*0.72,oy+diagH*0.25,'info\nvisibile','rgba(255,100,100,0.85)',8,'center',false);
+    }
+
+    // ℐ⁺ boundary
+    cx.beginPath();cx.moveTo(ox+diagW,oy+diagH);cx.lineTo(ox+diagW,oy);
+    cx.strokeStyle='rgba(148,163,184,0.35)';cx.lineWidth=1;cx.stroke();
+    cx.beginPath();cx.moveTo(ox,oy+diagH);cx.lineTo(ox+diagW,oy+diagH);
+    cx.strokeStyle='rgba(148,163,184,0.35)';cx.lineWidth=1;cx.stroke();
+
+    lbl(ox+diagW+3,oy+8,'ℐ⁺','#94a3b8',10,'left',false);
+    cx.restore();
+  }
+
+  drawDiag(startX, startY, false);
+  drawDiag(startX+diagW+gap, startY, true);
+
+  // Labels below diagrams
+  const y1=startY+diagH+20;
+  lbl(startX+diagW/2,y1,'✓ CCC rispettata','#4ade80',12,'center',true);
+  lbl(startX+diagW/2,y1+16,'Collasso con censura','#64748b',10,'center',false);
+  lbl(startX+diagW*1.5+gap,y1,'✗ CCC violata','#ff6060',12,'center',true);
+  lbl(startX+diagW*1.5+gap,y1+16,'Singolarità nuda (ipotetica)','#64748b',10,'center',false);
+
+  // Roger Penrose portrait
+  const rpX=W/2,rpY=y1+55,rpR=28;
+  cx.beginPath();cx.arc(rpX,rpY,rpR,0,Math.PI*2);
+  cx.fillStyle='rgba(30,30,80,0.7)';cx.fill();
+  cx.strokeStyle='rgba(244,114,182,0.5)';cx.lineWidth=2;cx.stroke();
+  lbl(rpX,rpY+5,'R.P.','#f9a8d4',14,'center',true);
+  lbl(rpX,rpY+rpR+14,'Roger Penrose — CCC, 1969','#94a3b8',10,'center',false);
+  lbl(rpX,rpY+rpR+26,'Premio Nobel per la Fisica, 2020','#64748b',9,'center',false);
+}
+
+// ── PHASE 5 — EHT
+function ph5(){
+  const cx_=W/2,cy_=H/2-10;
+  const BHR=Math.min(W,H)*0.14; // black hole shadow
+  const ringInner=BHR*1.05,ringOuter=BHR*1.65;
+
+  // Grid background (radio telescope suggestion)
+  cx.save();
+  cx.strokeStyle='rgba(244,114,182,0.04)';cx.lineWidth=0.5;
+  const gsize=28;
+  for(let x=0;x<W;x+=gsize){cx.beginPath();cx.moveTo(x,0);cx.lineTo(x,H);cx.stroke();}
+  for(let y=0;y<H;y+=gsize){cx.beginPath();cx.moveTo(0,y);cx.lineTo(W,y);cx.stroke();}
+  cx.restore();
+
+  // Outer diffuse glow
+  const pulse=0.85+0.15*Math.sin(T*1.2);
+  for(let i=4;i>=0;i--){
+    const gGlow=cx.createRadialGradient(cx_,cy_+ringOuter*0.18,ringOuter*0.3,cx_,cy_+ringOuter*0.1,ringOuter*(2+i*0.4)*pulse);
+    gGlow.addColorStop(0,`rgba(220,120,20,${0.06-i*0.01})`);
+    gGlow.addColorStop(0.4,`rgba(180,60,0,${0.03-i*0.005})`);
+    gGlow.addColorStop(1,'rgba(100,20,0,0)');
+    cx.beginPath();cx.arc(cx_,cy_,ringOuter*(2+i*0.4)*pulse,0,Math.PI*2);
+    cx.fillStyle=gGlow;cx.fill();
+  }
+
+  // Accretion ring — Doppler brightening (bottom brighter)
+  // Draw ring segment by segment for brightness variation
+  const segs=180;
+  for(let i=0;i<segs;i++){
+    const a0=i/segs*Math.PI*2-Math.PI/2;
+    const a1=(i+1)/segs*Math.PI*2-Math.PI/2;
+    // Bottom (angle=PI/2 from top, i.e. downward) is brightest
+    // Doppler brightening: sin(a + π/2) peaks at bottom of ring (approaching side)
+    const doppler=0.5+0.5*Math.sin(a0+Math.PI/2);
+    const gR=cx.createRadialGradient(cx_,cy_,ringInner*pulse,cx_,cy_,ringOuter*1.15*pulse);
+    const alpha=0.6+0.35*doppler;
+    const wht=Math.round(255*doppler);
+    const grn=Math.round(100+80*doppler);
+    gR.addColorStop(0,`rgba(${wht},${grn},20,${alpha})`);
+    gR.addColorStop(0.35,`rgba(255,${grn},10,${alpha*0.85})`);
+    gR.addColorStop(0.7,`rgba(200,60,0,${alpha*0.4})`);
+    gR.addColorStop(1,`rgba(100,20,0,0)`);
+    cx.beginPath();
+    cx.moveTo(cx_,cy_);
+    cx.arc(cx_,cy_,ringOuter*1.15*pulse,a0,a1);
+    cx.closePath();
+    cx.fillStyle=gR;cx.fill();
+  }
+
+  // Sharper inner ring edge
+  for(let k=0;k<4;k++){
+    const r=ringInner*pulse+(ringOuter-ringInner)*pulse*k/4;
+    cx.beginPath();cx.arc(cx_,cy_,r,0,Math.PI*2);
+    const al=0.25-k*0.05;
+    cx.strokeStyle=`rgba(255,180,40,${al})`;
+    cx.lineWidth=2+k;
+    gw('#ff8800',8+k*5);cx.stroke();ng();
+  }
+
+  // Pink lensing glow
+  cx.beginPath();cx.arc(cx_,cy_,ringInner*pulse*1.02,0,Math.PI*2);
+  cx.strokeStyle='rgba(244,114,182,0.18)';cx.lineWidth=6;
+  gw('#f472b6',20);cx.stroke();ng();
+
+  // BLACK HOLE SHADOW
+  cx.beginPath();cx.arc(cx_,cy_,BHR*pulse,0,Math.PI*2);
+  const gBH=cx.createRadialGradient(cx_,cy_,0,cx_,cy_,BHR*pulse);
+  gBH.addColorStop(0,'#000000');
+  gBH.addColorStop(0.85,'#000005');
+  gBH.addColorStop(1,'#000010');
+  cx.fillStyle=gBH;cx.fill();
+
+  // Labels on the ring
+  lbl(cx_,cy_+ringOuter*pulse*1.4,'M87* — 6.5×10⁹ M☉','#f9a8d4',14,'center',true);
+  lbl(cx_,cy_+ringOuter*pulse*1.4+20,'EHT 2019  ·  Distanza: 55 Mly','#94a3b8',11,'center',false);
+
+  // Info panel top-right
+  const ipX=W-170,ipY=40;
+  cx.fillStyle='rgba(0,0,20,0.7)';
+  cx.strokeStyle='rgba(244,114,182,0.2)';
+  cx.lineWidth=1;
+  cx.beginPath();cx.roundRect(ipX,ipY,160,130,6);cx.fill();cx.stroke();
+  lbl(ipX+80,ipY+18,'Buchi Neri','#f472b6',12,'center',true);
+  lbl(ipX+10,ipY+36,'M87*','#e2e8f0',10,'left',true);
+  lbl(ipX+150,ipY+36,'6.5×10⁹ M☉','#94a3b8',9,'right',false);
+  lbl(ipX+10,ipY+52,'Sgr A*','#e2e8f0',10,'left',true);
+  lbl(ipX+150,ipY+52,'4.1×10⁶ M☉','#94a3b8',9,'right',false);
+  lbl(ipX+10,ipY+68,'Stellari','#e2e8f0',10,'left',true);
+  lbl(ipX+150,ipY+68,'5–100 M☉','#94a3b8',9,'right',false);
+  cx.fillStyle='rgba(244,114,182,0.15)';cx.beginPath();cx.roundRect(ipX+4,ipY+77,152,1,0);cx.fill();
+  lbl(ipX+10,ipY+92,'EHT 2019','#64748b',9,'left',false);
+  lbl(ipX+150,ipY+92,'M87*','#94a3b8',9,'right',false);
+  lbl(ipX+10,ipY+106,'EHT 2022','#64748b',9,'left',false);
+  lbl(ipX+150,ipY+106,'Sgr A*','#94a3b8',9,'right',false);
+  lbl(ipX+10,ipY+122,'rs ≈ 2GM/c²','#64748b',9,'left',false);
+  lbl(ipX+150,ipY+122,'Schwarzschild','#64748b',9,'right',false);
+
+  // EHT badge bottom-left
+  lbl(30,H-36,'Event Horizon Telescope','#64748b',10,'left',false);
+  lbl(30,H-22,'Radio VLBI — risoluzione < 25 μas','#475569',9,'left',false);
+}
+
+// ── Main loop
+function loop(){
+  bg();
+  drawStars();
+  T+=0.016;
+  [ph0,ph1,ph2,ph3,ph4,ph5][ph]();
+  requestAnimationFrame(loop);
+}
+
+loop();
+</script>
+</body>
+</html>

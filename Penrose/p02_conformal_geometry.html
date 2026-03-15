@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Geometria Conforme — Penrose · DivulgAzione</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#000010; color:#e2e8f0; font-family:'Georgia',serif; overflow:hidden; }
+#canvas { display:block; }
+#ui {
+  position:fixed; top:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center;
+  padding:10px 20px; background:rgba(0,0,16,0.93); border-bottom:1px solid rgba(251,146,60,0.25); z-index:100; gap:12px;
+}
+#ui-title { font-size:12px; color:#fb923c; letter-spacing:3px; text-transform:uppercase; white-space:nowrap; }
+#ui-phase { font-size:11px; color:#94a3b8; text-align:center; line-height:1.5; max-width:560px; }
+#ui-badge { font-size:13px; color:#fdba74; font-weight:bold; text-align:right; white-space:nowrap; }
+#bottom {
+  position:fixed; bottom:0; left:0; right:0; padding:8px 16px; background:rgba(0,0,16,0.93);
+  border-top:1px solid rgba(251,146,60,0.2); display:flex; justify-content:center; gap:5px; z-index:100; flex-wrap:wrap;
+}
+.btn { padding:5px 11px; border:1px solid rgba(251,146,60,0.3); background:rgba(12,20,40,0.9); color:#fb923c; border-radius:20px; cursor:pointer; font-size:10px; transition:all 0.3s; font-family:Georgia,serif; }
+.btn:hover, .btn.active { background:rgba(251,146,60,0.15); border-color:#fb923c; color:#fdba74; }
+.nav-btn { padding:5px 13px; border:1px solid rgba(148,163,184,0.25); background:rgba(12,20,40,0.9); color:#64748b; border-radius:20px; cursor:pointer; font-size:10px; transition:all 0.3s; text-decoration:none; display:inline-flex; align-items:center; gap:4px; }
+.nav-btn:hover { color:#94a3b8; border-color:#94a3b8; }
+#panel { position:fixed; right:14px; top:60px; width:220px; background:rgba(8,14,30,0.95); border:1px solid rgba(251,146,60,0.2); border-radius:10px; padding:13px; font-size:11px; color:#64748b; line-height:1.8; z-index:100; }
+#panel h3 { color:#fb923c; font-size:11px; margin-bottom:8px; border-bottom:1px solid rgba(251,146,60,0.2); padding-bottom:5px; letter-spacing:1px; }
+.pr { display:flex; justify-content:space-between; margin-bottom:3px; }
+.pv { color:#e2e8f0; font-weight:bold; }
+.sep { border-color:rgba(251,146,60,0.15); margin:7px 0; }
+</style>
+</head>
+<body>
+<div id="ui">
+  <div id="ui-title">Penrose · 02 — Geometria Conforme</div>
+  <div id="ui-phase">Una trasformazione conforme preserva gli angoli localmente — i coni di luce rimangono invariati</div>
+  <div id="ui-badge">① / 6</div>
+</div>
+<canvas id="canvas"></canvas>
+<div id="panel">
+  <h3>CONCETTI CHIAVE</h3>
+  <div class="pr"><span>Metrica:</span><span class="pv">g̃_μν = Ω² g_μν</span></div>
+  <div class="pr"><span>Causale:</span><span class="pv">Ω > 0</span></div>
+  <div class="pr"><span>Nullo:</span><span class="pv">ds² = 0</span></div>
+  <hr class="sep">
+  <div class="pr"><span>i⁰:</span><span class="pv">Infinito spaziale</span></div>
+  <div class="pr"><span>i⁺:</span><span class="pv">Futuro timelike</span></div>
+  <div class="pr"><span>ℐ⁺:</span><span class="pv">Futuro nullo</span></div>
+  <div class="pr"><span>ℐ⁻:</span><span class="pv">Passato nullo</span></div>
+  <hr class="sep">
+  <div style="font-size:10px;color:#475569;line-height:1.6;">Penrose 1963<br>Geroch 1977<br>Wald GR 1984</div>
+</div>
+<div id="bottom">
+  <a class="nav-btn" href="p01_roger_penrose.html">← 01</a>
+  <button class="btn active" onclick="go(0)">① Mappe Conformi</button>
+  <button class="btn" onclick="go(1)">② Coni di Luce</button>
+  <button class="btn" onclick="go(2)">③ Compattificazione</button>
+  <button class="btn" onclick="go(3)">④ Infiniti</button>
+  <button class="btn" onclick="go(4)">⑤ Geodetiche</button>
+  <button class="btn" onclick="go(5)">⑥ Struttura Causale</button>
+  <a class="nav-btn" href="p03_minkowski.html">03 Minkowski →</a>
+</div>
+
+<script>
+const cv=document.getElementById('canvas'), cx=cv.getContext('2d');
+let W,H; function resize(){W=cv.width=window.innerWidth; H=cv.height=window.innerHeight;} resize(); window.addEventListener('resize',resize);
+let ph=0, T=0;
+const PHASES=[
+  {name:"① Mappe Conformi",desc:"Una trasformazione conforme g̃_μν = Ω²g_μν riscala la metrica ma preserva la struttura angolare. I coni di luce — e quindi la causalità — rimangono invariati: due eventi con relazione causale la mantengono dopo la trasformazione."},
+  {name:"② Coni di Luce",desc:"Il cono di luce divide lo spazio-tempo in regioni causalmente connesse. La metrica ds² = 0 definisce le geodetiche nulle (fotoni). Ogni punto ha un cono futuro (verso cui la materia può andare) e un cono passato."},
+  {name:"③ Compattificazione Conforme",desc:"Tramite la trasformazione arctan, l'infinito spaziale e temporale viene mappato in un insieme finito. L'intero spazio-tempo di Minkowski cade in un diamante compatto — senza perdere informazioni causali."},
+  {name:"④ I Punti all'Infinito",desc:"Minkowski conforme ha 5 tipi di infinito: i⁰ (spaziale, 1 punto), i⁺ (timelike futuro, 1 punto), i⁻ (timelike passato, 1 punto), ℐ⁺ (nullo futuro, 2 lati), ℐ⁻ (nullo passato, 2 lati)."},
+  {name:"⑤ Geodetiche nel Diagramma",desc:"Nel diagramma di Penrose: le linee verticali sono geodetiche timelike (osservatori a riposo), le linee a ±45° sono geodetiche nulle (fotoni), le linee orizzontali sono superfici a t costante."},
+  {name:"⑥ Struttura Causale",desc:"Due eventi sono causalmente connessi se possono essere uniti da una curva timelike o nulla. Il diagramma di Penrose preserva questa struttura: guardare il diagramma dice immediatamente cosa può influenzare cosa."}
+];
+function go(n){ ph=n; document.querySelectorAll('.btn').forEach((b,i)=>b.classList.toggle('active',i===n)); document.getElementById('ui-phase').textContent=PHASES[n].desc; document.getElementById('ui-badge').textContent=`${['①','②','③','④','⑤','⑥'][n]} / 6`; }
+function gw(col,blur){cx.shadowColor=col;cx.shadowBlur=blur;} function ng(){cx.shadowBlur=0;}
+function lbl(x,y,txt,col,sz,al='center',bold=false){cx.fillStyle=col;cx.font=`${bold?'bold ':''}${sz}px Georgia,serif`;cx.textAlign=al;cx.fillText(txt,x,y);}
+
+const STARS=Array.from({length:180},()=>({x:Math.random()*4000,y:Math.random()*2000,r:Math.random()*1.1+0.2,o:Math.random()}));
+function stars(){STARS.forEach(s=>{cx.beginPath();cx.arc(s.x,s.y,s.r,0,Math.PI*2);cx.fillStyle=`rgba(255,255,255,${s.o*(0.4+0.3*Math.sin(T*0.2+s.x*0.01))})`;cx.fill();});}
+function bg(){const g=cx.createRadialGradient(W/2,H/2,80,W/2,H/2,Math.max(W,H)*0.9);g.addColorStop(0,'#020920');g.addColorStop(1,'#000010');cx.fillStyle=g;cx.fillRect(0,0,W,H);}
+
+/* ── PHASE 0: Conformal maps ─────────── */
+function ph0(){
+  lbl(W/2,H*0.10,'Trasformazioni Conformi','#fb923c',22,'center',true);
+  lbl(W/2,H*0.10+30,'g̃_μν = Ω²(x) · g_μν','#fdba74',15,'center');
+  lbl(W/2,H*0.10+52,'La causalità è preservata — i coni di luce restano invariati','#94a3b8',12,'center');
+  // Two grids: original and transformed
+  const lx=W*0.22, rx=W*0.65, cy=H*0.5;
+  const S=Math.min(W,H)*0.055;
+  // Original flat grid
+  lbl(lx,cy-H*0.28,'Metrica originale g_μν','#64748b',11,'center');
+  for(let i=-4;i<=4;i++){
+    cx.beginPath(); cx.moveTo(lx+i*S,cy-H*0.24); cx.lineTo(lx+i*S,cy+H*0.24);
+    cx.strokeStyle='rgba(100,116,139,0.4)'; cx.lineWidth=1; cx.stroke();
+    cx.beginPath(); cx.moveTo(lx-4*S,cy+i*S*0.75); cx.lineTo(lx+4*S,cy+i*S*0.75);
+    cx.stroke();
+  }
+  // Light cone on flat grid
+  cx.beginPath(); cx.moveTo(lx,cy); cx.lineTo(lx+S*2.5,cy-S*2.5*1.33); cx.strokeStyle='#fbbf24'; cx.lineWidth=2; cx.stroke();
+  cx.beginPath(); cx.moveTo(lx,cy); cx.lineTo(lx-S*2.5,cy-S*2.5*1.33); cx.strokeStyle='#fbbf24'; cx.lineWidth=2; cx.stroke();
+  cx.beginPath(); cx.arc(lx,cy,5,0,Math.PI*2); cx.fillStyle='#fbbf24'; gw('#fbbf24',10); cx.fill(); ng();
+  lbl(lx,cy+S*0.5,'Punto p','#fbbf24',10,'center');
+
+  // Arrow
+  lbl(W/2,cy,'→','#fb923c',22,'center');
+  lbl(W/2,cy+20,'Ω(x)','#fdba74',12,'center');
+
+  // Transformed grid (warped)
+  lbl(rx,cy-H*0.28,'Metrica conformemente equivalente g̃_μν','#64748b',11,'center');
+  for(let i=-4;i<=4;i++){
+    cx.beginPath();
+    for(let t=-4;t<=4;t+=0.1){
+      const x=rx+t*S; const y=cy+i*S*0.75*(1+0.3*Math.sin(t*0.8+T*0.5));
+      if(t===-4) cx.moveTo(x,y); else cx.lineTo(x,y);
+    }
+    cx.strokeStyle='rgba(251,146,60,0.35)'; cx.lineWidth=1; cx.stroke();
+    cx.beginPath();
+    for(let t=-4;t<=4;t+=0.1){
+      const x=rx+i*S*(1+0.2*Math.sin(t*0.6+T*0.4)); const y=cy+t*S*0.75;
+      if(t===-4) cx.moveTo(x,y); else cx.lineTo(x,y);
+    }
+    cx.stroke();
+  }
+  // Same light cone (same 45° angle!)
+  cx.beginPath(); cx.moveTo(rx,cy); cx.lineTo(rx+S*2.5,cy-S*2.5*1.33); cx.strokeStyle='#fbbf24'; cx.lineWidth=2; cx.stroke();
+  cx.beginPath(); cx.moveTo(rx,cy); cx.lineTo(rx-S*2.5,cy-S*2.5*1.33); cx.strokeStyle='#fbbf24'; cx.lineWidth=2; cx.stroke();
+  cx.beginPath(); cx.arc(rx,cy,5,0,Math.PI*2); cx.fillStyle='#fbbf24'; gw('#fbbf24',10); cx.fill(); ng();
+  lbl(rx,cy+S*0.5,'Punto p','#fbbf24',10,'center');
+  lbl(rx,cy+H*0.28,'Angoli preservati — causalità invariata','#fb923c',10,'center');
+}
+
+/* ── PHASE 1: Light cones ─────────── */
+function ph1(){
+  lbl(W/2,H*0.09,'Coni di Luce nello Spazio-Tempo','#fb923c',22,'center',true);
+  lbl(W/2,H*0.09+30,'ds² = −c²dt² + dx² + dy² + dz² = 0  (geodetiche nulle)','#fdba74',14,'center');
+
+  const cx2=W/2, cy2=H*0.5;
+  // 3D-style spacetime diagram
+  // t-axis
+  cx.beginPath(); cx.moveTo(cx2,cy2+H*0.35); cx.lineTo(cx2,cy2-H*0.35);
+  cx.strokeStyle='#94a3b8'; cx.lineWidth=1.5; cx.stroke();
+  lbl(cx2+15,cy2-H*0.33,'t','#94a3b8',13,'left');
+  // x-axis
+  cx.beginPath(); cx.moveTo(cx2-W*0.32,cy2); cx.lineTo(cx2+W*0.32,cy2);
+  cx.strokeStyle='#94a3b8'; cx.lineWidth=1.5; cx.stroke();
+  lbl(cx2+W*0.31,cy2+14,'x','#94a3b8',13,'center');
+
+  // Past cone (lower)
+  const coneR=Math.min(W,H)*0.3;
+  const grad=cx.createRadialGradient(cx2,cy2,0,cx2,cy2+coneR,coneR);
+  grad.addColorStop(0,'rgba(248,113,113,0.4)');
+  grad.addColorStop(1,'rgba(248,113,113,0)');
+  cx.beginPath();
+  cx.moveTo(cx2,cy2);
+  cx.lineTo(cx2-coneR*Math.cos(Math.PI/6),cy2+coneR);
+  cx.lineTo(cx2+coneR*Math.cos(Math.PI/6),cy2+coneR);
+  cx.closePath(); cx.fillStyle=grad; cx.fill();
+  cx.beginPath();
+  cx.moveTo(cx2,cy2);
+  cx.lineTo(cx2-coneR*Math.cos(Math.PI/6),cy2+coneR);
+  cx.strokeStyle='#f87171'; cx.lineWidth=2; cx.stroke();
+  cx.beginPath();
+  cx.moveTo(cx2,cy2);
+  cx.lineTo(cx2+coneR*Math.cos(Math.PI/6),cy2+coneR);
+  cx.strokeStyle='#f87171'; cx.lineWidth=2; cx.stroke();
+  lbl(cx2,cy2+coneR*0.7,'Cono del passato','#f87171',11,'center');
+
+  // Future cone (upper)
+  const gradF=cx.createRadialGradient(cx2,cy2,0,cx2,cy2-coneR,coneR);
+  gradF.addColorStop(0,'rgba(96,165,250,0.4)');
+  gradF.addColorStop(1,'rgba(96,165,250,0)');
+  cx.beginPath();
+  cx.moveTo(cx2,cy2);
+  cx.lineTo(cx2-coneR*Math.cos(Math.PI/6),cy2-coneR);
+  cx.lineTo(cx2+coneR*Math.cos(Math.PI/6),cy2-coneR);
+  cx.closePath(); cx.fillStyle=gradF; cx.fill();
+  cx.beginPath(); cx.moveTo(cx2,cy2); cx.lineTo(cx2-coneR*Math.cos(Math.PI/6),cy2-coneR);
+  cx.strokeStyle='#60a5fa'; cx.lineWidth=2; cx.stroke();
+  cx.beginPath(); cx.moveTo(cx2,cy2); cx.lineTo(cx2+coneR*Math.cos(Math.PI/6),cy2-coneR);
+  cx.strokeStyle='#60a5fa'; cx.lineWidth=2; cx.stroke();
+  lbl(cx2,cy2-coneR*0.7,'Cono del futuro','#60a5fa',11,'center');
+
+  // Point
+  cx.beginPath(); cx.arc(cx2,cy2,6,0,Math.PI*2);
+  cx.fillStyle='#fbbf24'; gw('#fbbf24',15); cx.fill(); ng();
+  lbl(cx2+14,cy2,'Evento p','#fbbf24',11,'left');
+
+  // Animated photon
+  const ang=T*0.8; const prog=(Math.sin(T*0.6)+1)/2;
+  const pr=coneR*0.85*prog;
+  cx.beginPath(); cx.arc(cx2+Math.cos(ang)*pr,cy2-Math.sin(Math.abs(Math.cos(ang)))*pr*1.1,4,0,Math.PI*2);
+  cx.fillStyle='#fde68a'; gw('#fde68a',12); cx.fill(); ng();
+
+  lbl(W/2,H*0.88,'Regione spacelike (|Δx|>c|Δt|): non causalmente connessa · Solo l\'interno del cono è accessibile','#64748b',11,'center');
+}
+
+/* ── PHASE 2: Compactification ─────── */
+function ph2(){
+  lbl(W/2,H*0.09,'Compattificazione Conforme di Minkowski','#fb923c',22,'center',true);
+  lbl(W/2,H*0.09+30,'T = arctan(t+r) + arctan(t−r)     R = arctan(t+r) − arctan(t−r)','#fdba74',13,'center');
+
+  // Show the mapping visually
+  const lx=W*0.2, rx=W*0.65, cy=H*0.5;
+  const S=Math.min(W,H)*0.03;
+
+  // Infinite Minkowski (symbolically)
+  lbl(lx,cy-H*0.27,'Minkowski ℝ³·¹','#64748b',12,'center');
+  lbl(lx,cy-H*0.24,'t ∈ (−∞, +∞)','#475569',11,'center');
+  lbl(lx,cy-H*0.21,'r ∈ [0, +∞)','#475569',11,'center');
+  // Draw an extended grid with arrows going off
+  for(let i=-3;i<=3;i++){
+    cx.beginPath(); cx.moveTo(lx+i*S*1.5,cy-H*0.18); cx.lineTo(lx+i*S*1.5,cy+H*0.18);
+    cx.strokeStyle='rgba(100,116,139,0.3)'; cx.lineWidth=1; cx.stroke();
+    cx.beginPath(); cx.moveTo(lx-H*0.18,cy+i*S*1.2); cx.lineTo(lx+H*0.18,cy+i*S*1.2);
+    cx.stroke();
+  }
+  // Arrows going off to infinity
+  ['↑','↓','←','→'].forEach((arr,i)=>{
+    const ax=[lx,lx,lx-H*0.2,lx+H*0.2][i];
+    const ay=[cy-H*0.2,cy+H*0.2,cy,cy][i];
+    lbl(ax,ay,arr,'#334155',20,'center');
+    lbl(ax,ay+16,'∞','#334155',10,'center');
+  });
+
+  // Arrow
+  lbl(W/2,cy,'⟶','#fb923c',24,'center');
+  lbl(W/2,cy+22,'arctan','#fdba74',12,'center');
+
+  // Compact Penrose diamond
+  lbl(rx,cy-H*0.27,'Diamante Compatto','#fb923c',12,'center');
+  const dS=H*0.2;
+  cx.beginPath();
+  cx.moveTo(rx,cy-dS); cx.lineTo(rx+dS,cy); cx.lineTo(rx,cy+dS); cx.lineTo(rx-dS,cy);
+  cx.closePath(); cx.strokeStyle='#fb923c'; gw('#fb923c',12); cx.lineWidth=2; cx.stroke(); ng();
+  cx.fillStyle='rgba(251,146,60,0.05)'; cx.fill();
+
+  // Labels
+  lbl(rx,cy-dS-14,'i⁺','#60a5fa',13,'center',true);
+  lbl(rx,cy+dS+14,'i⁻','#f87171',13,'center',true);
+  lbl(rx+dS+14,cy,'i⁰','#4ade80',13,'center',true);
+  lbl(rx-dS-14,cy,'i⁰','#4ade80',13,'center',true);
+
+  // Animated point moving in
+  const t=T*0.5; const prog=(Math.sin(t)+1)/2;
+  const px=(1-prog)*lx+prog*rx;
+  const py=cy;
+  cx.beginPath(); cx.arc(px,py,5,0,Math.PI*2);
+  cx.fillStyle='#fde68a'; gw('#fde68a',10); cx.fill(); ng();
+}
+
+/* ── PHASE 3: Infinities ─────────── */
+function ph3(){
+  lbl(W/2,H*0.09,'I Cinque Infiniti di Minkowski','#fb923c',22,'center',true);
+
+  const cx2=W/2, cy2=H*0.52;
+  const dS=H*0.3;
+  // Diamond
+  cx.beginPath();
+  cx.moveTo(cx2,cy2-dS); cx.lineTo(cx2+dS*0.8,cy2); cx.lineTo(cx2,cy2+dS); cx.lineTo(cx2-dS*0.8,cy2);
+  cx.closePath(); cx.strokeStyle='rgba(100,116,139,0.5)'; cx.lineWidth=1.5; cx.stroke();
+  cx.fillStyle='rgba(15,23,42,0.6)'; cx.fill();
+
+  // Grid inside
+  const N=6;
+  for(let i=1;i<N;i++){
+    const t=i/N;
+    // Horizontal lines
+    const yl=cy2-dS+dS*2*t;
+    const xl=cx2-dS*0.8*(1-Math.abs(2*t-1));
+    const xr=cx2+dS*0.8*(1-Math.abs(2*t-1));
+    cx.beginPath(); cx.moveTo(xl,yl); cx.lineTo(xr,yl);
+    cx.strokeStyle='rgba(100,116,139,0.15)'; cx.lineWidth=1; cx.stroke();
+    // Vertical-ish
+    const x2l=cx2+(dS*0.8)*(2*t-1);
+    cx.beginPath(); cx.moveTo(cx2,cy2-dS+(dS*2*(1-t))); cx.lineTo(cx2+dS*0.8*(2*t-1),cy2);
+    cx.moveTo(cx2+dS*0.8*(2*t-1),cy2); cx.lineTo(cx2,cy2+dS-(dS*2*(1-t)));
+    cx.stroke();
+  }
+
+  // Five infinities with blinking highlights
+  const inf=[
+    {x:cx2,y:cy2-dS,label:'i⁺',name:'Futuro Timelike',desc:'Tutte le geodetiche massive terminano qui',col:'#60a5fa'},
+    {x:cx2,y:cy2+dS,label:'i⁻',name:'Passato Timelike',desc:'Tutte le geodetiche massive iniziano qui',col:'#f87171'},
+    {x:cx2+dS*0.8,y:cy2,label:'i⁰',name:'Infinito Spaziale',desc:'Geodetiche spacelike terminano qui',col:'#4ade80'},
+    {x:cx2-dS*0.8,y:cy2,label:'i⁰',name:'Infinito Spaziale',desc:'(stesso punto per simmetria sferica)',col:'#4ade80'},
+    {x:cx2+dS*0.4,y:cy2-dS*0.5,label:'ℐ⁺',name:'Futuro Nullo',desc:'Fotoni (geodetiche nulle) terminano qui',col:'#fbbf24'},
+    {x:cx2-dS*0.4,y:cy2-dS*0.5,label:'ℐ⁺',name:'Futuro Nullo (sin)',desc:'',col:'#fbbf24'},
+    {x:cx2+dS*0.4,y:cy2+dS*0.5,label:'ℐ⁻',name:'Passato Nullo',desc:'Fotoni arrivano da qui nel passato lontano',col:'#fb923c'},
+    {x:cx2-dS*0.4,y:cy2+dS*0.5,label:'ℐ⁻',name:'Passato Nullo (sin)',desc:'',col:'#fb923c'},
+  ];
+  inf.forEach((p,i)=>{
+    const pulse=0.7+0.3*Math.sin(T*2+i*0.8);
+    cx.beginPath(); cx.arc(p.x,p.y,8*pulse,0,Math.PI*2);
+    cx.fillStyle=p.col; gw(p.col,15*pulse); cx.fill(); ng();
+    const side=p.x>cx2?1:-1;
+    lbl(p.x+side*18,p.y,p.label,p.col,14,'left',true);
+    if(p.name&&!p.name.includes('sin'))lbl(p.x+side*18,p.y+16,p.name,'#64748b',9,side>0?'left':'right');
+  });
+}
+
+/* ── PHASE 4: Geodesics ─────────── */
+function ph4(){
+  lbl(W/2,H*0.09,'Geodetiche nel Diagramma di Penrose','#fb923c',22,'center',true);
+
+  const cx2=W/2, cy2=H*0.52;
+  const dS=H*0.28;
+  cx.beginPath();
+  cx.moveTo(cx2,cy2-dS); cx.lineTo(cx2+dS*0.85,cy2); cx.lineTo(cx2,cy2+dS); cx.lineTo(cx2-dS*0.85,cy2);
+  cx.closePath(); cx.strokeStyle='rgba(251,146,60,0.5)'; cx.lineWidth=2; cx.stroke();
+  cx.fillStyle='rgba(15,23,42,0.7)'; cx.fill();
+
+  // Timelike geodesics (vertical-ish lines) — wavy
+  for(let i=-2;i<=2;i++){
+    const xOff=i*dS*0.18;
+    cx.beginPath();
+    for(let t=-0.98;t<=0.98;t+=0.02){
+      const x=cx2+xOff+Math.sin(t*Math.PI)*dS*0.05;
+      const y=cy2+t*dS;
+      const inDiamond=Math.abs(x-cx2)/dS*1.18+Math.abs(y-cy2)/dS<0.98;
+      if(!inDiamond)continue;
+      if(t===-0.98||!inDiamond) cx.moveTo(x,y); else cx.lineTo(x,y);
+    }
+    cx.strokeStyle='rgba(96,165,250,0.5)'; cx.lineWidth=1.5; cx.stroke();
+  }
+  lbl(cx2-dS*0.55,cy2,'Geodetiche\ntimelike','#60a5fa',9.5,'center');
+
+  // Null geodesics (45° lines)
+  for(let i=-3;i<=3;i++){
+    const yOff=i*dS*0.22;
+    // Right-going
+    cx.beginPath();
+    cx.moveTo(cx2-dS*0.85+Math.abs(yOff)/dS*dS*0.85,cy2+yOff);
+    cx.lineTo(cx2,cy2+yOff-(dS*0.85-Math.abs(yOff)/dS*dS*0.85));
+    cx.strokeStyle='rgba(253,230,138,0.45)'; cx.lineWidth=1; cx.stroke();
+  }
+  lbl(cx2+dS*0.55,cy2-dS*0.35,'Geodetiche\nnulle (fotoni)','#fde68a',9.5,'center');
+
+  // Spacelike (horizontal) lines
+  for(let i=-2;i<=2;i++){
+    const yOff=i*dS*0.2;
+    const xHalf=dS*0.85*(1-Math.abs(yOff)/dS);
+    cx.beginPath(); cx.moveTo(cx2-xHalf,cy2+yOff); cx.lineTo(cx2+xHalf,cy2+yOff);
+    cx.strokeStyle='rgba(74,222,128,0.35)'; cx.lineWidth=1; cx.stroke();
+  }
+  lbl(cx2,cy2+dS*0.7,'Superfici spacelike (t=cost)','#4ade80',9.5,'center');
+
+  // Animated particle
+  const tp=(T*0.25)%2-1;
+  const pp=Math.abs(tp)-1; // -1 to 0
+  if(pp>-0.95){
+    cx.beginPath(); cx.arc(cx2,cy2+pp*dS,6,0,Math.PI*2);
+    cx.fillStyle='#f59e0b'; gw('#f59e0b',14); cx.fill(); ng();
+  }
+  lbl(W/2,H*0.88,'Le linee a ±45° sono sempre nulle — la causalità si legge a colpo d\'occhio','#64748b',11,'center');
+}
+
+/* ── PHASE 5: Causal structure ─────── */
+function ph5(){
+  lbl(W/2,H*0.09,'Struttura Causale — Cronologia & Causalità','#fb923c',22,'center',true);
+  lbl(W/2,H*0.09+30,'Il diagramma mostra chi può comunicare con chi','#fdba74',12,'center');
+
+  const cx2=W/2, cy2=H*0.52;
+  const dS=H*0.26;
+  cx.beginPath();
+  cx.moveTo(cx2,cy2-dS); cx.lineTo(cx2+dS*0.85,cy2); cx.lineTo(cx2,cy2+dS); cx.lineTo(cx2-dS*0.85,cy2);
+  cx.closePath(); cx.strokeStyle='rgba(251,146,60,0.5)'; cx.lineWidth=2; cx.stroke();
+  cx.fillStyle='rgba(15,23,42,0.7)'; cx.fill();
+
+  // Two events
+  const evA={x:cx2-dS*0.35,y:cy2+dS*0.3,c:'#f87171',label:'A'};
+  const evB={x:cx2+dS*0.4,y:cy2-dS*0.2,c:'#4ade80',label:'B'};
+  const evC={x:cx2+dS*0.5,y:cy2+dS*0.35,c:'#818cf8',label:'C'};
+
+  [evA,evB,evC].forEach(e=>{
+    cx.beginPath(); cx.arc(e.x,e.y,6,0,Math.PI*2); cx.fillStyle=e.c; gw(e.c,12); cx.fill(); ng();
+    lbl(e.x+12,e.y+4,`Evento ${e.label}`,e.c,10,'left');
+  });
+
+  // A can reach B (draw light cone of A)
+  const coneA=dS*0.6;
+  cx.beginPath(); cx.moveTo(evA.x,evA.y); cx.lineTo(evA.x-coneA,evA.y-coneA);
+  cx.strokeStyle='rgba(248,113,113,0.4)'; cx.lineWidth=1; cx.stroke();
+  cx.beginPath(); cx.moveTo(evA.x,evA.y); cx.lineTo(evA.x+coneA,evA.y-coneA);
+  cx.strokeStyle='rgba(248,113,113,0.4)'; cx.lineWidth=1; cx.stroke();
+
+  // Check B in cone of A
+  const dx=evB.x-evA.x, dy=evA.y-evB.y;
+  const inCone=Math.abs(dx)<=dy;
+  lbl(W*0.18,H*0.66,`A → B: ${inCone?'CAUSALE ✓':'NON CAUSALE ✗'}`,inCone?'#4ade80':'#f87171',11,'left');
+
+  // C not reachable
+  const dxC=evC.x-evA.x, dyC=evA.y-evC.y;
+  const inConeC=dyC>0&&Math.abs(dxC)<=dyC;
+  lbl(W*0.18,H*0.72,`A → C: ${inConeC?'CAUSALE ✓':'NON CAUSALE ✗'}`,inConeC?'#4ade80':'#f87171',11,'left');
+  lbl(W*0.18,H*0.78,'(spacelike — non raggiungibile)','#475569',9.5,'left');
+
+  lbl(W/2,H*0.88,'La struttura causale è la proprietà più fondamentale di uno spazio-tempo','#64748b',11,'center');
+}
+
+function loop(){
+  bg(); stars(); T+=0.016;
+  if(ph===0) ph0(); else if(ph===1) ph1(); else if(ph===2) ph2();
+  else if(ph===3) ph3(); else if(ph===4) ph4(); else ph5();
+  requestAnimationFrame(loop);
+}
+go(0); loop();
+</script>
+</body>
+</html>

@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Penrose · 07 — Buco Nero Carico (Reissner-Nordström)</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{background:#000010;color:#e2e8f0;font-family:'Segoe UI',sans-serif;overflow:hidden;height:100vh;display:flex;flex-direction:column}
+#topbar{display:flex;align-items:center;justify-content:space-between;padding:8px 16px;border-bottom:1px solid rgba(52,211,153,0.2);flex-shrink:0}
+.nav-btn{color:#94a3b8;text-decoration:none;font-size:13px;padding:4px 10px;border:1px solid rgba(52,211,153,0.2);border-radius:4px;transition:color .2s}
+.nav-btn:hover{color:#34d399}
+#title{font-size:14px;color:#34d399;letter-spacing:.05em}
+#main{display:flex;flex:1;overflow:hidden}
+#canvas-wrap{flex:1;position:relative}
+canvas{display:block;width:100%;height:100%}
+#sidebar{width:220px;display:flex;flex-direction:column;border-left:1px solid rgba(52,211,153,0.2);flex-shrink:0}
+#ui{padding:12px;border-bottom:1px solid rgba(52,211,153,0.25)}
+#ui-phase{font-size:11px;color:#34d399;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+#ui-badge{font-size:22px;margin-bottom:6px}
+#ui-desc{font-size:10px;color:#94a3b8;line-height:1.55}
+#btns{display:flex;flex-wrap:wrap;gap:5px;padding:10px;border-bottom:1px solid rgba(52,211,153,0.2)}
+.btn{flex:1;min-width:56px;padding:5px 4px;background:transparent;border:1px solid rgba(52,211,153,0.3);border-radius:4px;color:#34d399;font-size:12px;cursor:pointer;transition:all .2s;white-space:nowrap}
+.btn:hover{background:rgba(52,211,153,0.08)}
+.btn.active{background:rgba(52,211,153,0.15);color:#6ee7b7;border-color:rgba(52,211,153,0.6)}
+#panel{padding:12px;font-size:11px;overflow-y:auto;border:1px solid rgba(52,211,153,0.2);margin:8px;border-radius:6px;background:rgba(0,0,16,0.4)}
+#panel h3{color:#34d399;font-size:11px;letter-spacing:.1em;margin-bottom:10px}
+.pr{display:flex;justify-content:space-between;margin-bottom:5px;color:#64748b}
+.pv{color:#e2e8f0}
+.sep{border:none;border-top:1px solid rgba(52,211,153,0.15);margin:8px 0}
+</style>
+</head>
+<body>
+<div id="topbar">
+  <a class="nav-btn" href="p06_collapse.html">← 06</a>
+  <span id="title">Penrose · 07 — Buco Nero Carico (Reissner-Nordström)</span>
+  <a class="nav-btn" href="p08_kerr.html">08 Kerr →</a>
+</div>
+<div id="main">
+  <div id="canvas-wrap"><canvas id="c"></canvas></div>
+  <div id="sidebar">
+    <div id="ui">
+      <div id="ui-phase">Fase 0</div>
+      <div id="ui-badge">①</div>
+      <div id="ui-desc"></div>
+    </div>
+    <div id="btns">
+      <button class="btn active" onclick="go(0)">① Metrica</button>
+      <button class="btn" onclick="go(1)">② Orizzonti</button>
+      <button class="btn" onclick="go(2)">③ Timelike</button>
+      <button class="btn" onclick="go(3)">④ Penrose</button>
+      <button class="btn" onclick="go(4)">⑤ Estremo</button>
+      <button class="btn" onclick="go(5)">⑥ Reale</button>
+    </div>
+    <div id="panel">
+      <h3>REISSNER-NORDSTRÖM</h3>
+      <div class="pr"><span>r±:</span><span class="pv">M ± √(M²−Q²)</span></div>
+      <div class="pr"><span>Estremo:</span><span class="pv">Q = M, r±=M</span></div>
+      <hr class="sep">
+      <div class="pr"><span>Sing.:</span><span class="pv">Timelike (r=0)</span></div>
+      <div class="pr"><span>Cauchy:</span><span class="pv">r− (instabile)</span></div>
+      <div class="pr"><span>T_H (estr.):</span><span class="pv">= 0</span></div>
+      <hr class="sep">
+      <div style="font-size:10px;color:#475569;line-height:1.6;">H. Reissner, 1916<br>G. Nordström, 1918<br>Instabilità CH: Penrose 1968<br>Stati BPS: SUSY</div>
+    </div>
+  </div>
+</div>
+<script>
+const cv=document.getElementById('c'),cx=cv.getContext('2d');
+const DESC=[
+  "La metrica di Reissner-Nordström (1916/1918) descrive un buco nero sferico con carica elettrica Q. Presenta due orizzonti: r± = M ± √(M²−Q²). La metrica è: ds² = −Δ/r² c²dt² + r²/Δ dr² + r²dΩ², dove Δ = r²−2Mr+Q².",
+  "Il buco nero di Reissner-Nordström ha due orizzonti: l'orizzonte esterno r+ = M+√(M²−Q²) (orizzonte degli eventi) e l'orizzonte interno r− = M−√(M²−Q²) (orizzonte di Cauchy). L'orizzonte di Cauchy è instabile: piccole perturbazioni lo distruggono (blue-shift instability).",
+  "A differenza di Schwarzschild, la singolarità di Reissner-Nordström è di tipo TIMELIKE (verticale nel diagramma). Questo significa che teoricamente un osservatore che cade dentro può EVITARE la singolarità passandole accanto, sebbene l'orizzonte di Cauchy sia probabilmente fisicamente distrutto.",
+  "Il diagramma di Penrose del buco nero di RN mostra una torre infinita di regioni alternate: I (esterno), II (interno tra orizzonti), III (interno oltre l'orizzonte di Cauchy). Le singolarità sono linee verticali. Il diagramma si estende all'infinito verso l'alto e verso il basso.",
+  "Nel caso estremo Q = M, i due orizzonti coincidono: r+ = r- = M. Il buco nero estremale ha gravità superficiale zero (temperatura di Hawking T_H = 0). È legato alla supersimmetria (BPS states) e alla corrispondenza stringa-teoria.",
+  "Nella realtà astrofisica, i buchi neri hanno carica Q ≈ 0 (neutralizzata dal plasma circostante). Il parametro fisicamente rilevante è lo spin a = J/Mc (Kerr). La classificazione dei BH è: Schwarzschild (Q=0,a=0), Reissner-Nordström (Q≠0,a=0), Kerr (Q=0,a≠0), Kerr-Newman (Q≠0,a≠0)."
+];
+const BADGES=['①','②','③','④','⑤','⑥'];
+
+let W,H,ph=0,T=0;
+const stars=[];
+for(let i=0;i<180;i++)stars.push({x:Math.random(),y:Math.random(),r:Math.random()*1.2+0.3,p:Math.random()*Math.PI*2,sp:Math.random()*0.5+0.2});
+
+function resize(){W=cv.width=cv.offsetWidth;H=cv.height=cv.offsetHeight;}
+window.addEventListener('resize',resize);
+resize();
+
+function gw(col,blur){cx.shadowColor=col;cx.shadowBlur=blur;}
+function ng(){cx.shadowBlur=0;cx.shadowColor='transparent';}
+function lbl(x,y,txt,col,sz,al,bold){
+  cx.fillStyle=col;cx.font=(bold?'bold ':'')+sz+'px Segoe UI';
+  cx.textAlign=al||'center';cx.fillText(txt,x,y);
+}
+function bg(){cx.fillStyle='#000010';cx.fillRect(0,0,W,H);}
+function drawStars(){
+  for(const s of stars){
+    const bri=0.5+0.5*Math.sin(T*s.sp+s.p);
+    cx.beginPath();cx.arc(s.x*W,s.y*H,s.r,0,Math.PI*2);
+    cx.fillStyle=`rgba(200,220,255,${0.25+0.45*bri})`;cx.fill();
+  }
+}
+
+function go(n){
+  ph=n;T=0;
+  document.getElementById('ui-phase').textContent='Fase '+n;
+  document.getElementById('ui-badge').textContent=BADGES[n];
+  document.getElementById('ui-desc').textContent=DESC[n];
+  document.querySelectorAll('.btn').forEach((b,i)=>b.classList.toggle('active',i===n));
+}
+go(0);
+
+// ── Helpers ───────────────────────────────────────────────────────────────────
+
+function arrow(x1,y1,x2,y2,col,w,hs){
+  cx.save();cx.strokeStyle=col;cx.fillStyle=col;cx.lineWidth=w||1.5;
+  cx.beginPath();cx.moveTo(x1,y1);cx.lineTo(x2,y2);cx.stroke();
+  const a=Math.atan2(y2-y1,x2-x1),h=hs||8;
+  cx.beginPath();cx.moveTo(x2,y2);
+  cx.lineTo(x2-h*Math.cos(a-0.4),y2-h*Math.sin(a-0.4));
+  cx.lineTo(x2-h*Math.cos(a+0.4),y2-h*Math.sin(a+0.4));
+  cx.closePath();cx.fill();cx.restore();
+}
+
+function card(x,y,w,h,alpha){
+  cx.save();
+  cx.fillStyle=`rgba(0,10,30,${alpha||0.7})`;
+  cx.strokeStyle='rgba(52,211,153,0.18)';cx.lineWidth=1;
+  cx.beginPath();cx.roundRect(x,y,w,h,8);
+  cx.fill();cx.stroke();cx.restore();
+}
+
+function glowCircle(cx_,cy_,r,col,blur,lw){
+  cx.save();gw(col,blur||20);
+  cx.beginPath();cx.arc(cx_,cy_,r,0,Math.PI*2);
+  cx.strokeStyle=col;cx.lineWidth=lw||2;cx.stroke();
+  ng();cx.restore();
+}
+
+// ── PHASE 0 — Metrica ─────────────────────────────────────────────────────────
+function ph0(){
+  const cx_=W/2,cy_=H*0.48;
+  const scale=Math.min(W,H)/600;
+
+  // Card background
+  card(cx_-W*0.44,cy_-H*0.42,W*0.88,H*0.84,0.65);
+
+  // Formula block
+  const fy=cy_-H*0.30;
+  lbl(cx_,fy,'Metrica di Reissner-Nordström','#34d399',13*scale,'center',true);
+  lbl(cx_,fy+28*scale,'ds² = −Δ/r² c²dt² + r²/Δ dr² + r²dΩ²','#e2e8f0',11.5*scale,'center',false);
+  lbl(cx_,fy+46*scale,'dove  Δ = r² − 2Mr + Q²','#94a3b8',10*scale,'center',false);
+  lbl(cx_,fy+68*scale,'r± = M ± √(M²−Q²)','#6ee7b7',13*scale,'center',true);
+
+  // BH diagram — concentric circles
+  const bx=cx_,by=cy_+H*0.08;
+  const Rout=Math.min(W,H)*0.175*scale*1.3;
+  const Rin=Rout*0.52;
+
+  // Outer glow region
+  const gOuter=cx.createRadialGradient(bx,by,Rin*0.6,bx,by,Rout*1.5);
+  gOuter.addColorStop(0,'rgba(52,211,153,0.06)');
+  gOuter.addColorStop(1,'rgba(52,211,153,0)');
+  cx.beginPath();cx.arc(bx,by,Rout*1.5,0,Math.PI*2);
+  cx.fillStyle=gOuter;cx.fill();
+
+  // Electric field lines (animated radial)
+  const nLines=16;
+  for(let i=0;i<nLines;i++){
+    const ang=i/nLines*Math.PI*2;
+    const pulse=(T*0.6)%1;
+    const lineAlpha=0.5+0.3*Math.sin(T*1.5+i*0.4);
+    cx.save();
+    for(let seg=0;seg<5;seg++){
+      const t0=(seg/5+pulse)%1;
+      const t1=((seg+0.35)/5+pulse)%1;
+      const r0=Rout*0.65+t0*(Rout*1.3);
+      const r1=Rout*0.65+t1*(Rout*1.3);
+      if(r0>Rout*0.9&&r0<Rout*1.9){
+        gw('#34d399',8);
+        cx.beginPath();
+        cx.moveTo(bx+r0*Math.cos(ang),by+r0*Math.sin(ang));
+        cx.lineTo(bx+r1*Math.cos(ang),by+r1*Math.sin(ang));
+        cx.strokeStyle=`rgba(52,211,153,${lineAlpha*0.7})`;cx.lineWidth=1.2;
+        cx.stroke();ng();
+      }
+    }
+    cx.restore();
+  }
+
+  // Region between horizons (teal tint)
+  const gBetween=cx.createRadialGradient(bx,by,Rin,bx,by,Rout);
+  gBetween.addColorStop(0,'rgba(52,211,153,0.04)');
+  gBetween.addColorStop(1,'rgba(52,211,153,0.10)');
+  cx.beginPath();cx.arc(bx,by,Rout,0,Math.PI*2);
+  cx.fillStyle=gBetween;cx.fill();
+  cx.beginPath();cx.arc(bx,by,Rin,0,Math.PI*2);
+  cx.fillStyle='#000010';cx.fill();
+
+  // Singularity fill
+  cx.beginPath();cx.arc(bx,by,Rin*0.28,0,Math.PI*2);
+  cx.fillStyle='#000000';cx.fill();
+
+  // r+ outer horizon
+  const glowBrightness=0.8+0.2*Math.sin(T*2);
+  gw('#34d399',22*glowBrightness);
+  cx.beginPath();cx.arc(bx,by,Rout,0,Math.PI*2);
+  cx.strokeStyle='#34d399';cx.lineWidth=2.5;cx.stroke();ng();
+
+  // r- inner horizon (Cauchy)
+  const cauchyPulse=0.6+0.4*Math.sin(T*3.5);
+  gw('#6ee7b7',18*cauchyPulse);
+  cx.beginPath();cx.arc(bx,by,Rin,0,Math.PI*2);
+  cx.strokeStyle='#6ee7b7';cx.lineWidth=2;cx.stroke();ng();
+
+  // Q charge label
+  lbl(bx,by+4,'Q','#34d399',13*scale,'center',true);
+
+  // Labels
+  const lo=bx+Rout+12;
+  lbl(lo,by-6,'r+ (orizzonte degli eventi)','#34d399',9.5*scale,'left',false);
+  const li=bx+Rin+10;
+  lbl(li,by-Rin*0.38,'r− (orizzonte di Cauchy)','#6ee7b7',9*scale,'left',false);
+  lbl(bx-Rout-10,by-6,'Carica Q','#94a3b8',9.5*scale,'right',false);
+
+  // Condition labels at bottom
+  const by2=cy_+H*0.30;
+  lbl(cx_-W*0.15,by2,'Q < M  (sub-estremo):  due orizzonti','#94a3b8',9.5*scale,'center',false);
+  lbl(cx_+W*0.15,by2,'Q = M  (estremo):  r+ = r− = M','#6ee7b7',9.5*scale,'center',false);
+}
+
+// ── PHASE 1 — Due Orizzonti ───────────────────────────────────────────────────
+function ph1(){
+  const cx_=W/2,cy_=H*0.5;
+  const scale=Math.min(W,H)/600;
+  const Rout=Math.min(W,H)*0.22;
+  const Rin=Rout*0.5;
+  const Rcore=Rin*0.32;
+
+  // Background glow region
+  const gBg=cx.createRadialGradient(cx_,cy_,Rout*0.5,cx_,cy_,Rout*2.2);
+  gBg.addColorStop(0,'rgba(52,211,153,0.07)');
+  gBg.addColorStop(1,'rgba(52,211,153,0)');
+  cx.beginPath();cx.arc(cx_,cy_,Rout*2.2,0,Math.PI*2);
+  cx.fillStyle=gBg;cx.fill();
+
+  // Between horizons region (tinted)
+  cx.beginPath();cx.arc(cx_,cy_,Rout,0,Math.PI*2);
+  const gZone=cx.createRadialGradient(cx_,cy_,Rin,cx_,cy_,Rout);
+  gZone.addColorStop(0,'rgba(52,211,153,0.06)');
+  gZone.addColorStop(1,'rgba(52,211,153,0.14)');
+  cx.fillStyle=gZone;cx.fill();
+
+  // Inner region (dark, beyond Cauchy)
+  cx.beginPath();cx.arc(cx_,cy_,Rin,0,Math.PI*2);
+  const gInner=cx.createRadialGradient(cx_,cy_,0,cx_,cy_,Rin);
+  gInner.addColorStop(0,'rgba(10,0,30,1)');
+  gInner.addColorStop(0.6,'rgba(20,10,50,1)');
+  gInner.addColorStop(1,'rgba(30,20,60,0.9)');
+  cx.fillStyle=gInner;cx.fill();
+
+  // Singularity core
+  cx.beginPath();cx.arc(cx_,cy_,Rcore,0,Math.PI*2);
+  cx.fillStyle='#000000';cx.fill();
+
+  // r+ outer horizon (bright emerald)
+  const glow_r=0.75+0.25*Math.sin(T*1.8);
+  gw('#34d399',30*glow_r);
+  cx.beginPath();cx.arc(cx_,cy_,Rout,0,Math.PI*2);
+  cx.strokeStyle='#34d399';cx.lineWidth=3;cx.stroke();ng();
+
+  // r- inner Cauchy horizon (pulsing instability)
+  const cauchyPulse=0.5+0.5*Math.abs(Math.sin(T*4.5));
+  gw('#f0abfc',25*cauchyPulse);
+  cx.beginPath();cx.arc(cx_,cy_,Rin,0,Math.PI*2);
+  cx.strokeStyle=`rgba(240,171,252,${0.7+0.3*cauchyPulse})`;cx.lineWidth=2.5;cx.stroke();ng();
+
+  // Orbiting particles near r+
+  const nOrbit=4;
+  for(let i=0;i<nOrbit;i++){
+    const ang=T*0.6+i*Math.PI*2/nOrbit;
+    const pr=Rout*1.25;
+    const px=cx_+pr*Math.cos(ang),py=cy_+pr*Math.sin(ang);
+    gw('#6ee7b7',10);
+    cx.beginPath();cx.arc(px,py,3,0,Math.PI*2);
+    cx.fillStyle='#6ee7b7';cx.fill();ng();
+  }
+
+  // Particle falling in
+  const fallPhase=(T*0.25)%1;
+  if(fallPhase<0.5){
+    const fallR=Rout*1.8*(1-fallPhase*2)+Rout*(fallPhase*2);
+    const fax=cx_+fallR*Math.cos(0.3);
+    const fay=cy_+fallR*Math.sin(0.3);
+    gw('#fbbf24',8);
+    cx.beginPath();cx.arc(fax,fay,3.5,0,Math.PI*2);
+    cx.fillStyle='#fbbf24';cx.fill();ng();
+  }else{
+    const fallR2=Rin*(1-(fallPhase-0.5)*2)+Rcore*((fallPhase-0.5)*2);
+    const fax2=cx_+fallR2*Math.cos(0.3);
+    const fay2=cy_+fallR2*Math.sin(0.3);
+    gw('#fbbf24',8);
+    cx.beginPath();cx.arc(fax2,fay2,3.5,0,Math.PI*2);
+    cx.fillStyle='#fbbf24';cx.fill();ng();
+  }
+
+  // Labels
+  lbl(cx_,cy_-Rout-22,'r+ = M + √(M²−Q²)','#34d399',11*scale,'center',true);
+  lbl(cx_,cy_-Rout-8,'Orizzonte degli eventi','#34d399',9.5*scale,'center',false);
+  lbl(cx_,cy_+Rout+16,'r+ (esterno)','#34d399',9*scale,'center',false);
+
+  const Rin_lbl=cx_+Rin*0.72+12;
+  lbl(cx_+W*0.25,cy_-18,'r− = M − √(M²−Q²)','#f0abfc',10*scale,'center',true);
+  lbl(cx_+W*0.25,cy_-4,'Orizzonte di Cauchy','#c4b5fd',9.5*scale,'center',false);
+  // Arrow to inner horizon
+  cx.save();cx.strokeStyle='rgba(240,171,252,0.5)';cx.lineWidth=1;cx.setLineDash([3,4]);
+  cx.beginPath();cx.moveTo(cx_+W*0.25,cy_+10);cx.lineTo(cx_+Rin*0.7,cy_+Rin*0.7);cx.stroke();
+  cx.setLineDash([]);cx.restore();
+
+  lbl(cx_,cy_+Rout+34,'Instabilità Blue-Shift all\'orizzonte di Cauchy','#94a3b8',9*scale,'center',false);
+
+  // Region labels
+  lbl(cx_,cy_,'I I I','rgba(200,170,255,0.5)',10*scale,'center',false);
+  lbl(cx_+Rout*0.72,cy_,'I I','rgba(52,211,153,0.5)',10*scale,'center',false);
+  lbl(cx_+Rout*1.45,cy_,'I','rgba(100,200,130,0.5)',10*scale,'center',false);
+}
+
+// ── PHASE 2 — Singolarità Timelike ──────────────────────────────────────────
+function ph2(){
+  const scale=Math.min(W,H)/600;
+  const midX=W/2,midY=H/2;
+
+  // Divider
+  cx.save();cx.strokeStyle='rgba(52,211,153,0.15)';cx.lineWidth=1;cx.setLineDash([6,6]);
+  cx.beginPath();cx.moveTo(midX,H*0.05);cx.lineTo(midX,H*0.95);cx.stroke();
+  cx.setLineDash([]);cx.restore();
+
+  // Title
+  lbl(midX,H*0.06,'Confronto: Singolarità Spacelike vs Timelike','#34d399',12*scale,'center',true);
+
+  // ─── LEFT: Schwarzschild ───────────────────────────────────────────────────
+  const lx=W*0.25,ly=H*0.5;
+  const dW=W*0.32,dH=H*0.60;
+  card(lx-dW/2,ly-dH/2,dW,dH,0.55);
+
+  lbl(lx,ly-dH/2+20,'Schwarzschild','#94a3b8',11*scale,'center',true);
+  lbl(lx,ly-dH/2+36,'Q = 0','#64748b',9*scale,'center',false);
+
+  // Mini Penrose diagram — Schwarzschild style
+  const sdx=lx,sdy=ly+H*0.02;
+  const sdS=Math.min(dW,dH)*0.32;
+
+  // Singularity (horizontal red bar at top)
+  gw('#ef4444',15);
+  cx.beginPath();cx.moveTo(sdx-sdS,sdy-sdS);cx.lineTo(sdx+sdS,sdy-sdS);
+  cx.strokeStyle='#ef4444';cx.lineWidth=4;cx.stroke();ng();
+  lbl(sdx,sdy-sdS-10,'Singolarità — SPACELIKE','#ef4444',8.5*scale,'center',true);
+
+  // Future horizon (diagonal)
+  cx.save();cx.strokeStyle='rgba(150,200,255,0.7)';cx.lineWidth=1.5;
+  cx.beginPath();cx.moveTo(sdx-sdS,sdy+sdS);cx.lineTo(sdx,sdy-sdS);cx.stroke();
+  cx.restore();
+
+  // Region I box
+  cx.save();cx.fillStyle='rgba(30,30,80,0.4)';
+  cx.beginPath();cx.moveTo(sdx,sdy-sdS);cx.lineTo(sdx+sdS,sdy);cx.lineTo(sdx,sdy+sdS);cx.lineTo(sdx-sdS,sdy);cx.closePath();
+  cx.fill();cx.restore();
+
+  // Worldline (particle) — hits the singularity
+  const swProgress=(T*0.4)%1;
+  const swy_start=sdy+sdS*0.8;
+  const swy_hit=sdy-sdS;
+  const swy_now=swy_start+(swy_hit-swy_start)*swProgress;
+  const swx_now=sdx+sdS*0.3*(1-swProgress*1.1);
+  gw('#fbbf24',12);
+  cx.beginPath();cx.arc(swx_now,Math.max(swy_hit,swy_now),4,0,Math.PI*2);
+  cx.fillStyle='#fbbf24';cx.fill();ng();
+  // Trail
+  cx.save();cx.strokeStyle='rgba(251,191,36,0.4)';cx.lineWidth=1.5;
+  cx.beginPath();cx.moveTo(sdx+sdS*0.3,swy_start);cx.lineTo(swx_now,Math.max(swy_hit,swy_now));cx.stroke();
+  cx.restore();
+
+  lbl(lx,ly+dH/2-28,'Singolarità','#ef4444',9*scale,'center',true);
+  lbl(lx,ly+dH/2-14,'INEVITABILE','#ef4444',9*scale,'center',false);
+
+  // ─── RIGHT: Reissner-Nordström ────────────────────────────────────────────
+  const rx=W*0.75,ry=H*0.5;
+  card(rx-dW/2,ry-dH/2,dW,dH,0.55);
+
+  lbl(rx,ry-dH/2+20,'Reissner-Nordström','#34d399',11*scale,'center',true);
+  lbl(rx,ry-dH/2+36,'Q ≠ 0','#64748b',9*scale,'center',false);
+
+  // Mini RN Penrose diagram
+  const rdx=rx,rdy=ry+H*0.02;
+  const rdS=Math.min(dW,dH)*0.32;
+
+  // Region (diamond)
+  cx.save();cx.fillStyle='rgba(20,50,40,0.4)';
+  cx.beginPath();cx.moveTo(rdx,rdy-rdS);cx.lineTo(rdx+rdS,rdy);cx.lineTo(rdx,rdy+rdS);cx.lineTo(rdx-rdS,rdy);cx.closePath();
+  cx.fill();cx.restore();
+
+  // Vertical singularity (TIMELIKE — green vertical line on left)
+  const singX=rdx-rdS*0.9;
+  gw('#34d399',22);
+  cx.beginPath();cx.moveTo(singX,rdy-rdS*0.85);cx.lineTo(singX,rdy+rdS*0.85);
+  cx.strokeStyle='#34d399';cx.lineWidth=4;cx.stroke();ng();
+  lbl(singX-8,rdy-rdS*0.88,'Sing. — TIMELIKE','#34d399',8.5*scale,'right',false);
+
+  // Horizon lines
+  cx.save();cx.strokeStyle='rgba(52,211,153,0.6)';cx.lineWidth=1.5;
+  cx.beginPath();cx.moveTo(rdx-rdS,rdy);cx.lineTo(rdx,rdy-rdS);cx.stroke();
+  cx.beginPath();cx.moveTo(rdx-rdS,rdy);cx.lineTo(rdx,rdy+rdS);cx.stroke();
+  cx.restore();
+  cx.save();cx.strokeStyle='rgba(110,231,183,0.5)';cx.lineWidth=1.2;cx.setLineDash([4,4]);
+  cx.beginPath();cx.moveTo(singX,rdy);cx.lineTo(rdx,rdy-rdS*0.7);cx.stroke();
+  cx.beginPath();cx.moveTo(singX,rdy);cx.lineTo(rdx,rdy+rdS*0.7);cx.stroke();
+  cx.setLineDash([]);cx.restore();
+
+  // Worldline — passes BESIDE singularity
+  const rwProgress=(T*0.4)%1;
+  const rwx_now=rdx-rdS*0.3+rwProgress*rdS*0.5;
+  const rwy_now=rdy+rdS*0.85-rwProgress*rdS*1.7;
+  gw('#fbbf24',12);
+  cx.beginPath();cx.arc(Math.max(singX+5,rwx_now),rwy_now,4,0,Math.PI*2);
+  cx.fillStyle='#fbbf24';cx.fill();ng();
+  cx.save();cx.strokeStyle='rgba(251,191,36,0.4)';cx.lineWidth=1.5;
+  cx.beginPath();cx.moveTo(rdx-rdS*0.3,rdy+rdS*0.85);
+  cx.lineTo(Math.max(singX+5,rwx_now),rwy_now);cx.stroke();
+  cx.restore();
+
+  lbl(rx,ry+dH/2-28,'Singolarità','#34d399',9*scale,'center',true);
+  lbl(rx,ry+dH/2-14,'EVITABILE (in teoria)','#34d399',9*scale,'center',false);
+
+  // Bottom note
+  lbl(midX,H*0.93,'* L\'orizzonte di Cauchy è probabilmente instabile fisicamente (Penrose 1968)','#475569',9*scale,'center',false);
+}
+
+// ── PHASE 3 — Diagramma di Penrose RN ─────────────────────────────────────────
+function ph3(){
+  const scale=Math.min(W,H)/600;
+  const cx_=W*0.5,cy_=H*0.5;
+
+  lbl(cx_,H*0.05,'Diagramma di Penrose — Reissner-Nordström','#34d399',12*scale,'center',true);
+  lbl(cx_,H*0.91,'( La torre si ripete infinitamente verso l\'alto e verso il basso )','#475569',9*scale,'center',false);
+
+  // Draw the infinite tower: 3 repeated units
+  const unitH=H*0.25;
+  const unitW=W*0.52;
+  const x0=cx_;
+  const totalH=unitH*3;
+  const y0=cy_-totalH/2+unitH*0.5;
+
+  // ... dots top / bottom
+  lbl(cx_,y0-unitH*0.62,'• • •','#475569',13*scale,'center',false);
+  lbl(cx_,y0+totalH+unitH*0.05,'• • •','#475569',13*scale,'center',false);
+
+  // ── draw unit function
+  function drawRNUnit(yCenter,unitIdx){
+    const half=unitW/2;
+    const hH=unitH/2;
+
+    // Region I (right exterior diamond)
+    const Ix=x0+half*0.6;
+    const Iy=yCenter;
+    const Is=Math.min(half*0.72,hH*0.78);
+    cx.save();
+    cx.fillStyle='rgba(20,40,30,0.55)';
+    cx.beginPath();
+    cx.moveTo(Ix,Iy-Is);cx.lineTo(Ix+Is,Iy);cx.lineTo(Ix,Iy+Is);cx.lineTo(Ix-Is,Iy);
+    cx.closePath();cx.fill();cx.restore();
+    lbl(Ix,Iy,'I','rgba(110,231,183,0.7)',10*scale,'center',true);
+
+    // Region II (middle between horizons)
+    const IIx=x0-half*0.12;
+    const IIy=yCenter;
+    const IIs=Is*0.68;
+    cx.save();
+    cx.fillStyle='rgba(10,30,50,0.6)';
+    cx.beginPath();
+    cx.moveTo(IIx,IIy-IIs);cx.lineTo(IIx+IIs,IIy);cx.lineTo(IIx,IIy+IIs);cx.lineTo(IIx-IIs,IIy);
+    cx.closePath();cx.fill();cx.restore();
+    lbl(IIx,IIy,'II','rgba(148,163,184,0.6)',9*scale,'center',false);
+
+    // Region III (inner, left of Cauchy horizon)
+    const IIIx=x0-half*0.72;
+    const IIIy=yCenter;
+    const IIIs=IIs*0.7;
+    cx.save();
+    cx.fillStyle='rgba(30,10,50,0.65)';
+    cx.beginPath();
+    cx.moveTo(IIIx,IIIy-IIIs);cx.lineTo(IIIx+IIIs,IIIy);cx.lineTo(IIIx,IIIy+IIIs);cx.lineTo(IIIx-IIIs,IIIy);
+    cx.closePath();cx.fill();cx.restore();
+    lbl(IIIx,IIIy,'III','rgba(200,150,255,0.6)',9*scale,'center',false);
+
+    // Vertical singularity line (left edge)
+    const singX=x0-half*1.1;
+    const singPulse=0.7+0.3*Math.sin(T*2+unitIdx*1.5);
+    gw('#34d399',18*singPulse);
+    cx.beginPath();
+    cx.moveTo(singX,yCenter-IIIs*1.05);cx.lineTo(singX,yCenter+IIIs*1.05);
+    cx.strokeStyle='#34d399';cx.lineWidth=3;cx.stroke();ng();
+
+    // r+ outer horizon lines (45° from edge of region I left)
+    cx.save();
+    const bri1=0.7+0.3*Math.sin(T*1.5+unitIdx);
+    cx.strokeStyle=`rgba(52,211,153,${bri1})`;cx.lineWidth=1.8;
+    // Top-left of I = top-right of II  →  lines at ±45°
+    const p_int_x=Ix-Is; // shared point
+    const p_int_y=yCenter;
+    cx.beginPath();cx.moveTo(p_int_x,p_int_y-Is*0.0);cx.lineTo(Ix,Iy-Is);cx.stroke();
+    cx.beginPath();cx.moveTo(p_int_x,p_int_y);cx.lineTo(Ix,Iy+Is);cx.stroke();
+    cx.restore();
+
+    // r- Cauchy horizon lines
+    cx.save();
+    const bri2=0.5+0.5*Math.abs(Math.sin(T*4+unitIdx*2.1));
+    cx.strokeStyle=`rgba(167,139,250,${bri2})`;cx.lineWidth=1.5;cx.setLineDash([5,3]);
+    cx.beginPath();cx.moveTo(IIx-IIs,IIy);cx.lineTo(IIIx+IIIs,IIIy);cx.stroke();
+    cx.setLineDash([]);cx.restore();
+
+    // Singularity label (only on first unit)
+    if(unitIdx===1){
+      lbl(singX-6,yCenter,'r = 0','#34d399',8.5*scale,'right',false);
+    }
+  }
+
+  for(let i=0;i<3;i++){
+    drawRNUnit(y0+i*unitH,i);
+  }
+
+  // Animated particle worldline traversing the tower
+  const totalProgress=(T*0.18)%1;
+  const travelY=y0-unitH*0.1+totalProgress*(totalH+unitH*0.2);
+  const travelX=cx_+W*0.22-Math.sin(totalProgress*Math.PI*2.5)*W*0.12;
+  const clampX=Math.max(cx_-W*0.26+10,Math.min(cx_+W*0.32,travelX));
+  // Trail
+  cx.save();cx.strokeStyle='rgba(251,191,36,0.35)';cx.lineWidth=1.5;
+  cx.beginPath();
+  const trailLen=40;
+  for(let j=trailLen;j>=0;j--){
+    const tp=Math.max(0,totalProgress-j*0.006);
+    const ty2=y0-unitH*0.1+tp*(totalH+unitH*0.2);
+    const tx2=cx_+W*0.22-Math.sin(tp*Math.PI*2.5)*W*0.12;
+    const tcx=Math.max(cx_-W*0.26+10,Math.min(cx_+W*0.32,tx2));
+    j===trailLen?cx.moveTo(tcx,ty2):cx.lineTo(tcx,ty2);
+  }
+  cx.stroke();cx.restore();
+  gw('#fbbf24',14);
+  cx.beginPath();cx.arc(clampX,travelY,4,0,Math.PI*2);
+  cx.fillStyle='#fbbf24';cx.fill();ng();
+
+  // Legend
+  const legy=H*0.88;
+  const legx=cx_+W*0.28;
+  lbl(legx-90,legy,'─── r+','#34d399',9*scale,'left',false);
+  lbl(legx-10,legy,'- - - r−','#a78bfa',9*scale,'left',false);
+  lbl(legx+70,legy,'▋ sing.','#34d399',9*scale,'left',false);
+}
+
+// ── PHASE 4 — Caso Estremo ────────────────────────────────────────────────────
+function ph4(){
+  const scale=Math.min(W,H)/600;
+  lbl(W/2,H*0.06,'Caso Estremo: Q = M','#34d399',13*scale,'center',true);
+
+  const BHs=[
+    {label:'Q < M',sublabel:'Sub-estremo',x:W*0.18,Q_over_M:0.7,col:'#34d399',rings:2,nuda:false},
+    {label:'Q = M',sublabel:'Estremo',x:W*0.5,Q_over_M:1.0,col:'#6ee7b7',rings:1,nuda:false},
+    {label:'Q > M',sublabel:'Nudo!',x:W*0.82,Q_over_M:1.25,col:'#ef4444',rings:0,nuda:true}
+  ];
+
+  const cy_=H*0.42;
+  const baseR=Math.min(W,H)*0.13;
+
+  BHs.forEach((bh,i)=>{
+    const bx=bh.x,by=cy_;
+    const pulse=bh.rings===1?0.85+0.15*Math.sin(T*3):1;
+
+    if(bh.nuda){
+      // Naked singularity — just an X
+      gw('#ef4444',20);
+      const xs=baseR*0.5;
+      cx.strokeStyle='#ef4444';cx.lineWidth=3;
+      cx.beginPath();cx.moveTo(bx-xs,by-xs);cx.lineTo(bx+xs,by+xs);cx.stroke();
+      cx.beginPath();cx.moveTo(bx+xs,by-xs);cx.lineTo(bx-xs,by+xs);cx.stroke();
+      ng();
+      lbl(bx,by+xs+22,'Singolarità Nuda!','#ef4444',9.5*scale,'center',true);
+      lbl(bx,by+xs+36,'Violazione CCC','#94a3b8',8.5*scale,'center',false);
+    } else if(bh.rings===2){
+      const Rout=baseR;
+      const Rin=baseR*0.5;
+      // Glow
+      const g=cx.createRadialGradient(bx,by,Rin,bx,by,Rout*1.4);
+      g.addColorStop(0,'rgba(52,211,153,0.05)');g.addColorStop(1,'rgba(52,211,153,0)');
+      cx.beginPath();cx.arc(bx,by,Rout*1.4,0,Math.PI*2);cx.fillStyle=g;cx.fill();
+      // Inner region
+      cx.beginPath();cx.arc(bx,by,Rout,0,Math.PI*2);
+      cx.fillStyle='rgba(10,40,30,0.5)';cx.fill();
+      cx.beginPath();cx.arc(bx,by,Rin,0,Math.PI*2);
+      cx.fillStyle='rgba(0,0,16,0.9)';cx.fill();
+      // Rings
+      gw('#34d399',18);
+      cx.beginPath();cx.arc(bx,by,Rout,0,Math.PI*2);
+      cx.strokeStyle='#34d399';cx.lineWidth=2.5;cx.stroke();ng();
+      gw('#6ee7b7',12);
+      cx.beginPath();cx.arc(bx,by,Rin,0,Math.PI*2);
+      cx.strokeStyle='#6ee7b7';cx.lineWidth=1.8;cx.stroke();ng();
+      // Core
+      cx.beginPath();cx.arc(bx,by,Rin*0.25,0,Math.PI*2);cx.fillStyle='#000';cx.fill();
+      lbl(bx,by+Rout+18,'r+ ≠ r−','#34d399',9*scale,'center',false);
+    } else {
+      // Extremal: single degenerate horizon
+      const Rext=baseR*0.75*pulse;
+      const gExt=cx.createRadialGradient(bx,by,0,bx,by,Rext*1.8);
+      gExt.addColorStop(0,'rgba(110,231,183,0.12)');
+      gExt.addColorStop(0.6,'rgba(52,211,153,0.08)');
+      gExt.addColorStop(1,'rgba(52,211,153,0)');
+      cx.beginPath();cx.arc(bx,by,Rext*1.8,0,Math.PI*2);cx.fillStyle=gExt;cx.fill();
+
+      // Double ring (degenerate)
+      for(let dl=0;dl<3;dl++){
+        const dlR=Rext+(dl-1)*3;
+        const dlA=0.8-dl*0.3;
+        gw('#6ee7b7',22*pulse);
+        cx.beginPath();cx.arc(bx,by,dlR,0,Math.PI*2);
+        cx.strokeStyle=`rgba(110,231,183,${dlA})`;cx.lineWidth=2.2;cx.stroke();ng();
+      }
+      cx.beginPath();cx.arc(bx,by,Rext*0.22,0,Math.PI*2);cx.fillStyle='#000';cx.fill();
+      lbl(bx,by+Rext+20,'r+ = r− = M','#6ee7b7',9*scale,'center',false);
+    }
+
+    // Labels
+    lbl(bx,by-baseR*1.15,bh.label,bh.col,12*scale,'center',true);
+    lbl(bx,by-baseR*0.95,bh.sublabel,'#64748b',9*scale,'center',false);
+  });
+
+  // Extremal properties panel
+  const py=H*0.70;
+  card(W*0.3,py,W*0.4,H*0.20,0.65);
+  lbl(W/2,py+20,'Proprietà del Caso Estremo  (Q = M)','#6ee7b7',11*scale,'center',true);
+  lbl(W/2,py+40,'κ = 0   →   T_H = 0   (Hawking temperature nulla)','#e2e8f0',10*scale,'center',false);
+  lbl(W/2,py+56,'Gravità superficiale zero','#94a3b8',9.5*scale,'center',false);
+  lbl(W/2,py+74,'Legato a SUSY — stati BPS (Bogomol\'ny-Prasad-Sommerfield)','#6ee7b7',9*scale,'center',false);
+  lbl(W/2,py+90,'Corrispondenza stringa-teoria, AdS/CFT','#94a3b8',9*scale,'center',false);
+
+  // Transition arrow
+  arrow(W*0.33,cy_+4,W*0.67,cy_+4,'rgba(52,211,153,0.3)',1.5,8);
+  lbl(W*0.5,cy_+20,'Q ↗','rgba(52,211,153,0.4)',9*scale,'center',false);
+}
+
+// ── PHASE 5 — Classificazione BH ─────────────────────────────────────────────
+function ph5(){
+  const scale=Math.min(W,H)/600;
+  lbl(W/2,H*0.05,'Classificazione dei Buchi Neri','#34d399',13*scale,'center',true);
+
+  // 2x2 grid
+  const gW=W*0.38,gH=H*0.36;
+  const gx0=W*0.5-gW,gy0=H*0.14;
+  const cW=gW,cH=gH;
+
+  const cells=[
+    {r:0,c:0,name:'Schwarzschild',sub:'Q=0, a=0',col:'#94a3b8',type:'simple',next:false},
+    {r:0,c:1,name:'Reissner-Nordström',sub:'Q≠0, a=0',col:'#34d399',type:'two_rings',next:false},
+    {r:1,c:0,name:'Kerr',sub:'Q=0, a≠0',col:'#6ee7b7',type:'kerr',next:true},
+    {r:1,c:1,name:'Kerr-Newman',sub:'Q≠0, a≠0',col:'#a78bfa',type:'general',next:false}
+  ];
+
+  // Grid lines
+  cx.save();cx.strokeStyle='rgba(52,211,153,0.2)';cx.lineWidth=1;
+  cx.strokeRect(gx0,gy0,gW*2,gH*2);
+  cx.beginPath();cx.moveTo(gx0+gW,gy0);cx.lineTo(gx0+gW,gy0+gH*2);cx.stroke();
+  cx.beginPath();cx.moveTo(gx0,gy0+gH);cx.lineTo(gx0+gW*2,gy0+gH);cx.stroke();
+  cx.restore();
+
+  // Horizontal axis labels (spin)
+  lbl(gx0+gW*0.5,gy0-22,'a = 0','#64748b',10*scale,'center',false);
+  lbl(gx0+gW*1.5,gy0-22,'a ≠ 0','#64748b',10*scale,'center',false);
+
+  // Vertical axis labels (charge)
+  cx.save();cx.fillStyle='#64748b';cx.font='9.5px Segoe UI';cx.textAlign='right';
+  cx.translate(gx0-12,gy0+gH*0.5);cx.rotate(-Math.PI/2);cx.fillText('Q = 0',0,0);cx.restore();
+  cx.save();cx.fillStyle='#64748b';cx.font='9.5px Segoe UI';cx.textAlign='right';
+  cx.translate(gx0-12,gy0+gH*1.5);cx.rotate(-Math.PI/2);cx.fillText('Q ≠ 0',0,0);cx.restore();
+
+  cells.forEach(cell=>{
+    const cx_=gx0+cell.c*gW+gW/2;
+    const cy_=gy0+cell.r*gH+gH/2;
+    const R=Math.min(gW,gH)*0.18;
+
+    // Cell background
+    if(cell.next){
+      // Highlight Kerr (next chapter)
+      cx.save();cx.fillStyle='rgba(52,211,153,0.08)';
+      cx.beginPath();cx.rect(gx0+cell.c*gW,gy0+cell.r*gH,gW,gH);
+      cx.fill();cx.restore();
+      gw('#6ee7b7',20);
+      cx.save();cx.strokeStyle='rgba(110,231,183,0.4)';cx.lineWidth=2;cx.setLineDash([]);
+      cx.strokeRect(gx0+cell.c*gW+1,gy0+cell.r*gH+1,gW-2,gH-2);
+      cx.restore();ng();
+    }
+
+    // Mini BH sketch
+    if(cell.type==='simple'){
+      // Single ring Schwarzschild
+      gw('#94a3b8',12);
+      cx.beginPath();cx.arc(cx_,cy_-4,R,0,Math.PI*2);
+      cx.strokeStyle='#94a3b8';cx.lineWidth=2;cx.stroke();ng();
+      cx.beginPath();cx.arc(cx_,cy_-4,R*0.25,0,Math.PI*2);cx.fillStyle='#000';cx.fill();
+    } else if(cell.type==='two_rings'){
+      // Two rings RN
+      gw('#34d399',14);
+      cx.beginPath();cx.arc(cx_,cy_-4,R,0,Math.PI*2);
+      cx.strokeStyle='#34d399';cx.lineWidth=2;cx.stroke();ng();
+      gw('#6ee7b7',10);
+      cx.beginPath();cx.arc(cx_,cy_-4,R*0.5,0,Math.PI*2);
+      cx.strokeStyle='#6ee7b7';cx.lineWidth=1.5;cx.stroke();ng();
+      cx.beginPath();cx.arc(cx_,cy_-4,R*0.12,0,Math.PI*2);cx.fillStyle='#000';cx.fill();
+    } else if(cell.type==='kerr'){
+      // Kerr: oblate with ergosphere
+      const pulse=1+0.04*Math.sin(T*2.5);
+      gw('#6ee7b7',16*pulse);
+      // Ergosphere (outer, oblate)
+      cx.save();cx.translate(cx_,cy_-4);cx.scale(1,0.62);
+      cx.beginPath();cx.arc(0,0,R*1.28,0,Math.PI*2);
+      cx.strokeStyle='rgba(110,231,183,0.45)';cx.lineWidth=1.5;cx.setLineDash([4,3]);cx.stroke();
+      cx.setLineDash([]);cx.restore();ng();
+      // Event horizon (slightly oblate)
+      gw('#6ee7b7',14);
+      cx.save();cx.translate(cx_,cy_-4);cx.scale(1,0.7);
+      cx.beginPath();cx.arc(0,0,R,0,Math.PI*2);
+      cx.strokeStyle='#6ee7b7';cx.lineWidth=2;cx.stroke();cx.restore();ng();
+      cx.beginPath();cx.arc(cx_,cy_-4,R*0.18,0,Math.PI*2);cx.fillStyle='#000';cx.fill();
+      // Rotation arrow
+      const aPulse=T*1.5;
+      gw('#6ee7b7',8);
+      cx.save();cx.translate(cx_,cy_-4);
+      cx.beginPath();cx.arc(0,0,R*1.5,aPulse,aPulse+1.5);
+      cx.strokeStyle='rgba(110,231,183,0.7)';cx.lineWidth=1.5;cx.stroke();
+      const ae=aPulse+1.5;
+      cx.translate(R*1.5*Math.cos(ae),R*1.5*Math.sin(ae));
+      cx.rotate(ae+Math.PI/2);
+      cx.beginPath();cx.moveTo(0,0);cx.lineTo(-4,-6);cx.lineTo(4,-6);cx.closePath();
+      cx.fillStyle='rgba(110,231,183,0.7)';cx.fill();
+      cx.restore();ng();
+    } else {
+      // Kerr-Newman: general (two rings + oblate)
+      gw('#a78bfa',14);
+      cx.save();cx.translate(cx_,cy_-4);cx.scale(1,0.72);
+      cx.beginPath();cx.arc(0,0,R,0,Math.PI*2);
+      cx.strokeStyle='#a78bfa';cx.lineWidth=2;cx.stroke();cx.restore();ng();
+      gw('#c4b5fd',10);
+      cx.save();cx.translate(cx_,cy_-4);cx.scale(1,0.65);
+      cx.beginPath();cx.arc(0,0,R*0.5,0,Math.PI*2);
+      cx.strokeStyle='#c4b5fd';cx.lineWidth=1.5;cx.stroke();cx.restore();ng();
+      cx.beginPath();cx.arc(cx_,cy_-4,R*0.12,0,Math.PI*2);cx.fillStyle='#000';cx.fill();
+    }
+
+    // Cell labels
+    lbl(cx_,cy_+R*0.95,cell.name,cell.col,9.5*scale,'center',true);
+    lbl(cx_,cy_+R*0.95+14,cell.sub,'#64748b',8.5*scale,'center',false);
+    if(cell.next){
+      lbl(cx_,cy_-R*1.35,'→ Prossimo capitolo','rgba(110,231,183,0.6)',8*scale,'center',false);
+    }
+  });
+
+  // Note at bottom
+  const ny=gy0+gH*2+28;
+  card(W*0.15,ny,W*0.7,H*0.10,0.6);
+  lbl(W/2,ny+18,'Astrofisicamente: Q ≈ 0 (neutralizzata dal plasma)','#94a3b8',10*scale,'center',false);
+  lbl(W/2,ny+34,'Il parametro fisicamente rilevante è lo spin  a = J/Mc  (Kerr)','#6ee7b7',10*scale,'center',false);
+  lbl(W/2,ny+52,'M87* e Sgr A* sono buchi neri di Kerr con spin elevato','#64748b',9*scale,'center',false);
+}
+
+// ── Main loop ─────────────────────────────────────────────────────────────────
+function frame(){
+  bg();
+  drawStars();
+  cx.save();
+  [ph0,ph1,ph2,ph3,ph4,ph5][ph]();
+  cx.restore();
+  T+=0.016;
+  requestAnimationFrame(frame);
+}
+frame();
+</script>
+</body>
+</html>
