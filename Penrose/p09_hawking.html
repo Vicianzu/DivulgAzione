@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radiazione di Hawking — Penrose · DivulgAzione</title>
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
+body { background:#000010; color:#e2e8f0; font-family:'Georgia',serif; overflow:hidden; }
+#canvas { display:block; }
+#ui { position:fixed; top:0; left:0; right:0; display:flex; justify-content:space-between; align-items:center; padding:10px 20px; background:rgba(0,0,16,0.93); border-bottom:1px solid rgba(96,165,250,0.25); z-index:100; gap:12px; }
+#ui-title { font-size:12px; color:#60a5fa; letter-spacing:3px; text-transform:uppercase; white-space:nowrap; }
+#ui-phase { font-size:11px; color:#94a3b8; text-align:center; line-height:1.5; max-width:560px; }
+#ui-badge { font-size:13px; color:#93c5fd; font-weight:bold; text-align:right; white-space:nowrap; }
+#bottom { position:fixed; bottom:0; left:0; right:0; padding:8px 16px; background:rgba(0,0,16,0.93); border-top:1px solid rgba(96,165,250,0.2); display:flex; justify-content:center; gap:5px; z-index:100; flex-wrap:wrap; }
+.btn { padding:5px 11px; border:1px solid rgba(96,165,250,0.3); background:rgba(12,20,40,0.9); color:#60a5fa; border-radius:20px; cursor:pointer; font-size:10px; transition:all 0.3s; font-family:Georgia,serif; }
+.btn:hover, .btn.active { background:rgba(96,165,250,0.15); border-color:#60a5fa; color:#93c5fd; }
+.nav-btn { padding:5px 13px; border:1px solid rgba(148,163,184,0.25); background:rgba(12,20,40,0.9); color:#64748b; border-radius:20px; cursor:pointer; font-size:10px; transition:all 0.3s; text-decoration:none; display:inline-flex; align-items:center; }
+.nav-btn:hover { color:#94a3b8; border-color:#94a3b8; }
+#panel { position:fixed; right:14px; top:60px; width:222px; background:rgba(8,14,30,0.95); border:1px solid rgba(96,165,250,0.2); border-radius:10px; padding:13px; font-size:11px; color:#64748b; line-height:1.8; z-index:100; }
+#panel h3 { color:#60a5fa; font-size:11px; margin-bottom:8px; border-bottom:1px solid rgba(96,165,250,0.2); padding-bottom:5px; letter-spacing:1px; }
+.pr { display:flex; justify-content:space-between; margin-bottom:3px; }
+.pv { color:#e2e8f0; font-weight:bold; }
+.sep { border-color:rgba(96,165,250,0.15); margin:7px 0; }
+</style>
+</head>
+<body>
+<div id="ui">
+  <div id="ui-title">Penrose · 09 — Radiazione di Hawking</div>
+  <div id="ui-phase">Coppie virtuali di particelle nascono all'orizzonte degli eventi: una cade dentro, l'altra sfugge come radiazione di Hawking.</div>
+  <div id="ui-badge">① / 6</div>
+</div>
+<canvas id="canvas"></canvas>
+<div id="panel">
+  <h3>HAWKING</h3>
+  <div class="pr"><span>T_H:</span><span class="pv">ℏc³/(8πGMk)</span></div>
+  <div class="pr"><span>M☉ T_H:</span><span class="pv">~60 nK</span></div>
+  <div class="pr"><span>τ:</span><span class="pv">5120πG²M³/ℏc⁴</span></div>
+  <hr class="sep">
+  <div class="pr"><span>Page time:</span><span class="pv">~M³</span></div>
+  <div class="pr"><span>Island:</span><span class="pv">formula 2019</span></div>
+  <div class="pr"><span>Info:</span><span class="pv">preservata</span></div>
+  <hr class="sep">
+  <div style="font-size:10px;color:#475569;line-height:1.6;">S. Hawking, 1974<br>D. Page, 1993<br>Island formula, 2019<br>Scommessa: Hawking perse</div>
+</div>
+<div id="bottom">
+  <a class="nav-btn" href="p08_kerr.html">← 08</a>
+  <button class="btn active" onclick="go(0)">① Vuoto Quantistico</button>
+  <button class="btn" onclick="go(1)">② Temperatura di Hawking</button>
+  <button class="btn" onclick="go(2)">③ Diagramma di Penrose</button>
+  <button class="btn" onclick="go(3)">④ Evaporazione</button>
+  <button class="btn" onclick="go(4)">⑤ Paradosso Informazione</button>
+  <button class="btn" onclick="go(5)">⑥ Stato dell'Arte 2024</button>
+  <a class="nav-btn" href="index.html">Indice →</a>
+</div>
+<script>
+const cv=document.getElementById('canvas'),cx=cv.getContext('2d');
+let W,H;function resize(){W=cv.width=window.innerWidth;H=cv.height=window.innerHeight;}resize();window.addEventListener('resize',resize);
+let ph=0,T=0;
+const PHASES=[
+  {name:"Vuoto Quantistico all'Orizzonte",desc:"Coppie virtuali di particelle nascono all'orizzonte degli eventi: una cade dentro, l'altra sfugge come radiazione di Hawking. Il vuoto quantistico fluttua continuamente producendo coppie particella-antiparticella."},
+  {name:"Temperatura di Hawking",desc:"T_H = ℏc³/(8πGMk_B). Per un BN stellare: T_H ~ 60 nK (trascurabile). Per un micro-BN di massa lunare: T ~ 2.7 K (uguale alla CMB). La temperatura cresce come 1/M."},
+  {name:"Diagramma di Penrose — Radiazione di Hawking",desc:"Nel diagramma di Penrose del collasso, la radiazione di Hawking emerge da regioni vicino all'orizzonte e raggiunge ℐ⁺. L'ultimo raggio che riesce quasi a sfuggire definisce il momento di formazione dell'orizzonte."},
+  {name:"Evaporazione del Buco Nero",desc:"Il BN perde massa emettendo radiazione: M(t) ≈ (M₀³ − 3αt)^(1/3), con α = ℏc⁴/(15360πG²). La vita τ ∝ M³. Un BN solare dura ~2×10⁶⁷ anni. L'evaporazione finale è un'esplosione di raggi gamma."},
+  {name:"Il Paradosso dell'Informazione",desc:"Se la radiazione di Hawking è termica (casuale), l'informazione caduta nel BN è persa — violando la meccanica quantistica unitaria. Hawking (1974) disse 'persa'. Nel 2004 perse la scommessa con Preskill. Visione attuale: l'informazione sopravvive."},
+  {name:"Stato dell'Arte — 2024",desc:"La 'island formula' (2020) mostra come includere le isole di entanglement nel calcolo dell'entropia riproduce la curva di Page — l'entropia cresce poi decresce. L'olografia (AdS/CFT) conferma la preservazione dell'informazione."}
+];
+function go(n){ph=n;document.querySelectorAll('.btn').forEach((b,i)=>b.classList.toggle('active',i===n));document.getElementById('ui-phase').textContent=PHASES[n].desc;document.getElementById('ui-badge').textContent=['①','②','③','④','⑤','⑥'][n]+' / 6';}
+function gw(col,blur){cx.shadowColor=col;cx.shadowBlur=blur;}
+function ng(){cx.shadowBlur=0;}
+function lbl(x,y,txt,col,sz,al='center',bold=false){cx.fillStyle=col;cx.font=`${bold?'bold ':''}${sz}px Georgia,serif`;cx.textAlign=al;cx.fillText(txt,x,y);}
+const STARS=Array.from({length:180},()=>({x:Math.random()*4000,y:Math.random()*2000,r:Math.random()*1.1+0.2,o:Math.random()}));
+function stars(){STARS.forEach(s=>{cx.beginPath();cx.arc(s.x,s.y,s.r,0,Math.PI*2);cx.fillStyle=`rgba(255,255,255,${s.o*(0.4+0.3*Math.sin(T*0.2+s.x*0.01))})`;cx.fill();});}
+function bg(){const g=cx.createRadialGradient(W/2,H/2,80,W/2,H/2,Math.max(W,H)*0.9);g.addColorStop(0,'#020920');g.addColorStop(1,'#000010');cx.fillStyle=g;cx.fillRect(0,0,W,H);}
+
+// Pairs for phase 0
+const pairs=Array.from({length:18},(_,i)=>({
+  angle:Math.random()*Math.PI*2, phase:Math.random()*Math.PI*2, speed:0.3+Math.random()*0.4,
+  born:Math.random()*Math.PI*2
+}));
+
+function ph0(){
+  const cx2=W/2,cy2=H/2,R=90;
+  // BH shadow
+  cx.beginPath();cx.arc(cx2,cy2,R,0,Math.PI*2);cx.fillStyle='#000';cx.fill();
+  // Event horizon glow
+  gw('#60a5fa',30);cx.beginPath();cx.arc(cx2,cy2,R,0,Math.PI*2);cx.strokeStyle='#60a5fa';cx.lineWidth=2.5;cx.stroke();ng();
+  lbl(cx2,cy2-R-18,'Orizzonte degli Eventi','#60a5fa',11);
+
+  // Hawking radiation glow outside
+  const rg=cx.createRadialGradient(cx2,cy2,R,cx2,cy2,R+50);
+  rg.addColorStop(0,'rgba(96,165,250,0.18)');rg.addColorStop(1,'rgba(96,165,250,0)');
+  cx.fillStyle=rg;cx.beginPath();cx.arc(cx2,cy2,R+50,0,Math.PI*2);cx.fill();
+
+  // Pair creation animation
+  pairs.forEach((p,i)=>{
+    const life=(T*p.speed+p.born)%(Math.PI*2);
+    const frac=life/(Math.PI*2);
+    const horizonR=R+4;
+    const ax=cx2+Math.cos(p.angle)*horizonR;
+    const ay=cy2+Math.sin(p.angle)*horizonR;
+
+    // Particle that escapes (Hawking radiation)
+    const escDist=frac*180;
+    const ex=ax+Math.cos(p.angle+0.3)*escDist;
+    const ey=ay+Math.sin(p.angle+0.3)*escDist;
+    const alpha=Math.max(0,1-frac*1.2);
+    gw('#60a5fa',8);
+    cx.beginPath();cx.arc(ex,ey,2.5,0,Math.PI*2);cx.fillStyle=`rgba(147,197,253,${alpha})`;cx.fill();
+
+    // Antiparticle that falls in
+    const fallDist=frac*R*0.9;
+    const fx=ax-Math.cos(p.angle)*fallDist;
+    const fy=ay-Math.sin(p.angle)*fallDist;
+    if(fallDist<R){
+      cx.beginPath();cx.arc(fx,fy,2,0,Math.PI*2);cx.fillStyle=`rgba(239,68,68,${alpha})`;cx.fill();
+    }
+    ng();
+
+    // Birth point flash
+    if(frac<0.08){
+      gw('#ffffff',15);
+      cx.beginPath();cx.arc(ax,ay,3,0,Math.PI*2);cx.fillStyle=`rgba(255,255,255,${(0.08-frac)/0.08})`;cx.fill();ng();
+    }
+  });
+
+  // Labels
+  lbl(cx2+200,cy2-40,'Radiazione di Hawking','#93c5fd',12,undefined,true);
+  lbl(cx2+200,cy2-20,'(particella reale fugge)','#64748b',10);
+  lbl(cx2+200,cy2+20,'Particella con E<0','#ef4444',12,undefined,true);
+  lbl(cx2+200,cy2+40,'(cade nel BN)','#64748b',10);
+  lbl(cx2,cy2+R+35,'Coppia virtuale → reale all\'orizzonte','#94a3b8',11);
+  gw('#60a5fa',10);lbl(W/2,80,'T_H = ℏc³/(8πGMk_B)','#93c5fd',15,undefined,true);ng();
+}
+
+function ph1(){
+  const cx2=W/2,cy2=H/2;
+  // Temperature vs Mass graph
+  const gx=cx2-200,gy=cy2-130,gw2=400,gh=260;
+  cx.fillStyle='rgba(15,23,42,0.8)';cx.fillRect(gx,gy,gw2,gh);
+  cx.strokeStyle='rgba(96,165,250,0.3)';cx.lineWidth=1;cx.strokeRect(gx,gy,gw2,gh);
+
+  // Axes
+  cx.beginPath();cx.moveTo(gx+40,gy+20);cx.lineTo(gx+40,gy+gh-30);cx.lineTo(gx+gw2-20,gy+gh-30);
+  cx.strokeStyle='#94a3b8';cx.lineWidth=1.5;cx.stroke();
+
+  lbl(gx+gw2/2,gy+gh-5,'Massa M (M☉)','#94a3b8',10);
+  cx.save();cx.translate(gx+12,gy+gh/2);cx.rotate(-Math.PI/2);lbl(0,0,'T_H (Kelvin)','#94a3b8',10);cx.restore();
+
+  // T_H ~ 1/M curve
+  const pts=[];
+  for(let i=0;i<=80;i++){
+    const frac=i/80;
+    const xp=gx+40+frac*(gw2-60);
+    // log scale: mass from micro to stellar
+    const logM=-6+frac*10; // logM in solar masses
+    const M=Math.pow(10,logM);
+    const Th=6.17e-8/M; // T_H in Kelvin (approx)
+    const logT=Math.log10(Math.max(Th,1e-15));
+    const yp=gy+gh-30-(logT+15)/(20)*(gh-50);
+    pts.push({x:xp,y:Math.max(gy+20,Math.min(gy+gh-30,yp))});
+  }
+  cx.beginPath();pts.forEach((p,i)=>i===0?cx.moveTo(p.x,p.y):cx.lineTo(p.x,p.y));
+  gw('#60a5fa',12);cx.strokeStyle='#60a5fa';cx.lineWidth=2.5;cx.stroke();ng();
+
+  // Annotations
+  const annotX=gx+40+0.3*(gw2-60),annotY=gy+60;
+  cx.beginPath();cx.arc(annotX,annotY,4,0,Math.PI*2);cx.fillStyle='#fbbf24';cx.fill();
+  lbl(annotX+5,annotY-10,'Micro-BN','#fbbf24',9,'left');
+  lbl(annotX+5,annotY+5,'T ~ MeV','#fbbf24',9,'left');
+
+  const solarX=gx+40+0.73*(gw2-60),solarY=gy+gh-35;
+  cx.beginPath();cx.arc(solarX,solarY,4,0,Math.PI*2);cx.fillStyle='#60a5fa';cx.fill();
+  lbl(solarX,solarY-12,'M☉ → 60 nK','#60a5fa',9);
+
+  // Formula box
+  cx.fillStyle='rgba(30,41,59,0.9)';cx.fillRect(cx2-170,gy-55,340,45);
+  cx.strokeStyle='rgba(96,165,250,0.4)';cx.lineWidth=1;cx.strokeRect(cx2-170,gy-55,340,45);
+  gw('#60a5fa',10);lbl(cx2,gy-35,'T_H = ℏc³ / (8πGMk_B)','#93c5fd',15,undefined,true);ng();
+  lbl(cx2,gy-15,'T_H ∝ 1/M  —  più piccolo = più caldo','#64748b',10);
+
+  lbl(cx2,gy+gh+20,'Vita del BN: τ = 5120π G²M³ / (ℏc⁴)','#94a3b8',11);
+  lbl(cx2,gy+gh+38,'Per M = M☉: τ ≈ 2 × 10⁶⁷ anni','#64748b',10);
+}
+
+function ph2(){
+  const cx2=W/2,cy2=H/2;
+  // Oppenheimer-Snyder style Penrose diagram for collapse + Hawking radiation
+  const dS=170;
+  // Background card
+  cx.fillStyle='rgba(10,18,35,0.85)';cx.fillRect(cx2-dS-60,cy2-dS-40,dS*2+120,dS*2+80);
+  cx.strokeStyle='rgba(96,165,250,0.2)';cx.lineWidth=1;cx.strokeRect(cx2-dS-60,cy2-dS-40,dS*2+120,dS*2+80);
+
+  // Exterior region (right of stellar surface)
+  cx.fillStyle='rgba(15,30,60,0.6)';
+  cx.beginPath();cx.moveTo(cx2-dS*0.4,cy2+dS);cx.lineTo(cx2+dS,cy2);cx.lineTo(cx2,cy2-dS);cx.lineTo(cx2-dS*0.4,cy2-dS*0.4);cx.closePath();cx.fill();
+
+  // Interior of star (left side, hatched)
+  cx.fillStyle='rgba(100,50,0,0.25)';
+  cx.beginPath();cx.moveTo(cx2-dS,cy2);cx.lineTo(cx2-dS*0.4,cy2+dS);cx.lineTo(cx2-dS*0.4,cy2-dS*0.4);cx.closePath();cx.fill();
+
+  // Singularity at top
+  cx.beginPath();
+  for(let i=-dS;i<=dS;i+=12){
+    if(i===-dS) cx.moveTo(cx2+i, cy2-dS+(i%24===0?0:8));
+    else cx.lineTo(cx2+i, cy2-dS+(i%24===0?0:8));
+  }
+  gw('#ef4444',12);cx.strokeStyle='#ef4444';cx.lineWidth=3;cx.stroke();ng();
+  lbl(cx2,cy2-dS-14,'Singolarità r = 0','#ef4444',10);
+
+  // Event horizon (45° line from lower-left to singularity)
+  const hx1=cx2-dS*0.5,hy1=cy2+dS*0.5;
+  const hx2=cx2,hy2=cy2-dS;
+  gw('#60a5fa',14);cx.beginPath();cx.moveTo(hx1,hy1);cx.lineTo(hx2,hy2);cx.strokeStyle='#60a5fa';cx.lineWidth=2.5;cx.stroke();ng();
+  lbl(hx1-55,hy1-10,'Orizzonte','#60a5fa',9,'right');
+
+  // Stellar surface worldline
+  gw('#f97316',10);cx.beginPath();cx.moveTo(cx2-dS*0.4,cy2+dS);cx.quadraticCurveTo(cx2-dS*0.4,cy2,cx2-dS*0.4,cy2-dS*0.4);cx.strokeStyle='#f97316';cx.lineWidth=2;cx.stroke();ng();
+  lbl(cx2-dS*0.4-5,cy2+60,'Superficie','#f97316',9,'right');lbl(cx2-dS*0.4-5,cy2+75,'stellare','#f97316',9,'right');
+
+  // Hawking radiation: outgoing null lines from near horizon to I+
+  for(let i=0;i<5;i++){
+    const t=i/4;
+    const sx=hx1+(hx2-hx1)*t*0.9,sy=hy1+(hy2-hy1)*t*0.9;
+    const ex=cx2+dS*(0.3+t*0.5),ey=sy-(ex-sx);
+    const alpha=0.3+t*0.5;
+    gw('#93c5fd',6);cx.beginPath();cx.moveTo(sx,sy);cx.lineTo(ex,ey);cx.strokeStyle=`rgba(147,197,253,${alpha})`;cx.lineWidth=1.5;cx.stroke();ng();
+  }
+
+  // Hawking animation: animated photon moving up-right
+  const hprog=(T*0.3)%1;
+  const phx=hx1+(hx2-hx1)*0.3+hprog*dS*1.2;
+  const phy=hy1+(hy2-hy1)*0.3-hprog*dS*1.2;
+  gw('#93c5fd',15);cx.beginPath();cx.arc(phx,phy,3.5,0,Math.PI*2);cx.fillStyle='#93c5fd';cx.fill();ng();
+
+  // Boundary labels
+  lbl(cx2+dS+5,cy2,'ℐ⁺','#93c5fd',13,'left');lbl(cx2+dS+5,cy2-dS+10,'i⁺','#93c5fd',11,'left');
+  lbl(cx2+dS-20,cy2+8,'i⁰','#94a3b8',11);
+  lbl(cx2-dS-10,cy2+5,'i⁻','#94a3b8',11,'right');
+
+  lbl(cx2+60,cy2+50,'Regione Esterna','#93c5fd',10);
+  lbl(cx2-dS*0.7,cy2+20,'Interno','#f97316',9);
+
+  // Arrow label for Hawking radiation
+  lbl(cx2+dS-20,cy2-dS*0.4,'Radiazione','#93c5fd',9,'right');
+  lbl(cx2+dS-20,cy2-dS*0.4+14,'di Hawking →','#93c5fd',9,'right');
+}
+
+function ph3(){
+  const cx2=W/2,cy2=H/2;
+  // BH evaporation: shrinking BH with glowing Hawking radiation
+  const tau=25; // animation period
+  const cycle=(T%(tau))/(tau);
+  const M0=120,Mmin=8;
+  // M(t) = (M0^3 - 3*alpha*t)^(1/3)
+  const cubeM=Math.max(Mmin*Mmin*Mmin, M0*M0*M0*(1-cycle));
+  const R=Math.cbrt(cubeM);
+
+  // Hawking glow (intensifies as BH shrinks)
+  const intensity=1-R/M0;
+  const glowR=R+30+intensity*60;
+  const rg=cx.createRadialGradient(cx2,cy2,R,cx2,cy2,glowR);
+  rg.addColorStop(0,`rgba(96,165,250,${0.1+intensity*0.5})`);
+  rg.addColorStop(0.5,`rgba(96,165,250,${0.05+intensity*0.2})`);
+  rg.addColorStop(1,'rgba(96,165,250,0)');
+  cx.fillStyle=rg;cx.beginPath();cx.arc(cx2,cy2,glowR,0,Math.PI*2);cx.fill();
+
+  // Emitted photons
+  const nph=Math.floor(4+intensity*20);
+  for(let i=0;i<nph;i++){
+    const a=(T*1.5+i*(Math.PI*2/nph))%(Math.PI*2);
+    const dist=R+(((T*1.5+i*(Math.PI*2/nph))*60)%200);
+    const px=cx2+Math.cos(a)*dist,py=cy2+Math.sin(a)*dist;
+    const al=Math.max(0,1-dist/(R+200));
+    gw('#60a5fa',6);cx.beginPath();cx.arc(px,py,1.5,0,Math.PI*2);cx.fillStyle=`rgba(147,197,253,${al})`;cx.fill();ng();
+  }
+
+  // Final explosion flash
+  if(cycle>0.92){
+    const flash=(cycle-0.92)/0.08;
+    gw('#ffffff',80*flash);cx.beginPath();cx.arc(cx2,cy2,R+flash*150,0,Math.PI*2);cx.strokeStyle=`rgba(255,200,100,${flash})`;cx.lineWidth=3;cx.stroke();ng();
+  }
+
+  // BH shadow
+  cx.beginPath();cx.arc(cx2,cy2,Math.max(2,R),0,Math.PI*2);cx.fillStyle='#000';cx.fill();
+  gw('#60a5fa',15);cx.beginPath();cx.arc(cx2,cy2,Math.max(2,R),0,Math.PI*2);cx.strokeStyle='#60a5fa';cx.lineWidth=2;cx.stroke();ng();
+
+  // Mass label
+  const Mdisp=Math.round(R/M0*100);
+  lbl(cx2,cy2+R+28,`M = ${Mdisp}% M₀`,'#93c5fd',12,undefined,true);
+  lbl(cx2,cy2+R+48,'T_H ∝ 1/M → cresce con l\'evaporazione','#64748b',10);
+
+  // Formula
+  gw('#60a5fa',10);lbl(cx2,80,'M(t) = (M₀³ − 3αt)^(1/3)','#93c5fd',14,undefined,true);ng();
+  lbl(cx2,104,'τ ∝ M³  (vita del buco nero)','#94a3b8',10);
+
+  // Temperature indicator
+  const Trel=1/(R/M0+0.01)*0.03;
+  lbl(cx2,H-80,`T_H relativa: ${Trel.toFixed(2)} (unità arbitrarie)`,'#60a5fa',10);
+  lbl(cx2,H-62,'Evaporazione finale → esplosione γ','#f97316',10);
+}
+
+function ph4(){
+  const cx2=W/2,cy2=H/2;
+  // Information paradox diagram
+  cx.fillStyle='rgba(10,18,35,0.8)';cx.fillRect(cx2-320,cy2-200,640,400);
+  cx.strokeStyle='rgba(96,165,250,0.2)';cx.strokeRect(cx2-320,cy2-200,640,400);
+
+  lbl(cx2,cy2-175,'Il Paradosso dell\'Informazione di Hawking','#93c5fd',14,undefined,true);
+
+  // Left side: info falls in
+  const lx=cx2-160,ly=cy2-60;
+  cx.beginPath();cx.arc(lx,ly,50,0,Math.PI*2);cx.fillStyle='#000';cx.fill();
+  gw('#60a5fa',15);cx.beginPath();cx.arc(lx,ly,50,0,Math.PI*2);cx.strokeStyle='#60a5fa';cx.lineWidth=2;cx.stroke();ng();
+  lbl(lx,ly+65,'Buco Nero','#60a5fa',10);
+
+  // Falling info
+  const infoItems=['📖 Libro','⚛ Atomo','🌀 Stato Quantistico'];
+  infoItems.forEach((item,i)=>{
+    const prog=((T*0.4+i*0.8))%3;
+    if(prog<1){
+      const px=lx-120+prog*120;
+      const py=ly-20+i*20;
+      lbl(px,py,item,'#fbbf24',10);
+    }
+  });
+
+  // Outgoing Hawking radiation (thermal, random)
+  const hwItems=['~','~','~','~','~'];
+  hwItems.forEach((item,i)=>{
+    const a=-0.5+i*0.25;
+    const dist=60+((T*0.5+i*1.3)%1)*120;
+    const px=lx+Math.cos(a)*dist;
+    const py=ly+Math.sin(a)*dist;
+    lbl(px,py,'γ','rgba(96,165,250,0.7)',12);
+  });
+  lbl(lx,ly+85,'Radiazione termica (casuale?)','#64748b',9);
+
+  // Arrow + question mark
+  lbl(cx2,cy2,'≠ ?','#ef4444',28,undefined,true);
+  lbl(cx2,cy2+35,'Informazione perduta?','#ef4444',11);
+
+  // Right side: unitarity
+  const rx=cx2+160;
+  cx.fillStyle='rgba(15,40,20,0.5)';cx.fillRect(rx-80,cy2-90,160,180);
+  cx.strokeStyle='rgba(74,222,128,0.4)';cx.strokeRect(rx-80,cy2-90,160,180);
+  lbl(rx,cy2-70,'Meccanica Quantistica','#4ade80',10,undefined,true);
+  lbl(rx,cy2-45,'|ψ(t)⟩ = U|ψ(0)⟩','#4ade80',12);
+  lbl(rx,cy2-20,'Unitarietà','#4ade80',11);
+  lbl(rx,cy2+5,'Info SEMPRE','#4ade80',10);
+  lbl(rx,cy2+25,'preservata','#4ade80',10);
+  lbl(rx,cy2+55,'Hawking 2004:','#94a3b8',9);
+  lbl(rx,cy2+70,'"Ho perso la','#94a3b8',9);
+  lbl(rx,cy2+85,'scommessa"','#94a3b8',9);
+
+  // Timeline bottom
+  lbl(cx2,cy2+155,'1974 Hawking: info perduta  →  2004 Hawking perde scommessa  →  2019 Island formula','#475569',9);
+}
+
+function ph5(){
+  const cx2=W/2,cy2=H/2;
+  // Page curve
+  const gx=cx2-220,gy=cy2-160,gw2=440,gh=240;
+  cx.fillStyle='rgba(10,18,35,0.85)';cx.fillRect(gx,gy,gw2,gh);
+  cx.strokeStyle='rgba(96,165,250,0.25)';cx.strokeRect(gx,gy,gw2,gh);
+
+  // Axes
+  cx.beginPath();cx.moveTo(gx+50,gy+20);cx.lineTo(gx+50,gy+gh-30);cx.lineTo(gx+gw2-20,gy+gh-30);
+  cx.strokeStyle='#94a3b8';cx.lineWidth=1.5;cx.stroke();
+  lbl(gx+gw2/2,gy+gh-6,'Tempo (t/t_Page)','#94a3b8',9);
+  cx.save();cx.translate(gx+14,gy+gh/2);cx.rotate(-Math.PI/2);lbl(0,0,'Entropia di von Neumann S','#94a3b8',9);cx.restore();
+
+  // Hawking (thermal) prediction: monotonically increasing
+  cx.beginPath();cx.moveTo(gx+50,gy+gh-30);
+  for(let i=0;i<=100;i++){
+    const fx=i/100;
+    const px=gx+50+fx*(gw2-70);
+    const py=gy+gh-30-fx*(gh-50);
+    i===0?cx.moveTo(px,py):cx.lineTo(px,py);
+  }
+  gw('#ef4444',6);cx.strokeStyle='rgba(239,68,68,0.7)';cx.lineWidth=2;cx.setLineDash([6,4]);cx.stroke();cx.setLineDash([]);ng();
+  lbl(gx+gw2-30,gy+35,'Hawking','#ef4444',9,'right');lbl(gx+gw2-30,gy+50,'(termica)','#ef4444',9,'right');
+
+  // Page curve: rises then falls back
+  cx.beginPath();
+  for(let i=0;i<=100;i++){
+    const fx=i/100;
+    const px=gx+50+fx*(gw2-70);
+    let py;
+    if(fx<0.5){py=gy+gh-30-fx*2*(gh-50)*0.85;}
+    else{py=gy+gh-30-(1-fx)*2*(gh-50)*0.85;}
+    i===0?cx.moveTo(px,py):cx.lineTo(px,py);
+  }
+  gw('#60a5fa',10);cx.strokeStyle='#60a5fa';cx.lineWidth=2.5;cx.stroke();ng();
+  lbl(gx+60,gy+50,'Curva di Page','#60a5fa',9,'left');lbl(gx+60,gy+65,'(unitaria)','#60a5fa',9,'left');
+
+  // Page time marker
+  const ptX=gx+50+(gw2-70)*0.5;
+  cx.beginPath();cx.moveTo(ptX,gy+20);cx.lineTo(ptX,gy+gh-30);
+  cx.strokeStyle='rgba(251,191,36,0.4)';cx.lineWidth=1;cx.setLineDash([4,4]);cx.stroke();cx.setLineDash([]);
+  lbl(ptX,gy+15,'t_Page','#fbbf24',9);
+
+  // Animated dot on Page curve
+  const prog2=((T*0.08)%1);
+  const dpx=gx+50+prog2*(gw2-70);
+  let dpy;
+  if(prog2<0.5){dpy=gy+gh-30-prog2*2*(gh-50)*0.85;}
+  else{dpy=gy+gh-30-(1-prog2)*2*(gh-50)*0.85;}
+  gw('#60a5fa',15);cx.beginPath();cx.arc(dpx,dpy,5,0,Math.PI*2);cx.fillStyle='#60a5fa';cx.fill();ng();
+
+  // Explanation box
+  const exY=gy+gh+20;
+  lbl(cx2,exY,'Island Formula (2020): S_rad = min{Sformula + Area(isola)/4G}','#93c5fd',10);
+  lbl(cx2,exY+18,'→ Le isole di entanglement recuperano la curva di Page','#64748b',9);
+  lbl(cx2,exY+36,'→ L\'informazione è PRESERVATA — meccanica quantistica unitaria','#4ade80',10,undefined,true);
+  lbl(cx2,exY+54,'AdS/CFT: il conformal field theory duale è manifesta unitario','#64748b',9);
+
+  lbl(cx2,cy2-195,'Curva di Page — Entropia della Radiazione di Hawking','#93c5fd',13,undefined,true);
+}
+
+const DRAWS=[ph0,ph1,ph2,ph3,ph4,ph5];
+function loop(){bg();stars();T+=0.016;DRAWS[ph]();requestAnimationFrame(loop);}
+go(0);loop();
+</script>
+</body>
+</html>
