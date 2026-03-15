@@ -670,26 +670,15 @@ function ph5(){
   cx.beginPath();cx.moveTo(gx0,gy0+gH);cx.lineTo(gx0+gW*2,gy0+gH);cx.stroke();
   cx.restore();
 
-  // Axis labels
-  lbl(gx0+gW*0.5,gy0-22,'a = 0 (no spin)','#64748b',9.5*scale,'center',false);
-  lbl(gx0+gW*1.5,gy0-22,'a = 0 (no spin)','#64748b',9.5*scale,'center',false);
-  // overwrite second
-  lbl(gx0+gW*1.5,gy0-22,'a ≠ 0 (con spin)','#64748b',9.5*scale,'center',false);
-  // rewrite first
-  lbl(gx0+gW*0.5,gy0-22,'a = 0 (no spin)','#64748b',9.5*scale,'center',false);
+  // Horizontal axis labels (spin)
+  lbl(gx0+gW*0.5,gy0-22,'a = 0','#64748b',10*scale,'center',false);
+  lbl(gx0+gW*1.5,gy0-22,'a ≠ 0','#64748b',10*scale,'center',false);
 
-  // Vert axis
+  // Vertical axis labels (charge)
   cx.save();cx.fillStyle='#64748b';cx.font='9.5px Segoe UI';cx.textAlign='right';
   cx.translate(gx0-12,gy0+gH*0.5);cx.rotate(-Math.PI/2);cx.fillText('Q = 0',0,0);cx.restore();
   cx.save();cx.fillStyle='#64748b';cx.font='9.5px Segoe UI';cx.textAlign='right';
   cx.translate(gx0-12,gy0+gH*1.5);cx.rotate(-Math.PI/2);cx.fillText('Q ≠ 0',0,0);cx.restore();
-
-  // Actually fix axis labels: columns = spin state, rows = charge state
-  // col 0 = a=0, col 1 = a≠0
-  // row 0 = Q=0, row 1 = Q≠0
-  // Redraw properly
-  lbl(gx0+gW*0.5,gy0-22,'a = 0','#64748b',10*scale,'center',false);
-  lbl(gx0+gW*1.5,gy0-22,'a ≠ 0','#64748b',10*scale,'center',false);
 
   cells.forEach(cell=>{
     const cx_=gx0+cell.c*gW+gW/2;
