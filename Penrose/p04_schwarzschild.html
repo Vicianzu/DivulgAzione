@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Penrose · 04 — Buco Nero di Schwarzschild</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+body{background:#000010;color:#e2e8f0;font-family:Georgia,serif;overflow:hidden;}
+canvas{display:block;position:fixed;top:0;left:0;}
+#ui{position:fixed;top:0;left:0;right:320px;padding:14px 20px;background:rgba(0,0,16,0.85);border-bottom:1px solid rgba(167,139,250,0.25);backdrop-filter:blur(8px);z-index:10;}
+#ui h1{font-size:15px;color:#a78bfa;letter-spacing:.08em;margin-bottom:4px;}
+#ui-phase{font-size:11.5px;color:#94a3b8;line-height:1.55;max-width:900px;}
+#ui-badge{display:inline-block;margin-top:5px;font-size:10px;background:rgba(167,139,250,0.12);border:1px solid rgba(167,139,250,0.3);color:#a78bfa;padding:2px 8px;border-radius:10px;}
+#bottom{position:fixed;bottom:0;left:0;right:320px;padding:10px 16px;background:rgba(0,0,16,0.85);border-top:1px solid rgba(167,139,250,0.25);backdrop-filter:blur(8px);z-index:10;display:flex;align-items:center;gap:8px;flex-wrap:wrap;}
+.btn{padding:5px 11px;border:1px solid rgba(167,139,250,0.3);background:rgba(255,255,255,0.03);color:#a78bfa;border-radius:6px;cursor:pointer;font-size:12px;font-family:Georgia,serif;transition:all .2s;}
+.btn:hover,.btn.active{background:rgba(167,139,250,0.15);color:#c4b5fd;border-color:rgba(167,139,250,0.55);}
+.nav-btn{padding:5px 12px;border:1px solid rgba(167,139,250,0.3);background:rgba(255,255,255,0.03);color:#a78bfa;border-radius:6px;font-size:12px;font-family:Georgia,serif;text-decoration:none;margin-left:auto;transition:all .2s;}
+.nav-btn:hover{background:rgba(167,139,250,0.15);color:#c4b5fd;}
+#panel{position:fixed;top:0;right:0;width:312px;height:100%;background:rgba(0,0,16,0.9);border-left:1px solid rgba(167,139,250,0.2);backdrop-filter:blur(10px);z-index:10;padding:20px 16px;overflow-y:auto;}
+#panel h3{font-size:11px;letter-spacing:.15em;color:#a78bfa;margin-bottom:14px;}
+.pr{display:flex;justify-content:space-between;font-size:11px;margin-bottom:7px;color:#94a3b8;}
+.pv{color:#c4b5fd;font-style:italic;}
+.sep{border:none;border-top:1px solid rgba(167,139,250,0.15);margin:12px 0;}
+</style>
+</head>
+<body>
+<canvas id="canvas"></canvas>
+
+<div id="ui">
+  <h1>Penrose · 04 — Buco Nero di Schwarzschild</h1>
+  <div id="ui-phase"></div>
+  <span id="ui-badge"></span>
+</div>
+
+<div id="bottom">
+  <button class="btn" onclick="go(0)">① Metrica</button>
+  <button class="btn" onclick="go(1)">② Orizzonte</button>
+  <button class="btn" onclick="go(2)">③ Penrose Est.</button>
+  <button class="btn" onclick="go(3)">④ Penrose BN</button>
+  <button class="btn" onclick="go(4)">⑤ Singolarità</button>
+  <button class="btn" onclick="go(5)">⑥ Tortoise</button>
+  <button class="btn" onclick="go(6)">⑦ Visuale 3D</button>
+  <a class="nav-btn" href="p03_minkowski.html">← 03</a>
+  <a class="nav-btn" href="p05_kruskal.html">05 Kruskal →</a>
+</div>
+
+<div id="panel">
+  <h3>SCHWARZSCHILD</h3>
+  <div class="pr"><span>rs:</span><span class="pv">2GM/c²</span></div>
+  <div class="pr"><span>M☉ → rs:</span><span class="pv">≈ 3 km</span></div>
+  <div class="pr"><span>Metrica:</span><span class="pv">ds²(4D)</span></div>
+  <hr class="sep">
+  <div class="pr"><span>Fotoni:</span><span class="pv">r = 1.5 rs</span></div>
+  <div class="pr"><span>ISCO:</span><span class="pv">r = 3 rs</span></div>
+  <div class="pr"><span>η_μν:</span><span class="pv">diag(−,+,+,+)</span></div>
+  <hr class="sep">
+  <div style="font-size:10px;color:#475569;line-height:1.6;">K. Schwarzschild, 1916<br>Raggio: rs = 2GM/c²<br>Singolarità: r = 0<br>Tipo: spacelike</div>
+</div>
+
+<script>
+const cv = document.getElementById('canvas'), cx = cv.getContext('2d');
+let W, H;
+function resize() { W = cv.width = window.innerWidth; H = cv.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+
+let ph = 0, T = 0;
+
+const PHASES = [
+  { name: 'Metrica di Schwarzschild', desc: 'La soluzione di Schwarzschild (1916) descrive lo spazio-tempo attorno a una massa sferica non rotante. Il raggio di Schwarzschild rs = 2GM/c² definisce l\'orizzonte degli eventi. Per il Sole, rs ≈ 3 km.' },
+  { name: 'L\'Orizzonte degli Eventi', desc: 'L\'orizzonte degli eventi è la superficie di non ritorno: nessun segnale, nemmeno la luce, può sfuggire dall\'interno. La sfera dei fotoni si trova a r = 1.5·rs (orbite circolari instabili di fotoni).' },
+  { name: 'Diagramma di Penrose — Regione Esterna', desc: 'Il diagramma conforme della regione esterna di Schwarzschild (Region I) è un triangolo con: i⁺ (futuro temporale), i⁰ (infinito spaziale), ℐ⁺ (infinito nullo futuro), e la retta dell\'orizzonte a 45°.' },
+  { name: 'Diagramma di Penrose — Buco Nero', desc: 'Il diagramma completo mostra la Regione I (universo esterno) e la Regione II (interno del buco nero). La singolarità appare come una linea orizzontale zigzag nella parte superiore. L\'orizzonte è a 45°.' },
+  { name: 'La Singolarità di Schwarzschild', desc: 'La singolarità di Schwarzschild è di tipo spacelike: è una "barriera temporale" inevitabile, non un luogo nello spazio. La curvatura K ~ GM/r³ diverge. Ogni geodesica timelike che entra nella regione II raggiunge la singolarità in tempo finito.' },
+  { name: 'Coordinate di Tortoise', desc: 'Le coordinate tortoise r* = r + rs·ln|r/rs − 1| mappano l\'orizzonte a r* → −∞. Le coordinate di Eddington-Finkelstein (v = t + r*) rimuovono la singolarità coordinata all\'orizzonte e permettono di seguire i fotoni in entrata.' },
+  { name: 'Visualizzazione 3D — Buco Nero', desc: 'Il buco nero di Schwarzschild: ombra circolare (orizzonte), disco di accrescimento incandescente con gradiente bianco-arancione-rosso, lente gravitazionale con archi luminosi, particelle in spirale, getti relativistici. Formula: rs = 2GM/c².' }
+];
+
+function go(n) {
+  ph = n;
+  document.querySelectorAll('.btn').forEach((b, i) => b.classList.toggle('active', i === n));
+  document.getElementById('ui-phase').textContent = PHASES[n].desc;
+  document.getElementById('ui-badge').textContent = ['①','②','③','④','⑤','⑥','⑦'][n] + ' / ' + PHASES.length;
+}
+
+function gw(col, blur) { cx.shadowColor = col; cx.shadowBlur = blur; }
+function ng() { cx.shadowBlur = 0; cx.shadowColor = 'transparent'; }
+function lbl(x, y, txt, col, sz, al = 'center', bold = false) {
+  cx.fillStyle = col; cx.font = `${bold ? 'bold ' : ''}${sz}px Georgia,serif`;
+  cx.textAlign = al; cx.fillText(txt, x, y);
+}
+
+const STARS = Array.from({ length: 180 }, () => ({
+  x: Math.random() * 4000, y: Math.random() * 2000,
+  r: Math.random() * 1.1 + 0.2, o: Math.random()
+}));
+
+function stars() {
+  STARS.forEach(s => {
+    cx.beginPath();
+    cx.arc(s.x % W, s.y % H, s.r, 0, Math.PI * 2);
+    cx.fillStyle = `rgba(255,255,255,${s.o * (0.4 + 0.3 * Math.sin(T * 0.2 + s.x * 0.01))})`;
+    cx.fill();
+  });
+}
+
+function bg() {
+  const g = cx.createRadialGradient(W / 2, H / 2, 80, W / 2, H / 2, Math.max(W, H) * 0.9);
+  g.addColorStop(0, '#020920'); g.addColorStop(1, '#000010');
+  cx.fillStyle = g; cx.fillRect(0, 0, W, H);
+}
+
+// ── PHASE 0: Metrica di Schwarzschild ──────────────────────────────────────
+function ph0() {
+  const bx = W * 0.32, by = H * 0.5, rs = Math.min(W, H) * 0.13;
+  cx.save();
+
+  // Accretion disk (back half)
+  const diskRot = T * 0.18;
+  for (let layer = 12; layer >= 0; layer--) {
+    const fr = layer / 12;
+    const rx = rs * (1.5 + fr * 1.6), ry = rx * 0.28;
+    const alpha = 0.05 + fr * 0.18;
+    const r = Math.round(255), g = Math.round(150 - fr * 100), b = Math.round(20 - fr * 20);
+    cx.save();
+    cx.translate(bx, by);
+    cx.rotate(diskRot * (1 - fr * 0.3));
+    cx.beginPath();
+    cx.ellipse(0, 0, rx, ry, 0, Math.PI, Math.PI * 2);
+    cx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+    cx.lineWidth = 4 + fr * 6;
+    gw(`rgba(${r},${g},${b},0.5)`, 10);
+    cx.stroke();
+    cx.restore();
+  }
+
+  // BH shadow
+  cx.beginPath();
+  cx.arc(bx, by, rs, 0, Math.PI * 2);
+  cx.fillStyle = '#000';
+  cx.fill();
+
+  // Event horizon ring
+  cx.beginPath();
+  cx.arc(bx, by, rs, 0, Math.PI * 2);
+  gw('#a78bfa', 22);
+  cx.strokeStyle = '#a78bfa';
+  cx.lineWidth = 2.5;
+  cx.stroke();
+  ng();
+
+  // Accretion disk (front half)
+  for (let layer = 0; layer <= 12; layer++) {
+    const fr = layer / 12;
+    const rx = rs * (1.5 + fr * 1.6), ry = rx * 0.28;
+    const alpha = 0.07 + fr * 0.22;
+    const r = 255, g = Math.round(200 - fr * 120), b = Math.round(60 - fr * 55);
+    cx.save();
+    cx.translate(bx, by);
+    cx.rotate(diskRot * (1 - fr * 0.3));
+    cx.beginPath();
+    cx.ellipse(0, 0, rx, ry, 0, 0, Math.PI);
+    cx.strokeStyle = `rgba(${r},${g},${b},${alpha})`;
+    cx.lineWidth = 4 + fr * 6;
+    gw(`rgba(${r},${g},${b},0.6)`, 12);
+    cx.stroke();
+    cx.restore();
+  }
+
+  // Spiraling particles
+  for (let i = 0; i < 14; i++) {
+    const angle = (i / 14) * Math.PI * 2 + T * (0.4 + i * 0.03);
+    const dist = rs * (1.4 + 0.8 * ((i * 0.17 + T * 0.04) % 1));
+    const px = bx + dist * Math.cos(angle), py = by + dist * Math.sin(angle) * 0.3;
+    cx.beginPath();
+    cx.arc(px, py, 2, 0, Math.PI * 2);
+    gw('#ffd700', 8);
+    cx.fillStyle = '#ffe066';
+    cx.fill();
+  }
+  ng();
+
+  // Formulas on right
+  const fx = W * 0.68, fy = H * 0.28;
+  lbl(fx, fy, 'Metrica di Schwarzschild', '#a78bfa', 15, 'center', true);
+  lbl(fx, fy + 36, 'ds² = −(1 − rs/r)c²dt²', '#e2e8f0', 13, 'center');
+  lbl(fx, fy + 56, '+ (1 − rs/r)⁻¹dr²', '#e2e8f0', 13, 'center');
+  lbl(fx, fy + 76, '+ r²dΩ²', '#e2e8f0', 13, 'center');
+
+  const pulse = 0.85 + 0.15 * Math.sin(T * 1.5);
+  cx.save();
+  cx.globalAlpha = pulse;
+  lbl(fx, fy + 118, 'rs = 2GM/c²', '#ffd700', 16, 'center', true);
+  cx.restore();
+
+  lbl(fx, fy + 155, 'Per M☉: rs ≈ 3 km', '#94a3b8', 12, 'center');
+  lbl(fx, fy + 178, 'Per Terre: rs ≈ 9 mm', '#94a3b8', 12, 'center');
+
+  // Annotations
+  lbl(bx, by + rs + 22, 'Orizzonte degli eventi', '#a78bfa', 11, 'center');
+  lbl(bx, by - rs - 14, 'Disco di accrescimento', '#ff8c00', 11, 'center');
+
+  cx.restore();
+}
+
+// ── PHASE 1: Orizzonte degli Eventi ────────────────────────────────────────
+function ph1() {
+  const bx = W * 0.38, by = H * 0.5, rs = Math.min(W, H) * 0.1;
+  cx.save();
+
+  // Draw concentric radius circles
+  const radii = [
+    { r: rs, col: '#a78bfa', lbl: 'rs — Orizzonte', dash: [] },
+    { r: rs * 1.5, col: '#c084fc', lbl: 'r = 1.5rs — Sfera fotoni', dash: [6, 4] },
+    { r: rs * 3, col: '#38bdf8', lbl: 'r = 3rs — ISCO', dash: [3, 6] },
+    { r: rs * 5, col: '#334155', lbl: 'r = 5rs', dash: [2, 8] }
+  ];
+
+  radii.forEach(({ r, col, dash }) => {
+    cx.beginPath();
+    cx.arc(bx, by, r, 0, Math.PI * 2);
+    cx.setLineDash(dash);
+    cx.strokeStyle = col;
+    cx.lineWidth = r === rs ? 2 : 1;
+    if (r === rs || r === rs * 1.5) gw(col, 10);
+    cx.stroke();
+    ng();
+    cx.setLineDash([]);
+  });
+
+  // BH shadow
+  cx.beginPath();
+  cx.arc(bx, by, rs, 0, Math.PI * 2);
+  cx.fillStyle = '#000';
+  cx.fill();
+
+  // Event horizon glow
+  cx.beginPath();
+  cx.arc(bx, by, rs, 0, Math.PI * 2);
+  gw('#a78bfa', 20); cx.strokeStyle = '#a78bfa'; cx.lineWidth = 2.5; cx.stroke(); ng();
+
+  // Photon sphere glow
+  cx.beginPath();
+  cx.arc(bx, by, rs * 1.5, 0, Math.PI * 2);
+  gw('#c084fc', 12); cx.strokeStyle = '#c084fc'; cx.lineWidth = 1.5; cx.stroke(); ng();
+
+  // Animated photons on photon sphere
+  for (let i = 0; i < 5; i++) {
+    const angle = T * 0.7 + (i / 5) * Math.PI * 2;
+    const px = bx + rs * 1.5 * Math.cos(angle);
+    const py = by + rs * 1.5 * Math.sin(angle);
+    cx.beginPath(); cx.arc(px, py, 3, 0, Math.PI * 2);
+    gw('#fff', 10); cx.fillStyle = '#fff'; cx.fill(); ng();
+  }
+
+  // Light rays: escaping
+  for (let i = 0; i < 3; i++) {
+    const startAngle = (0.6 + i * 0.35);
+    const startX = bx + rs * 5 * Math.cos(Math.PI + startAngle);
+    const startY = by + rs * 5 * Math.sin(Math.PI + startAngle);
+    cx.beginPath();
+    cx.moveTo(startX, startY);
+    // Curve around BH
+    const bend = 0.3 + i * 0.1;
+    const cp1x = bx + rs * (2.5 - i * 0.3) * Math.cos(Math.PI * 1.3 + startAngle * 0.5);
+    const cp1y = by + rs * (1.8 - i * 0.2) * Math.sin(Math.PI * 1.3 + startAngle * 0.5);
+    const endX = bx + rs * 4 * Math.cos(0.5 + i * 0.3);
+    const endY = by - rs * (2 + i * 0.5);
+    cx.quadraticCurveTo(cp1x, cp1y, endX, endY);
+    gw('#ffd700', 8);
+    cx.strokeStyle = `rgba(255,215,0,0.7)`;
+    cx.lineWidth = 1.5;
+    cx.stroke();
+    ng();
+  }
+
+  // Light rays: captured (entering BH)
+  for (let i = 0; i < 2; i++) {
+    const t01 = ((T * 0.25 + i * 0.5) % 1);
+    const startX = bx - rs * 4.5;
+    const startY = by - rs * (0.4 - i * 0.8);
+    const endX = bx + rs * 0.3 * Math.cos(Math.PI * 1.1 + i * 0.2);
+    const endY = by + rs * 0.3 * Math.sin(Math.PI * 1.1 + i * 0.2);
+    const curX = startX + (endX - startX) * t01;
+    const curY = startY + (endY - startY) * t01 + rs * 0.5 * Math.sin(t01 * Math.PI) * (i % 2 === 0 ? -1 : 1);
+    cx.beginPath();
+    cx.moveTo(startX, startY);
+    cx.quadraticCurveTo(bx - rs * 2, by + rs * (i === 0 ? -1 : 1), curX, curY);
+    cx.strokeStyle = `rgba(255,100,50,${0.4 + t01 * 0.5})`;
+    cx.lineWidth = 1.5;
+    gw('#ff6432', 6); cx.stroke(); ng();
+  }
+
+  // Labels
+  const lx = W * 0.72;
+  lbl(lx, H * 0.18, 'Struttura radiale', '#a78bfa', 14, 'center', true);
+  radii.forEach(({ r, col, lbl: text }, i) => {
+    if (r < rs * 4.5) {
+      cx.fillStyle = col;
+      cx.font = '11px Georgia,serif';
+      cx.textAlign = 'left';
+      cx.fillText(text, lx - 80, H * 0.27 + i * 22);
+    }
+  });
+  lbl(lx, H * 0.62, '→ fotone che scappa', '#ffd700', 11, 'center');
+  lbl(lx, H * 0.66, '→ fotone catturato', '#ff6432', 11, 'center');
+  lbl(lx, H * 0.72, 'Nessun segnale sfugge', '#94a3b8', 11, 'center');
+  lbl(lx, H * 0.76, "dall'interno di rs", '#94a3b8', 11, 'center');
+
+  cx.restore();
+}
+
+// ── PHASE 2: Penrose Regione Esterna ───────────────────────────────────────
+function ph2() {
+  cx.save();
+  const cx0 = W * 0.42, cy0 = H * 0.5, sz = Math.min(W, H) * 0.32;
+
+  // Triangle: bottom-left, right, top
+  const bl = { x: cx0 - sz, y: cy0 + sz };
+  const ri = { x: cx0 + sz, y: cy0 };
+  const tp = { x: cx0, y: cy0 - sz };
+
+  // Fill region
+  cx.beginPath();
+  cx.moveTo(bl.x, bl.y);
+  cx.lineTo(ri.x, ri.y);
+  cx.lineTo(tp.x, tp.y);
+  cx.closePath();
+  cx.fillStyle = 'rgba(30,20,60,0.5)';
+  cx.fill();
+
+  // Boundary: ℐ⁻ (lower right)
+  cx.beginPath(); cx.moveTo(bl.x, bl.y); cx.lineTo(ri.x, ri.y);
+  cx.strokeStyle = '#fbbf24'; cx.lineWidth = 2; gw('#fbbf24', 10); cx.stroke(); ng();
+
+  // Boundary: ℐ⁺ (upper right)
+  cx.beginPath(); cx.moveTo(ri.x, ri.y); cx.lineTo(tp.x, tp.y);
+  cx.strokeStyle = '#fbbf24'; cx.lineWidth = 2; gw('#fbbf24', 10); cx.stroke(); ng();
+
+  // Horizon at 45°: bottom-left to top
+  cx.beginPath(); cx.moveTo(bl.x, bl.y); cx.lineTo(tp.x, tp.y);
+  cx.strokeStyle = '#a78bfa'; cx.lineWidth = 2.5; gw('#a78bfa', 16); cx.stroke(); ng();
+
+  // Animated timelike geodesic
+  const tprog = (T * 0.2) % 1;
+  const gx = bl.x + (tp.x - bl.x) * tprog + (ri.x - bl.x) * tprog * (1 - tprog) * 0.6;
+  const gy = bl.y + (tp.y - bl.y) * tprog;
+  cx.beginPath();
+  cx.moveTo(bl.x + (ri.x - bl.x) * 0.25, bl.y);
+  cx.quadraticCurveTo(cx0 + sz * 0.3, cy0, gx, gy);
+  cx.strokeStyle = 'rgba(96,165,250,0.7)'; cx.lineWidth = 2; cx.stroke();
+  cx.beginPath(); cx.arc(gx, gy, 4, 0, Math.PI * 2);
+  gw('#60a5fa', 12); cx.fillStyle = '#60a5fa'; cx.fill(); ng();
+
+  // Labels
+  lbl(tp.x, tp.y - 14, 'i⁺', '#e2e8f0', 14, 'center', true);
+  lbl(ri.x + 20, ri.y, 'i⁰', '#e2e8f0', 14, 'left', true);
+  lbl(bl.x - 20, bl.y + 8, 'i⁻', '#94a3b8', 13, 'right');
+  lbl(ri.x + 14, (ri.y + tp.y) / 2, 'ℐ⁺', '#fbbf24', 13, 'left', true);
+  lbl(ri.x + 14, (ri.y + bl.y) / 2, 'ℐ⁻', '#fbbf24', 13, 'left', true);
+  lbl(bl.x - 18, (bl.y + tp.y) / 2, 'Orizzonte', '#a78bfa', 11, 'right');
+  lbl(cx0 + sz * 0.35, cy0 + sz * 0.1, 'Regione I', '#94a3b8', 13, 'center');
+  lbl(cx0 + sz * 0.35, cy0 + sz * 0.2, 'Universo esterno', '#64748b', 11, 'center');
+
+  // Coord axes label
+  lbl(W * 0.78, H * 0.3, 'Diagramma Conforme', '#a78bfa', 14, 'center', true);
+  lbl(W * 0.78, H * 0.36, '(Regione I)', '#94a3b8', 12, 'center');
+  lbl(W * 0.78, H * 0.45, 'Asse verticale: T (tempo)', '#e2e8f0', 11, 'center');
+  lbl(W * 0.78, H * 0.49, 'Asse orizzontale: X (spazio)', '#e2e8f0', 11, 'center');
+  lbl(W * 0.78, H * 0.55, 'Luce: diagonali a 45°', '#fbbf24', 11, 'center');
+  lbl(W * 0.78, H * 0.62, '— Geodesica timelike', '#60a5fa', 11, 'center');
+
+  cx.restore();
+}
+
+// ── PHASE 3: Penrose Buco Nero completo ────────────────────────────────────
+function ph3() {
+  cx.save();
+  const cx0 = W * 0.4, cy0 = H * 0.5, sz = Math.min(W, H) * 0.3;
+
+  const tl = { x: cx0 - sz, y: cy0 - sz };
+  const tr = { x: cx0 + sz, y: cy0 - sz };
+  const bl = { x: cx0 - sz, y: cy0 + sz };
+  const br = { x: cx0 + sz, y: cy0 + sz };
+  const cc = { x: cx0, y: cy0 };
+
+  // Region I (right triangle)
+  cx.beginPath();
+  cx.moveTo(cc.x, cc.y); cx.lineTo(br.x, br.y);
+  cx.lineTo(tr.x, tr.y); cx.closePath();
+  cx.fillStyle = 'rgba(20,30,60,0.55)'; cx.fill();
+
+  // Region II (top triangle = black hole interior)
+  cx.beginPath();
+  cx.moveTo(cc.x, cc.y); cx.lineTo(tl.x, tl.y);
+  cx.lineTo(tr.x, tr.y); cx.closePath();
+  cx.fillStyle = 'rgba(40,0,40,0.6)'; cx.fill();
+
+  // Singularity (zigzag red line at top)
+  cx.beginPath();
+  const zpts = 14;
+  const zamp = sz * 0.045;
+  cx.moveTo(tl.x, tl.y);
+  for (let i = 1; i <= zpts; i++) {
+    const zx = tl.x + (tr.x - tl.x) * (i / zpts);
+    const zy = tl.y + (i % 2 === 0 ? -zamp : zamp);
+    cx.lineTo(zx, zy);
+  }
+  cx.lineTo(tr.x, tr.y);
+  gw('#ef4444', 18); cx.strokeStyle = '#ef4444'; cx.lineWidth = 3; cx.stroke(); ng();
+
+  // Horizons (diagonal lines)
+  cx.beginPath(); cx.moveTo(bl.x, bl.y); cx.lineTo(cc.x, cc.y);
+  gw('#a78bfa', 18); cx.strokeStyle = '#a78bfa'; cx.lineWidth = 2.5; cx.stroke(); ng();
+  cx.beginPath(); cx.moveTo(br.x, br.y); cx.lineTo(cc.x, cc.y);
+  gw('#a78bfa', 18); cx.strokeStyle = '#a78bfa'; cx.lineWidth = 2.5; cx.stroke(); ng();
+
+  // Null infinities
+  cx.beginPath(); cx.moveTo(bl.x, bl.y); cx.lineTo(br.x, br.y);
+  cx.strokeStyle = '#334155'; cx.lineWidth = 1.5; cx.stroke();
+  cx.beginPath(); cx.moveTo(cc.x, cc.y); cx.lineTo(tr.x, cy0);
+  cx.strokeStyle = '#fbbf24'; cx.lineWidth = 1.5; gw('#fbbf24', 6); cx.stroke(); ng();
+
+  // Animated infalling particle: Region I → Region II
+  const pt = (T * 0.22) % 1;
+  const startX = br.x - (br.x - cc.x) * 0.2, startY = br.y;
+  const endX = tl.x + (tr.x - tl.x) * 0.55, endY = tl.y + zamp;
+  const parX = startX + (endX - startX) * pt;
+  const parY = startY + (endY - startY) * pt;
+  // Trail
+  for (let j = 0; j < 10; j++) {
+    const tp2 = Math.max(0, pt - j * 0.025);
+    const tx = startX + (endX - startX) * tp2;
+    const ty = startY + (endY - startY) * tp2;
+    cx.beginPath(); cx.arc(tx, ty, 2.5 - j * 0.2, 0, Math.PI * 2);
+    cx.fillStyle = `rgba(96,165,250,${0.6 - j * 0.06})`; cx.fill();
+  }
+  cx.beginPath(); cx.arc(parX, parY, 4, 0, Math.PI * 2);
+  gw('#60a5fa', 14); cx.fillStyle = '#60a5fa'; cx.fill(); ng();
+
+  // Labels
+  lbl(cx0 + sz * 0.5, cy0 + sz * 0.4, 'Regione I', '#94a3b8', 12, 'center');
+  lbl(cx0 + sz * 0.5, cy0 + sz * 0.52, 'Universo', '#64748b', 11, 'center');
+  lbl(cx0 - sz * 0.08, cy0 - sz * 0.45, 'Regione II', '#c084fc', 12, 'center');
+  lbl(cx0 - sz * 0.08, cy0 - sz * 0.55, 'Buco Nero', '#9333ea', 11, 'center');
+  lbl(cx0, tl.y - 16, '— Singolarità —', '#ef4444', 12, 'center', true);
+  lbl(bl.x - 16, (bl.y + cy0) / 2, 'H⁺', '#a78bfa', 13, 'right', true);
+  lbl(br.x + 16, (br.y + cy0) / 2, 'H⁺', '#a78bfa', 13, 'left', true);
+
+  // Right side info
+  const rx = W * 0.8;
+  lbl(rx, H * 0.22, 'Diagramma Completo', '#a78bfa', 14, 'center', true);
+  lbl(rx, H * 0.28, 'Schwarzschild', '#a78bfa', 13, 'center');
+  lbl(rx, H * 0.38, '—— Orizzonte futuro H⁺', '#a78bfa', 11, 'center');
+  lbl(rx, H * 0.43, '—— Singolarità (spacelike)', '#ef4444', 11, 'center');
+  lbl(rx, H * 0.48, '● Particella infalling', '#60a5fa', 11, 'center');
+  lbl(rx, H * 0.56, "Ogni worldline che", '#94a3b8', 11, 'center');
+  lbl(rx, H * 0.60, "attraversa H⁺ colpisce", '#94a3b8', 11, 'center');
+  lbl(rx, H * 0.64, "inevitabilmente la singolarità", '#94a3b8', 11, 'center');
+
+  cx.restore();
+}
+
+// ── PHASE 4: Singolarità di Schwarzschild ──────────────────────────────────
+function ph4() {
+  cx.save();
+  const gx0 = W * 0.12, gx1 = W * 0.58, gy0 = H * 0.15, gy1 = H * 0.78;
+  const gw0 = gx1 - gx0, gh0 = gy1 - gy0;
+
+  // Singularity as wavy horizontal line at top
+  const singY = gy0 + 30;
+  cx.beginPath();
+  cx.moveTo(gx0, singY);
+  const wpts = 40;
+  for (let i = 0; i <= wpts; i++) {
+    const wx = gx0 + (gw0 * i / wpts);
+    const wy = singY + 10 * Math.sin(i * 0.7 + T * 2);
+    i === 0 ? cx.moveTo(wx, wy) : cx.lineTo(wx, wy);
+  }
+  gw('#ef4444', 16); cx.strokeStyle = '#ef4444'; cx.lineWidth = 3.5; cx.stroke(); ng();
+  lbl((gx0 + gx1) / 2, singY - 16, 'SINGOLARITÀ  r = 0', '#ef4444', 13, 'center', true);
+
+  // Time axis
+  cx.beginPath(); cx.moveTo(gx0, gy1); cx.lineTo(gx0, gy0);
+  cx.strokeStyle = '#475569'; cx.lineWidth = 1.5; cx.stroke();
+  cx.beginPath(); cx.moveTo(gx0, gy0 - 10); cx.lineTo(gx0 - 5, gy0 + 10); cx.lineTo(gx0 + 5, gy0 + 10); cx.closePath();
+  cx.fillStyle = '#475569'; cx.fill();
+  lbl(gx0 - 12, gy0 - 5, 't', '#94a3b8', 13, 'center', true);
+
+  // Space axis
+  cx.beginPath(); cx.moveTo(gx0, gy1); cx.lineTo(gx1, gy1);
+  cx.strokeStyle = '#475569'; cx.lineWidth = 1.5; cx.stroke();
+  cx.beginPath(); cx.moveTo(gx1 + 10, gy1); cx.lineTo(gx1 - 8, gy1 - 5); cx.lineTo(gx1 - 8, gy1 + 5); cx.closePath();
+  cx.fillStyle = '#475569'; cx.fill();
+  lbl(gx1 + 22, gy1, 'r', '#94a3b8', 13, 'center', true);
+
+  // Horizon line: 45° from (gx0, gy1) corner
+  const hx = gx0 + gw0 * 0.25, hy = gy1 - gh0 * 0.25;
+  cx.beginPath(); cx.moveTo(gx0, gy1); cx.lineTo(hx, hy);
+  cx.setLineDash([8, 4]);
+  gw('#a78bfa', 14); cx.strokeStyle = '#a78bfa'; cx.lineWidth = 2; cx.stroke(); ng();
+  cx.setLineDash([]);
+  lbl(gx0 + 30, gy1 - gh0 * 0.13, 'Orizzonte', '#a78bfa', 11, 'left');
+
+  // Timelike worldlines converging to singularity
+  const numLines = 7;
+  for (let i = 0; i < numLines; i++) {
+    const fr = i / (numLines - 1);
+    const startX = gx0 + gw0 * (0.28 + fr * 0.65);
+    const startY = gy1;
+    const endX = gx0 + gw0 * (0.1 + fr * 0.8);
+    const endY = singY + 14;
+
+    const prog = ((T * 0.18 + fr * 0.7) % 1);
+    const curX = startX + (endX - startX) * prog;
+    const curY = startY + (endY - startY) * prog;
+
+    cx.beginPath();
+    cx.moveTo(startX, startY);
+    cx.quadraticCurveTo(startX + (gx0 - startX) * 0.3 + 10, (startY + endY) / 2, endX, endY);
+    cx.strokeStyle = `rgba(96,165,250,0.3)`; cx.lineWidth = 1.5; cx.stroke();
+
+    // Moving dot
+    cx.beginPath(); cx.arc(curX, curY, 3.5, 0, Math.PI * 2);
+    const fade = Math.max(0.2, 1 - prog);
+    cx.fillStyle = `rgba(96,165,250,${fade})`; cx.fill();
+  }
+
+  // Curvature graph on right
+  const kx0 = W * 0.66, ky0 = H * 0.2, kx1 = W * 0.9, ky1 = H * 0.72;
+  lbl((kx0 + kx1) / 2, ky0 - 14, 'Curvatura K(r)', '#a78bfa', 13, 'center', true);
+
+  // Axes
+  cx.beginPath(); cx.moveTo(kx0, ky1); cx.lineTo(kx0, ky0); cx.strokeStyle = '#475569'; cx.lineWidth = 1.5; cx.stroke();
+  cx.beginPath(); cx.moveTo(kx0, ky1); cx.lineTo(kx1, ky1); cx.strokeStyle = '#475569'; cx.lineWidth = 1.5; cx.stroke();
+  lbl(kx0 - 14, ky0, 'K', '#94a3b8', 12, 'center'); lbl(kx1 + 10, ky1, 'r', '#94a3b8', 12, 'center');
+  lbl(kx0 + 10, ky1 + 14, 'rs', '#a78bfa', 11, 'left');
+  lbl(kx0 + (kx1 - kx0) * 0.4, ky1 + 14, '2rs', '#94a3b8', 10, 'center');
+
+  // K = GM/r³ curve
+  cx.beginPath();
+  const kgw = kx1 - kx0, kgh = ky1 - ky0;
+  let first = true;
+  for (let xi = 0.06; xi <= 1; xi += 0.01) {
+    const r = xi;
+    const k = Math.min(1, 0.008 / (r * r * r));
+    const px2 = kx0 + xi * kgw;
+    const py2 = ky1 - k * kgh * 0.9;
+    if (first) { cx.moveTo(px2, py2); first = false; } else cx.lineTo(px2, py2);
+  }
+  gw('#ef4444', 10); cx.strokeStyle = '#ef4444'; cx.lineWidth = 2; cx.stroke(); ng();
+
+  lbl((kx0 + kx1) / 2, ky0 + 30, 'K = GM/r³  →  ∞  per r → 0', '#ef4444', 11, 'center');
+  lbl((kx0 + kx1) / 2, ky1 + 36, 'r → 0: curvatura diverge', '#94a3b8', 11, 'center');
+
+  cx.restore();
+}
+
+// ── PHASE 5: Coordinate di Tortoise ────────────────────────────────────────
+function ph5() {
+  cx.save();
+  // Left graph: r* vs r
+  const lx0 = W * 0.07, ly0 = H * 0.15, lx1 = W * 0.44, ly1 = H * 0.82;
+  const lgw = lx1 - lx0, lgh = ly1 - ly0;
+
+  lbl((lx0 + lx1) / 2, ly0 - 14, 'Coordinate Tortoise  r*(r)', '#a78bfa', 13, 'center', true);
+
+  // Axes
+  cx.beginPath(); cx.moveTo(lx0, ly1); cx.lineTo(lx0, ly0); cx.strokeStyle = '#475569'; cx.lineWidth = 1.5; cx.stroke();
+  cx.beginPath(); cx.moveTo(lx0, ly0 + lgh * 0.5); cx.lineTo(lx1, ly0 + lgh * 0.5); cx.strokeStyle = '#475569'; cx.lineWidth = 1.5; cx.stroke();
+  lbl(lx0 - 16, ly0, 'r*', '#94a3b8', 12, 'center');
+  lbl(lx1 + 10, ly0 + lgh * 0.5, 'r', '#94a3b8', 12, 'center');
+
+  // rs marker
+  const rsX = lx0 + lgw * 0.25;
+  cx.beginPath(); cx.moveTo(rsX, ly0 + lgh * 0.5 - 8); cx.lineTo(rsX, ly0 + lgh * 0.5 + 8);
+  cx.strokeStyle = '#a78bfa'; cx.lineWidth = 1.5; cx.stroke();
+  lbl(rsX, ly0 + lgh * 0.5 + 22, 'rs', '#a78bfa', 11, 'center');
+
+  // r*(r) = r + rs*ln|r/rs - 1|
+  cx.beginPath();
+  let first = true;
+  for (let i = 1; i <= 300; i++) {
+    const r = 1.0 + i * 0.06; // in units of rs, start > 1
+    const rstar = r + Math.log(Math.abs(r - 1));
+    const px2 = lx0 + lgw * 0.25 + lgw * 0.6 * (r - 1) / 15;
+    const py2 = ly0 + lgh * 0.5 - lgh * 0.38 * rstar / 8;
+    const inBounds = px2 >= lx0 && px2 <= lx1 && py2 >= ly0 && py2 <= ly1;
+    if (inBounds) { first ? (cx.moveTo(px2, py2), first = false) : cx.lineTo(px2, py2); }
+    else first = true;
+  }
+  gw('#38bdf8', 10); cx.strokeStyle = '#38bdf8'; cx.lineWidth = 2; cx.stroke(); ng();
+
+  // Vertical asymptote at rs
+  cx.beginPath(); cx.moveTo(rsX, ly0 + 10); cx.lineTo(rsX, ly1);
+  cx.setLineDash([5, 4]); cx.strokeStyle = '#a78bfa'; cx.lineWidth = 1.5; cx.stroke(); cx.setLineDash([]);
+  lbl(rsX - 20, ly0 + 20, 'r* → −∞', '#a78bfa', 10, 'right');
+
+  lbl((lx0 + lx1) / 2, ly1 + 16, "r* = r + rs·ln|r/rs − 1|", '#38bdf8', 11, 'center');
+
+  // Right graph: Eddington-Finkelstein diagram
+  const rx0 = W * 0.52, ry0 = H * 0.15, rx1 = W * 0.9, ry1 = H * 0.82;
+  const rgw = rx1 - rx0, rgh = ry1 - ry0;
+
+  lbl((rx0 + rx1) / 2, ry0 - 14, 'Eddington-Finkelstein Ingoing', '#a78bfa', 13, 'center', true);
+
+  // Axes
+  cx.beginPath(); cx.moveTo(rx0, ry1); cx.lineTo(rx0, ry0); cx.strokeStyle = '#475569'; cx.lineWidth = 1.5; cx.stroke();
+  cx.beginPath(); cx.moveTo(rx0, ry1); cx.lineTo(rx1, ry1); cx.strokeStyle = '#475569'; cx.lineWidth = 1.5; cx.stroke();
+  lbl(rx0 - 14, ry0, 'v', '#94a3b8', 12, 'center');
+  lbl(rx1 + 10, ry1, 'r', '#94a3b8', 12, 'center');
+
+  // rs vertical line
+  const efRsX = rx0 + rgw * 0.3;
+  cx.beginPath(); cx.moveTo(efRsX, ry0 + 20); cx.lineTo(efRsX, ry1);
+  cx.setLineDash([5, 4]); gw('#a78bfa', 10); cx.strokeStyle = '#a78bfa'; cx.lineWidth = 1.5; cx.stroke(); ng(); cx.setLineDash([]);
+  lbl(efRsX, ry1 + 16, 'rs', '#a78bfa', 11, 'center');
+
+  // Ingoing null geodesics: v = const lines (45° that cross horizon)
+  for (let i = 0; i < 9; i++) {
+    const vval = i / 8;
+    const startR = 0.02, endR = 1;
+    cx.beginPath();
+    const sx = rx0 + rgw * (0.04 + vval * 0.85);
+    const sy = ry1 - rgh * 0.04;
+    // ingoing: v = t + r*, so at constant v, dr/dt < 0
+    const ex = rx0 + rgw * (0.04 + vval * 0.85 - 0.35);
+    const ey = ry0 + rgh * 0.1;
+    cx.moveTo(sx, sy);
+    cx.lineTo(Math.max(rx0 + 2, ex), Math.max(ry0 + 5, ey));
+    const alpha = 0.3 + i * 0.07;
+    cx.strokeStyle = `rgba(251,191,36,${alpha})`; cx.lineWidth = 1.5;
+    if (i === 4) { gw('#fbbf24', 8); }
+    cx.stroke(); ng();
+  }
+
+  // Outgoing near horizon
+  for (let i = 0; i < 4; i++) {
+    const t01 = ((T * 0.2 + i * 0.25) % 1);
+    const startX = efRsX + rgw * 0.05;
+    const startY = ry0 + rgh * (0.3 + i * 0.14);
+    const endX = efRsX - rgw * 0.2 * t01;
+    const endY = startY - rgh * 0.0;
+    cx.beginPath(); cx.moveTo(startX, startY); cx.lineTo(startX + (endX - startX) * t01, startY - rgh * 0.05 * t01);
+    gw('#ef4444', 6); cx.strokeStyle = `rgba(239,68,68,${0.4 + t01 * 0.4})`; cx.lineWidth = 1.5; cx.stroke(); ng();
+  }
+
+  // Singularity line at top
+  cx.beginPath(); cx.moveTo(rx0 + 5, ry0 + 28); cx.lineTo(efRsX, ry0 + 28);
+  gw('#ef4444', 12); cx.strokeStyle = '#ef4444'; cx.lineWidth = 2.5; cx.stroke(); ng();
+
+  lbl(rx0 + (efRsX - rx0) / 2, ry0 + 18, 'r = 0', '#ef4444', 11, 'center');
+  lbl((rx0 + rx1) / 2, ry1 + 32, 'v = t + r*   (ingoing EF)', '#94a3b8', 11, 'center');
+  lbl((rx0 + rx1) / 2, ry1 + 46, "L'orizzonte non è singolare nelle coord. EF", '#64748b', 10, 'center');
+
+  cx.restore();
+}
+
+// ── PHASE 6: EPIC Black Hole ────────────────────────────────────────────────
+function ph6() {
+  cx.save();
+  const bx = W * 0.46, by = H * 0.5;
+  const rs = Math.min(W * 0.28, H * 0.38);
+  const diskRot = T * 0.12;
+
+  // === JETS ===
+  const jetLen = rs * 2.8, jetW = rs * 0.18;
+  for (let side = -1; side <= 1; side += 2) {
+    const jg = cx.createLinearGradient(bx, by, bx, by + side * jetLen);
+    jg.addColorStop(0, 'rgba(200,150,255,0.6)');
+    jg.addColorStop(0.3, 'rgba(150,100,255,0.3)');
+    jg.addColorStop(1, 'rgba(100,50,255,0)');
+    cx.beginPath();
+    cx.moveTo(bx - jetW * 0.3, by);
+    cx.quadraticCurveTo(bx - jetW * (0.5 + 0.1 * Math.sin(T * 0.7)), by + side * jetLen * 0.5,
+      bx + jetW * 0.05 * Math.sin(T * 0.5), by + side * jetLen);
+    cx.quadraticCurveTo(bx + jetW * (0.5 + 0.1 * Math.sin(T * 0.7 + 1)), by + side * jetLen * 0.5,
+      bx + jetW * 0.3, by);
+    cx.fillStyle = jg;
+    cx.fill();
+
+    // Jet particles
+    for (let j = 0; j < 8; j++) {
+      const t01 = ((T * 0.3 + j * 0.125 * side) % 1 + 1) % 1;
+      const jx = bx + (Math.random() - 0.5) * jetW * (1 - t01);
+      const jy = by + side * jetLen * t01;
+      cx.beginPath(); cx.arc(jx, jy, 2, 0, Math.PI * 2);
+      gw('#c084fc', 8); cx.fillStyle = `rgba(192,132,252,${1 - t01})`; cx.fill(); ng();
+    }
+  }
+
+  // === OUTER GLOW ===
+  const outerGlow = cx.createRadialGradient(bx, by, rs * 0.9, bx, by, rs * 2.5);
+  outerGlow.addColorStop(0, 'rgba(167,139,250,0.06)');
+  outerGlow.addColorStop(0.4, 'rgba(80,40,120,0.04)');
+  outerGlow.addColorStop(1, 'rgba(0,0,0,0)');
+  cx.beginPath(); cx.arc(bx, by, rs * 2.5, 0, Math.PI * 2);
+  cx.fillStyle = outerGlow; cx.fill();
+
+  // === ACCRETION DISK (back half, many layers) ===
+  const diskLayers = 28;
+  for (let layer = diskLayers; layer >= 0; layer--) {
+    const fr = layer / diskLayers;
+    const rx = rs * (1.08 + fr * 2.2), ry = rx * 0.22;
+    const innerFr = Math.max(0, 1 - fr * 2);
+    const r = 255;
+    const g = Math.round(220 - fr * 180);
+    const b = Math.round(80 - fr * 78);
+    const alpha = 0.04 + (1 - fr) * 0.18;
+    cx.save();
+    cx.translate(bx, by);
+    cx.rotate(diskRot);
+    cx.beginPath();
+    cx.ellipse(0, 0, rx, ry, 0, Math.PI, Math.PI * 2);
+    const strokeG = cx.createLinearGradient(-rx, 0, rx, 0);
+    strokeG.addColorStop(0, `rgba(${r},${g},${b},${alpha * 0.5})`);
+    strokeG.addColorStop(0.5, `rgba(${r},${g},${b},${alpha})`);
+    strokeG.addColorStop(1, `rgba(${r},${g},${b},${alpha * 0.5})`);
+    cx.strokeStyle = strokeG;
+    cx.lineWidth = 5 + (1 - fr) * 9;
+    if (fr < 0.35) gw(`rgba(${r},${g},${b},0.7)`, 15 + innerFr * 25);
+    cx.stroke(); ng();
+    cx.restore();
+  }
+
+  // === BH SHADOW ===
+  const bhGrad = cx.createRadialGradient(bx - rs * 0.15, by - rs * 0.1, 0, bx, by, rs);
+  bhGrad.addColorStop(0, '#060606');
+  bhGrad.addColorStop(1, '#000000');
+  cx.beginPath(); cx.arc(bx, by, rs * 0.97, 0, Math.PI * 2);
+  cx.fillStyle = bhGrad; cx.fill();
+
+  // === PHOTON SPHERE ===
+  cx.beginPath(); cx.arc(bx, by, rs * 1.5, 0, Math.PI * 2);
+  gw('#c084fc', 22); cx.strokeStyle = 'rgba(192,132,252,0.35)'; cx.lineWidth = 3; cx.stroke(); ng();
+
+  // === EVENT HORIZON ===
+  cx.beginPath(); cx.arc(bx, by, rs, 0, Math.PI * 2);
+  gw('#a78bfa', 30); cx.strokeStyle = '#a78bfa'; cx.lineWidth = 2.5; cx.stroke(); ng();
+
+  // === ACCRETION DISK (front half) ===
+  for (let layer = 0; layer <= diskLayers; layer++) {
+    const fr = layer / diskLayers;
+    const rx = rs * (1.08 + fr * 2.2), ry = rx * 0.22;
+    const r = 255, g = Math.round(220 - fr * 180), b = Math.round(80 - fr * 78);
+    const alpha = 0.06 + (1 - fr) * 0.22;
+    cx.save();
+    cx.translate(bx, by);
+    cx.rotate(diskRot);
+    cx.beginPath();
+    cx.ellipse(0, 0, rx, ry, 0, 0, Math.PI);
+    const strokeG = cx.createLinearGradient(-rx, 0, rx, 0);
+    strokeG.addColorStop(0, `rgba(${r},${g},${b},${alpha * 0.5})`);
+    strokeG.addColorStop(0.5, `rgba(${r},${g},${b},${alpha})`);
+    strokeG.addColorStop(1, `rgba(${r},${g},${b},${alpha * 0.5})`);
+    cx.strokeStyle = strokeG;
+    cx.lineWidth = 5 + (1 - fr) * 9;
+    if (fr < 0.35) gw(`rgba(${r},${g},${b},0.8)`, 18 + (1 - fr) * 22);
+    cx.stroke(); ng();
+    cx.restore();
+  }
+
+  // Disk hot spot
+  cx.save();
+  cx.translate(bx, by);
+  cx.rotate(diskRot * 1.3);
+  cx.beginPath(); cx.arc(rs * 1.3, 0, rs * 0.15, 0, Math.PI * 2);
+  gw('#fff', 28); cx.fillStyle = 'rgba(255,255,220,0.6)'; cx.fill(); ng();
+  cx.restore();
+
+  // === GRAVITATIONAL LENSING ARCS ===
+  for (let arc = 0; arc < 3; arc++) {
+    const yOff = (arc - 1) * rs * 2.1;
+    const arcAlpha = 0.25 + (arc === 1 ? 0 : 0.15);
+    cx.beginPath();
+    cx.ellipse(bx, by + yOff, rs * (2.0 + arc * 0.3), rs * 0.35, 0, -Math.PI * 0.28, Math.PI * 0.28);
+    gw('#ffe0a0', 10);
+    cx.strokeStyle = `rgba(255,224,160,${arcAlpha})`;
+    cx.lineWidth = 2;
+    cx.stroke(); ng();
+
+    cx.beginPath();
+    cx.ellipse(bx, by - yOff, rs * (2.0 + arc * 0.3), rs * 0.35, 0, Math.PI * 0.72, Math.PI * 1.28);
+    cx.strokeStyle = `rgba(255,224,160,${arcAlpha})`;
+    cx.lineWidth = 2;
+    gw('#ffe0a0', 10); cx.stroke(); ng();
+  }
+
+  // === ORBITING PARTICLES ===
+  for (let i = 0; i < 24; i++) {
+    const baseAngle = (i / 24) * Math.PI * 2;
+    const speed = 0.35 + (i % 5) * 0.09;
+    const dist = rs * (1.25 + (i % 7) * 0.28);
+    const angle = baseAngle + T * speed;
+    const px = bx + dist * Math.cos(angle);
+    const py = by + dist * Math.sin(angle) * 0.25;
+
+    // Only draw particles not behind BH shadow
+    const distFromCenter = Math.sqrt((px - bx) ** 2 + (py - by) ** 2);
+    if (distFromCenter < rs * 0.92) continue;
+
+    // Trail
+    for (let trail = 6; trail >= 0; trail--) {
+      const ta = angle - trail * 0.08 * speed;
+      const tx = bx + dist * Math.cos(ta);
+      const ty = by + dist * Math.sin(ta) * 0.25;
+      cx.beginPath(); cx.arc(tx, ty, 1.5, 0, Math.PI * 2);
+      cx.fillStyle = `rgba(255,220,100,${(6 - trail) / 12})`;
+      cx.fill();
+    }
+
+    cx.beginPath(); cx.arc(px, py, 2.5, 0, Math.PI * 2);
+    gw('#ffd700', 10); cx.fillStyle = '#ffe066'; cx.fill(); ng();
+  }
+
+  // Spiraling particles (infalling)
+  for (let i = 0; i < 8; i++) {
+    const progress = ((T * 0.15 + i * 0.125) % 1);
+    const startDist = rs * 3.0, endDist = rs * 1.02;
+    const dist = startDist + (endDist - startDist) * progress;
+    const angle = (i / 8) * Math.PI * 2 + T * 0.4 + progress * Math.PI * 3;
+    const px = bx + dist * Math.cos(angle);
+    const py = by + dist * Math.sin(angle) * 0.25;
+    cx.beginPath(); cx.arc(px, py, 2, 0, Math.PI * 2);
+    const alpha = 0.3 + progress * 0.7;
+    gw('#ff6432', 8); cx.fillStyle = `rgba(255,100,50,${alpha})`; cx.fill(); ng();
+  }
+
+  // === LABELS ===
+  const pulseBright = 0.8 + 0.2 * Math.sin(T * 1.2);
+  cx.save(); cx.globalAlpha = pulseBright;
+  lbl(bx, by - rs - 28, 'rs = 2GM/c²', '#ffffff', 17, 'center', true);
+  cx.restore();
+
+  lbl(bx, by + rs * 0.78 + 22, 'Disco di Accrescimento', '#ff8c00', 12, 'center');
+  lbl(bx - rs * 1.9, by - rs * 0.55, 'Lente', '#ffe0a0', 10, 'center');
+  lbl(bx - rs * 1.9, by - rs * 0.45, 'gravitazionale', '#ffe0a0', 10, 'center');
+  lbl(bx + rs * 1.65, by, 'Sfera dei', '#c084fc', 10, 'center');
+  lbl(bx + rs * 1.65, by + 12, 'fotoni', '#c084fc', 10, 'center');
+  lbl(bx, by - rs * 2.5 - 14, 'Getto', '#c084fc', 10, 'center');
+  lbl(bx, by - rs * 2.5 - 2, 'relativistico', '#c084fc', 10, 'center');
+
+  cx.restore();
+}
+
+// ── MAIN LOOP ───────────────────────────────────────────────────────────────
+const PH_FNS = [ph0, ph1, ph2, ph3, ph4, ph5, ph6];
+
+function draw() {
+  bg();
+  stars();
+  T += 0.016;
+  PH_FNS[ph]();
+  requestAnimationFrame(draw);
+}
+
+go(0);
+draw();
+</script>
+</body>
+</html>
