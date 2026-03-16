@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NPD-003 · McDonnell · CCC–DS/CFT–Fuzzball</title>
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,300;1,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{--navy:#0d1b2a;--navy2:#1b2d3e;--bg:#f0f3f7;--white:#fff;--blue:#1a56a0;--blue-link:#1a56a0;--accent2:#00bcd4;--green:#1b5e20;--green-bg:#e8f5e9;--green-border:#81c784;--orange:#bf360c;--orange-bg:#fbe9e7;--orange-border:#ff8a65;--purple:#4527a0;--purple-bg:#ede7f6;--purple-border:#9575cd;--grey-bg:#eceff1;--grey-border:#b0bec5;--border:#cfd8dc;--text:#1c2b36;--text-light:#546e7a;--shadow:0 1px 3px rgba(0,0,0,.08);--shadow-md:0 4px 8px rgba(0,0,0,.08);}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{background:var(--bg);color:var(--text);font-family:'Source Serif 4',Georgia,serif;font-size:15px;line-height:1.6;}
+  .nav{background:var(--navy);height:54px;display:flex;align-items:center;padding:0 20px;position:sticky;top:0;z-index:200;}
+  .logo{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:500;color:#fff;margin-right:auto;}
+  .logo .c{color:var(--accent2);}
+  .logo .d{color:rgba(255,255,255,.3);}
+  .nav a{display:flex;align-items:center;height:54px;padding:0 13px;color:rgba(255,255,255,.6);text-decoration:none;font-size:12px;font-family:'JetBrains Mono',monospace;border-bottom:2px solid transparent;transition:all .15s;letter-spacing:.03em;}
+  .nav a:hover{color:#fff;}
+  .nav .sb{background:var(--accent2);color:var(--navy)!important;font-weight:500;margin-left:8px;border-radius:3px;height:32px!important;margin-top:11px;margin-bottom:11px;border-bottom:none!important;}
+  .bc{background:var(--white);border-bottom:1px solid var(--border);padding:7px 20px;}
+  .bc-i{max-width:1120px;margin:0 auto;font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text-light);display:flex;gap:6px;align-items:center;}
+  .bc-i a{color:var(--blue-link);text-decoration:none;}
+  .bc-i a:hover{text-decoration:underline;}
+  .ph{background:var(--navy2);padding:26px 20px;}
+  .ph-i{max-width:1120px;margin:0 auto;}
+  .pid{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,.35);letter-spacing:.1em;margin-bottom:10px;text-transform:uppercase;}
+  .ptitle{font-family:'Source Serif 4',serif;font-size:21px;font-weight:600;color:#fff;line-height:1.3;margin-bottom:11px;max-width:780px;}
+  .pauth{font-family:'JetBrains Mono',monospace;font-size:12px;color:rgba(255,255,255,.65);margin-bottom:7px;}
+  .pauth a{color:var(--accent2);text-decoration:none;}
+  .pmeta{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.4);margin-bottom:13px;}
+  .badges{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;}
+  .badge{display:inline-flex;align-items:center;font-size:10px;font-weight:500;padding:2px 7px;border-radius:2px;letter-spacing:.04em;text-transform:uppercase;font-family:'JetBrains Mono',monospace;border:1px solid transparent;}
+  .b-ctrl{background:var(--orange-bg);color:var(--orange);border-color:var(--orange-border);}
+  .b-cat{background:#e3f2fd;color:var(--blue-link);border-color:#90caf9;}
+  .b-ai{background:var(--purple-bg);color:var(--purple);border-color:var(--purple-border);}
+  .b-soon{background:var(--grey-bg);color:#546e7a;border-color:var(--grey-border);}
+  .plinks{display:flex;gap:10px;flex-wrap:wrap;}
+  .hl{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.6);text-decoration:none;border:1px solid rgba(255,255,255,.15);padding:4px 10px;border-radius:2px;transition:all .15s;letter-spacing:.03em;}
+  .hl:hover{color:#fff;border-color:rgba(255,255,255,.4);}
+  .hl.p{background:var(--accent2);color:var(--navy);border-color:var(--accent2);}
+  .hl.p:hover{background:#00acc1;}
+  .wrap{max-width:1120px;margin:0 auto;padding:18px 16px;display:flex;gap:18px;align-items:flex-start;}
+  .sb-col{width:205px;flex-shrink:0;}
+  .card{background:var(--white);border:1px solid var(--border);border-radius:4px;box-shadow:var(--shadow);margin-bottom:11px;overflow:hidden;}
+  .ch{background:var(--navy2);color:rgba(255,255,255,.8);font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;padding:7px 12px;}
+  .cr{display:flex;justify-content:space-between;align-items:center;padding:6px 12px;border-bottom:1px solid #f0f4f7;font-size:11px;font-family:'JetBrains Mono',monospace;}
+  .cr:last-child{border-bottom:none;}
+  .cr .l{color:var(--text-light);}
+  .cr .v{color:var(--text);font-weight:500;}
+  .cl{display:flex;justify-content:space-between;padding:6px 12px;border-bottom:1px solid #f0f4f7;font-size:11px;text-decoration:none;color:var(--blue-link);transition:background .1s;font-family:'JetBrains Mono',monospace;}
+  .cl:last-child{border-bottom:none;}
+  .cl:hover{background:#f5f8ff;}
+  .main{flex:1;min-width:0;}
+  .ac{background:var(--white);border:1px solid var(--border);border-radius:4px;box-shadow:var(--shadow);padding:18px 20px;margin-bottom:11px;}
+  .ac h3{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--text-light);margin-bottom:11px;padding-bottom:7px;border-bottom:1px solid var(--border);}
+  .at{font-size:14px;color:var(--text);line-height:1.75;font-family:'Source Serif 4',serif;}
+  .ec{background:var(--white);border:1px solid var(--border);border-radius:4px;box-shadow:var(--shadow);padding:14px 20px;margin-bottom:11px;}
+  .ec h3{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:500;letter-spacing:.12em;text-transform:uppercase;color:var(--text-light);margin-bottom:11px;padding-bottom:7px;border-bottom:1px solid var(--border);}
+  .eg{display:grid;grid-template-columns:1fr 1fr;gap:7px;}
+  .ei{background:var(--bg);border:1px solid var(--border);border-radius:3px;padding:8px 10px;}
+  .el{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--text-light);margin-bottom:2px;}
+  .ec2{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--blue-link);font-weight:500;margin-bottom:2px;}
+  .ed{font-size:11px;color:var(--text-light);line-height:1.4;font-family:'Source Serif 4',serif;}
+  .vd{border:none;border-top:2px solid var(--border);margin:18px 0;position:relative;}
+  .vd::after{content:'── interactive visualization ──';position:absolute;top:-9px;left:50%;transform:translateX(-50%);background:var(--bg);padding:0 12px;font-family:'JetBrains Mono',monospace;font-size:10px;color:var(--text-light);letter-spacing:.08em;white-space:nowrap;}
+  .vc{background:var(--navy);border:1px solid var(--border);border-radius:4px;overflow:hidden;box-shadow:var(--shadow-md);}
+  .vtb{background:var(--navy2);padding:9px 14px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.07);flex-wrap:wrap;gap:7px;}
+  .vt{font-family:'JetBrains Mono',monospace;font-size:11px;color:rgba(255,255,255,.55);letter-spacing:.05em;}
+  .vn{display:flex;gap:4px;flex-wrap:wrap;}
+  .vb{font-family:'JetBrains Mono',monospace;font-size:10px;color:rgba(255,255,255,.45);border:1px solid rgba(255,255,255,.1);background:transparent;padding:3px 9px;border-radius:2px;cursor:pointer;transition:all .15s;letter-spacing:.03em;}
+  .vb:hover,.vb.a{color:#fff;border-color:var(--accent2);background:rgba(0,188,212,.1);}
+  .vca{height:450px;position:relative;background:var(--navy);display:flex;}
+  .vp{width:38%;background:rgba(13,27,42,.95);border-right:1px solid rgba(255,255,255,.06);padding:20px 16px;overflow-y:auto;flex-shrink:0;}
+  .vpt{font-family:'JetBrains Mono',monospace;font-size:9px;color:var(--accent2);letter-spacing:.15em;text-transform:uppercase;margin-bottom:7px;}
+  .vpti{font-family:'Source Serif 4',serif;font-size:14px;color:#fff;font-weight:600;line-height:1.3;margin-bottom:9px;}
+  .vpb{font-family:'Source Serif 4',serif;font-size:12px;color:rgba(255,255,255,.57);line-height:1.7;}
+  .vpb p{margin-bottom:7px;}
+  .et{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:9px;padding:1px 5px;border-radius:2px;margin-right:3px;font-weight:500;letter-spacing:.05em;text-transform:uppercase;}
+  .ecm{background:rgba(33,150,243,.18);color:#90caf9;border:1px solid rgba(33,150,243,.28);}
+  .eas{background:rgba(255,193,7,.13);color:#ffd54f;border:1px solid rgba(255,193,7,.22);}
+  .esf{background:rgba(244,67,54,.13);color:#ef9a9a;border:1px solid rgba(244,67,54,.22);}
+  .vcw{flex:1;position:relative;}
+  #vc{width:100%;height:100%;display:block;}
+  footer{background:var(--navy);color:rgba(255,255,255,.35);padding:11px 20px;font-size:11px;font-family:'JetBrains Mono',monospace;display:flex;justify-content:space-between;flex-wrap:wrap;gap:7px;margin-top:28px;letter-spacing:.03em;}
+  footer a{color:rgba(255,255,255,.5);text-decoration:none;}
+  footer a:hover{color:#fff;}
+  @media(max-width:768px){.wrap{flex-direction:column;}.sb-col{width:100%;}.eg{grid-template-columns:1fr;}.vca{flex-direction:column;height:auto;}.vp{width:100%;border-right:none;border-bottom:1px solid rgba(255,255,255,.06);}.vcw{height:260px;}}
+</style>
+</head>
+<body>
+
+<nav class="nav">
+  <div class="logo"><span class="c">NPD</span><span class="d">·</span>archive</div>
+  <a href="index.html">Archive</a>
+  <a href="authors.html">Authors</a>
+  <a href="about.html">About</a>
+  <a href="submit.html" class="sb">Submit</a>
+</nav>
+
+<div class="bc"><div class="bc-i"><a href="index.html">Archive</a><span>/</span><a href="#">Quantum Gravity</a><span>/</span><span>NPD-003</span></div></div>
+
+<div class="ph">
+  <div class="ph-i">
+    <div class="pid">NPD · 2026 · 003 &nbsp;·&nbsp; viXra:2603.0079</div>
+    <div class="ptitle">On a Unified Speculative Framework Connecting Cyclic Conformal Cosmology, de Sitter Holography, and Fuzzball Boundary States</div>
+    <div class="pauth"><a href="author-mcdonnell.html">Eugene McDonnell</a> &nbsp;·&nbsp; Institute for Emergent Spacetime Research, Santa Fe NM, USA</div>
+    <div class="pmeta">Submitted March 15, 2026 &nbsp;·&nbsp; 14 pages &nbsp;·&nbsp; 17 references &nbsp;·&nbsp; CC BY 4.0</div>
+    <div class="badges">
+      <span class="badge b-ai">AI-assisted</span>
+      <span class="badge b-ctrl">Control case</span>
+      <span class="badge b-cat">Quantum Gravity</span>
+      <span class="badge b-cat">String Theory</span>
+      <span class="badge b-cat">CCC · ER=EPR</span>
+    </div>
+    <div class="plinks">
+      <a href="#" class="hl p">PDF ↓</a>
+      <a href="https://vixra.org/abs/2603.0079" target="_blank" class="hl">viXra ↗</a>
+      <a href="#viz" class="hl">Visualization ↓</a>
+      <a href="#" class="hl">Cite</a>
+    </div>
+  </div>
+</div>
+
+<div class="wrap">
+  <aside class="sb-col">
+    <div class="card">
+      <div class="ch">Paper info</div>
+      <div class="cr"><span class="l">ID</span><span class="v">NPD-003</span></div>
+      <div class="cr"><span class="l">Pages</span><span class="v">14</span></div>
+      <div class="cr"><span class="l">References</span><span class="v">17</span></div>
+      <div class="cr"><span class="l">Downloads</span><span class="v">—</span></div>
+      <div class="cr"><span class="l">License</span><span class="v">CC BY 4.0</span></div>
+    </div>
+    <div class="card">
+      <div class="ch">Epistemic status</div>
+      <div class="cr"><span class="l">(D) Derivation</span><span class="v">0</span></div>
+      <div class="cr"><span class="l">(CM) Motivated</span><span class="v">1</span></div>
+      <div class="cr"><span class="l">(AS) Analogy</span><span class="v">2</span></div>
+      <div class="cr"><span class="l">(SF) Speculative</span><span class="v">4</span></div>
+    </div>
+    <div class="card">
+      <div class="ch">External</div>
+      <a href="https://vixra.org/abs/2603.0079" target="_blank" class="cl">viXra record ↗</a>
+      <a href="author-mcdonnell.html" class="cl">Author page</a>
+    </div>
+  </aside>
+
+  <main class="main">
+    <div class="ac">
+      <h3>Abstract</h3>
+      <div class="at">We present a speculative theoretical framework connecting Penrose's Conformal Cyclic Cosmology (CCC), the de Sitter/CFT correspondence (DS/CFT), and the fuzzball description of black hole microstates in string theory. The central conjecture is that the asymptotic conformal boundaries of each cosmological aeon may be reinterpreted as fuzzball boundary states within an eleven-dimensional M-theoretic substrate, with the intervening de Sitter geometry playing the role of a transient geometric bridge. The ER=EPR conjecture is proposed as the structure invariant under conformal transitions. We further conjecture that the apparent separation between past and future fuzzball states is an artifact of dimensional projection from eleven to four dimensions, and that inflation may be interpretable as the geometric response to the quantum entanglement initialisation complexity of the nascent bridge. Each component is explicitly classified by epistemic status. No claim of mathematical derivation is made.</div>
+    </div>
+
+    <div class="ec">
+      <h3>Epistemic classification</h3>
+      <div class="eg">
+        <div class="ei"><div class="el">Most defensible</div><div class="ec2">(CM) Conjecture Motivated</div><div class="ed">ER=EPR as conformal invariant — technically anchored, computable in principle</div></div>
+        <div class="ei"><div class="el">Structural</div><div class="ec2">(AS) Analogy Suggestive ×2</div><div class="ed">DS/CFT as CCC mechanism · De Sitter as transient bridge</div></div>
+        <div class="ei"><div class="el">Speculative</div><div class="ec2">(SF) Speculative Free ×4</div><div class="ed">Fuzzball boundaries · Projection · Inflation · CMB anomalies</div></div>
+        <div class="ei"><div class="el">Falsification conditions</div><div class="ec2">5 explicit</div><div class="ed">DS/CFT unitarity · Fuzzball dS · ER=EPR conformal · Projection · CMB prediction</div></div>
+      </div>
+    </div>
+
+    <hr class="vd" id="viz">
+
+    <div class="vc">
+      <div class="vtb">
+        <div class="vt">NPD-003 · Interactive visualization</div>
+        <div class="vn">
+          <button class="vb a" onclick="go(0)">① ER=EPR</button>
+          <button class="vb" onclick="go(1)">② DS/CFT</button>
+          <button class="vb" onclick="go(2)">③ Fuzzball</button>
+          <button class="vb" onclick="go(3)">④ Bridge</button>
+          <button class="vb" onclick="go(4)">⑤ 11D</button>
+          <button class="vb" onclick="go(5)">⑥ Inflation</button>
+        </div>
+      </div>
+      <div class="vca">
+        <div class="vp">
+          <div class="vpt" id="pt">CM · Conjecture Motivated</div>
+          <div class="vpti" id="pti">ER=EPR as Conformal Invariant</div>
+          <div class="vpb" id="pb"><p>The ER=EPR proposal identifies Einstein-Rosen wormholes with entangled EPR pairs. Geometric connectivity and quantum entanglement are the same structure at different scales.</p><p><span class="et ecm">CM</span> We conjecture that the entanglement structure of the quantum vacuum is invariant under the conformal rescaling of CCC transitions.</p><p>Conformal transformations preserve causal structure — entanglement has no intrinsic length scale. This is the most technically defensible conjecture.</p></div>
+        </div>
+        <div class="vcw"><canvas id="vc"></canvas></div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer>
+  <span>New Physics Department · Independent Research Archive · 2026</span>
+  <span><a href="about.html">About</a> &nbsp;·&nbsp; <a href="submit.html">Submit</a> &nbsp;·&nbsp; <a href="mailto:info@newphysicsdepartment.com">Contact</a></span>
+</footer>
+
+<script>
+const S=[
+  {t:'CM · Conjecture Motivated',ti:'ER=EPR as Conformal Invariant',b:'<p>The ER=EPR proposal identifies Einstein-Rosen wormholes with entangled EPR pairs. Geometric connectivity and quantum entanglement are the same structure at different scales.</p><p><span class="et ecm">CM</span> We conjecture that the entanglement structure of the quantum vacuum is invariant under the conformal rescaling of CCC transitions.</p><p>Conformal transformations preserve causal structure — entanglement has no intrinsic length scale. This is the most technically defensible conjecture.</p>',d:dERPR},
+  {t:'AS · Analogy Suggestive',ti:'DS/CFT as Physical Mechanism of CCC',b:'<p>Both CCC and DS/CFT assign physical significance to the same conformal surface — the future boundary of de Sitter spacetime.</p><p><span class="et eas">AS</span> The conformal transition of CCC is a physical DS/CFT boundary: the CFT of one aeon is the initial state of the next bulk geometry.</p><p>The gap in each programme may be the same gap. Closing it in either context would likely close it in both.</p>',d:dDSCFT},
+  {t:'SF · Speculative Free',ti:'Conformal Boundaries as Fuzzball States',b:'<p>Fuzzball microstates replace black hole interiors with horizonless stringy geometries. Information is preserved in the detailed stringy structure.</p><p><span class="et esf">SF</span> The DS/CFT boundary state of each aeon corresponds, within M-theory, to a fuzzball microstate. Both are maximally entropic boundary states.</p><p>No fuzzball solutions in asymptotically de Sitter space are currently known. This is an explicit technical gap.</p>',d:dFuzz},
+  {t:'AS · Analogy Suggestive',ti:'De Sitter Bulk as Transient Bridge',b:'<p>Van Raamsdonk showed that spacetime connectivity in AdS/CFT equals boundary entanglement. Removing entanglement disconnects geometry.</p><p><span class="et eas">AS</span> The de Sitter bulk is a transient structure — the geometric realisation of entanglement between two boundary fuzzball states.</p><p>Our universe is the bridge. The geometry is real but derived, not fundamental.</p>',d:dBridge},
+  {t:'SF · Speculative Free',ti:'Dimensional Projection from 11D',b:'<p>In standard compactification, 7 of 11 dimensions are small. In projection, they are absent from the effective description entirely — not small, absent.</p><p><span class="et esf">SF</span> The two fuzzball states are projections of a single 11D object. The past-future distinction is an artifact of dimensional projection.</p><p>The arrow of time would be a property of the projection geometry, not of the underlying state.</p>',d:d11D},
+  {t:'SF · Speculative Free',ti:'Inflation as Entanglement Initialisation',b:'<p>The nascent de Sitter bridge requires globally consistent ER=EPR correlations across all degrees of freedom at initialisation.</p><p><span class="et esf">SF</span> The quasi-exponential expansion is the geometric response to the computational complexity of establishing global entanglement inherited from the fuzzball state.</p><p>Inflation ends when initialisation is complete.</p>',d:dInfl}
+];
+
+let cur=0,t=0;
+const cv=document.getElementById('vc'),ctx=cv.getContext('2d');
+function rsz(){cv.width=cv.parentElement.clientWidth;cv.height=cv.parentElement.clientHeight;}
+window.addEventListener('resize',rsz);rsz();
+
+function go(i){cur=i;t=0;document.querySelectorAll('.vb').forEach((b,j)=>b.classList.toggle('a',j===i));document.getElementById('pt').textContent=S[i].t;document.getElementById('pti').textContent=S[i].ti;document.getElementById('pb').innerHTML=S[i].b;}
+
+function dERPR(t){const w=cv.width,h=cv.height,cx=w*.5,cy=h*.5,dx=95+Math.sin(t*.008)*7;ctx.clearRect(0,0,w,h);const g=ctx.createLinearGradient(cx-dx,cy,cx+dx,cy);g.addColorStop(0,'rgba(0,188,212,.55)');g.addColorStop(.5,'rgba(33,150,243,.2)');g.addColorStop(1,'rgba(0,188,212,.55)');[1,-1].forEach(s=>{ctx.beginPath();ctx.moveTo(cx-dx,cy);ctx.bezierCurveTo(cx-dx+22,cy+s*(35+Math.sin(t*.012)*10),cx+dx-22,cy+s*(35+Math.sin(t*.012)*10),cx+dx,cy);ctx.strokeStyle=g;ctx.lineWidth=1.7;ctx.stroke();});[cx-dx,cx+dx].forEach((x,i)=>{const p=Math.sin(t*.015+i*Math.PI)*.22+.78;ctx.beginPath();ctx.arc(x,cy,24*p,0,Math.PI*2);ctx.fillStyle='rgba(0,188,212,.1)';ctx.fill();ctx.beginPath();ctx.arc(x,cy,12,0,Math.PI*2);ctx.fillStyle='rgba(0,188,212,.75)';ctx.fill();});ctx.font='10px JetBrains Mono,monospace';ctx.fillStyle='rgba(255,255,255,.4)';ctx.textAlign='center';ctx.fillText('EPR pair A',cx-dx,cy+38);ctx.fillText('EPR pair B',cx+dx,cy+38);ctx.fillText('ER wormhole',cx,cy-46);}
+
+function dDSCFT(t){const w=cv.width,h=cv.height,cx=w*.5,cy=h*.5;ctx.clearRect(0,0,w,h);ctx.beginPath();ctx.ellipse(cx,cy,135,74,0,0,Math.PI*2);ctx.strokeStyle='rgba(33,150,243,.3)';ctx.lineWidth=1.5;ctx.stroke();ctx.fillStyle='rgba(33,150,243,.04)';ctx.fill();[cy-74,cy+74].forEach((y,i)=>{const a=.5+Math.sin(t*.015+i*Math.PI)*.15;ctx.beginPath();ctx.ellipse(cx,y,95,10,0,0,Math.PI*2);ctx.strokeStyle=`rgba(0,188,212,${a})`;ctx.lineWidth=2.3;ctx.stroke();});ctx.font='10px JetBrains Mono,monospace';ctx.fillStyle='rgba(0,188,212,.7)';ctx.textAlign='center';ctx.fillText('I⁻ · CFT past',cx,cy-93);ctx.fillText('I⁺ · CFT future',cx,cy+93);ctx.fillStyle='rgba(255,255,255,.22)';ctx.fillText('de Sitter bulk',cx,cy);}
+
+function dFuzz(t){const w=cv.width,h=cv.height,cx=w*.5,cy=h*.5;ctx.clearRect(0,0,w,h);for(let s=0;s<26;s++){const a=(s/26)*Math.PI*2+t*.003,r1=26+Math.sin(s*2.3+t*.007)*16,r2=26+Math.cos(s*1.7+t*.005)*16;ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*r1,cy+Math.sin(a)*r1);ctx.quadraticCurveTo(cx+Math.cos(a+.5)*(r1+r2)*.28,cy+Math.sin(a+.5)*(r1+r2)*.28,cx+Math.cos(a+1)*r2,cy+Math.sin(a+1)*r2);ctx.strokeStyle=`hsla(${185+s*7},62%,56%,.28)`;ctx.lineWidth=1;ctx.stroke();}ctx.beginPath();ctx.arc(cx,cy,10,0,Math.PI*2);ctx.fillStyle='rgba(0,188,212,.65)';ctx.fill();ctx.font='10px JetBrains Mono,monospace';ctx.fillStyle='rgba(255,255,255,.4)';ctx.textAlign='center';ctx.fillText('fuzzball microstate',cx,cy+58);}
+
+function dBridge(t){const w=cv.width,h=cv.height,cx=w*.5,cy=h*.5,sep=108;ctx.clearRect(0,0,w,h);[-sep,sep].forEach((dx,i)=>{for(let s=0;s<13;s++){const a=(s/13)*Math.PI*2+t*.004*(i?1:-1),r=16+Math.sin(s*1.9+t*.006)*9;ctx.beginPath();ctx.arc(cx+dx+Math.cos(a)*r,cy+Math.sin(a)*r,1.7,0,Math.PI*2);ctx.fillStyle='rgba(0,188,212,.38)';ctx.fill();}ctx.beginPath();ctx.arc(cx+dx,cy,7,0,Math.PI*2);ctx.fillStyle='rgba(0,188,212,.68)';ctx.fill();});const bh=30+Math.sin(t*.01)*4;ctx.beginPath();ctx.moveTo(cx-sep,cy-bh);ctx.bezierCurveTo(cx-32,cy-bh*1.5,cx+32,cy-bh*1.5,cx+sep,cy-bh);ctx.bezierCurveTo(cx+32,cy+bh*1.5,cx-32,cy+bh*1.5,cx-sep,cy+bh);ctx.closePath();ctx.strokeStyle='rgba(33,150,243,.42)';ctx.lineWidth=1.4;ctx.stroke();ctx.fillStyle='rgba(33,150,243,.05)';ctx.fill();ctx.font='10px JetBrains Mono,monospace';ctx.fillStyle='rgba(255,255,255,.38)';ctx.textAlign='center';ctx.fillText('Fuzzball A',cx-sep,cy+42);ctx.fillText('de Sitter bridge',cx,cy-48);ctx.fillText('Fuzzball B',cx+sep,cy+42);}
+
+function d11D(t){const w=cv.width,h=cv.height,cx=w*.5,cy=h*.5;ctx.clearRect(0,0,w,h);ctx.beginPath();ctx.ellipse(cx,cy,132,80,0,0,Math.PI*2);ctx.strokeStyle='rgba(255,255,255,.1)';ctx.lineWidth=1;ctx.stroke();const pw=80+Math.sin(t*.008)*5;ctx.beginPath();ctx.ellipse(cx,cy,pw,26,0,0,Math.PI*2);ctx.strokeStyle='rgba(0,188,212,.58)';ctx.lineWidth=1.8;ctx.stroke();ctx.fillStyle='rgba(0,188,212,.05)';ctx.fill();for(let i=0;i<8;i++){const a=(i/8)*Math.PI*2;ctx.beginPath();ctx.moveTo(cx+Math.cos(a)*132,cy+Math.sin(a)*80);ctx.lineTo(cx+Math.cos(a)*pw,cy+Math.sin(a)*26);ctx.strokeStyle='rgba(255,255,255,.06)';ctx.lineWidth=1;ctx.stroke();}ctx.font='10px JetBrains Mono,monospace';ctx.textAlign='center';ctx.fillStyle='rgba(255,255,255,.25)';ctx.fillText('11D M-theory',cx,cy-92);ctx.fillStyle='rgba(0,188,212,.72)';ctx.fillText('4D projection',cx,cy+40);}
+
+function dInfl(t){const w=cv.width,h=cv.height,cx=w*.5,cy=h*.5;ctx.clearRect(0,0,w,h);for(let i=0;i<34;i++){const f=i/34,r=(105+Math.sin(t*.006)*4)*f;ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.strokeStyle=`rgba(0,188,212,${(1-f)*.32})`;ctx.lineWidth=.8;ctx.stroke();}const n=8,prog=(Math.sin(t*.008)+1)/2;for(let i=0;i<Math.floor(n*prog)+1;i++){const a=(i/n)*Math.PI*2,r=42+i*7;ctx.beginPath();ctx.arc(cx+Math.cos(a)*r*.6,cy+Math.sin(a)*r*.6,3.5,0,Math.PI*2);ctx.fillStyle=`rgba(33,150,243,${.48+i/n*.5})`;ctx.fill();if(i>0){const pa=((i-1)/n)*Math.PI*2,pr=42+(i-1)*7;ctx.beginPath();ctx.moveTo(cx+Math.cos(pa)*pr*.6,cy+Math.sin(pa)*pr*.6);ctx.lineTo(cx+Math.cos(a)*r*.6,cy+Math.sin(a)*r*.6);ctx.strokeStyle='rgba(33,150,243,.25)';ctx.lineWidth=1;ctx.stroke();}}ctx.font='10px JetBrains Mono,monospace';ctx.fillStyle='rgba(255,255,255,.35)';ctx.textAlign='center';ctx.fillText('entanglement initialisation',cx,cy+122);}
+
+function loop(){S[cur].d(t);t++;requestAnimationFrame(loop);}loop();
+</script>
+</body>
+</html>
