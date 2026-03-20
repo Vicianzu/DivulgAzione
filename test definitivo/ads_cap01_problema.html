@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CAP 01 — Il Problema: Quantizzare la Gravità | DivulgAzione</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="npd-nav">
+  <a href="index.html" class="npd-nav-logo"><span class="accent">D</span>ivulg<span class="accent">A</span>zione</a>
+  <div class="npd-nav-divider"></div>
+  <span class="npd-nav-tagline">Fisica Teorica Interattiva</span>
+  <ul class="npd-nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#argomenti">Argomenti</a></li>
+    <li><a href="index.html#serie-ads-cft">AdS/CFT</a></li>
+    <li><a href="ads_cap01_problema.html" class="active">CAP 01</a></li>
+  </ul>
+</nav>
+<div class="td-breadcrumb">
+  <div class="td-breadcrumb-inner">
+    <a href="index.html">Home</a><span> / </span><a href="index.html#serie-ads-cft">Serie AdS/CFT</a><span> / </span><span>CAP 01 — Il Problema</span>
+  </div>
+</div>
+<div class="td-page-header">
+  <div class="td-page-header-inner">
+    <div class="td-page-id">Serie AdS/CFT · CAP 01</div>
+    <div class="td-page-title">CAP 01 — Il Problema: Quantizzare la Gravità</div>
+    <div class="td-page-subtitle">Perché la gravità quantistica è così difficile e come AdS/CFT offre una via d'uscita elegante</div>
+    <div class="td-page-badges">
+      <span class="npd-badge badge-live">● Live</span>
+      <span class="npd-badge badge-sf">Serie AdS/CFT</span>
+      <span class="npd-badge badge-cat">CAP 01</span>
+    </div>
+  </div>
+</div>
+<div class="npd-container">
+  <aside class="npd-sidebar">
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Serie AdS/CFT</div>
+      <div class="td-info-row">Capitolo <span class="td-v">01 / 14</span></div>
+      <div class="td-info-row">Argomento <span class="td-v">Il Problema</span></div>
+      <div class="td-info-row">Livello <span class="td-v">Introduttivo</span></div>
+      <div class="td-info-row">Scene <span class="td-v">5</span></div>
+    </div>
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Navigazione</div>
+      <a href="index.html#serie-ads-cft" class="td-sidebar-link">← Serie AdS/CFT</a>
+      <a href="principio_olografico.html" class="td-sidebar-link">← Principio Olografico</a>
+      <a href="ads_cft.html" class="td-sidebar-link">AdS/CFT Dualità →</a>
+    </div>
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Concetti chiave</div>
+      <div class="td-info-row">QFT+GR <span class="td-v">incompatibili</span></div>
+      <div class="td-info-row">[G_N] <span class="td-v">massa⁻²</span></div>
+      <div class="td-info-row">Loop UV <span class="td-v">divergono ∞</span></div>
+      <div class="td-info-row">Soluzione <span class="td-v">AdS/CFT</span></div>
+    </div>
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Pagine correlate</div>
+      <a href="lqg.html" class="td-sidebar-link">LQG</a>
+      <a href="asymptotic_safety.html" class="td-sidebar-link">Asymptotic Safety</a>
+      <a href="stringhe.html" class="td-sidebar-link">Teoria delle Stringhe</a>
+      <a href="ads_cft.html" class="td-sidebar-link">AdS/CFT</a>
+    </div>
+  </aside>
+  <main class="npd-main">
+    <div class="td-card">
+      <div class="td-card-title">Il Conflitto Fondamentale</div>
+      <div class="td-card-body">
+        <p>La <span class="td-hl">meccanica quantistica dei campi (QFT)</span> richiede un background spazio-temporale <em>fisso</em> su cui propagare i campi. La <span class="td-am">relatività generale (GR)</span> afferma che lo spazio-tempo è <em>dinamico</em> e determinato dalla materia-energia. I due framework sono fondamentalmente incompatibili.</p>
+        <p>Quantizzare la gravità significa trattare la metrica <span class="td-cy">g_μν</span> come operatore quantistico — ma la metrica è la struttura stessa su cui la QFT è definita.</p>
+      </div>
+    </div>
+    <div class="td-card">
+      <div class="td-card-title">Non-Rinormalizzabilità</div>
+      <div class="td-card-body">
+        <p>La costante di Newton G_N ha dimensione <span class="td-am">[G_N] = massa⁻²</span>. Ogni loop perturbativo in gravità introduce una divergenza UV di ordine superiore, richiedendo infiniti controtermini.</p>
+        <div class="td-formula">L_grav = (1/16πG_N) √(-g) R + O(R²) + O(R³) + ...
+∞ termini → non predittiva in UV</div>
+        <p>A differenza di QED (dove α≈1/137 rende la perturbation theory convergente), la gravità perturbativa è <span class="td-am">non-rinormalizzabile</span>.</p>
+      </div>
+    </div>
+    <div class="td-card">
+      <div class="td-card-title">Approcci alla Gravità Quantistica</div>
+      <div class="td-card-body">
+        <p>Quattro programmi principali cercano una soluzione: <span class="td-hl">LQG</span> (spazio discreto, reti di spin), <span class="td-gr">Asymptotic Safety</span> (punto fisso UV non-perturbativo), <span class="td-cy">Teoria delle Stringhe</span> (oggetti 1D, 10D), <span class="td-vi">CDT</span> (triangolazioni causali dinamiche).</p>
+        <div class="td-formula">GQ = LQG ∪ Stringhe ∪ AS ∪ CDT ∪ ...</div>
+      </div>
+    </div>
+    <div class="td-card">
+      <div class="td-card-title">AdS/CFT: Una Soluzione Elegante</div>
+      <div class="td-card-body">
+        <p>AdS/CFT non quantizza la gravità direttamente. Invece <span class="td-hl">ridefinisce il problema</span>: la gravità in AdS₅ è completamente equivalente a una CFT₄ sul bordo, già ben definita, unitaria e perturbativamente consistente.</p>
+        <div class="td-formula">Z_gravity[AdS₅] = Z_CFT[∂AdS₅]
+"Il problema di quantizzare g_μν diventa
+ un problema di QFT ordinaria sul bordo"</div>
+      </div>
+    </div>
+    <hr class="td-viz-divider">
+    <div class="td-viz-wrap">
+      <div class="td-viz-toolbar">
+        <span class="td-viz-label">VISUALIZZAZIONE INTERATTIVA</span>
+        <div class="td-viz-btns">
+          <button class="td-viz-btn active" onclick="go(0)">QFT vs GR</button>
+          <button class="td-viz-btn" onclick="go(1)">Divergenze</button>
+          <button class="td-viz-btn" onclick="go(2)">Background</button>
+          <button class="td-viz-btn" onclick="go(3)">Approcci GQ</button>
+          <button class="td-viz-btn" onclick="go(4)">AdS/CFT</button>
+        </div>
+      </div>
+      <div class="td-viz-area">
+        <div class="td-viz-panel">
+          <div class="td-viz-panel-tag" id="vp-tag">SCENA 01</div>
+          <div class="td-viz-panel-title" id="vp-title">Il Clash: QFT vs GR</div>
+          <div class="td-viz-panel-body" id="vp-body">La QFT richiede un background fisso, la GR lo rende dinamico. Le due onde si scontrano in una zona caotica centrale.</div>
+        </div>
+        <div class="td-viz-canvas-wrap">
+          <canvas id="viz-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+<footer class="npd-footer">
+  <span>DivulgAzione · Serie AdS/CFT · CAP 01 · 2026</span>
+  <span><a href="index.html">Home</a> · <a href="index.html#argomenti">Argomenti</a> · <a href="index.html#serie-ads-cft">AdS/CFT</a></span>
+</footer>
+<script>
+const cv = document.getElementById('viz-canvas');
+const ctx = cv.getContext('2d');
+function resize() { cv.width = cv.parentElement.clientWidth; cv.height = cv.parentElement.clientHeight; }
+window.addEventListener('resize', resize); resize();
+
+function drawScene0(t) {
+  const W = cv.width, H = cv.height, cx = W/2, cy = H/2;
+  ctx.fillStyle = '#0d1b2a'; ctx.fillRect(0,0,W,H);
+  // Left: flat QFT grid
+  ctx.strokeStyle = 'rgba(255,255,255,0.08)'; ctx.lineWidth = 1;
+  for (let x = 0; x < W*0.45; x += 30) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,H); ctx.stroke(); }
+  for (let y = 0; y < H; y += 30) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(W*0.45,y); ctx.stroke(); }
+  // QFT wave
+  ctx.strokeStyle = 'rgba(0,188,212,0.8)'; ctx.lineWidth = 2; ctx.beginPath();
+  for (let x = 0; x < W*0.4; x++) { const y = cy + 30*Math.sin((x*0.05) - t*0.05); if(x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y); }
+  ctx.stroke();
+  ctx.fillStyle='rgba(0,188,212,0.7)'; ctx.font='11px "JetBrains Mono",monospace'; ctx.textAlign='center';
+  ctx.fillText('QFT — g fissa', W*0.22, 30);
+  // Right: curved GR grid
+  ctx.strokeStyle = 'rgba(255,160,0,0.15)';
+  for (let xi = 0; xi < 8; xi++) {
+    const bx = W*0.55 + xi*(W*0.45/8);
+    ctx.beginPath();
+    for (let yi = 0; yi <= H; yi += 5) {
+      const dist = Math.sqrt(Math.pow(bx-W*0.77,2)+Math.pow(yi-cy,2))+1;
+      const dx = 30*(W*0.77-bx)/(dist*0.8);
+      ctx.lineTo(bx+dx, yi);
+    }
+    ctx.stroke();
+  }
+  ctx.strokeStyle = 'rgba(255,160,0,0.4)'; ctx.lineWidth = 2; ctx.beginPath();
+  for (let x = W*0.6; x < W; x++) { const y = cy + 30*Math.sin((x*0.05) - t*0.04); if(x===W*0.6) ctx.moveTo(x,y); else ctx.lineTo(x,y); }
+  ctx.stroke();
+  ctx.fillStyle='rgba(255,160,0,0.8)'; ctx.textAlign='center';
+  ctx.fillText('GR — g dinamica', W*0.77, 30);
+  // clash in center
+  const phase = (t % 60) / 60;
+  for (let i = 0; i < 20; i++) {
+    const angle = Math.random()*Math.PI*2, r = Math.random()*40;
+    ctx.fillStyle = `rgba(255,255,255,${0.3*Math.sin(t*0.1+i)})`;
+    ctx.fillRect(cx-20+r*Math.cos(angle), cy-20+r*Math.sin(angle), 3, 3);
+  }
+  ctx.fillStyle='rgba(255,255,255,0.5)'; ctx.font='bold 14px "JetBrains Mono",monospace'; ctx.textAlign='center';
+  ctx.fillText('⚡ CLASH ⚡', cx, cy+50);
+}
+
+function drawScene1(t) {
+  const W = cv.width, H = cv.height, cx = W/2, cy = H/2;
+  ctx.fillStyle = '#0d1b2a'; ctx.fillRect(0,0,W,H);
+  ctx.font = '10px "JetBrains Mono",monospace'; ctx.textAlign = 'center';
+  const diagrams = ['albero\nO(G)', '1-loop\nO(G²)', '2-loop\nO(G³)', '3-loop\nO(G⁴)'];
+  const divs = [10, 40, 120, 350];
+  const maxDiv = 350;
+  for (let i = 0; i < 4; i++) {
+    const x = W*0.15 + i*(W*0.7/4) + W*0.07;
+    const by = H*0.75;
+    // bar
+    const barH = Math.min((divs[i]/maxDiv)*H*0.5, H*0.55);
+    const alpha = Math.min(0.3 + divs[i]/maxDiv*0.7, 1.0);
+    ctx.fillStyle = `rgba(255,${Math.max(0,160-i*40)},0,${alpha})`;
+    ctx.fillRect(x-20, by-barH, 40, barH);
+    // diagram lines
+    ctx.strokeStyle = 'rgba(0,188,212,0.8)'; ctx.lineWidth = 2;
+    ctx.beginPath(); ctx.moveTo(x-30, by+20); ctx.lineTo(x+30, by+20); ctx.stroke();
+    for (let c = 0; c < i; c++) {
+      const lx = x - 15 + c*10;
+      ctx.beginPath(); ctx.arc(lx, by+20, 8, 0, Math.PI*2); ctx.stroke();
+    }
+    ctx.fillStyle = 'rgba(255,255,255,0.6)';
+    ctx.fillText(diagrams[i], x, by+50);
+    if (i === 3) {
+      ctx.fillStyle = 'rgba(255,80,80,0.9)'; ctx.font = 'bold 16px "JetBrains Mono",monospace';
+      ctx.fillText('∞', x, by - barH - 10);
+    }
+  }
+  ctx.fillStyle='rgba(255,255,255,0.5)'; ctx.font='11px "JetBrains Mono",monospace';
+  ctx.fillText('Divergenze perturbative della gravità quantistica', cx, 25);
+}
+
+function drawScene2(t) {
+  const W = cv.width, H = cv.height, cx = W/2, cy = H/2;
+  ctx.fillStyle = '#0d1b2a'; ctx.fillRect(0,0,W,H);
+  const amp = Math.min(t*0.05, 15);
+  ctx.strokeStyle = 'rgba(255,255,255,0.15)'; ctx.lineWidth = 1;
+  const gSize = 35;
+  for (let gx = 0; gx <= W; gx += gSize) {
+    ctx.beginPath();
+    for (let gy = 0; gy <= H; gy += 5) {
+      const dx = amp * Math.sin(gy*0.08 + t*0.02) * Math.sin(gx*0.03);
+      const dy = amp * Math.cos(gx*0.08 + t*0.02) * Math.sin(gy*0.03);
+      if (gy === 0) ctx.moveTo(gx+dx, gy+dy); else ctx.lineTo(gx+dx, gy+dy);
+    }
+    ctx.stroke();
+  }
+  for (let gy = 0; gy <= H; gy += gSize) {
+    ctx.beginPath();
+    for (let gx = 0; gx <= W; gx += 5) {
+      const dx = amp * Math.sin(gy*0.08 + t*0.02) * Math.sin(gx*0.03);
+      const dy = amp * Math.cos(gx*0.08 + t*0.02) * Math.sin(gy*0.03);
+      if (gx === 0) ctx.moveTo(gx+dx, gy+dy); else ctx.lineTo(gx+dx, gy+dy);
+    }
+    ctx.stroke();
+  }
+  ctx.fillStyle='rgba(0,188,212,0.8)'; ctx.font='11px "JetBrains Mono",monospace'; ctx.textAlign='center';
+  ctx.fillText('g_μν = η_μν + h_μν — metrica fluttuante', cx, 25);
+  ctx.fillStyle='rgba(255,255,255,0.4)';
+  ctx.fillText('h_μν quantizzata su η_μν → perde covarianza generale', cx, H-15);
+}
+
+function drawScene3(t) {
+  const W = cv.width, H = cv.height, cx = W/2, cy = H/2;
+  ctx.fillStyle = '#0d1b2a'; ctx.fillRect(0,0,W,H);
+  const approaches = [
+    { name:'LQG', color:'rgba(33,150,243,0.9)', angle: Math.PI*1.5 },
+    { name:'STRINGHE', color:'rgba(0,188,212,0.9)', angle: Math.PI*1.5 + Math.PI*0.5 },
+    { name:'AS', color:'rgba(76,175,80,0.9)', angle: Math.PI*1.5 + Math.PI },
+    { name:'CDT', color:'rgba(255,160,0,0.9)', angle: Math.PI*1.5 + Math.PI*1.5 },
+  ];
+  const R = Math.min(W,H)*0.32;
+  // center
+  const pulse = 1 + 0.1*Math.sin(t*0.05);
+  ctx.fillStyle='rgba(255,200,0,0.15)'; ctx.beginPath(); ctx.arc(cx,cy,45*pulse,0,Math.PI*2); ctx.fill();
+  ctx.strokeStyle='rgba(255,200,0,0.6)'; ctx.lineWidth=2; ctx.beginPath(); ctx.arc(cx,cy,45*pulse,0,Math.PI*2); ctx.stroke();
+  ctx.fillStyle='rgba(255,255,255,0.85)'; ctx.font='bold 12px "JetBrains Mono",monospace'; ctx.textAlign='center';
+  ctx.fillText('GQ', cx, cy+4);
+  approaches.forEach((a, i) => {
+    const ax = cx + R*Math.cos(a.angle);
+    const ay = cy + R*Math.sin(a.angle);
+    const active = Math.floor(t/80) % 4 === i;
+    ctx.strokeStyle = active ? a.color : 'rgba(255,255,255,0.2)'; ctx.lineWidth = active ? 2 : 1;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(ax,ay); ctx.stroke();
+    const pr = active ? 35 : 28;
+    ctx.fillStyle = active ? a.color.replace('0.9','0.2') : 'rgba(255,255,255,0.05)';
+    ctx.beginPath(); ctx.arc(ax,ay,pr,0,Math.PI*2); ctx.fill();
+    ctx.strokeStyle = a.color; ctx.lineWidth=1.5; ctx.beginPath(); ctx.arc(ax,ay,pr,0,Math.PI*2); ctx.stroke();
+    ctx.fillStyle = active ? a.color : 'rgba(255,255,255,0.6)';
+    ctx.font = (active?'bold ':'')+'10px "JetBrains Mono",monospace'; ctx.textAlign='center';
+    ctx.fillText(a.name, ax, ay+4);
+  });
+  ctx.fillStyle='rgba(255,255,255,0.35)'; ctx.font='10px "JetBrains Mono",monospace'; ctx.textAlign='center';
+  ctx.fillText('Gravità Quantistica — approcci principali', cx, H-15);
+}
+
+function drawScene4(t) {
+  const W = cv.width, H = cv.height, cx = W/2, cy = H/2;
+  ctx.fillStyle = '#0d1b2a'; ctx.fillRect(0,0,W,H);
+  const R = Math.min(W,H)*0.38;
+  // AdS disk
+  ctx.strokeStyle='rgba(255,255,255,0.15)'; ctx.lineWidth=1;
+  for(let r=R*0.25; r<R; r+=R*0.15){ ctx.beginPath(); ctx.arc(cx,cy,r,0,Math.PI*2); ctx.stroke(); }
+  for(let a=0;a<Math.PI*2;a+=Math.PI/6){ ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+R*Math.cos(a),cy+R*Math.sin(a)); ctx.stroke(); }
+  // boundary
+  ctx.strokeStyle='rgba(0,188,212,0.8)'; ctx.lineWidth=3; ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.stroke();
+  // strings in bulk
+  for(let i=0;i<5;i++){
+    const angle = (t*0.01 + i*Math.PI*2/5);
+    const br = R*0.3 + R*0.2*Math.sin(t*0.02+i);
+    const bx = cx+br*Math.cos(angle), by = cy+br*Math.sin(angle);
+    ctx.strokeStyle='rgba(255,160,0,0.6)'; ctx.lineWidth=1.5; ctx.beginPath();
+    ctx.moveTo(bx-10*Math.cos(angle+Math.PI/2), by-10*Math.sin(angle+Math.PI/2));
+    ctx.lineTo(bx+10*Math.cos(angle+Math.PI/2), by+10*Math.sin(angle+Math.PI/2));
+    ctx.stroke();
+  }
+  // boundary operators
+  for(let i=0;i<8;i++){
+    const a2 = i*Math.PI*2/8 + t*0.005;
+    const ox=cx+R*Math.cos(a2), oy=cy+R*Math.sin(a2);
+    const pulse2 = 0.5+0.5*Math.sin(t*0.08+i);
+    ctx.fillStyle=`rgba(0,188,212,${0.5+0.4*pulse2})`; ctx.beginPath(); ctx.arc(ox,oy,5,0,Math.PI*2); ctx.fill();
+  }
+  // arrow
+  ctx.strokeStyle='rgba(255,255,255,0.5)'; ctx.lineWidth=1.5; ctx.setLineDash([5,5]);
+  ctx.beginPath(); ctx.moveTo(cx-15,cy); ctx.lineTo(cx+15,cy); ctx.stroke(); ctx.setLineDash([]);
+  ctx.fillStyle='rgba(0,188,212,0.9)'; ctx.font='bold 10px "JetBrains Mono",monospace'; ctx.textAlign='center';
+  ctx.fillText('CFT UNITARIA', cx, cy-R-12);
+  ctx.fillStyle='rgba(255,160,0,0.8)'; ctx.fillText('GRAVITÀ BULK EMERGE', cx, cy+15);
+  ctx.fillStyle='rgba(255,255,255,0.4)'; ctx.font='10px "JetBrains Mono",monospace';
+  ctx.fillText('AdS/CFT: Z_gravity[AdS] = Z_CFT[∂AdS]', cx, H-15);
+}
+
+const SCENES = [
+  { tag:'SCENA 01', title:'Il Clash: QFT vs GR',
+    body:'La QFT richiede un background fisso, la GR lo rende dinamico. Le due onde si scontrano in una zona caotica centrale.',
+    draw: drawScene0 },
+  { tag:'SCENA 02', title:'Divergenze Perturbative',
+    body:'Ogni ordine perturbativo in gravità introduce divergenze UV più severe. A differenza della QED, non esiste un insieme finito di controtermini.',
+    draw: drawScene1 },
+  { tag:'SCENA 03', title:'Background Dependence',
+    body:'Quantizzare h_μν su η_μν perde la covarianza generale. La metrica fluttua su scala di Planck — il quantum foam.',
+    draw: drawScene2 },
+  { tag:'SCENA 04', title:'Approcci alla GQ',
+    body:'LQG, Teoria delle Stringhe, Asymptotic Safety e CDT affrontano il problema con strategie diverse ma complementari.',
+    draw: drawScene3 },
+  { tag:'SCENA 05', title:'AdS/CFT: La Ridefinizione',
+    body:'AdS/CFT non quantizza la gravità: la mappa a una CFT ben definita sul bordo. La gravità emerge dalla struttura dell\'entanglement della CFT.',
+    draw: drawScene4 },
+];
+
+let cur = 0, tt = 0;
+function go(i) {
+  cur = i; tt = 0;
+  document.querySelectorAll('.td-viz-btn').forEach((b,j) => b.classList.toggle('active', j===i));
+  document.getElementById('vp-tag').textContent = SCENES[i].tag;
+  document.getElementById('vp-title').textContent = SCENES[i].title;
+  document.getElementById('vp-body').innerHTML = SCENES[i].body;
+}
+function loop() { SCENES[cur].draw(tt); tt++; requestAnimationFrame(loop); }
+loop();
+</script>
+</body>
+</html>

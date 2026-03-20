@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatività Generale | DivulgAzione</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="npd-nav">
+  <a href="index.html" class="npd-nav-logo"><span class="accent">D</span>ivulg<span class="accent">A</span>zione</a>
+  <div class="npd-nav-divider"></div>
+  <span class="npd-nav-tagline">Fisica Teorica Interattiva</span>
+  <ul class="npd-nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#argomenti">Argomenti</a></li>
+    <li><a href="relativita_generale.html" class="active">Rel. Generale</a></li>
+  </ul>
+</nav>
+
+<div class="td-breadcrumb">
+  <div class="td-breadcrumb-inner">
+    <a href="index.html">Home</a><span> / </span><a href="index.html#argomenti">Relatività</a><span> / </span><span>Relatività Generale</span>
+  </div>
+</div>
+
+<div class="td-page-header">
+  <div class="td-page-header-inner">
+    <div class="td-page-id">Relatività · #02</div>
+    <div class="td-page-title">Relatività Generale — La Gravità come Curvatura</div>
+    <div class="td-page-subtitle">La gravità non è una forza ma la curvatura dello spaziotempo indotta dalla massa-energia</div>
+    <div class="td-page-badges">
+      <span class="npd-badge badge-live">● Live</span>
+      <span class="npd-badge badge-cat">Relatività</span>
+      <span class="npd-badge badge-cat">Gravità</span>
+    </div>
+  </div>
+</div>
+
+<div class="npd-container">
+  <aside class="npd-sidebar">
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Informazioni</div>
+      <div class="td-info-row"><span>Anno</span><span class="td-v">1915</span></div>
+      <div class="td-info-row"><span>Autore</span><span class="td-v">A. Einstein</span></div>
+      <div class="td-info-row"><span>Tipo</span><span class="td-v">Teoria metrica della gravità</span></div>
+      <div class="td-info-row"><span>Equazione</span><span class="td-v">G<sub>μν</sub> = 8πG T<sub>μν</sub></span></div>
+    </div>
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Navigazione</div>
+      <a href="relativita_speciale.html" class="td-sidebar-link">← Relatività Speciale</a>
+      <a href="meccanica_quantistica.html" class="td-sidebar-link">Meccanica Quantistica →</a>
+    </div>
+  </aside>
+
+  <main class="npd-main">
+    <div class="td-card">
+      <div class="td-card-title">La Curvatura dello Spaziotempo</div>
+      <div class="td-card-body">
+        <p>In Relatività Generale, la <span class="td-cy">massa e l'energia curvano la geometria dello spaziotempo</span>. La gravità non è una forza a distanza, bensì la conseguenza della curvatura: i corpi seguono le <em>geodetiche</em> dello spaziotempo curvo. Le equazioni di campo di Einstein sono:</p>
+        <div class="td-formula">G_μν + Λg_μν = (8πG / c⁴) T_μν</div>
+        <p>Il lato sinistro descrive la <span class="td-hl">geometria</span> (tensore di Einstein + termine cosmologico), il lato destro descrive la <span class="td-am">materia-energia</span> (tensore energia-impulso).</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Geodetiche e Caduta Libera</div>
+      <div class="td-card-body">
+        <p>Un corpo in caduta libera segue una geodetica nello spaziotempo curvo. L'equazione delle geodetiche è:</p>
+        <div class="td-formula">d²x^α/dτ² + Γ^α_μν (dx^μ/dτ)(dx^ν/dτ) = 0</div>
+        <p>I simboli di Christoffel <span class="td-cy">Γ^α_μν</span> codificano la curvatura locale. La caduta libera è il moto "più rettilineo" possibile in uno spaziotempo curvo.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Il Raggio di Schwarzschild</div>
+      <div class="td-card-body">
+        <p>La soluzione di Schwarzschild (1916) descrive lo spaziotempo al di fuori di una massa sferica M. Il raggio critico oltre il quale la fuga è impossibile è:</p>
+        <div class="td-formula">r_s = 2GM / c²</div>
+        <p>Per il Sole r_s ≈ 3 km; per la Terra r_s ≈ 9 mm. Se tutta la massa viene compressa entro r_s si forma un <span class="td-vi">buco nero</span>: l'orizzonte degli eventi.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Onde Gravitazionali</div>
+      <div class="td-card-body">
+        <p>Sistemi binari di oggetti compatti irradiano energia sotto forma di <span class="td-cy">onde gravitazionali</span>: perturbazioni della curvatura che si propagano a velocità c. La deformazione rilevabile è:</p>
+        <div class="td-formula">h = ΔL / L  ≈ 10⁻²¹  (LIGO 2015)</div>
+        <p>Il 14 settembre 2015, <span class="td-am">LIGO</span> rilevò per la prima volta un'onda gravitazionale prodotta dalla fusione di due buchi neri (GW150914), confermando una predizione di Einstein fatta 100 anni prima.</p>
+      </div>
+    </div>
+
+    <hr class="td-viz-divider">
+    <div class="td-viz-wrap">
+      <div class="td-viz-toolbar">
+        <span class="td-viz-label">VISUALIZZAZIONE</span>
+        <div class="td-viz-btns">
+          <button class="td-viz-btn active" onclick="go(0)">Curvatura</button>
+          <button class="td-viz-btn" onclick="go(1)">Equiv. Principio</button>
+          <button class="td-viz-btn" onclick="go(2)">Buco Nero</button>
+          <button class="td-viz-btn" onclick="go(3)">Eq. Einstein</button>
+          <button class="td-viz-btn" onclick="go(4)">Onde Grav.</button>
+        </div>
+      </div>
+      <div class="td-viz-area">
+        <div class="td-viz-panel">
+          <div class="td-viz-panel-tag" id="vp-tag">SCENA 01</div>
+          <div class="td-viz-panel-title" id="vp-title">Curvatura dello Spaziotempo</div>
+          <div class="td-viz-panel-body" id="vp-body">Una massa deforma la geometria dello spaziotempo circostante. Più la massa è grande, più la curvatura è profonda.</div>
+        </div>
+        <div class="td-viz-canvas-wrap">
+          <canvas id="viz-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="npd-footer">
+  <span>DivulgAzione · Relatività Generale · 2026</span>
+  <span><a href="index.html">Home</a> · <a href="index.html#argomenti">Argomenti</a></span>
+</footer>
+
+<script>
+const cv = document.getElementById('viz-canvas');
+const ctx = cv.getContext('2d');
+function resize(){cv.width=cv.parentElement.clientWidth;cv.height=cv.parentElement.clientHeight;}
+window.addEventListener('resize',resize);resize();
+
+function txt(s,x,y,col,sz,align){
+  ctx.save();
+  ctx.font=(sz||11)+'px "JetBrains Mono",monospace';
+  ctx.fillStyle=col||'rgba(255,255,255,0.6)';
+  ctx.textAlign=align||'left';
+  ctx.textBaseline='middle';
+  ctx.fillText(s,x,y);
+  ctx.restore();
+}
+function drawGrid(){
+  ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=1;
+  const s=40;
+  for(let x=0;x<cv.width;x+=s){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,cv.height);ctx.stroke();}
+  for(let y=0;y<cv.height;y+=s){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cv.width,y);ctx.stroke();}
+}
+
+const SCENES=[
+  {
+    tag:'SCENA 01',
+    title:'Curvatura dello Spaziotempo',
+    body:'Una massa deforma la geometria dello spaziotempo circostante. Più la massa è grande, più la curvatura è profonda.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      const cx=cv.width/2, cy=cv.height/2;
+      const massR=14+4*Math.sin(t*0.04);
+      const strength=cv.width*0.022;
+      const step=cv.width/14;
+      // Curved grid
+      ctx.strokeStyle='rgba(0,188,212,0.35)';ctx.lineWidth=1;
+      // Horizontal lines
+      for(let row=0;row<=14;row++){
+        const y0=row*step;
+        ctx.beginPath();
+        for(let col=0;col<=28;col++){
+          const x0=col*(cv.width/28);
+          const dx=cx-x0, dy=cy-y0;
+          const dist=Math.sqrt(dx*dx+dy*dy)+1;
+          const pull=strength*Math.min(1,massR*3/dist)*(massR*3/dist);
+          const nx=x0+dx/dist*pull;
+          const ny=y0+dy/dist*pull;
+          if(col===0) ctx.moveTo(nx,ny); else ctx.lineTo(nx,ny);
+        }
+        ctx.stroke();
+      }
+      // Vertical lines
+      for(let col=0;col<=28;col++){
+        const x0=col*(cv.width/28);
+        ctx.beginPath();
+        for(let row=0;row<=14;row++){
+          const y0=row*step;
+          const dx=cx-x0, dy=cy-y0;
+          const dist=Math.sqrt(dx*dx+dy*dy)+1;
+          const pull=strength*Math.min(1,massR*3/dist)*(massR*3/dist);
+          const nx=x0+dx/dist*pull;
+          const ny=y0+dy/dist*pull;
+          if(row===0) ctx.moveTo(nx,ny); else ctx.lineTo(nx,ny);
+        }
+        ctx.stroke();
+      }
+      // Central mass glow
+      const grad=ctx.createRadialGradient(cx,cy,0,cx,cy,massR*3);
+      grad.addColorStop(0,'rgba(0,188,212,0.9)');
+      grad.addColorStop(0.4,'rgba(0,188,212,0.3)');
+      grad.addColorStop(1,'rgba(0,188,212,0)');
+      ctx.fillStyle=grad;
+      ctx.beginPath();ctx.arc(cx,cy,massR*3,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(0,188,212,1)';
+      ctx.beginPath();ctx.arc(cx,cy,massR,0,Math.PI*2);ctx.fill();
+      txt('MASSA M',cx,cy+massR+18,'rgba(0,188,212,0.8)',11,'center');
+      txt('CURVATURA DELLO SPAZIOTEMPO',cx,cv.height-16,'rgba(255,255,255,0.35)',10,'center');
+    }
+  },
+  {
+    tag:'SCENA 02',
+    title:'Principio di Equivalenza',
+    body:"Un osservatore in un razzo accelerante non può distinguere localmente la propria situazione da quella di un osservatore in un campo gravitazionale.",
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const midX=cv.width/2;
+      const cy=cv.height/2;
+      // Divider
+      ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=1;ctx.setLineDash([6,4]);
+      ctx.beginPath();ctx.moveTo(midX,20);ctx.lineTo(midX,cv.height-20);ctx.stroke();
+      ctx.setLineDash([]);
+      txt('=',midX,cy,'rgba(255,255,255,0.8)',24,'center');
+      // LEFT: Rocket
+      const lx=midX*0.5;
+      const rh=cv.height*0.38, rw=cv.width*0.09;
+      const rOff=(t*0.3)%cv.height;
+      const ry=cy+rh/2-rOff%(cv.height);
+      ctx.save();ctx.beginPath();ctx.rect(0,0,midX-10,cv.height);ctx.clip();
+      // Rocket body
+      ctx.fillStyle='rgba(255,255,255,0.12)';ctx.strokeStyle='rgba(255,255,255,0.6)';ctx.lineWidth=1.5;
+      ctx.fillRect(lx-rw/2,ry-rh,rw,rh);ctx.strokeRect(lx-rw/2,ry-rh,rw,rh);
+      // Nose
+      ctx.beginPath();ctx.moveTo(lx-rw/2,ry-rh);ctx.lineTo(lx,ry-rh-rw*0.8);ctx.lineTo(lx+rw/2,ry-rh);ctx.closePath();
+      ctx.fillStyle='rgba(33,150,243,0.4)';ctx.fill();ctx.strokeStyle='rgba(33,150,243,0.8)';ctx.stroke();
+      // Exhaust
+      ctx.fillStyle='rgba(255,160,0,0.7)';
+      ctx.beginPath();ctx.moveTo(lx-rw/2+4,ry);ctx.lineTo(lx,ry+rw*0.6+10*Math.sin(t*0.2));ctx.lineTo(lx+rw/2-4,ry);ctx.closePath();ctx.fill();
+      // Ball inside rocket
+      const ballY=ry-rh*0.4;
+      ctx.beginPath();ctx.arc(lx,ballY,7,0,Math.PI*2);
+      ctx.fillStyle='rgba(0,188,212,0.9)';ctx.fill();
+      // Ball apparent fall arrow
+      ctx.strokeStyle='rgba(0,188,212,0.6)';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(lx,ballY+10);ctx.lineTo(lx,ballY+28);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(lx-5,ballY+23);ctx.lineTo(lx,ballY+28);ctx.lineTo(lx+5,ballY+23);ctx.stroke();
+      txt('a ↑',lx+rw/2+5,ry-rh*0.5,'rgba(255,160,0,0.8)',11,'left');
+      txt('ACCELERAZIONE a',lx,cv.height-16,'rgba(255,160,0,0.65)',10,'center');
+      ctx.restore();
+      // RIGHT: Gravitational field
+      const rx=midX+midX*0.5;
+      ctx.save();ctx.beginPath();ctx.rect(midX+10,0,midX-10,cv.height);ctx.clip();
+      // Earth arc
+      ctx.strokeStyle='rgba(0,188,212,0.5)';ctx.lineWidth=2;
+      ctx.beginPath();ctx.arc(rx,cv.height+cv.width*0.15,cv.width*0.2,Math.PI*1.1,Math.PI*1.9);ctx.stroke();
+      ctx.fillStyle='rgba(0,188,212,0.08)';
+      ctx.beginPath();ctx.arc(rx,cv.height+cv.width*0.15,cv.width*0.2,Math.PI*1.1,Math.PI*1.9);ctx.fill();
+      // Gravity arrows
+      for(let i=0;i<5;i++){
+        const ax=rx-cv.width*0.12+i*cv.width*0.06;
+        const ay=cy-60+i%2*20;
+        ctx.strokeStyle='rgba(255,160,0,0.5)';ctx.lineWidth=1.5;
+        ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(ax,ay+36);ctx.stroke();
+        ctx.beginPath();ctx.moveTo(ax-5,ay+30);ctx.lineTo(ax,ay+36);ctx.lineTo(ax+5,ay+30);ctx.stroke();
+      }
+      // Ball falling
+      const ballYg=cy-60+(t*0.6)%(cy+20);
+      ctx.beginPath();ctx.arc(rx,ballYg,7,0,Math.PI*2);
+      ctx.fillStyle='rgba(0,188,212,0.9)';ctx.fill();
+      txt('g ↓',rx+12,cy-20,'rgba(255,160,0,0.8)',11,'left');
+      txt('CAMPO GRAVITAZIONALE g',rx,cv.height-16,'rgba(255,160,0,0.65)',10,'center');
+      ctx.restore();
+      txt('PRINCIPIO DI EQUIVALENZA',midX,28,'rgba(255,255,255,0.5)',11,'center');
+    }
+  },
+  {
+    tag:'SCENA 03',
+    title:'Buco Nero di Schwarzschild',
+    body:"All'interno del raggio di Schwarzschild nulla può sfuggire, nemmeno la luce. Il punto di singolarità è nascosto dall'orizzonte degli eventi.",
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const cx=cv.width/2, cy=cv.height/2;
+      const rs=Math.min(cv.width,cv.height)*0.13;
+      // Glow rings
+      for(let i=3;i>=1;i--){
+        ctx.beginPath();ctx.arc(cx,cy,rs*i*0.8,0,Math.PI*2);
+        ctx.fillStyle=`rgba(0,188,212,${0.03/i})`;ctx.fill();
+      }
+      ctx.beginPath();ctx.arc(cx,cy,rs*2.4,0,Math.PI*2);
+      ctx.strokeStyle='rgba(0,188,212,0.3)';ctx.lineWidth=1;ctx.setLineDash([3,6]);ctx.stroke();ctx.setLineDash([]);
+      // Event horizon
+      const ehGrad=ctx.createRadialGradient(cx,cy,0,cx,cy,rs);
+      ehGrad.addColorStop(0,'rgba(5,5,10,1)');
+      ehGrad.addColorStop(0.7,'rgba(5,5,15,1)');
+      ehGrad.addColorStop(1,'rgba(0,80,100,0.4)');
+      ctx.fillStyle=ehGrad;ctx.beginPath();ctx.arc(cx,cy,rs,0,Math.PI*2);ctx.fill();
+      ctx.strokeStyle='rgba(0,188,212,0.9)';ctx.lineWidth=2;ctx.beginPath();ctx.arc(cx,cy,rs,0,Math.PI*2);ctx.stroke();
+      // Orbiting particle
+      const orbitR=rs*2.4;
+      const angle=t*0.022;
+      const px=cx+Math.cos(angle)*orbitR;
+      const py=cy+Math.sin(angle)*orbitR*0.4;
+      ctx.beginPath();ctx.arc(px,py,5,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,160,0,0.95)';
+      ctx.shadowColor='rgba(255,160,0,0.8)';ctx.shadowBlur=14;
+      ctx.fill();ctx.shadowBlur=0;
+      // Infalling light ray
+      const lt=(t*0.8)%(cv.width*0.45);
+      const lx0=cv.width*0.05+lt;
+      if(lx0<cx-rs){
+        ctx.beginPath();ctx.arc(lx0,cy-cv.height*0.05,4,0,Math.PI*2);
+        ctx.fillStyle='rgba(255,255,180,0.9)';ctx.fill();
+      }
+      // Labels
+      txt('orizzonte r_s',cx+rs+5,cy-rs-8,'rgba(0,188,212,0.85)',10,'left');
+      txt('singolarità',cx+4,cy+4,'rgba(255,255,255,0.45)',9,'left');
+      txt('orbita circolare',cx+orbitR*0.5,cy-orbitR*0.2-10,'rgba(255,160,0,0.55)',9,'center');
+      txt('BUCO NERO DI SCHWARZSCHILD',cx,cv.height-16,'rgba(255,255,255,0.35)',10,'center');
+    }
+  },
+  {
+    tag:'SCENA 04',
+    title:'Equazioni di Einstein',
+    body:"Il tensore di Einstein G_μν descrive la curvatura, il tensore energia-impulso T_μν descrive la materia. La costante cosmologica Λ rappresenta l'energia del vuoto.",
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const cx=cv.width/2, cy=cv.height/2;
+      // Main equation
+      ctx.save();
+      ctx.font='bold 18px "JetBrains Mono",monospace';
+      ctx.fillStyle='rgba(255,255,255,0.92)';
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText('G_μν + Λg_μν = (8πG/c⁴) T_μν',cx,cy-cv.height*0.18);
+      ctx.restore();
+      // GEOMETRIA box
+      const bw=cv.width*0.3, bh=cv.height*0.38;
+      const lbx=cx*0.38, rby=cy+cv.height*0.04;
+      ctx.strokeStyle='rgba(0,188,212,0.7)';ctx.lineWidth=1.5;
+      ctx.fillStyle='rgba(0,188,212,0.05)';
+      ctx.fillRect(lbx-bw/2,rby-bh/2,bw,bh);
+      ctx.strokeRect(lbx-bw/2,rby-bh/2,bw,bh);
+      txt('GEOMETRIA',lbx,rby-bh/2+14,'rgba(0,188,212,0.85)',11,'center');
+      // Curved surface sketch
+      ctx.strokeStyle='rgba(0,188,212,0.5)';ctx.lineWidth=1.5;
+      for(let i=0;i<5;i++){
+        const yy=rby-bh*0.18+i*bh*0.08;
+        const ww=bw*0.6;
+        ctx.beginPath();
+        for(let xi=0;xi<=20;xi++){
+          const xx=lbx-ww/2+xi*ww/20;
+          const yCurve=yy+18*Math.sin(xi/20*Math.PI);
+          if(xi===0) ctx.moveTo(xx,yCurve); else ctx.lineTo(xx,yCurve);
+        }
+        ctx.stroke();
+      }
+      txt('G_μν + Λg_μν',lbx,rby+bh/2-14,'rgba(0,188,212,0.7)',10,'center');
+      // MATERIA box
+      const rbx=cx*1.62;
+      ctx.strokeStyle='rgba(255,160,0,0.7)';ctx.lineWidth=1.5;
+      ctx.fillStyle='rgba(255,160,0,0.05)';
+      ctx.fillRect(rbx-bw/2,rby-bh/2,bw,bh);
+      ctx.strokeRect(rbx-bw/2,rby-bh/2,bw,bh);
+      txt('MATERIA/ENERGIA',rbx,rby-bh/2+14,'rgba(255,160,0,0.85)',11,'center');
+      // Particle cloud
+      const seed=[0.1,0.3,0.6,0.8,0.2,0.7,0.45,0.15,0.65,0.9,0.35,0.55];
+      seed.forEach((s,i)=>{
+        const px=rbx-bw*0.25+s*bw*0.5;
+        const py=rby-bh*0.1+seed[(i+3)%12]*bh*0.35;
+        const pr=3+seed[(i+1)%12]*4;
+        const pulse=0.6+0.3*Math.sin(t*0.04+i);
+        ctx.beginPath();ctx.arc(px,py,pr,0,Math.PI*2);
+        ctx.fillStyle=`rgba(255,160,0,${pulse})`;ctx.fill();
+      });
+      txt('T_μν',rbx,rby+bh/2-14,'rgba(255,160,0,0.7)',10,'center');
+      // Animated arrow
+      const arrowProg=(Math.sin(t*0.025)+1)/2;
+      const ax1=lbx+bw/2+8;
+      const ax2=rbx-bw/2-8;
+      const ay=rby;
+      const arrowX=ax1+(ax2-ax1)*arrowProg;
+      ctx.strokeStyle='rgba(255,255,255,0.6)';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(ax1,ay);ctx.lineTo(ax2,ay);ctx.stroke();
+      ctx.beginPath();ctx.arc(arrowX,ay,4,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,255,255,0.8)';ctx.fill();
+      txt('↔',cx,ay,'rgba(255,255,255,0.5)',14,'center');
+      txt('EQUAZIONI DI CAMPO DI EINSTEIN (1915)',cx,cv.height-16,'rgba(255,255,255,0.35)',10,'center');
+    }
+  },
+  {
+    tag:'SCENA 05',
+    title:'Onde Gravitazionali',
+    body:'Due oggetti massivi in orbita irradiano energia sotto forma di onde gravitazionali, rilevate per la prima volta da LIGO nel 2015.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const cx=cv.width/2, cy=cv.height/2;
+      const sep=cv.width*0.07;
+      const angle=t*0.018;
+      // Binary system
+      const x1=cx+Math.cos(angle)*sep;
+      const y1=cy+Math.sin(angle)*sep*0.5;
+      const x2=cx-Math.cos(angle)*sep;
+      const y2=cy-Math.sin(angle)*sep*0.5;
+      // Ripples
+      const numRipples=10;
+      for(let i=0;i<numRipples;i++){
+        const rAge=(t*0.5+i*(80/numRipples))%80;
+        const rR=rAge*cv.width*0.012;
+        const a=Math.max(0,0.55-rAge*0.007);
+        ctx.strokeStyle=`rgba(0,188,212,${a})`;
+        ctx.lineWidth=1.2;
+        ctx.beginPath();ctx.ellipse(cx,cy,rR,rR*0.6,0,0,Math.PI*2);ctx.stroke();
+      }
+      // BH 1
+      ctx.beginPath();ctx.arc(x1,y1,10,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,255,255,0.85)';
+      ctx.shadowColor='rgba(255,255,255,0.6)';ctx.shadowBlur=16;
+      ctx.fill();ctx.shadowBlur=0;
+      // BH 2
+      ctx.beginPath();ctx.arc(x2,y2,8,0,Math.PI*2);
+      ctx.fillStyle='rgba(33,150,243,0.9)';
+      ctx.shadowColor='rgba(33,150,243,0.7)';ctx.shadowBlur=14;
+      ctx.fill();ctx.shadowBlur=0;
+      // Orbit path
+      ctx.strokeStyle='rgba(255,255,255,0.12)';ctx.lineWidth=1;ctx.setLineDash([3,6]);
+      ctx.beginPath();ctx.ellipse(cx,cy,sep,sep*0.5,0,0,Math.PI*2);ctx.stroke();
+      ctx.setLineDash([]);
+      // Labels
+      txt('BH₁',x1+14,y1,'rgba(255,255,255,0.65)',10,'left');
+      txt('BH₂',x2+14,y2,'rgba(33,150,243,0.65)',10,'left');
+      txt('LIGO 2015 — GW150914',cx,cy+cv.height*0.34,'rgba(0,188,212,0.7)',11,'center');
+      txt('onde gravitazionali h = ΔL/L',cx,cv.height-16,'rgba(255,255,255,0.35)',10,'center');
+    }
+  }
+];
+
+let cur=0, t=0;
+function go(i){
+  cur=i;t=0;
+  document.querySelectorAll('.td-viz-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
+  document.getElementById('vp-tag').textContent=SCENES[i].tag;
+  document.getElementById('vp-title').textContent=SCENES[i].title;
+  document.getElementById('vp-body').innerHTML=SCENES[i].body;
+}
+function loop(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  SCENES[cur].draw(t);
+  t++;
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>

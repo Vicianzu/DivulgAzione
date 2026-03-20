@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ER = EPR — Wormhole e Entanglement Quantistico | DivulgAzione</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="npd-nav">
+  <a href="index.html" class="npd-nav-logo"><span class="accent">D</span>ivulg<span class="accent">A</span>zione</a>
+  <div class="npd-nav-divider"></div>
+  <span class="npd-nav-tagline">Fisica Teorica Interattiva</span>
+  <ul class="npd-nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#argomenti">Argomenti</a></li>
+    <li><a href="er_epr.html" class="active">ER=EPR</a></li>
+  </ul>
+</nav>
+
+<div class="td-breadcrumb">
+  <div class="td-breadcrumb-inner">
+    <a href="index.html">Home</a><span> / </span><a href="index.html#argomenti">Dualità Olografica</a><span> / </span><span>ER = EPR</span>
+  </div>
+</div>
+
+<div class="td-page-header">
+  <div class="td-page-header-inner">
+    <div class="td-page-id">Dualità Olografica · #11</div>
+    <div class="td-page-title">ER = EPR — Wormhole e Entanglement Quantistico</div>
+    <div class="td-page-subtitle">La congettura di Maldacena e Susskind: le coppie EPR entangled sono equivalenti ai ponti Einstein-Rosen</div>
+    <div class="td-page-badges">
+      <span class="npd-badge badge-live">● Live</span>
+      <span class="npd-badge badge-cat">Olografia</span>
+      <span class="npd-badge badge-cat">ER=EPR</span>
+    </div>
+  </div>
+</div>
+
+<div class="npd-container">
+  <aside class="npd-sidebar">
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Riferimenti</div>
+      <div class="td-info-row"><span>Autori</span><span class="td-v">Maldacena &amp; Susskind</span></div>
+      <div class="td-info-row"><span>Anno</span><span class="td-v">2013</span></div>
+    </div>
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Precedenti storici</div>
+      <div class="td-info-row"><span>Einstein-Rosen</span><span class="td-v">1935</span></div>
+      <div class="td-info-row"><span>EPR</span><span class="td-v">1935</span></div>
+    </div>
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Navigazione</div>
+      <a href="penrose_ccc.html" class="td-sidebar-link">← Penrose CCC</a>
+      <a href="paradosso_informazione.html" class="td-sidebar-link">Paradosso Informazione →</a>
+    </div>
+  </aside>
+
+  <main class="npd-main">
+    <div class="td-card">
+      <div class="td-card-title">Il Paradosso EPR</div>
+      <div class="td-card-body">
+        <p>Nel 1935 Einstein, Podolsky e Rosen descrissero l'<span class="td-hl td-cy">entanglement quantistico</span> come "azione fantasma a distanza". Due particelle in uno stato di Bell condividono correlazioni non-locali istantanee:</p>
+        <div class="td-formula">|Ψ⁻⟩ = (|↑↓⟩ − |↓↑⟩) / √2</div>
+        <p>La misura dello spin su una particella determina istantaneamente lo spin dell'altra, indipendentemente dalla loro separazione. Nessuna informazione però viene trasmessa più veloce della luce, ma le correlazioni rimangono profondamente misteriose.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Il Ponte Einstein-Rosen</div>
+      <div class="td-card-body">
+        <p>La soluzione di Schwarzschild <span class="td-hl td-am">massimalmente estesa</span> (diagramma di Kruskal-Szekeres) rivela due regioni asintoticamente piatte connesse da un ponte geometrico interno:</p>
+        <div class="td-formula">ds² = −(1 − 2GM/r)dt² + (1 − 2GM/r)⁻¹dr² + r²dΩ²</div>
+        <p>Il ponte di Einstein-Rosen non è attraversabile: la geometria si "pincha" in tempo finito prima che qualsiasi segnale causale possa attraversarlo. Le due regioni sono causalmente disconnesse pur essendo topologicamente connesse.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">ER = EPR</div>
+      <div class="td-card-body">
+        <p>Maldacena e Susskind (2013) proposero che ogni coppia di particelle <span class="td-hl td-cy">entangled EPR</span> sia connessa da un <span class="td-hl td-am">micro-wormhole ER</span>. L'entanglement non è un fenomeno puramente quantistico astratto ma ha una controparte geometrica:</p>
+        <div class="td-formula">S_entanglement  ↔  Geometria ER</div>
+        <p>Il grado di entanglement quantistico corrisponde alla robustezza del ponte geometrico. Disconnettere l'entanglement disconnette le regioni dello spaziotempo — lo spaziotempo stesso emerge dall'entanglement.</p>
+      </div>
+    </div>
+
+    <hr class="td-viz-divider">
+    <div class="td-viz-wrap">
+      <div class="td-viz-toolbar">
+        <span class="td-viz-label">SCENA</span>
+        <div class="td-viz-btns">
+          <button class="td-viz-btn active" onclick="go(0)">01</button>
+          <button class="td-viz-btn" onclick="go(1)">02</button>
+          <button class="td-viz-btn" onclick="go(2)">03</button>
+          <button class="td-viz-btn" onclick="go(3)">04</button>
+        </div>
+      </div>
+      <div class="td-viz-area">
+        <div class="td-viz-panel">
+          <div class="td-viz-panel-tag" id="vp-tag">SCENA 01</div>
+          <div class="td-viz-panel-title" id="vp-title">Coppia EPR — Entanglement</div>
+          <div class="td-viz-panel-body" id="vp-body">Una coppia di particelle entangled condivide un unico stato quantistico. La misura dello spin su una particella determina istantaneamente lo spin dell'altra, qualunque sia la loro separazione.</div>
+        </div>
+        <div class="td-viz-canvas-wrap">
+          <canvas id="viz-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="npd-footer">
+  <span>DivulgAzione · Fisica Teorica Interattiva · ER = EPR #11</span>
+</footer>
+
+<script>
+const cv = document.getElementById('viz-canvas'), ctx = cv.getContext('2d');
+function resize() { cv.width = cv.parentElement.clientWidth; cv.height = cv.parentElement.clientHeight; }
+window.addEventListener('resize', resize);
+resize();
+
+function drawGrid() {
+  ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+  ctx.lineWidth = 1;
+  const s = 44;
+  for (let x = 0; x < cv.width; x += s) { ctx.beginPath(); ctx.moveTo(x,0); ctx.lineTo(x,cv.height); ctx.stroke(); }
+  for (let y = 0; y < cv.height; y += s) { ctx.beginPath(); ctx.moveTo(0,y); ctx.lineTo(cv.width,y); ctx.stroke(); }
+}
+
+function lbl(txt, x, y, col, sz) {
+  ctx.fillStyle = col || 'rgba(255,255,255,0.6)';
+  ctx.font = (sz||11)+'px "JetBrains Mono",monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText(txt, x, y);
+}
+
+function glowCircle(x, y, r, col) {
+  const g = ctx.createRadialGradient(x,y,0,x,y,r*2);
+  g.addColorStop(0, col.replace('1)', '0.5)').replace(/[\d.]+\)$/, '0.4)'));
+  g.addColorStop(1, col.replace(/[\d.]+\)$/, '0)'));
+  ctx.beginPath(); ctx.arc(x,y,r*2,0,Math.PI*2); ctx.fillStyle=g; ctx.fill();
+  ctx.beginPath(); ctx.arc(x,y,r,0,Math.PI*2); ctx.fillStyle=col; ctx.fill();
+}
+
+const SCENES = [
+  {
+    tag:'SCENA 01', title:'Coppia EPR — Entanglement',
+    body:'Una coppia di particelle entangled condivide un unico stato quantistico. La misura dello spin su una particella determina istantaneamente lo spin dell\'altra, qualunque sia la loro separazione.',
+    draw: function(t) {
+      ctx.fillStyle='#0d1b2a'; ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const cx=cv.width/2, cy=cv.height/2;
+      const period=280, phase=t%period;
+      const travelEnd=140, maxDist=cv.width*0.28;
+      const dist = phase<travelEnd ? (phase/travelEnd)*maxDist : maxDist;
+      const measuring = phase>190;
+      const flashA = measuring ? Math.abs(Math.sin((phase-190)*0.15)) : 0;
+
+      // Quantum connection line
+      const lA = measuring ? (0.4+flashA*0.6) : 0.55;
+      const lCol = measuring ? `rgba(255,255,255,${lA})` : 'rgba(0,188,212,0.55)';
+      ctx.beginPath(); ctx.strokeStyle=lCol; ctx.lineWidth=measuring?2+flashA*2:2;
+      ctx.setLineDash(measuring?[]:[10,6]);
+      ctx.moveTo(cx-dist,cy); ctx.lineTo(cx+dist,cy); ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Soft glow line
+      const gL=ctx.createLinearGradient(cx-dist,cy,cx+dist,cy);
+      gL.addColorStop(0,'rgba(0,188,212,0.25)'); gL.addColorStop(0.5,'rgba(0,188,212,0.05)'); gL.addColorStop(1,'rgba(255,160,0,0.25)');
+      ctx.beginPath(); ctx.strokeStyle=gL; ctx.lineWidth=10;
+      ctx.moveTo(cx-dist,cy); ctx.lineTo(cx+dist,cy); ctx.stroke();
+
+      // Particles
+      glowCircle(cx-dist,cy,11,'rgba(0,188,212,0.95)');
+      glowCircle(cx+dist,cy,11,'rgba(255,160,0,0.95)');
+
+      // Spin arrows at measurement
+      if(measuring) {
+        ctx.fillStyle=`rgba(255,255,255,${0.7+flashA*0.3})`;
+        ctx.font=`bold 20px "JetBrains Mono",monospace`; ctx.textAlign='center';
+        ctx.fillText('↑',cx-dist,cy-28); ctx.fillText('↓',cx+dist,cy-28);
+        lbl('MISURA!',cx,cy+58,`rgba(0,188,212,${flashA*0.9})`,12);
+      }
+
+      // Labels
+      lbl('Alice',cx-dist,cy+30,'rgba(0,188,212,0.7)');
+      lbl('Bob',cx+dist,cy+30,'rgba(255,160,0,0.7)');
+
+      // Bell state
+      ctx.fillStyle='rgba(0,188,212,0.8)'; ctx.font='13px "JetBrains Mono",monospace'; ctx.textAlign='center';
+      ctx.fillText('|Ψ⁻⟩ = (|↑↓⟩ − |↓↑⟩) / √2',cx,26);
+      lbl('ENTANGLEMENT',cx,cy-48,'rgba(255,255,255,0.2)',10);
+    }
+  },
+  {
+    tag:'SCENA 02', title:'Ponte Einstein-Rosen',
+    body:'La soluzione di Schwarzschild massimalmente estesa ha due regioni esterne connesse da un \'ponte\' geometrico interno — il wormhole di Einstein-Rosen. Non è attraversabile: il ponte si pincha prima che qualcosa possa passare.',
+    draw: function(t) {
+      ctx.fillStyle='#0d1b2a'; ctx.fillRect(0,0,cv.width,cv.height);
+      const cx=cv.width/2, cy=cv.height/2;
+      const sz=Math.min(cv.width,cv.height)*0.37;
+
+      // Region fills (diamond quadrants)
+      // Future (top triangle)
+      ctx.beginPath(); ctx.moveTo(cx,cy-sz); ctx.lineTo(cx+sz,cy); ctx.lineTo(cx-sz,cy); ctx.closePath();
+      ctx.fillStyle='rgba(255,60,60,0.09)'; ctx.fill();
+      // Past (bottom triangle)
+      ctx.beginPath(); ctx.moveTo(cx,cy+sz); ctx.lineTo(cx+sz,cy); ctx.lineTo(cx-sz,cy); ctx.closePath();
+      ctx.fillStyle='rgba(255,60,60,0.06)'; ctx.fill();
+      // Region I (right triangle)
+      ctx.beginPath(); ctx.moveTo(cx+sz,cy); ctx.lineTo(cx,cy-sz); ctx.lineTo(cx,cy+sz); ctx.closePath();
+      ctx.fillStyle='rgba(0,188,212,0.07)'; ctx.fill();
+      // Region II (left triangle)
+      ctx.beginPath(); ctx.moveTo(cx-sz,cy); ctx.lineTo(cx,cy-sz); ctx.lineTo(cx,cy+sz); ctx.closePath();
+      ctx.fillStyle='rgba(255,160,0,0.07)'; ctx.fill();
+
+      // Diamond outline
+      ctx.beginPath(); ctx.moveTo(cx,cy-sz); ctx.lineTo(cx+sz,cy); ctx.lineTo(cx,cy+sz); ctx.lineTo(cx-sz,cy); ctx.closePath();
+      ctx.strokeStyle='rgba(255,255,255,0.2)'; ctx.lineWidth=1.5; ctx.stroke();
+
+      // Horizon diagonals
+      ctx.strokeStyle='rgba(0,188,212,0.45)'; ctx.lineWidth=1.5;
+      [[cx-sz,cy,cx,cy-sz],[cx-sz,cy,cx,cy+sz],[cx+sz,cy,cx,cy-sz],[cx+sz,cy,cx,cy+sz]].forEach(([x1,y1,x2,y2])=>{
+        ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+      });
+
+      // Singularity lines (wavy, top and bottom of diamond interior)
+      const waveAmp=3, waveFreq=0.35;
+      ctx.setLineDash([5,4]); ctx.strokeStyle='rgba(255,80,80,0.8)'; ctx.lineWidth=2;
+      // Top singularity: runs along top interior edge
+      ctx.beginPath();
+      for(let i=0;i<=40;i++){
+        const frac=i/40, xi=cx-sz+frac*2*sz, yi=cy-sz+frac*sz+Math.sin(i*waveFreq+t*0.08)*waveAmp;
+        i===0 ? ctx.moveTo(xi,yi) : ctx.lineTo(xi,yi);
+      }
+      ctx.stroke();
+      // Bottom singularity
+      ctx.beginPath();
+      for(let i=0;i<=40;i++){
+        const frac=i/40, xi=cx-sz+frac*2*sz, yi=cy+sz-frac*sz+Math.sin(i*waveFreq+t*0.08+2)*waveAmp;
+        i===0 ? ctx.moveTo(xi,yi) : ctx.lineTo(xi,yi);
+      }
+      ctx.stroke();
+      ctx.setLineDash([]);
+
+      // Animated light ray (trying to cross, blocked)
+      const rayProgress=(t*0.6)%(sz*1.5);
+      const rx=cx-sz*0.6+rayProgress, ry=cy+sz*0.6-rayProgress;
+      if(rx<cx+sz*0.7&&ry>cy-sz*0.7){
+        ctx.beginPath(); ctx.strokeStyle='rgba(255,255,0,0.4)'; ctx.lineWidth=1.5;
+        ctx.moveTo(cx-sz*0.6,cy+sz*0.6); ctx.lineTo(rx,ry); ctx.stroke();
+        ctx.beginPath(); ctx.arc(rx,ry,3,0,Math.PI*2); ctx.fillStyle='rgba(255,255,0,0.7)'; ctx.fill();
+      }
+
+      // Labels
+      lbl('Regione I',cx+sz*0.56,cy+5,'rgba(0,188,212,0.75)',10);
+      lbl('Regione II',cx-sz*0.6,cy+5,'rgba(255,160,0,0.75)',10);
+      lbl('FUTURO',cx,cy-sz*0.52,'rgba(255,80,80,0.8)',10);
+      lbl('PASSATO',cx,cy+sz*0.58,'rgba(255,80,80,0.8)',10);
+      lbl('Singolarità',cx,cy-14,'rgba(255,80,80,0.55)',9);
+      lbl('Singolarità',cx,cy+18,'rgba(255,80,80,0.55)',9);
+      lbl('Diagramma di Kruskal-Szekeres',cx,cv.height-12,'rgba(255,255,255,0.3)',9);
+    }
+  },
+  {
+    tag:'SCENA 03', title:'ER = EPR: Unificazione',
+    body:'Maldacena e Susskind proposero che i due BH entangled nel sistema di Hawking siano equivalenti a due BH connessi da un wormhole ER. L\'entanglement crea connessione geometrica.',
+    draw: function(t) {
+      ctx.fillStyle='#0d1b2a'; ctx.fillRect(0,0,cv.width,cv.height);
+      const cx=cv.width/2, cy=cv.height/2;
+      const W=cv.width, H=cv.height;
+      const morph=(Math.sin(t*0.018)+1)/2;
+
+      const topY=cy*0.48, botY=cy+cy*0.48;
+      const dist=W*0.22;
+
+      // Separator
+      ctx.beginPath(); ctx.strokeStyle='rgba(255,255,255,0.08)'; ctx.lineWidth=1;
+      ctx.moveTo(50,cy); ctx.lineTo(W-50,cy); ctx.stroke();
+
+      // = sign
+      const eqA=0.5+morph*0.4;
+      ctx.fillStyle=`rgba(255,255,255,${eqA})`; ctx.font='bold 30px "JetBrains Mono",monospace'; ctx.textAlign='center';
+      ctx.fillText('=',cx,cy+10);
+
+      // TOP: EPR particles
+      if(morph<0.55){
+        ctx.setLineDash([10,6]); ctx.strokeStyle=`rgba(0,188,212,${0.4+morph*0.8})`; ctx.lineWidth=2+morph*2;
+        ctx.beginPath(); ctx.moveTo(cx-dist,topY); ctx.lineTo(cx+dist,topY); ctx.stroke(); ctx.setLineDash([]);
+      } else {
+        // Throat-like connection
+        const tw=6+morph*14;
+        ctx.beginPath();
+        ctx.moveTo(cx-dist,topY-tw); ctx.bezierCurveTo(cx-dist*0.4,topY-4,cx+dist*0.4,topY-4,cx+dist,topY-tw);
+        ctx.strokeStyle=`rgba(0,188,212,0.9)`; ctx.lineWidth=2; ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(cx-dist,topY+tw); ctx.bezierCurveTo(cx-dist*0.4,topY+4,cx+dist*0.4,topY+4,cx+dist,topY+tw);
+        ctx.stroke();
+      }
+      glowCircle(cx-dist,topY,13,'rgba(0,188,212,0.9)');
+      glowCircle(cx+dist,topY,13,'rgba(255,160,0,0.9)');
+
+      // BOTTOM: ER bridge with two BHs
+      const bhR=18+morph*6, throatH=25+morph*22;
+      ctx.beginPath();
+      ctx.moveTo(cx-dist,botY-throatH); ctx.bezierCurveTo(cx-dist*0.5,botY-8,cx+dist*0.5,botY-8,cx+dist,botY-throatH);
+      ctx.moveTo(cx-dist,botY+throatH); ctx.bezierCurveTo(cx-dist*0.5,botY+8,cx+dist*0.5,botY+8,cx+dist,botY+throatH);
+      ctx.strokeStyle=`rgba(0,188,212,${0.5+morph*0.5})`; ctx.lineWidth=2; ctx.stroke();
+
+      // BH circles
+      ctx.beginPath(); ctx.arc(cx-dist,botY,bhR,0,Math.PI*2); ctx.fillStyle='#060f18'; ctx.fill();
+      ctx.beginPath(); ctx.arc(cx-dist,botY,bhR,0,Math.PI*2); ctx.strokeStyle='rgba(0,188,212,0.8)'; ctx.lineWidth=2; ctx.stroke();
+      ctx.beginPath(); ctx.arc(cx+dist,botY,bhR,0,Math.PI*2); ctx.fillStyle='#060f18'; ctx.fill();
+      ctx.beginPath(); ctx.arc(cx+dist,botY,bhR,0,Math.PI*2); ctx.strokeStyle='rgba(255,160,0,0.8)'; ctx.lineWidth=2; ctx.stroke();
+
+      // Labels
+      lbl('EPR (Entanglement)',cx,topY-42,'rgba(0,188,212,0.7)',10);
+      lbl('ER (Wormhole)',cx,botY+54,'rgba(255,160,0,0.7)',10);
+      ctx.fillStyle=`rgba(255,255,255,${0.45+morph*0.45})`; ctx.font='bold 12px "JetBrains Mono",monospace'; ctx.textAlign='center';
+      ctx.fillText('ENTANGLEMENT = GEOMETRIA',cx,H-14);
+    }
+  },
+  {
+    tag:'SCENA 04', title:"Spaziotempo dall'Entanglement",
+    body:"Se l'entanglement crea connessioni geometriche, allora rimuovere l'entanglement disconnette le regioni dello spaziotempo. Lo spaziotempo emerge dall'entanglement.",
+    draw: function(t) {
+      ctx.fillStyle='#0d1b2a'; ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const cx=cv.width/2, cy=cv.height/2, W=cv.width;
+      const cycle=380, phase=t%cycle;
+      const ent=1-phase/cycle;
+      const drift=(1-ent)*W*0.09;
+      const lx=cx-W*0.2-drift, rx=cx+W*0.2+drift;
+      const bR=36+ent*10;
+
+      // Connection line
+      if(ent>0.03){
+        const lw=ent*9, la=ent*0.85;
+        ctx.beginPath(); ctx.strokeStyle=`rgba(0,188,212,${la})`; ctx.lineWidth=lw;
+        ctx.moveTo(lx+bR-4,cy); ctx.lineTo(rx-bR+4,cy); ctx.stroke();
+        ctx.beginPath(); ctx.strokeStyle=`rgba(0,188,212,${la*0.25})`; ctx.lineWidth=lw*4;
+        ctx.moveTo(lx+bR-4,cy); ctx.lineTo(rx-bR+4,cy); ctx.stroke();
+      }
+
+      // Left blob
+      const gL=ctx.createRadialGradient(lx,cy,0,lx,cy,bR*1.9);
+      gL.addColorStop(0,`rgba(0,188,212,${0.25+ent*0.25})`); gL.addColorStop(1,'rgba(0,188,212,0)');
+      ctx.beginPath(); ctx.arc(lx,cy,bR*1.9,0,Math.PI*2); ctx.fillStyle=gL; ctx.fill();
+      ctx.beginPath(); ctx.arc(lx,cy,bR,0,Math.PI*2); ctx.fillStyle=`rgba(33,150,243,${0.5+ent*0.3})`; ctx.fill();
+      ctx.beginPath(); ctx.arc(lx,cy,bR,0,Math.PI*2); ctx.strokeStyle=`rgba(0,188,212,${0.7+ent*0.3})`; ctx.lineWidth=2; ctx.stroke();
+
+      // Right blob
+      const gR=ctx.createRadialGradient(rx,cy,0,rx,cy,bR*1.9);
+      gR.addColorStop(0,`rgba(255,160,0,${0.25+ent*0.25})`); gR.addColorStop(1,'rgba(255,160,0,0)');
+      ctx.beginPath(); ctx.arc(rx,cy,bR*1.9,0,Math.PI*2); ctx.fillStyle=gR; ctx.fill();
+      ctx.beginPath(); ctx.arc(rx,cy,bR,0,Math.PI*2); ctx.fillStyle=`rgba(220,100,0,${0.5+ent*0.3})`; ctx.fill();
+      ctx.beginPath(); ctx.arc(rx,cy,bR,0,Math.PI*2); ctx.strokeStyle=`rgba(255,160,0,${0.7+ent*0.3})`; ctx.lineWidth=2; ctx.stroke();
+
+      lbl('A',lx,cy+5,'rgba(255,255,255,0.5)',11);
+      lbl('B',rx,cy+5,'rgba(255,255,255,0.5)',11);
+
+      // Entropy label
+      const sentPct=Math.round(ent*100);
+      ctx.fillStyle=ent>0.5?'rgba(0,188,212,0.85)':'rgba(255,160,0,0.85)';
+      ctx.font='bold 14px "JetBrains Mono",monospace'; ctx.textAlign='center';
+      ctx.fillText(`S_ent = ${sentPct}%`,cx,cy-68);
+
+      const state=ent>0.3?'SPAZIOTEMPO CONNESSO':'SPAZIOTEMPO DISCONNESSO';
+      lbl(state,cx,cy+78,ent>0.3?'rgba(0,188,212,0.75)':'rgba(255,80,80,0.8)',11);
+    }
+  }
+];
+
+let cur=0, tt=0;
+function go(i){
+  cur=i; tt=0;
+  document.querySelectorAll('.td-viz-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
+  document.getElementById('vp-tag').textContent=SCENES[i].tag;
+  document.getElementById('vp-title').textContent=SCENES[i].title;
+  document.getElementById('vp-body').innerHTML=SCENES[i].body;
+}
+function loop(){ SCENES[cur].draw(tt); tt++; requestAnimationFrame(loop); }
+loop();
+</script>
+</body>
+</html>

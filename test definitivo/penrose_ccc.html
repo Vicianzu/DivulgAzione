@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cosmologia Ciclica Conforme (CCC) | DivulgAzione</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="npd-nav">
+  <a href="index.html" class="npd-nav-logo"><span class="accent">D</span>ivulg<span class="accent">A</span>zione</a>
+  <div class="npd-nav-divider"></div>
+  <span class="npd-nav-tagline">Fisica Teorica Interattiva</span>
+  <ul class="npd-nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#argomenti">Argomenti</a></li>
+    <li><a href="penrose_ccc.html" class="active">CCC</a></li>
+  </ul>
+</nav>
+
+<div class="td-breadcrumb">
+  <div class="td-breadcrumb-inner">
+    <a href="index.html">Home</a><span> / </span><a href="index.html#argomenti">Relatività · Cosmologia</a><span> / </span><span>CCC di Penrose</span>
+  </div>
+</div>
+
+<div class="td-page-header">
+  <div class="td-page-header-inner">
+    <div class="td-page-id">Relatività · Cosmologia · #10</div>
+    <div class="td-page-title">Cosmologia Ciclica Conforme (CCC) — Roger Penrose</div>
+    <div class="td-page-subtitle">L'universo è uno di infiniti "aioni" conformemente equivalenti: il futuro conforme di un universo è il Big Bang del successivo</div>
+    <div class="td-page-badges">
+      <span class="npd-badge badge-live">● Live</span>
+      <span class="npd-badge badge-cat">Cosmologia</span>
+      <span class="npd-badge badge-cat">CCC</span>
+    </div>
+  </div>
+</div>
+
+<div class="npd-container">
+  <aside class="npd-sidebar">
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Informazioni</div>
+      <div class="td-info-row"><span>Autore</span><span class="td-v">Roger Penrose (2006)</span></div>
+      <div class="td-info-row"><span>Struttura</span><span class="td-v">Aioni infiniti</span></div>
+      <div class="td-info-row"><span>Rescaling</span><span class="td-v">g_μν → Ω² g_μν</span></div>
+      <div class="td-info-row"><span>Invarianza</span><span class="td-v">Particelle senza massa</span></div>
+    </div>
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Navigazione</div>
+      <a href="feynman.html" class="td-sidebar-link">← Feynman</a>
+      <a href="index.html" class="td-sidebar-link">Home →</a>
+    </div>
+  </aside>
+
+  <main class="npd-main">
+    <div class="td-card">
+      <div class="td-card-title">Gli Aioni di Penrose</div>
+      <div class="td-card-body">
+        <p>Nella <span class="td-cy">Cosmologia Ciclica Conforme</span>, l'intera storia cosmologica è organizzata in una sequenza di "aioni". Ogni aione comprende:</p>
+        <div class="td-formula">I⁻  (Big Bang spacelike)
+  ↓ espansione accelerata
+I⁺  (futuro conforme — de Sitter)
+  ↕  identificazione conforme
+I⁻  del prossimo aione</div>
+        <p>L'identificazione I⁺ → I⁻ è permessa perché al futuro remoto l'universo è dominato da fotoni e particelle <span class="td-am">senza massa</span>, che non percepiscono la scala temporale.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Il Rescaling Conforme</div>
+      <div class="td-card-body">
+        <p>Il collegamento tra aioni è un <span class="td-cy">rescaling conforme</span> della metrica:</p>
+        <div class="td-formula">g_μν  →  Ω² g_μν
+Le equazioni delle particelle senza massa (fotoni)
+sono invarianti sotto questo rescaling.
+I⁺ (aione N, Ω→0) ≅ I⁻ (aione N+1, Ω→∞)</div>
+        <p>La materia con massa scompare nel futuro remoto (i protoni decadono, i buchi neri evaporano via Hawking), lasciando un universo <span class="td-vi">puramente conformemente invariante</span>.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Evidenze Osservative</div>
+      <div class="td-card-body">
+        <p>Penrose e Gurzadyan (2010) ipotizzano che le <span class="td-cy">collisioni di buchi neri supermassivi</span> dell'aione precedente producano anelli di bassa varianza nel CMB — i cosiddetti <span class="td-am">"Hawking points"</span>.</p>
+        <div class="td-formula">Segnale predetto: anelli concentrici nel CMB
+  con varianza di temperatura ridotta
+Scala angolare: θ ~ 1°–5°
+Evidenza: controversa (Wehus &amp; Eriksen 2011)</div>
+        <p>La CCC predice anche un segnale nelle <span class="td-gr">polarizzazioni B-mode</span> del CMB, potenzialmente rilevabile da esperimenti futuri.</p>
+      </div>
+    </div>
+
+    <hr class="td-viz-divider">
+    <div class="td-viz-wrap">
+      <div class="td-viz-toolbar">
+        <span class="td-viz-label">VISUALIZZAZIONE</span>
+        <div class="td-viz-btns">
+          <button class="td-viz-btn active" onclick="go(0)">Stack di Aioni</button>
+          <button class="td-viz-btn" onclick="go(1)">Rescaling Conforme</button>
+          <button class="td-viz-btn" onclick="go(2)">Diagramma di Penrose</button>
+          <button class="td-viz-btn" onclick="go(3)">Anelli nel CMB</button>
+        </div>
+      </div>
+      <div class="td-viz-area">
+        <div class="td-viz-panel">
+          <div class="td-viz-panel-tag" id="vp-tag">SCENA 01</div>
+          <div class="td-viz-panel-title" id="vp-title">Stack di Aioni</div>
+          <div class="td-viz-panel-body" id="vp-body">La CCC propone che il nostro universo sia uno di una sequenza infinita di "aioni". Il futuro conforme (I⁺) di ogni aione è conformemente identico al Big Bang (I⁻) del successivo.</div>
+        </div>
+        <div class="td-viz-canvas-wrap">
+          <canvas id="viz-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="npd-footer">
+  <span>DivulgAzione · CCC Penrose · 2026</span>
+  <span><a href="index.html">Home</a> · <a href="index.html#argomenti">Argomenti</a></span>
+</footer>
+
+<script>
+const cv = document.getElementById('viz-canvas');
+const ctx = cv.getContext('2d');
+function resize(){cv.width=cv.parentElement.clientWidth;cv.height=cv.parentElement.clientHeight;}
+window.addEventListener('resize',resize);resize();
+
+function txt(s,x,y,col,sz,align){
+  ctx.save();
+  ctx.font=(sz||11)+'px "JetBrains Mono",monospace';
+  ctx.fillStyle=col||'rgba(255,255,255,0.6)';
+  ctx.textAlign=align||'left';
+  ctx.textBaseline='middle';
+  ctx.fillText(s,x,y);
+  ctx.restore();
+}
+function drawGrid(){
+  ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=1;
+  const s=40;
+  for(let x=0;x<cv.width;x+=s){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,cv.height);ctx.stroke();}
+  for(let y=0;y<cv.height;y+=s){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cv.width,y);ctx.stroke();}
+}
+
+const SCENES=[
+  {
+    tag:'SCENA 01',
+    title:'Stack di Aioni',
+    body:'La CCC propone che il nostro universo sia uno di una sequenza infinita di "aioni". Il futuro conforme (I⁺) di ogni aione è conformemente identico al Big Bang (I⁻) del successivo.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const W=cv.width, H=cv.height;
+      const numAeons=3;
+      const aeonH=H*0.24;
+      const aeonW=W*0.5;
+      const startY=H*0.1;
+      const cx=W/2;
+      const aeonCols=[
+        'rgba(0,188,212,',
+        'rgba(33,150,243,',
+        'rgba(140,100,220,'
+      ];
+      const aeonNames=['Aione 1','Aione 2','Aione 3 (nostro)'];
+      const pulse=0.5+0.5*Math.sin(t*0.025);
+
+      for(let i=0;i<numAeons;i++){
+        const cy=startY+i*(aeonH+H*0.05)+aeonH/2;
+        const col=aeonCols[i];
+        const w=aeonW*(0.7+0.15*(2-i));
+        const h=aeonH;
+        // Lens/diamond shape
+        ctx.save();
+        ctx.beginPath();
+        ctx.moveTo(cx,cy-h/2);      // top point I+
+        ctx.lineTo(cx+w/2,cy);      // right
+        ctx.lineTo(cx,cy+h/2);      // bottom point I-
+        ctx.lineTo(cx-w/2,cy);      // left
+        ctx.closePath();
+        // Fill with gradient
+        const grd=ctx.createLinearGradient(cx,cy-h/2,cx,cy+h/2);
+        grd.addColorStop(0,col+'0.4)');
+        grd.addColorStop(0.5,col+'0.12)');
+        grd.addColorStop(1,col+'0.4)');
+        ctx.fillStyle=grd;ctx.fill();
+        ctx.strokeStyle=col+(i===2?String(0.5+0.4*pulse)+')'  :'0.6)');
+        ctx.lineWidth=2;ctx.stroke();
+        ctx.restore();
+
+        // Labels
+        txt(aeonNames[i],cx,cy,col+'0.9)',11,'center');
+
+        // I+ label at top point
+        txt('I⁺',cx+w/2+8,cy-h/2,col+'0.8)',10,'left');
+        // I- label at bottom point
+        txt('I⁻',cx+w/2+8,cy+h/2,col+'0.8)',10,'left');
+
+        // Connecting dotted line between aeons
+        if(i<numAeons-1){
+          const y1=cy+h/2;
+          const y2=startY+(i+1)*(aeonH+H*0.05)+aeonH/2-aeonH/2;
+          ctx.strokeStyle='rgba(255,255,255,0.35)';ctx.lineWidth=1.5;ctx.setLineDash([5,5]);
+          ctx.beginPath();ctx.moveTo(cx,y1);ctx.lineTo(cx,y2);ctx.stroke();
+          ctx.setLineDash([]);
+          txt('identificazione conforme',cx+8,(y1+y2)/2,'rgba(255,255,255,0.45)',9,'left');
+        }
+      }
+      // Infinite ellipsis below
+      txt('⋮  aioni successivi  ⋮',cx,H*0.93,'rgba(255,255,255,0.35)',11,'center');
+    }
+  },
+  {
+    tag:'SCENA 02',
+    title:'Rescaling Conforme',
+    body:'Al futuro conforme I⁺ l\'universo è dominato da fotoni e particelle senza massa, che non possono misurare la scala temporale. Con un rescaling Ω, questa geometria è identica al Big Bang del prossimo aione.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const W=cv.width, H=cv.height;
+      const cy=H/2;
+      // Left: expanding universe
+      const lx=W*0.18;
+      const maxR=H*0.28;
+      const expandR=maxR*(0.3+0.7*Math.abs(Math.sin(t*0.01)));
+      ctx.strokeStyle='rgba(33,150,243,0.6)';ctx.lineWidth=1.5;
+      for(let r=1;r<=4;r++){
+        ctx.beginPath();ctx.arc(lx,cy,expandR*r/4,0,Math.PI*2);ctx.stroke();
+      }
+      // Photons on boundary
+      for(let p=0;p<6;p++){
+        const angle=p/6*Math.PI*2+t*0.02;
+        const px=lx+expandR*Math.cos(angle);
+        const py=cy+expandR*Math.sin(angle);
+        // Wavy arrow
+        ctx.strokeStyle='rgba(255,160,0,0.8)';ctx.lineWidth=1.5;
+        ctx.beginPath();
+        ctx.moveTo(px,py);
+        ctx.lineTo(px+14*Math.cos(angle),py+14*Math.sin(angle));
+        ctx.stroke();
+        ctx.fillStyle='rgba(255,160,0,0.8)';
+        ctx.beginPath();ctx.moveTo(px+14*Math.cos(angle),py+14*Math.sin(angle));
+        ctx.lineTo(px+7*Math.cos(angle+0.4),py+7*Math.sin(angle+0.4));
+        ctx.lineTo(px+7*Math.cos(angle-0.4),py+7*Math.sin(angle-0.4));
+        ctx.closePath();ctx.fill();
+      }
+      txt('I⁺  futuro remoto',lx,cy-maxR-18,'rgba(33,150,243,0.8)',11,'center');
+      txt('fotoni / senza massa',lx,cy+maxR+16,'rgba(255,160,0,0.7)',10,'center');
+
+      // Center: rescaling symbol
+      const scaleAnim=1+0.4*Math.sin(t*0.04);
+      ctx.save();
+      ctx.translate(W/2,cy);ctx.scale(scaleAnim,scaleAnim);
+      ctx.strokeStyle='rgba(76,175,80,0.9)';ctx.lineWidth=2;
+      ctx.beginPath();ctx.arc(0,0,22,0,Math.PI*2);ctx.stroke();
+      ctx.fillStyle='rgba(76,175,80,1)';
+      ctx.font='bold 14px "JetBrains Mono",monospace';
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText('×Ω',0,0);
+      ctx.restore();
+      // Arrows
+      ctx.strokeStyle='rgba(255,255,255,0.5)';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(W*0.32,cy);ctx.lineTo(W*0.44,cy);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(W*0.56,cy);ctx.lineTo(W*0.68,cy);ctx.stroke();
+      ctx.fillStyle='rgba(255,255,255,0.5)';
+      ctx.beginPath();ctx.moveTo(W*0.44,cy);ctx.lineTo(W*0.43,cy-5);ctx.lineTo(W*0.43,cy+5);ctx.closePath();ctx.fill();
+      ctx.beginPath();ctx.moveTo(W*0.68,cy);ctx.lineTo(W*0.67,cy-5);ctx.lineTo(W*0.67,cy+5);ctx.closePath();ctx.fill();
+
+      // Right: contracting to Big Bang
+      const rx=W*0.82;
+      const bigBangR=H*0.06+H*0.04*Math.abs(Math.sin(t*0.015+2));
+      const grd=ctx.createRadialGradient(rx,cy,0,rx,cy,bigBangR*3);
+      grd.addColorStop(0,'rgba(255,160,0,0.8)');
+      grd.addColorStop(0.4,'rgba(255,80,0,0.4)');
+      grd.addColorStop(1,'rgba(255,160,0,0)');
+      ctx.fillStyle=grd;ctx.beginPath();ctx.arc(rx,cy,bigBangR*3,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(255,200,0,1)';ctx.beginPath();ctx.arc(rx,cy,bigBangR,0,Math.PI*2);ctx.fill();
+      txt('I⁻  Big Bang',rx,cy-H*0.25,'rgba(255,160,0,0.9)',11,'center');
+      txt('prossimo aione',rx,cy+H*0.25,'rgba(255,160,0,0.6)',10,'center');
+      txt('g_μν → Ω² g_μν',W/2,H*0.9,'rgba(76,175,80,0.7)',11,'center');
+    }
+  },
+  {
+    tag:'SCENA 03',
+    title:'Conformal Boundaries',
+    body:'Il diagramma conforme di Penrose di un universo FRW mostra I⁺ come una linea spacelike nel futuro. Nella CCC questa linea è incollata all\'I⁻ del prossimo aione.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const W=cv.width, H=cv.height;
+      const cx=W/2, m=H*0.12;
+      // Penrose diagram: square/trapezoidal
+      const tl={x:cx-H*0.32,y:m};
+      const tr={x:cx+H*0.32,y:m};
+      const bl={x:cx-H*0.05,y:H-m};
+      const br={x:cx+H*0.05,y:H-m};
+      const bm={x:cx,y:H-m};
+
+      // Fill interior
+      ctx.save();
+      ctx.beginPath();
+      ctx.moveTo(bm.x,bm.y);ctx.lineTo(tl.x,tl.y);ctx.lineTo(tr.x,tr.y);ctx.closePath();
+      ctx.fillStyle='rgba(33,150,243,0.07)';ctx.fill();
+      ctx.restore();
+
+      // I+ (top — spacelike, pulsing highlight)
+      const iPlusPulse=0.5+0.5*Math.sin(t*0.04);
+      ctx.strokeStyle='rgba(0,188,212,'+iPlusPulse+')';ctx.lineWidth=3;
+      ctx.beginPath();ctx.moveTo(tl.x,tl.y);ctx.lineTo(tr.x,tr.y);ctx.stroke();
+      txt('I⁺  (futuro conforme)',cx,tl.y-14,'rgba(0,188,212,0.9)',11,'center');
+
+      // I- (bottom — spacelike)
+      const iMinusPulse=0.5+0.5*Math.sin(t*0.04+Math.PI);
+      ctx.strokeStyle='rgba(255,160,0,'+iMinusPulse+')';ctx.lineWidth=3;
+      ctx.beginPath();ctx.moveTo(bl.x,bl.y);ctx.lineTo(br.x,br.y);ctx.stroke();
+      txt('I⁻  (Big Bang)',cx,H-m+16,'rgba(255,160,0,0.9)',11,'center');
+
+      // Null sides
+      ctx.strokeStyle='rgba(255,255,255,0.4)';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(bm.x,bm.y);ctx.lineTo(tl.x,tl.y);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(bm.x,bm.y);ctx.lineTo(tr.x,tr.y);ctx.stroke();
+
+      // World lines
+      const wlX=[cx-H*0.1,cx,cx+H*0.1];
+      ctx.strokeStyle='rgba(33,150,243,0.45)';ctx.lineWidth=1;
+      wlX.forEach(function(wx){
+        ctx.beginPath();ctx.moveTo(bm.x+(wx-cx)*0.1,bm.y);ctx.lineTo(wx,tl.y);ctx.stroke();
+      });
+
+      // Light ray bouncing
+      const lrt=(t*0.8)%(H-m-tl.y)*2;
+      const lry=tl.y+Math.abs(lrt-(H-m-tl.y));
+      const lrx=cx+lrt*(tr.x-cx)/(H-m-tl.y)*0.5;
+      ctx.fillStyle='rgba(255,255,255,0.8)';
+      ctx.beginPath();ctx.arc(lrx,lry,4,0,Math.PI*2);ctx.fill();
+
+      // CCC identification arrow
+      ctx.strokeStyle='rgba(76,175,80,0.6)';ctx.lineWidth=1.5;ctx.setLineDash([5,5]);
+      ctx.beginPath();ctx.moveTo(tl.x-20,tl.y);ctx.lineTo(tl.x-20,tl.y-25);
+      ctx.lineTo(cx,tl.y-35);ctx.stroke();
+      ctx.setLineDash([]);
+      txt('CCC: incollati',cx,tl.y-44,'rgba(76,175,80,0.7)',9,'center');
+    }
+  },
+  {
+    tag:'SCENA 04',
+    title:'Anelli Concentrici nel CMB',
+    body:'Penrose predice che eventi cosmici nel precedente aione (collisioni di buchi neri supermassivi) lascino tracce nel CMB sotto forma di anelli di bassa varianza di temperatura.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const W=cv.width, H=cv.height;
+      const cx=W/2, cy=H/2;
+      const cmapR=Math.min(W,H)*0.42;
+
+      // CMB noise background (stable pattern)
+      ctx.save();
+      ctx.beginPath();ctx.arc(cx,cy,cmapR,0,Math.PI*2);ctx.clip();
+      for(let i=0;i<350;i++){
+        const px=cx-cmapR+i*(2*cmapR/350);
+        for(let j=0;j<350;j++){
+          const py=cy-cmapR+j*(2*cmapR/350);
+          const dx=px-cx, dy=py-cy;
+          if(dx*dx+dy*dy>cmapR*cmapR) continue;
+          const n=Math.sin(px*0.07+3)*Math.sin(py*0.09+5)*Math.sin(px*0.04+py*0.05);
+          const alpha=0.18*Math.abs(n);
+          ctx.fillStyle=n>0?`rgba(255,100,100,${alpha})`:`rgba(100,100,255,${alpha})`;
+          ctx.fillRect(px,py,4,4);
+        }
+      }
+      ctx.restore();
+
+      // CMB border circle
+      ctx.strokeStyle='rgba(255,255,255,0.3)';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.arc(cx,cy,cmapR,0,Math.PI*2);ctx.stroke();
+      txt('CMB map',cx,cy+cmapR+16,'rgba(255,255,255,0.5)',11,'center');
+
+      // Concentric ring sets
+      const ringCenters=[
+        {x:cx-cmapR*0.3,y:cy-cmapR*0.2},
+        {x:cx+cmapR*0.25,y:cy+cmapR*0.15},
+        {x:cx+cmapR*0.05,y:cy-cmapR*0.35}
+      ];
+      const pulse=0.4+0.4*Math.sin(t*0.04);
+      ringCenters.forEach(function(rc,i){
+        for(let r=1;r<=3;r++){
+          const rad=r*20+i*5;
+          ctx.strokeStyle='rgba(255,160,0,'+(pulse*(0.9-r*0.2))+')';
+          ctx.lineWidth=2.5-r*0.4;
+          ctx.beginPath();ctx.arc(rc.x,rc.y,rad,0,Math.PI*2);ctx.stroke();
+        }
+        ctx.fillStyle='rgba(255,160,0,0.8)';
+        ctx.beginPath();ctx.arc(rc.x,rc.y,3,0,Math.PI*2);ctx.fill();
+      });
+
+      txt('anelli CCC (predetti)',W*0.5,H*0.08,'rgba(255,160,0,0.9)',11,'center');
+      txt('collisione BH supermassivo — aione precedente',W*0.5,H*0.93,'rgba(255,255,255,0.4)',10,'center');
+    }
+  }
+];
+
+let cur=0,tt=0;
+function go(i){
+  cur=i;tt=0;
+  document.querySelectorAll('.td-viz-btn').forEach(function(b,j){b.classList.toggle('active',j===i);});
+  document.getElementById('vp-tag').textContent=SCENES[i].tag;
+  document.getElementById('vp-title').textContent=SCENES[i].title;
+  document.getElementById('vp-body').innerHTML=SCENES[i].body;
+}
+function loop(){SCENES[cur].draw(tt);tt++;requestAnimationFrame(loop);}
+loop();
+</script>
+</body>
+</html>

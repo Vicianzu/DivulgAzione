@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Il Principio Olografico e il Futuro della Fisica | DivulgAzione</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="npd-nav">
+  <a href="index.html" class="npd-nav-logo"><span class="accent">D</span>ivulg<span class="accent">A</span>zione</a>
+  <div class="npd-nav-divider"></div>
+  <span class="npd-nav-tagline">Fisica Teorica Interattiva</span>
+  <ul class="npd-nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#argomenti">Argomenti</a></li>
+    <li><a href="principio_olografico.html" class="active">Olografia</a></li>
+  </ul>
+</nav>
+
+<div class="td-breadcrumb">
+  <div class="td-breadcrumb-inner">
+    <a href="index.html">Home</a><span> / </span><a href="index.html#argomenti">Dualità Olografica</a><span> / </span><span>Principio Olografico</span>
+  </div>
+</div>
+
+<div class="td-page-header">
+  <div class="td-page-header-inner">
+    <div class="td-page-id">Dualità Olografica · #13</div>
+    <div class="td-page-title">Il Principio Olografico e il Futuro della Fisica</div>
+    <div class="td-page-subtitle">Tutta l'informazione di un volume 3D è codificata sulla sua superficie 2D — dalle aree di Bekenstein alla formula RT</div>
+    <div class="td-page-badges">
+      <span class="npd-badge badge-live">● Live</span>
+      <span class="npd-badge badge-cat">Olografia</span>
+      <span class="npd-badge badge-cat">Futuro della Fisica</span>
+    </div>
+  </div>
+</div>
+
+<div class="npd-container">
+  <aside class="npd-sidebar">
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Riferimenti</div>
+      <div class="td-info-row"><span>'t Hooft &amp; Susskind</span><span class="td-v">1993</span></div>
+      <div class="td-info-row"><span>Bekenstein</span><span class="td-v">1972</span></div>
+      <div class="td-info-row"><span>Ryu-Takayanagi</span><span class="td-v">2006</span></div>
+    </div>
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Formule chiave</div>
+      <div class="td-info-row"><span>Bekenstein</span><span class="td-v">S = A/4l_P²</span></div>
+      <div class="td-info-row"><span>RT</span><span class="td-v">S_A = Area(γ_A)/4G</span></div>
+    </div>
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Navigazione</div>
+      <a href="paradosso_informazione.html" class="td-sidebar-link">← Paradosso Informazione</a>
+      <a href="ads_cap01_problema.html" class="td-sidebar-link">AdS/CFT CAP 01 →</a>
+    </div>
+  </aside>
+
+  <main class="npd-main">
+    <div class="td-card">
+      <div class="td-card-title">Il Limite di Bekenstein</div>
+      <div class="td-card-body">
+        <p>Jacob Bekenstein scoprì che l'entropia massima contenuta in una regione è limitata dall'<span class="td-hl td-cy">area del bordo</span>, non dal volume. Per un buco nero:</p>
+        <div class="td-formula">S_BH = A / (4 l_P²) = k_B · A / (4 G ℏ/c³)</div>
+        <p>Questo limite di Bekenstein è universale: qualsiasi sistema con più entropia di A/4l_P² collassa in un buco nero. L'informazione è <span class="td-hl td-am">2D, non 3D</span> — il principio olografico.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">La Formula di Ryu-Takayanagi</div>
+      <div class="td-card-body">
+        <p>Ryu e Takayanagi (2006) calcolarono l'entropia di entanglement di una regione di bordo A come l'area della superficie <span class="td-hl td-cy">minimale γ_A</span> nel bulk AdS:</p>
+        <div class="td-formula">S_A = Area(γ_A) / (4G_N)</div>
+        <p>La formula RT è la controparte olografica della formula di Bekenstein-Hawking per l'entropia dei buchi neri. Connette quantità geometriche nel bulk a quantità di entanglement sul bordo.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Tensor Network e MERA</div>
+      <div class="td-card-body">
+        <p>Il <span class="td-hl td-gr">MERA</span> (Multi-scale Entanglement Renormalization Ansatz) è un tensor network che mappa stati CFT UV (bordo) a stati IR. La sua struttura è isomorfa alla geometria discreta di AdS:</p>
+        <div class="td-formula">MERA ≅ AdS discreto:
+  Layer UV (bordo) → layer IR (bulk)
+  Tensori = curvatura, Reti = geometria</div>
+        <p>Ogni strato del MERA corrisponde a un'ipersuperficie AdS. L'entanglement nei tensori è equivalente alla connessione geometrica del bulk.</p>
+      </div>
+    </div>
+
+    <hr class="td-viz-divider">
+    <div class="td-viz-wrap">
+      <div class="td-viz-toolbar">
+        <span class="td-viz-label">SCENA</span>
+        <div class="td-viz-btns">
+          <button class="td-viz-btn active" onclick="go(0)">01</button>
+          <button class="td-viz-btn" onclick="go(1)">02</button>
+          <button class="td-viz-btn" onclick="go(2)">03</button>
+          <button class="td-viz-btn" onclick="go(3)">04</button>
+        </div>
+      </div>
+      <div class="td-viz-area">
+        <div class="td-viz-panel">
+          <div class="td-viz-panel-tag" id="vp-tag">SCENA 01</div>
+          <div class="td-viz-panel-title" id="vp-title">Limite di Bekenstein</div>
+          <div class="td-viz-panel-body" id="vp-body">L'entropia massima di una regione è proporzionale all'area del suo bordo, non al volume. Un buco nero ha entropia S = A/4l_P², dove A è l'area dell'orizzonte degli eventi.</div>
+        </div>
+        <div class="td-viz-canvas-wrap">
+          <canvas id="viz-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="npd-footer">
+  <span>DivulgAzione · Fisica Teorica Interattiva · Principio Olografico #13</span>
+</footer>
+
+<script>
+const cv=document.getElementById('viz-canvas'), ctx=cv.getContext('2d');
+function resize(){ cv.width=cv.parentElement.clientWidth; cv.height=cv.parentElement.clientHeight; }
+window.addEventListener('resize',resize); resize();
+
+function lbl(txt,x,y,col,sz){
+  ctx.fillStyle=col||'rgba(255,255,255,0.6)'; ctx.font=(sz||11)+'px "JetBrains Mono",monospace'; ctx.textAlign='center'; ctx.fillText(txt,x,y);
+}
+
+// ─── SCENE 1: Bekenstein / 3D → 2D ─────────────────────────────────────────
+function drawScene1(t){
+  ctx.fillStyle='#0d1b2a'; ctx.fillRect(0,0,cv.width,cv.height);
+  const cx=cv.width/2, cy=cv.height/2;
+  const cycle=260, phase=t%cycle;
+  const compress=Math.min(1,phase/160); // 0→1 compression progress
+
+  // Isometric cube parameters
+  const s=Math.min(cv.width,cv.height)*0.18;
+  const iso={ // cube corner offsets in isometric projection
+    sx: s, sy: s*0.5
+  };
+
+  // Cube: top face, right face, left face
+  // Center of cube
+  const bx=cx-s*0.5, by=cy+s*0.15;
+
+  // Top face
+  ctx.beginPath();
+  ctx.moveTo(bx, by-iso.sy);
+  ctx.lineTo(bx+iso.sx, by);
+  ctx.lineTo(bx, by+iso.sy);
+  ctx.lineTo(bx-iso.sx, by);
+  ctx.closePath();
+  ctx.fillStyle='rgba(33,150,243,0.12)'; ctx.fill();
+  ctx.strokeStyle='rgba(33,150,243,0.5)'; ctx.lineWidth=1.5; ctx.stroke();
+
+  // Right face
+  ctx.beginPath();
+  ctx.moveTo(bx+iso.sx, by);
+  ctx.lineTo(bx+iso.sx, by+s);
+  ctx.lineTo(bx, by+iso.sy+s);
+  ctx.lineTo(bx, by+iso.sy);
+  ctx.closePath();
+  ctx.fillStyle='rgba(33,150,243,0.07)'; ctx.fill();
+  ctx.strokeStyle='rgba(33,150,243,0.4)'; ctx.lineWidth=1.5; ctx.stroke();
+
+  // Left face (front-facing)
+  ctx.beginPath();
+  ctx.moveTo(bx-iso.sx, by);
+  ctx.lineTo(bx-iso.sx, by+s);
+  ctx.lineTo(bx, by+iso.sy+s);
+  ctx.lineTo(bx, by+iso.sy);
+  ctx.closePath();
+  ctx.fillStyle='rgba(0,188,212,0.09)'; ctx.fill();
+  ctx.strokeStyle='rgba(0,188,212,0.45)'; ctx.lineWidth=1.5; ctx.stroke();
+
+  // 3D information dots — compress toward right face
+  const numDots=16;
+  for(let i=0;i<numDots;i++){
+    const seed=i*2.71828;
+    const fx=(Math.sin(seed*3.1)*0.5+0.5)*0.7, fy=(Math.cos(seed*2.7)*0.5+0.5)*0.7, fz=(Math.sin(seed*1.4)*0.5+0.5)*0.7;
+    // 3D coords in cube, isometric projection
+    const ix=(fx-0.5)*s, iy=(fy-0.5)*s, iz=(fz-0.5)*s;
+    // Isometric projection: x'=ix-iz, y'=(ix+iz)*0.5-iy
+    const px3d=bx+iso.sx*0.5+(ix-iz), py3d=by+iso.sy*0.5+(ix+iz)*0.5-iy+s*0.5;
+
+    // Target: right face of cube (project to x=max)
+    const pxTgt=bx+iso.sx-iz*0.5, pyTgt=by+iz*0.5-iy+s*0.5;
+
+    const px=px3d+(pxTgt-px3d)*compress;
+    const py=py3d+(pyTgt-py3d)*compress;
+    const alpha=0.4+Math.sin(t*0.04+i)*0.3;
+    ctx.beginPath(); ctx.arc(px,py,3,0,Math.PI*2);
+    ctx.fillStyle=`rgba(0,188,212,${alpha})`; ctx.fill();
+
+    // Arrow when compressing
+    if(compress>0.1&&compress<0.9){
+      ctx.beginPath(); ctx.strokeStyle=`rgba(0,188,212,${compress*0.4})`; ctx.lineWidth=1;
+      ctx.moveTo(px3d,py3d); ctx.lineTo(px,py); ctx.stroke();
+    }
+  }
+
+  // Surface grid on right face
+  const surfaceA=compress;
+  ctx.strokeStyle=`rgba(0,188,212,${surfaceA*0.4})`; ctx.lineWidth=1;
+  for(let i=0;i<=4;i++){
+    const frac=i/4;
+    // Vertical lines on face
+    const x1=bx+iso.sx*(1-frac), y1=by+iso.sy*frac;
+    const x2=x1, y2=y1+s;
+    ctx.beginPath(); ctx.moveTo(x1,y1); ctx.lineTo(x2,y2); ctx.stroke();
+    // Horizontal lines
+    const x3=bx, y3=by+iso.sy+s*frac;
+    const x4=bx+iso.sx, y4=by+s*frac;
+    ctx.beginPath(); ctx.moveTo(x3,y3); ctx.lineTo(x4,y4); ctx.stroke();
+  }
+
+  // Labels
+  const cx2=cx+s*0.6;
+  lbl('3D VOLUME',bx-s*0.5,by-s*0.5,'rgba(255,255,255,0.4)',10);
+  lbl('2D SUPERFICIE',cx2,cy-20,'rgba(0,188,212,0.7)',10);
+  lbl('→',bx+s*0.4,cy,'rgba(255,255,255,0.4)',14);
+
+  ctx.fillStyle='rgba(255,255,255,0.5)'; ctx.font='12px "JetBrains Mono",monospace'; ctx.textAlign='center';
+  ctx.fillText('S = A / (4 l_P²)',cx,cv.height-14);
+}
+
+// ─── SCENE 2: Ryu-Takayanagi ───────────────────────────────────────────────
+function drawScene2(t){
+  ctx.fillStyle='#0d1b2a'; ctx.fillRect(0,0,cv.width,cv.height);
+  const cx=cv.width/2, cy=cv.height/2;
+  const R=Math.min(cv.width,cv.height)*0.37;
+
+  // AdS disk fill
+  const diskGrad=ctx.createRadialGradient(cx,cy,0,cx,cy,R);
+  diskGrad.addColorStop(0,'rgba(33,150,243,0.12)');
+  diskGrad.addColorStop(1,'rgba(33,150,243,0.03)');
+  ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.fillStyle=diskGrad; ctx.fill();
+
+  // Poincaré disk boundary
+  ctx.beginPath(); ctx.arc(cx,cy,R,0,Math.PI*2); ctx.strokeStyle='rgba(255,255,255,0.3)'; ctx.lineWidth=2; ctx.stroke();
+
+  // Boundary region A (arc from -π/4 to π/4 in cyan)
+  const aStart=-Math.PI*0.45, aEnd=Math.PI*0.45;
+  ctx.beginPath(); ctx.arc(cx,cy,R,aStart,aEnd);
+  ctx.strokeStyle='rgba(0,188,212,0.9)'; ctx.lineWidth=5; ctx.stroke();
+
+  // A endpoints
+  const ax1=cx+Math.cos(aStart)*R, ay1=cy+Math.sin(aStart)*R;
+  const ax2=cx+Math.cos(aEnd)*R, ay2=cy+Math.sin(aEnd)*R;
+
+  // RT geodesic (arc through bulk connecting endpoints of A)
+  // In Poincaré disk, geodesic is a circular arc perpendicular to boundary
+  // Approximate with a Bezier through bulk
+  const bulkDepth=R*0.52;
+  const mx=(ax1+ax2)/2, my=(ay1+ay2)/2;
+  const toCenter=Math.sqrt((mx-cx)*(mx-cx)+(my-cy)*(my-cy));
+  const ctrlX=cx+(mx-cx)*bulkDepth/Math.max(toCenter,1);
+  const ctrlY=cy+(my-cy)*bulkDepth/Math.max(toCenter,1);
+
+  // Entanglement wedge (shaded region bounded by A arc and RT surface)
+  ctx.beginPath();
+  ctx.arc(cx,cy,R,aStart,aEnd);
+  ctx.bezierCurveTo(ctrlX+10,ctrlY+5,ctrlX-10,ctrlY-5,ax1,ay1);
+  ctx.fillStyle='rgba(0,188,212,0.07)'; ctx.fill();
+
+  // RT surface γ_A (pulsing)
+  const pulseW=2+Math.sin(t*0.07)*0.8;
+  ctx.beginPath();
+  ctx.moveTo(ax1,ay1); ctx.quadraticCurveTo(ctrlX,ctrlY,ax2,ay2);
+  ctx.strokeStyle='rgba(76,175,80,0.9)'; ctx.lineWidth=pulseW+1.5; ctx.stroke();
+  // Glow
+  ctx.beginPath(); ctx.moveTo(ax1,ay1); ctx.quadraticCurveTo(ctrlX,ctrlY,ax2,ay2);
+  ctx.strokeStyle='rgba(76,175,80,0.25)'; ctx.lineWidth=(pulseW+1.5)*4; ctx.stroke();
+
+  // A label on arc
+  const midA=(aStart+aEnd)/2;
+  lbl('A',cx+Math.cos(midA)*(R+14),cy+Math.sin(midA)*(R+14),'rgba(0,188,212,0.9)',12);
+
+  // γ_A label
+  lbl('γ_A',ctrlX-4,ctrlY-18,'rgba(76,175,80,0.85)',11);
+
+  // Bulk label
+  lbl('AdS bulk',cx,cy+R*0.65,'rgba(255,255,255,0.25)',9);
+
+  // Some faint geodesics in bulk for texture
+  ctx.strokeStyle='rgba(255,255,255,0.04)'; ctx.lineWidth=1;
+  for(let i=0;i<8;i++){
+    const a=i*Math.PI/4, r2=R*0.5;
+    ctx.beginPath(); ctx.moveTo(cx,cy); ctx.lineTo(cx+Math.cos(a)*r2,cy+Math.sin(a)*r2); ctx.stroke();
+  }
+
+  // Formula
+  ctx.fillStyle='rgba(255,255,255,0.55)'; ctx.font='12px "JetBrains Mono",monospace'; ctx.textAlign='center';
+  ctx.fillText('S_A  =  Area(γ_A) / 4G',cx,cv.height-14);
+}
+
+// ─── SCENE 3: MERA tensor network ──────────────────────────────────────────
+function drawScene3(t){
+  ctx.fillStyle='#0d1b2a'; ctx.fillRect(0,0,cv.width,cv.height);
+  const W=cv.width, H=cv.height;
+
+  const n=[8,4,2,1]; // sites per layer
+  const nLayers=n.length;
+  const layerColors=['rgba(0,188,212,0.85)','rgba(33,150,243,0.85)','rgba(76,175,80,0.85)','rgba(255,160,0,0.85)'];
+  const marginX=W*0.08, marginY=H*0.1;
+  const layerSpacing=(H-marginY*2)/(nLayers);
+
+  // Which site has the propagating perturbation
+  const pertLayer=Math.floor(((t*0.4)%(nLayers*60))/60);
+  const pertSite=Math.floor(t*0.02)%n[0];
+
+  function siteX(layer,i){ return marginX+(W-marginX*2)*((i+0.5)/n[layer]); }
+  function siteY(layer){ return marginY+layerSpacing*layer+(H-marginY*2-layerSpacing*(nLayers-1))*0.15; }
+
+  // Draw from bottom (UV) to top (IR)
+  for(let layer=nLayers-1;layer>=0;layer--){
+    const y=siteY(layer);
+    const col=layerColors[layer];
+
+    // Connections to next layer (isometries)
+    if(layer>0){
+      for(let i=0;i<n[layer];i++){
+        const x1=siteX(layer,i);
+        const parentI=Math.floor(i/2);
+        const x2=siteX(layer-1,parentI);
+        const y2=siteY(layer-1);
+        const isActive=(layer<=pertLayer);
+        ctx.beginPath(); ctx.strokeStyle=isActive?col.replace('0.85','0.55'):'rgba(255,255,255,0.12)'; ctx.lineWidth=isActive?1.5:1;
+        ctx.moveTo(x1,y); ctx.lineTo(x2,y2); ctx.stroke();
+      }
+      // Disentangler connections (horizontal, between pairs)
+      for(let i=0;i<n[layer]-1;i+=2){
+        const x1=siteX(layer,i), x2=siteX(layer,i+1);
+        const isActive=(layer<=pertLayer);
+        // Diamond shape (disentangler)
+        const dmx=(x1+x2)/2, dmy=y;
+        ctx.beginPath();
+        ctx.moveTo(dmx,dmy-9); ctx.lineTo(x2-3,dmy); ctx.lineTo(dmx,dmy+9); ctx.lineTo(x1+3,dmy); ctx.closePath();
+        ctx.fillStyle=isActive?col.replace('0.85','0.2)'):'rgba(255,255,255,0.06)';
+        ctx.strokeStyle=isActive?col:'rgba(255,255,255,0.2)'; ctx.lineWidth=1.2;
+        ctx.fill(); ctx.stroke();
+      }
+    }
+
+    // Site squares
+    for(let i=0;i<n[layer];i++){
+      const x=siteX(layer,i);
+      const isPerturbed=(layer===nLayers-1&&i===pertSite%n[layer]&&layer<=pertLayer)||
+                        (layer<nLayers-1&&Math.floor(pertSite/(Math.pow(2,nLayers-1-layer)))===i&&layer<=pertLayer);
+      const size=layer===nLayers-1?7:8+layer*3;
+      ctx.fillStyle=isPerturbed?col:'rgba(13,27,42,0.9)';
+      ctx.strokeStyle=isPerturbed?col.replace('0.85','1)'):col;
+      ctx.lineWidth=isPerturbed?2:1.5;
+      ctx.beginPath(); ctx.rect(x-size,y-size,size*2,size*2); ctx.fill(); ctx.stroke();
+    }
+  }
+
+  // Labels
+  lbl('UV (bordo CFT)',W/2,siteY(nLayers-1)+22,'rgba(0,188,212,0.6)',9);
+  lbl('IR (bulk AdS)',W/2,siteY(0)-18,'rgba(255,160,0,0.6)',9);
+  ctx.fillStyle='rgba(255,255,255,0.5)'; ctx.font='12px "JetBrains Mono",monospace'; ctx.textAlign='center';
+  ctx.fillText('MERA  ≅  AdS discreto',W/2,H-14);
+}
+
+// ─── SCENE 4: dS/CFT ────────────────────────────────────────────────────────
+function drawScene4(t){
+  ctx.fillStyle='#0d1b2a'; ctx.fillRect(0,0,cv.width,cv.height);
+  const cx=cv.width/2, cy=cv.height/2;
+  const W=cv.width, H=cv.height;
+
+  const expand=0.6+Math.sin(t*0.012)*0.15; // breathing expansion
+  const h=H*0.65, w0=W*0.07*expand, wTop=W*0.38*expand;
+
+  // dS bulk: expanding cone (football shape)
+  // Draw as filled region between two parabolic curves
+  const nPts=40;
+  const yTop=cy-h*0.5, yBot=cy+h*0.5;
+  function bulkX(y,side){
+    const frac=(y-yBot)/(yTop-yBot); // 0 at bottom, 1 at top
+    const w=w0+(wTop-w0)*frac;
+    return side>0 ? cx+w : cx-w;
+  }
+
+  // Bulk fill
+  ctx.beginPath();
+  ctx.moveTo(cx-w0,yBot);
+  for(let i=0;i<=nPts;i++){
+    const y=yBot+(yTop-yBot)*i/nPts;
+    ctx.lineTo(bulkX(y,1),y);
+  }
+  for(let i=nPts;i>=0;i--){
+    const y=yBot+(yTop-yBot)*i/nPts;
+    ctx.lineTo(bulkX(y,-1),y);
+  }
+  ctx.closePath();
+  const bulkGrad=ctx.createLinearGradient(cx,yBot,cx,yTop);
+  bulkGrad.addColorStop(0,'rgba(33,150,243,0.06)');
+  bulkGrad.addColorStop(1,'rgba(255,160,0,0.08)');
+  ctx.fillStyle=bulkGrad; ctx.fill();
+
+  // Bulk boundary curves
+  ctx.beginPath();
+  ctx.moveTo(cx-w0,yBot);
+  for(let i=0;i<=nPts;i++){ const y=yBot+(yTop-yBot)*i/nPts; ctx.lineTo(bulkX(y,1),y); }
+  ctx.strokeStyle='rgba(33,150,243,0.4)'; ctx.lineWidth=1.5; ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(cx-w0,yBot);
+  for(let i=0;i<=nPts;i++){ const y=yBot+(yTop-yBot)*i/nPts; ctx.lineTo(bulkX(y,-1),y); }
+  ctx.stroke();
+
+  // Bottom cap (I⁻, Big Bang)
+  ctx.beginPath(); ctx.ellipse(cx,yBot,w0,w0*0.4,0,0,Math.PI*2);
+  ctx.fillStyle='rgba(33,150,243,0.12)'; ctx.fill();
+  ctx.strokeStyle='rgba(33,150,243,0.5)'; ctx.lineWidth=1.5; ctx.stroke();
+  lbl('I⁻ (Big Bang)',cx,yBot+18,'rgba(33,150,243,0.55)',9);
+
+  // Top I⁺ boundary (CFT lives here)
+  ctx.beginPath(); ctx.ellipse(cx,yTop,wTop,wTop*0.2,0,0,Math.PI*2);
+  ctx.fillStyle='rgba(255,160,0,0.18)'; ctx.fill();
+  ctx.strokeStyle='rgba(255,160,0,0.85)'; ctx.lineWidth=2; ctx.stroke();
+  lbl('I⁺ (CFT?)',cx,yTop-16,'rgba(255,160,0,0.85)',10);
+
+  // CFT operators appearing on I⁺
+  const nOps=8;
+  for(let i=0;i<nOps;i++){
+    const a=(i/nOps)*Math.PI*2;
+    const ox=cx+Math.cos(a)*wTop*0.7, oy=yTop+Math.sin(a)*wTop*0.14;
+    const opAlpha=Math.max(0,Math.min(1,(t-30-i*8)/40));
+    if(opAlpha>0){
+      ctx.beginPath(); ctx.arc(ox,oy,4,0,Math.PI*2);
+      const opColors=['rgba(0,188,212,','rgba(76,175,80,','rgba(255,160,0,'];
+      ctx.fillStyle=opColors[i%3]+opAlpha+')'; ctx.fill();
+    }
+  }
+
+  // Geodesics from bulk reaching I⁺
+  const nGeo=5;
+  for(let i=0;i<nGeo;i++){
+    const baseA=(i/(nGeo-1))*Math.PI-Math.PI*0.5;
+    const gBotX=bulkX(yBot+h*0.35,Math.cos(baseA)), gBotY=yBot+h*0.35;
+    const gTopA=(i/(nGeo-1))*Math.PI*1.4-Math.PI*0.7;
+    const gTopX=cx+Math.cos(gTopA)*wTop*0.5, gTopY=yTop;
+    const geoA=0.08+Math.sin(t*0.03+i)*0.04;
+    ctx.beginPath(); ctx.strokeStyle=`rgba(255,255,255,${geoA})`; ctx.lineWidth=1;
+    ctx.moveTo(gBotX,gBotY); ctx.quadraticCurveTo(cx,cy+h*0.1,gTopX,gTopY); ctx.stroke();
+  }
+
+  // Dark energy label
+  lbl('energia oscura Λ > 0',cx,cy+20,'rgba(255,255,255,0.25)',10);
+  lbl('dS bulk',cx,cy-30,'rgba(255,255,255,0.3)',10);
+
+  ctx.fillStyle='rgba(255,255,255,0.5)'; ctx.font='12px "JetBrains Mono",monospace'; ctx.textAlign='center';
+  ctx.fillText('dS/CFT: universo olograficamente codificato su I⁺',cx,H-14);
+}
+
+const SCENES=[
+  {tag:'SCENA 01',title:'Limite di Bekenstein',body:"L'entropia massima di una regione è proporzionale all'area del suo bordo, non al volume. Un buco nero ha entropia S = A/4l_P², dove A è l'area dell'orizzonte degli eventi.",draw:drawScene1},
+  {tag:'SCENA 02',title:'Formula di Ryu-Takayanagi',body:"La formula RT calcola l'entropia di entanglement di una regione A del bordo CFT come l'area della superficie minimale γ_A nel bulk AdS: S_A = Area(γ_A)/4G.",draw:drawScene2},
+  {tag:'SCENA 03',title:'Tensor Network MERA',body:"Il MERA (Multi-scale Entanglement Renormalization Ansatz) è un tensor network che mappa uno stato CFT UV (bordo) a un IR. La struttura del MERA è isomorfa alla geometria discreta di AdS.",draw:drawScene3},
+  {tag:'SCENA 04',title:'dS/CFT e il Futuro',body:"La corrispondenza dS/CFT estende l'olografia agli spazi de Sitter (curvatura positiva), rilevanti per la cosmologia. Il nostro universo, dominato da energia oscura, potrebbe essere olograficamente codificato su I⁺.",draw:drawScene4}
+];
+
+let cur=0,tt=0;
+function go(i){
+  cur=i; tt=0;
+  document.querySelectorAll('.td-viz-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
+  document.getElementById('vp-tag').textContent=SCENES[i].tag;
+  document.getElementById('vp-title').textContent=SCENES[i].title;
+  document.getElementById('vp-body').innerHTML=SCENES[i].body;
+}
+function loop(){ SCENES[cur].draw(tt); tt++; requestAnimationFrame(loop); }
+loop();
+</script>
+</body>
+</html>

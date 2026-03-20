@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bulk Reconstruction | DivulgAzione</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="npd-nav">
+  <a href="index.html" class="npd-nav-logo"><span class="accent">D</span>ivulg<span class="accent">A</span>zione</a>
+  <div class="npd-nav-divider"></div>
+  <span class="npd-nav-tagline">Fisica Teorica Interattiva</span>
+  <ul class="npd-nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#argomenti">Argomenti</a></li>
+    <li><a href="bulk_reconstruction.html" class="active">Bulk Reconstruction</a></li>
+  </ul>
+</nav>
+
+<div class="td-breadcrumb">
+  <div class="td-breadcrumb-inner">
+    <a href="index.html">Home</a><span> / </span><a href="index.html#argomenti">Dualità Olografica</a><span> / </span><span>Bulk Reconstruction</span>
+  </div>
+</div>
+
+<div class="td-page-header">
+  <div class="td-page-header-inner">
+    <div class="td-page-id">Dualità Olografica · #08</div>
+    <div class="td-page-title">Bulk Reconstruction — Spazio Emergente dall'Olografia</div>
+    <div class="td-page-subtitle">Come ricostruire il campo bulk dall'operatore CFT sul bordo tramite la smearing function HKLL</div>
+    <div class="td-page-badges">
+      <span class="npd-badge badge-live">● Live</span>
+      <span class="npd-badge badge-cat">Olografia</span>
+      <span class="npd-badge badge-sf">AdS/CFT</span>
+    </div>
+  </div>
+</div>
+
+<div class="npd-container">
+  <aside class="npd-sidebar">
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Informazioni</div>
+      <div class="td-info-row"><span>Formula</span><span class="td-v">HKLL</span></div>
+      <div class="td-info-row"><span>Autori</span><span class="td-v">Hamilton, Kabat, Lifschytz, Lowe</span></div>
+      <div class="td-info-row"><span>Anno</span><span class="td-v">2006</span></div>
+      <div class="td-info-row"><span>QEC</span><span class="td-v">Almheiri-Harlow (2015)</span></div>
+    </div>
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Navigazione</div>
+      <a href="ads_cft.html" class="td-sidebar-link">← AdS/CFT</a>
+      <a href="feynman.html" class="td-sidebar-link">Feynman →</a>
+    </div>
+  </aside>
+
+  <main class="npd-main">
+    <div class="td-card">
+      <div class="td-card-title">La Formula HKLL</div>
+      <div class="td-card-body">
+        <p>La ricostruzione di un campo bulk <span class="td-cy">φ(z,x)</span> a partire dagli operatori del bordo CFT è data dalla formula HKLL:</p>
+        <div class="td-formula">φ(z,x) = ∫ K(z,x;x') O(x') dx'
+K(z,x;x') = smearing function (kernel HKLL)
+∝ (z² − |x−x'|²)^{Δ−d/2}  per  |x−x'| > z</div>
+        <p>La <span class="td-am">smearing function K</span> è supportata sulla regione causale del punto bulk: K è non-nulla solo sul dominio di dipendenza del punto (z,x) nel bordo.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Entanglement Wedge</div>
+      <div class="td-card-body">
+        <p>Data una regione A sul bordo, la <span class="td-cy">superficie di Ryu-Takayanagi</span> γ_A è la superficie minima estesa nel bulk con ∂γ_A = ∂A. L'entanglement wedge W(A) è la regione del bulk delimitata da A ∪ γ_A.</p>
+        <div class="td-formula">S_A = Area(γ_A) / 4G_N   (formula RT)
+W(A) = dominio di dipendenza(A ∪ γ_A)
+Il campo bulk φ ∈ W(A) è ricostruibile da O ∈ A</div>
+        <p>Questo è il <span class="td-vi">principio dell'entanglement wedge reconstruction</span>: solo i punti bulk all'interno di W(A) sono accessibili dagli operatori del bordo in A.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Quantum Error Correction</div>
+      <div class="td-card-body">
+        <p>Almheiri, Dong e Harlow (2015) mostrarono che la <span class="td-cy">bulk reconstruction è analoga a un codice quantistico a correzione d'errore</span>. I qubit logici del bulk sono codificati in modo ridondante nei qubit fisici del bordo.</p>
+        <div class="td-formula">Codice HaPPY (tensor network pentagonale):
+ogni qubit logico bulk → codificato su ≥ 3 qubit bordo
+cancellazione di A̅ non distrugge info di W(A)</div>
+        <p>Questo fornisce la base per la <span class="td-am">subregion duality</span>: la fisica di una regione bulk è accessibile da più regioni del bordo in modo complementare.</p>
+      </div>
+    </div>
+
+    <hr class="td-viz-divider">
+    <div class="td-viz-wrap">
+      <div class="td-viz-toolbar">
+        <span class="td-viz-label">VISUALIZZAZIONE</span>
+        <div class="td-viz-btns">
+          <button class="td-viz-btn active" onclick="go(0)">HKLL Smearing</button>
+          <button class="td-viz-btn" onclick="go(1)">Entanglement Wedge</button>
+          <button class="td-viz-btn" onclick="go(2)">Codice Quantistico</button>
+          <button class="td-viz-btn" onclick="go(3)">Emergenza Radiale</button>
+        </div>
+      </div>
+      <div class="td-viz-area">
+        <div class="td-viz-panel">
+          <div class="td-viz-panel-tag" id="vp-tag">SCENA 01</div>
+          <div class="td-viz-panel-title" id="vp-title">HKLL — Smearing Function</div>
+          <div class="td-viz-panel-body" id="vp-body">La formula HKLL permette di ricostruire un campo bulk φ(z,x) da operatori del bordo: φ(z,x) = ∫K(z,x;x')O(x')dx'. La smearing function K si diffonde dal punto bulk verso il bordo.</div>
+        </div>
+        <div class="td-viz-canvas-wrap">
+          <canvas id="viz-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="npd-footer">
+  <span>DivulgAzione · Bulk Reconstruction · 2026</span>
+  <span><a href="index.html">Home</a> · <a href="index.html#argomenti">Argomenti</a></span>
+</footer>
+
+<script>
+const cv = document.getElementById('viz-canvas');
+const ctx = cv.getContext('2d');
+function resize(){cv.width=cv.parentElement.clientWidth;cv.height=cv.parentElement.clientHeight;}
+window.addEventListener('resize',resize);resize();
+
+function txt(s,x,y,col,sz,align){
+  ctx.save();
+  ctx.font=(sz||11)+'px "JetBrains Mono",monospace';
+  ctx.fillStyle=col||'rgba(255,255,255,0.6)';
+  ctx.textAlign=align||'left';
+  ctx.textBaseline='middle';
+  ctx.fillText(s,x,y);
+  ctx.restore();
+}
+function drawGrid(){
+  ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=1;
+  const s=40;
+  for(let x=0;x<cv.width;x+=s){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,cv.height);ctx.stroke();}
+  for(let y=0;y<cv.height;y+=s){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cv.width,y);ctx.stroke();}
+}
+
+const SCENES=[
+  {
+    tag:'SCENA 01',
+    title:'HKLL — Smearing Function',
+    body:'La formula HKLL permette di ricostruire un campo bulk φ(z,x) da operatori del bordo: φ(z,x) = ∫K(z,x;x\')O(x\')dx\'. La smearing function K si diffonde dal punto bulk verso il bordo.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const W=cv.width, H=cv.height;
+      const cx=W/2, cy=H/2;
+      const R=Math.min(W,H)*0.38;
+      // Poincaré disk
+      ctx.save();
+      ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.clip();
+      ctx.fillStyle='rgba(5,15,30,1)';ctx.fillRect(cx-R,cy-R,2*R,2*R);
+      // Grid inside disk
+      ctx.strokeStyle='rgba(255,255,255,0.05)';ctx.lineWidth=1;
+      for(let a=0;a<8;a++){
+        const angle=a/8*Math.PI*2;
+        ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+R*Math.cos(angle),cy+R*Math.sin(angle));ctx.stroke();
+      }
+      for(let r=1;r<=4;r++){
+        ctx.beginPath();ctx.arc(cx,cy,R*r/4,0,Math.PI*2);ctx.stroke();
+      }
+      ctx.restore();
+      // Boundary ring
+      ctx.strokeStyle='rgba(0,188,212,0.8)';ctx.lineWidth=2.5;
+      ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.stroke();
+
+      // Operator points on boundary
+      const numOps=5;
+      const ops=[];
+      for(let i=0;i<numOps;i++){
+        const angle=i/numOps*Math.PI*2;
+        ops.push({x:cx+R*Math.cos(angle),y:cy+R*Math.sin(angle),angle:angle});
+      }
+
+      // Bulk reconstruction point (slowly moving)
+      const bx=cx+R*0.25*Math.cos(t*0.01);
+      const by=cy+R*0.25*Math.sin(t*0.008);
+
+      // Smearing lines from operators to bulk point
+      ops.forEach(function(op,i){
+        const dist=Math.sqrt((op.x-bx)*(op.x-bx)+(op.y-by)*(op.y-by));
+        const weight=1/(1+dist*0.002);
+        const phase=(t*0.04+i*0.8)%1;
+        // Draw propagation ripple along line
+        for(let r=0;r<3;r++){
+          const frac=((phase+r/3)%1);
+          const lx=op.x+(bx-op.x)*frac;
+          const ly=op.y+(by-op.y)*frac;
+          const alpha=(1-frac)*0.6;
+          ctx.fillStyle='rgba(0,188,212,'+alpha+')';
+          ctx.beginPath();ctx.arc(lx,ly,3,0,Math.PI*2);ctx.fill();
+        }
+        ctx.strokeStyle='rgba(0,188,212,'+(weight*0.5)+')';
+        ctx.lineWidth=weight*2+0.5;
+        ctx.beginPath();ctx.moveTo(op.x,op.y);ctx.lineTo(bx,by);ctx.stroke();
+        // Operator dot
+        const pulse=0.7+0.3*Math.sin(t*0.06+i);
+        ctx.fillStyle='rgba(0,188,212,'+pulse+')';
+        ctx.beginPath();ctx.arc(op.x,op.y,6,0,Math.PI*2);ctx.fill();
+        txt('O(x\')',op.x+8*Math.cos(op.angle+0.3),op.y+8*Math.sin(op.angle+0.3),'rgba(0,188,212,0.7)',9,'center');
+      });
+
+      // Bulk point glow
+      const grd=ctx.createRadialGradient(bx,by,0,bx,by,22);
+      grd.addColorStop(0,'rgba(255,160,0,0.8)');
+      grd.addColorStop(1,'rgba(255,160,0,0)');
+      ctx.fillStyle=grd;ctx.beginPath();ctx.arc(bx,by,22,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(255,160,0,1)';ctx.beginPath();ctx.arc(bx,by,6,0,Math.PI*2);ctx.fill();
+      txt('φ(z,x)',bx+10,by-14,'rgba(255,160,0,0.9)',11,'left');
+
+      txt('BORDO CFT',cx,cy-R-14,'rgba(0,188,212,0.8)',11,'center');
+      txt('φ(z,x) = ∫K·O dx\'',W*0.5,H*0.94,'rgba(255,255,255,0.4)',10,'center');
+    }
+  },
+  {
+    tag:'SCENA 02',
+    title:'Entanglement Wedge e Formula RT',
+    body:'Data una regione A sul bordo, la superficie di Ryu-Takayanagi γ_A è la superficie minimale che si estende nel bulk con ∂γ_A = ∂A. L\'entanglement wedge è delimitato da A e γ_A.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const W=cv.width, H=cv.height;
+      const cx=W/2, cy=H/2;
+      const R=Math.min(W,H)*0.38;
+      // Disk background
+      ctx.save();
+      ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.clip();
+      ctx.fillStyle='rgba(5,15,30,1)';ctx.fillRect(cx-R,cy-R,2*R,2*R);
+      ctx.strokeStyle='rgba(255,255,255,0.04)';ctx.lineWidth=1;
+      for(let a=0;a<8;a++){
+        const angle=a/8*Math.PI*2;
+        ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+R*Math.cos(angle),cy+R*Math.sin(angle));ctx.stroke();
+      }
+      for(let r=1;r<=4;r++){ctx.beginPath();ctx.arc(cx,cy,R*r/4,0,Math.PI*2);ctx.stroke();}
+      ctx.restore();
+
+      // Region A: arc from angle a1 to a2
+      const a1=-0.4*Math.PI, a2=0.4*Math.PI;
+      // Entanglement wedge fill
+      ctx.save();
+      ctx.beginPath();
+      // Boundary arc A
+      ctx.arc(cx,cy,R,a1,a2,false);
+      // RT geodesic (approximated as arc going inward)
+      const ax1=cx+R*Math.cos(a1), ay1=cy+R*Math.sin(a1);
+      const ax2=cx+R*Math.cos(a2), ay2=cy+R*Math.sin(a2);
+      const midX=(ax1+ax2)/2, midY=(ay1+ay2)/2;
+      const inward=0.5;
+      const rtX=cx+(midX-cx)*inward, rtY=cy+(midY-cy)*inward;
+      // Quadratic bezier for RT curve
+      ctx.quadraticCurveTo(rtX,rtY,ax1,ay1);
+      ctx.closePath();
+      ctx.fillStyle='rgba(0,188,212,0.12)';ctx.fill();
+      ctx.restore();
+
+      // Boundary ring
+      ctx.strokeStyle='rgba(255,255,255,0.2)';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.stroke();
+
+      // Region A arc (highlighted)
+      ctx.strokeStyle='rgba(0,188,212,0.9)';ctx.lineWidth=4;
+      ctx.beginPath();ctx.arc(cx,cy,R,a1,a2,false);ctx.stroke();
+      txt('A',cx+R*1.06*Math.cos((a1+a2)/2),cy+R*1.06*Math.sin((a1+a2)/2),'rgba(0,188,212,1)',13,'center');
+
+      // RT geodesic (pulsing)
+      const pulse=0.6+0.4*Math.sin(t*0.04);
+      ctx.strokeStyle='rgba(76,175,80,'+pulse+')';ctx.lineWidth=2.5;
+      ctx.beginPath();
+      ctx.moveTo(ax1,ay1);ctx.quadraticCurveTo(rtX,rtY,ax2,ay2);ctx.stroke();
+      txt('γ_A  (RT)',rtX-20,rtY-16,'rgba(76,175,80,0.9)',11,'center');
+
+      // Endpoint dots
+      ctx.fillStyle='rgba(0,188,212,1)';
+      ctx.beginPath();ctx.arc(ax1,ay1,5,0,Math.PI*2);ctx.fill();
+      ctx.beginPath();ctx.arc(ax2,ay2,5,0,Math.PI*2);ctx.fill();
+
+      // Label
+      const ewX=(ax1+ax2)/2*0.6+cx*0.4;
+      const ewY=(ay1+ay2)/2*0.6+cy*0.4;
+      txt('Entanglement',ewX,ewY-8,'rgba(255,255,255,0.6)',9,'center');
+      txt('Wedge',ewX,ewY+8,'rgba(255,255,255,0.6)',9,'center');
+
+      txt('S_A = Area(γ_A)/4G_N',W*0.5,H*0.93,'rgba(255,255,255,0.4)',10,'center');
+    }
+  },
+  {
+    tag:'SCENA 03',
+    title:'Codice Quantistico Olografico',
+    body:'Il bulk reconstruction è analogo a un codice quantistico a correzione d\'errore: i qubit logici del bulk sono codificati nei qubit fisici del bordo in modo resiliente alla cancellazione di regioni del bordo.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const W=cv.width, H=cv.height;
+      const cx=W/2, cy=H/2;
+      const R=Math.min(W,H)*0.36;
+      // Boundary circle
+      ctx.strokeStyle='rgba(255,255,255,0.25)';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.stroke();
+
+      // Physical qubits on boundary (6)
+      const numPhys=6;
+      const physQubits=[];
+      for(let i=0;i<numPhys;i++){
+        const angle=i/numPhys*Math.PI*2-Math.PI/2;
+        physQubits.push({x:cx+R*Math.cos(angle),y:cy+R*Math.sin(angle),angle:angle});
+      }
+
+      // Logical qubits in bulk (2)
+      const logQubits=[
+        {x:cx-R*0.28,y:cy-R*0.1},
+        {x:cx+R*0.28,y:cy+R*0.1}
+      ];
+
+      // Highlight set cycling
+      const sets=[[0,1,2],[2,3,4],[4,5,0],[1,2,3,4]];
+      const hlSet=sets[Math.floor(t/90)%sets.length];
+
+      // Encoding lines: each logical qubit connects to all 3-subset of physical
+      logQubits.forEach(function(lq,li){
+        const subset=li===0?[0,1,2,3]:[2,3,4,5];
+        subset.forEach(function(pi){
+          const pq=physQubits[pi];
+          const isHL=hlSet.includes(pi);
+          ctx.strokeStyle=isHL?'rgba(0,188,212,0.6)':'rgba(255,255,255,0.15)';
+          ctx.lineWidth=isHL?1.5:0.8;
+          ctx.setLineDash(isHL?[]:[4,4]);
+          ctx.beginPath();ctx.moveTo(lq.x,lq.y);ctx.lineTo(pq.x,pq.y);ctx.stroke();
+          ctx.setLineDash([]);
+        });
+      });
+
+      // Physical qubits (squares)
+      physQubits.forEach(function(pq,i){
+        const isHL=hlSet.includes(i);
+        ctx.fillStyle=isHL?'rgba(0,188,212,0.8)':'rgba(33,150,243,0.4)';
+        ctx.strokeStyle=isHL?'rgba(0,188,212,1)':'rgba(33,150,243,0.6)';
+        ctx.lineWidth=1.5;
+        const s=isHL?12:9;
+        ctx.fillRect(pq.x-s/2,pq.y-s/2,s,s);
+        ctx.strokeRect(pq.x-s/2,pq.y-s/2,s,s);
+        const lx=pq.x+18*Math.cos(pq.angle), ly=pq.y+18*Math.sin(pq.angle);
+        txt('q'+i,lx,ly,'rgba(255,255,255,0.55)',9,'center');
+      });
+
+      // Logical qubits (stars)
+      logQubits.forEach(function(lq,i){
+        const col=i===0?'rgba(255,160,0,1)':'rgba(76,175,80,1)';
+        ctx.fillStyle=col;
+        // Star shape
+        for(let p=0;p<5;p++){
+          const a=p/5*Math.PI*2-Math.PI/2;
+          const a2=(p+0.5)/5*Math.PI*2-Math.PI/2;
+          ctx.beginPath();
+          ctx.moveTo(lq.x+14*Math.cos(a),lq.y+14*Math.sin(a));
+          ctx.lineTo(lq.x+6*Math.cos(a2),lq.y+6*Math.sin(a2));
+        }
+        ctx.save();
+        ctx.beginPath();
+        for(let p=0;p<5;p++){
+          const a=p/5*Math.PI*2-Math.PI/2;
+          const a2=(p+0.5)/5*Math.PI*2-Math.PI/2;
+          const x1=lq.x+13*Math.cos(a),y1=lq.y+13*Math.sin(a);
+          const x2=lq.x+6*Math.cos(a2),y2=lq.y+6*Math.sin(a2);
+          if(p===0)ctx.moveTo(x1,y1);
+          ctx.lineTo(x2,y2);
+          ctx.lineTo(lq.x+13*Math.cos((p+1)/5*Math.PI*2-Math.PI/2),lq.y+13*Math.sin((p+1)/5*Math.PI*2-Math.PI/2));
+        }
+        ctx.closePath();ctx.fillStyle=col;ctx.fill();
+        ctx.restore();
+        txt('L'+i,lq.x,lq.y+22,col,10,'center');
+      });
+
+      txt('qubit fisici (bordo)',W*0.5,H*0.06,'rgba(33,150,243,0.8)',11,'center');
+      txt('qubit logici (bulk)',W*0.5,H*0.92,'rgba(255,160,0,0.8)',11,'center');
+      txt('QEC olografico — subset attivo evidenziato',W*0.5,H*0.97,'rgba(255,255,255,0.35)',9,'center');
+    }
+  },
+  {
+    tag:'SCENA 04',
+    title:'Emergenza della Direzione Radiale',
+    body:'La coordinata radiale z dell\'AdS emerge dal flusso RG della CFT. Passare dal bordo (UV, z→0) al bulk (IR, z→∞) corrisponde a rimuovere i dettagli a piccola scala.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const W=cv.width, H=cv.height;
+      const numLayers=5;
+      const layerH=H*0.7/numLayers;
+      const startY=H*0.1;
+
+      for(let lev=0;lev<numLayers;lev++){
+        const y=startY+lev*layerH;
+        const frac=lev/(numLayers-1);
+        // Number of dots: decreases upward (UV at bottom = many dots)
+        const numDots=Math.round(20-lev*3.5);
+        const dotR=3+lev*3;
+        const alpha=0.6+0.3*(1-frac);
+        const colR=Math.round(frac*255);
+        const colG=Math.round(188*(1-frac)+160*frac);
+        const colB=Math.round(212*(1-frac));
+        const col=`rgba(${colR},${colG},${colB},${alpha})`;
+
+        // Layer background
+        ctx.fillStyle=`rgba(${colR},${colG},${colB},0.04)`;
+        ctx.fillRect(W*0.05,y+2,W*0.9,layerH-4);
+
+        // Dots
+        for(let d=0;d<numDots;d++){
+          const dx=W*0.08+d/(numDots-1||1)*W*0.84;
+          // Slight jitter stable per layer+dot
+          const jy=y+layerH/2+Math.sin(lev*7+d*3)*4;
+          ctx.fillStyle=col;
+          ctx.beginPath();ctx.arc(dx,jy,dotR,0,Math.PI*2);ctx.fill();
+        }
+        // Label
+        if(lev===0) txt('z = 0  UV bordo',W*0.5,y+layerH/2,'rgba(0,188,212,0.9)',11,'center');
+        if(lev===numLayers-1) txt('z → ∞  IR bulk',W*0.5,y+layerH/2,'rgba(255,160,0,0.9)',11,'center');
+      }
+
+      // RG arrows on side
+      const arrowX=W*0.96;
+      for(let lev=0;lev<numLayers-1;lev++){
+        const y1=startY+lev*layerH+layerH*0.7;
+        const y2=startY+(lev+1)*layerH+layerH*0.3;
+        ctx.strokeStyle='rgba(255,255,255,0.3)';ctx.lineWidth=1.5;
+        ctx.beginPath();ctx.moveTo(arrowX,y1);ctx.lineTo(arrowX,y2);ctx.stroke();
+        ctx.fillStyle='rgba(255,255,255,0.3)';
+        ctx.beginPath();ctx.moveTo(arrowX,y2);ctx.lineTo(arrowX-5,y2-10);ctx.lineTo(arrowX+5,y2-10);ctx.closePath();ctx.fill();
+      }
+      txt('RG',arrowX,startY+H*0.35,'rgba(255,255,255,0.5)',10,'center');
+      txt('coordinata z emerge dal flusso RG / coarse-graining',W*0.5,H*0.93,'rgba(255,255,255,0.4)',10,'center');
+    }
+  }
+];
+
+let cur=0,tt=0;
+function go(i){
+  cur=i;tt=0;
+  document.querySelectorAll('.td-viz-btn').forEach(function(b,j){b.classList.toggle('active',j===i);});
+  document.getElementById('vp-tag').textContent=SCENES[i].tag;
+  document.getElementById('vp-title').textContent=SCENES[i].title;
+  document.getElementById('vp-body').innerHTML=SCENES[i].body;
+}
+function loop(){SCENES[cur].draw(tt);tt++;requestAnimationFrame(loop);}
+loop();
+</script>
+</body>
+</html>

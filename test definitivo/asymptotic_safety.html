@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Asymptotic Safety | DivulgAzione</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="npd-nav">
+  <a href="index.html" class="npd-nav-logo"><span class="accent">D</span>ivulg<span class="accent">A</span>zione</a>
+  <div class="npd-nav-divider"></div>
+  <span class="npd-nav-tagline">Fisica Teorica Interattiva</span>
+  <ul class="npd-nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#argomenti">Argomenti</a></li>
+    <li><a href="asymptotic_safety.html" class="active">Asymptotic Safety</a></li>
+  </ul>
+</nav>
+
+<div class="td-breadcrumb">
+  <div class="td-breadcrumb-inner">
+    <a href="index.html">Home</a><span> / </span><a href="index.html#argomenti">Gravità Quantistica</a><span> / </span><span>Asymptotic Safety</span>
+  </div>
+</div>
+
+<div class="td-page-header">
+  <div class="td-page-header-inner">
+    <div class="td-page-id">Gravità Quantistica · #05</div>
+    <div class="td-page-title">Asymptotic Safety — Punto Fisso UV della Gravità</div>
+    <div class="td-page-subtitle">La gravità quantistica come teoria non-perturbativa con punto fisso ultravioletto del gruppo di rinormalizzazione</div>
+    <div class="td-page-badges">
+      <span class="npd-badge badge-live">● Live</span>
+      <span class="npd-badge badge-cat">Gravità Quantistica</span>
+      <span class="npd-badge badge-as">RG</span>
+    </div>
+  </div>
+</div>
+
+<div class="npd-container">
+  <aside class="npd-sidebar">
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Informazioni</div>
+      <div class="td-info-row"><span>Proposta da</span><span class="td-v">M. Reuter (1998)</span></div>
+      <div class="td-info-row"><span>Metodo</span><span class="td-v">Exact RG (Wetterinck eq.)</span></div>
+      <div class="td-info-row"><span>Punto fisso</span><span class="td-v">G* &gt; 0, Λ* &gt; 0</span></div>
+      <div class="td-info-row"><span>Dimensione critica</span><span class="td-v">d = 2 + ε</span></div>
+    </div>
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Navigazione</div>
+      <a href="lqg.html" class="td-sidebar-link">← LQG</a>
+      <a href="index.html" class="td-sidebar-link">Home →</a>
+    </div>
+  </aside>
+
+  <main class="npd-main">
+    <div class="td-card">
+      <div class="td-card-title">Il Gruppo di Rinormalizzazione</div>
+      <div class="td-card-body">
+        <p>Il gruppo di rinormalizzazione (RG) descrive come le costanti di accoppiamento cambiano con la scala energetica k. L'equazione di Wetterinck è un'equazione esatta per l'azione effettiva media Γ_k:</p>
+        <div class="td-formula">∂_t Γ_k = ½ Tr[(Γ_k^(2) + R_k)⁻¹ ∂_t R_k]</div>
+        <p>Dove <span class="td-cy">R_k</span> è un regolatore infrarosso che sopprime i modi con p &lt; k. Al variare di k si ottiene il flusso RG nel spazio dei coupling.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Il Punto Fisso di Reuter</div>
+      <div class="td-card-body">
+        <p>Reuter (1998) scoprì che la gravità Euclidea possiede un <span class="td-cy">punto fisso UV non-gaussiano</span>: per k → ∞ i coupling dimensionless convergono a valori finiti:</p>
+        <div class="td-formula">G(k) = G_N · k²  →  G*  (finito)
+Λ(k) / k²  →  Λ*  (finito)</div>
+        <p>La teoria è <span class="td-hl">asintoticamente sicura</span>: predittiva a tutte le energie senza le divergenze UV della perturbation theory convenzionale. Il punto fisso è attrattivo con <span class="td-am">dimensione critica 2</span>.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Dimensione Spettrale</div>
+      <div class="td-card-body">
+        <p>La dimensione spettrale d_s misura la dimensione effettiva percepita da un cammino casuale. All'Asymptotic Safety Fixed Point, la dimensione decresce con la scala:</p>
+        <div class="td-formula">d_s(k) ≈ 4   per k ≪ k_P   (IR)
+d_s(k) → 2   per k → ∞   (UV)</div>
+        <p>Questa <span class="td-vi">riduzione dimensionale UV</span> è una firma universale della gravità quantistica, condivisa da LQG, CDT e Asymptotic Safety.</p>
+      </div>
+    </div>
+
+    <hr class="td-viz-divider">
+    <div class="td-viz-wrap">
+      <div class="td-viz-toolbar">
+        <span class="td-viz-label">VISUALIZZAZIONE</span>
+        <div class="td-viz-btns">
+          <button class="td-viz-btn active" onclick="go(0)">Flusso RG</button>
+          <button class="td-viz-btn" onclick="go(1)">Punto Fisso</button>
+          <button class="td-viz-btn" onclick="go(2)">Dim. Spettrale</button>
+          <button class="td-viz-btn" onclick="go(3)">Massa Higgs</button>
+        </div>
+      </div>
+      <div class="td-viz-area">
+        <div class="td-viz-panel">
+          <div class="td-viz-panel-tag" id="vp-tag">SCENA 01</div>
+          <div class="td-viz-panel-title" id="vp-title">Flusso RG nel Piano (G, Λ)</div>
+          <div class="td-viz-panel-body" id="vp-body">Il flusso del gruppo di rinormalizzazione nel piano (G_N, Λ) mostra un punto fisso UV attrattivo a (G*, Λ*). Le traiettorie del flusso convergono verso di esso ad alte energie.</div>
+        </div>
+        <div class="td-viz-canvas-wrap">
+          <canvas id="viz-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="npd-footer">
+  <span>DivulgAzione · Asymptotic Safety · 2026</span>
+  <span><a href="index.html">Home</a> · <a href="index.html#argomenti">Argomenti</a></span>
+</footer>
+
+<script>
+const cv = document.getElementById('viz-canvas');
+const ctx = cv.getContext('2d');
+function resize(){cv.width=cv.parentElement.clientWidth;cv.height=cv.parentElement.clientHeight;}
+window.addEventListener('resize',resize);resize();
+
+function txt(s,x,y,col,sz,align){
+  ctx.save();
+  ctx.font=(sz||11)+'px "JetBrains Mono",monospace';
+  ctx.fillStyle=col||'rgba(255,255,255,0.6)';
+  ctx.textAlign=align||'left';
+  ctx.textBaseline='middle';
+  ctx.fillText(s,x,y);
+  ctx.restore();
+}
+function drawGrid(){
+  ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=1;
+  const s=40;
+  for(let x=0;x<cv.width;x+=s){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,cv.height);ctx.stroke();}
+  for(let y=0;y<cv.height;y+=s){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cv.width,y);ctx.stroke();}
+}
+
+// RG flow trajectories: list of starting points
+const FLOW_STARTS=[
+  {g:0.05,l:-0.1},{g:0.05,l:0.5},{g:0.05,l:0.9},
+  {g:0.25,l:-0.1},{g:0.25,l:0.9},
+  {g:0.5,l:0.0},{g:0.5,l:0.5},{g:0.5,l:0.9},
+  {g:0.75,l:0.1},{g:0.75,l:0.7},
+  {g:0.9,l:0.3},{g:0.9,l:0.8},
+  {g:0.1,l:0.7},{g:0.6,l:0.3}
+];
+
+function rgFlowStep(g,l){
+  // Simplified RG beta functions pointing toward fixed point G*=0.27, L*=0.19
+  const gstar=0.27, lstar=0.19;
+  const dg=-(g-gstar)*0.05;
+  const dl=-(l-lstar)*0.05;
+  return {dg, dl};
+}
+
+const SCENES=[
+  {
+    tag:'SCENA 01',
+    title:'Flusso RG nel Piano (G, Λ)',
+    body:'Il flusso del gruppo di rinormalizzazione nel piano (G_N, Λ) mostra un punto fisso UV attrattivo a (G*, Λ*). Le traiettorie del flusso convergono verso di esso ad alte energie.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const margin=cv.width*0.12;
+      const plotW=cv.width-margin*1.4;
+      const plotH=cv.height-margin*1.6;
+      const ox=margin, oy=cv.height-margin*0.9;
+      const gstar=0.27, lstar=0.19;
+      // Axes
+      ctx.strokeStyle='rgba(255,255,255,0.5)';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox+plotW,oy);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox,oy-plotH);ctx.stroke();
+      txt('Λ',ox+plotW+8,oy,'rgba(255,255,255,0.7)',12,'left');
+      txt('G_N',ox-8,oy-plotH-12,'rgba(255,255,255,0.7)',12,'right');
+      txt('0',ox-10,oy,'rgba(255,255,255,0.4)',10,'right');
+      // Draw flow arrows
+      const gridN=6;
+      for(let gi=0;gi<=gridN;gi++){
+        for(let li=0;li<=gridN;li++){
+          const g=gi/gridN;
+          const l=li/gridN*1.1-0.1;
+          const {dg,dl}=rgFlowStep(g,l);
+          const px=ox+l/1.1*plotW+plotW*0.1;
+          const py=oy-g*plotH;
+          const dist=Math.sqrt((g-gstar)*(g-gstar)+(l-lstar)*(l-lstar));
+          const col=dist<0.1?'rgba(0,188,212,0.9)':dist<0.3?'rgba(33,150,243,0.7)':'rgba(255,255,255,0.35)';
+          // Animate: arrows drift slowly toward fixed point
+          const phase=(t*0.008+gi*0.3+li*0.2)%(Math.PI*2);
+          const drift=0.15*Math.sin(phase);
+          const ag=g+(dg*5+drift*dg*2);
+          const al=l+(dl*5+drift*dl*2);
+          const apx=ox+al/1.1*plotW+plotW*0.1;
+          const apy=oy-ag*plotH;
+          const len=18;
+          const angle=Math.atan2(apy-py,apx-px);
+          ctx.strokeStyle=col;ctx.lineWidth=1.2;
+          ctx.beginPath();ctx.moveTo(px,py);
+          const ex=px+Math.cos(angle)*len, ey=py+Math.sin(angle)*len;
+          ctx.lineTo(ex,ey);ctx.stroke();
+          // Arrowhead
+          ctx.beginPath();
+          ctx.moveTo(ex-5*Math.cos(angle-0.4),ey-5*Math.sin(angle-0.4));
+          ctx.lineTo(ex,ey);
+          ctx.lineTo(ex-5*Math.cos(angle+0.4),ey-5*Math.sin(angle+0.4));
+          ctx.strokeStyle=col;ctx.stroke();
+        }
+      }
+      // Fixed point star
+      const fxX=ox+lstar/1.1*plotW+plotW*0.1;
+      const fxY=oy-gstar*plotH;
+      const starPulse=1+0.15*Math.sin(t*0.06);
+      ctx.save();
+      ctx.shadowColor='rgba(255,210,0,0.9)';ctx.shadowBlur=16*starPulse;
+      ctx.fillStyle='rgba(255,210,0,0.95)';
+      for(let s=0;s<5;s++){
+        const a=s/5*Math.PI*2-Math.PI/2;
+        const r1=9*starPulse, r2=4;
+        const pts=[];
+        for(let sp=0;sp<5;sp++){
+          const a1=sp/5*Math.PI*2-Math.PI/2;
+          const a2=sp/5*Math.PI*2-Math.PI/2+Math.PI/5;
+          pts.push({x:fxX+Math.cos(a1)*r1,y:fxY+Math.sin(a1)*r1});
+          pts.push({x:fxX+Math.cos(a2)*r2,y:fxY+Math.sin(a2)*r2});
+        }
+        ctx.beginPath();pts.forEach((p,i)=>i===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y));
+        ctx.closePath();ctx.fill();
+      }
+      ctx.restore();
+      txt('(G*, Λ*)',fxX+12,fxY-10,'rgba(255,210,0,0.9)',10,'left');
+      txt('PUNTO FISSO UV',fxX+12,fxY+4,'rgba(255,210,0,0.65)',9,'left');
+      // Axis tick labels
+      txt('G*',ox-12,fxY,'rgba(255,210,0,0.6)',9,'right');
+      txt('Λ*',fxX,oy+12,'rgba(255,210,0,0.6)',9,'center');
+      txt('FLUSSO RG — ASYMPTOTIC SAFETY',cv.width/2,cv.height-14,'rgba(255,255,255,0.35)',10,'center');
+    }
+  },
+  {
+    tag:'SCENA 02',
+    title:'Rinormalizzazione e Punto Fisso',
+    body:"Nella perturbation theory classica i loop divergono. All'Asymptotic Safety Fixed Point, i coupling si stabilizzano: la teoria è predittiva a tutte le scale.",
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const cx=cv.width/2, cy=cv.height/2;
+      const margin=cv.width*0.1;
+      const plotW=cv.width-margin*2;
+      const baseY=cy+cv.height*0.08;
+      // Propagator line
+      ctx.strokeStyle='rgba(255,255,255,0.55)';ctx.lineWidth=2;
+      ctx.beginPath();ctx.moveTo(margin,baseY);ctx.lineTo(margin+plotW,baseY);ctx.stroke();
+      // Loop orders: diverging then stabilizing
+      const fixedK=margin+plotW*0.58;
+      const loops=[
+        {x:margin+plotW*0.12, order:1, r:18},
+        {x:margin+plotW*0.28, order:2, r:22},
+        {x:margin+plotW*0.44, order:3, r:26},
+        {x:margin+plotW*0.70, order:4, r:22},
+        {x:margin+plotW*0.84, order:5, r:18}
+      ];
+      loops.forEach((loop,i)=>{
+        const isFP=loop.x>fixedK;
+        // Amplitude bars
+        let amp;
+        if(!isFP){
+          amp=20*(i+1)*(1+0.3*Math.sin(t*0.05+i));
+        } else {
+          const j=i-3;
+          amp=50*(1+0.15*Math.sin(t*0.05+i))*(1-j*0.2);
+        }
+        const barCol=isFP?'rgba(0,188,212,0.7)':'rgba(255,80,80,0.7)';
+        ctx.fillStyle=barCol.replace('0.7','0.15');
+        ctx.strokeStyle=barCol;ctx.lineWidth=1.5;
+        ctx.fillRect(loop.x-10,baseY-amp,20,amp);
+        ctx.strokeRect(loop.x-10,baseY-amp,20,amp);
+        // Loop circle on propagator
+        ctx.strokeStyle='rgba(255,255,255,0.5)';ctx.lineWidth=1.5;
+        ctx.beginPath();ctx.arc(loop.x,baseY,loop.r,0,Math.PI*2);ctx.stroke();
+        txt(`${loop.order}L`,loop.x,baseY+loop.r+12,'rgba(255,255,255,0.5)',9,'center');
+        // Divergence label
+        if(!isFP){
+          txt(`~k^${(loop.order*2).toString()}`,loop.x,baseY-amp-12,'rgba(255,80,80,0.7)',9,'center');
+        } else {
+          txt('∼ G*',loop.x,baseY-amp-12,'rgba(0,188,212,0.8)',9,'center');
+        }
+      });
+      // Fixed point marker
+      ctx.strokeStyle='rgba(255,210,0,0.8)';ctx.lineWidth=1.5;ctx.setLineDash([4,3]);
+      ctx.beginPath();ctx.moveTo(fixedK,cv.height*0.08);ctx.lineTo(fixedK,cv.height*0.92);ctx.stroke();
+      ctx.setLineDash([]);
+      txt('k = k*',fixedK+5,cv.height*0.12,'rgba(255,210,0,0.8)',10,'left');
+      txt('PUNTO FISSO',fixedK+5,cv.height*0.12+16,'rgba(255,210,0,0.6)',9,'left');
+      // Arrow labels
+      txt('DIVERGENTE',margin+plotW*0.22,baseY-140,'rgba(255,80,80,0.7)',11,'center');
+      txt('STABILIZZATO',margin+plotW*0.77,baseY-80,'rgba(0,188,212,0.8)',11,'center');
+      ctx.strokeStyle='rgba(255,255,255,0.25)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(margin,baseY-110);ctx.lineTo(fixedK-5,baseY-110);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(fixedK+5,baseY-50);ctx.lineTo(margin+plotW,baseY-50);ctx.stroke();
+      txt('k →  (scala UV)',cx,cv.height-16,'rgba(255,255,255,0.35)',10,'center');
+    }
+  },
+  {
+    tag:'SCENA 03',
+    title:'Dimensione Spettrale',
+    body:"La dimensione spettrale d_s misura come si diffonde una particella casuale. A grande scala d_s≈4, ma a scala di Planck d_s→2: lo spaziotempo diventa effettivamente 2D ad alte energie.",
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const margin=cv.width*0.13;
+      const plotW=cv.width-margin*1.6;
+      const plotH=cv.height-margin*2.2;
+      const ox=margin*0.8, oy=cv.height-margin*1.1;
+      // Axes
+      ctx.strokeStyle='rgba(255,255,255,0.5)';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox+plotW,oy);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox,oy-plotH);ctx.stroke();
+      txt('log(k/k_P)',ox+plotW/2,oy+18,'rgba(255,255,255,0.5)',10,'center');
+      txt('d_s',ox-14,oy-plotH/2,'rgba(255,255,255,0.6)',12,'right');
+      // Tick marks
+      const xTicks=[-3,-2,-1,0,1,2,3];
+      xTicks.forEach(v=>{
+        const px=ox+plotW*(v+3)/6;
+        ctx.strokeStyle='rgba(255,255,255,0.2)';ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(px,oy-4);ctx.lineTo(px,oy+4);ctx.stroke();
+        txt(v.toString(),px,oy+14,'rgba(255,255,255,0.4)',9,'center');
+      });
+      const yTicks=[1,2,3,4];
+      yTicks.forEach(v=>{
+        const py=oy-plotH*(v-1)/3.5;
+        ctx.strokeStyle='rgba(255,255,255,0.2)';ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(ox-4,py);ctx.lineTo(ox+4,py);ctx.stroke();
+        txt(v.toString(),ox-12,py,'rgba(255,255,255,0.4)',9,'right');
+      });
+      // Dashed lines at d_s=4 and d_s=2
+      const y4=oy-plotH*(4-1)/3.5;
+      const y2=oy-plotH*(2-1)/3.5;
+      ctx.strokeStyle='rgba(255,255,255,0.18)';ctx.lineWidth=1;ctx.setLineDash([6,4]);
+      ctx.beginPath();ctx.moveTo(ox,y4);ctx.lineTo(ox+plotW,y4);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(ox,y2);ctx.lineTo(ox+plotW,y2);ctx.stroke();
+      ctx.setLineDash([]);
+      txt('d_s = 4  (IR)',ox+plotW+5,y4,'rgba(0,188,212,0.6)',9,'left');
+      txt('d_s = 2  (UV)',ox+plotW+5,y2,'rgba(255,160,0,0.6)',9,'left');
+      // Sigmoid curve: d_s = 2 + 2/(1+exp(-2(x-0))) as x goes from -3 to 3
+      ctx.strokeStyle='rgba(0,188,212,0.9)';ctx.lineWidth=2.5;
+      ctx.beginPath();
+      for(let px=0;px<=plotW;px+=1){
+        const logk=-3+px/plotW*6;
+        const ds=2+2/(1+Math.exp(-2.2*logk));
+        const canvasX=ox+px;
+        const canvasY=oy-plotH*(ds-1)/3.5;
+        if(px===0) ctx.moveTo(canvasX,canvasY); else ctx.lineTo(canvasX,canvasY);
+      }
+      ctx.stroke();
+      // Moving dot on curve
+      const dotPhase=(t%240)/240;
+      const dotLogk=-3+dotPhase*6;
+      const dotDs=2+2/(1+Math.exp(-2.2*dotLogk));
+      const dotX=ox+dotPhase*plotW;
+      const dotY=oy-plotH*(dotDs-1)/3.5;
+      ctx.beginPath();ctx.arc(dotX,dotY,6,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,160,0,1)';
+      ctx.shadowColor='rgba(255,160,0,0.8)';ctx.shadowBlur=12;ctx.fill();ctx.shadowBlur=0;
+      // Readout
+      txt(`k/k_P = 10^${dotLogk.toFixed(1)}`,dotX+10,dotY-12,'rgba(255,255,255,0.6)',9,'left');
+      txt(`d_s = ${dotDs.toFixed(2)}`,dotX+10,dotY+4,'rgba(255,160,0,0.8)',10,'left');
+      txt('DIMENSIONE SPETTRALE — ASYMPTOTIC SAFETY',cv.width/2,cv.height-14,'rgba(255,255,255,0.35)',10,'center');
+    }
+  },
+  {
+    tag:'SCENA 04',
+    title:'Predizioni: Massa del Bosone di Higgs',
+    body:"L'Asymptotic Safety predice una finestra per la massa del bosone di Higgs. La massa misurata di 125 GeV si trova all'interno della banda di predizione teorica.",
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const cx=cv.width/2, cy=cv.height/2;
+      const margin=cv.width*0.12;
+      const plotW=cv.width-margin*2;
+      const axY=cy+cv.height*0.1;
+      const minMass=100, maxMass=155;
+      const predMin=118, predMax=132;
+      const measured=125;
+      function massToX(m){return margin+plotW*(m-minMass)/(maxMass-minMass);}
+      // Axis
+      ctx.strokeStyle='rgba(255,255,255,0.5)';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(margin,axY);ctx.lineTo(margin+plotW,axY);ctx.stroke();
+      // Ticks
+      for(let m=100;m<=155;m+=5){
+        const px=massToX(m);
+        ctx.strokeStyle='rgba(255,255,255,0.25)';ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(px,axY-4);ctx.lineTo(px,axY+4);ctx.stroke();
+        if(m%10===0) txt(m+'',px,axY+14,'rgba(255,255,255,0.4)',9,'center');
+      }
+      txt('m_H  (GeV)',cx,axY+28,'rgba(255,255,255,0.5)',10,'center');
+      // Predicted band (AS)
+      const predX1=massToX(predMin), predX2=massToX(predMax);
+      const bandH=cv.height*0.18;
+      const pulse=0.15+0.06*Math.sin(t*0.04);
+      ctx.fillStyle=`rgba(0,188,212,${pulse})`;
+      ctx.fillRect(predX1,axY-bandH,predX2-predX1,bandH);
+      ctx.strokeStyle='rgba(0,188,212,0.75)';ctx.lineWidth=1.5;
+      ctx.strokeRect(predX1,axY-bandH,predX2-predX1,bandH);
+      txt('PREDETTO',predX1+(predX2-predX1)/2,axY-bandH-14,'rgba(0,188,212,0.85)',11,'center');
+      txt('ASYMPTOTIC SAFETY',predX1+(predX2-predX1)/2,axY-bandH+14,'rgba(0,188,212,0.6)',9,'center');
+      txt(`${predMin}–${predMax} GeV`,predX1+(predX2-predX1)/2,axY-bandH+28,'rgba(0,188,212,0.55)',9,'center');
+      // Measured line
+      const mxX=massToX(measured);
+      const mFlash=0.7+0.2*Math.sin(t*0.08);
+      ctx.strokeStyle=`rgba(255,160,0,${mFlash})`;ctx.lineWidth=3;
+      ctx.shadowColor='rgba(255,160,0,0.7)';ctx.shadowBlur=10;
+      ctx.beginPath();ctx.moveTo(mxX,axY+10);ctx.lineTo(mxX,axY-bandH-10);ctx.stroke();
+      ctx.shadowBlur=0;
+      // Arrow
+      ctx.beginPath();ctx.arc(mxX,axY,5,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,160,0,0.95)';ctx.fill();
+      txt('m_H = 125 GeV',mxX,axY-bandH-30,'rgba(255,160,0,0.95)',11,'center');
+      txt('LHC 2012',mxX,axY-bandH-14,'rgba(255,160,0,0.65)',9,'center');
+      txt('MISURATO',mxX,axY+22,'rgba(255,160,0,0.7)',10,'center');
+      // Scale labels
+      txt('100',margin,axY+14,'rgba(255,255,255,0.3)',9,'center');
+      txt('155 GeV',margin+plotW,axY+14,'rgba(255,255,255,0.3)',9,'center');
+      // Summary
+      ctx.save();
+      ctx.font='13px "JetBrains Mono",monospace';
+      ctx.fillStyle='rgba(255,255,255,0.65)';
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText('125 GeV  ∈  [118, 132] GeV  ✓',cx,axY-bandH-56);
+      ctx.restore();
+      txt('PREDIZIONE ASYMPTOTIC SAFETY vs MISURA LHC',cx,cv.height-14,'rgba(255,255,255,0.35)',10,'center');
+    }
+  }
+];
+
+let cur=0, t=0;
+function go(i){
+  cur=i;t=0;
+  document.querySelectorAll('.td-viz-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
+  document.getElementById('vp-tag').textContent=SCENES[i].tag;
+  document.getElementById('vp-title').textContent=SCENES[i].title;
+  document.getElementById('vp-body').innerHTML=SCENES[i].body;
+}
+function loop(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  SCENES[cur].draw(t);
+  t++;
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>

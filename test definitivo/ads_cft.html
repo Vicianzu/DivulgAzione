@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdS/CFT | DivulgAzione</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="npd-nav">
+  <a href="index.html" class="npd-nav-logo"><span class="accent">D</span>ivulg<span class="accent">A</span>zione</a>
+  <div class="npd-nav-divider"></div>
+  <span class="npd-nav-tagline">Fisica Teorica Interattiva</span>
+  <ul class="npd-nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#argomenti">Argomenti</a></li>
+    <li><a href="ads_cft.html" class="active">AdS/CFT</a></li>
+  </ul>
+</nav>
+
+<div class="td-breadcrumb">
+  <div class="td-breadcrumb-inner">
+    <a href="index.html">Home</a><span> / </span><a href="index.html#argomenti">Dualità Olografica</a><span> / </span><span>AdS/CFT</span>
+  </div>
+</div>
+
+<div class="td-page-header">
+  <div class="td-page-header-inner">
+    <div class="td-page-id">Dualità Olografica · #07</div>
+    <div class="td-page-title">Corrispondenza AdS/CFT — La Dualità di Maldacena</div>
+    <div class="td-page-subtitle">Una teoria di stringa in uno spazio Anti-de Sitter è equivalente a una teoria di campo conforme sul suo bordo</div>
+    <div class="td-page-badges">
+      <span class="npd-badge badge-live">● Live</span>
+      <span class="npd-badge badge-cat">AdS/CFT</span>
+      <span class="npd-badge badge-sf">Olografia</span>
+    </div>
+  </div>
+</div>
+
+<div class="npd-container">
+  <aside class="npd-sidebar">
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Informazioni</div>
+      <div class="td-info-row"><span>Autore</span><span class="td-v">Maldacena (1997)</span></div>
+      <div class="td-info-row"><span>Dualità</span><span class="td-v">IIB su AdS₅×S⁵ ↔ N=4 SYM</span></div>
+      <div class="td-info-row"><span>Limite</span><span class="td-v">Large N, g_s→0</span></div>
+      <div class="td-info-row"><span>Simbolo</span><span class="td-v">Z_bulk = Z_CFT</span></div>
+    </div>
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Navigazione</div>
+      <a href="stringhe.html" class="td-sidebar-link">← Stringhe</a>
+      <a href="bulk_reconstruction.html" class="td-sidebar-link">Bulk Reconstruction →</a>
+    </div>
+  </aside>
+
+  <main class="npd-main">
+    <div class="td-card">
+      <div class="td-card-title">La Dualità di Maldacena</div>
+      <div class="td-card-body">
+        <p>Nel 1997 Juan Maldacena congetturò che la <span class="td-cy">teoria IIB di stringa su AdS₅×S⁵</span> è esattamente duale alla <span class="td-am">N=4 Super Yang-Mills su ℝ⁴</span>. Questa è la corrispondenza più studiata nella fisica teorica moderna.</p>
+        <div class="td-formula">IIB su AdS₅×S⁵  ↔  N=4 SYM(SU(N)) su ℝ⁴
+N → ∞,  g_s → 0,  g_s N = λ fisso
+g²_YM = 4π g_s,   l⁴_AdS / l⁴_s = 4π g_s N = λ</div>
+        <p>La funzione di partizione del <span class="td-cy">bulk</span> con condizioni al contorno φ₀ coincide con quella della <span class="td-gr">CFT</span>: Z_bulk[φ₀] = ⟨e^{∫φ₀ O}⟩_CFT.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Il Dizionario AdS/CFT</div>
+      <div class="td-card-body">
+        <p>Ogni oggetto del bulk ha un corrispondente nella CFT. La relazione fondamentale tra massa bulk e dimensione conforme è:</p>
+        <div class="td-formula">m²l² = Δ(Δ − d)    (campo scalare in AdS_{d+1})
+campo massivo φ  ↔  operatore O_Δ
+simmetria di gauge  ↔  corrente conservata J
+orizzonte BH  ↔  stato termico CFT (T_H = T_CFT)</div>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Dualità Forte-Debole</div>
+      <div class="td-card-body">
+        <p>La corrispondenza AdS/CFT è una dualità <span class="td-cy">forte-debole</span>: quando la CFT è fortemente accoppiata (λ ≫ 1), la descrizione gravitazionale è classica (l ≫ l_s).</p>
+        <div class="td-formula">λ = g²_YM · N ≪ 1  →  CFT perturbativa
+λ = g²_YM · N ≫ 1  →  Gravità classica in AdS</div>
+        <p>Questo rende AdS/CFT potentissimo: <span class="td-am">problemi intrattabili nella CFT</span> diventano calcoli classici nel bulk AdS.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Olografia ed Entanglement</div>
+      <div class="td-card-body">
+        <p>La formula di <span class="td-cy">Ryu-Takayanagi</span> (2006) collega l'entanglement entropico nella CFT alla geometria del bulk:</p>
+        <div class="td-formula">S_A = Area(γ_A) / (4 G_N)
+γ_A = superficie minimale nel bulk con ∂γ_A = ∂A</div>
+        <p>Questo suggerisce che la <span class="td-vi">geometria spaziotemporale emerge dall'entanglement quantistico</span> dei gradi di libertà della CFT.</p>
+      </div>
+    </div>
+
+    <hr class="td-viz-divider">
+    <div class="td-viz-wrap">
+      <div class="td-viz-toolbar">
+        <span class="td-viz-label">VISUALIZZAZIONE</span>
+        <div class="td-viz-btns">
+          <button class="td-viz-btn active" onclick="go(0)">Disco di Poincaré</button>
+          <button class="td-viz-btn" onclick="go(1)">CFT sul Bordo</button>
+          <button class="td-viz-btn" onclick="go(2)">Dizionario</button>
+          <button class="td-viz-btn" onclick="go(3)">Forte-Debole</button>
+          <button class="td-viz-btn" onclick="go(4)">MERA</button>
+        </div>
+      </div>
+      <div class="td-viz-area">
+        <div class="td-viz-panel">
+          <div class="td-viz-panel-tag" id="vp-tag">SCENA 01</div>
+          <div class="td-viz-panel-title" id="vp-title">Lo Spazio AdS₅ — Disco di Poincaré</div>
+          <div class="td-viz-panel-body" id="vp-body">Lo spazio AdS è uno spazio-tempo a curvatura negativa costante. Nel modello del disco di Poincaré, il bordo del disco rappresenta il confine dove vive la CFT.</div>
+        </div>
+        <div class="td-viz-canvas-wrap">
+          <canvas id="viz-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="npd-footer">
+  <span>DivulgAzione · AdS/CFT · 2026</span>
+  <span><a href="index.html">Home</a> · <a href="index.html#argomenti">Argomenti</a></span>
+</footer>
+
+<script>
+const cv = document.getElementById('viz-canvas');
+const ctx = cv.getContext('2d');
+function resize(){cv.width=cv.parentElement.clientWidth;cv.height=cv.parentElement.clientHeight;}
+window.addEventListener('resize',resize);resize();
+
+function txt(s,x,y,col,sz,align){
+  ctx.save();
+  ctx.font=(sz||11)+'px "JetBrains Mono",monospace';
+  ctx.fillStyle=col||'rgba(255,255,255,0.6)';
+  ctx.textAlign=align||'left';
+  ctx.textBaseline='middle';
+  ctx.fillText(s,x,y);
+  ctx.restore();
+}
+function drawGrid(){
+  ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=1;
+  const s=40;
+  for(let x=0;x<cv.width;x+=s){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,cv.height);ctx.stroke();}
+  for(let y=0;y<cv.height;y+=s){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cv.width,y);ctx.stroke();}
+}
+
+const SCENES=[
+  {
+    tag:'SCENA 01',
+    title:'Lo Spazio AdS₅ — Disco di Poincaré',
+    body:'Lo spazio AdS è uno spazio-tempo a curvatura negativa costante. Nel modello del disco di Poincaré, il bordo del disco rappresenta il confine dove vive la CFT.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const W=cv.width, H=cv.height;
+      const cx=W/2, cy=H/2;
+      const R=Math.min(W,H)*0.4;
+      // Clip to disk
+      ctx.save();
+      ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.clip();
+      // Interior fill
+      ctx.fillStyle='rgba(13,27,42,1)';ctx.fillRect(cx-R,cy-R,2*R,2*R);
+      // Radial grid lines
+      ctx.strokeStyle='rgba(255,255,255,0.07)';ctx.lineWidth=1;
+      for(let a=0;a<12;a++){
+        const angle=a/12*Math.PI*2;
+        ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+R*Math.cos(angle),cy+R*Math.sin(angle));ctx.stroke();
+      }
+      // Concentric circles
+      for(let r=1;r<=5;r++){
+        ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=1;
+        ctx.beginPath();ctx.arc(cx,cy,R*r/5,0,Math.PI*2);ctx.stroke();
+      }
+      ctx.restore();
+      // Boundary ring
+      ctx.strokeStyle='rgba(0,188,212,0.9)';ctx.lineWidth=3;
+      ctx.beginPath();ctx.arc(cx,cy,R,0,Math.PI*2);ctx.stroke();
+      // Bulk excitation moving slowly
+      const bx=cx+R*0.35*Math.cos(t*0.012);
+      const by=cy+R*0.35*Math.sin(t*0.009);
+      const grd=ctx.createRadialGradient(bx,by,0,bx,by,18);
+      grd.addColorStop(0,'rgba(0,188,212,0.9)');
+      grd.addColorStop(1,'rgba(0,188,212,0)');
+      ctx.fillStyle=grd;ctx.beginPath();ctx.arc(bx,by,18,0,Math.PI*2);ctx.fill();
+      ctx.fillStyle='rgba(0,188,212,1)';ctx.beginPath();ctx.arc(bx,by,5,0,Math.PI*2);ctx.fill();
+
+      txt('BORDO CFT',cx,cy-R-16,'rgba(0,188,212,0.9)',12,'center');
+      txt('BULK AdS₅',cx,cy+16,'rgba(255,255,255,0.5)',11,'center');
+      txt('z→0  bordo',cx+R*0.7,cy-R*0.6,'rgba(255,255,255,0.4)',9,'left');
+      txt('z→∞  centro',cx-10,cy+R*0.45,'rgba(255,255,255,0.4)',9,'right');
+    }
+  },
+  {
+    tag:'SCENA 02',
+    title:'La CFT sul Bordo',
+    body:'Sul bordo dell\'AdS (z→0) vive una teoria di campo conforme. Gli operatori O con dimensione Δ corrispondono a campi massivi nel bulk con m²l² = Δ(Δ-4).',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const W=cv.width, H=cv.height;
+      const bY=H*0.88;
+      // AdS bulk faint grid going upward
+      ctx.strokeStyle='rgba(33,150,243,0.08)';ctx.lineWidth=1;
+      for(let i=0;i<=10;i++){
+        ctx.beginPath();ctx.moveTo(i/10*W,bY);ctx.lineTo(i/10*W,0);ctx.stroke();
+      }
+      for(let j=1;j<=6;j++){
+        const y=bY-j/6*bY;
+        ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(W,y);ctx.stroke();
+      }
+      // Boundary line
+      ctx.strokeStyle='rgba(0,188,212,0.8)';ctx.lineWidth=3;
+      ctx.beginPath();ctx.moveTo(0,bY);ctx.lineTo(W,bY);ctx.stroke();
+      txt('BORDO CFT  (z→0)',W*0.5,bY+16,'rgba(0,188,212,0.8)',12,'center');
+      txt('BULK AdS',W*0.5,H*0.3,'rgba(33,150,243,0.5)',12,'center');
+
+      // Operator insertions with wavefronts
+      const ops=[
+        {x:W*0.18,label:'O_Δ₁',col:'rgba(0,188,212,1)',phase:0},
+        {x:W*0.5,label:'O_Δ₂',col:'rgba(76,175,80,1)',phase:1.8},
+        {x:W*0.82,label:'O_Δ₃',col:'rgba(255,160,0,1)',phase:3.4}
+      ];
+      ops.forEach(function(op){
+        // Dot on boundary
+        ctx.fillStyle=op.col;
+        ctx.beginPath();ctx.arc(op.x,bY,7,0,Math.PI*2);ctx.fill();
+        txt(op.label,op.x,bY+30,op.col,11,'center');
+        // Ripple wavefronts going into bulk
+        for(let r=0;r<4;r++){
+          const rad=(((t*1.2+op.phase*30+r*45))%180);
+          const alpha=Math.max(0,(1-rad/180)*0.6);
+          ctx.strokeStyle=op.col.replace(',1)',','+alpha+')');
+          ctx.lineWidth=1.5;
+          ctx.beginPath();
+          ctx.arc(op.x,bY,rad*0.7,Math.PI,0,false);
+          ctx.stroke();
+        }
+      });
+    }
+  },
+  {
+    tag:'SCENA 03',
+    title:'Il Dizionario AdS/CFT',
+    body:'La corrispondenza mappa ogni oggetto del bulk AdS a un oggetto del bordo CFT e viceversa. Questo è il "dizionario olografico".',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const W=cv.width, H=cv.height;
+      const pairs=[
+        ['campo φ(z,x)','operatore O_Δ'],
+        ['massa  m²l²','dim. conforme Δ'],
+        ['simmetria gauge','corrente J^μ'],
+        ['orizzonte BH','stato termico ρ_T']
+      ];
+      const colL='rgba(0,188,212,0.9)';
+      const colR='rgba(76,175,80,0.9)';
+      const highlight=Math.floor(t/80)%pairs.length;
+
+      // Column headers
+      txt('BULK AdS',W*0.22,H*0.1,colL,14,'center');
+      txt('CFT BORDO',W*0.78,H*0.1,colR,14,'center');
+      // Divider
+      ctx.strokeStyle='rgba(255,255,255,0.15)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(W/2,H*0.08);ctx.lineTo(W/2,H*0.92);ctx.stroke();
+
+      pairs.forEach(function(pair,i){
+        const y=H*0.2+i*(H*0.65/pairs.length)+H*0.04;
+        const isHL=(i===highlight);
+        const alpha=isHL?1:0.45;
+        const bg=isHL?'rgba(0,188,212,0.08)':'rgba(0,0,0,0)';
+        if(isHL){
+          ctx.fillStyle='rgba(0,188,212,0.06)';
+          ctx.fillRect(W*0.02,y-18,W*0.96,36);
+        }
+        txt(pair[0],W*0.22,y,colL.replace(',0.9)',','+alpha+')',12,'center');
+        txt(pair[1],W*0.78,y,colR.replace(',0.9)',','+alpha+')',12,'center');
+        // Arrow
+        const arrowAlpha=isHL?0.9:0.2;
+        ctx.strokeStyle='rgba(255,255,255,'+arrowAlpha+')';ctx.lineWidth=isHL?2:1;
+        ctx.beginPath();ctx.moveTo(W*0.38,y);ctx.lineTo(W*0.62,y);ctx.stroke();
+        // Arrowheads
+        ctx.fillStyle='rgba(255,255,255,'+arrowAlpha+')';
+        ctx.beginPath();ctx.moveTo(W*0.62,y);ctx.lineTo(W*0.61,y-5);ctx.lineTo(W*0.61,y+5);ctx.closePath();ctx.fill();
+        ctx.beginPath();ctx.moveTo(W*0.38,y);ctx.lineTo(W*0.39,y-5);ctx.lineTo(W*0.39,y+5);ctx.closePath();ctx.fill();
+      });
+      txt('↔  dizionario olografico  ↔',W/2,H*0.87,'rgba(255,255,255,0.35)',10,'center');
+    }
+  },
+  {
+    tag:'SCENA 04',
+    title:'Dualità Forte-Debole',
+    body:'L\'accoppiamento della CFT λ=g²_YM·N è inversamente proporzionale alla curvatura AdS. Quando la CFT è fortemente accoppiata (λ≫1), la gravità è classica (l≫l_s).',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const W=cv.width, H=cv.height;
+      const margin=W*0.1;
+      const plotW=W-margin*2;
+      const plotH=H*0.6;
+      const ox=margin, oy=H*0.75;
+
+      // Axes
+      ctx.strokeStyle='rgba(255,255,255,0.4)';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox+plotW,oy);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(ox,oy);ctx.lineTo(ox,oy-plotH);ctx.stroke();
+      txt('λ = g²·N',ox+plotW+8,oy,'rgba(255,255,255,0.6)',11,'left');
+      txt('descrizione',ox-8,oy-plotH-12,'rgba(255,255,255,0.5)',10,'right');
+
+      // Curve: CFT perturbativa (strong in IR, weak UV)
+      ctx.strokeStyle='rgba(0,188,212,0.9)';ctx.lineWidth=2.5;
+      ctx.beginPath();
+      for(let k=0;k<=100;k++){
+        const x=ox+k/100*plotW;
+        const lam=k/100*10;
+        const y=oy-plotH*(0.9/(1+lam*0.5));
+        if(k===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+      txt('CFT perturbativa',ox+plotW*0.1,oy-plotH*0.75,'rgba(0,188,212,0.8)',11,'left');
+
+      // Curve: Gravity regime
+      ctx.strokeStyle='rgba(255,160,0,0.9)';ctx.lineWidth=2.5;
+      ctx.beginPath();
+      for(let k=0;k<=100;k++){
+        const x=ox+k/100*plotW;
+        const lam=k/100*10;
+        const y=oy-plotH*(0.1+0.8*(lam*0.1/(1+lam*0.1)));
+        if(k===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+      }
+      ctx.stroke();
+      txt('Gravità classica AdS',ox+plotW*0.55,oy-plotH*0.7,'rgba(255,160,0,0.8)',11,'left');
+
+      // Moving indicator
+      const lamT=5+4*Math.sin(t*0.015);
+      const ix=ox+lamT/10*plotW;
+      ctx.strokeStyle='rgba(255,255,255,0.6)';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+      ctx.beginPath();ctx.moveTo(ix,oy);ctx.lineTo(ix,oy-plotH*0.9);ctx.stroke();
+      ctx.setLineDash([]);
+      txt('λ='+lamT.toFixed(1),ix,oy+14,'rgba(255,255,255,0.7)',10,'center');
+
+      // AdS/CFT arrow
+      ctx.strokeStyle='rgba(76,175,80,0.8)';ctx.lineWidth=2;
+      ctx.beginPath();ctx.moveTo(ox+plotW*0.2,oy-plotH*0.9);ctx.lineTo(ox+plotW*0.8,oy-plotH*0.9);ctx.stroke();
+      const arX1=ox+plotW*0.2, arX2=ox+plotW*0.8, arY=oy-plotH*0.9;
+      ctx.fillStyle='rgba(76,175,80,0.8)';
+      ctx.beginPath();ctx.moveTo(arX2,arY);ctx.lineTo(arX2-10,arY-5);ctx.lineTo(arX2-10,arY+5);ctx.closePath();ctx.fill();
+      ctx.beginPath();ctx.moveTo(arX1,arY);ctx.lineTo(arX1+10,arY-5);ctx.lineTo(arX1+10,arY+5);ctx.closePath();ctx.fill();
+      txt('AdS/CFT',W/2,oy-plotH*0.9-14,'rgba(76,175,80,0.9)',12,'center');
+    }
+  },
+  {
+    tag:'SCENA 05',
+    title:'Geometria Emergente e MERA',
+    body:'Il tensore network MERA modella la struttura olografica: i gradi di libertà UV del bordo sono ristrutturati in layer verso il bulk IR.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const W=cv.width, H=cv.height;
+      // MERA binary tree
+      const levels=4;
+      const uvNodes=Math.pow(2,levels);
+      const uvY=H*0.85;
+      const topY=H*0.1;
+      const levelH=(uvY-topY)/levels;
+      // Active node for propagation animation
+      const signalLevel=Math.floor((t*0.03)%(levels+1));
+
+      function nodeX(level,idx){
+        const nNodes=Math.pow(2,levels-level);
+        const spacing=W/(nNodes+1);
+        return spacing*(idx+1);
+      }
+
+      // Draw from top to bottom
+      for(let lev=0;lev<levels;lev++){
+        const y=topY+lev*levelH;
+        const yn=topY+(lev+1)*levelH;
+        const nParents=Math.pow(2,lev);
+        for(let idx=0;idx<nParents;idx++){
+          const px=nodeX(lev,idx);
+          const c1x=nodeX(lev+1,idx*2);
+          const c2x=nodeX(lev+1,idx*2+1);
+          const isActive=(lev===levels-1-signalLevel);
+          const lineAlpha=isActive?0.9:0.35;
+          // Lines to children
+          ctx.strokeStyle='rgba(33,150,243,'+lineAlpha+')';ctx.lineWidth=isActive?2:1;
+          ctx.beginPath();ctx.moveTo(px,y);ctx.lineTo(c1x,yn);ctx.stroke();
+          ctx.beginPath();ctx.moveTo(px,y);ctx.lineTo(c2x,yn);ctx.stroke();
+          // Node
+          const frac=lev/levels;
+          const r=Math.round(0+200*frac);
+          const g=Math.round(188*(1-frac)+160*frac);
+          const b=Math.round(212*(1-frac)+0*frac);
+          const nodeCol=`rgba(${r},${g},${b},${isActive?1:0.6})`;
+          ctx.fillStyle=nodeCol;ctx.strokeStyle='rgba(255,255,255,0.3)';ctx.lineWidth=1;
+          ctx.beginPath();ctx.arc(px,y,isActive?9:6,0,Math.PI*2);ctx.fill();ctx.stroke();
+        }
+      }
+      // UV nodes at bottom
+      for(let idx=0;idx<uvNodes;idx++){
+        const px=nodeX(levels,idx);
+        const isActive=(signalLevel>=levels);
+        ctx.fillStyle=isActive?'rgba(0,188,212,1)':'rgba(0,188,212,0.7)';
+        ctx.beginPath();ctx.arc(px,uvY,isActive?8:5,0,Math.PI*2);ctx.fill();
+      }
+      // IR node at top
+      const topX=nodeX(0,0);
+      ctx.fillStyle='rgba(255,160,0,0.9)';ctx.beginPath();ctx.arc(topX,topY,10,0,Math.PI*2);ctx.fill();
+
+      txt('IR  (bulk)',topX,topY-20,'rgba(255,160,0,0.8)',11,'center');
+      txt('UV  (bordo CFT)',W/2,uvY+20,'rgba(0,188,212,0.8)',11,'center');
+      txt('MERA  — tensore network olografico',W/2,H*0.96,'rgba(255,255,255,0.4)',10,'center');
+    }
+  }
+];
+
+let cur=0,tt=0;
+function go(i){
+  cur=i;tt=0;
+  document.querySelectorAll('.td-viz-btn').forEach(function(b,j){b.classList.toggle('active',j===i);});
+  document.getElementById('vp-tag').textContent=SCENES[i].tag;
+  document.getElementById('vp-title').textContent=SCENES[i].title;
+  document.getElementById('vp-body').innerHTML=SCENES[i].body;
+}
+function loop(){SCENES[cur].draw(tt);tt++;requestAnimationFrame(loop);}
+loop();
+</script>
+</body>
+</html>
