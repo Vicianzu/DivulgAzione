@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Teoria delle Stringhe | DivulgAzione</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="npd-nav">
+  <a href="index.html" class="npd-nav-logo"><span class="accent">D</span>ivulg<span class="accent">A</span>zione</a>
+  <div class="npd-nav-divider"></div>
+  <span class="npd-nav-tagline">Fisica Teorica Interattiva</span>
+  <ul class="npd-nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#argomenti">Argomenti</a></li>
+    <li><a href="stringhe.html" class="active">Stringhe</a></li>
+  </ul>
+</nav>
+
+<div class="td-breadcrumb">
+  <div class="td-breadcrumb-inner">
+    <a href="index.html">Home</a><span> / </span><a href="index.html#argomenti">Teoria delle Stringhe</a><span> / </span><span>Stringhe &amp; Calabi-Yau</span>
+  </div>
+</div>
+
+<div class="td-page-header">
+  <div class="td-page-header-inner">
+    <div class="td-page-id">Teoria delle Stringhe · #06</div>
+    <div class="td-page-title">Teoria delle Stringhe e Varietà di Calabi-Yau</div>
+    <div class="td-page-subtitle">Stringhe vibranti, D-brane, dualità, M-teoria e la compattificazione sulle varietà di Calabi-Yau</div>
+    <div class="td-page-badges">
+      <span class="npd-badge badge-live">● Live</span>
+      <span class="npd-badge badge-cat">Teoria delle Stringhe</span>
+      <span class="npd-badge badge-sf">Superstringhe</span>
+    </div>
+  </div>
+</div>
+
+<div class="npd-container">
+  <aside class="npd-sidebar">
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Informazioni</div>
+      <div class="td-info-row"><span>Fondatori</span><span class="td-v">Veneziano, Schwarz, Green, Witten</span></div>
+      <div class="td-info-row"><span>Anno</span><span class="td-v">1968–1995</span></div>
+      <div class="td-info-row"><span>Dimensioni</span><span class="td-v">10+1</span></div>
+      <div class="td-info-row"><span>Tensione</span><span class="td-v">T = 1/(2πα')</span></div>
+    </div>
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Navigazione</div>
+      <a href="asymptotic_safety.html" class="td-sidebar-link">← Asymptotic Safety</a>
+      <a href="ads_cft.html" class="td-sidebar-link">AdS/CFT →</a>
+    </div>
+  </aside>
+
+  <main class="npd-main">
+    <div class="td-card">
+      <div class="td-card-title">La Stringa Fondamentale</div>
+      <div class="td-card-body">
+        <p>A differenza della teoria dei campi standard che descrive <span class="td-cy">particelle puntiformi</span> (0D), la teoria delle stringhe propone che i costituenti fondamentali siano oggetti estesi 1D — le stringhe. Ogni stringa può vibrare in modi diversi, e ogni modo di vibrazione corrisponde a una particella diversa.</p>
+        <div class="td-formula">T = 1/(2πα')       α' = lunghezza di stringa²
+modo n=0 → tachione (stringa bosonica)
+modo n=1 + spin-2 → gravitone</div>
+        <p>La tensione <span class="td-cy">T</span> è il parametro fondamentale; l'energia di Planck corrisponde a <span class="td-am">l_s = √α' ≈ 10⁻³⁵ m</span>.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">D-brane e Dualità</div>
+      <div class="td-card-body">
+        <p>Le <span class="td-cy">D-brane</span> (Dirichlet-brane) sono ipersuperfici estese su cui le estremità delle stringhe aperte sono vincolate. Una Dp-brana è un oggetto p-dimensionale che svolge un ruolo cruciale nelle dualità tra le diverse teorie di stringa.</p>
+        <div class="td-formula">Dualità S:  g_s  ↔  1/g_s   (IIB ↔ IIB, I ↔ SO(32) HE)
+Dualità T:  R   ↔  α'/R   (IIA ↔ IIB, HO ↔ HE)
+Dualità U:  combinazione di S e T</div>
+        <p>Le stringhe chiuse — incluso il <span class="td-gr">gravitone</span> — si propagano liberamente nel bulk 10D, non vincolate alle brane.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">M-teoria</div>
+      <div class="td-card-body">
+        <p>Le cinque teorie di superstringa consistenti (Tipo I, IIA, IIB, HO, HE) e la <span class="td-am">SUGRA 11D</span> sono tutte limiti di una teoria unica 11-dimensionale proposta da Witten nel 1995: la <span class="td-cy">M-teoria</span>. La lettera "M" sta per "Madre", "Mistero", o "Membrana".</p>
+        <div class="td-formula">IIA  ←[g_s→∞]—  M-teoria (11D)  —[R₁₁→0]→  IIB
+HO  ←→  HE  ←[limite]→  SUGRA 11D</div>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Calabi-Yau</div>
+      <div class="td-card-body">
+        <p>Per compattificare le 6 dimensioni extra preservando la supersimmetria <span class="td-cy">N=1</span> in 4D, si usa una <span class="td-vi">varietà di Calabi-Yau</span>: una 6-manifold complessa con curvatura di Ricci nulla (Hol ⊆ SU(3)).</p>
+        <div class="td-formula">g_μν (10D) = g_μν (4D) ⊕ g_mn (CY₃)
+ric(g_mn) = 0    ←→    ∂∂̄ J = 0, dΩ = 0</div>
+        <p>Il numero di generazioni di particelle è dato dal numero di Euler della CY diviso per 2: <span class="td-am">|χ(CY)|/2 = 3</span> per 3 generazioni.</p>
+      </div>
+    </div>
+
+    <hr class="td-viz-divider">
+    <div class="td-viz-wrap">
+      <div class="td-viz-toolbar">
+        <span class="td-viz-label">VISUALIZZAZIONE</span>
+        <div class="td-viz-btns">
+          <button class="td-viz-btn active" onclick="go(0)">Stringa Vibrante</button>
+          <button class="td-viz-btn" onclick="go(1)">D-brane</button>
+          <button class="td-viz-btn" onclick="go(2)">Dualità S</button>
+          <button class="td-viz-btn" onclick="go(3)">M-teoria</button>
+          <button class="td-viz-btn" onclick="go(4)">Calabi-Yau</button>
+        </div>
+      </div>
+      <div class="td-viz-area">
+        <div class="td-viz-panel">
+          <div class="td-viz-panel-tag" id="vp-tag">SCENA 01</div>
+          <div class="td-viz-panel-title" id="vp-title">Stringa Vibrante</div>
+          <div class="td-viz-panel-body" id="vp-body">Una stringa può vibrare in modi diversi n=1,2,3,... Ogni modo di vibrazione corrisponde a una particella diversa: il modo n=2 con momento angolare è il gravitone.</div>
+        </div>
+        <div class="td-viz-canvas-wrap">
+          <canvas id="viz-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="npd-footer">
+  <span>DivulgAzione · Teoria delle Stringhe · 2026</span>
+  <span><a href="index.html">Home</a> · <a href="index.html#argomenti">Argomenti</a></span>
+</footer>
+
+<script>
+const cv = document.getElementById('viz-canvas');
+const ctx = cv.getContext('2d');
+function resize(){cv.width=cv.parentElement.clientWidth;cv.height=cv.parentElement.clientHeight;}
+window.addEventListener('resize',resize);resize();
+
+function txt(s,x,y,col,sz,align){
+  ctx.save();
+  ctx.font=(sz||11)+'px "JetBrains Mono",monospace';
+  ctx.fillStyle=col||'rgba(255,255,255,0.6)';
+  ctx.textAlign=align||'left';
+  ctx.textBaseline='middle';
+  ctx.fillText(s,x,y);
+  ctx.restore();
+}
+function drawGrid(){
+  ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=1;
+  const s=40;
+  for(let x=0;x<cv.width;x+=s){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,cv.height);ctx.stroke();}
+  for(let y=0;y<cv.height;y+=s){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cv.width,y);ctx.stroke();}
+}
+
+const SCENES=[
+  {
+    tag:'SCENA 01',
+    title:'Stringa Vibrante',
+    body:'Una stringa può vibrare in modi diversi n=1,2,3,... Ogni modo di vibrazione corrisponde a una particella diversa: il modo n=2 con momento angolare è il gravitone.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const W=cv.width, H=cv.height;
+      const mode=Math.floor(t/200)%3+1;
+      const labels=['modo n=1  (fotone)','modo n=2  (gravitone)','modo n=3  (stato massivo)'];
+      const colors=['rgba(0,188,212,1)','rgba(76,175,80,1)','rgba(255,160,0,1)'];
+      const x0=W*0.1, x1=W*0.9;
+      const L=x1-x0;
+      const A=H*0.22;
+      const cy=H/2;
+
+      // Draw all 3 modes faded, highlight current
+      for(let n=1;n<=3;n++){
+        const alpha=(n===mode)?1:0.15;
+        const col=colors[n-1].replace(',1)',','+alpha+')');
+        ctx.strokeStyle=col;
+        ctx.lineWidth=n===mode?2.5:1;
+        ctx.beginPath();
+        const steps=200;
+        for(let i=0;i<=steps;i++){
+          const x=x0+i/steps*L;
+          const phase=n===mode?t*0.05:0;
+          const y=cy+A*Math.sin(n*Math.PI*(x-x0)/L)*Math.sin(phase);
+          if(i===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+        }
+        ctx.stroke();
+        // End points
+        ctx.fillStyle=col;
+        ctx.beginPath();ctx.arc(x0,cy,4,0,Math.PI*2);ctx.fill();
+        ctx.beginPath();ctx.arc(x1,cy,4,0,Math.PI*2);ctx.fill();
+        // Label
+        const lx=x0+L*(0.5);
+        const ly=cy-A-30-(n-1)*22;
+        if(n===mode){
+          txt(labels[n-1],lx,ly,colors[n-1],12,'center');
+        }
+      }
+      // Mode indicator
+      txt('MODO ATTIVO: n='+mode, W*0.5, H*0.88,'rgba(255,255,255,0.7)',13,'center');
+      txt('ciclo automatico ogni 200 frame', W*0.5, H*0.93,'rgba(255,255,255,0.35)',10,'center');
+    }
+  },
+  {
+    tag:'SCENA 02',
+    title:'D-brane',
+    body:'Le D-brane sono ipersuperfici su cui le estremità delle stringhe aperte sono vincolate. Le stringhe chiuse propagano liberamente nel bulk, incluso il gravitone.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const W=cv.width, H=cv.height;
+      // Draw D3-brane as horizontal rectangle
+      const bx=W*0.15, by=H*0.55, bw=W*0.7, bh=18;
+      ctx.strokeStyle='rgba(0,188,212,0.8)';ctx.lineWidth=2;
+      ctx.fillStyle='rgba(0,188,212,0.1)';
+      ctx.fillRect(bx,by,bw,bh);
+      ctx.strokeRect(bx,by,bw,bh);
+      txt('D3-brana',W*0.5,by+bh+16,'rgba(0,188,212,0.9)',12,'center');
+
+      // Open strings: endpoints on brane
+      const openStrings=[
+        {x1:W*0.25,x2:W*0.35,phase:0},
+        {x1:W*0.45,x2:W*0.55,phase:1.2},
+        {x1:W*0.65,x2:W*0.75,phase:2.4}
+      ];
+      openStrings.forEach(function(s,i){
+        const mx=(s.x1+s.x2)/2;
+        const amp=H*0.12+H*0.04*Math.sin(t*0.04+s.phase);
+        const top=by-amp;
+        ctx.strokeStyle='rgba(33,150,243,0.9)';ctx.lineWidth=2;
+        ctx.beginPath();
+        for(let k=0;k<=60;k++){
+          const frac=k/60;
+          const x=s.x1+frac*(s.x2-s.x1);
+          const y=by-Math.sin(frac*Math.PI)*amp;
+          if(k===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+        }
+        ctx.stroke();
+        // endpoints
+        ctx.fillStyle='rgba(33,150,243,1)';
+        ctx.beginPath();ctx.arc(s.x1,by,4,0,Math.PI*2);ctx.fill();
+        ctx.beginPath();ctx.arc(s.x2,by,4,0,Math.PI*2);ctx.fill();
+      });
+      txt('stringhe aperte',W*0.5,by-H*0.18,'rgba(33,150,243,0.8)',11,'center');
+
+      // Closed string: small circle moving slowly
+      const csx=W*0.2+W*0.6*((t*0.003)%1);
+      const csy=H*0.28+H*0.06*Math.sin(t*0.03);
+      const cr=18+4*Math.sin(t*0.05);
+      ctx.strokeStyle='rgba(76,175,80,0.9)';ctx.lineWidth=2;
+      ctx.beginPath();ctx.arc(csx,csy,cr,0,Math.PI*2);ctx.stroke();
+      txt('stringa chiusa (gravitone)',csx,csy-cr-12,'rgba(76,175,80,0.8)',10,'center');
+    }
+  },
+  {
+    tag:'SCENA 03',
+    title:'Dualità S: g_s ↔ 1/g_s',
+    body:'La dualità S mappa la Teoria IIB con accoppiamento g_s alla stessa teoria con accoppiamento 1/g_s. Il regime forte diventa il regime debole della teoria duale.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const W=cv.width, H=cv.height;
+      const gs=0.5+4.5*Math.abs(Math.sin(t*0.01));
+
+      // Left box
+      const lx=W*0.05, ly=H*0.2, lw=W*0.35, lh=H*0.55;
+      const leftAlpha=Math.max(0.1,1-gs/5);
+      ctx.strokeStyle='rgba(0,188,212,'+leftAlpha+')';ctx.lineWidth=2;
+      ctx.fillStyle='rgba(0,188,212,0.05)';
+      ctx.fillRect(lx,ly,lw,lh);ctx.strokeRect(lx,ly,lw,lh);
+      txt('TEORIA IIB',lx+lw/2,ly+24,'rgba(0,188,212,'+(leftAlpha+0.2)+')',13,'center');
+      txt('g_s = '+gs.toFixed(2),lx+lw/2,ly+48,'rgba(255,255,255,0.7)',12,'center');
+      // string thickness ∝ gs
+      const lthick=Math.max(0.5,1+1*leftAlpha);
+      ctx.strokeStyle='rgba(0,188,212,'+(leftAlpha*0.9)+')';ctx.lineWidth=lthick;
+      for(let i=0;i<3;i++){
+        ctx.beginPath();
+        const sy=ly+lh*0.35+i*22;
+        ctx.moveTo(lx+20,sy);
+        for(let k=1;k<=40;k++){
+          const x=lx+20+k*(lw-40)/40;
+          const y=sy+4*Math.sin(k*0.5+t*0.04+i);
+          ctx.lineTo(x,y);
+        }
+        ctx.stroke();
+      }
+
+      // Right box
+      const rx=W*0.6, ry=H*0.2, rw=W*0.35, rh=H*0.55;
+      const dualGs=1/gs;
+      const rightAlpha=Math.max(0.1,1-dualGs/5);
+      ctx.strokeStyle='rgba(255,160,0,'+Math.min(1,rightAlpha+0.3)+')';ctx.lineWidth=2;
+      ctx.fillStyle='rgba(255,160,0,0.05)';
+      ctx.fillRect(rx,ry,rw,rh);ctx.strokeRect(rx,ry,rw,rh);
+      txt('TEORIA IIB',rx+rw/2,ry+24,'rgba(255,160,0,0.9)',13,'center');
+      txt('g_s = '+(1/gs).toFixed(2),rx+rw/2,ry+48,'rgba(255,255,255,0.7)',12,'center');
+      const rthick=Math.max(0.5,gs*0.6);
+      ctx.strokeStyle='rgba(255,160,0,'+Math.min(0.9,0.3+gs*0.1)+')';ctx.lineWidth=rthick;
+      for(let i=0;i<3;i++){
+        ctx.beginPath();
+        const sy=ry+rh*0.35+i*22;
+        ctx.moveTo(rx+20,sy);
+        for(let k=1;k<=40;k++){
+          const x=rx+20+k*(rw-40)/40;
+          const y=sy+4*Math.sin(k*0.5+t*0.04+i);
+          ctx.lineTo(x,y);
+        }
+        ctx.stroke();
+      }
+
+      // Center arrow
+      const cx=W*0.5;
+      ctx.strokeStyle='rgba(255,255,255,0.7)';ctx.lineWidth=2;
+      ctx.beginPath();ctx.moveTo(lx+lw+10,H/2);ctx.lineTo(rx-10,H/2);ctx.stroke();
+      // Arrowheads
+      ctx.fillStyle='rgba(255,255,255,0.7)';
+      ctx.beginPath();ctx.moveTo(rx-10,H/2);ctx.lineTo(rx-22,H/2-6);ctx.lineTo(rx-22,H/2+6);ctx.closePath();ctx.fill();
+      ctx.beginPath();ctx.moveTo(lx+lw+10,H/2);ctx.lineTo(lx+lw+22,H/2-6);ctx.lineTo(lx+lw+22,H/2+6);ctx.closePath();ctx.fill();
+      txt('S-dualità',cx,H/2-18,'rgba(255,255,255,0.8)',12,'center');
+      txt('g_s ↔ 1/g_s',cx,H/2+18,'rgba(255,255,255,0.6)',11,'center');
+    }
+  },
+  {
+    tag:'SCENA 04',
+    title:'M-teoria: La Teoria del Tutto?',
+    body:'Le cinque teorie di superstringhe (Tipo I, IIA, IIB, HO, HE) e la SUGRA 11D sono tutti limiti di una teoria unica 11-dimensionale: la M-teoria.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const W=cv.width, H=cv.height;
+      const cx=W/2, cy=H/2;
+      const R=Math.min(W,H)*0.32;
+      const theories=['Tipo I','Tipo IIA','Tipo IIB','HO','HE','SUGRA 11D'];
+      const tColors=[
+        'rgba(0,188,212,0.9)','rgba(33,150,243,0.9)','rgba(76,175,80,0.9)',
+        'rgba(255,160,0,0.9)','rgba(179,136,255,0.9)','rgba(255,80,80,0.9)'
+      ];
+      // Outer circles
+      theories.forEach(function(th,i){
+        const angle=i/6*Math.PI*2-Math.PI/2;
+        const tx=cx+R*Math.cos(angle);
+        const ty=cy+R*Math.sin(angle);
+        // Pulsing line to center
+        const pulse=0.5+0.5*Math.sin(t*0.03+i*1.1);
+        ctx.strokeStyle=tColors[i].replace(',0.9)',','+(0.3+0.4*pulse)+')');
+        ctx.lineWidth=1.5;
+        ctx.setLineDash([6,6]);
+        ctx.beginPath();ctx.moveTo(tx,ty);ctx.lineTo(cx,cy);ctx.stroke();
+        ctx.setLineDash([]);
+        // Circle
+        ctx.fillStyle=tColors[i].replace(',0.9)',',0.15)');
+        ctx.strokeStyle=tColors[i];
+        ctx.lineWidth=2;
+        ctx.beginPath();ctx.arc(tx,ty,30,0,Math.PI*2);ctx.fill();ctx.stroke();
+        txt(th,tx,ty,tColors[i],10,'center');
+      });
+      // Central M-teoria pulsing
+      const pulse=0.7+0.3*Math.sin(t*0.04);
+      const cr=38*pulse;
+      const grad=ctx.createRadialGradient(cx,cy,0,cx,cy,cr);
+      grad.addColorStop(0,'rgba(255,160,0,0.7)');
+      grad.addColorStop(1,'rgba(255,160,0,0)');
+      ctx.fillStyle=grad;
+      ctx.beginPath();ctx.arc(cx,cy,cr,0,Math.PI*2);ctx.fill();
+      ctx.strokeStyle='rgba(255,160,0,0.9)';ctx.lineWidth=2.5;
+      ctx.beginPath();ctx.arc(cx,cy,36,0,Math.PI*2);ctx.stroke();
+      txt('M-TEORIA',cx,cy-7,'rgba(255,160,0,1)',12,'center');
+      txt('11D',cx,cy+9,'rgba(255,160,0,0.8)',11,'center');
+    }
+  },
+  {
+    tag:'SCENA 05',
+    title:'Varietà di Calabi-Yau',
+    body:'Per preservare la supersimmetria nel passaggio a 4D, le 6 dimensioni extra si compattificano su una varietà di Calabi-Yau: una 6-manifold complessa con curvatura di Ricci nulla.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const W=cv.width, H=cv.height;
+      const cx=W/2, cy=H/2;
+      const baseRot=t*0.008;
+      // Draw Calabi-Yau cross-section as overlapping parametric loops
+      const numLoops=5;
+      for(let li=0;li<numLoops;li++){
+        const phaseOff=li*Math.PI*2/numLoops+baseRot;
+        const r1=Math.min(W,H)*0.22;
+        const r2=Math.min(W,H)*0.14;
+        const alpha=0.4+0.3*Math.sin(t*0.02+li);
+        const hue=li/numLoops;
+        // Interpolate cyan→purple
+        const R_c=Math.round(0+(180*hue));
+        const G_c=Math.round(188*(1-hue));
+        const B_c=Math.round(212*(1-hue)+212*hue);
+        ctx.strokeStyle=`rgba(${R_c},${G_c},${B_c},${alpha})`;
+        ctx.lineWidth=1.5;
+        ctx.beginPath();
+        const steps=300;
+        for(let k=0;k<=steps;k++){
+          const u=k/steps*Math.PI*2;
+          const x=cx+r1*Math.cos(u+phaseOff)*Math.cos(2*u)+r2*Math.cos(3*u+phaseOff*0.5);
+          const y=cy+r1*Math.sin(u+phaseOff)*0.7+r2*Math.sin(2*u+phaseOff*0.3);
+          if(k===0)ctx.moveTo(x,y);else ctx.lineTo(x,y);
+        }
+        ctx.closePath();ctx.stroke();
+      }
+      // Inner glow
+      const grad=ctx.createRadialGradient(cx,cy,0,cx,cy,H*0.18);
+      grad.addColorStop(0,'rgba(0,188,212,0.15)');
+      grad.addColorStop(1,'rgba(0,0,0,0)');
+      ctx.fillStyle=grad;ctx.beginPath();ctx.arc(cx,cy,H*0.18,0,Math.PI*2);ctx.fill();
+
+      txt('Calabi-Yau  (proiezione 2D)',cx,H*0.88,'rgba(0,188,212,0.8)',12,'center');
+      txt('6 dimensioni compatte · hol ⊆ SU(3) · Ric = 0',cx,H*0.93,'rgba(255,255,255,0.4)',10,'center');
+    }
+  }
+];
+
+let cur=0,tt=0;
+function go(i){
+  cur=i;tt=0;
+  document.querySelectorAll('.td-viz-btn').forEach(function(b,j){b.classList.toggle('active',j===i);});
+  document.getElementById('vp-tag').textContent=SCENES[i].tag;
+  document.getElementById('vp-title').textContent=SCENES[i].title;
+  document.getElementById('vp-body').innerHTML=SCENES[i].body;
+}
+function loop(){SCENES[cur].draw(tt);tt++;requestAnimationFrame(loop);}
+loop();
+</script>
+</body>
+</html>
