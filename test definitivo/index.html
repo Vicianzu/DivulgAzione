@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DivulgAzione — Fisica Teorica Interattiva</title>
+<meta name="description" content="Simulazioni interattive di fisica teorica in italiano: Relatività, Meccanica Quantistica, Teoria delle Stringhe, AdS/CFT, LQG e altro.">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ── NAVBAR ── -->
+<nav class="npd-nav">
+  <a href="index.html" class="npd-nav-logo">
+    <span class="accent">D</span>ivulg<span class="accent">A</span>zione
+  </a>
+  <div class="npd-nav-divider"></div>
+  <span class="npd-nav-tagline">Fisica Teorica Interattiva · in italiano</span>
+  <div class="npd-nav-search">
+    <select>
+      <option>argomento</option>
+      <option>autore</option>
+      <option>parola chiave</option>
+    </select>
+    <input type="text" placeholder="Cerca argomenti, teorie, concetti...">
+    <button>Cerca</button>
+  </div>
+  <ul class="npd-nav-links">
+    <li><a href="index.html" class="active">Home</a></li>
+    <li><a href="#serie-ads-cft">AdS/CFT</a></li>
+    <li><a href="#argomenti">Argomenti</a></li>
+  </ul>
+</nav>
+
+<!-- ── MAIN LAYOUT ── -->
+<div class="npd-container">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="npd-sidebar">
+
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Statistiche archivio</div>
+      <div class="npd-stat-row">Visualizzazioni <strong>13</strong></div>
+      <div class="npd-stat-row">Serie complete <strong>1</strong></div>
+      <div class="npd-stat-row">Capitoli AdS/CFT <strong>14</strong></div>
+      <div class="npd-stat-row">Aggiornato <strong>Mar 2026</strong></div>
+    </div>
+
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Categorie</div>
+      <a href="#argomenti">Relatività <span class="cnt">2</span></a>
+      <a href="#argomenti">Meccanica Quantistica <span class="cnt">2</span></a>
+      <a href="#argomenti">Gravità Quantistica <span class="cnt">3</span></a>
+      <a href="#argomenti">Teoria delle Stringhe <span class="cnt">2</span></a>
+      <a href="#argomenti">Dualità Olografica <span class="cnt">3</span></a>
+      <a href="#serie-ads-cft">Serie AdS/CFT <span class="cnt">14 cap.</span></a>
+    </div>
+
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Argomenti rapidi</div>
+      <a href="relativita_speciale.html">Relatività Speciale</a>
+      <a href="relativita_generale.html">Relatività Generale</a>
+      <a href="meccanica_quantistica.html">Meccanica Quantistica</a>
+      <a href="lqg.html">Loop Quantum Gravity</a>
+      <a href="asymptotic_safety.html">Asymptotic Safety</a>
+      <a href="stringhe.html">Teoria delle Stringhe</a>
+      <a href="ads_cft.html">AdS/CFT</a>
+      <a href="bulk_reconstruction.html">Bulk Reconstruction</a>
+      <a href="feynman.html">Diagrammi di Feynman</a>
+      <a href="penrose_ccc.html">Cosmologia Ciclica (CCC)</a>
+      <a href="er_epr.html">ER = EPR</a>
+      <a href="paradosso_informazione.html">Paradosso Informazione</a>
+      <a href="principio_olografico.html">Principio Olografico</a>
+    </div>
+
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Archivi esterni</div>
+      <a href="https://arxiv.org" target="_blank">arXiv.org ↗</a>
+      <a href="https://inspirehep.net" target="_blank">InspireHEP ↗</a>
+      <a href="https://vixra.org" target="_blank">viXra.org ↗</a>
+    </div>
+
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main class="npd-main">
+
+    <div class="npd-info">
+      <strong>DivulgAzione</strong> è un archivio di visualizzazioni interattive di fisica teorica
+      in italiano. Ogni pagina presenta un argomento con animazioni Canvas, formule e spiegazioni
+      accessibili. Il sito usa lo stile del
+      <a href="../Npd/index.html" target="_blank">New Physics Department ↗</a>
+      per garantire leggibilità e coerenza visiva.
+    </div>
+
+    <!-- ── ARGOMENTI PRINCIPALI ── -->
+    <div class="npd-results-header" id="argomenti">
+      <div class="npd-results-count">
+        <strong>9</strong> visualizzazioni principali
+      </div>
+      <div style="font-size:12px; color: var(--text-dim);">
+        Ordine: tematico ▾
+      </div>
+    </div>
+
+    <!-- CARD: Relatività Speciale -->
+    <div class="npd-card">
+      <span class="npd-paper-num">#01</span>
+      <a href="relativita_speciale.html" class="npd-paper-title">Relatività Speciale — Einstein 1905</a>
+      <div class="npd-paper-meta">Relatività · 6 scene animate</div>
+      <div style="margin-bottom:10px;">
+        <span class="npd-badge badge-live">● Live</span>
+        <span class="npd-badge badge-cat">Relatività</span>
+        <span class="npd-badge badge-cat">Fisica classica</span>
+      </div>
+      <div class="npd-abstract">
+        Dalla crisi dell'etere ai postulati di Einstein: dilatazione del tempo, contrazione di Lorentz,
+        spazio-tempo di Minkowski e E = mc². Animazioni interattive di esperimenti mentali fondamentali.
+      </div>
+      <div class="npd-paper-links">
+        <a href="relativita_speciale.html">▶ Visualizzazione interattiva</a>
+      </div>
+    </div>
+
+    <!-- CARD: Relatività Generale -->
+    <div class="npd-card">
+      <span class="npd-paper-num">#02</span>
+      <a href="relativita_generale.html" class="npd-paper-title">Relatività Generale — Curvatura dello Spaziotempo</a>
+      <div class="npd-paper-meta">Relatività · 5 scene animate</div>
+      <div style="margin-bottom:10px;">
+        <span class="npd-badge badge-live">● Live</span>
+        <span class="npd-badge badge-cat">Relatività</span>
+        <span class="npd-badge badge-cat">Gravità</span>
+      </div>
+      <div class="npd-abstract">
+        Principio di equivalenza, equazioni di Einstein, buchi neri, onde gravitazionali e diagrammi
+        di Penrose. La gravità come geometria dello spaziotempo curvo.
+      </div>
+      <div class="npd-paper-links">
+        <a href="relativita_generale.html">▶ Visualizzazione interattiva</a>
+      </div>
+    </div>
+
+    <!-- CARD: Meccanica Quantistica -->
+    <div class="npd-card">
+      <span class="npd-paper-num">#03</span>
+      <a href="meccanica_quantistica.html" class="npd-paper-title">Meccanica Quantistica — Fondamenti e Modello Standard</a>
+      <div class="npd-paper-meta">Quantistica · 5 scene animate</div>
+      <div style="margin-bottom:10px;">
+        <span class="npd-badge badge-live">● Live</span>
+        <span class="npd-badge badge-cat">Meccanica Quantistica</span>
+        <span class="npd-badge badge-cat">QFT</span>
+      </div>
+      <div class="npd-abstract">
+        Funzione d'onda, principio di indeterminazione di Heisenberg, entanglement, Modello Standard
+        e quantizzazione dei campi. Dall'atomo di Bohr alla QFT relativistica.
+      </div>
+      <div class="npd-paper-links">
+        <a href="meccanica_quantistica.html">▶ Visualizzazione interattiva</a>
+      </div>
+    </div>
+
+    <!-- CARD: LQG -->
+    <div class="npd-card">
+      <span class="npd-paper-num">#04</span>
+      <a href="lqg.html" class="npd-paper-title">Gravità Quantistica a Loop (LQG)</a>
+      <div class="npd-paper-meta">Gravità Quantistica · 5 scene animate</div>
+      <div style="margin-bottom:10px;">
+        <span class="npd-badge badge-live">● Live</span>
+        <span class="npd-badge badge-cat">Gravità Quantistica</span>
+        <span class="npd-badge badge-cat">LQG</span>
+      </div>
+      <div class="npd-abstract">
+        Reti di spin, spazio discreto a scala di Planck, Big Bounce e cosmologia quantistica a loop.
+        La geometria come rete combinatoria di nodi e link con area e volume quantizzati.
+      </div>
+      <div class="npd-paper-links">
+        <a href="lqg.html">▶ Visualizzazione interattiva</a>
+      </div>
+    </div>
+
+    <!-- CARD: Asymptotic Safety -->
+    <div class="npd-card">
+      <span class="npd-paper-num">#05</span>
+      <a href="asymptotic_safety.html" class="npd-paper-title">Asymptotic Safety — Il Punto Fisso UV della Gravità</a>
+      <div class="npd-paper-meta">Gravità Quantistica · 4 scene animate</div>
+      <div style="margin-bottom:10px;">
+        <span class="npd-badge badge-live">● Live</span>
+        <span class="npd-badge badge-cat">Gravità Quantistica</span>
+        <span class="npd-badge badge-cat">Gruppo di Rinormalizzazione</span>
+      </div>
+      <div class="npd-abstract">
+        Rinormalizzazione non-perturbativa, punto fisso UV di Reuter, flusso del gruppo di
+        rinormalizzazione della costante di Newton. La gravità predittiva a tutte le scale energetiche.
+      </div>
+      <div class="npd-paper-links">
+        <a href="asymptotic_safety.html">▶ Visualizzazione interattiva</a>
+      </div>
+    </div>
+
+    <!-- CARD: Stringhe -->
+    <div class="npd-card">
+      <span class="npd-paper-num">#06</span>
+      <a href="stringhe.html" class="npd-paper-title">Teoria delle Stringhe &amp; Calabi-Yau</a>
+      <div class="npd-paper-meta">Teoria delle Stringhe · 5 scene animate</div>
+      <div style="margin-bottom:10px;">
+        <span class="npd-badge badge-live">● Live</span>
+        <span class="npd-badge badge-cat">Stringhe</span>
+        <span class="npd-badge badge-cat">M-teoria</span>
+        <span class="npd-badge badge-cat">D-brane</span>
+      </div>
+      <div class="npd-abstract">
+        Dalla stringa bosonica alla superstringa: dualità S, T, U; M-teoria, D-brane, compattificazione
+        su varietà Calabi-Yau e il paesaggio delle soluzioni.
+      </div>
+      <div class="npd-paper-links">
+        <a href="stringhe.html">▶ Visualizzazione interattiva</a>
+      </div>
+    </div>
+
+    <!-- CARD: AdS/CFT -->
+    <div class="npd-card">
+      <span class="npd-paper-num">#07</span>
+      <a href="ads_cft.html" class="npd-paper-title">Corrispondenza AdS/CFT — La Dualità Olografica</a>
+      <div class="npd-paper-meta">Dualità Olografica · 5 scene animate</div>
+      <div style="margin-bottom:10px;">
+        <span class="npd-badge badge-live">● Live</span>
+        <span class="npd-badge badge-cat">AdS/CFT</span>
+        <span class="npd-badge badge-cat">Olografia</span>
+        <span class="npd-badge badge-cat">Maldacena</span>
+      </div>
+      <div class="npd-abstract">
+        La congettura di Maldacena (1997): la gravità in AdS₅×S⁵ è equivalente a 𝒩=4 SYM sul bordo.
+        Dizionario bulk-bordo, dualità forte-debole e geometria emergente dall'entanglement.
+      </div>
+      <div class="npd-paper-links">
+        <a href="ads_cft.html">▶ Visualizzazione interattiva</a>
+      </div>
+    </div>
+
+    <!-- CARD: ER=EPR -->
+    <div class="npd-card">
+      <span class="npd-paper-num">#08</span>
+      <a href="er_epr.html" class="npd-paper-title">ER = EPR — Wormhole e Entanglement Quantistico</a>
+      <div class="npd-paper-meta">Dualità Olografica · 4 scene animate</div>
+      <div style="margin-bottom:10px;">
+        <span class="npd-badge badge-live">● Live</span>
+        <span class="npd-badge badge-cat">ER=EPR</span>
+        <span class="npd-badge badge-cat">Entanglement</span>
+        <span class="npd-badge badge-cat">Wormhole</span>
+      </div>
+      <div class="npd-abstract">
+        La congettura di Maldacena e Susskind (2013): i ponti di Einstein-Rosen sono fisicamente
+        identici alle coppie EPR entangled. Lo spaziotempo emerge dall'entanglement quantistico.
+      </div>
+      <div class="npd-paper-links">
+        <a href="er_epr.html">▶ Visualizzazione interattiva</a>
+      </div>
+    </div>
+
+    <!-- CARD: Principio Olografico -->
+    <div class="npd-card">
+      <span class="npd-paper-num">#09</span>
+      <a href="principio_olografico.html" class="npd-paper-title">Il Principio Olografico e il Futuro della Fisica</a>
+      <div class="npd-paper-meta">Dualità Olografica · 4 scene animate</div>
+      <div style="margin-bottom:10px;">
+        <span class="npd-badge badge-live">● Live</span>
+        <span class="npd-badge badge-cat">Principio Olografico</span>
+        <span class="npd-badge badge-cat">'t Hooft</span>
+        <span class="npd-badge badge-cat">Tensor Network</span>
+      </div>
+      <div class="npd-abstract">
+        Dal limite di Bekenstein al principio olografico di 't Hooft e Susskind: la fisica in un volume
+        è codificata sulla superficie. Tensor network MERA, dS/CFT e domande aperte.
+      </div>
+      <div class="npd-paper-links">
+        <a href="principio_olografico.html">▶ Visualizzazione interattiva</a>
+      </div>
+    </div>
+
+    <!-- SEPARATORE SERIE -->
+    <div class="npd-results-header" id="serie-ads-cft" style="margin-top:32px;">
+      <div class="npd-results-count">
+        <strong>Serie AdS/CFT</strong> — 14 capitoli tematici
+      </div>
+    </div>
+
+    <div class="npd-info">
+      Serie completa sulla corrispondenza AdS/CFT: dai fondamenti (SUSY, stringhe, supergravità)
+      alla dualità di Maldacena, fino alle frontiere della ricerca (entanglement, ER=EPR,
+      paradosso dell'informazione, principio olografico).
+    </div>
+
+    <!-- CARD: CAP 01 -->
+    <div class="npd-card">
+      <span class="npd-paper-num">CAP 01</span>
+      <a href="ads_cap01_problema.html" class="npd-paper-title">Il Problema: Quantizzare la Gravità</a>
+      <div class="npd-paper-meta">AdS/CFT Series · Capitolo 01</div>
+      <div style="margin-bottom:10px;">
+        <span class="npd-badge badge-live">● Live</span>
+        <span class="npd-badge badge-cat">GR vs QM</span>
+        <span class="npd-badge badge-cat">Scala di Planck</span>
+      </div>
+      <div class="npd-abstract">
+        GR vs QM: la crisi concettuale a E_P, la non-rinormalizzabilità della gravità,
+        le strade verso la gravità quantistica e il ruolo della dualità AdS/CFT.
+      </div>
+      <div class="npd-paper-links">
+        <a href="ads_cap01_problema.html">▶ Visualizzazione interattiva</a>
+      </div>
+    </div>
+
+    <!-- CARD: CAP 02–14 condensati -->
+    <div class="npd-card">
+      <span class="npd-paper-num">CAP 02–14</span>
+      <a href="ads_cft.html" class="npd-paper-title">Serie completa: AdS/CFT dalla A alla Z</a>
+      <div class="npd-paper-meta">AdS/CFT Series · 13 capitoli rimanenti</div>
+      <div style="margin-bottom:10px;">
+        <span class="npd-badge badge-cat">SUSY</span>
+        <span class="npd-badge badge-cat">Stringhe</span>
+        <span class="npd-badge badge-cat">SUGRA</span>
+        <span class="npd-badge badge-cat">AdS</span>
+        <span class="npd-badge badge-cat">CFT</span>
+        <span class="npd-badge badge-cat">Dizionario</span>
+        <span class="npd-badge badge-cat">ER=EPR</span>
+        <span class="npd-badge badge-cat">Isole</span>
+      </div>
+      <div class="npd-abstract">
+        SUSY, Teoria delle Stringhe, SUGRA, Geometria AdS, CFT, Bekenstein-Hawking,
+        D-brane e Maldacena, Dizionario AdS/CFT, Bulk Reconstruction, Entanglement RT,
+        ER=EPR, Paradosso dell'Informazione, Principio Olografico.
+      </div>
+      <div class="npd-paper-links">
+        <a href="ads_cft.html">▶ Apri visualizzazione AdS/CFT</a>
+        <a href="bulk_reconstruction.html">Bulk Reconstruction</a>
+        <a href="feynman.html">Diagrammi di Feynman</a>
+        <a href="paradosso_informazione.html">Paradosso Informazione</a>
+        <a href="penrose_ccc.html">Cosmologia Ciclica</a>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<footer class="npd-footer">
+  <span>DivulgAzione · Fisica Teorica Interattiva · 2026</span>
+  <span>
+    <a href="index.html">Home</a> ·
+    <a href="#argomenti">Argomenti</a> ·
+    <a href="#serie-ads-cft">Serie AdS/CFT</a> ·
+    <a href="../Npd/index.html" target="_blank">New Physics Department ↗</a>
+  </span>
+</footer>
+
+</body>
+</html>

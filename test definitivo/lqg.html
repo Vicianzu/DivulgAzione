@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loop Quantum Gravity | DivulgAzione</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="npd-nav">
+  <a href="index.html" class="npd-nav-logo"><span class="accent">D</span>ivulg<span class="accent">A</span>zione</a>
+  <div class="npd-nav-divider"></div>
+  <span class="npd-nav-tagline">Fisica Teorica Interattiva</span>
+  <ul class="npd-nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#argomenti">Argomenti</a></li>
+    <li><a href="lqg.html" class="active">LQG</a></li>
+  </ul>
+</nav>
+
+<div class="td-breadcrumb">
+  <div class="td-breadcrumb-inner">
+    <a href="index.html">Home</a><span> / </span><a href="index.html#argomenti">Gravità Quantistica</a><span> / </span><span>Loop Quantum Gravity</span>
+  </div>
+</div>
+
+<div class="td-page-header">
+  <div class="td-page-header-inner">
+    <div class="td-page-id">Gravità Quantistica · #04</div>
+    <div class="td-page-title">Gravità Quantistica a Loop (LQG)</div>
+    <div class="td-page-subtitle">Lo spazio è quantizzato: reti di spin, area discreta a scala di Planck e il Big Bounce cosmologico</div>
+    <div class="td-page-badges">
+      <span class="npd-badge badge-live">● Live</span>
+      <span class="npd-badge badge-cat">Gravità Quantistica</span>
+      <span class="npd-badge badge-as">LQG</span>
+    </div>
+  </div>
+</div>
+
+<div class="npd-container">
+  <aside class="npd-sidebar">
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Informazioni</div>
+      <div class="td-info-row"><span>Fondatori</span><span class="td-v">Rovelli, Smolin, Ashtekar</span></div>
+      <div class="td-info-row"><span>Anno</span><span class="td-v">1986–1995</span></div>
+      <div class="td-info-row"><span>Fondamento</span><span class="td-v">Variabili di Ashtekar-Barbero</span></div>
+      <div class="td-info-row"><span>Area minima</span><span class="td-v">A<sub>min</sub> = 4πγ√3 l<sub>P</sub>²</span></div>
+    </div>
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Navigazione</div>
+      <a href="meccanica_quantistica.html" class="td-sidebar-link">← Meccanica Quantistica</a>
+      <a href="asymptotic_safety.html" class="td-sidebar-link">Asymptotic Safety →</a>
+    </div>
+  </aside>
+
+  <main class="npd-main">
+    <div class="td-card">
+      <div class="td-card-title">Reti di Spin</div>
+      <div class="td-card-body">
+        <p>In LQG la geometria dello spazio è descritta da <span class="td-cy">reti di spin</span>: grafi in cui i <em>nodi</em> rappresentano volumi quantizzati di spazio e i <em>link</em> rappresentano superfici con area discreta. I valori di spin <span class="td-am">j = 0, 1/2, 1, 3/2, …</span> assegnati ai link determinano l'area della superficie corrispondente.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Lo Spazio Discreto</div>
+      <div class="td-card-body">
+        <p>A scale inferiori alla lunghezza di Planck l<sub>P</sub> ≈ 1.6×10⁻³⁵ m, lo spazio non è continuo. L'area di una superficie intersecata da j link è quantizzata secondo:</p>
+        <div class="td-formula">A = 8πγ l_P² Σ √(j_i(j_i+1))</div>
+        <p>Dove <span class="td-cy">γ ≈ 0.2375</span> è il parametro di Barbero-Immirzi. Non esiste area minore del quanto fondamentale <span class="td-am">A_min = 4πγ√3 l_P²</span>.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Cosmologia Quantistica a Loop</div>
+      <div class="td-card-body">
+        <p>Nella Loop Quantum Cosmology (LQC), la singolarità del Big Bang è <span class="td-hl">rimpiazzata da un Big Bounce</span>: quando la densità di energia raggiunge la densità critica di Planck ρ<sub>P</sub> ≈ 5.16×10⁹⁶ kg/m³, la pressione quantistica ferma il collasso e innesca una nuova espansione. L'universo rimbalza.</p>
+      </div>
+    </div>
+
+    <hr class="td-viz-divider">
+    <div class="td-viz-wrap">
+      <div class="td-viz-toolbar">
+        <span class="td-viz-label">VISUALIZZAZIONE</span>
+        <div class="td-viz-btns">
+          <button class="td-viz-btn active" onclick="go(0)">Rete di Spin</button>
+          <button class="td-viz-btn" onclick="go(1)">Spazio Discreto</button>
+          <button class="td-viz-btn" onclick="go(2)">Area Quantizzata</button>
+          <button class="td-viz-btn" onclick="go(3)">Big Bounce</button>
+          <button class="td-viz-btn" onclick="go(4)">Spinfoam</button>
+        </div>
+      </div>
+      <div class="td-viz-area">
+        <div class="td-viz-panel">
+          <div class="td-viz-panel-tag" id="vp-tag">SCENA 01</div>
+          <div class="td-viz-panel-title" id="vp-title">Rete di Spin</div>
+          <div class="td-viz-panel-body" id="vp-body">Una rete di spin è il quantum di geometria in LQG. I nodi rappresentano volumi quantizzati, i link rappresentano superfici con area discreta proporzionale allo spin j.</div>
+        </div>
+        <div class="td-viz-canvas-wrap">
+          <canvas id="viz-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="npd-footer">
+  <span>DivulgAzione · Loop Quantum Gravity · 2026</span>
+  <span><a href="index.html">Home</a> · <a href="index.html#argomenti">Argomenti</a></span>
+</footer>
+
+<script>
+const cv = document.getElementById('viz-canvas');
+const ctx = cv.getContext('2d');
+function resize(){cv.width=cv.parentElement.clientWidth;cv.height=cv.parentElement.clientHeight;}
+window.addEventListener('resize',resize);resize();
+
+function txt(s,x,y,col,sz,align){
+  ctx.save();
+  ctx.font=(sz||11)+'px "JetBrains Mono",monospace';
+  ctx.fillStyle=col||'rgba(255,255,255,0.6)';
+  ctx.textAlign=align||'left';
+  ctx.textBaseline='middle';
+  ctx.fillText(s,x,y);
+  ctx.restore();
+}
+function drawGrid(){
+  ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=1;
+  const s=40;
+  for(let x=0;x<cv.width;x+=s){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,cv.height);ctx.stroke();}
+  for(let y=0;y<cv.height;y+=s){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cv.width,y);ctx.stroke();}
+}
+
+// Spin network: fixed node positions (normalized 0..1)
+const NET_NODES=[
+  {fx:0.15,fy:0.25},{fx:0.30,fy:0.55},{fx:0.18,fy:0.75},
+  {fx:0.42,fy:0.20},{fx:0.50,fy:0.48},{fx:0.38,fy:0.72},
+  {fx:0.60,fy:0.18},{fx:0.68,fy:0.45},{fx:0.55,fy:0.75},
+  {fx:0.80,fy:0.25},{fx:0.82,fy:0.60},{fx:0.70,fy:0.82},
+  {fx:0.25,fy:0.40},{fx:0.60,fy:0.62},{fx:0.45,fy:0.88}
+];
+const NET_EDGES=[
+  [0,1],[1,2],[0,3],[1,4],[2,5],[3,4],[3,6],[4,5],[4,7],
+  [5,8],[6,7],[6,9],[7,10],[8,11],[7,13],[9,10],[10,11],
+  [11,14],[1,12],[12,4],[5,13],[13,11],[2,14],[14,8]
+];
+const SPINS=['½','1','3/2','1','½','1','3/2','½','1'];
+
+// Spinfoam foam cells
+let foamCells=[];
+function generateFoam(){
+  foamCells=[];
+  const n=18;
+  for(let i=0;i<n;i++){
+    const pts=[];
+    const cx=0.1+Math.random()*0.8;
+    const cy=0.1+Math.random()*0.8;
+    const r=0.04+Math.random()*0.07;
+    const sides=Math.floor(4+Math.random()*4);
+    for(let s=0;s<sides;s++){
+      pts.push({x:cx+r*Math.cos(s/sides*Math.PI*2+i),y:cy+r*Math.sin(s/sides*Math.PI*2+i)});
+    }
+    foamCells.push({pts,phase:Math.random()*Math.PI*2,birth:Math.random()*300,life:200+Math.random()*200});
+  }
+}
+generateFoam();
+
+const SCENES=[
+  {
+    tag:'SCENA 01',
+    title:'Rete di Spin',
+    body:'Una rete di spin è il quantum di geometria in LQG. I nodi rappresentano volumi quantizzati, i link rappresentano superfici con area discreta proporzionale allo spin j.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      // Edges
+      NET_EDGES.forEach((e,i)=>{
+        const a=NET_NODES[e[0]], b=NET_NODES[e[1]];
+        const ax=a.fx*cv.width, ay=a.fy*cv.height;
+        const bx=b.fx*cv.width, by=b.fy*cv.height;
+        ctx.strokeStyle='rgba(255,255,255,0.35)';ctx.lineWidth=1.5;
+        ctx.beginPath();ctx.moveTo(ax,ay);ctx.lineTo(bx,by);ctx.stroke();
+        // Spin label at midpoint
+        const mx=(ax+bx)/2, my=(ay+by)/2;
+        const spin=SPINS[i%SPINS.length];
+        txt('j='+spin,mx,my,'rgba(255,160,0,0.7)',9,'center');
+      });
+      // Nodes
+      NET_NODES.forEach((n,i)=>{
+        const x=n.fx*cv.width, y=n.fy*cv.height;
+        const r=6+3*Math.sin(t*0.04+i*0.7);
+        // Glow
+        const grad=ctx.createRadialGradient(x,y,0,x,y,r*2.5);
+        grad.addColorStop(0,'rgba(0,188,212,0.5)');grad.addColorStop(1,'rgba(0,188,212,0)');
+        ctx.fillStyle=grad;ctx.beginPath();ctx.arc(x,y,r*2.5,0,Math.PI*2);ctx.fill();
+        ctx.fillStyle='rgba(0,188,212,0.95)';
+        ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.fill();
+        ctx.strokeStyle='rgba(255,255,255,0.7)';ctx.lineWidth=1;
+        ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.stroke();
+      });
+      txt('RETE DI SPIN — quantum di geometria LQG',cv.width/2,cv.height-16,'rgba(255,255,255,0.35)',10,'center');
+      txt('● nodo = volume quantizzato',20,cv.height-38,'rgba(0,188,212,0.6)',10,'left');
+      txt('— link = superficie (area = f(j))',20,cv.height-22,'rgba(255,160,0,0.6)',10,'left');
+    }
+  },
+  {
+    tag:'SCENA 02',
+    title:'Spazio Discreto a Scala di Planck',
+    body:'A scale inferiori alla lunghezza di Planck l_P ≈ 1.6×10⁻³⁵ m, lo spazio non è continuo ma è composto da quanti discreti di geometria.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      // Zoom effect: as t increases, scale up to show discrete cells
+      const zoom=1+Math.min(t*0.008,3.5);
+      const cx=cv.width/2, cy=cv.height/2;
+      const baseStep=Math.min(cv.width,cv.height)*0.09;
+      const step=baseStep/zoom;
+      // Color grid lines more vividly as zoom increases
+      const discreteness=Math.min(1,(zoom-1)/2.5);
+      ctx.strokeStyle=`rgba(0,188,212,${0.15+discreteness*0.35})`;
+      ctx.lineWidth=1;
+      const offX=cx%step, offY=cy%step;
+      for(let x=offX-step;x<cv.width+step;x+=step){
+        ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,cv.height);ctx.stroke();
+      }
+      for(let y=offY-step;y<cv.height+step;y+=step){
+        ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cv.width,y);ctx.stroke();
+      }
+      // At high zoom, fill cells with discrete colors
+      if(zoom>2.0){
+        const alpha=(zoom-2.0)/1.5*0.35;
+        for(let xi=0;xi*step<cv.width+step;xi++){
+          for(let yi=0;yi*step<cv.height+step;yi++){
+            const x=(xi-0.5)*step+offX-step;
+            const y=(yi-0.5)*step+offY-step;
+            const hue=(xi*7+yi*13)%6;
+            const cols=['rgba(0,188,212,A)','rgba(33,150,243,A)','rgba(0,188,212,A)','rgba(0,150,200,A)','rgba(0,188,212,A)','rgba(33,100,200,A)'];
+            ctx.fillStyle=cols[hue].replace('A',alpha.toString());
+            ctx.fillRect(x,y,step-1,step-1);
+          }
+        }
+      }
+      // Labels
+      const scaleLabel=zoom<2?'scala macroscopica':'scala di Planck';
+      ctx.save();
+      ctx.font='bold 14px "JetBrains Mono",monospace';
+      ctx.fillStyle=`rgba(255,255,255,${0.5+discreteness*0.4})`;
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(scaleLabel,cx,32);
+      ctx.restore();
+      txt(`zoom × ${zoom.toFixed(1)}`,cv.width-20,cv.height-16,'rgba(0,188,212,0.65)',11,'right');
+      txt(`step = ${(step).toFixed(0)} px`,20,cv.height-16,'rgba(255,255,255,0.4)',10,'left');
+      if(zoom>3.2){
+        txt('QUANTI DI GEOMETRIA',cx,cy,'rgba(0,188,212,0.55)',12,'center');
+        txt('l_P ≈ 1.6 × 10⁻³⁵ m',cx,cy+20,'rgba(255,255,255,0.4)',10,'center');
+      }
+    }
+  },
+  {
+    tag:'SCENA 03',
+    title:'Area Quantizzata',
+    body:"In LQG ogni superficie intersecata da j link ha un'area minima non nulla, proporzionale a j(j+1). Non esiste area più piccola del quanto fondamentale.",
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const cols=6, rows=4;
+      const cw=cv.width/(cols+2), ch=cv.height/(rows+2);
+      const offX=(cv.width-cols*cw)*0.5;
+      const offY=(cv.height-rows*ch)*0.5;
+      const total=cols*rows;
+      const visible=Math.min(total,Math.floor(t/8)+1);
+      const jVals=[0.5,1,1.5,1,0.5,2,1,1.5,0.5,1,2,1.5,1,0.5,1,2,1.5,0.5,1,1,2,0.5,1.5,1];
+      for(let i=0;i<visible;i++){
+        const col=i%cols, row=Math.floor(i/cols);
+        const x=offX+col*cw;
+        const y=offY+row*ch;
+        const j=jVals[i%jVals.length];
+        const area=Math.sqrt(j*(j+1)).toFixed(2);
+        const pulse=0.7+0.3*Math.sin(t*0.05+i*0.4);
+        const alpha=Math.min(1,(t/8-i)*0.5);
+        // Hue based on j
+        const hues={0.5:'rgba(0,188,212,A)',1:'rgba(33,150,243,A)',1.5:'rgba(76,175,80,A)',2:'rgba(156,39,176,A)'};
+        const baseCol=(hues[j]||'rgba(0,188,212,A)');
+        ctx.fillStyle=baseCol.replace('A',(alpha*0.18).toString());
+        ctx.strokeStyle=baseCol.replace('A',(alpha*pulse).toString());
+        ctx.lineWidth=1.5;
+        ctx.fillRect(x+2,y+2,cw-4,ch-4);
+        ctx.strokeRect(x+2,y+2,cw-4,ch-4);
+        // Content
+        txt('j='+j,x+cw/2,y+ch*0.33,baseCol.replace('A',(alpha*0.9).toString()),10,'center');
+        txt('A=√(j(j+1))',x+cw/2,y+ch*0.55,baseCol.replace('A',(alpha*0.65).toString()),8,'center');
+        txt(area+' A_min',x+cw/2,y+ch*0.74,'rgba(255,255,255,'+(alpha*0.55)+')',9,'center');
+      }
+      txt(`QUANTI DI AREA: ${visible}/${total}`,cv.width/2,cv.height-16,'rgba(255,255,255,0.4)',10,'center');
+      txt('A = 8πγ l_P² Σ √(j(j+1))',cv.width/2,20,'rgba(255,255,255,0.6)',11,'center');
+    }
+  },
+  {
+    tag:'SCENA 04',
+    title:'Big Bounce — LQC',
+    body:"Nella cosmologia quantistica a loop, la singolarità del Big Bang è rimpiazzata da un Big Bounce: l'universo che collassa rimbalza in espansione quando la densità raggiunge la densità critica di Planck.",
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const cx=cv.width/2, cy=cv.height/2;
+      const period=300;
+      const phase=(t%period)/period;
+      // Radius: large → small → large (bounce at phase=0.5)
+      const maxR=Math.min(cv.width,cv.height)*0.38;
+      const minR=Math.min(cv.width,cv.height)*0.04;
+      let r, label, labelCol;
+      if(phase<0.45){
+        // Contraction
+        r=maxR*(1-phase/0.45)+minR*(phase/0.45);
+        label='COLLASSO';labelCol='rgba(255,160,0,0.9)';
+      } else if(phase<0.55){
+        // Bounce
+        const bp=(phase-0.45)/0.1;
+        r=minR+(minR*0.5)*Math.sin(bp*Math.PI);
+        label='BIG BOUNCE!';labelCol='rgba(0,188,212,1)';
+      } else {
+        // Expansion
+        const ep=(phase-0.55)/0.45;
+        r=minR+ep*(maxR-minR);
+        label='ESPANSIONE';labelCol='rgba(33,150,243,0.9)';
+      }
+      // Fill with faint grid
+      ctx.save();ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.clip();
+      const density=Math.max(0.05,minR/r);
+      ctx.strokeStyle=`rgba(0,188,212,${density*0.4})`;ctx.lineWidth=1;
+      const innerStep=Math.max(8,r/6);
+      for(let x=-r;x<r;x+=innerStep){
+        ctx.beginPath();ctx.moveTo(cx+x,-r+cy);ctx.lineTo(cx+x,r+cy);ctx.stroke();
+      }
+      for(let y=-r;y<r;y+=innerStep){
+        ctx.beginPath();ctx.moveTo(-r+cx,cy+y);ctx.lineTo(r+cx,cy+y);ctx.stroke();
+      }
+      ctx.restore();
+      // Universe circle
+      ctx.strokeStyle=`rgba(0,188,212,0.85)`;ctx.lineWidth=2;
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.stroke();
+      ctx.fillStyle='rgba(0,188,212,0.06)';
+      ctx.beginPath();ctx.arc(cx,cy,r,0,Math.PI*2);ctx.fill();
+      // Glow at bounce
+      if(phase>=0.45&&phase<0.55){
+        const gA=(1-(phase-0.5)*(phase-0.5)*400)*0.7;
+        ctx.beginPath();ctx.arc(cx,cy,r+30,0,Math.PI*2);
+        ctx.fillStyle=`rgba(0,188,212,${Math.max(0,gA*0.2)})`;ctx.fill();
+      }
+      // Label
+      ctx.save();
+      ctx.font='bold 16px "JetBrains Mono",monospace';
+      ctx.fillStyle=labelCol;
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(label,cx,cy);
+      ctx.restore();
+      // Timeline arrow
+      const tw=cv.width*0.7, ty=cv.height-28;
+      const tx=cv.width*0.15;
+      ctx.strokeStyle='rgba(255,255,255,0.3)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(tx,ty);ctx.lineTo(tx+tw,ty);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(tx+tw-8,ty-5);ctx.lineTo(tx+tw,ty);ctx.lineTo(tx+tw-8,ty+5);ctx.stroke();
+      const dot=tx+((t%period)/period)*tw;
+      ctx.beginPath();ctx.arc(dot,ty,4,0,Math.PI*2);
+      ctx.fillStyle='rgba(0,188,212,0.9)';ctx.fill();
+      txt('tempo cosmologico →',tx+tw/2,ty+14,'rgba(255,255,255,0.35)',9,'center');
+      txt(`r = ${r.toFixed(0)} u`,cx,cy+r+18,labelCol.replace('0.9','0.6').replace('1','0.6'),9,'center');
+    }
+  },
+  {
+    tag:'SCENA 05',
+    title:'Spinfoam',
+    body:"Una spinfoam è l'analogo relativistico-covariante della rete di spin: una struttura 2D fatta di facce, spigoli e vertici che descrive l'evoluzione della geometria quantistica nel tempo.",
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      const foam=foamCells;
+      foam.forEach((cell,i)=>{
+        const age=t-cell.birth;
+        if(age<0||age>cell.life) return;
+        const lifePhase=age/cell.life;
+        const alpha=lifePhase<0.2?lifePhase/0.2:lifePhase>0.8?(1-lifePhase)/0.2:1;
+        const pulse=0.5+0.4*Math.sin(t*0.03+cell.phase);
+        const pts=cell.pts.map(p=>({x:p.x*cv.width,y:p.y*cv.height}));
+        // Face fill
+        ctx.beginPath();
+        pts.forEach((p,pi)=>pi===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y));
+        ctx.closePath();
+        const faceAlpha=alpha*pulse*0.12;
+        ctx.fillStyle=`rgba(0,188,212,${faceAlpha})`;ctx.fill();
+        // Edges
+        ctx.strokeStyle=`rgba(0,188,212,${alpha*pulse*0.7})`;ctx.lineWidth=1.2;
+        ctx.beginPath();
+        pts.forEach((p,pi)=>pi===0?ctx.moveTo(p.x,p.y):ctx.lineTo(p.x,p.y));
+        ctx.closePath();ctx.stroke();
+        // Vertices
+        pts.forEach(p=>{
+          ctx.beginPath();ctx.arc(p.x,p.y,2.5,0,Math.PI*2);
+          ctx.fillStyle=`rgba(255,255,255,${alpha*0.8})`;ctx.fill();
+        });
+        // Face label
+        const fcx=pts.reduce((s,p)=>s+p.x,0)/pts.length;
+        const fcy=pts.reduce((s,p)=>s+p.y,0)/pts.length;
+        txt('f'+(i%9),fcx,fcy,`rgba(0,188,212,${alpha*0.5})`,8,'center');
+      });
+      // Regenerate cells
+      if(t%80===0){
+        const idx=Math.floor(Math.random()*foam.length);
+        const cx2=0.1+Math.random()*0.8, cy2=0.1+Math.random()*0.8;
+        const r=0.04+Math.random()*0.07;
+        const sides=Math.floor(4+Math.random()*4);
+        const pts=[];
+        for(let s=0;s<sides;s++) pts.push({x:cx2+r*Math.cos(s/sides*Math.PI*2+idx),y:cy2+r*Math.sin(s/sides*Math.PI*2+idx)});
+        foam[idx]={pts,phase:Math.random()*Math.PI*2,birth:t,life:200+Math.random()*200};
+      }
+      txt('SPINFOAM — evoluzione della geometria quantistica',cv.width/2,cv.height-16,'rgba(255,255,255,0.35)',10,'center');
+      txt('● vertice',18,cv.height-38,'rgba(255,255,255,0.5)',9,'left');
+      txt('— spigolo',18,cv.height-24,'rgba(0,188,212,0.55)',9,'left');
+    }
+  }
+];
+
+let cur=0, t=0;
+function go(i){
+  cur=i;t=0;
+  document.querySelectorAll('.td-viz-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
+  document.getElementById('vp-tag').textContent=SCENES[i].tag;
+  document.getElementById('vp-title').textContent=SCENES[i].title;
+  document.getElementById('vp-body').innerHTML=SCENES[i].body;
+}
+function loop(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  SCENES[cur].draw(t);
+  t++;
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>

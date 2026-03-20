@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Relatività Speciale | DivulgAzione</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="npd-nav">
+  <a href="index.html" class="npd-nav-logo"><span class="accent">D</span>ivulg<span class="accent">A</span>zione</a>
+  <div class="npd-nav-divider"></div>
+  <span class="npd-nav-tagline">Fisica Teorica Interattiva</span>
+  <ul class="npd-nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#argomenti">Argomenti</a></li>
+    <li><a href="relativita_speciale.html" class="active">Rel. Speciale</a></li>
+  </ul>
+</nav>
+
+<div class="td-breadcrumb">
+  <div class="td-breadcrumb-inner">
+    <a href="index.html">Home</a><span> / </span><a href="index.html#argomenti">Relatività</a><span> / </span><span>Relatività Speciale</span>
+  </div>
+</div>
+
+<div class="td-page-header">
+  <div class="td-page-header-inner">
+    <div class="td-page-id">Relatività · #01</div>
+    <div class="td-page-title">Relatività Speciale — Einstein 1905</div>
+    <div class="td-page-subtitle">I postulati di Einstein, dilatazione del tempo, contrazione di Lorentz, coni luce di Minkowski e l'equivalenza massa-energia</div>
+    <div class="td-page-badges">
+      <span class="npd-badge badge-live">● Live</span>
+      <span class="npd-badge badge-cat">Relatività</span>
+      <span class="npd-badge badge-cat">Einstein 1905</span>
+    </div>
+  </div>
+</div>
+
+<div class="npd-container">
+  <aside class="npd-sidebar">
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Informazioni</div>
+      <div class="td-info-row"><span>Anno</span><span class="td-v">1905</span></div>
+      <div class="td-info-row"><span>Postulati</span><span class="td-v">2</span></div>
+      <div class="td-info-row"><span>Effetti</span><span class="td-v">dilatazione, contrazione</span></div>
+      <div class="td-info-row"><span>Equazione iconica</span><span class="td-v">E = mc²</span></div>
+    </div>
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Navigazione</div>
+      <a href="index.html" class="td-sidebar-link">← Home</a>
+      <a href="relativita_generale.html" class="td-sidebar-link">Relatività Generale →</a>
+    </div>
+  </aside>
+
+  <main class="npd-main">
+    <div class="td-card">
+      <div class="td-card-title">I Due Postulati</div>
+      <div class="td-card-body">
+        <p>Einstein (1905) fondò la Relatività Speciale su due postulati: <span class="td-cy">le leggi della fisica sono identiche in tutti i sistemi di riferimento inerziali</span>, e <span class="td-hl">la velocità della luce nel vuoto è la stessa per tutti gli osservatori</span>, indipendentemente dal moto della sorgente. Da questi due postulati emerge il fattore di Lorentz:</p>
+        <div class="td-formula">γ = 1 / √(1 − β²)&nbsp;&nbsp;&nbsp;&nbsp;dove β = v/c</div>
+        <p>Per <span class="td-am">v → c</span>, γ diverge: nessun corpo con massa può raggiungere la velocità della luce.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Dilatazione del Tempo</div>
+      <div class="td-card-body">
+        <p>Un orologio in moto relativo testa più lentamente rispetto a un orologio a riposo. Il <em>tempo proprio</em> τ₀ misurato dall'osservatore in moto appare dilatato all'osservatore esterno:</p>
+        <div class="td-formula">Δt' = γ · Δt₀</div>
+        <p>A v = 0.8c, γ ≈ 1.67: ogni secondo sull'orologio in moto corrisponde a <span class="td-cy">1.67 secondi</span> per l'osservatore a riposo.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Contrazione di Lorentz</div>
+      <div class="td-card-body">
+        <p>La lunghezza di un oggetto in moto è misurata inferiore nella direzione del moto. La <em>lunghezza propria</em> L₀ si contrae a:</p>
+        <div class="td-formula">L' = L₀ / γ = L₀ · √(1 − β²)</div>
+        <p>Questo effetto è reciproco: ciascun osservatore vede l'altro contratto. La contrazione è <span class="td-gr">reale e misurabile</span>, non un'illusione ottica.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Lo Spaziotempo di Minkowski</div>
+      <div class="td-card-body">
+        <p>Hermann Minkowski (1908) unificò spazio e tempo in un'unica varietà 4D. L'<em>intervallo invariante</em> tra due eventi è:</p>
+        <div class="td-formula">ds² = −c²dt² + dx² + dy² + dz²</div>
+        <p>La firma <span class="td-vi">(−, +, +, +)</span> è caratteristica dello spaziotempo relativistico. I <span class="td-cy">coni luce</span> definiscono la struttura causale: eventi con ds² &lt; 0 sono <em>timelike</em>, con ds² &gt; 0 sono <em>spacelike</em>, con ds² = 0 si trovano sul cono luce.</p>
+      </div>
+    </div>
+
+    <hr class="td-viz-divider">
+    <div class="td-viz-wrap">
+      <div class="td-viz-toolbar">
+        <span class="td-viz-label">VISUALIZZAZIONE</span>
+        <div class="td-viz-btns">
+          <button class="td-viz-btn active" onclick="go(0)">Michelson-Morley</button>
+          <button class="td-viz-btn" onclick="go(1)">Dilatazione Tempo</button>
+          <button class="td-viz-btn" onclick="go(2)">Contrazione</button>
+          <button class="td-viz-btn" onclick="go(3)">Cono Luce</button>
+          <button class="td-viz-btn" onclick="go(4)">E = mc²</button>
+        </div>
+      </div>
+      <div class="td-viz-area">
+        <div class="td-viz-panel">
+          <div class="td-viz-panel-tag" id="vp-tag">SCENA 01</div>
+          <div class="td-viz-panel-title" id="vp-title">Esperimento di Michelson-Morley</div>
+          <div class="td-viz-panel-body" id="vp-body">Due raggi di luce percorrono bracci perpendicolari dell'interferometro. Il risultato nullo dimostrò che non esiste l'etere luminifero.</div>
+        </div>
+        <div class="td-viz-canvas-wrap">
+          <canvas id="viz-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="npd-footer">
+  <span>DivulgAzione · Relatività Speciale · 2026</span>
+  <span><a href="index.html">Home</a> · <a href="index.html#argomenti">Argomenti</a></span>
+</footer>
+
+<script>
+const cv = document.getElementById('viz-canvas');
+const ctx = cv.getContext('2d');
+function resize(){cv.width=cv.parentElement.clientWidth;cv.height=cv.parentElement.clientHeight;}
+window.addEventListener('resize',resize);resize();
+
+function txt(s,x,y,col,sz,align){
+  ctx.save();
+  ctx.font=(sz||11)+'px "JetBrains Mono",monospace';
+  ctx.fillStyle=col||'rgba(255,255,255,0.6)';
+  ctx.textAlign=align||'left';
+  ctx.textBaseline='middle';
+  ctx.fillText(s,x,y);
+  ctx.restore();
+}
+
+function drawGrid(){
+  ctx.strokeStyle='rgba(255,255,255,0.06)';
+  ctx.lineWidth=1;
+  const step=40;
+  for(let x=0;x<cv.width;x+=step){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,cv.height);ctx.stroke();}
+  for(let y=0;y<cv.height;y+=step){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cv.width,y);ctx.stroke();}
+}
+
+const SCENES=[
+  {
+    tag:'SCENA 01',
+    title:'Esperimento di Michelson-Morley',
+    body:"Due raggi di luce percorrono bracci perpendicolari dell'interferometro. Il risultato nullo dimostrò che non esiste l'etere luminifero.",
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';
+      ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const cx=cv.width/2, cy=cv.height/2;
+      const arm=Math.min(cv.width,cv.height)*0.3;
+      // Beam splitter
+      ctx.save();
+      ctx.translate(cx,cy);
+      ctx.rotate(Math.PI/4);
+      ctx.strokeStyle='rgba(255,255,255,0.7)';
+      ctx.lineWidth=2;
+      ctx.beginPath();ctx.moveTo(-12,0);ctx.lineTo(12,0);ctx.stroke();
+      ctx.restore();
+      // Horizontal arm
+      ctx.strokeStyle='rgba(0,188,212,0.5)';
+      ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+arm,cy);ctx.stroke();
+      // Mirror H
+      ctx.strokeStyle='rgba(255,255,255,0.8)';
+      ctx.lineWidth=3;
+      ctx.beginPath();ctx.moveTo(cx+arm,cy-14);ctx.lineTo(cx+arm,cy+14);ctx.stroke();
+      // Vertical arm
+      ctx.strokeStyle='rgba(33,150,243,0.5)';
+      ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx,cy-arm);ctx.stroke();
+      // Mirror V
+      ctx.strokeStyle='rgba(255,255,255,0.8)';
+      ctx.lineWidth=3;
+      ctx.beginPath();ctx.moveTo(cx-14,cy-arm);ctx.lineTo(cx+14,cy-arm);ctx.stroke();
+      // Detector arm
+      ctx.strokeStyle='rgba(255,160,0,0.5)';
+      ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx-arm*0.55,cy);ctx.stroke();
+      // Animated light H
+      const ph=(t%100)/100;
+      const lhx=cx+(ph<0.5?ph*2*arm:(2-ph*2)*arm);
+      ctx.beginPath();ctx.arc(lhx,cy,5,0,Math.PI*2);
+      ctx.fillStyle='rgba(0,188,212,1)';
+      ctx.shadowColor='rgba(0,188,212,0.9)';ctx.shadowBlur=14;
+      ctx.fill();ctx.shadowBlur=0;
+      // Animated light V
+      const pv=((t+25)%100)/100;
+      const lvy=cy-(pv<0.5?pv*2*arm:(2-pv*2)*arm);
+      ctx.beginPath();ctx.arc(cx,lvy,5,0,Math.PI*2);
+      ctx.fillStyle='rgba(33,150,243,1)';
+      ctx.shadowColor='rgba(33,150,243,0.9)';ctx.shadowBlur=14;
+      ctx.fill();ctx.shadowBlur=0;
+      // Fringes at detector
+      for(let i=0;i<8;i++){
+        const a=0.2+0.15*Math.sin(t*0.05+i*0.8);
+        ctx.strokeStyle=`rgba(0,188,212,${a})`;
+        ctx.lineWidth=1;
+        ctx.beginPath();ctx.moveTo(cx-arm*0.55+i*7-28,cy-18);ctx.lineTo(cx-arm*0.55+i*7-28,cy+18);ctx.stroke();
+      }
+      txt('BRACCIO H',cx+arm*0.48,cy+18,'rgba(0,188,212,0.7)',10,'center');
+      txt('BRACCIO V',cx+18,cy-arm*0.5,'rgba(33,150,243,0.7)',10,'left');
+      txt('SPECCHIO',cx+arm+6,cy,'rgba(255,255,255,0.5)',9,'left');
+      txt('SPECCHIO',cx+6,cy-arm-14,'rgba(255,255,255,0.5)',9,'left');
+      txt('RIVELATORE',cx-arm*0.55-6,cy-18,'rgba(255,160,0,0.7)',9,'right');
+      txt('ETERE: ✗  RISULTATO NULLO',cx,cv.height-16,'rgba(255,100,100,0.8)',11,'center');
+    }
+  },
+  {
+    tag:'SCENA 02',
+    title:'Dilatazione del Tempo',
+    body:"L'orologio in moto testa più lentamente. A v=0.8c il fattore γ≈1.67: ogni secondo per l'osservatore in moto diventa 1.67s per l'osservatore esterno.",
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';
+      ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const cx=cv.width/2, cy=cv.height/2;
+      const r=Math.min(cv.width,cv.height)*0.19;
+      const gamma=1.67;
+      function drawClock(x,y,angle,label,sublabel,col){
+        ctx.strokeStyle='rgba(255,255,255,0.4)';
+        ctx.lineWidth=2;
+        ctx.beginPath();ctx.arc(x,y,r,0,Math.PI*2);ctx.stroke();
+        for(let i=0;i<12;i++){
+          const a=i/12*Math.PI*2;
+          ctx.beginPath();ctx.moveTo(x+Math.cos(a)*r*0.84,y+Math.sin(a)*r*0.84);
+          ctx.lineTo(x+Math.cos(a)*r*0.96,y+Math.sin(a)*r*0.96);ctx.stroke();
+        }
+        ctx.strokeStyle=col;
+        ctx.lineWidth=2.5;
+        ctx.beginPath();ctx.moveTo(x,y);
+        ctx.lineTo(x+Math.cos(angle-Math.PI/2)*r*0.72,y+Math.sin(angle-Math.PI/2)*r*0.72);ctx.stroke();
+        ctx.fillStyle='rgba(255,255,255,0.9)';
+        ctx.beginPath();ctx.arc(x,y,4,0,Math.PI*2);ctx.fill();
+        txt(label,x,y+r+20,col,12,'center');
+        txt(sublabel,x,y+r+36,'rgba(255,255,255,0.45)',10,'center');
+      }
+      drawClock(cx*0.5,cy,t*0.025,'RIPOSO','τ₀ — tempo proprio','rgba(0,188,212,0.9)');
+      drawClock(cx*1.5,cy,t*0.025/gamma,'v = 0.8c','τ = τ₀ / γ','rgba(33,150,243,0.9)');
+      ctx.save();
+      ctx.font='bold 22px "JetBrains Mono",monospace';
+      ctx.fillStyle='rgba(0,188,212,1)';
+      ctx.textAlign='center';
+      ctx.textBaseline='middle';
+      ctx.fillText('γ = 1.67',cx,cy-r-36);
+      ctx.restore();
+      txt('β = v/c = 0.8',cx,cy-r-16,'rgba(255,255,255,0.45)',11,'center');
+      ctx.strokeStyle='rgba(255,160,0,0.45)';
+      ctx.setLineDash([5,5]);
+      ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(cx*0.5+r+8,cy);ctx.lineTo(cx*1.5-r-8,cy);ctx.stroke();
+      ctx.setLineDash([]);
+      txt('v →',cx,cy+3,'rgba(255,160,0,0.6)',11,'center');
+      const secRest=Math.floor(t*0.025/(Math.PI*2)*60)%60;
+      const secMov=Math.floor(t*0.025/gamma/(Math.PI*2)*60)%60;
+      txt(`t₀ = ${secRest}s`,cx*0.5,cy+r+54,'rgba(255,255,255,0.5)',10,'center');
+      txt(`t' = ${secMov}s`,cx*1.5,cy+r+54,'rgba(255,255,255,0.5)',10,'center');
+    }
+  },
+  {
+    tag:'SCENA 03',
+    title:'Contrazione di Lorentz',
+    body:"Un oggetto in moto appare contratto nella direzione del moto. La lunghezza propria L₀ si riduce a L'=L₀/γ.",
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';
+      ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const cx=cv.width/2, cy=cv.height/2;
+      const beta=0.5+0.45*Math.sin(t*0.012);
+      const gamma=1/Math.sqrt(1-beta*beta);
+      const L0=cv.width*0.38;
+      const Lp=L0/gamma;
+      const h=46;
+      // Rest frame
+      ctx.fillStyle='rgba(0,188,212,0.12)';
+      ctx.strokeStyle='rgba(0,188,212,0.85)';
+      ctx.lineWidth=2;
+      ctx.fillRect(cx-L0/2,cy-h/2-64,L0,h);
+      ctx.strokeRect(cx-L0/2,cy-h/2-64,L0,h);
+      // Bracket L0
+      ctx.strokeStyle='rgba(0,188,212,0.5)';
+      ctx.lineWidth=1;
+      const y0=cy-h-78;
+      ctx.beginPath();ctx.moveTo(cx-L0/2,y0+6);ctx.lineTo(cx-L0/2,y0);ctx.lineTo(cx+L0/2,y0);ctx.lineTo(cx+L0/2,y0+6);ctx.stroke();
+      txt('L₀',cx,y0-8,'rgba(0,188,212,0.9)',12,'center');
+      txt('SISTEMA A RIPOSO',cx,cy-h/2-72,'rgba(0,188,212,0.6)',9,'center');
+      // Moving frame
+      ctx.fillStyle='rgba(255,160,0,0.12)';
+      ctx.strokeStyle='rgba(255,160,0,0.85)';
+      ctx.lineWidth=2;
+      ctx.fillRect(cx-Lp/2,cy-h/2+28,Lp,h);
+      ctx.strokeRect(cx-Lp/2,cy-h/2+28,Lp,h);
+      // Bracket Lp
+      ctx.strokeStyle='rgba(255,160,0,0.5)';
+      ctx.lineWidth=1;
+      const y1=cy+h/2+42;
+      ctx.beginPath();ctx.moveTo(cx-Lp/2,y1-6);ctx.lineTo(cx-Lp/2,y1);ctx.lineTo(cx+Lp/2,y1);ctx.lineTo(cx+Lp/2,y1-6);ctx.stroke();
+      txt("L'",cx,y1+12,'rgba(255,160,0,0.9)',12,'center');
+      txt('SISTEMA IN MOTO',cx,cy-h/2+20,'rgba(255,160,0,0.6)',9,'center');
+      // Velocity arrow
+      ctx.strokeStyle='rgba(255,160,0,0.8)';
+      ctx.lineWidth=2;
+      const ax=cx+Lp/2+10;
+      ctx.beginPath();ctx.moveTo(ax,cy+28);ctx.lineTo(ax+36,cy+28);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(ax+30,cy+22);ctx.lineTo(ax+36,cy+28);ctx.lineTo(ax+30,cy+34);ctx.fill();
+      txt('v',ax+40,cy+28,'rgba(255,160,0,0.8)',11,'left');
+      // Info panel
+      txt(`β = ${beta.toFixed(3)}`,22,cv.height-46,'rgba(255,255,255,0.6)',12,'left');
+      txt(`γ = ${gamma.toFixed(3)}`,22,cv.height-26,'rgba(0,188,212,0.9)',13,'left');
+      txt(`L'/L₀ = ${(1/gamma).toFixed(3)}`,cv.width-22,cv.height-36,'rgba(255,160,0,0.85)',12,'right');
+    }
+  },
+  {
+    tag:'SCENA 04',
+    title:'Cono Luce di Minkowski',
+    body:'Il cono luce divide lo spaziotempo in passato, futuro e regioni causalmente disconnesse. Solo eventi dentro il cono sono raggiungibili.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';
+      ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const cx=cv.width/2, cy=cv.height/2;
+      const s=Math.min(cv.width,cv.height)*0.4;
+      // Future cone
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx-s,cy-s);ctx.lineTo(cx+s,cy-s);ctx.closePath();
+      ctx.fillStyle='rgba(0,188,212,0.09)';ctx.fill();
+      // Past cone
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx-s,cy+s);ctx.lineTo(cx+s,cy+s);ctx.closePath();
+      ctx.fillStyle='rgba(255,160,0,0.09)';ctx.fill();
+      // Spacelike regions
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx-s,cy-s);ctx.lineTo(cx-s,cy+s);ctx.closePath();
+      ctx.fillStyle='rgba(255,255,255,0.03)';ctx.fill();
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+s,cy-s);ctx.lineTo(cx+s,cy+s);ctx.closePath();
+      ctx.fillStyle='rgba(255,255,255,0.03)';ctx.fill();
+      // Axes
+      ctx.strokeStyle='rgba(255,255,255,0.5)';
+      ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(cx,cy-s-12);ctx.lineTo(cx,cy+s+12);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(cx-s-12,cy);ctx.lineTo(cx+s+12,cy);ctx.stroke();
+      txt('ct',cx+5,cy-s-16,'rgba(255,255,255,0.7)',12,'left');
+      txt('x',cx+s+14,cy,'rgba(255,255,255,0.7)',12,'left');
+      // Light cone lines
+      ctx.strokeStyle='rgba(0,188,212,0.95)';ctx.lineWidth=2;
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx-s,cy-s);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+s,cy-s);ctx.stroke();
+      ctx.strokeStyle='rgba(255,160,0,0.95)';ctx.lineWidth=2;
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx-s,cy+s);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+s,cy+s);ctx.stroke();
+      // Labels
+      txt('FUTURO',cx,cy-s*0.55,'rgba(0,188,212,0.9)',13,'center');
+      txt('PASSATO',cx,cy+s*0.55,'rgba(255,160,0,0.9)',13,'center');
+      txt('SPACELIKE',cx-s*0.62,cy+5,'rgba(255,255,255,0.35)',10,'center');
+      txt('SPACELIKE',cx+s*0.62,cy+5,'rgba(255,255,255,0.35)',10,'center');
+      txt('ds²=0  (luce)',cx+s*0.36,cy-s*0.42,'rgba(0,188,212,0.55)',9,'left');
+      // World line
+      const wlen=Math.min(t*0.6,s*0.82);
+      ctx.strokeStyle='rgba(200,80,230,0.9)';
+      ctx.lineWidth=2;
+      ctx.setLineDash([5,3]);
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+wlen*0.18,cy-wlen);ctx.stroke();
+      ctx.setLineDash([]);
+      if(wlen>10){
+        const wx=cx+wlen*0.18, wy=cy-wlen;
+        ctx.beginPath();ctx.arc(wx,wy,4,0,Math.PI*2);
+        ctx.fillStyle='rgba(200,80,230,0.9)';ctx.fill();
+        ctx.shadowColor='rgba(200,80,230,0.7)';ctx.shadowBlur=10;ctx.fill();ctx.shadowBlur=0;
+        txt('linea del mondo',wx+8,wy,'rgba(200,80,230,0.7)',9,'left');
+      }
+      ctx.beginPath();ctx.arc(cx,cy,5,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,255,255,0.9)';ctx.fill();
+      txt('ORIGINE',cx+8,cy-3,'rgba(255,255,255,0.5)',9,'left');
+    }
+  },
+  {
+    tag:'SCENA 05',
+    title:'E = mc²',
+    body:"La massa a riposo è energia pura. L'annichilazione di un elettrone e un positrone produce due fotoni gamma con energia E=mc² ciascuno.",
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';
+      ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const cx=cv.width/2, cy=cv.height/2;
+      const phase=t%220;
+      if(phase<110){
+        const prog=phase/110;
+        const dist=(1-prog)*cv.width*0.26+22;
+        // Electron
+        ctx.beginPath();ctx.arc(cx-dist,cy,16,0,Math.PI*2);
+        ctx.fillStyle='rgba(0,188,212,0.9)';
+        ctx.shadowColor='rgba(0,188,212,0.8)';ctx.shadowBlur=20;
+        ctx.fill();ctx.shadowBlur=0;
+        txt('e⁻',cx-dist,cy,'rgba(255,255,255,1)',11,'center');
+        txt('elettrone',cx-dist,cy+28,'rgba(0,188,212,0.7)',9,'center');
+        // Positron
+        ctx.beginPath();ctx.arc(cx+dist,cy,16,0,Math.PI*2);
+        ctx.fillStyle='rgba(255,160,0,0.9)';
+        ctx.shadowColor='rgba(255,160,0,0.8)';ctx.shadowBlur=20;
+        ctx.fill();ctx.shadowBlur=0;
+        txt('e⁺',cx+dist,cy,'rgba(255,255,255,1)',11,'center');
+        txt('positrone',cx+dist,cy+28,'rgba(255,160,0,0.7)',9,'center');
+        // Approaching arrows
+        ctx.strokeStyle='rgba(255,255,255,0.3)';
+        ctx.lineWidth=1;
+        ctx.setLineDash([3,4]);
+        ctx.beginPath();ctx.moveTo(cx-dist+20,cy-30);ctx.lineTo(cx-20,cy-30);ctx.stroke();
+        ctx.beginPath();ctx.moveTo(cx+dist-20,cy-30);ctx.lineTo(cx+20,cy-30);ctx.stroke();
+        ctx.setLineDash([]);
+      } else {
+        const prog=(phase-110)/110;
+        const flashA=Math.max(0,0.75-prog*1.5);
+        ctx.beginPath();ctx.arc(cx,cy,72*Math.min(prog*2.5,1),0,Math.PI*2);
+        const g=ctx.createRadialGradient(cx,cy,0,cx,cy,72);
+        g.addColorStop(0,`rgba(255,255,255,${flashA})`);
+        g.addColorStop(1,`rgba(255,255,255,0)`);
+        ctx.fillStyle=g;ctx.fill();
+        const plen=prog*cv.width*0.36;
+        // Photon 1
+        ctx.strokeStyle='rgba(0,188,212,0.95)';ctx.lineWidth=3;
+        ctx.shadowColor='rgba(0,188,212,0.7)';ctx.shadowBlur=10;
+        ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+plen*0.72,cy-plen*0.72);ctx.stroke();
+        ctx.beginPath();ctx.arc(cx+plen*0.72,cy-plen*0.72,5,0,Math.PI*2);
+        ctx.fillStyle='rgba(0,188,212,1)';ctx.fill();ctx.shadowBlur=0;
+        // Photon 2
+        ctx.strokeStyle='rgba(33,150,243,0.95)';ctx.lineWidth=3;
+        ctx.shadowColor='rgba(33,150,243,0.7)';ctx.shadowBlur=10;
+        ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx-plen*0.72,cy+plen*0.72);ctx.stroke();
+        ctx.beginPath();ctx.arc(cx-plen*0.72,cy+plen*0.72,5,0,Math.PI*2);
+        ctx.fillStyle='rgba(33,150,243,1)';ctx.fill();ctx.shadowBlur=0;
+        txt('γ',cx+plen*0.72+10,cy-plen*0.72,'rgba(0,188,212,0.95)',16,'left');
+        txt('γ',cx-plen*0.72-22,cy+plen*0.72,'rgba(33,150,243,0.95)',16,'left');
+        ctx.save();
+        ctx.font='bold 22px "JetBrains Mono",monospace';
+        ctx.fillStyle='rgba(255,255,255,0.92)';
+        ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.fillText('E = mc²',cx,cy-40);
+        ctx.restore();
+        txt('ANNICHILAZIONE  e⁻e⁺ → 2γ',cx,cy+52,'rgba(255,255,255,0.45)',10,'center');
+      }
+    }
+  }
+];
+
+let cur=0, t=0;
+function go(i){
+  cur=i;t=0;
+  document.querySelectorAll('.td-viz-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
+  document.getElementById('vp-tag').textContent=SCENES[i].tag;
+  document.getElementById('vp-title').textContent=SCENES[i].title;
+  document.getElementById('vp-body').innerHTML=SCENES[i].body;
+}
+function loop(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  SCENES[cur].draw(t);
+  t++;
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>

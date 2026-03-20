@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meccanica Quantistica | DivulgAzione</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<nav class="npd-nav">
+  <a href="index.html" class="npd-nav-logo"><span class="accent">D</span>ivulg<span class="accent">A</span>zione</a>
+  <div class="npd-nav-divider"></div>
+  <span class="npd-nav-tagline">Fisica Teorica Interattiva</span>
+  <ul class="npd-nav-links">
+    <li><a href="index.html">Home</a></li>
+    <li><a href="index.html#argomenti">Argomenti</a></li>
+    <li><a href="meccanica_quantistica.html" class="active">Meccanica Quantistica</a></li>
+  </ul>
+</nav>
+
+<div class="td-breadcrumb">
+  <div class="td-breadcrumb-inner">
+    <a href="index.html">Home</a><span> / </span><a href="index.html#argomenti">Meccanica Quantistica</a><span> / </span><span>Fondamenti</span>
+  </div>
+</div>
+
+<div class="td-page-header">
+  <div class="td-page-header-inner">
+    <div class="td-page-id">Meccanica Quantistica · #03</div>
+    <div class="td-page-title">Meccanica Quantistica — Fondamenti e Modello Standard</div>
+    <div class="td-page-subtitle">Funzione d'onda, principio di indeterminazione, entanglement, doppia fenditura e il Modello Standard delle particelle</div>
+    <div class="td-page-badges">
+      <span class="npd-badge badge-live">● Live</span>
+      <span class="npd-badge badge-cat">Meccanica Quantistica</span>
+      <span class="npd-badge badge-cm">QFT</span>
+    </div>
+  </div>
+</div>
+
+<div class="npd-container">
+  <aside class="npd-sidebar">
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Informazioni</div>
+      <div class="td-info-row"><span>Anno fondazione</span><span class="td-v">1925–1927</span></div>
+      <div class="td-info-row"><span>Autori</span><span class="td-v">Heisenberg, Schrödinger, Dirac, Born</span></div>
+      <div class="td-info-row"><span>Formalismo</span><span class="td-v">Spazio di Hilbert</span></div>
+      <div class="td-info-row"><span>Equazione</span><span class="td-v">iℏ ∂ψ/∂t = Ĥψ</span></div>
+    </div>
+    <div class="npd-sidebar-card">
+      <div class="npd-sidebar-title">Navigazione</div>
+      <a href="relativita_generale.html" class="td-sidebar-link">← Relatività Generale</a>
+      <a href="lqg.html" class="td-sidebar-link">Loop Quantum Gravity →</a>
+    </div>
+  </aside>
+
+  <main class="npd-main">
+    <div class="td-card">
+      <div class="td-card-title">Il Formalismo Quantistico</div>
+      <div class="td-card-body">
+        <p>La meccanica quantistica descrive lo stato di un sistema tramite la <span class="td-cy">funzione d'onda ψ(x,t)</span>, soluzione dell'equazione di Schrödinger:</p>
+        <div class="td-formula">iℏ ∂ψ/∂t = Ĥψ</div>
+        <p>L'interpretazione di Born afferma che <span class="td-hl">|ψ(x,t)|²</span> è la densità di probabilità di trovare la particella in x al tempo t. Lo stato quantistico vive in uno spazio di Hilbert; le osservabili sono operatori hermitiani.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Principio di Indeterminazione</div>
+      <div class="td-card-body">
+        <p>Il principio di Heisenberg (1927) stabilisce un limite fondamentale alla precisione con cui si possono conoscere simultaneamente posizione e momento di una particella:</p>
+        <div class="td-formula">ΔxΔp ≥ ℏ/2</div>
+        <p>Questa non è una limitazione strumentale: <span class="td-am">l'indeterminazione è intrinseca alla natura quantistica</span>. Una particella localizzata con precisione ha una distribuzione di momenti molto ampia, e viceversa.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Entanglement Quantistico</div>
+      <div class="td-card-body">
+        <p>Quando due particelle interagiscono, il loro stato può diventare <span class="td-cy">entangled</span>: non separabile come prodotto di stati individuali. Uno stato di Bell è:</p>
+        <div class="td-formula">|Ψ⟩ = (1/√2)(|↑↓⟩ − |↓↑⟩)</div>
+        <p>La misura su una particella collassa istantaneamente lo stato dell'altra, <span class="td-vi">indipendentemente dalla distanza</span>. Il teorema di Bell dimostrò sperimentalmente che nessuna teoria a variabili nascoste locali può riprodurre le predizioni quantistiche.</p>
+      </div>
+    </div>
+
+    <div class="td-card">
+      <div class="td-card-title">Il Modello Standard</div>
+      <div class="td-card-body">
+        <p>Il Modello Standard classifica le particelle fondamentali in <span class="td-am">6 quark</span>, <span class="td-cy">6 leptoni</span>, <span class="td-gr">4 bosoni di gauge</span> (fotone γ, W±, Z⁰, gluone g) più il <span class="td-vi">bosone di Higgs</span> H. È la teoria quantistica di campo più accurata mai costruita, testata a livelli di precisione di 10⁻¹².</p>
+      </div>
+    </div>
+
+    <hr class="td-viz-divider">
+    <div class="td-viz-wrap">
+      <div class="td-viz-toolbar">
+        <span class="td-viz-label">VISUALIZZAZIONE</span>
+        <div class="td-viz-btns">
+          <button class="td-viz-btn active" onclick="go(0)">Funzione d'Onda</button>
+          <button class="td-viz-btn" onclick="go(1)">Indeterminazione</button>
+          <button class="td-viz-btn" onclick="go(2)">Entanglement</button>
+          <button class="td-viz-btn" onclick="go(3)">Doppia Fenditura</button>
+          <button class="td-viz-btn" onclick="go(4)">Modello Standard</button>
+        </div>
+      </div>
+      <div class="td-viz-area">
+        <div class="td-viz-panel">
+          <div class="td-viz-panel-tag" id="vp-tag">SCENA 01</div>
+          <div class="td-viz-panel-title" id="vp-title">Funzione d'Onda ψ(x,t)</div>
+          <div class="td-viz-panel-body" id="vp-body">La funzione d'onda è una soluzione dell'equazione di Schrödinger. Il suo modulo quadro |ψ|² rappresenta la densità di probabilità di trovare la particella in quella posizione.</div>
+        </div>
+        <div class="td-viz-canvas-wrap">
+          <canvas id="viz-canvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+<footer class="npd-footer">
+  <span>DivulgAzione · Meccanica Quantistica · 2026</span>
+  <span><a href="index.html">Home</a> · <a href="index.html#argomenti">Argomenti</a></span>
+</footer>
+
+<script>
+const cv = document.getElementById('viz-canvas');
+const ctx = cv.getContext('2d');
+function resize(){cv.width=cv.parentElement.clientWidth;cv.height=cv.parentElement.clientHeight;}
+window.addEventListener('resize',resize);resize();
+
+function txt(s,x,y,col,sz,align){
+  ctx.save();
+  ctx.font=(sz||11)+'px "JetBrains Mono",monospace';
+  ctx.fillStyle=col||'rgba(255,255,255,0.6)';
+  ctx.textAlign=align||'left';
+  ctx.textBaseline='middle';
+  ctx.fillText(s,x,y);
+  ctx.restore();
+}
+function drawGrid(){
+  ctx.strokeStyle='rgba(255,255,255,0.06)';ctx.lineWidth=1;
+  const s=40;
+  for(let x=0;x<cv.width;x+=s){ctx.beginPath();ctx.moveTo(x,0);ctx.lineTo(x,cv.height);ctx.stroke();}
+  for(let y=0;y<cv.height;y+=s){ctx.beginPath();ctx.moveTo(0,y);ctx.lineTo(cv.width,y);ctx.stroke();}
+}
+
+// Double slit dots accumulator
+let dsSlitDots=[];
+
+const SCENES=[
+  {
+    tag:'SCENA 01',
+    title:"Funzione d'Onda ψ(x,t)",
+    body:"La funzione d'onda è una soluzione dell'equazione di Schrödinger. Il suo modulo quadro |ψ|² rappresenta la densità di probabilità di trovare la particella in quella posizione.",
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const cx=cv.width/2, margin=cv.width*0.06;
+      const W=cv.width-margin*2;
+      const cy1=cv.height*0.32, cy2=cv.height*0.7;
+      const k=0.045, omega=0.06, A=cv.height*0.12;
+      // x-axis ψ
+      ctx.strokeStyle='rgba(255,255,255,0.25)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(margin,cy1);ctx.lineTo(margin+W,cy1);ctx.stroke();
+      // Draw ψ(x,t)
+      ctx.strokeStyle='rgba(0,188,212,0.95)';ctx.lineWidth=2;
+      ctx.beginPath();
+      for(let px=0;px<=W;px+=1){
+        const x=px/W*Math.PI*8;
+        const y=cy1-A*Math.sin(k*W*(px/W)*8-omega*t)*Math.exp(-0.5*Math.pow((px/W-0.5)/0.22,2));
+        if(px===0) ctx.moveTo(margin+px,y); else ctx.lineTo(margin+px,y);
+      }
+      ctx.stroke();
+      txt('ψ(x,t)',margin-4,cy1-A*0.8,'rgba(0,188,212,0.9)',12,'right');
+      // Fill |ψ|²
+      ctx.strokeStyle='rgba(255,255,255,0.25)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(margin,cy2);ctx.lineTo(margin+W,cy2);ctx.stroke();
+      ctx.beginPath();
+      const A2=cv.height*0.1;
+      for(let px=0;px<=W;px+=1){
+        const psi=Math.sin(k*W*(px/W)*8-omega*t)*Math.exp(-0.5*Math.pow((px/W-0.5)/0.22,2));
+        const y=cy2-A2*psi*psi;
+        if(px===0){ctx.moveTo(margin+px,cy2);ctx.lineTo(margin+px,y);}
+        else ctx.lineTo(margin+px,y);
+      }
+      for(let px=W;px>=0;px-=1){
+        ctx.lineTo(margin+px,cy2);
+      }
+      ctx.closePath();
+      ctx.fillStyle='rgba(0,188,212,0.18)';ctx.fill();
+      // Outline |ψ|²
+      ctx.strokeStyle='rgba(0,188,212,0.55)';ctx.lineWidth=1.5;
+      ctx.beginPath();
+      for(let px=0;px<=W;px+=1){
+        const psi=Math.sin(k*W*(px/W)*8-omega*t)*Math.exp(-0.5*Math.pow((px/W-0.5)/0.22,2));
+        const y=cy2-A2*psi*psi;
+        if(px===0) ctx.moveTo(margin+px,y); else ctx.lineTo(margin+px,y);
+      }
+      ctx.stroke();
+      txt('|ψ(x,t)|²  (densità di probabilità)',margin,cy2-A2-14,'rgba(0,188,212,0.7)',10,'left');
+      txt('← x →',cx,cv.height-16,'rgba(255,255,255,0.3)',10,'center');
+      txt('iℏ ∂ψ/∂t = Ĥψ',cv.width-margin-4,cy1+20,'rgba(255,255,255,0.45)',10,'right');
+    }
+  },
+  {
+    tag:'SCENA 02',
+    title:'Indeterminazione di Heisenberg',
+    body:'Localizzare una particella con maggior precisione (piccolo Δx) richiede necessariamente una grande incertezza nel momento (grande Δp), e viceversa.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const cy=cv.height/2;
+      const margin=cv.width*0.06;
+      const halfW=cv.width*0.38;
+      function gauss(cx,sigma,amp,yBase,col,label,sigmaLabel){
+        // Fill
+        ctx.beginPath();
+        for(let px=0;px<=halfW*2;px+=1){
+          const xr=(px/halfW-1)*3;
+          const y=yBase-amp*Math.exp(-0.5*(xr/sigma)*(xr/sigma));
+          if(px===0){ctx.moveTo(cx-halfW+px,yBase);ctx.lineTo(cx-halfW+px,y);}
+          else ctx.lineTo(cx-halfW+px,y);
+        }
+        for(let px=halfW*2;px>=0;px-=1){ctx.lineTo(cx-halfW+px,yBase);}
+        ctx.closePath();
+        ctx.fillStyle=col.replace('A','0.15');ctx.fill();
+        // Stroke
+        ctx.strokeStyle=col.replace('A','0.9');ctx.lineWidth=2;
+        ctx.beginPath();
+        for(let px=0;px<=halfW*2;px+=1){
+          const xr=(px/halfW-1)*3;
+          const y=yBase-amp*Math.exp(-0.5*(xr/sigma)*(xr/sigma));
+          if(px===0) ctx.moveTo(cx-halfW+px,y); else ctx.lineTo(cx-halfW+px,y);
+        }
+        ctx.stroke();
+        // Width bracket
+        const wx=sigma/3*halfW;
+        ctx.strokeStyle=col.replace('A','0.5');ctx.lineWidth=1;ctx.setLineDash([3,3]);
+        ctx.beginPath();ctx.moveTo(cx-wx,yBase-amp*0.61);ctx.lineTo(cx+wx,yBase-amp*0.61);ctx.stroke();
+        ctx.setLineDash([]);
+        txt(sigmaLabel,cx,yBase-amp*0.61-12,col.replace('A','0.8'),10,'center');
+        txt(label,cx,yBase+22,col.replace('A','0.7'),11,'center');
+      }
+      const lx=cv.width*0.28, rx=cv.width*0.72;
+      const amp=cv.height*0.14;
+      const halfHW=cv.width*0.2;
+      // LEFT: narrow Δx, broad Δp
+      gauss(lx,0.45,amp,cy-20,'rgba(0,188,212,A)','Δx piccolo','Δx');
+      gauss(lx,1.4,amp*0.5,cy+cv.height*0.28,'rgba(0,188,212,A)','Δp grande','Δp');
+      // RIGHT: broad Δx, narrow Δp
+      gauss(rx,1.4,amp,cy-20,'rgba(255,160,0,A)','Δx grande','Δx');
+      gauss(rx,0.45,amp*0.5,cy+cv.height*0.28,'rgba(255,160,0,A)','Δp piccolo','Δp');
+      // Axes
+      ctx.strokeStyle='rgba(255,255,255,0.25)';ctx.lineWidth=1;
+      ctx.beginPath();ctx.moveTo(margin,cy-20);ctx.lineTo(cv.width-margin,cy-20);ctx.stroke();
+      ctx.beginPath();ctx.moveTo(margin,cy+cv.height*0.28);ctx.lineTo(cv.width-margin,cy+cv.height*0.28);ctx.stroke();
+      txt('spazio  x →',lx,cy-20+12,'rgba(255,255,255,0.3)',9,'center');
+      txt('momento  p →',lx,cy+cv.height*0.28+12,'rgba(255,255,255,0.3)',9,'center');
+      txt('spazio  x →',rx,cy-20+12,'rgba(255,255,255,0.3)',9,'center');
+      txt('momento  p →',rx,cy+cv.height*0.28+12,'rgba(255,255,255,0.3)',9,'center');
+      // Central formula
+      ctx.save();
+      ctx.font='bold 15px "JetBrains Mono",monospace';
+      ctx.fillStyle='rgba(255,255,255,0.85)';
+      ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText('ΔxΔp ≥ ℏ/2',cv.width/2,cy+cv.height*0.05);
+      ctx.restore();
+      // Divider
+      ctx.strokeStyle='rgba(255,255,255,0.12)';ctx.lineWidth=1;ctx.setLineDash([4,4]);
+      ctx.beginPath();ctx.moveTo(cv.width/2,16);ctx.lineTo(cv.width/2,cv.height-16);ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  },
+  {
+    tag:'SCENA 03',
+    title:'Entanglement Quantistico',
+    body:"Due particelle entangled condividono uno stato quantistico unico. La misura su una particella collassa istantaneamente lo stato dell'altra, indipendentemente dalla distanza.",
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      drawGrid();
+      const cx=cv.width/2, cy=cv.height/2;
+      const phase=t%300;
+      const traveling=phase<200;
+      const measuring=phase>=200;
+      const sep=traveling ? (phase/200)*cv.width*0.33 : cv.width*0.33;
+      const lx=cx-sep, rx=cx+sep;
+      // Entanglement line
+      ctx.strokeStyle=`rgba(255,255,255,${traveling?0.4:0.1})`;ctx.lineWidth=1;ctx.setLineDash([4,4]);
+      ctx.beginPath();ctx.moveTo(lx+12,cy);ctx.lineTo(rx-12,cy);ctx.stroke();
+      ctx.setLineDash([]);
+      // Particle A (cyan)
+      ctx.beginPath();ctx.arc(lx,cy,14,0,Math.PI*2);
+      ctx.fillStyle='rgba(0,188,212,0.88)';
+      ctx.shadowColor='rgba(0,188,212,0.7)';ctx.shadowBlur=18;ctx.fill();ctx.shadowBlur=0;
+      // Particle B (amber)
+      ctx.beginPath();ctx.arc(rx,cy,14,0,Math.PI*2);
+      ctx.fillStyle='rgba(255,160,0,0.88)';
+      ctx.shadowColor='rgba(255,160,0,0.7)';ctx.shadowBlur=18;ctx.fill();ctx.shadowBlur=0;
+      if(measuring){
+        const mp=(phase-200)/100;
+        // Spin arrows
+        ctx.strokeStyle='rgba(0,188,212,0.95)';ctx.lineWidth=2.5;
+        ctx.beginPath();ctx.moveTo(lx,cy+10);ctx.lineTo(lx,cy-20);ctx.stroke();
+        ctx.beginPath();ctx.moveTo(lx-5,cy-14);ctx.lineTo(lx,cy-20);ctx.lineTo(lx+5,cy-14);ctx.stroke();
+        txt('↑',lx,cy-30,'rgba(0,188,212,1)',14,'center');
+        ctx.strokeStyle='rgba(255,160,0,0.95)';ctx.lineWidth=2.5;
+        ctx.beginPath();ctx.moveTo(rx,cy-10);ctx.lineTo(rx,cy+20);ctx.stroke();
+        ctx.beginPath();ctx.moveTo(rx-5,cy+14);ctx.lineTo(rx,cy+20);ctx.lineTo(rx+5,cy+14);ctx.stroke();
+        txt('↓',rx,cy+32,'rgba(255,160,0,1)',14,'center');
+        // Flash correlation
+        const fa=Math.max(0,0.7-mp*0.7);
+        ctx.strokeStyle=`rgba(255,255,255,${fa})`;ctx.lineWidth=2;ctx.setLineDash([2,2]);
+        ctx.beginPath();ctx.moveTo(lx,cy);ctx.lineTo(rx,cy);ctx.stroke();
+        ctx.setLineDash([]);
+        txt('MISURA',lx,cy+34,'rgba(0,188,212,0.7)',9,'center');
+        txt('COLLASSO',rx,cy-34,'rgba(255,160,0,0.7)',9,'center');
+      }
+      txt('A',lx,cy,'rgba(255,255,255,0.9)',11,'center');
+      txt('B',rx,cy,'rgba(255,255,255,0.9)',11,'center');
+      // Origin pulse
+      if(traveling){
+        ctx.beginPath();ctx.arc(cx,cy,4,0,Math.PI*2);
+        ctx.fillStyle='rgba(255,255,255,0.5)';ctx.fill();
+      }
+      // Formula
+      txt("|Ψ⟩ = (|↑↓⟩ − |↓↑⟩) / √2",cx,cy-cv.height*0.28,'rgba(255,255,255,0.8)',12,'center');
+      txt('STATO ENTANGLED DI BELL',cx,cy-cv.height*0.18,'rgba(255,255,255,0.4)',10,'center');
+      txt('distanza arbitraria →',cx,cy+cv.height*0.33,'rgba(255,255,255,0.3)',10,'center');
+    }
+  },
+  {
+    tag:'SCENA 04',
+    title:'Esperimento della Doppia Fenditura',
+    body:"Elettroni sparati uno alla volta verso due fenditure producono un pattern di interferenza — come se ogni particella passasse attraverso entrambe le fenditure contemporaneamente.",
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      const cx=cv.width/2, cy=cv.height/2;
+      const slitX=cx*0.44;
+      const screenX=cx*1.6;
+      const slitGap=cv.height*0.1, slitH=cv.height*0.055;
+      const slit1y=cy-slitGap/2, slit2y=cy+slitGap/2;
+      // Add dots
+      if(t%2===0 && dsSlitDots.length<1200){
+        // Interference pattern I(y) = cos²(π*d*y/(λ*L))
+        const d=slitGap, L=screenX-slitX;
+        const lambda=cv.height*0.18;
+        for(let i=0;i<3;i++){
+          const yCand=cy+(Math.random()-0.5)*cv.height*0.85;
+          const dy=yCand-cy;
+          const I=Math.pow(Math.cos(Math.PI*d*dy/(lambda*L)),2);
+          if(Math.random()<I) dsSlitDots.push({x:screenX+Math.random()*8,y:yCand,a:0.7+Math.random()*0.3});
+        }
+      }
+      // Draw dots
+      dsSlitDots.forEach(d=>{
+        ctx.beginPath();ctx.arc(d.x,d.y,1.5,0,Math.PI*2);
+        ctx.fillStyle=`rgba(0,188,212,${d.a})`;ctx.fill();
+      });
+      // Barrier
+      ctx.fillStyle='rgba(33,150,243,0.35)';ctx.strokeStyle='rgba(33,150,243,0.7)';ctx.lineWidth=2;
+      ctx.fillRect(slitX-4,0,8,slit1y-slitH/2);ctx.strokeRect(slitX-4,0,8,slit1y-slitH/2);
+      ctx.fillRect(slitX-4,slit1y+slitH/2,8,slit2y-slitH/2-(slit1y+slitH/2));
+      ctx.strokeRect(slitX-4,slit1y+slitH/2,8,slit2y-slitH/2-(slit1y+slitH/2));
+      ctx.fillRect(slitX-4,slit2y+slitH/2,8,cv.height-(slit2y+slitH/2));
+      ctx.strokeRect(slitX-4,slit2y+slitH/2,8,cv.height-(slit2y+slitH/2));
+      // Screen
+      ctx.strokeStyle='rgba(255,255,255,0.35)';ctx.lineWidth=1.5;
+      ctx.beginPath();ctx.moveTo(screenX,16);ctx.lineTo(screenX,cv.height-16);ctx.stroke();
+      // Particle beam
+      if(t%30<15){
+        const bx=slitX-cv.width*0.2+((t%30)/15)*(cv.width*0.2);
+        ctx.beginPath();ctx.arc(bx,cy,4,0,Math.PI*2);
+        ctx.fillStyle='rgba(255,160,0,0.9)';ctx.shadowColor='rgba(255,160,0,0.7)';ctx.shadowBlur=10;
+        ctx.fill();ctx.shadowBlur=0;
+      }
+      txt('SORGENTE',slitX-cv.width*0.14,cy,'rgba(255,160,0,0.55)',9,'center');
+      txt('DOPPIA\nFENDITURA',slitX,cy+cv.height*0.38,'rgba(33,150,243,0.65)',9,'center');
+      txt('SCHERMO\n(interferenza)',screenX+6,cy,'rgba(0,188,212,0.65)',9,'left');
+      txt(`N = ${dsSlitDots.length} elettroni`,cx,cv.height-16,'rgba(255,255,255,0.4)',10,'center');
+      // Slits labels
+      txt('s₁',slitX+6,slit1y,'rgba(255,255,255,0.5)',9,'left');
+      txt('s₂',slitX+6,slit2y,'rgba(255,255,255,0.5)',9,'left');
+    }
+  },
+  {
+    tag:'SCENA 05',
+    title:'Il Modello Standard',
+    body:'Il Modello Standard classifica le particelle fondamentali in quark (6), leptoni (6), bosoni di gauge (γ,W,Z,g) e il bosone di Higgs.',
+    draw:function(t){
+      ctx.fillStyle='#0d1b2a';ctx.fillRect(0,0,cv.width,cv.height);
+      const particles=[
+        // Quarks (amber)
+        {n:'u',l:'up',c:'rgba(255,160,0,A)',col:0,row:0},
+        {n:'c',l:'charm',c:'rgba(255,160,0,A)',col:1,row:0},
+        {n:'t',l:'top',c:'rgba(255,160,0,A)',col:2,row:0},
+        {n:'d',l:'down',c:'rgba(255,160,0,A)',col:0,row:1},
+        {n:'s',l:'strange',c:'rgba(255,160,0,A)',col:1,row:1},
+        {n:'b',l:'bottom',c:'rgba(255,160,0,A)',col:2,row:1},
+        // Leptons (blue)
+        {n:'e',l:'electron',c:'rgba(33,150,243,A)',col:0,row:2},
+        {n:'μ',l:'muon',c:'rgba(33,150,243,A)',col:1,row:2},
+        {n:'τ',l:'tau',c:'rgba(33,150,243,A)',col:2,row:2},
+        {n:'νe',l:'e-neutr.',c:'rgba(33,150,243,A)',col:0,row:3},
+        {n:'νμ',l:'μ-neutr.',c:'rgba(33,150,243,A)',col:1,row:3},
+        {n:'ντ',l:'τ-neutr.',c:'rgba(33,150,243,A)',col:2,row:3},
+        // Gauge bosons (green)
+        {n:'γ',l:'fotone',c:'rgba(76,175,80,A)',col:3,row:0},
+        {n:'W',l:'W boson',c:'rgba(76,175,80,A)',col:3,row:1},
+        {n:'Z',l:'Z boson',c:'rgba(76,175,80,A)',col:3,row:2},
+        {n:'g',l:'gluone',c:'rgba(76,175,80,A)',col:3,row:3},
+        // Higgs
+        {n:'H',l:'Higgs',c:'rgba(156,39,176,A)',col:4,row:1}
+      ];
+      const cols=5, rows=4;
+      const bw=Math.min(cv.width/(cols+1.8), cv.height/(rows+1.8));
+      const bh=bw*0.88;
+      const offX=(cv.width-cols*bw*1.12)/2;
+      const offY=(cv.height-rows*bh*1.12)/2;
+      const pulse=Math.floor(t/40)%particles.length;
+      particles.forEach((p,i)=>{
+        const x=offX+p.col*bw*1.12;
+        const y=offY+p.row*bh*1.12;
+        const isActive=i===pulse;
+        const a=isActive?0.95:0.55;
+        ctx.fillStyle=p.c.replace('A',isActive?'0.22':'0.1');
+        ctx.strokeStyle=p.c.replace('A',a.toString());
+        ctx.lineWidth=isActive?2:1.2;
+        ctx.fillRect(x,y,bw,bh);ctx.strokeRect(x,y,bw,bh);
+        // Symbol
+        ctx.save();
+        ctx.font=`bold ${bw*0.28}px "JetBrains Mono",monospace`;
+        ctx.fillStyle=p.c.replace('A',a.toString());
+        ctx.textAlign='center';ctx.textBaseline='middle';
+        ctx.fillText(p.n,x+bw/2,y+bh*0.42);
+        ctx.restore();
+        txt(p.l,x+bw/2,y+bh*0.78,p.c.replace('A','0.6'),8,'center');
+        if(isActive){
+          ctx.strokeStyle=p.c.replace('A','0.3');ctx.lineWidth=1;
+          ctx.beginPath();ctx.arc(x+bw/2,y+bh/2,bw*0.58,0,Math.PI*2);ctx.stroke();
+        }
+      });
+      // Column headers
+      txt('QUARK',offX+bw*1.12,offY-14,'rgba(255,160,0,0.55)',9,'center');
+      txt('LEPTONI',offX+bw*1.12,offY+rows*bh*1.12+14,'rgba(33,150,243,0.55)',9,'center');
+      txt('BOSONI',offX+3*bw*1.12+bw/2,offY-14,'rgba(76,175,80,0.55)',9,'center');
+      txt('HIGGS',offX+4*bw*1.12+bw/2,offY+bh*1.12-14,'rgba(156,39,176,0.55)',9,'center');
+    }
+  }
+];
+
+let cur=0, t=0;
+function go(i){
+  cur=i;t=0;
+  if(i===3) dsSlitDots=[];
+  document.querySelectorAll('.td-viz-btn').forEach((b,j)=>b.classList.toggle('active',j===i));
+  document.getElementById('vp-tag').textContent=SCENES[i].tag;
+  document.getElementById('vp-title').textContent=SCENES[i].title;
+  document.getElementById('vp-body').innerHTML=SCENES[i].body;
+}
+function loop(){
+  ctx.clearRect(0,0,cv.width,cv.height);
+  SCENES[cur].draw(t);
+  t++;
+  requestAnimationFrame(loop);
+}
+loop();
+</script>
+</body>
+</html>
